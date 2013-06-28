@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130628172958) do
+ActiveRecord::Schema.define(version: 20130628195448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -351,18 +351,6 @@ ActiveRecord::Schema.define(version: 20130628172958) do
     t.integer  "group_id"
     t.boolean  "graded"
     t.datetime "released_at"
-  end
-
-  create_table "tasks", force: true do |t|
-    t.integer  "assignment_id"
-    t.integer  "submission_id"
-    t.string   "title"
-    t.text     "description"
-    t.datetime "due_at"
-    t.boolean  "accepts_submissions"
-    t.boolean  "group"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "team_memberships", force: true do |t|

@@ -1,7 +1,7 @@
 class Submission < ActiveRecord::Base
   attr_accessible :assignment, :assignment_id, :comment, :feedback, :group,
     :group_id, :attachment, :link, :student, :student_id, :creator,
-    :creator_id, :text_feedback, :text_comment
+    :creator_id, :text_feedback, :text_comment, :graded
 
   include Canable::Ables
   #userstamps! # adds creator and updater
@@ -17,7 +17,7 @@ class Submission < ActiveRecord::Base
   has_one :grade
   accepts_nested_attributes_for :grade
 
-  #scope :ungraded
+  scope :ungraded, -> { where(graded: false) }
 
   validates_presence_of :assignment, :student
 
@@ -61,9 +61,5 @@ class Submission < ActiveRecord::Base
     else
       "Ungraded"
     end
-  end
-
-  def ungraded
-    status == "Ungraded"
   end
 end
