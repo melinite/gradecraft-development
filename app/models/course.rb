@@ -1,14 +1,14 @@
 class Course < ActiveRecord::Base
   attr_accessible :badge_set_ids, :course_grade_scheme_id, :courseno, :name,
-    :semester, :theme_id, :year, :badge_setting, :team_setting, :team_term,
-    :user_term, :user_id, :course_id, :homepage_message, :group_setting,
+    :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
+    :user_id, :course_id, :homepage_message, :group_setting,
     :total_student_weight, :student_weight_close_date, :team_roles,
     :section_leader_term, :group_term, :student_weight_type,
     :has_assignment_submissions, :teams_visible, :badge_use_scope,
     :multiplier_default, :multiplier_term, :badges_value, :predictor_setting,
     :max_group_size, :min_group_size, :shared_badges, :graph_display,
-    :max_student_assignment_type_weight, :assignments, :theme
-  
+    :max_student_assignment_type_weight, :assignments
+
   has_many :course_memberships
   has_many :users, :through => :course_memberships
   accepts_nested_attributes_for :users
@@ -27,7 +27,6 @@ class Course < ActiveRecord::Base
   has_many :groups, :dependent => :destroy
   has_many :teams, :dependent => :destroy
   has_many :team_assignments, :dependent => :destroy
-  belongs_to :theme
 
   validates_presence_of :name, :badge_setting, :team_setting, :group_setting
 

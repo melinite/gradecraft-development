@@ -3,7 +3,6 @@ Fabricator(:course) do
   courseno 101
   year Date.today.year
   semester %w{Fall Winter Spring Summer}.sample
-  theme
   team_setting true
   group_setting true
   total_student_weight 60

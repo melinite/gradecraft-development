@@ -11,28 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130710163524) do
+ActiveRecord::Schema.define(version: 20130628172958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "assignment_submissions", force: true do |t|
-    t.integer  "assignment_id"
-    t.integer  "user_id"
-    t.string   "feedback"
-    t.string   "comment"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
-    t.datetime "attachment_updated_at"
-    t.string   "link"
-    t.integer  "submittable_id"
-    t.string   "submittable_type"
-    t.text     "text_feedback"
-    t.text     "text_comment"
-  end
 
   create_table "assignment_types", force: true do |t|
     t.string   "name"

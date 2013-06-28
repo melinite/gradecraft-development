@@ -12,14 +12,15 @@ MiniTest::Reporters.use!
 require 'valid_attribute'
 
 class ActiveSupport::TestCase
-  %w(assignment assignment_type course grade student student_assignment_type_weight).each do |fabricator|
+  # Example:
+  #
+  # def assignment
+  #   @assignment ||= create_assignment
+  # end
+  %w(assignment assignment_type course grade student student_assignment_type_weight submission).each do |fabricator|
     define_method fabricator do
       instance_variable_get("@#{fabricator}") || instance_variable_set("@#{fabricator}", send("create_#{fabricator}"))
     end
-  end
-
-  def grade
-    @grade ||= create_grade
   end
 
   def create_assignment(overrides = {})
@@ -28,6 +29,10 @@ class ActiveSupport::TestCase
 
   def create_assignments(count = 2)
     1.upto(count).map { |n| create_assignment(:point_total => 100 + n * 200) }
+  end
+
+  def create_submission(overrides = {})
+    Fabricate :submission, { :assignment => assignment, :student => student }.merge(overrides)
   end
 
   def create_assignment_type(overrides = {})
