@@ -11,7 +11,8 @@ class Assignment < ActiveRecord::Base
   has_many :users, :through => :grades
   has_one :rubric
   belongs_to :badge_set
-  has_many :submissions
+  has_many :tasks
+  has_many :submissions, :through => :tasks
   accepts_nested_attributes_for :grades
   accepts_nested_attributes_for :assignment_type
   has_many :score_levels, :through => :assignment_type

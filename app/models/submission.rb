@@ -1,15 +1,14 @@
 class Submission < ActiveRecord::Base
-  attr_accessible :assignment, :assignment_id, :comment, :feedback, :group,
-    :group_id, :attachment, :link, :student, :student_id, :creator,
-    :creator_id, :text_feedback, :text_comment, :graded
+  attr_accessible :task, :task_id, :comment, :feedback, :group, :group_id,
+    :attachment, :link, :student, :student_id, :creator, :creator_id,
+    :text_feedback, :text_comment, :graded
 
   include Canable::Ables
   #userstamps! # adds creator and updater
 
-
   #has_attached_file :attachment
 
-  belongs_to :assignment
+  belongs_to :task
   belongs_to :student, :class_name => 'User'
   belongs_to :creator, :class_name => 'User'
   belongs_to :group
@@ -19,9 +18,11 @@ class Submission < ActiveRecord::Base
 
   scope :ungraded, -> { where(graded: false) }
 
-  validates_presence_of :assignment, :student
+  validates_presence_of :task, :student
 
   scope :for_submittable, -> { where(submittable_id: submittable.id, submittable_type: submittable.class) }
+
+  delegates :assignment, :to => :task
 
   #Canable permissions
   def updatable_by?(user)

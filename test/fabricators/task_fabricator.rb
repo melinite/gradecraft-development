@@ -1,0 +1,3 @@
+Fabricator(:task) do
+
+end
