@@ -24,18 +24,8 @@
 $(document).ready(function(){
   $('#gradeCurious').popover();
 
-/*
-  
-  $('#classBoxandWhiskerPopover').click(function() {
-    $(this).popover({ html: true }).popover('toggle');
-    box_and_whiskers('toggle');
-  });
-*/
-/*
-
   $('.modal').modal();
-*/
-
+  
   $('#easyTab a').click(function (e) {
     e.preventDefault();
     $('#easyTab a[href="#basic"]').tab('show'); // Select tab by name
@@ -46,8 +36,6 @@ $(document).ready(function(){
   });
   
   $('.toolTip').tooltip();
-
-	$("#sortableTable").tablesorter();
 	
 	$('#navbar').affix();
  
@@ -70,11 +58,9 @@ $(document).ready(function(){
     
 	$('#userBarTotalSim').show();	
 
-$('#course_id').change(function() { $(this).closest('form').submit(); });
+  $('#course_id').change(function() { $(this).closest('form').submit(); });
 
-$('.nav-tabs').button();
-
-    
+  $('.nav-tabs').button();  
 	
 	// handle 'select all' button
 	$(".select-all").click(function(e){
