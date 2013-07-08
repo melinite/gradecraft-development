@@ -17,7 +17,7 @@
 //= require selectToUISlider.jQuery
 //= require jquery.omniselect
 //= require gradecraft
-//= require_tree .
+//= require_self
 //= require jquery.dynatable
 //= require ckeditor/init
 

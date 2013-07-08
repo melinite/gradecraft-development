@@ -1,12 +1,8 @@
 /*
- * This is a manifest file that'll automatically include all the stylesheets available in this directory
- * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
- * the top of the compiled file, but it's generally better to create a new file per style scope.
- *= require_self
  *= require jquery.ui
  *= require bootstrap
  *= require flexslider.css
- *= require_tree .
+ *= require_self
 */
 
 /* Branding colors */
@@ -18,7 +14,7 @@ $red: #d64545;
 @import url(http://fonts.googleapis.com/css?family=Pontano+Sans);
 
 body {
-  background-image: image-url(images/cloud_bg2.gif);
+  background: image-url("cloud_bg2.gif");
   font-family: 'Pontano Sans',sans-serif !important;
 }
 
@@ -231,7 +227,7 @@ ul.no_bullet li {
 }
 
 .sidebar-nav-fixed {
-  background-image: image-url(images/sidebar.png);
+  background-image: image-url("sidebar.png");
   padding: 10px 0px;
 }
 
@@ -323,7 +319,7 @@ div#userScoreSection {
   margin: 10px 0px;
   border: none;
   outline: none;
-  background: image-url(images/sidebar_divider.png);
+  background: image-url("sidebar_divider.png");
   display: block;
   width: 100%;
   height: 2px;
@@ -347,7 +343,7 @@ color: #ccc;
 -moz-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
 box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
 text-indent: 30px;
-background: #fff image-url(images/icn_search.png) no-repeat;
+background: #fff image-url("icn_search.png") no-repeat;
 background-position: 12px 8px;
 }
 
@@ -364,151 +360,151 @@ box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
 }
 
 #sidebar li.icn_new_article a {
-background: image-url(images/icn_new_article.png) no-repeat center left;
+background: image-url("icn_new_article.png") no-repeat center left;
 }
 #sidebar li.icn_edit_article a {
-background: image-url(images/icn_edit_article.png) no-repeat center left;
+background: image-url("icn_edit_article.png") no-repeat center left;
 }
 #sidebar li.icn_categories a {
-background: image-url(images/icn_categories.png) no-repeat center left;
+background: image-url("icn_categories.png") no-repeat center left;
 }
 #sidebar li.icn_team a {
-background: image-url(images/icn_podium.png) no-repeat center left;
+background: image-url("icn_podium.png") no-repeat center left;
 }
 #sidebar li.icn_tags a {
-background: image-url(images/icn_tags.png) no-repeat center left;
+background: image-url("icn_tags.png") no-repeat center left;
 }
 #sidebar li.icn_add_user a {
-background: image-url(images/icn_add_user.png) no-repeat center left;
+background: image-url("icn_add_user.png") no-repeat center left;
 }
 #sidebar li.icn_view_users a {
-background: image-url(images/icn_view_users.png) no-repeat center left;
+background: image-url("icn_view_users.png") no-repeat center left;
 }
 #sidebar li.icn_profile a {
-background: image-url(images/icn_profile.png) no-repeat center left;
+background: image-url("icn_profile.png") no-repeat center left;
 }
 #sidebar li.icn_folder a {
-background: image-url(images/icn_folder.png) no-repeat center left;
+background: image-url("icn_folder.png") no-repeat center left;
 }
 #sidebar li.icn_photo a {
-background: image-url(images/icn_photo.png) no-repeat center left;
+background: image-url("icn_photo.png") no-repeat center left;
 }
 #sidebar li.icn_audio a {
-background: image-url(images/icn_audio.png) no-repeat center left;
+background: image-url("icn_audio.png") no-repeat center left;
 }
 #sidebar li.icn_video a {
-background: image-url(images/icn_video.png) no-repeat center left;
+background: image-url("icn_video.png") no-repeat center left;
 }
 #sidebar li.icn_settings a {
-background: image-url(images/icn_settings.png) no-repeat center left;
+background: image-url("icn_settings.png") no-repeat center left;
 }
 #sidebar li.icn_security a {
-background: image-url(images/icn_security.png) no-repeat center left;
+background: image-url("icn_security.png") no-repeat center left;
 }
 #sidebar li.icn_jump_back a {
-background: image-url(images/icn_jump_back.png) no-repeat center left;
+background: image-url("icn_jump_back.png") no-repeat center left;
 }
 #sidebar li.icn_badge a {
-background: image-url(images/icn_badge.png) no-repeat center left;
+background: image-url("icn_badge.png") no-repeat center left;
 }
 
 #sidebar li.icn_book a {
-background: image-url(images/icn_book.png) no-repeat center left;
+background: image-url("icn_book.png") no-repeat center left;
 }
 #sidebar li.icn_attendance a {
-background: image-url(images/icn_parents.png) no-repeat center left;
+background: image-url("icn_parents.png") no-repeat center left;
 }
 #sidebar li.icn_blog a {
-background: image-url(images/icn_blog.png) no-repeat center left;
+background: image-url("icn_blog.png") no-repeat center left;
 }
 #sidebar li.icn_lfpg a {
-background: image-url(images/icn_gamepad.png) no-repeat center left;
+background: image-url("icn_gamepad.png") no-repeat center left;
 }
 #sidebar li.icn_cup a {
-background: image-url(images/icn_cup.png) no-repeat center left;
+background: image-url("icn_cup.png") no-repeat center left;
 }
 #sidebar li.icn_certificate a {
-background: image-url(images/icn_certificate.png) no-repeat top left;
+background: image-url("icn_certificate.png") no-repeat top left;
 }
 
 li.icn_certificate a {
-background: image-url(images/icn_certificate.png) no-repeat top left;
+background: image-url("icn_certificate.png") no-repeat top left;
 }
 
 #sidebar li.icn_sheriff a {
-background: image-url(images/icn_sheriffs_st.png) no-repeat center left;
+background: image-url("icn_sheriffs_st.png") no-repeat center left;
 }
 #sidebar li.icn_skull a {
-background: image-url(images/icn_skull.png) no-repeat center left;
+background: image-url("icn_skull.png") no-repeat center left;
 }
 #sidebar li.icn_star a {
-background: image-url(images/icn_star.png) no-repeat center left;
+background: image-url("icn_star.png") no-repeat center left;
 }
 #sidebar li.icn_calendar a {
-background: image-url(images/icn_calendar.png) no-repeat center left;
+background: image-url("icn_calendar.png") no-repeat center left;
 }
 #sidebar li.icn_dashboard a {
-background: image-url(images/icn_dashboard.png) no-repeat center left;
+background: image-url("icn_dashboard.png") no-repeat center left;
 }
 #sidebar li.icn_flag a {
-background: image-url(images/icn_pin_flag.png) no-repeat center left;
+background: image-url("icn_pin_flag.png") no-repeat center left;
 }
 #sidebar li.icn_stats a {
-background: image-url(images/icn_stats.png) no-repeat center left;
+background: image-url("icn_stats.png") no-repeat center left;
 }
 #sidebar li.icn_screenshot a {
-background: image-url(images/icn_screenshot.png) no-repeat center left;
+background: image-url("icn_screenshot.png") no-repeat center left;
 }
 #sidebar li.icn_charts a {
-background: image-url(images/icn_charts.png) no-repeat center left;
+background: image-url("icn_charts.png") no-repeat center left;
 }
 #sidebar li.icn_calculator a {
-background: image-url(images/icn_calculator.png) no-repeat center left;
+background: image-url("icn_calculator.png") no-repeat center left;
 }
 #sidebar li.icn_compass a {
-background: image-url(images/icn_compass.png) no-repeat center left;
+background: image-url("icn_compass.png") no-repeat center left;
 }
 #sidebar li.icn_dislikes a {
-background: image-url(images/icn_dislikes.png) no-repeat center left;
+background: image-url("icn_dislikes.png") no-repeat center left;
 }
 #sidebar li.icn_crown a {
-background: image-url(images/icn_crown.png) no-repeat center left;
+background: image-url("icn_crown.png") no-repeat center left;
 }
 #sidebar li.icn_group a {
-background: image-url(images/icn_group.png) no-repeat center left;
+background: image-url("icn_group.png") no-repeat center left;
 }
 #sidebar li.icn_envelope a, .icn_envelope {
-background: image-url(images/icn_envelope.png) no-repeat center left;
+background: image-url("icn_envelope.png") no-repeat center left;
 }
 #rubric li.icn_learning_theory a {
-  background: image-url(../badges/learningtheory_sm.png) no-repeat center left;
+  background: image-url("badges/learningtheory_sm.png") no-repeat center left;
 }
 #rubric li.icn_apa a {
-  background: image-url(../badges/apa_sm.png) no-repeat center left;
+  background: image-url("badges/apa_sm.png") no-repeat center left;
 }
 #rubric li.icn_motivation a {
-  background: image-url(../badges/motivationaltheory_sm.png) no-repeat center left;
+  background: image-url("badges/motivationaltheory_sm.png") no-repeat center left;
 }
 #rubric li.icn_scholar a {
-  background: image-url(../badges/scholar_sm.png) no-repeat center left;
+  background: image-url("badges/scholar_sm.png") no-repeat center left;
 }
 #rubric li.icn_violence a {
-  background: image-url(../badges/violence_sm.png) no-repeat center left;
+  background: image-url("badges/violence_sm.png") no-repeat center left;
 }
 #rubric li.icn_gamedesigner a {
-  background: image-url(../badges/gamer_sm.png) no-repeat center left;
+  background: image-url("badges/gamer_sm.png") no-repeat center left;
 }
 #rubric li.icn_educationalgames a {
-  background: image-url(../badges/educationalgames_sm.png) no-repeat center left;
+  background: image-url("badges/educationalgames_sm.png") no-repeat center left;
 }
 #rubric li.icn_mathandscience a {
-  background: image-url(../badges/mathandscience_sm.png) no-repeat center left;
+  background: image-url("badges/mathandscience_sm.png") no-repeat center left;
 }
 #rubric li.icn_virtual a {
-  background: image-url(../badges/virtualreality_sm.png) no-repeat center left;
+  background: image-url("badges/virtualreality_sm.png") no-repeat center left;
 }
 #rubric li.icn_gamecritic a {
-  background: image-url(../badges/gamecritic_sm.png) no-repeat center left;
+  background: image-url("badges/gamecritic_sm.png") no-repeat center left;
 }
 
 ul.tabs {

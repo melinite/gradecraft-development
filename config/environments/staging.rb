@@ -15,7 +15,6 @@ GradeCraft::Application.configure do
   config.active_support.deprecation = :notify
   config.assets.compile = false
   config.assets.compress = true
-  config.assets.css_compressor = :sass
   config.assets.digest = true
   config.cache_classes = false
   config.consider_all_requests_local = false
