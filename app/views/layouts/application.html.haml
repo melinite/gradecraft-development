@@ -9,6 +9,8 @@
       = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag 'application'
+    %script(src="/ckeditor/ckeditor.js")
+    %script(src="/ckeditor/adapters/jquery.js")
     = yield(:head)
   %body
     .navbar.navbar-fixed-top.navbar-inverse

@@ -17,11 +17,13 @@
 //= require selectToUISlider.jQuery
 //= require jquery.omniselect
 //= require gradecraft
+//= require preload_store
 //= require_self
 //= require jquery.dynatable
-//= require ckeditor/init
 
 $(document).ready(function(){
+  $('.ckeditor').ckeditor();
+
   $('#gradeCurious').popover();
   
   $('#myModal').modal('hide');

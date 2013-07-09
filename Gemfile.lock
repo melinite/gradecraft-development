@@ -64,9 +64,6 @@ GEM
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
-    ckeditor (4.0.4)
-      mime-types
-      orm_adapter
     cocaine (0.4.2)
     coderay (1.0.9)
     columnize (0.3.6)
@@ -160,7 +157,6 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
-    orm_adapter (0.4.0)
     pacecar (1.5.3)
     pg (0.15.1)
     polyglot (0.3.3)
@@ -271,7 +267,6 @@ DEPENDENCIES
   canable
   capybara
   carrierwave
-  ckeditor
   d3_rails
   dalli
   debugger
