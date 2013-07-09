@@ -19,6 +19,7 @@ GradeCraft::Application.configure do
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
   config.cache_classes = false
+  config.cache_store = :dalli_store
   config.consider_all_requests_local = false
   config.eager_load = true
   config.force_ssl = true
