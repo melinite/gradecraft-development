@@ -16,9 +16,9 @@ class InfoController < ApplicationController
       @bottom_ten_students = @students.order('course_memberships.sortable_score ASC').limit(10)
     end
     @badges = current_course.badges.includes(:earned_badges, :elements)
-    @user = current_user
+    @user = current_user# 
     @assignments = current_course.assignments.includes(:assignment_submissions, :assignment_type)
-    @assignment_types = current_course.assignment_types.includes(:assignments)
     @submissions = current_course.assignment_submissions
+    @assignment_types = current_course.try(:assignment_types).includes(:assignments)
   end
 end

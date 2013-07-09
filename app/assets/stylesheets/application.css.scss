@@ -36,40 +36,9 @@ h5.pageTitle {
   padding: 10px;
 }
 
-#page {  
+#page { 
   margin-top: 38px;
   background-color: #FFF;
-}
-
-#page_no_bkg {
-  margin-top: 44px;
- } 
- 
-.logged_out {
-  padding: 10px;
-}
-
-.section .tab-content .tab-pane {
-  padding: 10px !important;
-}
-
-.section .tab-content .tab-pane .btn {
-  margin-bottom: 5px;
-}
-
-.tab-pane .assignment {
-  margin-left: 15px;
-}
-
-.section .col {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.logged_out { 
-  margin: 10px 5px 5px 5px;
-  background-color: #FFF;
-  border-radius: 10px;
 }
 
 .main.logged_out {
@@ -83,12 +52,16 @@ h5.pageTitle {
 #page_no_bkg {
   margin-top: 40px;
 }
+.rounded {
+  border-radius: 10px;
+}
 
 div.alert {
   color: #FFF;
   clear: both;
   margin: 0 15px 15px;
 }
+
 
 .btn.btn-primary, .btn-info, .btn.btn-success, .btn.btn-error  {
   background-image: none;
@@ -165,6 +138,14 @@ div.alert {
   color: #FFF;
 }
 
+.navbar-fixed-bottom {
+  clear: both;
+}
+
+.navbar a.btn {
+  color: #FFF;
+}
+
 a.brand {
   font-family: 'Futura', sans-serif;
   font-size: 1.5em;
@@ -192,11 +173,18 @@ footer {
   background: linear-gradient(to bottom,  #3f4c6b 0%,#3f4c6b 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4c6b', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
   opacity: .7;
+<<<<<<< HEAD
   padding: 10px 0px 10px;
   color: #FFF;
   margin-bottom: 40px !important;
+=======
+  padding: 15px 0px 20px;
+  color: #FFF;
 }
 
+footer div {
+  padding: 15px 15px 20px;
+}
 footer ul, footer li {
   list-style-type: none;
   margin: 0;
@@ -286,6 +274,8 @@ ul.no_bullet li {
   padding: 10px;
   margin: 0px 0 15px;
   background-color: #FFF;
+  overflow: hidden;
+  margin: 0px 0 15px;
 }
 .sidebar .section, .sidebar .btn {
   margin-bottom: 15px !important;
@@ -514,7 +504,6 @@ thead {
   text-align: right !important;
   float: right;
 }
-
 
 @media screen and (min-width: 768px) {
   .jumbotron {

@@ -34,8 +34,6 @@ gem 'sendgrid'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'twitter-bootstrap-rails'
-gem 'uglifier'
-gem 'will_paginate'
 gem 'rdiscount'
 gem 'best_in_place', git: 'git@github.com:bernat/best_in_place.git', branch: 'rails-4'
 
