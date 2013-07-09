@@ -276,6 +276,7 @@ DEPENDENCIES
   haml
   haml-rails
   jquery-rails (~> 2.0)
+  json
   launchy
   minitest-colorize
   minitest-matchers
