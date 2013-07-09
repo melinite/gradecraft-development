@@ -110,7 +110,7 @@ class UsersController < ApplicationController
     @student_assignment_type_weight = @user.student_assignment_type_weights.new
     @assignments = current_course.assignments
     @grades = @user.grades.all 
-    @badges = current_course.badges
+    @badges = current_course.badges.includes(:earned_badges)
     respond_with @user
   end
   

@@ -36,6 +36,8 @@ gem 'sorcery'
 gem 'twitter-bootstrap-rails'
 gem 'uglifier'
 gem 'will_paginate'
+gem 'rdiscount'
+gem 'best_in_place', git: 'git@github.com:bernat/best_in_place.git', branch: 'rails-4'
 
 group :development do
   gem 'bullet'

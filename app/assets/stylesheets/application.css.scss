@@ -26,19 +26,24 @@ h1, h2, h3, h5, h6 {
   padding: 10px;
 }
 
-#page {
-  margin-top: 44px;
+#page {  
+  margin-top: 38px;
   background-color: #FFF;
-  border-radius: 10px;
 }
 
 #page_no_bkg {
   margin-top: 44px;
+ } 
+.rounded {
+  border-radius: 10px;
 }
 
-#primaryContent {
-  padding-top: 10px;
+div.alert {
+  color: #FFF;
+  clear: both;
+  margin: 0 15px 15px;
 }
+
 
 .btn.btn-primary, .btn-info, .btn.btn-success, .btn.btn-error  {
   background-image: none;
@@ -53,19 +58,19 @@ h1, h2, h3, h5, h6 {
   color: #FFF;
 }
 
-.btn.btn-primary {
+.btn.btn-primary, .badge.badge-primary{
   background-color: $blue !important;
 }
 
-.btn.btn-info {
+.btn.btn-info, .badge.badge-info, .alert.alert-info  {
   background-color: $lightblue !important;
 }
 
-.btn.btn-success {
+.btn.btn-success, .badge.badge-success, .alert.alert-success {
   background-color: $green;
 }
 
-.btn.btn-error {
+.btn.btn-error, .badge.badge-warning, .alert.alert-error {
   background-color: $red;
 }
 
@@ -82,7 +87,6 @@ h1, h2, h3, h5, h6 {
 }
 
 .navbar {
-  padding: 3px;
   background: #45484d; /* Old browsers */
   background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
@@ -92,10 +96,19 @@ h1, h2, h3, h5, h6 {
   background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
   font-family: 'Futura', sans-serif;
+  height: 40px;
 }
 
 .navbar a {
   color: $lightblue;
+}
+
+.navbar .navbar-inner {
+  padding: 0;
+}
+
+.navbar-fixed-bottom {
+  clear: both;
 }
 
 .navbar a.btn {
@@ -125,8 +138,6 @@ a.username.btn {
 }
 
 footer {
-  margin: 0;
-  border-radius: 10px;
   background: #3f4c6b; /* Old browsers */
   background: -moz-linear-gradient(top,  #3f4c6b 0%, #3f4c6b 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f4c6b), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */
@@ -136,12 +147,16 @@ footer {
   background: linear-gradient(to bottom,  #3f4c6b 0%,#3f4c6b 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4c6b', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
   opacity: .7;
+  padding: 15px 0px 20px;
   color: #FFF;
 }
 
+<<<<<<< HEAD
 footer div {
   padding: 15px 15px 20px;
 }
+=======
+>>>>>>> Updates to student dashboard and submission process
 
 footer ul, footer li {
   list-style-type: none;
@@ -173,8 +188,7 @@ ul.no_bullet li {
 }
 
 .jumbotron {
-  margin: 5px;
-  padding: 1em !important;
+  padding: 0em 1em !important;
   background-color: transparent !important;
 }
 
@@ -225,8 +239,9 @@ ul.no_bullet li {
 .section {
   border-radius: 10px !important;
   background-color: #FFF;
+  overflow: hidden;
+  margin: 0px 0 15px;
 }
-
 .sidebar .section, .sidebar .btn {
   margin-bottom: 15px !important;
 }
@@ -569,14 +584,6 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
 	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
 }
 
-.section {
-  border: 2px solid #eee;
-  margin: 0px 0 20px;
-  padding: 10px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
 
 table {
    font-size: 80%;
@@ -585,6 +592,10 @@ table {
 thead {
   background-color: #777;
   color: #FFF;
+}
+
+.form-actions {
+  margin-bottom: 50px;
 }
 
 
