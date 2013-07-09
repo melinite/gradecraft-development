@@ -64,7 +64,6 @@ GEM
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
-    cocaine (0.4.2)
     coderay (1.0.9)
     columnize (0.3.6)
     d3_rails (3.1.6)
@@ -108,9 +107,6 @@ GEM
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
     hashie (2.0.5)
-    highcharts-rails (3.0.1.5)
-      cocaine (~> 0.4.0)
-      railties (>= 3.1)
     highline (1.6.19)
     hike (1.2.3)
     httpauth (0.2.0)
@@ -279,7 +275,6 @@ DEPENDENCIES
   guard-minitest
   haml
   haml-rails
-  highcharts-rails
   jquery-rails (~> 2.0)
   launchy
   minitest-colorize
