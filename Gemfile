@@ -32,6 +32,7 @@ gem 'sendgrid'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'twitter-bootstrap-rails'
+gem 'uglifier'
 gem 'will_paginate'
 
 group :development do
