@@ -45,6 +45,24 @@ class User < ActiveRecord::Base
                     :format   => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
 
+  def self.find_or_create_by_lti_auth_hash(auth_hash)
+    criteria = { lti_uid: auth_hash['uid'] }
+    where(criteria).first || create!(criteria) do |u|
+      auth_hash['info'].tap do |info|
+        u.username = info['ext_sakai_eid']
+        u.email = info['email']
+        u.first_name = info['first_name']
+        u.last_name = info['last_name']
+      end
+      case auth_hash['roles']
+      when 'instructor'
+        u.role = 'professor'
+      else
+        u.role = 'student'
+      end
+    end
+  end
+
   #Course
   def find_scoped_courses(course_id)
     course_id = BSON::ObjectId(course_id) if course_id.is_a?(String)

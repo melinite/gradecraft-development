@@ -24,6 +24,9 @@ GradeCraft::Application.routes.draw do
     resources :student_assignment_type_weights
   end
   resources :user_sessions
+
+  match 'auth/:provider/callback', to: 'user_sessions#lti_create', via: [:get, :post]
+
   resources :password_resets
   resources :info
   resources :home

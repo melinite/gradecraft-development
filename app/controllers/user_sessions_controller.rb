@@ -1,6 +1,7 @@
 class UserSessionsController < ApplicationController
 
   skip_before_filter :require_login, :except => [:destroy, :new, :index]
+  skip_before_filter :verify_authenticity_token, :only => [:lti_create]
 
   def new
     @user = User.new
@@ -20,9 +21,28 @@ class UserSessionsController < ApplicationController
     end
   end
 
+  def lti_create
+    @user = User.find_or_create_by_lti_auth_hash(auth_hash)
+    if @user
+      save_lti_context
+      auto_login @user
+      flash[:notice] = t('sessions.lti.success')
+    else
+      flash[:alert] = t('sessions.lti.error')
+    end
+    respond_with @user do |format|
+      format.html { redirect_to dashboard_path }
+    end
+  end
+
   def destroy
     logout
     redirect_to 'root', :notice => "Logged out!"
   end
 
+  private
+
+  def auth_hash
+    request.env['omniauth.auth']
+  end
 end

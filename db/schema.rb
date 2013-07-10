@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130626163929) do
+ActiveRecord::Schema.define(version: 20130710163524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,13 @@ ActiveRecord::Schema.define(version: 20130626163929) do
   end
 
   add_index "badges", ["assignment_id"], name: "index_badges_on_assignment_id", using: :btree
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.string   "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "challenge_grades", force: true do |t|
     t.integer  "challenge_id"
@@ -344,6 +351,38 @@ ActiveRecord::Schema.define(version: 20130626163929) do
     t.integer  "weight",             null: false
   end
 
+  create_table "submissions", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "student_id"
+    t.string   "feedback"
+    t.string   "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "link"
+    t.text     "text_feedback"
+    t.text     "text_comment"
+    t.integer  "creator_id"
+    t.integer  "group_id"
+    t.boolean  "graded"
+    t.datetime "released_at"
+  end
+
+  create_table "tasks", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "submission_id"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "due_at"
+    t.boolean  "accepts_submissions"
+    t.boolean  "group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "team_memberships", force: true do |t|
     t.integer  "team_id"
     t.integer  "user_id"
@@ -402,6 +441,7 @@ ActiveRecord::Schema.define(version: 20130626163929) do
     t.datetime "last_login_at"
     t.datetime "last_logout_at"
     t.datetime "last_activity_at"
+    t.string   "lti_uid"
   end
 
   add_index "users", ["last_logout_at", "last_activity_at"], name: "index_users_on_last_logout_at_and_last_activity_at", using: :btree

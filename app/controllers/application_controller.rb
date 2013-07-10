@@ -4,24 +4,25 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   #Canable details
   include Canable::Enforcers
+  include Omniauth::Lti::Context
   delegate :can_view?, :to => :current_user
   helper_method :can_view?
   hide_action :can_view?
-  
+
   respond_to :html
-  
+
   protect_from_forgery
-  
+
   Rails.env.production? do
     before_filter :check_url
   end
-  
+
   def check_url
     redirect_to request.protocol + "www." + request.host_with_port + request.fullpath if !/^www/.match(request.host)
   end
-  
+
   before_filter :require_login, :except => [:not_authenticated]
-  
+
   before_filter :increment_page_views
 
   include ApplicationHelper
@@ -31,7 +32,7 @@ class ApplicationController < ActionController::Base
       @user = User.find_by_username(request.env["REMOTE_USER"])
       if @user
         auto_login(@user)
-        User.increment_counter(:visit_count, current_user.id) if current_user  
+        User.increment_counter(:visit_count, current_user.id) if current_user
         redirect_to dashboard_path
       else
         redirect_to root_url, :alert => "Please login first."
@@ -48,8 +49,8 @@ class ApplicationController < ActionController::Base
   def ensure_staff?
     return not_authenticated unless current_user.is_staff?
   end
-  
-  private 
+
+  private
   def increment_page_views
     User.increment_counter(:page_views, current_user.id) if current_user && request.format.html?
   end

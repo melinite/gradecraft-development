@@ -18,3 +18,7 @@ en:
       destroy:
         notice: "%{resource_name} was successfully deleted."
         alert: "Could not delete %{resource_name}."
+  sessions:
+    lti:
+      success: 'You have been succesfully logged in'
+      error: 'Sorry, we could not log you in.'
