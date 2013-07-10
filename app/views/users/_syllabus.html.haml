@@ -297,9 +297,11 @@
                   - else
                     = button_to "Create a Group", new_assignment_group_path(assignment), :class => "btn btn-primary btn-tiny btn-success"
                         = simple_form_for([assignment, assignment.assignment_submissions.new(:submittable_id => @user)], :html => {:class => 'form-horizontal' }) do |f|
+                        = simple_form_for([assignment, assignment.assignment_submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form-horizontal' }) do |f|
                           %div.form-inputs
                             = f.input :submittable_type, :input_html => { :value => "Individual" }, :as => :hidden
                             = f.input :assignment_id, :default => assignment, :as => :hidden
+                            = f.input :user_id, :input_html => {:value => @user.id}, :as => :hidden
                             = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
                             = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
                           

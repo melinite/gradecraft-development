@@ -52,6 +52,16 @@ h5.pageTitle {
 #page_no_bkg {
   margin-top: 40px;
 }
+.logged_out {
+  background-color: #FFF;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.main.logged_out {
+  margin-top: 50px !important;
+}
+
 .rounded {
   border-radius: 10px;
 }
@@ -173,18 +183,15 @@ footer {
   background: linear-gradient(to bottom,  #3f4c6b 0%,#3f4c6b 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4c6b', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
   opacity: .7;
-<<<<<<< HEAD
   padding: 10px 0px 10px;
   color: #FFF;
   margin-bottom: 40px !important;
-=======
-  padding: 15px 0px 20px;
-  color: #FFF;
 }
 
 footer div {
   padding: 15px 15px 20px;
 }
+
 footer ul, footer li {
   list-style-type: none;
   margin: 0;
