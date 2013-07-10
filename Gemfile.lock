@@ -133,6 +133,8 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    markerb (1.0.1)
+      redcarpet (>= 2.0)
     method_source (0.8.1)
     mime-types (1.23)
     minitest (4.7.5)
@@ -202,6 +204,7 @@ GEM
     rb-kqueue (0.2.0)
       ffi (>= 0.5.0)
     rdiscount (2.1.6)
+    redcarpet (2.3.0)
     responders (0.6.5)
     ruby2ruby (2.0.3)
       ruby_parser (~> 3.1)
@@ -293,6 +296,7 @@ DEPENDENCIES
   jquery-rails (~> 2.0)
   json
   launchy
+  markerb
   minitest-colorize
   minitest-matchers
   minitest-rails

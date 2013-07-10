@@ -26,6 +26,7 @@ GradeCraft::Application.routes.draw do
   resources :user_sessions
 
   match 'auth/:provider/callback', to: 'user_sessions#lti_create', via: [:get, :post]
+  get 'lti_error' => 'pages#lti_error', :as => :lti_error
 
   resources :password_resets
   resources :info
