@@ -31,10 +31,4 @@ class InfoController < ApplicationController
     @submissions = current_course.assignment_submissions
     @assignment_types = current_course.try(:assignment_types).includes(:assignments)
   end
-
-#   def cosign_test
-#     render :text => request.env["REMOTE_USER"]
-#   end
-
-
 end

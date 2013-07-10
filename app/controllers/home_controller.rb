@@ -9,8 +9,7 @@ class HomeController < ApplicationController
         @user = current_user
         @student_assignment_type_weights = @user.student_assignment_type_weights.all
         @student_assignment_type_weight = @user.student_assignment_type_weights.new
-        @assignment_types = current_course.assignment_types
-        #@assignment_type_choice = current_course.assignment_types.student_choice
+        @assignment_types = current_course.assignment_types.includes(:assignments)
       end
       @teams = current_course.try(:teams)
       @users = current_course.try(:users)
@@ -19,7 +18,6 @@ class HomeController < ApplicationController
       @top_ten_students = @students.order('course_memberships.sortable_score DESC').limit(10)
       @bottom_ten_students = @students.order('course_memberships.sortable_score ASC').limit(10)
       @assignments = current_course.try(:assignments)
-      #@submissions = current_course.try(:assignment_submissions).ungraded.all
     end
   end
 

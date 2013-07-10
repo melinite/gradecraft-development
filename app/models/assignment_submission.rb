@@ -1,5 +1,5 @@
 class AssignmentSubmission < ActiveRecord::Base
-  attr_accessible :assignment_id, :comment, :feedback, :group_id, :attachment, :link, :submittable_id, :submittable_type, :text_feedback, :text_comment
+  attr_accessible :assignment_id, :comment, :feedback, :group_id, :attachment, :link, :submittable_id, :submittable_type, :text_feedback, :text_comment, :user_id
   
   include Canable::Ables 
   

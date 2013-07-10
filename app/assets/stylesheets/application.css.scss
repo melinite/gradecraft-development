@@ -34,6 +34,17 @@ h1, h2, h3, h5, h6 {
 #page_no_bkg {
   margin-top: 44px;
  } 
+ 
+.logged_out {
+  background-color: #FFF;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.main.logged_out {
+  margin-top: 50px !important;
+}
+
 .rounded {
   border-radius: 10px;
 }
@@ -150,13 +161,6 @@ footer {
   padding: 15px 0px 20px;
   color: #FFF;
 }
-
-<<<<<<< HEAD
-footer div {
-  padding: 15px 15px 20px;
-}
-=======
->>>>>>> Updates to student dashboard and submission process
 
 footer ul, footer li {
   list-style-type: none;

@@ -23,7 +23,7 @@
     = @assignment_type.percentage_course
   %p
     %b Students set course weight?
-    = @assignment_type.user_percentage_set? ? "Yes" : "No"
+    = @assignment_type.student_weightable? ? "Yes" : "No"
 
 %div.well
   %h4 Predictor Settings
