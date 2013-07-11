@@ -32,6 +32,7 @@ gem 'sorcery'
 gem 'twitter-bootstrap-rails'
 gem 'will_paginate'
 gem 'rdiscount'
+gem 'fnordmetric'
 
 group :development do
   gem 'bullet'

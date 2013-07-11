@@ -140,7 +140,8 @@ var PredictorView = Backbone.View.extend({
     return courseTotal;
   },
   calculateScores: function() {
-    var assignmentTypes = this.collection;
+    var assignmentTypes = this.collection,
+        scores = {assignments: {}, types: {}};
     $.each(this.$el.find('.slides li').not('.clone'),function(i,slide) {
       var $slide = $(slide);
       if ($slide.attr('id') == 'slide-required') {
@@ -149,19 +150,24 @@ var PredictorView = Backbone.View.extend({
       var assignmentTypeId = $slide.data('assignment-type-id');
       var score = 0;
       $.each($slide.find('input, select, .slider'), function(i,item) {
-        var $item = $(item);
+        var $item = $(item),
+            itemScore;
         if($item.is(':checkbox') && $item.is(':checked')) {
-          score += parseInt($item.val());
+          itemScore = parseInt($item.val());
         } else if ($item.is('select')) {
-          score += parseInt($item.children('option:selected').val() || 0);
+          itemScore = parseInt($item.children('option:selected').val() || 0);
         } else if ($item.is('input[type="hidden"]')) {
-          score += parseInt($item.val());
+          itemScore = parseInt($item.val());
         } else if ($item.is('.ui-slider')) {
-          score += parseInt($item.slider('value'));
+          itemScore = parseInt($item.slider('value'));
         }
+        score += itemScore;
+        scores['types'][assignmentTypeId] = score;
+        scores['assignments'][$item.attr('id')] = itemScore;
       });
       assignmentTypes.get(assignmentTypeId).set('score',score);
     });
+    $.ajax('/users/predictor_event', {method: 'post', data: scores});
   }
 });
 

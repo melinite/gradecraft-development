@@ -141,6 +141,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def predictor_event
+    FNORD_METRIC.event(params.merge(_session: current_user.id.to_s, _type: :predictor_set, _namespace: 'gradecraft'))
+    render :nothing => true, :status => :ok
+  end
+
   def new
     @title = "Create a New User"
     @teams = current_course.teams.all

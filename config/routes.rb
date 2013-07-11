@@ -20,6 +20,7 @@ GradeCraft::Application.routes.draw do
       get 'choices'
       get 'analytics'
       get 'my_badges'
+      post 'predictor_event'
     end
     resources :student_assignment_type_weights
   end
