@@ -20,6 +20,15 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Futura", sans-serif !important;
+  text-align: center;
+}
+
+h5.pageTitle {
+background-color: $lightblue;
+padding: 10px 5px;
+color: #FFF;
+border-top-left-radius: 15px;
+border-top-right-radius: 15px;
 }
 
 h5.pageTitle {
@@ -64,6 +73,10 @@ h5.pageTitle {
 
 .rounded {
   border-radius: 10px;
+  }
+  
+#page_no_bkg {
+  margin-top: 44px;
 }
 
 div.alert {
@@ -207,10 +220,10 @@ footer a:hover {
   opacity: .7;
 }
 
-footer .col-sm-12 {
+
+footer .col-sm-12 li {
   text-align: center;
 }
-
 
 ul.no_bullet {
   padding: 0px;
@@ -280,7 +293,7 @@ ul.no_bullet li {
   overflow: hidden;
   padding: 10px;
   margin: 0px 0 15px;
-  background-color: #FFF;
+  background-color: #ccc;
   overflow: hidden;
   margin: 0px 0 15px;
 }
