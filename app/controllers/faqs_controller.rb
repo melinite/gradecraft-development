@@ -1,4 +1,7 @@
 class FaqsController < ApplicationController
+
+  skip_before_filter :require_login
+
   def index
     @faqs = Faq.all
     respond_with(@faqs)
