@@ -17,7 +17,6 @@ class AssignmentType < ActiveRecord::Base
 
   #default_scope :order => 'order_placement ASC'
 
-  #Displays how much the assignment type is worth in the list view
   def weight
     if percentage_course?
       percentage_course.to_s << "%"
@@ -117,7 +116,6 @@ class AssignmentType < ActiveRecord::Base
     student_weightable? ? weight_for_student(student) : 1
   end
 
-  #assignment type weights by student
   def weights_by_student_id
     @weights_by_student ||= {}.tap do |weights|
       student_weights.each do |student_weight|

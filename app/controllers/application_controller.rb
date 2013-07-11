@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   #Canable details
   include Canable::Enforcers
   delegate :can_view?, :to => :current_user
-  helper_method :can_view? # so you can use it in your views
+  helper_method :can_view?
   hide_action :can_view?
   
   respond_to :html

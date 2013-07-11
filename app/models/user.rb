@@ -45,7 +45,6 @@ class User < ActiveRecord::Base
                     :format   => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
 
-  #Course
   def find_scoped_courses(course_id)
     course_id = BSON::ObjectId(course_id) if course_id.is_a?(String)
     if is_admin? || self.course_ids.include?(course_id)
@@ -59,7 +58,6 @@ class User < ActiveRecord::Base
     @default_course ||= (self.courses.where(:id => self.default_course_id).first || self.courses.first)
   end
 
-  #Names
   def name
     @name = [first_name,last_name].reject(&:blank?).join(' ').presence || "User #{id}"
   end
@@ -76,7 +74,6 @@ class User < ActiveRecord::Base
     teams.first.try(:team_leader)
   end
 
-  #Roles
   %w{student gsi professor admin}.each do |role|
     scope role.pluralize, -> { where role: role }
   end
@@ -105,7 +102,6 @@ class User < ActiveRecord::Base
     is_prof? || is_gsi? || is_admin?
   end
 
-  #Grades
 
   def grade_level(course)
     course.grade_level(self)
@@ -125,7 +121,6 @@ class User < ActiveRecord::Base
     grades_by_assignment_id[assignment.id].try(:first)
   end
 
-  #Badges
 
   def earned_badges_value(course)
     earned_badges.to_a.sum(&:point_value)
@@ -168,12 +163,10 @@ class User < ActiveRecord::Base
     (weights_for_assignment_type_id(assignment_type).try(:value) || 0.5)
   end
 
-  #Import Users
   def self.csv_header
     "First Name,Last Name,Email,Username".split(',')
   end
 
-  #Export Users and Final Scores
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Logins", "Pageviews", "Predictor Views"]
@@ -183,7 +176,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  #Export Users and Final Scores for Course
   def self.csv_for_course(course, options = {})
     CSV.generate(options) do |csv|
       csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Logins", "Pageviews", "Predictor Views"]
@@ -193,7 +185,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  #Calculates the total points available in a course, assuming that badges act as extra credit
   def total_points_for_course(course, in_progress = false)
     course.total_points(in_progress) + earned_badges_value(course)
   end

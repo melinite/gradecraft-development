@@ -29,10 +29,8 @@ class Course < ActiveRecord::Base
   has_many :team_assignments, :dependent => :destroy
   belongs_to :theme
 
-  #Validations
   validates_presence_of :name, :badge_setting, :team_setting, :group_setting
 
-  #Terms
   def user_term
     super || "Player"
   end
@@ -57,7 +55,6 @@ class Course < ActiveRecord::Base
     users.students
   end
 
-  #Conditions
   def has_teams?
     team_setting == true
   end
@@ -66,47 +63,38 @@ class Course < ActiveRecord::Base
     graph_display == true
   end
 
-  #Can students see the team scores?
   def teams_visible?
     teams_visible == true
   end
 
-  #Does the course use badges
   def has_badges?
     badge_setting == true
   end
 
-  #Do badges count towards the course grade?
   def valuable_badges?
     badges_value == true
   end
 
-  #Can students access the predictor?
   def predictor_on?
     predictor_setting == true
   end
 
-  #Does the course have assignments that are graded at a group scope?
   def has_groups?
     group_setting == true
   end
 
-  #Are badges assigned outside of assignments?
   def course_badges?
     badge_use_scope == "Course"
   end
 
-  #Are badges assigned only in assignments?
   def assignment_badges?
     badge_use_scope == "Assignment"
   end
 
-  #Are badges assigned both inside and outside of assignments?
   def multi_badges?
     badge_use_scope == "Both"
   end
 
-  #Can students see other students' badges?
   def shared_badges?
     shared_badges == true
   end
@@ -115,12 +103,10 @@ class Course < ActiveRecord::Base
     total_student_weight > 0
   end
 
-  #Do students declare their roles on their team within the system?
   def team_roles?
     team_roles == true
   end
 
-  #Will GradeCraft be used to accept assignment submissions?
   def has_assignment_submissions?
     has_assignment_submissions == true
   end
@@ -141,7 +127,6 @@ class Course < ActiveRecord::Base
     assignments.map { |assignment| assignment.point_total_for_student(student) }.sum
   end
 
-  #How much are badges worth throughout the course?
   def badge_total
     badges.sum(:value)
   end
@@ -150,7 +135,6 @@ class Course < ActiveRecord::Base
    student.earned_grades(self)
   end
 
-  #What course grade has the student achieved?
   def grade_level(student)
     course_grade_scheme.try(:grade_level, score_for_student(student)) || "Not yet known"
   end

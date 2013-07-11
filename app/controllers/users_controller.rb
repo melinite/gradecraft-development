@@ -12,20 +12,18 @@ class UsersController < ApplicationController
 
       CSV.parse(infile) do |row|
         n += 1
-        # SKIP: header i.e. first row OR blank row
+
         next if n == 1 or row.join.blank?
-        # build_from_csv method will map customer attributes & 
-        # build new customer record
+
         user = User.build_from_csv(row)
-        # Save upon valid 
-        # otherwise collect error records to export
+
         if user.valid?
           user.save
         else
           errs << row
         end
       end
-      # Export Error file for later upload upon correction
+
       if errs.any?
         errFile ="errors_#{Date.today.strftime('%d%b%y')}.csv"
         errs.insert(0, User.csv_header)
@@ -37,7 +35,7 @@ class UsersController < ApplicationController
           :disposition => "attachment; filename=#{errFile}.csv"
       else
         flash[:notice] = I18n.t('user.import.success')
-        redirect_to import_url #GET
+        redirect_to import_url
       end
     end
   end
