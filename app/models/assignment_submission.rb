@@ -9,6 +9,7 @@ class AssignmentSubmission < ActiveRecord::Base
   accepts_nested_attributes_for :grade
   
   validates_presence_of :assignment_id, :submittable_id, :submittable_type
+  validates :link, :format => URI::regexp(%w(http https))
   
   
   scope :for_submittable, -> lambda { where submittable_id: submittable.id, submittable_type: submittable.class }
@@ -55,5 +56,5 @@ class AssignmentSubmission < ActiveRecord::Base
   def ungraded
     status == "Ungraded"
   end
-  
+
 end
