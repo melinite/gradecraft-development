@@ -29,6 +29,7 @@ padding: 10px 5px;
 color: #FFF;
 border-top-left-radius: 15px;
 border-top-right-radius: 15px;
+margin-bottom: 0px;
 }
 
 .container {
@@ -259,7 +260,7 @@ ul.no_bullet li {
 
 .section {
   border-radius: 10px !important;
-  background-color: #ccc;
+  border: 1px solid #ccc;
   overflow: hidden;
   margin: 0px 0 15px;
 }
