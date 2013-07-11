@@ -91,23 +91,21 @@
   %div.tab-content   
     %div.tab-pane#tab4.active
       %h4= "Ungraded Assignment Submissions"
-      - @assignments.each do |assignment|
-        - if assignment.has_ungraded_submissions?
-          %span.assignmentTypeTitle= link_to "#{assignment.try(:name)}", assignment_path(assignment)
-          %span.assignmentTypeValue= "(#{assignment.try(:point_total)} total points)" 
-          %table.table.table-bordered
-            %thead
-            %tr            
-              - if assignment.is_individual?
-                %th= current_course.team_term
-                %th= current_course.user_term
-              - elsif assignment.has_groups? 
-                %th= current_course.group_term
-              - elsif assignment.has_teams?
-                %th= current_course.team_term
-              %th Link
-              %th Comment
-              %th
+      %table.table.table-bordered
+        %thead
+          %tr
+            %td= "Submitted by #{current_course.user_term}"
+            %td= "Link"
+            %td= "Date Submitted"
+            %td= "Comment"
+        %tbody
+          - @submissions.group_by(&:assignment).each do |assignment, submissions|
+            - submissions.each do |submission|
+              %tr
+                %td= submission.submittable.try(:name)
+                %td= submission.link
+                %td= submission.created_at
+                %td= raw submission.text_comment
     %div.tab-pane#tab5
       %h4= "Badges"
       %table.table.table-bordered
