@@ -172,15 +172,16 @@ footer {
   background: linear-gradient(to bottom,  #3f4c6b 0%,#3f4c6b 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4c6b', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
   opacity: .7;
-  padding: 15px 0px 20px;
+  padding: 10px 0px 10px;
   color: #FFF;
+  margin-bottom: 40px;
 }
 
 footer ul, footer li {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
+} 
 
 footer a {
   color: $green;
@@ -194,6 +195,7 @@ footer a:hover {
 footer .col-sm-12 li {
   text-align: center;
 }
+
 
 ul.no_bullet {
   padding: 0px;

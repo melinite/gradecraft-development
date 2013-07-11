@@ -152,7 +152,7 @@
                         %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
                         %h3= assignment.name
                       %div.modal-body
-                        %h4= best_in_place submission, :link, :path => assignment_assignment_submission_path(assignment, @user)
+                        %h4= best_in_place submission, :link, :path => assignment_assignment_submission_path(assignment, submission, @user)
                         %p= best_in_place submission, :comment, :path => assignment_assignment_submission_path(assignment, @user)
                         - if submission.link? 
                           //%iframe.col.col-lg-12{:src => submission.link, :height => "60%"}
@@ -168,14 +168,15 @@
                         %h3
                           = "Submit #{assignment.name}"
                       %div.modal-body
-                        = simple_form_for([assignment, assignment.assignment_submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form-horizontal' }) do |f|
+                        = simple_form_for([assignment, assignment.assignment_submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form form-horizontal' }) do |f|
                           %div.form-inputs
                             = f.input :submittable_type, :input_html => { :value => "Individual" }, :as => :hidden
                             = f.input :assignment_id, :default => assignment, :as => :hidden
                             = f.input :user_id, :input_html => {:value => @user.id}, :as => :hidden
                             = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
-                            = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
+                            = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'col-lg-12 col', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
                           
                             %div.modal-footer
                             = f.button :submit, 'Submit', :class => "btn-primary"
+                            
                             %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
