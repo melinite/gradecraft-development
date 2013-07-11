@@ -94,10 +94,10 @@
       %table.table.table-bordered
         %thead
           %tr
-            %td= "Submitted by #{current_course.user_term}"
+            %td= "Submitted by"
             %td= "Link"
-            %td= "Date Submitted"
             %td= "Comment"
+            %td= "Date Submitted"
         %tbody
           - @submissions.group_by(&:assignment).each do |assignment, submissions|
             - submissions.each do |submission|
@@ -107,9 +107,9 @@
                 %td= raw submission.text_comment
                 %td= submission.created_at
                 %td= submission.submittable.try(:name)
-                %td= submission.link
-                %td= submission.created_at
+                %td= link_to submission.link
                 %td= raw submission.text_comment
+                %td= submission.created_at
     %div.tab-pane#tab5
       %h4= "Badges"
       %table.table.table-bordered
