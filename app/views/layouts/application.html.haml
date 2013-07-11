@@ -73,6 +73,7 @@
             = yield
       - elsif current_user && current_user.is_student?
         %div.col.col-lg-12
+          = render 'layouts/alerts'
           = yield
       - else
         %div#page.container

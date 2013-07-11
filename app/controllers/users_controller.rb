@@ -104,6 +104,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    if current_user.is_staff?
+      @title = @user.name
+    end
     @earned_badges = @user.earned_badges
     @assignment_types = current_course.assignment_types
     @student_assignment_type_weights = @user.student_assignment_type_weights.all
