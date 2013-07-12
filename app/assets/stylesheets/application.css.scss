@@ -20,16 +20,16 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Futura", sans-serif !important;
-  text-align: center;
 }
 
 h5.pageTitle {
-background-color: $lightblue;
-padding: 10px 5px;
-color: #FFF;
-border-top-left-radius: 15px;
-border-top-right-radius: 15px;
-margin-bottom: 0px;
+  background-color: $lightblue;
+  padding: 10px 5px;
+  color: #FFF;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-bottom: 0px;
+  text-align: center;
 }
 
 h5.pageTitle {
@@ -62,10 +62,28 @@ h5.pageTitle {
 #page_no_bkg {
   margin-top: 40px;
 }
-.logged_out {
+
+.section .tab-content .tab-pane {
+  padding: 10px !important;
+}
+
+.section .tab-content .tab-pane .btn {
+  margin-bottom: 5px;
+}
+
+.tab-pane .assignment {
+  margin-left: 15px;
+}
+
+.section .col {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.logged_out { 
+  margin: 10px 5px 5px 5px;
   background-color: #FFF;
   border-radius: 10px;
-  margin: 5px;
 }
 
 .main.logged_out {
@@ -74,10 +92,10 @@ h5.pageTitle {
 
 .rounded {
   border-radius: 10px;
-  }
+}
   
 #page_no_bkg {
-  margin-top: 44px;
+  margin-top: 40px;
 }
 
 div.alert {
@@ -85,7 +103,6 @@ div.alert {
   clear: both;
   margin: 0 15px 15px;
 }
-
 
 .btn.btn-primary, .btn-info, .btn.btn-success, .btn.btn-error  {
   background-image: none;
@@ -129,7 +146,7 @@ div.alert {
 }
 
 .modal {
-  width: 50%; 
+  width: 50%;
   margin: 25px auto;
 }
 
@@ -162,6 +179,7 @@ div.alert {
   color: #FFF;
 }
 
+<<<<<<< HEAD
 .navbar-fixed-bottom {
   clear: both;
 }
@@ -170,6 +188,8 @@ div.alert {
   color: #FFF;
 }
 
+=======
+>>>>>>> Added calendar builder files
 a.brand {
   font-family: 'Futura', sans-serif;
   font-size: 1.5em;
@@ -222,8 +242,7 @@ footer a:hover {
   opacity: .7;
 }
 
-
-footer .col-sm-12 li {
+footer .col-sm-12 {
   text-align: center;
 }
 
@@ -293,10 +312,17 @@ ul.no_bullet li {
 .section {
   border-radius: 10px !important;
   border: 1px solid #ccc;
+<<<<<<< HEAD
   padding: 10px;
   margin: 0px 0 15px;
   background-color: #ccc;
   overflow: hidden;
+=======
+  overflow: hidden;
+  padding: 10px;
+  margin: 0px 0 15px;
+  background-color: #FFF;
+>>>>>>> Added calendar builder files
 }
 
 .sidebar .section, .sidebar .btn {
