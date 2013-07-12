@@ -65,9 +65,9 @@ class UsersController < ApplicationController
   
   def students
     @title = "#{current_course.user_term} Roster"
-    @users = current_course.users
+    @users = current_course.users.includes(:earned_badges)
     @students = current_course.users.students
-    @teams = current_course.teams.all 
+    @teams = current_course.teams
     @sorted_students = @students.order('course_memberships.sortable_score DESC')
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
@@ -108,12 +108,12 @@ class UsersController < ApplicationController
       @title = @user.name
     end
     @earned_badges = @user.earned_badges
-    @assignment_types = current_course.assignment_types
+    @assignment_types = current_course.assignment_types.includes(:assignments)
     @student_assignment_type_weights = @user.student_assignment_type_weights.all
     @student_assignment_type_weight = @user.student_assignment_type_weights.new
-    @assignments = current_course.assignments
+    @assignments = current_course.assignments.includes(:assignment_submissions, :assignment_type)
     @grades = @user.grades.all 
-    @badges = current_course.badges.includes(:earned_badges)
+    @badges = current_course.badges.includes(:earned_badges, :elements)
     respond_with @user
   end
   
@@ -248,10 +248,8 @@ class UsersController < ApplicationController
     q = params[:user][:name]
     @users = User.find(:all, :conditions => ["name LIKE %?%",q])
   end
-
   
-  private
-  
+  private  
   
   def increment_predictor_views
     User.increment_counter(:predictor_views, current_user.id) if current_user && request.format.html?

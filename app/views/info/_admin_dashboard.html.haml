@@ -102,7 +102,7 @@
           - @submissions.group_by(&:assignment).each do |assignment, submissions|
             - submissions.each do |submission|
               %tr
-                %td= submission.submittable.try(:name)
+                %td= link_to submission.submittable.try(:name), submission.submittable
                 %td= link_to submission.link
                 %td= raw submission.text_comment
                 %td= submission.created_at

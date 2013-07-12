@@ -1,13 +1,65 @@
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-  %span.assignmentTypeTitle= "#{assignment_type.try(:name)}"
-  %span.assignmentTypeValue= "(#{assignment_type.try(:weight)})" 
-  %table.table.table-bordered
-    %thead
-    %tr
-      %th Name
-      %th Due Date
-    %tbody
+  %div.col.col-lg-12
+    %button.btn.btn-primary.col.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} - #{ number_with_delimiter(assignment_type.score_for_student(@user))} / #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points
+    
+    - if assignment_type.present_weight_for_student(@user)
+      %span.badge.badge-important
+        = "#{@user.weights_for_assignment_type_id(assignment_type).value} #{current_course.multiplier_term} "
+        - if (assignment_type.student_weightable? && assignment_type.multiplier_open?) || (assignment_type.student_weightable? && current_user.is_staff?)
+          - assignment_type.weight_for_assignment_type(@user).tap do |weight|
+            - if weight
+              = link_to "(Change)", edit_user_user_assignment_type_weight_path(@user, weight, :assignment_type_id => assignment_type)
+    - else
+      - if (assignment_type.student_weightable? && assignment_type.multiplier_open?) || (assignment_type.student_weightable? && current_user.is_staff?)
+        %span.badge.badge-important= link_to "Set #{current_course.multiplier_term}", new_user_user_assignment_type_weight_path(@user, :assignment_type_id => assignment_type)
+    
+    %div.col.col-lg-12{:id => "assignment_type-#{assignment_type.id}", :class => "collapse"}
       - assignments.each do |assignment|
-        %tr
-          %td= link_to assignment.name, assignment
-          %td= assignment.try(:due_date)
+        %div.col.col-lg-12.assignment
+          %h5
+            = assignment.try(:name)
+            - if assignment.is_required?
+              %span.badge.badge-warning Required!
+          - if assignment.future?
+            %div.col.col-lg-12
+              = "Due: #{assignment.try(:due_date).strftime("%A, %B %d")}"
+            %div.col.col-lg-12
+              = raw assignment.description
+          - if assignment.has_assignment_submissions?
+            - assignment.submission_for_student(@user).tap do |submission|
+              - if submission
+                %a{:href => "#assignment_submission-#{submission.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
+                %div.modal.col.col-lg-10{ :id => "assignment_submission-#{submission.id}"}
+                  %div.modal-content
+                    %div.modal-header
+                      %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
+                      %h3= assignment.name
+                    %div.modal-body
+                      %h4= best_in_place submission, :link, :path => assignment_assignment_submission_path(assignment, submission, @user)
+                      %p= best_in_place submission, :comment, :path => assignment_assignment_submission_path(assignment, @user)
+                      - if submission.link? 
+                        %iframe.col.col-lg-12{:src => submission.link, :height => "60%"}
+                      %div.modal-footer
+                      %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
+                      %a{:href => "#", :class => "btn btn-primary"} Save changes
+              - else
+                %a{:href => "#assignment_submission-#{assignment.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Submit
+                %div.modal.col.col-lg-10{ :id => "assignment_submission-#{assignment.id}"}
+                  %div.modal-content
+                    %div.modal-header
+                      %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
+                      %h3
+                        = "Submit #{assignment.name}"
+                    %div.modal-body
+                      = simple_form_for([assignment, assignment.assignment_submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form form-horizontal' }) do |f|
+                        %div.form-inputs
+                          = f.input :submittable_id, :input_html => { :value => @user.id }, :as => :hidden
+                          = f.input :submittable_type, :input_html => { :value => "User" }, :as => :hidden
+                          = f.input :assignment_id, :default => assignment, :as => :hidden
+                          = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
+                          = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'col-lg-12 col', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
+                        
+                          %div.modal-footer
+                          = f.button :submit, 'Submit', :class => "btn-primary"
+                          
+                          %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close

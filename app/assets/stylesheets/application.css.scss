@@ -20,16 +20,16 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Futura", sans-serif !important;
-  text-align: center;
 }
 
 h5.pageTitle {
-background-color: $lightblue;
-padding: 10px 5px;
-color: #FFF;
-border-top-left-radius: 15px;
-border-top-right-radius: 15px;
-margin-bottom: 0px;
+  background-color: $lightblue;
+  padding: 10px 5px;
+  color: #FFF;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-bottom: 0px;
+  text-align: center;
 }
 
 .container {
@@ -46,9 +46,30 @@ margin-bottom: 0px;
  } 
  
 .logged_out {
+  padding: 10px;
+}
+
+.section .tab-content .tab-pane {
+  padding: 10px !important;
+}
+
+.section .tab-content .tab-pane .btn {
+  margin-bottom: 5px;
+}
+
+.tab-pane .assignment {
+  margin-left: 15px;
+}
+
+.section .col {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.logged_out { 
+  margin: 10px 5px 5px 5px;
   background-color: #FFF;
   border-radius: 10px;
-  margin: 5px;
 }
 
 .main.logged_out {
@@ -57,10 +78,10 @@ margin-bottom: 0px;
 
 .rounded {
   border-radius: 10px;
-  }
+}
   
 #page_no_bkg {
-  margin-top: 44px;
+  margin-top: 40px;
 }
 
 div.alert {
@@ -68,7 +89,6 @@ div.alert {
   clear: both;
   margin: 0 15px 15px;
 }
-
 
 .btn.btn-primary, .btn-info, .btn.btn-success, .btn.btn-error  {
   background-image: none;
@@ -80,6 +100,11 @@ div.alert {
 }
 
 .btn a {
+  color: #FFF;
+}
+
+.btn a:hover {
+  text-decoration: none;
   color: #FFF;
 }
 
@@ -107,7 +132,7 @@ div.alert {
 }
 
 .modal {
-  width: 50%; 
+  width: 50%;
   margin: 25px auto;
 }
 
@@ -140,11 +165,6 @@ div.alert {
   color: #FFF;
 }
 
-.site {
-  background-color: #fff;
-  border-radius: 10px;
-}
-
 a.brand {
   font-family: 'Futura', sans-serif;
   font-size: 1.5em;
@@ -174,7 +194,7 @@ footer {
   opacity: .7;
   padding: 10px 0px 10px;
   color: #FFF;
-  margin-bottom: 40px;
+  margin-bottom: 40px !important;
 }
 
 footer ul, footer li {
@@ -192,7 +212,7 @@ footer a:hover {
   opacity: .7;
 }
 
-footer .col-sm-12 li {
+footer .col-sm-12 {
   text-align: center;
 }
 
@@ -250,7 +270,6 @@ ul.no_bullet li {
   background-color: $blue;
 }
 
-
 .spacer {
   clear: both;
   height: 5px;
@@ -264,7 +283,9 @@ ul.no_bullet li {
   border-radius: 10px !important;
   border: 1px solid #ccc;
   overflow: hidden;
+  padding: 10px;
   margin: 0px 0 15px;
+  background-color: #FFF;
 }
 .sidebar .section, .sidebar .btn {
   margin-bottom: 15px !important;
@@ -280,7 +301,6 @@ ul.nav.nav-list > li > a {
   margin-left: 34px;
   color: #333;
 }
-
 
 .sidebar-nav-fixed li.nav-header {
   font-family: Helvetica, sans-serif;
@@ -320,8 +340,6 @@ ul.nav.nav-list > li > a {
   }
 }
 
-
-
 div#userScoreSection {
   background-color: #222222 !important;
   border-radius:10px;
@@ -349,10 +367,10 @@ div#userScoreSection {
 
 /* Score total on user homepage */
 #userPointValues {
-  color: #ffffff;
+  color: #333;
   font-size: 18px;
   font-family: Helvetica, sans-serif;
-
+  margin-bottom: 10px;
   #userScoreNum {
     color: $green;
   }
@@ -400,154 +418,6 @@ box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
 }
 #sidebar li a:hover {
   text-decoration: underline;
-}
-
-#sidebar li.icn_new_article a {
-background: url("/icons/icn_new_article.png") no-repeat center left;
-}
-#sidebar li.icn_edit_article a {
-background: url("/icons/icn_edit_article.png") no-repeat center left;
-}
-#sidebar li.icn_categories a {
-background: url("/icons/icn_categories.png") no-repeat center left;
-}
-#sidebar li.icn_team a {
-background: url("/icons/icn_podium.png") no-repeat center left;
-}
-#sidebar li.icn_tags a {
-background: url("/icons/icn_tags.png") no-repeat center left;
-}
-#sidebar li.icn_add_user a {
-background: url("/icons/icn_add_user.png") no-repeat center left;
-}
-#sidebar li.icn_view_users a {
-background: url("/icons/icn_view_users.png") no-repeat center left;
-}
-#sidebar li.icn_profile a {
-background: url("/icons/icn_profile.png") no-repeat center left;
-}
-#sidebar li.icn_folder a {
-background: url("/icons/icn_folder.png") no-repeat center left;
-}
-#sidebar li.icn_photo a {
-background: url("/icons/icn_photo.png") no-repeat center left;
-}
-#sidebar li.icn_audio a {
-background: url("/icons/icn_audio.png") no-repeat center left;
-}
-#sidebar li.icn_video a {
-background: url("/icons/icn_video.png") no-repeat center left;
-}
-#sidebar li.icn_settings a {
-background: url("/icons/icn_settings.png") no-repeat center left;
-}
-#sidebar li.icn_security a {
-background: url("/icons/icn_security.png") no-repeat center left;
-}
-#sidebar li.icn_jump_back a {
-background: url("/icons/icn_jump_back.png") no-repeat center left;
-}
-#sidebar li.icn_badge a {
-background: url("/icons/icn_badge.png") no-repeat center left;
-}
-
-#sidebar li.icn_book a {
-background: url("/icons/icn_book.png") no-repeat center left;
-}
-#sidebar li.icn_attendance a {
-background: url("/icons/icn_parents.png") no-repeat center left;
-}
-#sidebar li.icn_blog a {
-background: url("/icons/icn_blog.png") no-repeat center left;
-}
-#sidebar li.icn_lfpg a {
-background: url("/icons/icn_gamepad.png") no-repeat center left;
-}
-#sidebar li.icn_cup a {
-background: url("/icons/icn_cup.png") no-repeat center left;
-}
-#sidebar li.icn_certificate a {
-background: url("/icons/icn_certificate.png") no-repeat top left;
-}
-
-li.icn_certificate a {
-background: url("/icons/icn_certificate.png") no-repeat top left;
-}
-
-#sidebar li.icn_sheriff a {
-background: url("/icons/icn_sheriffs_st.png") no-repeat center left;
-}
-#sidebar li.icn_skull a {
-background: url("/icons/icn_skull.png") no-repeat center left;
-}
-#sidebar li.icn_star a {
-background: url("/icons/icn_star.png") no-repeat center left;
-}
-#sidebar li.icn_calendar a {
-background: url("/icons/icn_calendar.png") no-repeat center left;
-}
-#sidebar li.icn_dashboard a {
-background: url("/icons/icn_dashboard.png") no-repeat center left;
-}
-#sidebar li.icn_flag a {
-background: url("/icons/icn_pin_flag.png") no-repeat center left;
-}
-#sidebar li.icn_stats a {
-background: url("/icons/icn_stats.png") no-repeat center left;
-}
-#sidebar li.icn_screenshot a {
-background: url("/icons/icn_screenshot.png") no-repeat center left;
-}
-#sidebar li.icn_charts a {
-background: url("/icons/icn_charts.png") no-repeat center left;
-}
-#sidebar li.icn_calculator a {
-background: url("/icons/icn_calculator.png") no-repeat center left;
-}
-#sidebar li.icn_compass a {
-background: url("/icons/icn_compass.png") no-repeat center left;
-}
-#sidebar li.icn_dislikes a {
-background: url("/icons/icn_dislikes.png") no-repeat center left;
-}
-#sidebar li.icn_crown a {
-background: url("/icons/icn_crown.png") no-repeat center left;
-}
-#sidebar li.icn_group a {
-background: url("/icons/icn_group.png") no-repeat center left;
-}
-#sidebar li.icn_envelope a, .icn_envelope {
-background: url("/icons/icn_envelope.png") no-repeat center left;
-}
-#rubric li.icn_learning_theory a {
-  background: url("/badges/learningtheory_sm.png") no-repeat center left;
-}
-#rubric li.icn_apa a {
-  background: url("/badges/apa_sm.png") no-repeat center left;
-}
-#rubric li.icn_motivation a {
-  background: url("/badges/motivationaltheory_sm.png") no-repeat center left;
-}
-#rubric li.icn_scholar a {
-  background: url("/badges/scholar_sm.png") no-repeat center left;
-}
-#rubric li.icn_violence a {
-  background: url("/badges/violence_sm.png") no-repeat center left;
-}
-#rubric li.icn_gamedesigner a {
-  background: url("/badges/gamer_sm.png") no-repeat center left;
-}
-#rubric li.icn_educationalgames a {
-  background: url("/badges/educationalgames_sm.png") no-repeat center left;
-}
-#rubric li.icn_mathandscience a {
-  background: url("/badges/mathandscience_sm.png") no-repeat center left;
-}
-#rubric li.icn_virtual a {
-  background: url("/badges/virtualreality_sm.png") no-repeat center left;
-}
-#rubric li.icn_gamecritic a {
-  background: url("/badges/gamecritic_sm.png") no-repeat center left;
 }
 
 ul.tabs {
@@ -607,8 +477,27 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
 	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
 }
 
+.navbar-fixed-bottom {
+  height: 40px;
+}
 
+.navbar-fixed-bottom .course select, .course {
+  color: $lightblue;
+  padding: 0;
+  font-size: 14px;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+.navbar-fixed-bottom .course select {
+  background-color: transparent; 
+  padding: 0px !important;
+  margin-top: -4px;
+  background-image: url(../images/assignArrowDn.png) no-repeat center right;
+  padding-right: 25px;
+}
 table {
+  background-color: #FFF !important;
    font-size: 80%;
 }
 

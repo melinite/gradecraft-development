@@ -10,9 +10,6 @@
   - if current_user.is_student?
     = "Your current score is "
   - elsif current_user.is_staff?
-    = "#{@user.name}"
-    |
     = "Current Score: "
   %span#userScoreNum #{number_with_delimiter(@user.earned_grades(current_course), :delimiter => ',') if @user.respond_to?(:earned_grades)}
-  %div#userBarInProgressSim
   %div#userBarTotalSim

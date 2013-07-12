@@ -84,4 +84,13 @@ class CoursesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def assignments
+    @assignments = EventSearch.new(:current_user => current_user, :events => @artist.events).find
+    respond_with @assignments do |format|
+      format.ics do
+        render :text => CalendarBuilder.new(:assignments => @assignments).to_ics, :content_type => 'text/calendar'
+      end
+    end
+  end
 end
