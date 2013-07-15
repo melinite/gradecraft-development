@@ -72,6 +72,7 @@ class Grade < ActiveRecord::Base
     status == "Released"
   end
 
+  #Canable Permissions
   def updatable_by?(user)
     creator == user
   end

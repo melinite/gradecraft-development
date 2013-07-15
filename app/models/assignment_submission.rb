@@ -13,6 +13,7 @@ class AssignmentSubmission < ActiveRecord::Base
   
   scope :for_submittable, -> lambda { where submittable_id: submittable.id, submittable_type: submittable.class }
   
+  #Canable permissions
   def updatable_by?(user)
     if assignment.is_individual?
       submittable_id == user.id 
