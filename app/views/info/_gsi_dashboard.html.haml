@@ -102,7 +102,7 @@
           %tbody
             %tr
               - assignment.assignment_submissions_for_assignment(assignment).tap do |submission|
-                - if submission.ungraded
+                - if submission.graded?
                   - if assignment.is_individual?
                     %td= submission.submittable.teams.first.try(:name)
                   %td= submission.submittable.try(:name)
