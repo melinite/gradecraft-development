@@ -2,7 +2,6 @@ class Grade < ActiveRecord::Base
   self.inheritance_column = 'something_you_will_not_use'
 
   include Canable::Ables
-  #userstamps! # adds creator and updater
 
   belongs_to :gradeable, :polymorphic => :true
   belongs_to :assignment

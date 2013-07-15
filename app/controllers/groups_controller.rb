@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
     @groups = Group.all
  
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @groups }
     end
   end
@@ -17,7 +17,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @group }
     end
   end
@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
     @students = current_course.users.students
     @assignments = current_course.assignments.all
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @group }
     end
   end

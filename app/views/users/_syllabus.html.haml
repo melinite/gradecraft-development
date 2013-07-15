@@ -71,7 +71,6 @@
                         = link_to "Submit", new_assignment_assignment_submission_path(assignment, @assignment_submission, :submittable_id => @user, :submittable_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
 
                   
-                // Individually graded assignments
                 - if assignment.is_individual?
                   - assignment.assignment_grades.where(:gradeable_id => @user).first.tap do |grade|
                     - if grade

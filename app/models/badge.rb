@@ -36,7 +36,7 @@ class Badge < ActiveRecord::Base
     visible == "1"
   end
   
-  #badges per role  
+  #badges per role 
   def earned_badges_by_earnable_id
     @earned_badges_by_earnable_id ||= earned_badges.group_by { |eb| [eb.earnable_type,eb.earnable_id] }
   end

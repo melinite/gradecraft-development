@@ -6,7 +6,7 @@ class BadgeSetsController < ApplicationController
     @title = "Badge Sets"
     @badge_sets = BadgeSet.all
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @badge_sets }
     end
   end
@@ -15,7 +15,7 @@ class BadgeSetsController < ApplicationController
     @badge_set = BadgeSet.find(params[:id])
     @title = @badge_set.name
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @badge_set }
     end
   end
@@ -25,7 +25,7 @@ class BadgeSetsController < ApplicationController
     @title = "Create a New Badge Set"
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @badge_set }
     end
   end

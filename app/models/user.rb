@@ -59,7 +59,6 @@ class User < ActiveRecord::Base
     @default_course ||= (self.courses.where(:id => self.default_course_id).first || self.courses.first)
   end
 
-  #Names
   def name
     @name = [first_name,last_name].reject(&:blank?).join(' ').presence || "User #{id}"
   end
@@ -106,7 +105,6 @@ class User < ActiveRecord::Base
   end
 
   #Grades
-
   def grade_level(course)
     course.grade_level(self)
   end
@@ -126,7 +124,6 @@ class User < ActiveRecord::Base
   end
 
   #Badges
-
   def earned_badges_value(course)
     earned_badges.to_a.sum(&:point_value)
   end
@@ -183,7 +180,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  #Export Users and Final Scores for Course
+   #Export Users and Final Scores for Course
   def self.csv_for_course(course, options = {})
     CSV.generate(options) do |csv|
       csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Logins", "Pageviews", "Predictor Views"]

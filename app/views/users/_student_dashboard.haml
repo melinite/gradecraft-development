@@ -2,7 +2,6 @@
   - if current_user.is_staff?
     %div.section= gravatar_for @user, :size => 300, :d => "mm"
   
-  // Badges Sidebar
   - if current_course.has_badges? 
     %div.section#badges
       %h4.center Badges
@@ -27,11 +26,9 @@
                     %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
       %div.unEarnedText Badges you've earned will shine brightly!
       
-  // Predictor Sidebar Link
   %div.col.col-lg-12.btn.btn-success
     = link_to 'Predict Course Grade', predictor_users_path(:user_id => @user.id)
 
-  // Check Grade Sidebar
   - if current_user.is_student?
     %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => current_course.grade_level(@user)}
       %span.buttonTitle Check My Final Grade
@@ -39,7 +36,6 @@
     %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => current_course.grade_level(@user)} 
       %span.buttonTitle Check Their Final Grade      
   
-  // To Do List Sidebar
   %div.btn.btn-danger.col.col-lg-12{"data-target" => "#toDoList", "data-toggle" => "collapse"} 
     %span.buttonTitle To Do List
     %i.caret
@@ -56,7 +52,6 @@
                   %div= "(Due: #{assignment.try(:due_date).strftime("%b-%d")})"
   
 %div.col.col-lg-9
-  // Displays a warning to IE users to switch to Chrome
   /[if IE]
     %a{ :href => 'https://www.google.com/intl/en/chrome/browser/' }
       %h3 We highly recommend you install Google Chrome to use GradeCraft  
