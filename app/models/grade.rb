@@ -96,3 +96,5 @@ class Grade < ActiveRecord::Base
   end
 
 end
+class Grade < Assignment
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130716190012) do
+ActiveRecord::Schema.define(version: 20130716195920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,10 @@ ActiveRecord::Schema.define(version: 20130716190012) do
     t.integer  "category_id"
     t.boolean  "release_necessary"
     t.datetime "open_date"
+    t.string   "_type"
+    t.integer  "parent_id"
+    t.string   "icon"
+    t.boolean  "can_earn_multiple_times"
   end
 
   create_table "badges", force: true do |t|
