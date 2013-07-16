@@ -5,14 +5,10 @@ gem 'rails', '4.0.0'
 gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
 gem 'airbrake'
-gem 'bootstrap-datepicker-rails'
-gem 'brakeman'
 gem 'canable'
 gem 'carrierwave'
-gem 'd3_rails'
+gem 'ckeditor'
 gem 'dalli'
-gem 'dotenv-rails'
-gem 'flexslider'
 gem 'gravatar_image_tag'
 gem 'haml'
 gem 'jquery-rails', '~> 2.0'
@@ -34,8 +30,10 @@ gem 'sendgrid'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'twitter-bootstrap-rails'
-gem 'rdiscount'
 gem 'best_in_place', git: 'git@github.com:bernat/best_in_place.git', branch: 'rails-4'
+gem 'rdiscount' 
+gem 'nokogiri', '1.6.0'
+
 
 group :development do
   gem 'bullet'
@@ -45,11 +43,12 @@ group :development do
   gem 'minitest-colorize'
   gem 'minitest-matchers'
   gem 'minitest-reporters'
+  gem 'minitest-capybara'
   gem 'valid_attribute'
+  gem 'capybara'
 end
 
 group :test do
-  gem 'capybara'
   gem 'faker'
   gem 'launchy'
 end
@@ -57,4 +56,5 @@ end
 group :test, :development do
   gem 'debugger'
   gem 'fabrication'
+  gem 'poltergeist'
 end

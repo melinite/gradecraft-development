@@ -12,6 +12,16 @@ MiniTest::Reporters.use!
 require 'valid_attribute'
 require 'support/custom_fabricators'
 
+require 'capybara/rails'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+
+
+# for minitest/spec
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+end
+
 class ActiveSupport::TestCase
   extend CustomFabricators
 
