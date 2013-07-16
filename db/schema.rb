@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130701195351) do
+ActiveRecord::Schema.define(version: 20130716190012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,14 +59,9 @@ ActiveRecord::Schema.define(version: 20130701195351) do
     t.boolean  "has_assignment_submissions"
     t.boolean  "student_logged"
     t.string   "student_logged_button_text"
-    t.integer  "badge_set_id"
+    t.integer  "category_id"
     t.boolean  "release_necessary"
     t.datetime "open_date"
-  end
-
-  create_table "badge_sets_courses", id: false, force: true do |t|
-    t.integer "course_id"
-    t.integer "badge_set_id"
   end
 
   create_table "badges", force: true do |t|
@@ -124,6 +119,11 @@ ActiveRecord::Schema.define(version: 20130701195351) do
   create_table "course_badge_sets", force: true do |t|
     t.integer "course_id"
     t.integer "badge_set_id"
+  end
+
+  create_table "course_categories", id: false, force: true do |t|
+    t.integer "course_id"
+    t.integer "category_id"
   end
 
   create_table "course_grade_scheme_elements", force: true do |t|
