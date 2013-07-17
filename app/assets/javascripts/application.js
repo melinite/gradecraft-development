@@ -18,7 +18,6 @@
 //= require preload_store
 //= require_self
 //= require jquery.dynatable
-//= require ckeditor/init
 //= require best_in_place
 //= require best_in_place.purr
 
