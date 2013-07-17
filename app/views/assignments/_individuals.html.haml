@@ -17,7 +17,7 @@
             %th
           %th= current_course.user_term
           %th Score
-          - if @assignment.assignment_type.student_choice?
+          - if @assignment.assignment_type.student_weightable?
             %th Multiplied Score
           - if @assignment.has_levels?
             %th Level
@@ -38,7 +38,7 @@
                     = check_box_tag "grade_ids[]", grade.id
               %td= link_to student.name, student
               %td= grade.try(:unmultiplied_score)
-              - if @assignment.assignment_type.student_choice?
+              - if @assignment.assignment_type.student_weightable?
                 %td
                   - if grade
                     = grade.score(student)

@@ -1,12 +1,9 @@
-%div
+%div.col.col-lg-12
   - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-    %div.assignmentType.well.darkwell
-      %button.btn.btn-primary{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name) } 
+    %div.col.col-lg-12.section
+      %button.btn.btn-primary.col.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} - #{ number_with_delimiter(assignment_type.score_for_student(@user))} / #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points
       
-      %span.badge.badge-warning.pull-right
-        = number_with_delimiter(assignment_type.score_for_student(@user)) 
-        = "/"
-        = " #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points"
+      %span.badge.badge-info.pull-right.col.col-lg-4.col-sm-12
       - if assignment_type.present_weight_for_student(@user)
         %span.badge.badge-important
           = "#{@user.weights_for_assignment_type_id(assignment_type).value} #{current_course.multiplier_term} "
@@ -18,11 +15,11 @@
         - if (assignment_type.student_weightable? && assignment_type.multiplier_open?) || (assignment_type.student_weightable? && current_user.is_staff?)
           %span.badge.badge-important= link_to "Set #{current_course.multiplier_term}", new_user_user_assignment_type_weight_path(@user, :assignment_type_id => assignment_type)
       
-      %div{:id => "assignment_type-#{assignment_type.id}", :class => "collapse"}
-        %div.assignmentsGroup
-          - assignments.each do |assignment|
-            %div.assignment
-              %span.assignmentTitle= assignment.try(:name)
+      %div.col.col-lg-12{:id => "assignment_type-#{assignment_type.id}", :class => "collapse"}
+        - assignments.each do |assignment|
+          %div.col.col-lg-12
+            %h5
+              = assignment.try(:name)
               - if assignment.is_required?
                 %span.assignmentRequired.label.label-important Required!
               - if assignment.future?
@@ -55,18 +52,18 @@
                       - elsif submission
                         %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
                         %div.modal#myModal
-                          %div.modal-content.section.col.col-lg-10
+                          %div.modal-content
                             %div.modal-header
                               %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
                               %h3= assignment.name
                             %div.modal-body
-                              %p 
-                                = link_to submission.link, submission.link
-                                = submission.comment
+                              %h4= link_to submission.link, submission.link
+                              - if submission.link? 
+                                %iframe{:src => submission.link}
+                              %p= submission.comment
                               %div.modal-footer
                               %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
                               %a{:href => "#", :class => "btn btn-primary"} Save changes
-                              = link_to "See Submission (#{submission.created_at})", assignment_assignment_submission_path(assignment, submission, :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success btn-info'
                       - else
                         = link_to "Submit", new_assignment_assignment_submission_path(assignment, @assignment_submission, :submittable_id => @user, :submittable_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
 
@@ -139,4 +136,175 @@
                           %span.editLink= button_to "Grade", new_assignment_grade_path("assignment_id" => assignment.id, :gradeable_id => @user.groups.where(:assignment_id => assignment.id).first.id, :gradeable_type => "Group"), :class => 'btn btn-primary btn-tiny btn-success'
                   - else
                     = button_to "Create a Group", new_assignment_group_path(assignment), :class => "btn btn-primary btn-tiny btn-success"
-                    
+                %span.badge.badge-warning Required!
+            - if assignment.future?
+              %div.col.col-lg-12
+                = "Due: #{assignment.try(:due_date).strftime("%A, %B %d")}"
+            %div.col.col-lg-12
+              = raw assignment.description
+            - if assignment.has_assignment_submissions?
+              - assignment.submission_for_student(@user).tap do |submission|
+                - if submission
+                  %a{:href => "#assignment_submission-#{submission.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
+                  %div.modal.col.col-lg-10{ :id => "assignment_submission-#{submission.id}"}
+                    %div.modal-content
+                      %div.modal-header
+                        %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
+                        %h3= assignment.name
+                      %div.modal-body
+                        %h4= best_in_place submission, :link, :path => assignment_assignment_submission_path(assignment, @user)
+                        %h4= best_in_place submission, :link, :path => assignment_assignment_submission_path(assignment, submission, @user)
+                        %p= best_in_place submission, :comment, :path => assignment_assignment_submission_path(assignment, @user)
+                        - if submission.link? 
+                          //%iframe.col.col-lg-12{:src => submission.link, :height => "60%"}
+                        %div.modal-footer
+                        %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
+                        %a{:href => "#", :class => "btn btn-primary"} Save changes
+                - else
+                  %a{:href => "#assignment_submission-#{assignment.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Submit
+                  %div.modal.col.col-lg-10{ :id => "assignment_submission-#{assignment.id}"}
+                    %div.modal-content
+                      %div.modal-header
+                        %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
+                        %h3
+                          = "Submit #{assignment.name}"
+                      %div.modal-body
+                        = simple_form_for([assignment, assignment.assignment_submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form form-horizontal' }) do |f|
+                          %div.form-inputs
+                            = f.input :submittable_type, :input_html => { :value => "Individual" }, :as => :hidden
+                            = f.input :assignment_id, :default => assignment, :as => :hidden
+                            = f.input :user_id, :input_html => {:value => @user.id}, :as => :hidden
+                            = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
+                            = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'col-lg-12 col', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
+                          
+                            %div.modal-footer
+                            = f.button :submit, 'Submit', :class => "btn-primary"
+                            
+                            %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
+                %span.assignmentRequired.label.label-important Required!
+              - if assignment.future?
+                %span.assignmentDate= "| Due: #{assignment.try(:due_date).strftime("%A, %B %d")}"
+                %span.assignmentDesc= raw assignment.description
+              %div.grade
+                - if assignment.has_assignment_submissions?
+                  - if assignment.has_groups?
+                    - if @user.group_for_assignment(assignment)
+                      - assignment.submission_for_group(@user.groups.first).tap do |submission|
+                        - if submission && @user.groups.first.grade_for_assignment(assignment)
+                          = link_to "See Submission", assignment_assignment_submission_path(assignment, submission, :grade_id => @user.groups.first.grade_for_assignment(assignment).id, :gradeable_id => @user.groups.first, :gradeable_type => "Group"), :class => 'btn btn-tiny btn-success btn-info'
+                          = submission.created_date
+                        - elsif submission
+                          = link_to "See Submission", assignment_assignment_submission_path(assignment, submission, :gradeable_id => @user.groups.first, :gradeable_type => "Group"), :class => 'btn btn-tiny btn-success btn-info'
+                        - else
+                          = link_to "Submit", new_assignment_assignment_submission_path(assignment, @assignment_submission, :submittable_id => @user.groups.first, :submittable_type => "Group"), :class => 'btn btn-tiny btn-success btn-primary'
+                  - elsif assignment.has_teams?
+                    - assignment.submission_for_team(@user.teams.first).tap do |submission|
+                      - if submission && @user.teams.first.grade_for_assignment(assignment)
+                        = link_to "See Submission ", assignment_assignment_submission_path(assignment, submission, :grade_id => @user.teams.first.grade_for_assignment(assignment).id, :gradeable_id => @user.teams.first, :gradeable_type => "Team"), :class => 'btn btn-tiny btn-success btn-info'
+                      - elsif submission
+                        = link_to "See Submission ", assignment_assignment_submission_path(assignment, submission, :gradeable_id => @user.teams.first, :gradeable_type => "Team"), :class => 'btn btn-tiny btn-success btn-info'
+                      - else
+                        = link_to "Submit", new_assignment_assignment_submission_path(assignment, @assignment_submission, :submittable_id => @user.teams.first, :submittable_type => "Team"), :class => 'btn btn-tiny btn-success btn-primary'
+                  - elsif assignment.is_individual?
+                    - assignment.submission_for_student(@user).tap do |submission|
+                      - if submission && @user.grade_for_assignment(assignment)
+                        = link_to "See Submission (#{submission.created_at})", assignment_assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :submittable_id => @user, :submittable_type => "User", :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success btn-info'
+                      - elsif submission
+                        %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
+                        %div.modal#myModal
+                          %div.modal-content
+                            %div.modal-header
+                              %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
+                              %h3= assignment.name
+                            %div.modal-body
+                              %h4= link_to submission.link, submission.link
+                              - if submission.link? 
+                                %iframe{:src => submission.link}
+                              %p= submission.comment
+                              %div.modal-footer
+                              %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
+                              %a{:href => "#", :class => "btn btn-primary"} Save changes
+                      - else
+                        = link_to "Submit", new_assignment_assignment_submission_path(assignment, @assignment_submission, :submittable_id => @user, :submittable_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
+
+                  
+                // Individually graded assignments
+                - if assignment.is_individual?
+                  - assignment.assignment_grades.where(:gradeable_id => @user).first.tap do |grade|
+                    - if grade
+                      - if current_user.is_staff?
+                        %span.editLink= link_to "Edit Grade", edit_assignment_grade_path("assignment_id" => assignment.id, :id => grade, :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-info btn-tiny btn-success'
+                      - if assignment.release_necessary? && grade.is_released? 
+                        = "You earned #{ number_with_delimiter(grade.score(@user)) } out of #{number_with_delimiter(assignment.point_total_for_student(@user))} points"
+                        %p= raw grade.feedback
+                      - elsif assignment.release_necessary?
+                        = "#{number_with_delimiter(assignment.point_total_for_student(@user))} points possible"
+                        %p= raw grade.feedback
+                      - else
+                        = "You earned #{number_with_delimiter(grade.score(@user))} out of #{number_with_delimiter(assignment.point_total_for_student(@user))} points"
+                        %p= raw grade.feedback
+                    - else 
+                      - if assignment.self_gradeable? && assignment.open?
+                        = button_to "#{assignment.student_logged_button_text}", self_log_assignment_grades_path(assignment, :gradeable_id => @user, :gradeable_type => "User"), :class => "btn btn-primary btn-tiny btn-success"
+                      - elsif current_user.is_staff? 
+                        %span.editLink= link_to "Grade", new_assignment_grade_path("assignment_id" => assignment.id, :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-primary btn-tiny btn-success'
+                      = "#{assignment.point_total_for_student(@user)} possible points"
+                      %p
+
+                - elsif assignment.has_teams?
+                  - if assignment.self_gradeable? && assignment.open?
+                    = button_to "#{assignment.student_logged_button_text}", self_log_assignment_grades_path(assignment, :gradeable_id => @user.teams.first, :gradeable_type => "Team"), :class => "btn btn-primary btn-tiny btn-success"
+                  - assignment.assignment_grades.where(:gradeable_id => @user.teams.try(:first)).first.tap do |grade|
+                    - if grade
+                      - if current_user.is_staff?
+                        %span.editLink= link_to "Edit Grade", edit_assignment_grade_path("assignment_id" => assignment.id, :id => grade, :gradeable_id => @user.teams.first, :gradeable_type => "Team"), :class => 'btn btn-info btn-tiny btn-success'
+                      - if assignment.release_necessary? && grade.is_released? 
+                        = "Your team earned #{ grade.score(@user)} out of #{assignment.point_total_for_student(@user)} points"
+                        %p= raw grade.feedback
+                      - elsif assignment.release_necessary?
+                        = "#{assignment.point_total_for_student(@user) } points possible"
+                        %p
+                      - else
+                        = "Your team earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"
+                        %p= raw grade.feedback
+                    - else
+                      - if current_user.is_staff? 
+                        %span.editLink= link_to "Grade", new_assignment_grade_path("assignment_id" => assignment.id, :gradeable_id => @user.teams.first, :gradeable_type => "Team"), :class => 'btn btn-primary btn-tiny btn-success'
+                      = "#{assignment.point_total_for_student(@user)} possible points"
+                      %p
+
+                - elsif assignment.has_groups?
+                  - if @user.group_for_assignment(assignment)
+                    - if assignment.self_gradeable? && assignment.open?
+                      = button_to "#{assignment.student_logged_button_text}", self_log_assignment_grades_path(assignment, :gradeable_id => @user.groups.where(:assignment_id => assignment.id).first.id, :gradeable_type => "Group"), :class => "btn btn-primary btn-tiny btn-success"
+                    - assignment.assignment_grades.where(:gradeable => @user.group_for_assignment(assignment)).first.tap do |grade|
+                      - if grade
+                        - if current_user.is_staff?
+                          %span.editLink= link_to "Edit Grade", edit_assignment_grade_path(assignment, grade, :gradeable_id => @user.groups.where(:assignment_id => assignment.id).first.id, :gradeable_type => "Group"), :class => 'btn btn-info btn-tiny btn-success'
+                        - if assignment.release_necessary? && grade.is_released? 
+                          = "Your group earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"
+                          %p= raw grade.feedback
+                        - elsif assignment.release_necessary?
+                          = "#{assignment.point_total_for_student(@user) } points possible"
+                          %p
+                        - else
+                          = "Your group earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"
+                          %p= raw grade.feedback
+                      - else
+                        = "#{assignment.point_total_for_student(@user)} possible points"
+                        %p
+                        - if current_user.is_staff? 
+                          %span.editLink= button_to "Grade", new_assignment_grade_path("assignment_id" => assignment.id, :gradeable_id => @user.groups.where(:assignment_id => assignment.id).first.id, :gradeable_type => "Group"), :class => 'btn btn-primary btn-tiny btn-success'
+                  - else
+                    = button_to "Create a Group", new_assignment_group_path(assignment), :class => "btn btn-primary btn-tiny btn-success"
+                    = simple_form_for([assignment, assignment.assignment_submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form-horizontal' }) do |f|
+                      %div.form-inputs
+                        = f.input :submittable_type, :input_html => { :value => "Individual" }, :as => :hidden
+                        = f.input :assignment_id, :default => assignment, :as => :hidden
+                        = f.input :user_id, :input_html => {:value => @user.id}, :as => :hidden
+                        = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
+                        = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'col-lg-12 col', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
+                      
+                        %div.modal-footer
+                        = f.button :submit, 'Submit', :class => "btn-primary"                            
+                        %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close

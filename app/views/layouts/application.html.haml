@@ -17,16 +17,13 @@
   %body
     .navbar.navbar-fixed-top.navbar-inverse
       .navbar-inner
-        %a.brand(href="/dashboard")
-          - if current_course
-            #{current_course.name}
-          - else
-            GradeCraft
-        %div.pull-right
-          - if current_user && current_course
-            %div{:class => 'btn-group pull-left'}
-              - if current_user.is_staff? 
-                = link_to "Dashboard",  dashboard_path, :class => "btn"
+        %div.col.col-lg-6.col-sm-8
+          %a.brand(href="/dashboard")
+            - if current_course
+              #{current_course.name}
+            - else
+              GradeCraft
+        %div.pull-right.col.col-lg-4.col-sm-4
           - if current_user
             %div{:class => 'btn-group pull-right'}
               %a{:class => 'username btn dropdown-toggle', "data-toggle" => 'dropdown', :href => '#' }
@@ -50,24 +47,19 @@
                 %div.spacer
                 %div.divider.clear
                 = link_to 'Forget your password?', new_user_session_path, :class => " "
-
-    %div
-      - if flash[:notice]
-        .alert.alert-success= flash[:notice]
-      - if flash[:error]
-        .alert.alert-error= flash[:error]
-      - if flash[:alert]
-        .alert.alert-info= flash[:alert]    
+    
+    %div.col.col-lg-12#page.bkg(class="#{'logged_out col col-lg-10 col-offset-1 rounded' if ! current_user}")
       - if current_user && current_user.is_staff? &&! current_page?(:controller => 'users', :action => 'predictor')
-        %div.col.col-lg-12#page 
-          %div.col.col-lg-3.col-sm-4.col-12
-            %div.sidebar-nav-fixed
-              = render 'layouts/admin_subnav'  
-          %div.col.col-lg-9.col-sm-8.col-12#primaryContent
-            %h4= @title 
-            = yield
+        %div.col.col-lg-3.col-sm-12.col-lg-12
+          %div.sidebar-nav-fixed
+            = render 'layouts/admin_subnav'
+        %div.col.col-lg-9.col-sm-12.col-lg-12
+          = render 'layouts/alerts'
+          - if @title
+            %h5.pageTitle= @title
+          = yield
       - elsif current_user && current_user.is_staff? && current_page?(:controller => 'users', :action => 'predictor')
-        %div.col.col-lg-12#page 
+        %div.col.col-lg-12
           %div.col.col-lg-3
             %div.sidebar-nav-fixed.well
               %ul.nav.nav-list
@@ -76,37 +68,49 @@
                 %li= link_to "Assignments", assignments_path
                 %li= link_to "Badges", badges_path
                 %li= link_to "Settings", edit_course_path(current_course)
-          %div.col.col-lg-9#primaryContent
+          %div.col.col-lg-9
+            = render 'layouts/alerts'
             = yield
       - elsif current_user && current_user.is_student?
-        %div.col.col-lg-12#page_no_bkg
+        %div.col.col-lg-12#page
+          = render 'layouts/alerts'
           = yield
       - else
-        %div.container
-          %div#page
-            = yield  
-          %footer.row.col.col-lg-12
-            %div.col.col-lg-4
-              %h5 &copy; 2012-13 Regents of the University of Michigan
-            %div.col.col-lg-2
-              %h5 Explore
-              %ul
-                %li= link_to "See the Demo"
-            %div.col.col-lg-2
-              %h5 Develop
-              %ul
-                %li= link_to "Using Gradecraft", using_gradecraft_path
-                %li= link_to "Features"
-            %div.col.col-lg-2
-              %h5 About 
-              %ul
-                %li= link_to "Blog"
-                %li= link_to "Site Credits", credits_path
-        
-    .navbar.navbar-fixed-bottom.navbar-inverse
-      .navbar-inner
-        - if current_user.try(:is_admin?)
-          %div{:class => 'btn-group pull-left'}
-            = form_tag change_current_course_path, :class => 'dropup' do 
-              = select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name', current_course.id)
-        
+        = render 'layouts/alerts'
+        = yield
+
+    %footer.col.col-lg-12(class="#{'logged_out col col-lg-10 col-offset-1 rounded' if ! current_user}")
+      %div.col.col-lg-3
+        %h5 &copy; 2012-13 Regents of the University of Michigan
+      %div.col.col-lg-2.col-sm-12
+        %h5 Explore
+        %ul
+          %li= link_to "Features", features_path
+          %li= link_to "See the Demo", "https://gradecraft.herokuapp.com"
+      %div.col.col-lg-2.col-sm-12
+        %h5 Using GradeCraft
+        %ul
+          %li= link_to "Apply to Use", using_gradecraft_path
+          %li= link_to "Documentation", faqs_path
+          %li= link_to "Submit a Bug", submit_a_bug_path
+      %div.col.col-lg-2.col-sm-12
+        %h5 About 
+        %ul
+          %li= link_to "Research", research_path
+          %li= link_to "People", people_path
+          %li= link_to "Codebase", "https://github.com/bellotastudios/gradecraft"
+      %div.col.col-lg-2.col-sm-12
+        %h5 Talk to Us
+        %ul
+          %li= link_to "Email", "mailto:cait@gradecraft.com"
+          %li= link_to "News", news_path
+          %li= link_to "Twitter", "https://twitter.com/gradecraft"
+
+   
+    - if current_user.try(:is_admin?)
+      .navbar.navbar-fixed-bottom.navbar-inverse
+        .navbar-inner
+          %div.course
+            = "Current Course: "
+            = form_tag change_current_course_path, :class => 'btn btn-tiny' do 
+              = select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name', current_course.id) 

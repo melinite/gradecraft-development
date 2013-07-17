@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @title = "Assignments"
-    @assignments = current_course.assignments
+    @assignments = current_course.assignments.includes(:assignment_type)
     @assignment_types = current_course.assignment_types
     @grade_schemes = current_course.grade_schemes.all
     respond_to do |format|
@@ -37,7 +37,7 @@ class AssignmentsController < ApplicationController
     @earnables = current_course.earned_badges.all
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @students = current_course.users.students.includes(:teams).where(user_search_options)
+    @students = current_course.users.students.where(user_search_options)
     respond_with @assignment    
   end
 

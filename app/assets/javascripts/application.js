@@ -18,6 +18,8 @@
 //= require preload_store
 //= require_self
 //= require jquery.dynatable
+//= require best_in_place
+//= require best_in_place.purr
 
 $(document).ready(function(){
   $('.ckeditor').ckeditor();
@@ -34,6 +36,9 @@ $(document).ready(function(){
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
     
   });
+  
+  /* Activating Best In Place */
+  jQuery(".best_in_place").best_in_place();
   
   $('.toolTip').tooltip();
 	

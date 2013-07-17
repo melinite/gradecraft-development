@@ -8,7 +8,7 @@
   %tr
     %th #{current_course.user_term}
     - @assignment_types.each do |assignment_type|
-      - if assignment_type.student_choice? 
+      - if assignment_type.student_weightable? 
         %th= assignment_type.name
     %th #{current_course.multiplier_term} Sum
     %th #{current_course.multiplier_term} Awarded?
@@ -17,7 +17,7 @@
       %tr 
         %td= link_to student.name, user_path(student)
         - @assignment_types.each do |assignment_type|
-          - if assignment_type.student_choice? 
+          - if assignment_type.student_weightable? 
             - student.weights_for_assignment_type_id(assignment_type).tap do |weight|
               - if weight
                 %td= weight.value

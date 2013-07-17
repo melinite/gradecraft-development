@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
   before_filter :ensure_staff?, :only => [:new, :edit, :create, :destroy]
 
   def index
-    @teams = current_course.teams.all
+    @teams = current_course.teams.includes(:challenge_grades, :earned_badges)
     @title = "#{current_course.team_term}s"
     respond_with @teams
   end

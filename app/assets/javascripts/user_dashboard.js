@@ -154,7 +154,8 @@ $(document).ready(function() {
     var $wrapper = $('#userBarInProgressSim');
     if($wrapper.length) {
       var userID = $('#userID').data('user-id');
-      
+      /*
+
       // Get Assignment Type Info
       $.getJSON('/users/predictor.json?in_progress=true', { user_id: userID }, function(data) {
         options.chart.renderTo = 'userBarInProgressSim';
@@ -164,6 +165,7 @@ $(document).ready(function() {
         options.series = data.scores
         chart = new Highcharts.Chart(options);
       });
+*/
 
       $.getJSON('/users/predictor.json', { user_id: userID }, function(data) {
         options.chart.renderTo = 'userBarTotalSim';

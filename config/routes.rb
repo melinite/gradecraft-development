@@ -90,9 +90,6 @@ GradeCraft::Application.routes.draw do
   end
 
   get 'gradebook' => 'grades#gradebook'
-  #get 'predictor.json' => 'users#predictor.json'
-  get 'credits' => 'info#show'
-  get 'using_gradecraft' => 'info#using_gradecraft'
   get 'home/index'
   get 'dashboard' => 'info#dashboard'
   root :to => "home#index"
@@ -102,6 +99,14 @@ GradeCraft::Application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
+  
+  
+  get 'submit_a_bug' => 'info#submit_a_bug'
+  get 'features' => 'info#features'
+  get 'research' => 'info#research'
+  get 'news' => 'info#news'
+  get 'using_gradecraft' => 'info#using_gradecraft'
+  get 'people' => 'info#people'
 
   # get 'cosign_test' => 'info#cosign_test'
 end

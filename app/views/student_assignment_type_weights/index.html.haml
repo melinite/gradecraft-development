@@ -10,7 +10,7 @@
     %th Value
     %th
     - @assignment_types.each do |at|
-      - if at.student_choice? 
+      - if at.student_weightable? 
         - @user.weights_for_assignment_type_id(at).tap do |weight|
           %tr
             %td= at.try(:name)

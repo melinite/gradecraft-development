@@ -42,20 +42,19 @@
     %div{:id => "toDoList", :class => "collapse"}
       - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
         - if assignment_type.has_soon_assignments?
-          %h3.assignmentTypeToDo
+          %h5
             = "#{assignment_type.try(:name)}"
-          %ul
-            - assignments.each do |assignment|
-              - if assignment.soon? 
-                %li
-                  = "#{assignment.try(:name)}" 
-                  %div= "(Due: #{assignment.try(:due_date).strftime("%b-%d")})"
-  
+          - assignments.each do |assignment|
+            - if assignment.soon? 
+              %div
+                = "#{assignment.try(:name)}" 
+                %div= "Due: #{assignment.try(:due_date).strftime("%b-%d")}"
+
 %div.col.col-lg-9
   /[if IE]
     %a{ :href => 'https://www.google.com/intl/en/chrome/browser/' }
       %h3 We highly recommend you install Google Chrome to use GradeCraft  
-  %div.section
+  %div.section.col.col-lg-12
     %div
       - if current_user.is_staff?
         = render "scoreboard" 
@@ -63,18 +62,25 @@
         = render "users/scoreboard" 
       %ul.nav.nav-tabs
         %li.active
-          %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Timeline
+          %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Assignments
         %li 
           %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
         %li
           %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Syllabus
         %li 
           %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Badges
+        %li 
+          %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Timeline
       %div.tab-content
         %div.tab-pane.active#tab1
-          = render "users/syllabus" 
+          = render "users/syllabus"
         %div.tab-pane#tab2
           = render "users/assignments" 
+        %div.tab-pane#tab2
+          = render "users/calendar" 
         %div.tab-pane#tab3
+          = render "users/syllabus"
         %div.tab-pane#tab4
           = render "users/badges" 
+        %div.tab-pane#tab5
+          = render "users/timeline" 

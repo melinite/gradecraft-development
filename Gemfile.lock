@@ -1,3 +1,12 @@
+GIT
+  remote: git@github.com:bernat/best_in_place.git
+  revision: 366413be357d65cdf47031e928aea969f72e3659
+  branch: rails-4
+  specs:
+    best_in_place (2.0.3)
+      jquery-rails
+      rails (~> 4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -257,14 +266,10 @@ GEM
       execjs
       railties (>= 3.1)
     tzinfo (0.3.37)
-    uglifier (2.1.1)
-      execjs (>= 0.3.0)
-      multi_json (~> 1.0, >= 1.0.2)
     uniform_notifier (1.2.0)
     uuid (2.3.7)
       macaddr (~> 1.0)
     valid_attribute (1.3.1)
-    will_paginate (3.0.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -275,6 +280,7 @@ DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
   airbrake
+  best_in_place!
   bootstrap-datepicker-rails
   brakeman
   bullet
@@ -317,6 +323,4 @@ DEPENDENCIES
   simple_form (~> 3.0.0.rc)
   sorcery
   twitter-bootstrap-rails
-  uglifier
   valid_attribute
-  will_paginate
