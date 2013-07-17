@@ -54,7 +54,8 @@
             = render 'layouts/admin_subnav'
         %div.col.col-lg-9.col-sm-12.col-lg-12
           = render 'layouts/alerts'
-          %h5.pageTitle= @title
+          - if @title
+            %h5.pageTitle= @title
           = yield
       - elsif current_user && current_user.is_staff? && current_page?(:controller => 'users', :action => 'predictor')
         %div.col.col-lg-12

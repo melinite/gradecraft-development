@@ -24,9 +24,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h5.pageTitle {
-  background-color: $lightblue;
-  padding: 10px 5px;
+  background-color: $blue;
+  padding: 10px 15px;
   color: #FFF;
+  font-size: 16px !important;
+  text-transform: uppercase;
+  font-weight: bold;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   margin-bottom: 0px;
@@ -39,6 +42,11 @@ h5.pageTitle {
 #page.logged_out {
   margin-top: 45px;
   margin-bottom: 10px;
+}
+
+.section {
+  padding: 1em 0 .5em;
+  background: image-url("sidebar_divider.png") bottom repeat-x;
 }
 
 .bkg {
@@ -84,6 +92,7 @@ h5.pageTitle {
     font-size: 1.5em;
     color: #fff;
     text-shadow: 0 -1px 0 #000;
+    margin-left: 50px;
   }
   
   a.brand:hover {
@@ -160,6 +169,12 @@ h5.pageTitle {
   padding-right: 25px;
 }
 
+/** Page Navigation **/
+#content_nav {
+  background-color: #333;
+  padding: 5px;
+}
+
 /** Sidebar **/
 .sidebar .section, .sidebar .btn {
   margin-bottom: 15px !important;
@@ -222,10 +237,22 @@ margin: 5px 0 15px 15px !important;
   box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
 }
 
+.divider {
+  margin: 10px 0px;
+  border: none;
+  outline: none;
+  background: image-url("sidebar_divider.png");
+  display: block;
+  width: 100%;
+  height: 2px;
+}
+
+
 /** Table Styles **/
 table {
   background-color: #FFF !important;
   font-size: 80%;
+  border-bottom: 2px solid #333;
 }
 
 thead {
