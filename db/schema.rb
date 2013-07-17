@@ -344,11 +344,11 @@ ActiveRecord::Schema.define(version: 20130716190012) do
     t.integer  "group_id"
     t.boolean  "graded"
     t.datetime "released_at"
+    t.integer  "task_id"
   end
 
   create_table "tasks", force: true do |t|
     t.integer  "assignment_id"
-    t.integer  "submission_id"
     t.string   "title"
     t.text     "description"
     t.datetime "due_at"

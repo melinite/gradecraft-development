@@ -1,6 +1,6 @@
 Fabricator(:submission) do
-  assignment
-  student
+  task
+  student { Fabricate(:student) }
   feedback "MyString"
   comment "MyString"
 end

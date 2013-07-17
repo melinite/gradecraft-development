@@ -20,9 +20,7 @@ class Submission < ActiveRecord::Base
 
   validates_presence_of :task, :student
 
-  scope :for_submittable, -> { where(submittable_id: submittable.id, submittable_type: submittable.class) }
-
-  delegates :assignment, :to => :task
+  delegate :assignment, :to => :task
 
   #Canable permissions
   def updatable_by?(user)

@@ -1,6 +1,8 @@
 class Task < ActiveRecord::Base
   belongs_to :assignment
-  belongs_to :submission
+  has_one :submission
+
+  attr_accessible :assignment
 
   validates_presence_of :assignment
 end

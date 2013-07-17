@@ -1,3 +1,2 @@
 Fabricator(:task) do
-
 end
