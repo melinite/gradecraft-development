@@ -83,4 +83,13 @@ class AssignmentsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  def feed
+    @assignments = current_course.assignments 
+    respond_with @assignments.with_due_date do |format|
+      format.ics do
+        render :text => CalendarBuilder.new(:assignments => @assignments.with_due_date ).to_ics, :content_type => 'text/calendar'
+      end
+    end
+  end
 end
