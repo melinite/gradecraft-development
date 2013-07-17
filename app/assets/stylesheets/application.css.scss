@@ -84,7 +84,7 @@ h5.pageTitle {
   background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
   font-family: 'Futura', sans-serif;
-  height: 36px;
+  height: auto;
   
   
   a.brand {
@@ -92,7 +92,6 @@ h5.pageTitle {
     font-size: 1.5em;
     color: #fff;
     text-shadow: 0 -1px 0 #000;
-    margin-left: 50px;
   }
   
   a.brand:hover {
@@ -100,6 +99,10 @@ h5.pageTitle {
     color: #FFF;
   }
   
+  a.username.btn {
+    color: $green;
+    font-family: "Futura", sans-serif;
+  }
     
   .login {
     width: 260px;
@@ -303,6 +306,8 @@ footer .col-sm-12 {
 
 .btn.btn-primary, .btn-info, .btn.btn-success, .btn.btn-error  {
   background-image: none;
+  margin: 5px;
+  font-family: 'Pontano Sans',sans-serif !important;
 }
 
 .btn.btn-primary:hover, .btn-group.open .btn-primary.dropdown-toggle {
