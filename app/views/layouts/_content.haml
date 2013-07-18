@@ -1,4 +1,4 @@
-%div.span12
+%div.col.col-lg-12
   - if flash[:notice]
     .alert.alert-success= flash[:notice]
   - if flash[:alert]
@@ -34,5 +34,5 @@
       %hr
       = yield
   - else  
-    %div.span12
+    %div.col.col-lg-12
       = yield
