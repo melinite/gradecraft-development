@@ -1,4 +1,4 @@
-%div.span12
+%div.col.col-lg-12
   - if @grade.assignment.is_individual?
     = link_to 'Edit', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :gradeable_id => @grade.gradeable_id, :gradeable_type => "User"), :class => 'btn btn-info btn-small'
   - elsif @grade.assignment.has_teams?

@@ -39,5 +39,5 @@
         %td= link_to 'Edit', edit_user_path(user), :class => 'btn btn-tiny btn-success'
         %td= link_to 'Delete', user.course_memberships.first, :class => 'btn btn-tiny btn-success', :confirm => 'This will remove the student from your course - Are you sure?' , :method => :destroy
 
-%div.span12
+%div.col.col-lg-12
   = link_to "Create a New #{current_course.user_term}", new_user_path, :class => "btn btn-primary"

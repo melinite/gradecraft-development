@@ -17,11 +17,11 @@
         %div#prediction
 
 %div#predictorPage{ 'data-student-name' => @user.name, 'data-course-total' => current_course.total_points }
-  %div.flexslider.span12
-    %ul.slides.span10
+  %div.flexslider.col.col-lg-12
+    %ul.slides.col.col-lg-10
       - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
         %li{:id => "slide-#{assignment_type.id}", :data => { :'assignment-type-id' => assignment_type.id, :'assignment-type-name' => assignment_type.name } }
-          %div.slide-panel.span12
+          %div.slide-panel.col.col-lg-12
             %div.assignmentType
               %span.assignmentTypeTitle= assignment_type.name
               %div.pull-right
@@ -139,7 +139,7 @@
 
       - if current_course.valuable_badges?
         %li#slide-badges{ :data => { 'assignment-type-id' => 'badges', 'assignment-type-name' => 'Badges' } }
-          %div.slide-panel.span12
+          %div.slide-panel.col.col-lg-12
             %div.assignmentType
               %span.assignmentTypeTitle Badges
               %span.badge.badge-warning.pull-right= "#{@user.earned_badges_value(current_course)} points"
