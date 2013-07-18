@@ -62,6 +62,7 @@ GradeCraft::Application.routes.draw do
   resources :assignments do
     collection do
       get :settings
+      get :feed
     end
     resources :assignment_submissions
     resources :groups
