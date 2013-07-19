@@ -94,7 +94,4 @@ class Grade < ActiveRecord::Base
       #end
     #end
   end
-
-end
-class Grade < Assignment
 end
