@@ -23,9 +23,9 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :course_memberships
   belongs_to :default_course, :class_name => 'Course'
   has_many :grades, :as => :gradeable, :dependent => :destroy
-  has_many :assignment_type_weights, :class_name => 'StudentAssignmentTypeWeight', :foreign_key => :student_id
+  has_many :assignment_weights, :foreign_key => :student_id
   has_many :assignments, :through => :grades
-  has_many :assignment_submissions, :as => :submittable, :dependent => :destroy
+  has_many :submissions, :as => :submittable, :dependent => :destroy
   has_many :earned_badges, :as => :earnable, :dependent => :destroy
   accepts_nested_attributes_for :earned_badges, :reject_if => proc { |attributes| attributes['earned'] != '1' }
 
@@ -166,21 +166,20 @@ class User < ActiveRecord::Base
     course_memberships.for_course(course).first.sortable_score
   end
 
-  def weights_by_assignment_type_id
-    @weights_by_assignment_type_id ||= assignment_type_weights.group_by(&:assignment_type_id)
+  def weights_by_assignment_id
+    @weights_by_assignment_id ||= Hash.new { |h, k| h[k] = 0 }.tap do |weights_hash|
+      assignment_weights.each do |assignment_weight|
+        weights_hash[assignment_weight.assignment_id] = assignment_weight.weight
+      end
+    end
   end
 
-  def weights_for_assignment_type_id(assignment_type)
-    weights_by_assignment_type_id[assignment_type.id].try(:first)
+  def weight_for_assignment(assignment)
+    weights_by_assignment_id[assignment.id]
   end
 
   def assignment_type_score(assignment_type)
-    grades.select { |g| g.assignment.assignment_type_id == assignment_type.id }.sum { |g| g.score(self) }
-  end
-
-
-  def assignment_type_multiplier(assignment_type)
-    (weights_for_assignment_type_id(assignment_type).try(:value) || 0.5)
+    grades.for_assignemnt_type(assignment_type).sum { |g| g.score(self) }
   end
 
   #Import Users

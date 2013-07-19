@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130716195920) do
+ActiveRecord::Schema.define(version: 20130720193112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignment_submissions", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.string   "feedback"
+    t.string   "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "link"
+    t.integer  "submittable_id"
+    t.string   "submittable_type"
+    t.text     "text_feedback"
+    t.text     "text_comment"
+  end
 
   create_table "assignment_types", force: true do |t|
     t.string   "name"
@@ -39,6 +57,18 @@ ActiveRecord::Schema.define(version: 20130716195920) do
     t.boolean  "student_weightable"
   end
 
+  create_table "assignment_weights", force: true do |t|
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "student_id",         null: false
+    t.integer  "assignment_type_id", null: false
+    t.integer  "weight",             null: false
+    t.integer  "assignment_id",      null: false
+  end
+
+  add_index "assignment_weights", ["assignment_id"], name: "index_assignment_weights_on_assignment_id", using: :btree
+  add_index "assignment_weights", ["student_id", "assignment_id"], name: "index_weights_on_student_id_and_assignment_id", unique: true, using: :btree
+
   create_table "assignments", force: true do |t|
     t.string   "name"
     t.text     "description"
@@ -59,13 +89,25 @@ ActiveRecord::Schema.define(version: 20130716195920) do
     t.boolean  "has_assignment_submissions"
     t.boolean  "student_logged"
     t.string   "student_logged_button_text"
-    t.integer  "category_id"
+    t.integer  "badge_set_id"
     t.boolean  "release_necessary"
     t.datetime "open_date"
     t.string   "_type"
     t.integer  "parent_id"
     t.string   "icon"
     t.boolean  "can_earn_multiple_times"
+  end
+
+  create_table "badge_sets", force: true do |t|
+    t.string   "name"
+    t.string   "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "badge_sets_courses", id: false, force: true do |t|
+    t.integer "course_id"
+    t.integer "badge_set_id"
   end
 
   create_table "badges", force: true do |t|
@@ -163,34 +205,34 @@ ActiveRecord::Schema.define(version: 20130716195920) do
     t.string   "semester"
     t.string   "theme_id"
     t.integer  "course_grade_scheme_id"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.boolean  "badge_setting",                      default: true
-    t.boolean  "team_setting",                       default: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
+    t.boolean  "badge_setting",                                        default: true
+    t.boolean  "team_setting",                                         default: false
     t.string   "user_term"
     t.string   "team_term"
     t.string   "homepage_message"
-    t.boolean  "status",                             default: true
+    t.boolean  "status",                                               default: true
     t.boolean  "group_setting"
     t.integer  "badge_set_id"
-    t.integer  "total_student_weight",                               null: false
-    t.integer  "max_student_assignment_type_weight"
-    t.datetime "student_weight_close_date"
+    t.integer  "total_assignment_weight",                                              null: false
+    t.integer  "max_assignment_weight",                                                null: false
+    t.datetime "assignment_weight_close_date"
     t.boolean  "team_roles"
     t.string   "section_leader_term"
     t.string   "group_term"
-    t.string   "student_weight_type"
+    t.string   "assignment_weight_type"
     t.boolean  "has_assignment_submissions"
     t.boolean  "teams_visible"
     t.string   "badge_use_scope"
-    t.decimal  "multiplier_default"
-    t.string   "multiplier_term"
+    t.string   "weight_term"
     t.boolean  "predictor_setting"
     t.boolean  "badges_value"
     t.integer  "max_group_size"
     t.integer  "min_group_size"
     t.boolean  "shared_badges"
     t.boolean  "graph_display"
+    t.decimal  "default_assignment_weight",    precision: 4, scale: 1, default: 1.0
   end
 
   create_table "criteria", force: true do |t|
@@ -320,14 +362,6 @@ ActiveRecord::Schema.define(version: 20130716195920) do
     t.integer  "assignment_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-  end
-
-  create_table "student_assignment_type_weights", force: true do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "student_id"
-    t.integer  "assignment_type_id"
-    t.integer  "weight",             null: false
   end
 
   create_table "submissions", force: true do |t|

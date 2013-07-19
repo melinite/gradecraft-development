@@ -2,12 +2,12 @@ class Course < ActiveRecord::Base
   attr_accessible :badge_set_ids, :course_grade_scheme_id, :courseno, :name,
     :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
     :user_id, :course_id, :homepage_message, :group_setting,
-    :total_student_weight, :student_weight_close_date, :team_roles,
-    :section_leader_term, :group_term, :student_weight_type,
+    :total_assignment_weight, :assignment_weight_close_date, :team_roles,
+    :section_leader_term, :group_term, :assignment_weight_type,
     :has_assignment_submissions, :teams_visible, :badge_use_scope,
-    :multiplier_default, :multiplier_term, :badges_value, :predictor_setting,
-    :max_group_size, :min_group_size, :shared_badges, :graph_display,
-    :max_student_assignment_type_weight, :assignments
+    :weight_term, :badges_value, :predictor_setting, :max_group_size,
+    :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
+    :assignments, :default_assignment_weight
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -46,7 +46,7 @@ class Course < ActiveRecord::Base
     super || "Team Leader"
   end
 
-  def multiplier_term
+  def weight_term
     super || "Multiplier"
   end
 
@@ -99,7 +99,7 @@ class Course < ActiveRecord::Base
   end
 
   def student_weighted?
-    total_student_weight > 0
+    total_assignment_weight > 0
   end
 
   def team_roles?
@@ -114,8 +114,8 @@ class Course < ActiveRecord::Base
     course_memberships.detect { |m| m.user_id == student.id }
   end
 
-  def total_points(in_progress = false)
-    (in_progress ? assignments.past : assignments).to_a.sum(&:point_total)
+  def total_points(options = {})
+    (options[:past] ? assignments.past : assignments).to_a.sum(&:point_total)
   end
 
   def running_total_points
@@ -175,12 +175,12 @@ class Course < ActiveRecord::Base
     scores_by_assignment_type_for_student(student)[assignment_type.id]
   end
 
-  def multiplier_count(student)
-    student.assignment_type_weights.map(&:weight).compact.sum
+  def assignment_weight_for_student(student)
+    student.assignment_weights.pluck('weight').sum
   end
 
-  def multipliers_spent?(student)
-    multiplier_count(student) >= total_student_weight
+  def assignment_weight_spent_for_student(student)
+    assignment_weight_for_student(student) >= total_assignment_weight
   end
 
   def grades_for_course(course)

@@ -7,7 +7,7 @@ class Grade < ActiveRecord::Base
   belongs_to :assignment
   belongs_to :assignment_submission
   has_many :grade_scheme_elements, :through => :assignment
-  has_many :earned_badges, :as => :earnable, :dependent => :destroy
+  has_many :earned_badges, :as => :gradeable, :dependent => :destroy
   has_many :badges, :through => :earned_badges
 
   validates_uniqueness_of :gradeable_id, :scope => :assignment_id
@@ -31,6 +31,7 @@ class Grade < ActiveRecord::Base
 
   scope :completion, -> { where(order: "assignments.due_date ASC", :joins => :assignment) }
   scope :released, -> { where(status: "Released") }
+  scope :for_assignment_type, ->(assignment_type) { where(:assignment_type_id => assignment_type.id) }
 
   def raw_score
     super || 0
@@ -40,11 +41,11 @@ class Grade < ActiveRecord::Base
     if final_score?
       final_score
     else
-      raw_score * multiplier(student)
+      (raw_score * weight_for_student(student)).to_i
     end
   end
 
-  def unmultiplied_score
+  def unweighted_score
     if final_score?
       final_score
     else
@@ -53,11 +54,11 @@ class Grade < ActiveRecord::Base
   end
 
   def point_total(student)
-    assignment.point_total * multiplier(student)
+    assignment.point_total * weight_for_student(student)
   end
 
-  def multiplier(student)
-    assignment.multiplier_for_student(student)
+  def weight_for_student(student)
+    assignment.weight_for_student(student)
   end
 
   def has_feedback?

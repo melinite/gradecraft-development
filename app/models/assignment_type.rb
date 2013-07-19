@@ -9,13 +9,14 @@ class AssignmentType < ActiveRecord::Base
   belongs_to :grade_scheme
   has_many :assignments
   has_many :grades, :through => :assignments
-  has_many :student_weights, :class_name => 'StudentAssignmentTypeWeight'
   has_many :score_levels
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
   validates_presence_of :name, :points_predictor_display, :point_setting
 
   #default_scope :order => 'order_placement ASC'
+
+  scope :student_weightable, -> { where(:student_weightable => true) }
 
   #Displays how much the assignment type is worth in the list view
   def weight
@@ -112,66 +113,4 @@ class AssignmentType < ActiveRecord::Base
   def point_total_for_student(student)
     assignments.to_a.sum { |a| a.point_total_for_student(student) }
   end
-
-  def multiplier_for_student(student)
-    student_weightable? ? weight_for_student(student) : 1
-  end
-
-  #assignment type weights by student
-  def weights_by_student_id
-    @weights_by_student ||= {}.tap do |weights|
-      student_weights.each do |student_weight|
-        if student_weight.blank?
-          weight = 1
-        else
-          weights[student_weight.student_id] = student_weight
-        end
-      end
-    end
-  end
-
-  def present_weight_for_student(student)
-    weights_by_student_id[student.id].tap do |weight|
-      if weight
-        return true
-      else
-        return false
-      end
-    end
-  end
-
-  def weight_for_student(student)
-    weights_by_student_id[student.id].tap do |student_weight|
-      if course.multipliers_spent?(student)
-        if student_weight
-          if student_weight.weight.blank?
-            return 0.5
-          elsif student_weight.weight == 0
-            return 0.5
-          else
-            return student_weight.weight
-          end
-        else
-          return 0.5
-        end
-      else
-        if student_weight
-          if student_weight.weight.blank?
-            return 1
-          elsif student_weight.weight == 0
-            return 1
-          else
-            return student_weight.weight
-          end
-        else
-          return 1
-        end
-      end
-    end
-  end
-
-  def weight_for_assignment_type(student)
-    weights_by_student_id[student.id]
-  end
-
 end

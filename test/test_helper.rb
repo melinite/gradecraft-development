@@ -23,47 +23,55 @@ class ActionDispatch::IntegrationTest
 end
 
 class ActiveSupport::TestCase
-  extend CustomFabricators
+  include CustomFabricators
 
   # Custom fabricator definitions
   #
   # These set up default dependencies for fabricating objects. For example, if
-  # we're generating a bunch of assignment types, assignments and grades, we
+  # we're generating a bunch of assignment types, assignments, and grades, we
   # want them all to belong to the same course.
   #
   # Three methods are also defined to use the default dependencies:
   #
-  # 1. A method with the same name as the fabricator. The first time it is called it will memoize the fabricated object so subsequent calls will refer to the same instance.
-  # 2. A create_* method. This accepts a hash of attributes just like Fabricate, which override the default attributes specified inside the `fabricate` block (and subsequently the default attributes specified in the Fabricator definition.
-  # 3. A build_* method. Basically the same as the create_* method, but does not save the fabricated object.
+  # 1. A method with the same name as the fabricator. The first time it is
+  # called it will memoize the define_custom_fabricatord object so subsequent
+  # calls will refer to the same instance.
+  #
+  # 2. A create_* method. This accepts a hash of attributes just like
+  # define_custom_fabricator, which override the default attributes specified
+  # inside the `define_custom_fabricator` block (and subsequently the default
+  # attributes specified in the Fabricator definition.
+  #
+  # 3. A build_* method. Basically the same as the create_* method, but does
+  # not save the fabricated object.
 
-  fabricate :assignment do
+  define_custom_fabricator :assignment do
     { :assignment_type => assignment_type }
   end
 
-  fabricate :assignment_type do
+  define_custom_fabricator :assignment_type do
     { :course => course }
   end
 
-  fabricate :course
+  define_custom_fabricator :course
 
-  fabricate :grade do
+  define_custom_fabricator :grade do
     { :gradeable => student, :assignment => assignment }
   end
 
-  fabricate :student do
+  define_custom_fabricator :student do
     { :courses => [course] }
   end
 
-  fabricate :student_assignment_type_weight do
-    { :student => student, :assignment_type => assignment_type }
+  define_custom_fabricator :assignment_weight do
+    { :student => student, :assignment => assignment }
   end
 
-  fabricate :submission do
+  define_custom_fabricator :submission do
     { :task => task, :student => student }
   end
 
-  fabricate :task do
+  define_custom_fabricator :task do
     { :assignment => assignment }
   end
 

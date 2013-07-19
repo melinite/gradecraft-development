@@ -2,18 +2,19 @@ require 'test_helper'
 
 class AssignmentTypeTest < ActiveSupport::TestCase
   test "calculates point total for student" do
-    create_assignments(2) # point totals: 300, 500
+    [300, 500].each do |point_total|
+      create_assignment(:point_total => point_total)
+    end
     assert_equal 800, assignment_type.point_total_for_student(student)
-  end
-
-  test "multiplier is 1 if not student weightable" do
-    assert_equal 1, assignment_type.multiplier_for_student(student)
   end
 
   test "calculates weighted point total for student" do
     @assignment_type = create_assignment_type(:student_weightable => true)
-    create_assignments(2) # point totals: 300, 500
-    create_student_assignment_type_weight(:weight => 2)
+    [300, 500].each do |point_total|
+      create_assignment(:point_total => point_total) do
+        create_assignment_weight(:weight => 2)
+      end
+    end
     assert_equal 1600, assignment_type.point_total_for_student(student)
   end
 
@@ -24,8 +25,12 @@ class AssignmentTypeTest < ActiveSupport::TestCase
 
   test "calculates 2x score for student" do
     @assignment_type = create_assignment_type(:student_weightable => true)
-    create_grades(2) # raw scores: 200, 400
-    create_student_assignment_type_weight(:weight => 2)
+    [200, 400].each do |raw_score|
+      create_assignment do
+        create_grade(:raw_score => raw_score)
+        create_assignment_weight(:weight => 2)
+      end
+    end
     assert_equal 1200, assignment_type.score_for_student(student)
   end
 

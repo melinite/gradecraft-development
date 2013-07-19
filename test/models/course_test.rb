@@ -17,21 +17,26 @@ class CourseTest < ActiveSupport::TestCase
     assert_equal "Team Leader", course.section_leader_term
   end
 
-  test "multiplier_term returns default Mulitplier if no term set" do
-    assert_equal "Multiplier", course.multiplier_term
+  test "weight_term returns default Multiplier if no term set" do
+    assert_equal "Multiplier", course.weight_term
   end
 
   test "point total" do
-    create_assignments(2) # point totals: 300, 500
+    create_assignments
     assert_equal 800, course.total_points
   end
 
   test "point total with past assignment" do
-    create_assignments(3) # point totals: future, 300; past, 500; future, 700
-    assert_equal 500, course.total_points(true)
+    create_assignments
+    assert_equal 500, course.total_points(:past => true)
+  end
+
+  def create_assignments
+    create_assignment(:point_total => 300, :due_date => 1.day.from_now)
+    create_assignment(:point_total => 500, :due_date => 1.day.ago)
   end
 
   def course
-    @course ||= Fabricate.build(:course)
+    @course ||= build_course
   end
 end

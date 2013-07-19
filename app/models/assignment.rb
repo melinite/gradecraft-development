@@ -2,27 +2,30 @@ class Assignment < ActiveRecord::Base
   self.inheritance_column = 'something_you_will_not_use'
 
   has_many :grades, :dependent => :destroy
-  validates_presence_of :course
+  accepts_nested_attributes_for :grades
+
   #belongs_to :grade_scheme
   #has_many :grade_scheme_elements, :through => :grade_scheme
+
   belongs_to :assignment_type
+  accepts_nested_attributes_for :assignment_type
+
+  has_many :weights, :class_name => 'AssignmentWeight'
   has_many :groups
   has_many :group_memberships, :through => :group_memberships
   has_many :users, :through => :grades
   has_one :rubric
-  belongs_to :badge_set
+  belongs_to :category
   has_many :tasks
   has_many :submissions, :through => :tasks
-  accepts_nested_attributes_for :grades
-  accepts_nested_attributes_for :assignment_type
+
   has_many :score_levels, :through => :assignment_type
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
-  delegate :points_predictor_display, :to => :assignment
-  delegate :mass_grade, :to => :assignment_type
-  delegate :course, :to => :assignment_type, :allow_nil => false
+  delegate :points_predictor_display, :mass_grade, :course,
+    :student_weightable?, :to => :assignment_type
 
-  validates_presence_of :name, :grade_scope
+  validates_presence_of :assignment_type, :name, :grade_scope
 
   attr_accessible :type, :name, :description, :point_total, :due_date,
     :created_at, :updated_at, :level, :present, :grades_attributes, :assignment_type,
@@ -42,7 +45,6 @@ class Assignment < ActiveRecord::Base
   scope :past, -> { with_due_date.where('assignments.due_date < ?', Date.today) }
 
   scope :grading_done, -> { where assignment_grades.present? == 1 }
-
 
   #grades per role
   def grades_by_gradeable_id
@@ -91,7 +93,6 @@ class Assignment < ActiveRecord::Base
     assignment_submissions_by_assignment_id[assignment.id].try(:first)
   end
 
-
   #Assignment grade data
   def assignment_grades
     Grade.where(:assignment_id => id)
@@ -138,11 +139,19 @@ class Assignment < ActiveRecord::Base
   end
 
   def point_total_for_student(student)
-    point_total * multiplier_for_student(student)
+    (point_total * weight_for_student(student)).to_i
   end
 
-  def multiplier_for_student(student)
-    assignment_type.multiplier_for_student(student)
+  def weight_for_student?(student)
+    student_weightable? && weights_by_student_id[student.id] > 0
+  end
+
+  def weight_for_student(student)
+    if weight_for_student?(student)
+      weights_by_student_id[student.id]
+    else
+      course.default_assignment_weight
+    end
   end
 
   def past?
@@ -203,7 +212,7 @@ class Assignment < ActiveRecord::Base
     assignment_type.mass_grade_type == "Select List"
   end
 
-   def mass_grade?
+  def mass_grade?
     mass_grade == true
   end
 
@@ -222,4 +231,11 @@ class Assignment < ActiveRecord::Base
     nil
   end
 
+  def weights_by_student_id
+    @weights_by_student_id ||= Hash.new { |h, k| h[k] = 0 }.tap do |weights_hash|
+      weights.each do |weight|
+        weights_hash[weight.student_id] = weight.weight
+      end
+    end
+  end
 end
