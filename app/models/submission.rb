@@ -12,11 +12,14 @@ class Submission < ActiveRecord::Base
   belongs_to :student, :class_name => 'User'
   belongs_to :creator, :class_name => 'User'
   belongs_to :group
+  belongs_to :course
 
   has_one :grade
   accepts_nested_attributes_for :grade
 
   scope :ungraded, -> { where(graded: false) }
+
+  before_validation :set_course_id
 
   validates_presence_of :task, :student
 
@@ -60,5 +63,11 @@ class Submission < ActiveRecord::Base
     else
       "Ungraded"
     end
+  end
+
+  private
+
+  def set_course_id
+    self.course_id = assignment.course_id
   end
 end

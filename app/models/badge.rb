@@ -12,9 +12,9 @@ class Badge < Assignment
 
   accepts_nested_attributes_for :badge_set
 
-  validates_presence_of :name
+  validates_presence_of :course, :name
 
-  default_scope :order => 'badges.id ASC'
+  scope :ordered, -> { 'badges.id ASC' }
 
   def occurance
     super || "onetime"
@@ -28,12 +28,12 @@ class Badge < Assignment
     end
   end
 
-  def badges_earned
-    EarnedBadge.where(:badge_id => id)
+  def assignment_type
+    self
   end
 
-  def visible?
-    visible == "1"
+  def badges_earned
+    EarnedBadge.where(:badge_id => id)
   end
 
   #badges per role
@@ -43,5 +43,15 @@ class Badge < Assignment
 
   def earned_badge_for_student(student)
     earned_badges_by_earnable_id[['User',student.id]].try(:first)
+  end
+
+  def grade_scope
+    'Individual'
+  end
+
+  private
+
+  def set_course_id
+    self.course_id = badge_set.course_id
   end
 end

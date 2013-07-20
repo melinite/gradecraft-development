@@ -1,20 +1,5 @@
-class Team < ActiveRecord::Base
-
-  has_many :team_memberships
-  has_many :users, :through => :team_memberships
+class Team < Group
   has_many :challenge_grades, :dependent => :destroy
-  has_many :earned_badges, :as => :earnable, :dependent => :destroy
-
-  #before_save :set_sortable_score
-
-  belongs_to :course
-  attr_accessible :name, :created_at, :updated_at, :banner_file_name, :banner_updated_at, :sortable_score, :rank, :team_id, :user_ids, :course_id, :team_memberships_attributes
-
-  validates_presence_of :name, :course_id
-
-  has_many :assignment_submissions, :as => :submittable, :dependent => :destroy
-
-  #default_scope :order => 'id ASC'
 
   def user_grades
     Grade.where(:user_id => students)
@@ -73,5 +58,4 @@ class Team < ActiveRecord::Base
       end
     end
   end
-
 end

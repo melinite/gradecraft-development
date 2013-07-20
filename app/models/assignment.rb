@@ -1,6 +1,4 @@
 class Assignment < ActiveRecord::Base
-  self.inheritance_column = 'something_you_will_not_use'
-
   has_many :grades, :dependent => :destroy
   accepts_nested_attributes_for :grades
 
@@ -18,12 +16,14 @@ class Assignment < ActiveRecord::Base
   belongs_to :category
   has_many :tasks
   has_many :submissions, :through => :tasks
+  belongs_to :course
 
   has_many :score_levels, :through => :assignment_type
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
-  delegate :points_predictor_display, :mass_grade, :course,
-    :student_weightable?, :to => :assignment_type
+  delegate :points_predictor_display, :mass_grade, :student_weightable?, :to => :assignment_type
+
+  before_validation :set_course_id
 
   validates_presence_of :assignment_type, :name, :grade_scope
 
@@ -130,10 +130,6 @@ class Assignment < ActiveRecord::Base
     grade_scope=="Team"
   end
 
-  def is_visible?
-    visible == "true"
-  end
-
   def point_total
     super || assignment_type.universal_point_value
   end
@@ -231,11 +227,17 @@ class Assignment < ActiveRecord::Base
     nil
   end
 
+  private
+
   def weights_by_student_id
     @weights_by_student_id ||= Hash.new { |h, k| h[k] = 0 }.tap do |weights_hash|
       weights.each do |weight|
         weights_hash[weight.student_id] = weight.weight
       end
     end
+  end
+
+  def set_course_id
+    self.course_id = assignment_type.course_id
   end
 end

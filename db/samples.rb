@@ -8,42 +8,21 @@ badge_icons = ['/badges/above_and_beyond.png','/badges/always_learning.png','/ba
 
 grade_scheme_hash = { [0,600000] => 'F', [600000,649000] => 'D+', [650000,699999] => 'C-', [700000,749999] => 'C', [750000,799999] => 'C+', [800000,849999] => 'B-', [850000,899999] => 'B', [900000,949999] => 'B+', [950000,999999] => 'A-', [100000,1244999] => 'A', [1245000,1600000] => 'A+'}
 
-#Generate badge set
-badge_set = BadgeSet.create! do |bs|
-  bs.name = "Hogwarts Most Officially Official Badge Set"
-end
-puts "Awards may now be given!"
-
-badges = []
-badge_names.each do |badge_name|
-  badges << Badge.create! do |b|
-    b.badge_set_id = 1
-    b.name = badge_name
-    b.value = 100 * rand(10)
-    b.icon = badge_icons.sample
-    b.visible = "1"
-  end
-end
-puts "Did someone need motivation? We found these badges in the Room of Requirements..."
-
 # Generate sample courses
-Course.create! do |c|
+default_course = Course.create! do |c|
   c.name = "Videogames & Learning"
   c.courseno = "ED222"
   c.year = Date.today.year
   c.semester = "Winter"
-  c.user_term = "Player"
-  c.section_leader_term = "Team Leader"
-  c.group_term = "Group"
-  c.total_student_weight = 60
+  c.total_assignment_weight = 6
+  c.max_assignment_weight = 6
+  c.default_assignment_weight = 1
   c.max_group_size = 3
   c.min_group_size = 5
-  c.team_term = "Team"
   c.team_setting = true
   c.teams_visible = true
   c.group_setting = true
   c.badge_setting = true
-  c.badge_sets << badge_set
   c.badge_use_scope = "Both"
   c.shared_badges = true
   c.badges_value = false
@@ -51,23 +30,37 @@ Course.create! do |c|
   c.predictor_setting = true
   c.graph_display = false
 end
-default_course = Course.first
 puts "Videogames and Learning has been installed"
 
-teams = []
-team_names.each do |team_name|
-  teams << default_course.teams.create! do |t|
+#Generate badge set
+badge_set = BadgeSet.create! do |bs|
+  bs.course = default_course
+  bs.name = "Hogwarts Most Officially Official Badge Set"
+end
+puts "Awards may now be given!"
+
+badges = badge_names.map do |badge_name|
+  badge_set.badges.create! do |b|
+    b.name = badge_name
+    b.point_total = 100 * rand(10)
+    b.icon = badge_icons.sample
+    b.visible = true
+  end
+end
+puts "Did someone need motivation? We found these badges in the Room of Requirements..."
+
+teams = team_names.map do |team_name|
+  default_course.teams.create! do |t|
     t.name = team_name
   end
 end
 puts "The Team Competition has begun!"
 
 # Generate sample students
-students = []
-user_names.each do |name|
+students = user_names.map do |name|
   first_name, last_name = name.split(' ')
   username = name.parameterize.sub('-','.')
-  students << User.create! do |u|
+  User.create! do |u|
     u.username = username
     u.first_name = first_name
     u.last_name = last_name
@@ -80,13 +73,9 @@ end
 puts "Generated #{students.count} unruly students"
 
 students.each do |student|
-  TeamMembership.create! do |tm|
-    tm.user = student
-    tm.team = teams.sample
-  end
+  student.teams << teams.sample
 end
 puts "Added students to teams"
-
 
 # Generate sample admin
 User.create! do |u|
