@@ -3,9 +3,8 @@ class InfoController < ApplicationController
   respond_to :html
 
   helper_method :sort_column, :sort_direction
-  
-  before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
+  before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
   def dashboard
     if current_user.is_staff?
