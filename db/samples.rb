@@ -193,7 +193,7 @@ grinding_assignments = []
     a.name = "Class #{n}"
     a.point_total = 5000
     a.due_date = rand(n - 6).weeks.ago
-    a.has_assignment_submissions = false
+    a.submissions_allowed = false
     a.release_necessary = false
     a.grade_scope = "Individual"
   end
@@ -203,7 +203,7 @@ grinding_assignments = []
     a.name = "Reading Reaction #{n}"
     a.point_total = 5000
     a.due_date = rand(n - 6).weeks.ago
-    a.has_assignment_submissions = false
+    a.submissions_allowed = false
     a.release_necessary = true
     a.grade_scope = "Individual"
   end
@@ -229,7 +229,7 @@ blog_assignments = []
     a.assignment_type = assignment_types[:blogging]
     a.name = "Blog Post #{n}"
     a.point_total = 5000
-    a.has_assignment_submissions = true
+    a.submissions_allowed = true
     a.release_necessary = false
     a.grade_scope = "Individual"
   end
@@ -238,7 +238,7 @@ blog_assignments = []
     a.assignment_type = assignment_types[:blogging]
     a.name = "Blog Comment #{n}"
     a.point_total = 2000
-    a.has_assignment_submissions = true
+    a.submissions_allowed = true
     a.release_necessary = false
     a.grade_scope = "Individual"
   end
@@ -262,7 +262,7 @@ assignments << Assignment.create! do |a|
   a.name = "Game Selection Paper"
   a.point_total = 80000
   a.due_date = rand(3).weeks.ago
-  a.has_assignment_submissions = true
+  a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Individual"
@@ -283,7 +283,7 @@ assignments << Assignment.create! do |a|
   a.name = "Game Play Update Paper 1"
   a.point_total = 120000
   a.due_date = rand(3).weeks.from_now
-  a.has_assignment_submissions = true
+  a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Individual"
@@ -295,7 +295,7 @@ assignments << Assignment.create! do |a|
   a.name = "Game Play Update Paper 2"
   a.point_total = 120000
   a.due_date = rand(5).weeks.from_now
-  a.has_assignment_submissions = true
+  a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Individual"
@@ -307,7 +307,7 @@ assignments << Assignment.create! do |a|
   a.name = "Game Play Reflection Paper"
   a.point_total = 160000
   a.due_date = rand(7).weeks.from_now
-  a.has_assignment_submissions = true
+  a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Individual"
@@ -319,7 +319,7 @@ assignments << Assignment.create! do |a|
   a.name = "Individual Paper/Project 1"
   a.point_total = 200000
   a.due_date = rand(4).weeks.from_now
-  a.has_assignment_submissions = true
+  a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Individual"
@@ -331,7 +331,7 @@ assignments << Assignment.create! do |a|
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
   a.due_date = rand(7).weeks.from_now
-  a.has_assignment_submissions = true
+  a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Individual"
@@ -343,7 +343,7 @@ assignments << Assignment.create! do |a|
   a.name = "Group Game Design Project"
   a.point_total = 400000
   a.due_date = rand(7).weeks.from_now
-  a.has_assignment_submissions = true
+  a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Group"

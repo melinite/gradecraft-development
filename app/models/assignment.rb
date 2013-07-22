@@ -30,7 +30,7 @@ class Assignment < ActiveRecord::Base
   attr_accessible :type, :name, :description, :point_total, :due_date,
     :created_at, :updated_at, :level, :present, :grades_attributes, :assignment_type,
     :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
-    :open_time, :has_assignment_submissions, :student_logged_button_text,
+    :open_time, :submissions_allowed, :student_logged_button_text,
     :student_logged, :badge_set_id, :release_necessary,
     :score_levels_attributes, :open_date, :close_time, :course, :due_date
 
