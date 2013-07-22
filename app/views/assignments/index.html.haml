@@ -1,5 +1,6 @@
-- if current_user.is_staff?
-  = link_to 'Create a New Assignment', new_assignment_path, {:class => 'btn btn-info btn-small'}
+%div.col.col-lg-12#content_nav
+  - if current_user.is_staff?
+    = link_to 'Create a New Assignment', new_assignment_path, {:class => 'btn btn-info col col-sm-12 col-lg-2 btn-small pull-right'}
 
 %div
   %div.pull-right
@@ -40,4 +41,3 @@
           %td= link_to 'Log Grades',  mass_edit_assignment_grades_path("assignment_id"=>assignment.id), :class => 'btn btn-tiny btn-success'
           %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
           %td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete 
-      

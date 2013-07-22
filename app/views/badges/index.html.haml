@@ -1,5 +1,6 @@
-- if current_user.is_staff?
-  = link_to 'New Badge', new_badge_path, :class => "btn btn-info btn-small"
+%div.col.col-lg-12#content_nav
+  - if current_user.is_staff?
+    = link_to 'New Badge', new_badge_path, :class => "btn btn-info col col-sm-12 col-lg-1 btn-small pull-right"
     
 %table.display.table-bordered.table#sortableTable.tablesorter
   %thead
