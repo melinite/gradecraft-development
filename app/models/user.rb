@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   include Canable::Cans
 
-  before_save :set_sortable_scores
+  before_save :set_sortable_scores, :set_default_course
 
   ROLES = %w(student professor gsi admin)
 
@@ -78,10 +78,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def default_course
-    @default_course ||= (self.courses.where(:id => self.default_course_id).first || self.courses.first)
-  end
-
   def name
     @name = [first_name,last_name].reject(&:blank?).join(' ').presence || "User #{id}"
   end
@@ -129,8 +125,7 @@ class User < ActiveRecord::Base
 
   def earned_grades(course)
     course.grades_for_student(self).sum(&:score)
-
-    #(course.grades_for_student(self).map(&:score).sum) + earned_badges_value(course) + team_score(course)
+    # (course.grades_for_student(self).map(&:score).sum) + earned_badges_value(course) + team_score(course)
   end
 
   def grades_by_assignment_id
@@ -143,27 +138,19 @@ class User < ActiveRecord::Base
 
   #Badges
   def earned_badges_value(course)
-    earned_badges.to_a.sum(&:point_value)
+    earned_badges.where(:course => course).pluck('raw_score').sum
   end
 
   def user_badge_count
     earned_badges.count
   end
 
-  def earnable
-    @user.earned_badges.all
-  end
-
   def earned_badges_by_badge_id
     @earned_badges_by_badge ||= earned_badges.group_by(&:badge_id)
   end
 
-  def earned_badges_by_badge(badge)
-    earned_badges_by_badge_id[badge.id].try(:first)
-  end
-
   def sortable_score_for_course(course)
-    course_memberships.for_course(course).first.sortable_score
+    course_memberships.where(:course => course).pluck('sortable_score').first
   end
 
   def weights_by_assignment_id
@@ -217,7 +204,7 @@ class User < ActiveRecord::Base
   end
 
   def team_score(course)
-    teams.where(:course_id => course.id).first.try(&:score) || 0
+    teams.where(:course => course).pluck('score').first
   end
 
   def earned_grades(course)
@@ -225,10 +212,14 @@ class User < ActiveRecord::Base
   end
 
   def group_for_assignment(assignment)
-    groups.where(:assignment_id => assignment.id).first
+    groups.where(:assignment => assignment).first
   end
 
   private
+
+  def set_default_course
+    self.default_course ||= courses.first
+  end
 
   def set_sortable_scores
     course_memberships.each do |course_membership|

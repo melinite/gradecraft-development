@@ -3,12 +3,15 @@ class Grade < ActiveRecord::Base
 
   include Canable::Ables
 
+  belongs_to :course
   belongs_to :gradeable, :polymorphic => :true
   belongs_to :assignment
   belongs_to :submission
   has_many :grade_scheme_elements, :through => :assignment
   has_many :earned_badges, :as => :gradeable, :dependent => :destroy
   has_many :badges, :through => :earned_badges
+
+  before_validation :set_course
 
   validates_uniqueness_of :gradeable_id, :scope => :assignment_id
 
@@ -24,7 +27,7 @@ class Grade < ActiveRecord::Base
 
   validates_presence_of :gradeable, :assignment
 
-  delegate :name, :course, :description, :due_date, :assignment_type, :to => :assignment
+  delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
   after_save :save_gradeable_score
   after_destroy :save_gradeable_score
@@ -94,5 +97,11 @@ class Grade < ActiveRecord::Base
         #, user.earned_grades(course), user.grade_level(course)]
       #end
     #end
+  end
+
+  private
+
+  def set_course
+    self.course = assignment.course
   end
 end
