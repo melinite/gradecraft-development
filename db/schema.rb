@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 20130720213455) do
     t.boolean  "shared_badges"
     t.boolean  "graph_display"
     t.decimal  "default_assignment_weight",    precision: 4, scale: 1, default: 1.0
+    t.string   "lti_uid"
   end
 
   create_table "criteria", force: true do |t|
