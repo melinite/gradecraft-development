@@ -17,8 +17,8 @@ class InfoController < ApplicationController
     end
     @badges = current_course.badges.includes(:earned_badges, :elements)
     @user = current_user
-    @assignments = current_course.assignments.includes(:assignment_submissions, :assignment_type)
+    @assignments = current_course.assignments.includes(:submissions, :assignment_type)
     @assignment_types = current_course.assignment_types.includes(:assignments)
-    @submissions = current_course.assignment_submissions
+    @submissions = current_course.submissions
   end
 end

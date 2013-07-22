@@ -33,7 +33,7 @@ class AssignmentsController < ApplicationController
     @groups = @assignment.groups
     @title = "View #{@assignment.name}"
     @teams = current_course.teams
-    @assignment_submissions = @assignment.assignment_submissions
+    @submissions = @assignment.submissions
     @earnables = current_course.earned_badges.all
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?

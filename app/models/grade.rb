@@ -5,7 +5,7 @@ class Grade < ActiveRecord::Base
 
   belongs_to :gradeable, :polymorphic => :true
   belongs_to :assignment
-  belongs_to :assignment_submission
+  belongs_to :submission
   has_many :grade_scheme_elements, :through => :assignment
   has_many :earned_badges, :as => :gradeable, :dependent => :destroy
   has_many :badges, :through => :earned_badges
@@ -18,7 +18,7 @@ class Grade < ActiveRecord::Base
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :user, :badge_ids, :grade,
     :gradeable, :gradeable_id, :gradeable_type, :earned_badges_attributes,
-    :earned, :assignment_submission_id, :badge_ids, :earned_badge_id,
+    :earned, :submission_id, :badge_ids, :earned_badge_id,
     :gradeable_attributes, :earned_badges, :earned_badges_attributes,
     :assignment
 

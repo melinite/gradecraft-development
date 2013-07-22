@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130720213455) do
+ActiveRecord::Schema.define(version: 20130722154510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -332,7 +332,6 @@ ActiveRecord::Schema.define(version: 20130720213455) do
     t.string   "gradeable_type"
     t.integer  "final_score"
     t.integer  "assignment_submission_id"
-    t.string   "_type"
     t.integer  "course_id"
   end
 
@@ -381,6 +380,14 @@ ActiveRecord::Schema.define(version: 20130720213455) do
     t.integer  "assignment_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "student_assignment_type_weights", force: true do |t|
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "student_id"
+    t.integer  "assignment_type_id"
+    t.integer  "weight",             null: false
   end
 
   create_table "submissions", force: true do |t|
@@ -464,7 +471,7 @@ ActiveRecord::Schema.define(version: 20130720213455) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "role",                            default: "student"
+    t.string   "role",                            default: "student", null: false
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "rank"
@@ -480,6 +487,7 @@ ActiveRecord::Schema.define(version: 20130720213455) do
     t.datetime "last_logout_at"
     t.datetime "last_activity_at"
     t.string   "lti_uid"
+    t.string   "last_login_from_ip_address"
   end
 
   add_index "users", ["last_logout_at", "last_activity_at"], name: "index_users_on_last_logout_at_and_last_activity_at", using: :btree

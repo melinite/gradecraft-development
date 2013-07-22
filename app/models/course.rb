@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
     :user_id, :course_id, :homepage_message, :group_setting,
     :total_assignment_weight, :assignment_weight_close_date, :team_roles,
     :section_leader_term, :group_term, :assignment_weight_type,
-    :has_assignment_submissions, :teams_visible, :badge_use_scope,
+    :has_submissions, :teams_visible, :badge_use_scope,
     :weight_term, :badges_value, :predictor_setting, :max_group_size,
     :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
     :assignments, :default_assignment_weight
@@ -16,7 +16,7 @@ class Course < ActiveRecord::Base
   has_many :assignment_types, :dependent => :destroy
   has_many :assignments, :through => :assignment_types, :dependent => :destroy
   has_many :grades, :through => :assignments
-  has_many :assignment_submissions, :through => :assignments
+  has_many :submissions, :through => :assignments
   has_and_belongs_to_many :badge_sets, :join_table => :course_badge_sets
   has_many :badges, :through => :badge_sets
   has_many :earned_badges, :through => :users
@@ -106,8 +106,8 @@ class Course < ActiveRecord::Base
     team_roles == true
   end
 
-  def has_assignment_submissions?
-    has_assignment_submissions == true
+  def has_submissions?
+    has_submissions == true
   end
 
   def membership_for_student(student)

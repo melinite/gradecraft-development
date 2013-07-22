@@ -111,7 +111,7 @@ class UsersController < ApplicationController
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @student_assignment_type_weights = @user.student_assignment_type_weights.all
     @student_assignment_type_weight = @user.student_assignment_type_weights.new
-    @assignments = current_course.assignments.includes(:assignment_submissions, :assignment_type)
+    @assignments = current_course.assignments.includes(:submissions, :assignment_type)
     @grades = @user.grades.all 
     @badges = current_course.badges.includes(:earned_badges, :elements)
     respond_with @user

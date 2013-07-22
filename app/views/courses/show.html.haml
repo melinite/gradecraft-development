@@ -23,7 +23,7 @@
     = @course.course_grade_scheme.try(:name)
   %p
     %b GradeCraft will accept assignment submissions for this course:
-    = @course.has_assignment_submissions? ? 'Yes' : 'No'
+    = @course.has_submissions? ? 'Yes' : 'No'
   %p
     %b Course Status:
     = @course.status? ? 'Active' : 'Archived'

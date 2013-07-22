@@ -69,7 +69,7 @@ class Assignment < ActiveRecord::Base
 
   #submissions per role
   def submissions_by_submittable_id
-    @submissions_by_submittable_id || assignment_submissions.group_by { |s| [s.submittable_type,s.submittable_id] }
+    @submissions_by_submittable_id || submissions.group_by { |s| [s.submittable_type,s.submittable_id] }
   end
 
   def submission_for_student(student)
@@ -85,12 +85,12 @@ class Assignment < ActiveRecord::Base
     submissions_by_submittable_id[['Team',team.id]].try(:first)
   end
 
-  def assignment_submissions_by_assignment_id
-    @assignment_submissions_by_assignment_id ||= assignment_submissions.group_by(&:assignment_id)
+  def submissions_by_assignment_id
+    @submissions_by_assignment_id ||= submissions.group_by(&:assignment_id)
   end
 
-  def assignment_submissions_for_assignment(assignment)
-    assignment_submissions_by_assignment_id[assignment.id].try(:first)
+  def submissions_for_assignment(assignment)
+    submissions_by_assignment_id[assignment.id].try(:first)
   end
 
   #Assignment grade data
@@ -168,12 +168,12 @@ class Assignment < ActiveRecord::Base
     points_predictor = "Fixed"
   end
 
-  def has_assignment_submissions?
-    has_assignment_submissions == true
+  def has_submissions?
+    has_submissions == true
   end
 
   def has_ungraded_submissions?
-    has_assignment_submissions == true && assignment_submissions.try(:ungraded)
+    has_submissions == true && submissions.try(:ungraded)
   end
 
   def slider?

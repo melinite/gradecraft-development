@@ -8,7 +8,7 @@ class Group < ActiveRecord::Base
   has_many :grades, :as => :gradeable, :dependent => :destroy
   has_many :earned_badges, :as => :earnable, :dependent => :destroy
   has_many :badges, :through => :earned_badges
-  has_many :assignment_submissions, :as => :submittable, :dependent => :destroy
+  has_many :submissions, :as => :submittable, :dependent => :destroy
 
   belongs_to :assignment
   belongs_to :course

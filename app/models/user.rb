@@ -5,7 +5,11 @@ class User < ActiveRecord::Base
 
   before_save :set_sortable_scores
 
-  Roles = %w{student professor gsi admin}
+  ROLES = %w(student professor gsi admin)
+
+  ROLES.each do |role|
+    scope role.pluralize, -> { where role: role }
+  end
 
   attr_accessor :remember_me
   attr_accessible :username, :email, :crypted_password, :remember_me_token,
@@ -91,11 +95,6 @@ class User < ActiveRecord::Base
 
   def team_leader
     teams.first.try(:team_leader)
-  end
-
-  #Roles
-  %w{student gsi professor admin}.each do |role|
-    scope role.pluralize, -> { where role: role }
   end
 
   def is_prof?
