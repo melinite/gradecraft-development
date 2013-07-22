@@ -55,7 +55,7 @@ Course.create! do |c|
   c.team_setting = true
   c.group_setting = true
   c.badge_setting = true
-  c.has_assignment_submissions = true
+  c.submissions_allowed = true
   c.team_term = "Team"
   c.user_term = "Player"
   c.section_leader_term = "Team Leader"
@@ -69,7 +69,7 @@ Course.create! do |c|
   c.team_setting = true
   c.group_setting = true
   c.badge_setting = true
-  c.has_assignment_submissions = true
+  c.submissions_allowed = true
   c.team_term = "Section"
   c.user_term = "Student"
   c.section_leader_term = "GSI"
@@ -88,7 +88,7 @@ Course.create! do |c|
   c.team_setting = false
   c.group_setting = false
   c.badge_setting = true
-  c.has_assignment_submissions = true
+  c.submissions_allowed = true
   c.team_term = "Section"
   c.user_term = "Student"
   c.section_leader_term = "GSI"
@@ -109,7 +109,7 @@ course_names.each do |course_name|
     c.team_setting = true
     c.group_setting = true
     c.badge_setting = true
-    c.has_assignment_submissions = true
+    c.submissions_allowed = true
     c.team_term = "House"
     c.user_term = "Wizard"
     c.section_leader_term = "Prefect"
@@ -235,7 +235,7 @@ courses.each do |course|
       a.due_date = rand(10).weeks.from_now
       a.assignment_type = assignment_types.sample
       a.point_total = (100 + rand(10)) * 100
-      a.has_assignment_submissions = true
+      a.submissions_allowed = true
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130722154510) do
+ActiveRecord::Schema.define(version: 20130722162751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20130722154510) do
     t.datetime "close_time"
     t.datetime "open_time"
     t.boolean  "required"
-    t.boolean  "has_assignment_submissions"
+    t.boolean  "submissions_allowed"
     t.boolean  "student_logged"
     t.string   "student_logged_button_text"
     t.integer  "badge_set_id"
@@ -241,7 +241,6 @@ ActiveRecord::Schema.define(version: 20130722154510) do
     t.boolean  "shared_badges"
     t.boolean  "graph_display"
     t.decimal  "default_assignment_weight",    precision: 4, scale: 1, default: 1.0
-    t.string   "lti_uid"
   end
 
   create_table "criteria", force: true do |t|
