@@ -1,19 +1,13 @@
 class ScopeController < ApplicationController
-
   def change
-    kind, id = params[:scope].split("|")
-
-    new_scope = find_scope(id)
-
-    if new_scope
-      session[:scope_id] = new_scope.id
+    if current_user.admin?
+      Course.find(params[:course])
+    else
+      current_user.courses.find(course_id)
     end
 
-    redirect_to root_url
-  end
+    session[:course_id] = course.id if course
 
-  def find_scope(id)
-    current_user.find_scoped_courses(id)
+    redirect_to root_path
   end
-
 end

@@ -11,28 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130722162751) do
+ActiveRecord::Schema.define(version: 20130723005618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "assignment_submissions", force: true do |t|
-    t.integer  "assignment_id"
-    t.integer  "user_id"
-    t.string   "feedback"
-    t.string   "comment"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
-    t.datetime "attachment_updated_at"
-    t.string   "link"
-    t.integer  "submittable_id"
-    t.string   "submittable_type"
-    t.text     "text_feedback"
-    t.text     "text_comment"
-  end
 
   create_table "assignment_types", force: true do |t|
     t.string   "name"
@@ -100,38 +82,6 @@ ActiveRecord::Schema.define(version: 20130722162751) do
     t.boolean  "visible",                    default: true
   end
 
-  create_table "badge_sets", force: true do |t|
-    t.string   "name"
-    t.string   "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "badge_sets_courses", id: false, force: true do |t|
-    t.integer "course_id"
-    t.integer "badge_set_id"
-  end
-
-  create_table "badges", force: true do |t|
-    t.integer  "assignment_id"
-    t.string   "name"
-    t.text     "description"
-    t.string   "icon"
-    t.binary   "visible"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.string   "occurrence"
-    t.integer  "badge_set_id"
-    t.integer  "value"
-    t.integer  "multiplier"
-  end
-
-  add_index "badges", ["assignment_id"], name: "index_badges_on_assignment_id", using: :btree
-
   create_table "categories", force: true do |t|
     t.string   "name"
     t.text     "description"
@@ -168,11 +118,6 @@ ActiveRecord::Schema.define(version: 20130722162751) do
     t.boolean  "release_necessary"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-  end
-
-  create_table "course_badge_sets", force: true do |t|
-    t.integer "course_id"
-    t.integer "badge_set_id"
   end
 
   create_table "course_categories", id: false, force: true do |t|
@@ -265,26 +210,6 @@ ActiveRecord::Schema.define(version: 20130722162751) do
     t.datetime "updated_at"
   end
 
-  create_table "earned_badges", force: true do |t|
-    t.integer  "badge_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "feedback"
-    t.integer  "earnable_id"
-    t.string   "earnable_type"
-    t.text     "text_feedback"
-    t.boolean  "shared"
-    t.integer  "grade_id"
-  end
-
-  create_table "elements", force: true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.integer  "badge_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "faqs", force: true do |t|
     t.string   "question"
     t.text     "answer"
@@ -330,7 +255,7 @@ ActiveRecord::Schema.define(version: 20130722162751) do
     t.integer  "gradeable_id"
     t.string   "gradeable_type"
     t.integer  "final_score"
-    t.integer  "assignment_submission_id"
+    t.integer  "submission_id"
     t.integer  "course_id"
   end
 
@@ -381,14 +306,6 @@ ActiveRecord::Schema.define(version: 20130722162751) do
     t.datetime "updated_at",         null: false
   end
 
-  create_table "student_assignment_type_weights", force: true do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "student_id"
-    t.integer  "assignment_type_id"
-    t.integer  "weight",             null: false
-  end
-
   create_table "submissions", force: true do |t|
     t.integer  "assignment_id"
     t.integer  "student_id"
@@ -426,26 +343,6 @@ ActiveRecord::Schema.define(version: 20130722162751) do
   end
 
   add_index "tasks", ["course_id"], name: "index_tasks_on_course_id", using: :btree
-
-  create_table "team_memberships", force: true do |t|
-    t.integer  "team_id"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "teams", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "banner_file_name"
-    t.string   "banner_content_type"
-    t.integer  "banner_file_size"
-    t.datetime "banner_updated_at"
-    t.integer  "sortable_score"
-    t.integer  "rank"
-    t.integer  "course_id"
-  end
 
   create_table "themes", force: true do |t|
     t.string   "name"

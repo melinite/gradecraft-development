@@ -197,7 +197,7 @@ grinding_assignments = []
     a.release_necessary = false
     a.grade_scope = "Individual"
   end
-  
+
   grinding_assignments << Assignment.create! do |a|
     a.assignment_type = assignment_types[:reading_reaction]
     a.name = "Reading Reaction #{n}"
@@ -208,15 +208,23 @@ grinding_assignments = []
     a.grade_scope = "Individual"
   end
 end
+
+grinding_assignments.each do |a|
+  a.tasks.create!
+end
+
 puts "Attendance and Reading Reaction classes have been posted!"
 
 grinding_assignments.each do |assignment|
   next unless assignment.due_date.past? 
-
   students.each do |student|
-    assignment.grades.create! do |grade|
-      grade.gradeable = student
-      grade.raw_score = assignment.point_total * [0, 1].sample 
+    assignment.tasks.each do |task|
+      task.submissions.create! do |submission|
+        submission.grade = Grade.create! do |grade|
+          grade.gradeable = student
+          grade.raw_score = assignment.point_total * [0, 1].sample
+        end
+      end
     end
   end
 end

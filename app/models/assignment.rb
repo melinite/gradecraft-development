@@ -1,7 +1,4 @@
 class Assignment < ActiveRecord::Base
-  has_many :grades, :dependent => :destroy
-  accepts_nested_attributes_for :grades
-
   #belongs_to :grade_scheme
   #has_many :grade_scheme_elements, :through => :grade_scheme
 
@@ -9,13 +6,17 @@ class Assignment < ActiveRecord::Base
   accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'
-  has_many :groups
+  has_many :groups, -> { where(:type => nil) }
   has_many :group_memberships, :through => :group_memberships
+
+  has_many :tasks, :dependent => :destroy
+  has_many :submissions, :through => :tasks
+  has_many :grades, :through => :submissions
+  accepts_nested_attributes_for :grades
+
   has_many :users, :through => :grades
   has_one :rubric
   belongs_to :category
-  has_many :tasks
-  has_many :submissions, :through => :tasks
   belongs_to :course
 
   has_many :score_levels, :through => :assignment_type

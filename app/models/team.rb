@@ -1,36 +1,26 @@
-class Team < Group
+class Team < AbstractGroup
   has_many :challenge_grades, :dependent => :destroy
 
+  attr_accessible :name
+
   def user_grades
-    Grade.where(:user_id => students)
+    Grade.where(:student => members)
   end
 
   def score
-    challenge_grades.map(&:raw_score).sum || 0
+    challenge_grades.pluck('raw_score').sum
   end
 
   def badge_count
     earned_badges.count
   end
 
-  def grades_by_assignment_id
-    @grades_by_assignment ||= grades.group_by(&:assignment_id)
+  def member_count
+    members.count
   end
 
-  def grade_for_assignment(assignment)
-    grades_by_assignment_id[assignment.id].try(:first)
-  end
-
-  def students
-    users
-  end
-
-  def student_count
-    students.count
-  end
-
-  def student_badge_count
-    students.sum(&:user_badge_count)
+  def member_badge_count
+    member.sum(&:user_badge_count)
   end
 
   def team_leader
@@ -38,7 +28,7 @@ class Team < Group
   end
 
   def students_by_team_id
-    @students_by_team_id ||= students.group_by(&:team_id)
+    @students_by_team_id ||= members.group_by(&:team_id)
   end
 
   def students_in_team(team)

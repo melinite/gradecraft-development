@@ -1,9 +1,8 @@
 class GroupMembership < ActiveRecord::Base
-  attr_accessible :accepted, :group_id, :user_id
-  
+  attr_accessible :accepted, :group, :group_id, :user, :user_id
+
+  belongs_to :group, :class_name => 'AbstractGroup'
   belongs_to :user
-  belongs_to :group
-  
-  validates_presence_of :group_id, :user_id
-    
+
+  validates_presence_of :group, :user
 end

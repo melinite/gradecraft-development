@@ -38,7 +38,7 @@ class Badge < Assignment
 
   #badges per role
   def earned_badges_by_earnable_id
-    @earned_badges_by_earnable_id ||= earned_badges.group_by { |eb| [eb.earnable_type,eb.earnable_id] }
+    @earned_badges_by_earnable_id ||= earned_badges.group_by { |eb| [eb.earnable_type, eb.earnable_id] }
   end
 
   def earned_badge_for_student(student)

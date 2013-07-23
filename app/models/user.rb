@@ -35,9 +35,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :earned_badges, :reject_if => proc { |attributes| attributes['earned'] != '1' }
 
   has_many :badges, :through => :earned_badges
-  has_many :team_memberships, :dependent => :destroy
-  has_many :teams, :through => :team_memberships
   has_many :group_memberships, :dependent => :destroy
+  has_many :teams, :through => :group_memberships, :source => :group
   has_many :groups, :through => :group_memberships
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -70,7 +69,6 @@ class User < ActiveRecord::Base
 
   #Course
   def find_scoped_courses(course_id)
-    course_id = BSON::ObjectId(course_id) if course_id.is_a?(String)
     if is_admin? || self.course_ids.include?(course_id)
       Course.find(course_id)
     else

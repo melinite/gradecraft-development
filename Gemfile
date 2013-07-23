@@ -34,6 +34,7 @@ gem 'sendgrid'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'twitter-bootstrap-rails'
+gem 'quiet_assets', :group => :development
 
 group :development do
   gem 'bullet'

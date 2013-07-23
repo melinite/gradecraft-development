@@ -1,6 +1,6 @@
-class Task < ActiveRecord::Base
+class Task < AbstractTask
   belongs_to :assignment
-  has_one :submission
+  has_many :submissions, :dependent => :destroy
 
   attr_accessible :assignment
 

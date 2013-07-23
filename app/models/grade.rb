@@ -1,22 +1,6 @@
-class Grade < ActiveRecord::Base
-  self.inheritance_column = 'something_you_will_not_use'
-
+class Grade < AbstractGrade
   include Canable::Ables
 
-  belongs_to :course
-  belongs_to :gradeable, :polymorphic => :true
-  belongs_to :assignment
-  belongs_to :submission
-  has_many :grade_scheme_elements, :through => :assignment
-  has_many :earned_badges, :as => :gradeable, :dependent => :destroy
-  has_many :badges, :through => :earned_badges
-
-  before_validation :set_course
-
-  validates_uniqueness_of :gradeable_id, :scope => :assignment_id
-
-  accepts_nested_attributes_for :earned_badges
-  accepts_nested_attributes_for :gradeable
   attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :user, :badge_ids, :grade,
@@ -25,16 +9,27 @@ class Grade < ActiveRecord::Base
     :gradeable_attributes, :earned_badges, :earned_badges_attributes,
     :assignment
 
-  validates_presence_of :gradeable, :assignment
+  belongs_to :submission
+  belongs_to :assignment
+  has_many :grade_scheme_elements, :through => :assignment
+
+  has_many :earned_badges, :dependent => :destroy
+  accepts_nested_attributes_for :earned_badges
+
+  has_many :badges, :through => :earned_badges
+
+  before_validation :set_assignment_and_course
+
+  validates_presence_of :assignment
+  validates_uniqueness_of :gradeable, :scope => :assignment
 
   delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
-  after_save :save_gradeable_score
-  after_destroy :save_gradeable_score
+  after_save :save_gradeable
+  after_destroy :save_gradeable
 
   scope :completion, -> { where(order: "assignments.due_date ASC", :joins => :assignment) }
   scope :released, -> { where(status: "Released") }
-  scope :for_assignment_type, ->(assignment_type) { where(:assignment_type_id => assignment_type.id) }
 
   def raw_score
     super || 0
@@ -68,10 +63,6 @@ class Grade < ActiveRecord::Base
     feedback != "" && feedback != nil
   end
 
-  def save_gradeable_score
-    gradeable.save
-  end
-
   def is_released?
     status == "Released"
   end
@@ -101,7 +92,12 @@ class Grade < ActiveRecord::Base
 
   private
 
-  def set_course
-    self.course = assignment.course
+  def save_gradeable
+    gradeable.save
+  end
+
+  def set_assignment_and_course
+    self.assignment_id = submission.assignment_id
+    self.course_id = assignment.course_id
   end
 end

@@ -14,7 +14,7 @@ class Submission < ActiveRecord::Base
   belongs_to :group
   belongs_to :course
 
-  has_one :grade
+  has_one :grade, :dependent => :destroy
   accepts_nested_attributes_for :grade
 
   scope :ungraded, -> { where(graded: false) }
