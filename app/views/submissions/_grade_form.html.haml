@@ -1,0 +1,20 @@
+= simple_form_for([@assignment, @grade], :html => {:class => 'form-horizontal' }) do |f|
+  %div.control-group
+  = f.input :submission_id, :input_html => {:value => @submission.id}, :as => :hidden
+  = f.input :gradeable_id, :input_html => { :value => @gradeable.id }, :as => :hidden
+  - if @assignment.is_individual?
+    = f.input :gradeable_type, :as => :hidden, :input_html => { :value => 'User' }
+  - elsif @assignment.has_groups?
+    = f.input :gradeable_type, :as => :hidden, :input_html => { :value => 'Group' }
+  - if @assignment.has_teams?
+    = f.input :gradeable_type, :as => :hidden, :input_html => { :value => 'Team' }
+  - if @assignment.has_levels?
+    = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select
+  - else
+    = f.input :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{@assignment.point_total}"
+  //= f.input :final_score
+  = f.input :feedback, :as => :text, :input_html => {:id => 'some-textarea', :class => 'col-lg-9 col' }
+  - if @assignment.release_necessary?
+    = f.input :status, :as => :radio_buttons, :collection => [["New"], ["Graded"],["Released"]]
+
+  = f.submit :class => 'btn btn-primary'
