@@ -12,6 +12,8 @@ class Badge < Assignment
 
   accepts_nested_attributes_for :badge_set
 
+  before_validation :set_course
+
   validates_presence_of :course, :name
 
   scope :ordered, -> { 'badges.id ASC' }
@@ -51,7 +53,7 @@ class Badge < Assignment
 
   private
 
-  def set_course_id
+  def set_course
     self.course_id = badge_set.course_id
   end
 end

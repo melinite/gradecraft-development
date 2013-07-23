@@ -9,7 +9,7 @@ badge_icons = ['/badges/above_and_beyond.png','/badges/always_learning.png','/ba
 grade_scheme_hash = { [0,600000] => 'F', [600000,649000] => 'D+', [650000,699999] => 'C-', [700000,749999] => 'C', [750000,799999] => 'C+', [800000,849999] => 'B-', [850000,899999] => 'B', [900000,949999] => 'B+', [950000,999999] => 'A-', [100000,1244999] => 'A', [1245000,1600000] => 'A+'}
 
 # Generate sample courses
-default_course = Course.create! do |c|
+course = Course.create! do |c|
   c.name = "Videogames & Learning"
   c.courseno = "ED222"
   c.year = Date.today.year
@@ -33,8 +33,7 @@ end
 puts "Videogames and Learning has been installed"
 
 #Generate badge set
-badge_set = BadgeSet.create! do |bs|
-  bs.course = default_course
+badge_set = course.badge_sets.create! do |bs|
   bs.name = "Hogwarts Most Officially Official Badge Set"
 end
 puts "Awards may now be given!"
@@ -50,7 +49,7 @@ end
 puts "Did someone need motivation? We found these badges in the Room of Requirements..."
 
 teams = team_names.map do |team_name|
-  default_course.teams.create! do |t|
+  course.teams.create! do |t|
     t.name = team_name
   end
 end
@@ -66,8 +65,7 @@ students = user_names.map do |name|
     u.last_name = last_name
     u.email = "#{username}@hogwarts.edu"
     u.password = 'uptonogood'
-    u.default_course = default_course
-    u.courses = [default_course]
+    u.courses << course
   end
 end
 puts "Generated #{students.count} unruly students"
@@ -85,8 +83,7 @@ User.create! do |u|
   u.role = 'admin'
   u.email = 'dumbledore@hogwarts.edu'
   u.password = 'fawkes'
-  u.default_course = default_course
-  u.courses = [default_course]
+  u.courses << course
 end
 puts "Albus Dumbledore just apparated into Hogwarts"
 
@@ -98,8 +95,7 @@ User.create! do |u|
   u.role = 'professor'
   u.email = 'snape@hogwarts.edu'
   u.password = 'lily'
-  u.default_course = default_course
-  u.courses = [default_course]
+  u.courses << course
 end
 puts "Severus Snape has been spotted in Slytherin House"
 
@@ -111,14 +107,13 @@ students << User.create! do |u|
   u.role = 'gsi'
   u.email = 'percy.weasley@hogwarts.edu'
   u.password = 'bestprefect'
-  u.default_course = default_course
-  u.courses = [default_course]
+  u.courses << course
 end
 puts "Percy Weasley has arrived on campus, on time as usual"
 
 assignment_types = {}
 assignment_types[:attendance] = AssignmentType.create! do |at|
-  at.course = default_course
+  at.course = course
   at.name = "Attendance"
   at.point_setting = "Individually"
   at.points_predictor_display = "Fixed"
@@ -134,7 +129,7 @@ end
 puts "Come to class."
 
 assignment_types[:reading_reaction] = AssignmentType.create! do |at|
-  at.course = default_course
+  at.course = course
   at.name = "Reading Reactions"
   at.point_setting = "Individually"
   at.points_predictor_display = "Select"
@@ -148,7 +143,7 @@ end
 puts "Do your readings."
 
 assignment_types[:blogging] = AssignmentType.create! do |at|
-  at.course = default_course
+  at.course = course
   at.name = "Blogging"
   at.point_setting = "Individually"
   at.points_predictor_display = "Slider"
@@ -162,7 +157,7 @@ end
 puts "Blogging is great for filling in missed points in other areas"
 
 assignment_types[:lfpg] = AssignmentType.create! do |at|
-  at.course = default_course
+  at.course = course
   at.name = "Learning from Playing a Game"
   at.point_setting = "Individually"
   at.points_predictor_display = "Slider"
@@ -174,7 +169,7 @@ end
 puts "This is the good stuff :)"
 
 assignment_types[:boss_battle] = AssignmentType.create! do |at|
-  at.course = default_course
+  at.course = course
   at.name = "Boss Battles"
   at.point_setting = "Individually"
   at.points_predictor_display = "Slider"
@@ -188,32 +183,27 @@ puts "Challenges!"
 grinding_assignments = []
 
 1.upto(10).each do |n|
-  grinding_assignments << Assignment.create! do |a|
-    a.assignment_type = assignment_types[:attendance]
+  grinding_assignments << assignment_types[:attendance].assignments.create! do |a|
     a.name = "Class #{n}"
     a.point_total = 5000
     a.due_date = rand(n - 6).weeks.ago
     a.submissions_allowed = false
     a.release_necessary = false
     a.grade_scope = "Individual"
-    a.course_id = default_course
   end
 
-  grinding_assignments << Assignment.create! do |a|
-    a.assignment_type = assignment_types[:reading_reaction]
+  grinding_assignments << assignment_types[:reading_reaction].assignments.create! do |a|
     a.name = "Reading Reaction #{n}"
     a.point_total = 5000
     a.due_date = rand(n - 6).weeks.ago
     a.submissions_allowed = false
     a.release_necessary = true
     a.grade_scope = "Individual"
-    a.course_id = default_course
   end
 end
 
 grinding_assignments.each do |a|
   a.tasks.create! do |t|
-    puts a.name
     t.title = "Task 1"
     t.due_at = rand.weeks.from_now
     t.accepts_submissions = true
@@ -222,26 +212,18 @@ end
 
 puts "Attendance and Reading Reaction classes have been posted!"
 
-grinding_submissions = []
-
 grinding_assignments.each do |assignment|
-  next unless assignment.due_date.past? 
+  next unless assignment.due_date.past?
   students.each do |student|
     assignment.tasks.each do |task|
-      grinding_submissions << task.submissions.create! do |submission|
-        submission.student = student
-        submission.text_comment = "Wingardium Leviosa"
-        submission.link = "http://www.pottermore.com/en-us"
-        submission.assignment_id = assignment
-        submission.course_id = default_course
+      submission = student.submissions.create! do |s|
+        s.task = task
+        s.text_comment = "Wingardium Leviosa"
+        s.link = "http://www.pottermore.com/en-us"
       end
-      grinding_submissions.each do |submission| 
-        submission.grade = Grade.create! do |grade|
-          grade.submission = submission
-          grade.gradeable = student
-          grade.raw_score = submission.assignment.point_total * [0, 1].sample
-        end
-        puts "Submission Grades Posted!"
+      student.grades.create! do |g|
+        g.submission = submission
+        g.raw_score = assignment.point_total * [0, 1].sample
       end
     end
   end
@@ -328,8 +310,7 @@ assignments << Assignment.create! do |a|
 end
 puts "Game Play Update Paper 2 has been posted!"
 
-assignments << Assignment.create! do |a|
-  a.assignment_type = assignment_types[:lfpg]
+assignments << assignment_types[:lfpg].assignment.create! do |a|
   a.name = "Game Play Reflection Paper"
   a.point_total = 160000
   a.due_date = rand(7).weeks.from_now
@@ -340,8 +321,7 @@ assignments << Assignment.create! do |a|
 end
 puts "Game Play Reflection Paper has been posted!"
 
-assignments << Assignment.create! do |a|
-  a.assignment_type = assignment_types[:boss_battle]
+assignments << assignment_types[:boss_battle].assignments.create! do |a|
   a.name = "Individual Paper/Project 1"
   a.point_total = 200000
   a.due_date = rand(4).weeks.from_now
@@ -352,8 +332,7 @@ assignments << Assignment.create! do |a|
 end
 puts "Individual Project 1 has been posted!"
 
-assignments << Assignment.create! do |a|
-  a.assignment_type = assignment_types[:boss_battle]
+assignments << assignment_types[:boss_battle].assignments.create! do |a|
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
   a.due_date = rand(7).weeks.from_now
@@ -364,8 +343,7 @@ assignments << Assignment.create! do |a|
 end
 puts "Individual Project 2 has been posted!"
 
-assignments << Assignment.create! do |a|
-  a.assignment_type = assignment_types[:boss_battle]
+assignments << assignment_types[:boss_battle].assignments.create! do |a|
   a.name = "Group Game Design Project"
   a.point_total = 400000
   a.due_date = rand(7).weeks.from_now
