@@ -252,16 +252,33 @@ blog_assignments = []
   end
 end
 
+blog_assignments.each do |a|
+  a.tasks.create! do |t|
+    t.title = "Task 1"
+    t.due_at = rand.weeks.from_now
+    t.accepts_submissions = true
+  end
+end
+
+puts "Blogging assignments have been posted!"
+
 blog_assignments.each_with_index do |assignment, i|
   next if i % 2 == 0 
   students.each do |student|
-    assignment.grades.create! do |grade|
-      grade.gradeable = student
-      grade.raw_score = assignment.point_total * [0, 1].sample 
+    assignment.tasks.each do |task|
+      submission = student.submissions.create! do |s|
+        s.task = task
+        s.text_comment = "Wingardium Leviosa"
+        s.link = "http://www.pottermore.com/en-us"
+      end
+      student.grades.create! do |g|
+        g.submission = submission
+        g.raw_score = assignment.point_total * [0, 1].sample
+      end
     end
   end
 end
-puts "Blogging assignments and scores have been posted!"
+puts "Blogging scores have been posted!"
 
 assignments = []
 
@@ -274,17 +291,27 @@ assignments << Assignment.create! do |a|
   a.release_necessary = true
   a.open_date = "14/02/2013"
   a.grade_scope = "Individual"
-end
-puts "Game Selection Paper has been posted!"
-
-students.each do |student|
-  Grade.create! do |g|
-    g.assignment = assignments.last
-    g.gradeable = student
-    g.raw_score = 80000 * [0,1].sample
+  a.save
+  a.tasks.create! do |t|
+    t.title = "Task 1"
+    t.due_at = rand.weeks.from_now
+    t.accepts_submissions = true
+  end
+  students.each do |student|
+    a.tasks.each do |task|
+      submission = student.submissions.create! do |s|
+        s.task = task
+        s.text_comment = "Wingardium Leviosa"
+        s.link = "http://www.pottermore.com/en-us"
+      end
+      student.grades.create! do |g|
+        g.submission = submission
+        g.raw_score = 80000 * [0,1].sample
+      end
+    end
   end
 end
-puts "Grades from Game Selection Paper have been posted!"
+puts "Game Selection Paper has been posted!"
 
 assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
@@ -310,7 +337,8 @@ assignments << Assignment.create! do |a|
 end
 puts "Game Play Update Paper 2 has been posted!"
 
-assignments << assignment_types[:lfpg].assignment.create! do |a|
+assignments << Assignment.create! do |a|
+  a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Reflection Paper"
   a.point_total = 160000
   a.due_date = rand(7).weeks.from_now
@@ -321,7 +349,8 @@ assignments << assignment_types[:lfpg].assignment.create! do |a|
 end
 puts "Game Play Reflection Paper has been posted!"
 
-assignments << assignment_types[:boss_battle].assignments.create! do |a|
+assignments << Assignment.create! do |a|
+  a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 1"
   a.point_total = 200000
   a.due_date = rand(4).weeks.from_now
@@ -332,7 +361,8 @@ assignments << assignment_types[:boss_battle].assignments.create! do |a|
 end
 puts "Individual Project 1 has been posted!"
 
-assignments << assignment_types[:boss_battle].assignments.create! do |a|
+assignments << Assignment.create! do |a|
+  a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
   a.due_date = rand(7).weeks.from_now
@@ -343,7 +373,8 @@ assignments << assignment_types[:boss_battle].assignments.create! do |a|
 end
 puts "Individual Project 2 has been posted!"
 
-assignments << assignment_types[:boss_battle].assignments.create! do |a|
+assignments << Assignment.create! do |a|
+  a.assignment_type = assignment_types[:boss_battle]
   a.name = "Group Game Design Project"
   a.point_total = 400000
   a.due_date = rand(7).weeks.from_now
