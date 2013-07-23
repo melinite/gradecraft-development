@@ -36,8 +36,8 @@ class User < ActiveRecord::Base
 
   has_many :badges, :through => :earned_badges
   has_many :group_memberships, :dependent => :destroy
-  has_many :teams, :through => :group_memberships, :source => :group
-  has_many :groups, :through => :group_memberships
+  has_many :teams, -> { where(type: 'Team') }, :through => :group_memberships, :source => :group
+  has_many :groups, -> { where(type: 'Group') }, :through => :group_memberships
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
