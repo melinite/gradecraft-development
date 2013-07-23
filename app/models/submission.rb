@@ -9,6 +9,7 @@ class Submission < ActiveRecord::Base
   #has_attached_file :attachment
 
   belongs_to :task
+  belongs_to :assignment
   belongs_to :student, :class_name => 'User'
   belongs_to :creator, :class_name => 'User'
   belongs_to :group
@@ -19,11 +20,9 @@ class Submission < ActiveRecord::Base
 
   scope :ungraded, -> { where(graded: false) }
 
-  before_validation :set_course_id
+  before_validation :set_assignment_and_course
 
   validates_presence_of :task, :student
-
-  delegate :assignment, :to => :task
 
   #Canable permissions
   def updatable_by?(user)
@@ -67,7 +66,8 @@ class Submission < ActiveRecord::Base
 
   private
 
-  def set_course_id
+  def set_assignment_and_course
+    self.assignment_id = task.assignment_id
     self.course_id = assignment.course_id
   end
 end

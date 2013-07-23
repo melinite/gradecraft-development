@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class AssignmentTest < ActiveSupport::TestCase
+  include ValidAttribute::Method
+
   test "can detect when a weight is not set" do
     refute assignment.weight_for_student?(student)
   end
@@ -28,6 +30,12 @@ class AssignmentTest < ActiveSupport::TestCase
     @assignment = create_assignment(:point_total => 300)
     create_assignment_weight(:weight => 2)
     assert_equal 600, @assignment.point_total_for_student(student)
+  end
+
+  test "sets course" do
+    @assignment = build_assignment(:course => nil)
+    assert_wont have_valid(:course).when(nil), @assignment
+    assert_must have_valid(:course).when(course), @assignment
   end
 
   def course

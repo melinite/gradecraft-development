@@ -24,9 +24,9 @@ class Assignment < ActiveRecord::Base
 
   delegate :points_predictor_display, :mass_grade, :student_weightable?, :to => :assignment_type
 
-  before_validation :set_course_id
+  before_validation :set_course
 
-  validates_presence_of :assignment_type, :name, :grade_scope
+  validates_presence_of :assignment_type, :course, :name, :grade_scope
 
   attr_accessible :type, :name, :description, :point_total, :due_date,
     :created_at, :updated_at, :level, :present, :grades_attributes, :assignment_type,
@@ -238,7 +238,7 @@ class Assignment < ActiveRecord::Base
     end
   end
 
-  def set_course_id
+  def set_course
     self.course_id = assignment_type.course_id
   end
 end

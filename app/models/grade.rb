@@ -5,9 +5,8 @@ class Grade < AbstractGrade
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :user, :badge_ids, :grade,
     :gradeable, :gradeable_id, :gradeable_type, :earned_badges_attributes,
-    :earned, :submission_id, :badge_ids, :earned_badge_id,
-    :gradeable_attributes, :earned_badges, :earned_badges_attributes,
-    :assignment
+    :earned, :submission, :submission_id, :badge_ids, :earned_badge_id,
+    :gradeable_attributes, :earned_badges, :earned_badges_attributes
 
   belongs_to :submission
   belongs_to :assignment
@@ -21,7 +20,7 @@ class Grade < AbstractGrade
   before_validation :set_assignment_and_course
 
   validates_presence_of :assignment
-  validates_uniqueness_of :gradeable, :scope => :assignment
+  validates_uniqueness_of :assignment_id, :scope => [:gradeable_id, :gradeable_type]
 
   delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
