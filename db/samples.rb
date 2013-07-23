@@ -196,6 +196,7 @@ grinding_assignments = []
     a.submissions_allowed = false
     a.release_necessary = false
     a.grade_scope = "Individual"
+    a.course_id = default_course
   end
 
   grinding_assignments << Assignment.create! do |a|
@@ -206,24 +207,41 @@ grinding_assignments = []
     a.submissions_allowed = false
     a.release_necessary = true
     a.grade_scope = "Individual"
+    a.course_id = default_course
   end
 end
 
 grinding_assignments.each do |a|
-  a.tasks.create!
+  a.tasks.create! do |t|
+    puts a.name
+    t.title = "Task 1"
+    t.due_at = rand.weeks.from_now
+    t.accepts_submissions = true
+  end
 end
 
 puts "Attendance and Reading Reaction classes have been posted!"
+
+grinding_submissions = []
 
 grinding_assignments.each do |assignment|
   next unless assignment.due_date.past? 
   students.each do |student|
     assignment.tasks.each do |task|
-      task.submissions.create! do |submission|
+      grinding_submissions << task.submissions.create! do |submission|
+        submission.student = student
+        submission.text_comment = "Wingardium Leviosa"
+        submission.link = "http://www.pottermore.com/en-us"
+        submission.assignment_id = assignment
+        submission.course_id = default_course
+      end
+      grinding_submissions.each do |submission| 
         submission.grade = Grade.create! do |grade|
+          grade.submission = submission
           grade.gradeable = student
-          grade.raw_score = assignment.point_total * [0, 1].sample
+          grade.raw_score = submission.assignment.point_total * [0, 1].sample
         end
+        puts "Submission Grades Posted!"
       end
     end
   end

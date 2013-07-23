@@ -98,6 +98,6 @@ class Grade < AbstractGrade
 
   def set_assignment_and_course
     self.assignment_id = submission.assignment_id
-    self.course_id = assignment.course_id
+    self.course_id = submission.assignment.course_id
   end
 end
