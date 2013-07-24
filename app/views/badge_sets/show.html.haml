@@ -19,7 +19,7 @@
         %td 
           %img{:src => badge.icon, :alt => badge.name}
         %td= badge.name
-        %td= badge.value
+        %td= badge.point_total
         %td= raw badge.description
         %td= link_to "View", badge_path(badge), :class => 'btn btn-tiny btn-success'
         %td= link_to "Edit", edit_badge_path(badge), :class => 'btn btn-tiny btn-success'
