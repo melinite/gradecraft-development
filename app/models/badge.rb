@@ -1,13 +1,18 @@
-class Badge < Assignment
-  attr_accessible :assignment_id, :name, :description, :icon, :visible, :created_at, 
-  :updated_at, :image_file_name, :occurrence, :badge_set_id, :value, :multiplier
+class Badge < ActiveRecord::Base
+  self.table_name = 'assignments'
+
+  default_scope -> { where(:type => 'Badge') }
+
+  attr_accessible :assignment, :assignment_id, :name, :description, :icon,
+    :visible, :created_at, :updated_at, :image_file_name, :occurrence,
+    :badge_set, :category_id, :value, :multiplier
 
   #has_attached_file :image, :styles => { :small => "70x70>" }
 
   #mount_uploader :icon, ImageUploader
   has_many :earned_badges, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
-  belongs_to :badge_set
+  belongs_to :badge_set, :foreign_key => :category_id
   belongs_to :course
   belongs_to :assignment
 
@@ -17,7 +22,7 @@ class Badge < Assignment
 
   validates_presence_of :course, :name
 
-  scope :ordered, -> { 'badges.id ASC' }
+  scope :ordered, -> { 'assignments.id ASC' }
 
   def can_earn_multiple_times
     super || false
@@ -29,14 +34,6 @@ class Badge < Assignment
     else
       0
     end
-  end
-
-  def assignment_type
-    self
-  end
-
-  def badges_earned
-    EarnedBadge.where(:badge_id => id)
   end
 
   #badges per role
@@ -55,6 +52,6 @@ class Badge < Assignment
   private
 
   def set_course
-    self.course_id = badge_set.course_id
+    self.course_id = badge_set.try(:course_id)
   end
 end

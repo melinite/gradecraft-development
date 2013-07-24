@@ -3,8 +3,10 @@ class BadgeSet < ActiveRecord::Base
 
   default_scope -> { where(:type => 'BadgeSet') }
 
+  attr_accessible :course, :name
+
   belongs_to :course
-  has_many :badges, :foreign_key => :assignment_type
+  has_many :badges, :foreign_key => :category_id
 
   validates_presence_of :course, :name
 end
