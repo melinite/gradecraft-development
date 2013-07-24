@@ -18,6 +18,7 @@ class Course < ActiveRecord::Base
     has_many :assignments
     has_many :badge_sets
     has_many :badges
+    has_many :categories
     has_many :earned_badges
     has_many :grade_schemes
     has_many :grades

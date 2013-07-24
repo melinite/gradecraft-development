@@ -3,8 +3,8 @@ class CategoriesController < ApplicationController
   before_filter :ensure_staff?
 
   def index
-    @title = "Categorys"
-    @categories = Category.all
+    @title = "Categories"
+    @categories = current_course.categories
     respond_to do |format|
       format.html
       format.json { render json: @categories }
@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.find(params[:id])
+    @category = current_course.categories.find(params[:id])
     @title = @category.name
     respond_to do |format|
       format.html
@@ -21,7 +21,7 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category = Category.new
+    @category = current_course.categories.new
     @title = "Create a New Category"
 
     respond_to do |format|
@@ -31,12 +31,12 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find(params[:id])
+    @category = current_course.categories.find(params[:id])
     @title = "Edit #{@category.name}"
   end
 
   def create
-    @category = Category.new(params[:category])
+    @category = current_course.categories.new(params[:category])
 
     respond_to do |format|
       if @category.save
@@ -44,13 +44,13 @@ class CategoriesController < ApplicationController
         format.json { render json: @category, status: :created, location: @category }
       else
         format.html { render action: "new" }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
+        format.json { render json: @category.errors, notice: "Category creation failed." }
       end
     end
   end
 
   def update
-    @category = Category.find(params[:id])
+    @category = current_course.categories.find(params[:id])
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
@@ -64,7 +64,7 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find(params[:id])
+    @category = current_course.categories.find(params[:id])
     @category.destroy
 
     respond_to do |format|
