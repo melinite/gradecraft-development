@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130724181758) do
+ActiveRecord::Schema.define(version: 20130724191754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 20130724181758) do
     t.boolean  "can_earn_multiple_times"
     t.boolean  "visible",                    default: true
     t.integer  "category_id"
+    t.boolean  "resubmissions_allowed"
+    t.integer  "max_submissions"
   end
 
   create_table "categories", force: true do |t|
@@ -203,6 +205,7 @@ ActiveRecord::Schema.define(version: 20130724181758) do
     t.integer  "final_score"
     t.integer  "submission_id"
     t.integer  "course_id"
+    t.boolean  "shared"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
