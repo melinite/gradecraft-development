@@ -4,9 +4,8 @@
   = f.input :icon, :as => :string, :label => "Image"
   = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Description", :placeholder => "Describe what this badge means, and how it can be earned. Note that if this badge is marked as visible then this description will also be viewable in the list of badges."
   = f.input :visible, :as => :boolean
-  = f.input :value
-  = f.input :multiplier
-  = f.input :occurrence, :collection => [["Onetime", "onetime"], ["Multiple", "multiple"]], :hint => "Can this badge be given to one person multiple times through the semester, or only only once?", :prompt => "-- Select Occurrence --"
+  = f.input :point_total
+  = f.input :can_earn_multiple_times, :collection => [["Onetime", "onetime"], ["Multiple", "multiple"]], :hint => "Can this badge be given to one person multiple times through the semester, or only only once?", :prompt => "-- Select Occurrence --"
 
   .form-actions
     %div.btn-toolbar    

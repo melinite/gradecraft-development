@@ -11,7 +11,7 @@ class Badge < ActiveRecord::Base
 
   #mount_uploader :icon, ImageUploader
   has_many :earned_badges, :dependent => :destroy
-  has_many :tasks, :dependent => :destroy
+  has_many :tasks, :foreign_key => :assignment_id, :dependent => :destroy
   belongs_to :badge_set, :foreign_key => :category_id
   belongs_to :course
   belongs_to :assignment

@@ -4,6 +4,7 @@
   = f.input :high_range
   = f.input :letter_grade
   = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
+  = f.input :grade_scheme_id, :as => :hidden, :default => @grade_scheme.id
     
   .form-actions
     %div.btn-toolbar

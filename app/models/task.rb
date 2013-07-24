@@ -2,6 +2,7 @@ class Task < AbstractTask
   attr_accessible :assignment
 
   belongs_to :assignment
+  belongs_to :badge, :foreign_key => :assignment_id
   belongs_to :course
   has_many :submissions, :dependent => :destroy
 
