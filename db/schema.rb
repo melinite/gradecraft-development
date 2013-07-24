@@ -168,16 +168,6 @@ ActiveRecord::Schema.define(version: 20130724204645) do
     t.datetime "updated_at"
   end
 
-  create_table "faqs", force: true do |t|
-    t.string   "question"
-    t.text     "answer"
-    t.integer  "order"
-    t.string   "category"
-    t.string   "audience"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "grade_scheme_elements", force: true do |t|
     t.string   "name"
     t.integer  "low_range"
@@ -213,8 +203,8 @@ ActiveRecord::Schema.define(version: 20130724204645) do
     t.integer  "final_score"
     t.integer  "submission_id"
     t.integer  "course_id"
-    t.integer  "student_id"
     t.boolean  "shared"
+    t.integer  "student_id"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
@@ -288,6 +278,7 @@ ActiveRecord::Schema.define(version: 20130724204645) do
     t.string   "assignment_type"
   end
 
+  add_index "submissions", ["assignment_id", "assignment_type"], name: "index_submissions_on_assignment_id_and_assignment_type", using: :btree
   add_index "submissions", ["course_id"], name: "index_submissions_on_course_id", using: :btree
 
   create_table "tasks", force: true do |t|
@@ -307,13 +298,6 @@ ActiveRecord::Schema.define(version: 20130724204645) do
   add_index "tasks", ["assignment_id", "assignment_type"], name: "index_tasks_on_assignment_id_and_assignment_type", using: :btree
   add_index "tasks", ["course_id"], name: "index_tasks_on_course_id", using: :btree
   add_index "tasks", ["id", "type"], name: "index_tasks_on_id_and_type", using: :btree
-
-  create_table "themes", force: true do |t|
-    t.string   "name"
-    t.string   "filename"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "users", force: true do |t|
     t.string   "username",                                            null: false

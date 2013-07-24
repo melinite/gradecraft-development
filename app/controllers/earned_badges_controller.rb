@@ -14,7 +14,7 @@ class EarnedBadgesController < ApplicationController
   
   def my_badges
     @title = "Awarded Badges"
-    @earned_badges = @earnable.earned_badges.all
+    @earned_badges = @earnable.earned_badges
     respond_to do |format|
       format.html
       format.json { render json: @earned_badge }
@@ -34,38 +34,38 @@ class EarnedBadgesController < ApplicationController
   def new
     @title = "Award a New Badge"
     @badge = Badge.find(params[:id])
-    @badges = current_course.badges.all
+    @badges = current_course.badges
     @earned_badge = EarnedBadge.new
-    @students = current_course.users.students.all
+    @students = current_course.users.students
   end
   
   def new_via_student
     @title = "Award a New Badge"
-    @badges = current_course.badges.all
+    @badges = current_course.badges
     @earned_badge = EarnedBadge.new
-    @students = current_course.users.students.all
+    @students = current_course.users.students
   end
 
   def new_via_assignment
     @title = "Award a New Badge"
-    @assignments = current_course.assignments.all
-    @badges = current_course.badges.all
+    @assignments = current_course.assignments
+    @badges = current_course.badges
     @earned_badge = @earnable.earned_badges.new
     #@earned_badge.earnable = params[:earnable_type].constantize.find(params[:earnable_id])    
   end
   
   def edit
     @title = "Edit Awarded Badge"
-    @badges = current_course.badges.all
-    @badge_sets = current_course.badge_sets.all
+    @badges = current_course.badges
+    @badge_sets = current_course.badge_sets
     @earned_badge = EarnedBadge.find(params[:id])
     respond_with @earned_badge
   end
   
 
   def create
-    @badge_sets = current_course.badge_sets.all 
-    @badges = current_course.badges.all
+    @badge_sets = current_course.badge_sets 
+    @badges = current_course.badges
     @earned_badge = @earnable.earned_badges.build(params[:earned_badge])
     respond_to do |format|
       if @earned_badge.save
@@ -79,7 +79,7 @@ class EarnedBadgesController < ApplicationController
   end
 
   def update
-    @badge_sets = current_course.badge_sets.all 
+    @badge_sets = current_course.badge_sets 
     @badges = Badge.all
     @earned_badge = EarnedBadge.find(params[:id])
 
@@ -118,7 +118,7 @@ class EarnedBadgesController < ApplicationController
   end
   
   def chart
-    @badges = current_course.badges.all
+    @badges = current_course.badges
     @students = current_course.users.students
   end
 

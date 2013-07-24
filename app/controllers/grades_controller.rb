@@ -34,35 +34,32 @@ class GradesController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
     @grade = @assignment.assignment_grades.create(params[:grade])
-    @grade.gradeable = params[:gradeable_type].constantize.find(params[:gradeable_id])
-    #@grade.earnable = params[:earnable_type].constantize.find(params[:earnable_id])
+    @grade.student = params[:student_id])
     @badges = current_course.badges
     @score_levels = @assignment_type.score_levels
     @earned_badge = EarnedBadge.new
     @earned_badges = current_course.badges.map do |b|
       EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
     end
-    @teams = current_course.teams.all
-    @groups = current_course.groups.all
+    @teams = current_course.teams
+    @groups = current_course.groups
     @students = current_course.users.students
     respond_with(@grade)
   end
 
   def edit
-    @badges = current_course.badges.all
+    @badges = current_course.badges
     @assignment = Assignment.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type    
     @score_levels = @assignment_type.score_levels
     @students = current_course.users.students
-    @teams = current_course.teams.all
-    @groups = current_course.groups.all
+    @teams = current_course.teams
+    @groups = current_course.groups
     @grade = @assignment.assignment_grades.find(params[:id])
     @earned_badges = current_course.badges.map do |b|
       EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
     end
-    @grade.gradeable = params[:gradeable_type].constantize.find(params[:gradeable_id])
-    #@gradeable_earned_badges = @gradeable.earned_badges
-    #@grade_scheme_elements = @assignment.grade_scheme_elements
+    @grade.student = params[:student_id])    
     respond_with @grade
   end
   
@@ -72,7 +69,7 @@ class GradesController < ApplicationController
     @students = current_course.users.students 
     @grade = @gradeable.assignment_grades.build(params[:grade])
     @earnable = find_earnable
-    @badges = current_course.badges.all
+    @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|
       if @grade.save
@@ -89,8 +86,7 @@ class GradesController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     @grade = @assignment.assignment_grades.find(params[:id])
     @earnable = find_earnable
-    @badges = current_course.badges.all
-    #@earned_badge = EarnedBadge.new(params[:earned_badge])
+    @badges = current_course.badges
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
         format.html { redirect_to @assignment, notice: 'Grade was successfully updated.' }

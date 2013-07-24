@@ -4,7 +4,7 @@ class BadgeSetsController < ApplicationController
 
   def index
     @title = "Badge Sets"
-    @badge_sets = BadgeSet.all
+    @badge_sets = current_course.badge_sets
     respond_to do |format|
       format.html
       format.json { render json: @badge_sets }
@@ -12,7 +12,7 @@ class BadgeSetsController < ApplicationController
   end
 
   def show
-    @badge_set = BadgeSet.find(params[:id])
+    @badge_set = current_course.badge_sets.find(params[:id])
     @title = @badge_set.name
     respond_to do |format|
       format.html
@@ -21,7 +21,7 @@ class BadgeSetsController < ApplicationController
   end
 
   def new
-    @badge_set = BadgeSet.new
+    @badge_set = current_course.badge_sets.new
     @title = "Create a New Badge Set"
 
     respond_to do |format|
@@ -31,12 +31,12 @@ class BadgeSetsController < ApplicationController
   end
 
   def edit
-    @badge_set = BadgeSet.find(params[:id])
+    @badge_set = current_course.badge_sets.find(params[:id])
     @title = "Edit #{@badge_set.name}"
   end
 
   def create
-    @badge_set = BadgeSet.new(params[:badge_set])
+    @badge_set = current_course.badge_sets.new(params[:badge_set])
 
     respond_to do |format|
       if @badge_set.save
@@ -50,7 +50,7 @@ class BadgeSetsController < ApplicationController
   end
 
   def update
-    @badge_set = BadgeSet.find(params[:id])
+    @badge_set = current_course.badge_sets.find(params[:id])
 
     respond_to do |format|
       if @badge_set.update_attributes(params[:badge_set])
@@ -64,7 +64,7 @@ class BadgeSetsController < ApplicationController
   end
 
   def destroy
-    @badge_set = BadgeSet.find(params[:id])
+    @badge_set = current_course.badge_sets.find(params[:id])
     @badge_set.destroy
 
     respond_to do |format|
