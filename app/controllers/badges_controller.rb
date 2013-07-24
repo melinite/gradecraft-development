@@ -4,7 +4,7 @@ class BadgesController < ApplicationController
 
   def index
     @title = "View All Badges"
-    @badges = current_course.badges.includes(:elements)
+    @badges = current_course.badges.includes(:tasks)
   end
 
   def show

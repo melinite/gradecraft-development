@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130723005618) do
+ActiveRecord::Schema.define(version: 20130724141021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 20130723005618) do
     t.boolean  "submissions_allowed"
     t.boolean  "student_logged"
     t.string   "student_logged_button_text"
-    t.integer  "badge_set_id"
     t.boolean  "release_necessary"
     t.datetime "open_date"
     t.string   "type"
@@ -156,7 +155,6 @@ ActiveRecord::Schema.define(version: 20130723005618) do
     t.string   "courseno"
     t.string   "year"
     t.string   "semester"
-    t.string   "theme_id"
     t.integer  "course_grade_scheme_id"
     t.datetime "created_at",                                                           null: false
     t.datetime "updated_at",                                                           null: false
@@ -175,7 +173,7 @@ ActiveRecord::Schema.define(version: 20130723005618) do
     t.string   "section_leader_term"
     t.string   "group_term"
     t.string   "assignment_weight_type"
-    t.boolean  "has_assignment_submissions"
+    t.boolean  "accepts_submissions"
     t.boolean  "teams_visible"
     t.string   "badge_use_scope"
     t.string   "weight_term"
@@ -208,16 +206,6 @@ ActiveRecord::Schema.define(version: 20130723005618) do
   create_table "dashboards", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "faqs", force: true do |t|
-    t.string   "question"
-    t.text     "answer"
-    t.integer  "order"
-    t.string   "category"
-    t.string   "audience"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "grade_scheme_elements", force: true do |t|
@@ -343,13 +331,6 @@ ActiveRecord::Schema.define(version: 20130723005618) do
   end
 
   add_index "tasks", ["course_id"], name: "index_tasks_on_course_id", using: :btree
-
-  create_table "themes", force: true do |t|
-    t.string   "name"
-    t.string   "filename"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "users", force: true do |t|
     t.string   "username",                                            null: false

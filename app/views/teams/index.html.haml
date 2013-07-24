@@ -20,7 +20,7 @@
       %tr
         %td= team.rank
         %td= link_to team.name, team
-        %td= team.student_count
+        %td= team.member_count
         %td= team.score
         - if current_user.is_staff?
           %td

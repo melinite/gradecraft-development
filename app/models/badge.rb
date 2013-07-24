@@ -1,11 +1,12 @@
 class Badge < Assignment
-  attr_accessible :assignment_id, :name, :description, :icon, :visible, :created_at, :updated_at, :image_file_name, :occurrence, :badge_set_id, :value, :multiplier
+  attr_accessible :assignment_id, :name, :description, :icon, :visible, :created_at, 
+  :updated_at, :image_file_name, :occurrence, :badge_set_id, :value, :multiplier
 
   #has_attached_file :image, :styles => { :small => "70x70>" }
 
   #mount_uploader :icon, ImageUploader
   has_many :earned_badges, :dependent => :destroy
-  has_many :elements, :dependent => :destroy
+  has_many :tasks, :dependent => :destroy
   belongs_to :badge_set
   belongs_to :course
   belongs_to :assignment
@@ -18,8 +19,8 @@ class Badge < Assignment
 
   scope :ordered, -> { 'badges.id ASC' }
 
-  def occurance
-    super || "onetime"
+  def can_earn_multiple_times
+    super || false
   end
 
   def point_value

@@ -26,7 +26,7 @@ course = Course.create! do |c|
   c.badge_use_scope = "Both"
   c.shared_badges = true
   c.badges_value = false
-  c.has_assignment_submissions = true
+  c.accepts_submissions = true
   c.predictor_setting = true
   c.graph_display = false
 end

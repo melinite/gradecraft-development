@@ -110,7 +110,7 @@ class Course < ActiveRecord::Base
   end
 
   def has_submissions?
-    has_submissions == true
+    accepts_submissions == true
   end
 
   def membership_for_student(student)

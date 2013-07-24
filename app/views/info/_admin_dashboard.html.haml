@@ -112,7 +112,7 @@
         %thead
           %tr
             %th= "Badge"
-            %th= "Elements"
+            %th= "Tasks"
             %th= "# Earned"
             %th
         %tbody
@@ -123,7 +123,7 @@
                 = link_to badge.name, badge 
               %td
                 %ul
-                  - badge.elements.each do |element|
-                    %li= link_to element.name, badge_element_path(badge, element)
+                  - badge.tasks.each do |task|
+                    %li= link_to task.name, badge_task_path(badge, task)
               %td= badge.earned_badges.count
               %td= link_to "Award", new_earned_badge_path(:id => badge), :class => "btn btn-tiny btn-success"
