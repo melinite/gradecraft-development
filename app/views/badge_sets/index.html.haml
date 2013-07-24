@@ -11,7 +11,7 @@
     - @badge_sets.each do |badge_set|
       %tr
         %td= link_to badge_set.name, badge_set
-        %td= badge_set.notes
+        %td= badge_set.description
         %td= link_to 'Edit', edit_badge_set_path(badge_set), :class => 'btn btn-tiny btn-success'
         %td= link_to 'Delete', badge_set, :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
 
