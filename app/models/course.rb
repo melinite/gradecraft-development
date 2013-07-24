@@ -125,57 +125,8 @@ class Course < ActiveRecord::Base
     assignments.past.map { |assignment| assignment.point_total_for_student(student) }.sum
   end
 
-  def total_for_student(student)
-    assignments.map { |assignment| assignment.point_total_for_student(student) }.sum
-  end
-
   def badge_total
     badges.sum(:value)
-  end
-
-  def score_for_student(student)
-   student.earned_grades(self)
-  end
-
-  def grade_level(student)
-    course_grade_scheme.try(:grade_level, score_for_student(student)) || "Not yet known"
-  end
-
-  def group_grades_for_student(student)
-    grades = []
-    student.groups.each do |group|
-      grades += self.grades.where(:gradeable => group)
-    end
-    grades
-  end
-
-  def individual_grades_for_student(student)
-    self.grades.where(:gradeable => student)
-  end
-
-  def team_grades_for_student(student)
-    self.grades.where(:gradeable => student.teams.first)
-  end
-
-  def grades_for_student(student)
-    individual_grades_for_student(student) + ((group_grades_for_student(student) if student.groups.present?) || [])
-    #individual_grades_for_student(student) + team_grades_for_student(student) + ((group_grades_for_student(student) if student.groups.present?) || [])
-  end
-
-  def point_totals_by_assignment_type_for_student(student)
-    assignment_type_point_totals = {}
-    self.grades_for_student(student).group_by { |g| g.assignment.assignment_type_id }.each { |assignment_type_id,grades| assignment_type_point_totals[assignment_type_id] = grades.map(&:point_total).sum }
-    assignment_type_point_totals
-  end
-
-  def scores_by_assignment_type_for_student(student)
-    assignment_type_scores = {}
-    self.grades_for_student(student).group_by { |g| g.assignment.assignment_type_id }.each { |assignment_type_id,grades| assignment_type_scores[assignment_type_id] = grades.map { |g| g.score(student) }.sum }
-    assignment_type_scores
-  end
-
-  def assignment_type_score_for_student(assignment_type,student)
-    scores_by_assignment_type_for_student(student)[assignment_type.id]
   end
 
   def assignment_weight_for_student(student)
@@ -184,14 +135,6 @@ class Course < ActiveRecord::Base
 
   def assignment_weight_spent_for_student(student)
     assignment_weight_for_student(student) >= total_assignment_weight
-  end
-
-  def grades_for_course(course)
-    scores = []
-    students.each do |student|
-      scores += grades_for_student(student)
-    end
-    scores
   end
 
   def minimum_course_score
