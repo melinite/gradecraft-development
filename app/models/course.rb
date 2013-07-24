@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  attr_accessible :badge_set_ids, :course_grade_scheme_id, :courseno, :name,
+  attr_accessible :badge_set_ids, :courseno, :name,
     :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
     :user_id, :course_id, :homepage_message, :group_setting,
     :total_assignment_weight, :assignment_weight_close_date, :team_roles,
@@ -27,8 +27,6 @@ class Course < ActiveRecord::Base
   end
 
   has_many :grade_scheme_elements, :through => :grade_schemes
-  belongs_to :course_grade_scheme
-  has_many :course_grade_scheme_elements, :through => :course_grade_scheme
   has_many :team_assignments, :dependent => :destroy
 
   validates_presence_of :name, :badge_setting, :team_setting, :group_setting

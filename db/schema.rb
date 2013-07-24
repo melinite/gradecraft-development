@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130724180402) do
+ActiveRecord::Schema.define(version: 20130724181758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20130724180402) do
     t.string   "courseno"
     t.string   "year"
     t.string   "semester"
-    t.integer  "course_grade_scheme_id"
+    t.integer  "grade_scheme_id"
     t.datetime "created_at",                                                           null: false
     t.datetime "updated_at",                                                           null: false
     t.boolean  "badge_setting",                                        default: true

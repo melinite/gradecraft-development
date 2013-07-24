@@ -26,7 +26,7 @@
   %li.nav-header Course Settings
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
   %li.icn_group= link_to "Staff", staff_users_path
-  %li.icn_calculator= link_to "Grading Scheme", course_grade_schemes_path
+  %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
   
   - if current_user.is_admin?
     %li.divider
