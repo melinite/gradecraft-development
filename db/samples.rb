@@ -32,22 +32,6 @@ course = Course.create! do |c|
 end
 puts "Videogames and Learning has been installed"
 
-#Generate badge set
-badge_set = course.badge_sets.create! do |bs|
-  bs.name = "Hogwarts Most Officially Official Badge Set"
-end
-puts "Awards may now be given!"
-
-badges = badge_names.map do |badge_name|
-  badge_set.badges.create! do |b|
-    b.name = badge_name
-    b.point_total = 100 * rand(10)
-    b.icon = badge_icons.sample
-    b.visible = true
-  end
-end
-puts "Did someone need motivation? We found these badges in the Room of Requirements..."
-
 teams = team_names.map do |team_name|
   course.teams.create! do |t|
     t.name = team_name
@@ -69,11 +53,6 @@ students = user_names.map do |name|
   end
 end
 puts "Generated #{students.count} unruly students"
-
-students.each do |student|
-  student.teams << teams.sample
-end
-puts "Added students to teams"
 
 # Generate sample admin
 User.create! do |u|
@@ -112,6 +91,35 @@ end
 puts "Percy Weasley has arrived on campus, on time as usual"
 
 assignment_types = {}
+
+#Generate badge set
+badge_set = course.badge_sets.create! do |bs|
+  bs.name = "Hogwarts Most Officially Official Badge Set"
+end
+puts "Awards may now be given!"
+
+assignment_types[:badge] = AssignmentType.create! do |at|
+  at.course = course
+  at.name = "Badges"
+  at.point_setting = "Individually"
+  at.points_predictor_display = "Fixed"
+  at.resubmission = true
+  at.max_value = "60000"
+  at.predictor_description = "Badges Badges Everywhere"
+  at.save 
+  badges = badge_names.map do |badge_name|
+    at.assignments.create! do |b|
+      b.name = badge_name
+      b.point_total = 100 * rand(10)
+      b.icon = badge_icons.sample
+      b.visible = true
+      b.type = "Badge"
+      b.grade_scope = "Individual"
+    end
+  end
+puts "Did someone need motivation? We found these badges in the Room of Requirements..."
+end
+
 assignment_types[:attendance] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Attendance"
