@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20130724153016) do
     t.string   "icon"
     t.boolean  "can_earn_multiple_times"
     t.boolean  "visible",                    default: true
+    t.integer  "category_id"
   end
 
   create_table "categories", force: true do |t|
