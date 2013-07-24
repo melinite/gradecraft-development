@@ -1,9 +1,0 @@
-= simple_form_for(@course_grade_scheme, :html => {:class => 'form-horizontal' }) do |f|
-  = f.input :name
-  
-  .form-actions
-    %div.btn-toolbar    
-      %div.btn-group
-        = f.button :submit, "Create Course Grade Scheme", :class => "btn-primary"
-      %div.btn-group
-        = link_to 'Cancel', course_grade_schemes_path, :class => 'btn btn-info'

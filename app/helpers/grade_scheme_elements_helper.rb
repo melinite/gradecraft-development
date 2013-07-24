@@ -1,2 +1,0 @@
-module GradeSchemeElementsHelper
-end
