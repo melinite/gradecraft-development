@@ -98,27 +98,16 @@ badge_set = course.badge_sets.create! do |bs|
 end
 puts "Awards may now be given!"
 
-assignment_types[:badge] = AssignmentType.create! do |at|
-  at.course = course
-  at.name = "Badges"
-  at.point_setting = "Individually"
-  at.points_predictor_display = "Fixed"
-  at.resubmission = true
-  at.max_value = "60000"
-  at.predictor_description = "Badges Badges Everywhere"
-  at.save 
-  badges = badge_names.map do |badge_name|
-    at.assignments.create! do |b|
-      b.name = badge_name
-      b.point_total = 100 * rand(10)
-      b.icon = badge_icons.sample
-      b.visible = true
-      b.type = "Badge"
-      b.grade_scope = "Individual"
-    end
+badges = badge_names.map do |badge_name|
+  badge_set.badges.create! do |b|
+    b.name = badge_name
+    b.point_total = 100 * rand(10)
+    b.icon = badge_icons.sample
+    b.visible = true
+    b.grade_scope = "Individual"
   end
-puts "Did someone need motivation? We found these badges in the Room of Requirements..."
 end
+puts "Did someone need motivation? We found these badges in the Room of Requirements..."
 
 assignment_types[:attendance] = AssignmentType.create! do |at|
   at.course = course
