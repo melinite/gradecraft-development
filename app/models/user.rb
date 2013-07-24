@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   include Canable::Cans
 
-  before_save :set_default_course  #:set_sortable_scores, 
+  before_save :set_sortable_scores, :set_default_course
 
   ROLES = %w(student professor gsi admin)
 
