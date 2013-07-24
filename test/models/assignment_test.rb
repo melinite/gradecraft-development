@@ -3,6 +3,10 @@ require 'test_helper'
 class AssignmentTest < ActiveSupport::TestCase
   include ValidAttribute::Method
 
+  test "sets type automatically" do
+    assert_equal 'Assignment', Assignment.new.type
+  end
+
   test "can detect when a weight is not set" do
     refute assignment.weight_for_student?(student)
   end

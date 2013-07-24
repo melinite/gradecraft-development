@@ -1,7 +1,7 @@
 class Submission < ActiveRecord::Base
-  attr_accessible :task, :task_id, :comment, :feedback, :group, :group_id,
-    :attachment, :link, :student, :student_id, :creator, :creator_id,
-    :text_feedback, :text_comment, :graded
+  attr_accessible :task, :task_id, :assignment, :assignment_id, :assignment_type, :comment,
+    :feedback, :group, :group_id, :attachment, :link, :student, :student_id,
+    :creator, :creator_id, :text_feedback, :text_comment, :graded
 
   include Canable::Ables
   #userstamps! # adds creator and updater
@@ -9,7 +9,7 @@ class Submission < ActiveRecord::Base
   #has_attached_file :attachment
 
   belongs_to :task
-  belongs_to :assignment
+  belongs_to :assignment, :polymorphic => true
   belongs_to :student, :class_name => 'User'
   belongs_to :creator, :class_name => 'User'
   belongs_to :group
@@ -67,7 +67,8 @@ class Submission < ActiveRecord::Base
   private
 
   def set_assignment_and_course
-    self.assignment_id = task.assignment_id
-    self.course_id = assignment.course_id
+    self.assignment_id = task.try(:assignment_id)
+    self.assignment_type = task.try(:assignment_type)
+    self.course_id = assignment.try(:course_id)
   end
 end
