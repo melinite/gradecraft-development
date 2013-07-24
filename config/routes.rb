@@ -32,6 +32,7 @@ GradeCraft::Application.routes.draw do
   resources :info
   resources :home
   resources :group_memberships
+  resources :categories
   resources :courses
   resources :course_memberships
   resources :badge_sets

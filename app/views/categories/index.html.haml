@@ -1,0 +1,17 @@
+= link_to 'New Category', new_category_path, {:class => 'btn btn-info btn-small'}
+
+%table.table.display.table-bordered.tablesorter
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th.header
+      %th.header
+  %tbody
+    - @categories.each do |category|
+      %tr
+        %td= link_to category.name, category
+        %td= category.description
+        %td= link_to 'Edit', edit_category_path(category), :class => 'btn btn-tiny btn-success'
+        %td= link_to 'Delete', category, :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+
