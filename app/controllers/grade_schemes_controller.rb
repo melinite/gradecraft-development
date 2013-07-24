@@ -3,7 +3,7 @@ class GradeSchemesController < ApplicationController
   before_filter :ensure_staff?
 
   def index
-    @grade_schemes = current_course.grade_schemes.all
+    @grade_schemes = current_course.grade_schemes
 
     respond_to do |format|
       format.html 
@@ -22,7 +22,7 @@ class GradeSchemesController < ApplicationController
 
   def new
     @grade_scheme = current_course.grade_schemes.new
-    @assignments = Assignment.all
+    @assignments = current_course.assignments
     respond_to do |format|
       format.html 
       format.json { render json: @grade_scheme }
@@ -31,12 +31,12 @@ class GradeSchemesController < ApplicationController
 
   def edit
     @grade_scheme = current_course.grade_schemes.find(params[:id])
-    @assignments = Assignment.all
+    @assignments = current_course.assignments
   end
 
   def create
     @grade_scheme = current_course.grade_schemes.new(params[:grade_scheme])
-    @assignments = Assignment.all
+    @assignments = current_course.assignments
 
     respond_to do |format|
       if @grade_scheme.save
@@ -61,7 +61,7 @@ class GradeSchemesController < ApplicationController
 
   def update
     @grade_scheme = current_course.grade_schemes.find(params[:id])
-    @assignments = Assignment.all
+    @assignments = current_course.assignments
     respond_to do |format|
       if @grade_scheme.update_attributes(params[:grade_scheme])
         format.html { redirect_to @grade_scheme, notice: 'Grade scheme was successfully updated.' }

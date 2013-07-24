@@ -49,7 +49,7 @@ class SubmissionsController < ApplicationController
   def edit
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students
-    @groups = @assignment.groups.all 
+    @groups = @assignment.groups 
     @teams = current_course.teams
     @title = "Edit Submission for #{@assignment.name}"
     @submission = Submission.find(params[:id])
