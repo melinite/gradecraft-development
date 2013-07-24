@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class GradeTest < ActiveSupport::TestCase
+  test "sets type automatically" do
+    assert_equal 'Grade', Grade.new.type
+  end
+
   test "saves course membership's sortable score after creating" do
     assert_equal grade.raw_score, student.sortable_score_for_course(course)
   end

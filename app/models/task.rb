@@ -1,8 +1,9 @@
-class Task < AbstractTask
-  attr_accessible :assignment
+class Task < ActiveRecord::Base
+  default_scope -> { where(:type => 'Task') }
 
-  belongs_to :assignment
-  belongs_to :badge, :foreign_key => :assignment_id
+  attr_accessible :assignment, :assignment_id, :assignment_type
+
+  belongs_to :assignment, :polymorphic => true
   belongs_to :course
   has_many :submissions, :dependent => :destroy
 
@@ -13,6 +14,6 @@ class Task < AbstractTask
   private
 
   def set_course
-    self.course_id = assignment.course_id
+    self.course_id = assignment.try(:course_id)
   end
 end

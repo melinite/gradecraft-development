@@ -1,5 +1,7 @@
-class Grade < AbstractGrade
+class Grade < ActiveRecord::Base
   include Canable::Ables
+
+  default_scope -> { where(:type => 'Grade') }
 
   attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
@@ -8,24 +10,27 @@ class Grade < AbstractGrade
     :earned, :submission, :submission_id, :badge_ids, :earned_badge_id,
     :gradeable_attributes, :earned_badges, :earned_badges_attributes
 
+  belongs_to :course
   belongs_to :submission
   belongs_to :assignment
-  has_many :grade_scheme_elements, :through => :assignment
+  belongs_to :student
 
   has_many :earned_badges, :dependent => :destroy
-  accepts_nested_attributes_for :earned_badges
 
   has_many :badges, :through => :earned_badges
+  accepts_nested_attributes_for :earned_badges
 
-  before_validation :set_assignment_and_course
+  has_many :grade_scheme_elements, :through => :assignment
+
+  before_validation :set_assignment_and_course_and_student
 
   validates_presence_of :assignment
   validates_uniqueness_of :assignment_id, :scope => [:gradeable_id, :gradeable_type]
 
   delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
-  after_save :save_gradeable
-  after_destroy :save_gradeable
+  after_save :save_student
+  after_destroy :save_student
 
   scope :completion, -> { where(order: "assignments.due_date ASC", :joins => :assignment) }
   scope :released, -> { where(status: "Released") }
@@ -72,7 +77,7 @@ class Grade < AbstractGrade
   end
 
   def creatable_by?(user)
-    gradeable_id = user.id
+    student_id == user.id
   end
 
   def viewable_by?(user)
@@ -91,12 +96,14 @@ class Grade < AbstractGrade
 
   private
 
-  def save_gradeable
-    gradeable.save
+  def save_student
+    student.save
   end
 
-  def set_assignment_and_course
-    self.assignment_id = submission.assignment_id
-    self.course_id = submission.assignment.course_id
+  def set_assignment_and_course_and_student
+    self.assignment_id = submission.try(:assignment_id)
+    self.assignment_type = submission.try(:assignment_type)
+    self.student_id = submission.try(:student_id)
+    self.course_id = assignment.try(:course_id)
   end
 end

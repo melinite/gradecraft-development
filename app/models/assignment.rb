@@ -8,12 +8,12 @@ class Assignment < ActiveRecord::Base
   accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'
-  has_many :groups, -> { where(:type => nil) }
+  has_many :groups
   has_many :group_memberships, :through => :group_memberships
 
   has_many :tasks, :dependent => :destroy
-  has_many :submissions, :through => :tasks
-  has_many :grades, :through => :submissions
+  has_many :submissions
+  has_many :grades
   accepts_nested_attributes_for :grades
 
   has_many :users, :through => :grades
@@ -103,10 +103,6 @@ class Assignment < ActiveRecord::Base
 
   def average
     assignment_grades.average(:raw_score).try(:round)
-  end
-
-  def type
-    assignment_type.try(:name)
   end
 
   def release_necessary?

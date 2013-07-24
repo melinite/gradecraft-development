@@ -16,6 +16,10 @@ class Badge < ActiveRecord::Base
   belongs_to :course
   belongs_to :assignment
 
+  has_many :tasks, :dependent => :destroy
+  has_many :submissions
+  has_many :grades
+
   accepts_nested_attributes_for :badge_set
 
   before_validation :set_course

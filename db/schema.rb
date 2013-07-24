@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130724191754) do
+ActiveRecord::Schema.define(version: 20130724203207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,16 @@ ActiveRecord::Schema.define(version: 20130724191754) do
     t.datetime "updated_at"
   end
 
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.integer  "order"
+    t.string   "category"
+    t.string   "audience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "grade_scheme_elements", force: true do |t|
     t.string   "name"
     t.integer  "low_range"
@@ -200,17 +210,15 @@ ActiveRecord::Schema.define(version: 20130724191754) do
     t.string   "status"
     t.boolean  "attempted"
     t.boolean  "substantial"
-    t.integer  "gradeable_id"
-    t.string   "gradeable_type"
     t.integer  "final_score"
     t.integer  "submission_id"
     t.integer  "course_id"
     t.boolean  "shared"
+    t.integer  "student_id"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
   add_index "grades", ["course_id"], name: "index_grades_on_course_id", using: :btree
-  add_index "grades", ["gradeable_id", "gradeable_type"], name: "index_grades_on_graded_id_and_graded_type", using: :btree
 
   create_table "group_memberships", force: true do |t|
     t.integer  "group_id"
@@ -275,8 +283,10 @@ ActiveRecord::Schema.define(version: 20130724191754) do
     t.datetime "released_at"
     t.integer  "task_id"
     t.integer  "course_id"
+    t.string   "assignment_type"
   end
 
+  add_index "submissions", ["assignment_id", "assignment_type"], name: "index_submissions_on_assignment_id_and_assignment_type", using: :btree
   add_index "submissions", ["course_id"], name: "index_submissions_on_course_id", using: :btree
 
   create_table "tasks", force: true do |t|
@@ -289,9 +299,20 @@ ActiveRecord::Schema.define(version: 20130724191754) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "course_id"
+    t.string   "assignment_type"
+    t.string   "type"
   end
 
+  add_index "tasks", ["assignment_id", "assignment_type"], name: "index_tasks_on_assignment_id_and_assignment_type", using: :btree
   add_index "tasks", ["course_id"], name: "index_tasks_on_course_id", using: :btree
+  add_index "tasks", ["id", "type"], name: "index_tasks_on_id_and_type", using: :btree
+
+  create_table "themes", force: true do |t|
+    t.string   "name"
+    t.string   "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: true do |t|
     t.string   "username",                                            null: false
