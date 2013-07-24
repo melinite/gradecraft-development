@@ -239,6 +239,6 @@ class Assignment < ActiveRecord::Base
   end
 
   def set_course
-    self.course_id = assignment_type.course_id
+    self.course_id = assignment_type.try(:course_id)
   end
 end

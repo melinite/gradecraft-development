@@ -32,11 +32,13 @@ class AssignmentTest < ActiveSupport::TestCase
     assert_equal 600, @assignment.point_total_for_student(student)
   end
 
-  test "sets course" do
+  test "sets course from assignment type before validation" do
     @assignment = build_assignment(:course => nil)
-    assert_wont have_valid(:course).when(nil), @assignment
-    assert_must have_valid(:course).when(course), @assignment
+    @assignment.valid?
+    assert_equal @assignment.course, assignment_type.course
   end
+
+  # Custom fabricator overrides
 
   def course
     @course ||= create_course(:default_assignment_weight => 0.5)
