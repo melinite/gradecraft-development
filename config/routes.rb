@@ -34,10 +34,6 @@ GradeCraft::Application.routes.draw do
   resources :group_memberships
   resources :courses
   resources :course_memberships
-  resources :course_grade_schemes do
-    resources :course_grade_scheme_elements
-  end
-  resources :themes
   resources :badge_sets
   resources :badges do
     resources :elements
@@ -56,7 +52,6 @@ GradeCraft::Application.routes.draw do
     resources :earned_badges
   end
   resources :assignment_types
-  resources :faqs
   resources :score_levels
   resources :groups, :only => :index
   resources :assignments do

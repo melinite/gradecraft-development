@@ -37,7 +37,7 @@ class CoursesController < ApplicationController
   def edit
     @title = "Edit Basic Settings"
     @course = Course.find(params[:id])
-    @course_grade_schemes = CourseGradeScheme.all
+    @grade_schemes = GradeScheme.all
     @badge_sets = BadgeSet.all
     @grade_schemes = GradeScheme.all
     

@@ -382,14 +382,12 @@ assignments << Assignment.create! do |a|
 end
 puts "Group Game Design has been posted!"
 
-course_grade_scheme = CourseGradeScheme.new(:name => 'N.E.W.T. Grades')
+grade_scheme = GradeScheme.new(:name => 'N.E.W.T. Grades')
 grade_scheme_hash.each do |range,name|
-  course_grade_scheme.course_grade_scheme_elements.new do |e|
+  grade_scheme.grade_scheme_elements.new do |e|
     e.name = name
     e.low_range = range.first
     e.high_range = range.last
   end
 end
-course_grade_scheme.courses = Course.all
-course_grade_scheme.save!
 puts "Installed N.E.W.T. grade scheme for each course"
