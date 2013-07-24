@@ -16,7 +16,7 @@ class Team < AbstractGroup
   end
 
   def member_count
-    members.count
+    #member.count
   end
 
   def member_badge_count

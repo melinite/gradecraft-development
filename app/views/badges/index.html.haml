@@ -7,7 +7,7 @@
       %th#icon Icon
       %th#title Title
       %th#description Description
-      %th#elements Criteria
+      %th#tasks Criteria
       - if current_course.valuable_badges?
         %th Value
       - if current_user.is_staff?
@@ -24,8 +24,8 @@
             %td= raw badge.description
             %td
               %ul
-                - badge.elements.each do |element|
-                  %li= element.name
+                - badge.tasks.each do |task|
+                  %li= task.name
             - if current_course.valuable_badges?
               %td= number_with_delimiter(badge.value)
             %td 

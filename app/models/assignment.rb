@@ -74,16 +74,16 @@ class Assignment < ActiveRecord::Base
   end
 
   def submission_for_student(student)
-    submissions_by_submittable_id[['User',student.id]].try(:first)
+    submissions_by_student_id[['User',student.id]].try(:first)
   end
 
 
   def submission_for_group(group)
-    submissions_by_submittable_id[['Group',group.id]].try(:first)
+    submissions_by_group_id[['Group',group.id]].try(:first)
   end
 
   def submission_for_team(team)
-    submissions_by_submittable_id[['Team',team.id]].try(:first)
+    submissions_by_group_id[['Team',team.id]].try(:first)
   end
 
   def submissions_by_assignment_id
@@ -169,8 +169,8 @@ class Assignment < ActiveRecord::Base
     points_predictor = "Fixed"
   end
 
-  def has_submissions?
-    has_submissions == true
+  def submissions_allowed?
+    submissions_allowed == true
   end
 
   def has_ungraded_submissions?

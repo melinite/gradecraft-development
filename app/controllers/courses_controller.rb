@@ -15,7 +15,6 @@ class CoursesController < ApplicationController
   def show
     @title = "Course Settings"
     @course = Course.find(params[:id])
-    @themes = Theme.all
     @users = current_course.users.all
     respond_to do |format|
       format.html
@@ -26,7 +25,6 @@ class CoursesController < ApplicationController
   def new
     @title = "Create a New Course"
     @course = Course.new
-    @themes = Theme.all
     @badge_sets = BadgeSet.all
     @grade_schemes = GradeScheme.all
 
@@ -41,7 +39,6 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @course_grade_schemes = CourseGradeScheme.all
     @badge_sets = BadgeSet.all
-    @themes = Theme.all
     @grade_schemes = GradeScheme.all
     
   end

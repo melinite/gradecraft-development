@@ -16,9 +16,6 @@
     %b Year:
     = @course.year
   %p
-    %b Theme:
-    = @course.theme.try(:name)
-  %p
     %b Course Grade Scheme:
     = @course.course_grade_scheme.try(:name)
   %p
@@ -94,20 +91,20 @@
   %h4 MULTIPLIERS
   %p
     %b User's set: 
-    = @course.max_student_weight
-    = @course.student_weight_type
+    = @course.max_assignment_weight
+    = @course.assignment_weight_type
   %p
     %b Minimum size:
-    = @course.min_size
+    //= @course.min_size
   %p
     %b Maximium size: 
-    = @course.max_size
+    = @course.max_assignment_weight
   %p
     %b Multipliers must be set by: 
-    = @course.student_weight_close_date
+    = @course.assignment_weight_close_date
   %p
     %b Multiplier/weight term:
-    = @course.multiplier_term
+    = @course.weight_term
   %p
     %b What amount should other (unselected) assignment types be multiplied by?
-    = @course.multiplier_default
+    = @course.default_assignment_weight

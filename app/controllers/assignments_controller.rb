@@ -5,9 +5,9 @@ class AssignmentsController < ApplicationController
 
   def index
     @title = "Assignments"
-    @assignments = current_course.assignments.includes(:assignment_type)
+    @assignments = current_course.assignments.where(:type => nil)
     @assignment_types = current_course.assignment_types
-    @grade_schemes = current_course.grade_schemes.all
+    @grade_schemes = current_course.grade_schemes
     respond_to do |format|
       format.html
       format.json { render json: @assignments.as_json(only:[:id, :name, :description, :point_total, :due_date, :assignment_type_id, :grade_scheme_id, :grade_scope, :visible, :required ]) }

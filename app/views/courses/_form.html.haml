@@ -5,9 +5,8 @@
     = f.input :courseno, :label => "Course Number"
     = f.input :semester, :collection => [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]]
     = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2) 
-    = f.input :theme_id, :collection => @themes, :prompt => "-- Select a Theme --", :include_blank => :true
     = f.association :course_grade_scheme, :collection => @course_grade_schemes
-    = f.input :has_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions" 
+    = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions" 
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
     = f.input :predictor_setting, :label => "Can the students see the predictor on their dashboard?", :as => :radio_buttons
 
@@ -37,12 +36,12 @@
     
   %div.well
     %h4 MULTIPLIERS
-    = f.input :total_student_weight, :label => "Student set what amount of the course?"
-    = f.input :student_weight_type, :label => "Amount type", :collection => [["Multiplier"],["Percent"]]
-    = f.input :student_weight_close_date, :label => "What date must they make this decision by?", :as => :date
-    = f.input :max_student_assignment_type_weight, :label => "Maximum amount that students may set"
-    = f.input :multiplier_default, :label => "What amount should other assignment types be multiplied by?", :validate => false
-    = f.input :multiplier_term, :label => "What do you want to call these weights/multipliers?"
+    = f.input :total_assignment_weight, :label => "Student set what amount of the course?"
+    = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"],["Percent"]]
+    = f.input :assignment_weight_close_date, :label => "What date must they make this decision by?", :as => :date
+    = f.input :max_assignment_weight, :label => "Maximum amount that students may set"
+    = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false
+    = f.input :weight_term, :label => "What do you want to call these weights/multipliers?"
   
   .form-actions
     %div.btn-toolbar    

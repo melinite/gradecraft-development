@@ -6,7 +6,7 @@
   %img{:src => @badge.icon, :alt => @badge.name}
 %p
   %b Value:
-  = "#{@badge.value} points"
+  //= "#{@badge.value} points"
 %p
   %b Description:
   = raw @badge.description
@@ -15,8 +15,8 @@
   = @badge.icon
 
 %h3
-Badge Elements:
-(#{link_to 'Add Element', new_badge_element_path(@badge)})
+Badge tasks:
+//(#{link_to 'Add task', new_badge_task_path(@badge)})
 
 %table.display.table-bordered.table
   %thead
@@ -26,12 +26,12 @@ Badge Elements:
       %th
       %th
   %tbody
-    - @badge.elements.each do |element|
+    - @badge.tasks.each do |task|
       %tr
-        %td= element.name
-        %td= element.description
-        %td= link_to "Edit", edit_badge_element_path(@badge.id, element.id), :class => 'btn btn-tiny btn-success'
-        %td= link_to "Delete", badge_element_path(@badge.id, element.id), :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-tiny btn-success', :method => :delete
+        %td= task.name
+        %td= task.description
+        %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-success'
+        %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-tiny btn-success', :method => :delete
         
 %table.display.table-bordered.table
         
