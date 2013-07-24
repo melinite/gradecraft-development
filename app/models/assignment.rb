@@ -71,21 +71,13 @@ class Assignment < ActiveRecord::Base
   end
 
   #submissions per role
-  def submissions_by_submittable_id
-    @submissions_by_submittable_id || submissions.group_by { |s| [s.submittable_type,s.submittable_id] }
+  
+  def submissions_by_student_id
+    @submissions_by_student_id ||= submissions.group_by(&:student_id)
   end
-
+  
   def submission_for_student(student)
-    submissions_by_student_id[['User',student.id]].try(:first)
-  end
-
-
-  def submission_for_group(group)
-    submissions_by_group_id[['Group',group.id]].try(:first)
-  end
-
-  def submission_for_team(team)
-    submissions_by_group_id[['Team',team.id]].try(:first)
+    submissions_by_student_id[student.id].try(:first)
   end
 
   def submissions_by_assignment_id

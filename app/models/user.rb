@@ -126,8 +126,7 @@ class User < ActiveRecord::Base
   end
 
   def earned_grades(course)
-    course.grades_for_student(self).sum(&:score)
-    # (course.grades_for_student(self).map(&:score).sum) + earned_badges_value(course) + team_score(course)
+    grades.where(:course => course).to_a.sum { |g| g.score(self) }
   end
 
   def grades_by_assignment_id
@@ -201,16 +200,8 @@ class User < ActiveRecord::Base
     course.total_points(in_progress) + earned_badges_value(course)
   end
 
-  def grade_score(course)
-    course.grades_for_student(self).sum { |g| g.score(self) }
-  end
-
   def team_score(course)
     teams.where(:course => course).pluck('score').first
-  end
-
-  def earned_grades(course)
-    grade_score(course) + earned_badges_value(course) || 0
   end
 
   def group_for_assignment(assignment)
