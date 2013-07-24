@@ -1,5 +1,9 @@
-class Team < AbstractGroup
+class Team < ActiveRecord::Base
+  self.table_name = 'groups'
+
   has_many :challenge_grades, :dependent => :destroy
+  has_many :group_memberships, :as => :group
+  has_many :students, :through => :group_memberships
 
   attr_accessible :name
 

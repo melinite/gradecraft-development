@@ -1,5 +1,5 @@
 class GroupMembership < ActiveRecord::Base
-  attr_accessible :accepted, :group, :group_id, :user, :user_id
+  attr_accessible :accepted, :group, :group_id, :group_type, :user, :user_id
 
   belongs_to :group, :polymorphic => true
   belongs_to :user
