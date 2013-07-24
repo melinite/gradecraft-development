@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130724203207) do
+ActiveRecord::Schema.define(version: 20130724204645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,8 +213,8 @@ ActiveRecord::Schema.define(version: 20130724203207) do
     t.integer  "final_score"
     t.integer  "submission_id"
     t.integer  "course_id"
-    t.boolean  "shared"
     t.integer  "student_id"
+    t.boolean  "shared"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
@@ -227,9 +227,11 @@ ActiveRecord::Schema.define(version: 20130724203207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "course_id"
+    t.string   "group_type"
   end
 
   add_index "group_memberships", ["course_id"], name: "index_group_memberships_on_course_id", using: :btree
+  add_index "group_memberships", ["group_id", "group_type"], name: "index_group_memberships_on_group_id_and_group_type", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name"
@@ -286,7 +288,6 @@ ActiveRecord::Schema.define(version: 20130724203207) do
     t.string   "assignment_type"
   end
 
-  add_index "submissions", ["assignment_id", "assignment_type"], name: "index_submissions_on_assignment_id_and_assignment_type", using: :btree
   add_index "submissions", ["course_id"], name: "index_submissions_on_course_id", using: :btree
 
   create_table "tasks", force: true do |t|

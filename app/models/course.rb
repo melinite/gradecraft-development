@@ -13,18 +13,18 @@ class Course < ActiveRecord::Base
   has_many :users, :through => :course_memberships
   accepts_nested_attributes_for :users
 
-  with_options :dependent => :destroy do
-    has_many :assignment_types
-    has_many :assignments
-    has_many :badge_sets
-    has_many :badges
-    has_many :categories
-    has_many :earned_badges
-    has_many :grade_schemes
-    has_many :grades
-    has_many :groups
-    has_many :submissions
-    has_many :teams
+  with_options :dependent => :destroy do |c|
+    c.has_many :assignment_types
+    c.has_many :assignments
+    c.has_many :badge_sets
+    c.has_many :badges
+    c.has_many :categories
+    c.has_many :earned_badges
+    c.has_many :grade_schemes
+    c.has_many :grades
+    c.has_many :groups
+    c.has_many :submissions
+    c.has_many :teams
   end
 
   has_many :grade_scheme_elements, :through => :grade_schemes
