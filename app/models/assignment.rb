@@ -2,6 +2,8 @@ class Assignment < ActiveRecord::Base
   #belongs_to :grade_scheme
   #has_many :grade_scheme_elements, :through => :grade_scheme
 
+  default_scope -> { where(:type => 'Assignment') }
+
   belongs_to :assignment_type
   accepts_nested_attributes_for :assignment_type
 

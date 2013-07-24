@@ -53,6 +53,14 @@ class ActiveSupport::TestCase
     { :course => course }
   end
 
+  define_custom_fabricator :badge do
+    { :badge_set => badge_set }
+  end
+
+  define_custom_fabricator :badge_set do
+    { :course => course }
+  end
+
   define_custom_fabricator :course
 
   define_custom_fabricator :grade do

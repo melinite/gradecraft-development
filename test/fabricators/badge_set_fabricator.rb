@@ -1,3 +1,3 @@
 Fabricator(:badge_set) do
-  name { sequence(:name) { |i| "Badge Set #{i}" } } 
+  name { sequence(:badge_set_name) { |i| "Badge Set #{i}" } }
 end
