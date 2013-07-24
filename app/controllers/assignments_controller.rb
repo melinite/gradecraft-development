@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @title = "Assignments"
-    @assignments = current_course.assignments.where(:type => nil)
+    @assignments = current_course.assignments.where(:type => "Assignment")
     @assignment_types = current_course.assignment_types
     @grade_schemes = current_course.grade_schemes
     respond_to do |format|

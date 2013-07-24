@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130724153016) do
+ActiveRecord::Schema.define(version: 20130724180402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,53 +93,9 @@ ActiveRecord::Schema.define(version: 20130724153016) do
 
   add_index "categories", ["course_id"], name: "index_categories_on_course_id", using: :btree
 
-  create_table "challenge_grades", force: true do |t|
-    t.integer  "challenge_id"
-    t.integer  "score"
-    t.string   "feedback"
-    t.boolean  "status"
-    t.integer  "team_id"
-    t.integer  "final_score"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "course_id"
-  end
-
-  add_index "challenge_grades", ["course_id"], name: "index_challenge_grades_on_course_id", using: :btree
-
-  create_table "challenges", force: true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.integer  "point_total"
-    t.datetime "due_date"
-    t.integer  "course_id"
-    t.string   "points_predictor_display"
-    t.boolean  "visible"
-    t.boolean  "has_challenge_submissions"
-    t.boolean  "release_necessary"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
   create_table "course_categories", id: false, force: true do |t|
     t.integer "course_id"
     t.integer "category_id"
-  end
-
-  create_table "course_grade_scheme_elements", force: true do |t|
-    t.string   "name"
-    t.string   "letter_grade"
-    t.integer  "low_range"
-    t.integer  "high_range"
-    t.integer  "course_grade_scheme_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "course_grade_schemes", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "course_memberships", force: true do |t|
