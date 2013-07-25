@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   has_many :assignments, :through => :grades
   has_many :submissions, :foreign_key => :student_id, :dependent => :destroy
   has_many :created_submissions, :as => :creator
-  has_many :grades, :as => :student, :dependent => :destroy
+  has_many :grades, :foreign_key => :student_id, :dependent => :destroy
   has_many :earned_badges, :as => :student, :dependent => :destroy
   has_many :badges, :through => :earned_badges
   accepts_nested_attributes_for :earned_badges, :reject_if => proc { |attributes| attributes['earned'] != '1' }

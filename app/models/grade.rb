@@ -12,7 +12,7 @@ class Grade < ActiveRecord::Base
   belongs_to :course
   belongs_to :submission
   belongs_to :assignment
-  belongs_to :student
+  belongs_to :user, :foreign_key => :student_id
 
   has_many :earned_badges, :dependent => :destroy
 
@@ -96,12 +96,11 @@ class Grade < ActiveRecord::Base
   private
 
   def save_student
-    student.save
+    user.save
   end
 
   def set_assignment_and_course_and_student
     self.assignment_id = submission.try(:assignment_id)
-    self.assignment_type = submission.try(:assignment_type)
     self.student_id = submission.try(:student_id)
     self.course_id = assignment.try(:course_id)
   end
