@@ -34,7 +34,7 @@ class GradesController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
     @grade = @assignment.assignment_grades.create(params[:grade])
-    @grade.student = params[:student_id])
+    @grade.student = current_course.grades.where(params[:student_id])
     @badges = current_course.badges
     @score_levels = @assignment_type.score_levels
     @earned_badge = EarnedBadge.new
@@ -59,15 +59,15 @@ class GradesController < ApplicationController
     @earned_badges = current_course.badges.map do |b|
       EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
     end
-    @grade.student = params[:student_id])    
+    @grade.student = current_course.grades.where(params[:student_id])   
     respond_with @grade
   end
   
   def create
-    @gradeable = find_gradeable
+    @student = find_student
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students 
-    @grade = @gradeable.assignment_grades.build(params[:grade])
+    @grade = @student.assignment_grades.build(params[:grade])
     @earnable = find_earnable
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
@@ -104,7 +104,7 @@ class GradesController < ApplicationController
     @grade.destroy
     
     respond_to do |format|
-      format.html { redirect_to assignment_path(@assignment), notice: "#{ @grade.gradeable.name}'s #{@assignment.name} grade was successfully deleted." }
+      format.html { redirect_to assignment_path(@assignment), notice: "#{ @grade.student.name}'s #{@assignment.name} grade was successfully deleted." }
       format.json { head :ok }
     end
   end
@@ -112,13 +112,13 @@ class GradesController < ApplicationController
   def self_log
     @assignment = Assignment.find(params[:assignment_id])
     @grade = @assignment.assignment_grades.create(params[:grade])
-    @grade.gradeable = params[:gradeable_type].constantize.find(params[:gradeable_id])
+    @grade.student = current_course.grades.where(params[:student_id])
   end
   
   def self_log_create
-    @gradeable = find_gradeable
+    @student = find_student
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @gradeable.assignment_grades.build(params[:grade])
+    @grade = @student.assignment_grades.build(params[:grade])
     respond_to do |format|
       if @grade.save
         format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }
@@ -131,6 +131,7 @@ class GradesController < ApplicationController
 
   def mass_edit
     @assignment = Assignment.find(params[:assignment_id])
+    debugger
     @title = "Mass Grade #{@assignment.name}"
     @assignment_type = @assignment.assignment_type    
     @score_levels = @assignment_type.score_levels
@@ -138,12 +139,12 @@ class GradesController < ApplicationController
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = current_course.users.students.includes(:teams).where(user_search_options)
     @grades = @students.map do |s| 
-      @assignment.assignment_grades.where(:gradeable_id => s.id, :gradeable_type => 'User').first || @assignment.assignment_grades.new(:gradeable => s, :assignment => @assignment)
+      @assignment.assignment_grades.where(:student_id => s.id).first || @assignment.grades.new(:student => s.id, :assignment => @assignment)
     end
   end
 
   def mass_update
-    @gradeable = find_gradeable
+    @student = find_student
     @assignment = Assignment.find(params[:assignment_id])
     if @assignment.update_attributes(params[:assignment])
       redirect_to assignment_path(@assignment)
@@ -168,7 +169,7 @@ class GradesController < ApplicationController
     redirect_to assignment_path(@assignment)
   end
   
-  def find_gradeable
+  def find_student
     params.each do |name, value|
       if name =~ /(.+)_id$/
         return $1.classify.constantize.find(value)

@@ -1,16 +1,12 @@
 %div.col.col-lg-12
-  - if @grade.assignment.is_individual?
-    = link_to 'Edit', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :gradeable_id => @grade.gradeable_id, :gradeable_type => "User"), :class => 'btn btn-info btn-small'
-  - elsif @grade.assignment.has_teams?
-    = link_to 'Edit', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :gradeable_id => @grade.gradeable_id, :gradeable_type => "Team"), :class => 'btn btn-info btn-small'
-  - if @grade.assignment.has_groups?
-    = link_to 'Edit', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :gradeable_id => @grade.gradeable_id, :gradeable_type => "Group"), :class => 'btn btn-info btn-small'
+  = link_to 'Edit', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :student_id => @grade.student_id), :class => 'btn btn-info btn-small'
+
   = link_to 'Back', assignment_path(@grade.assignment_id), :class => 'btn btn-info btn-small'
   = link_to "Grade Another " +@grade.assignment.name, new_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => 'btn btn-info btn-small'
   
 %p
   %b User:
-  = link_to @grade.gradeable.try(:name), "/#{@grade.gradeable_type.downcase}s/#{@grade.gradeable_id}"
+  = link_to @grade.student.try(:name), student
 %p
   %b Assignment:
   = link_to @grade.assignment.name, assignment_path(@grade.assignment_id)

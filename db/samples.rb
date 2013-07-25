@@ -201,6 +201,7 @@ end
 
 grinding_assignments.each do |a|
   a.tasks.create! do |t|
+    t.assignment = a
     t.title = "Task 1"
     t.due_at = rand.weeks.from_now
     t.accepts_submissions = true
@@ -217,8 +218,10 @@ grinding_assignments.each do |assignment|
         s.task = task
         s.text_comment = "Wingardium Leviosa"
         s.link = "http://www.pottermore.com/en-us"
+        puts "house elf"
       end
       student.grades.create! do |g|
+        puts "Dobby"
         g.submission = submission
         g.raw_score = assignment.point_total * [0, 1].sample
       end

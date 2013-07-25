@@ -8,14 +8,13 @@
   %table#massGrade
     - @grades.each_with_index do |grade,i|
       %tr
-        %td= link_to grade.gradeable.try(:name), grade.gradeable
+        %td= link_to grade.student, grade.student
         %td
           - "assignment[grades_attributes][#{i}][raw_score]".tap do |raw_score_field_name|
             - if grade.persisted?
               = hidden_field_tag "assignment[grades_attributes][#{i}][id]", grade.id
             - else
-              = hidden_field_tag "assignment[grades_attributes][#{i}][gradeable_id]", grade.gradeable.id
-              = hidden_field_tag "assignment[grades_attributes][#{i}][gradeable_type]", grade.gradeable.class.name        
+              //= hidden_field_tag "assignment[grades_attributes][#{i}][student_id]", grade.student.id
             = label_tag do
               - if @assignment.grade_checkboxes?
                 

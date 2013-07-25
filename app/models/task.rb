@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
   attr_accessible :assignment, :assignment_id, :assignment_type
 
   belongs_to :assignment, :polymorphic => true
+  belongs_to :badge, :foreign_key => :assignment_id
   belongs_to :course
   has_many :submissions, :dependent => :destroy
 
