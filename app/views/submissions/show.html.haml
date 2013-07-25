@@ -1,14 +1,5 @@
-- if @submission.assignment.is_individual? 
-  = link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission), {:class => 'btn btn-info btn-small'}
-- elsif @submission.assignment.has_groups? 
-  = link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission), {:class => 'btn btn-info btn-small'}
-- elsif @submission.assignment.has_teams? 
-  = link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :gradeable_id => @submission.submittable, :gradeable_type => "Team"), {:class => 'btn btn-info btn-small'}
-  = link_to 'Back', assignment_submissions_path(@assignment), {:class => 'btn btn-info btn-small'}
-- elsif current_user.is_student?
-  = link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission), {:class => 'btn btn-info btn-small'}
-- elsif current_user.is_staff? 
-  = link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission), {:class => 'btn btn-info btn-small'}
+= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), {:class => 'btn btn-info btn-small'}
+= link_to 'Back', assignment_submissions_path(@assignment), {:class => 'btn btn-info btn-small'}
 
 %p
   %b Assignment:
@@ -26,7 +17,7 @@
 - elsif @submission.assignment.has_groups?
   %p
     %b Group:
-    = link_to @submission.submittable.try(:name), assignment_group_path(@submission, @submission.submittable)
+    = link_to @submission.student.try(:name), assignment_group_path(@submission, @submission.student)
 %p
   %b Submitted: 
   = @submission.created_at

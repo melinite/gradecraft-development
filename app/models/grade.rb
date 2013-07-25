@@ -6,14 +6,13 @@ class Grade < ActiveRecord::Base
   attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :user, :badge_ids, :grade,
-    :gradeable, :gradeable_id, :gradeable_type, :earned_badges_attributes,
-    :earned, :submission, :submission_id, :badge_ids, :earned_badge_id,
-    :gradeable_attributes, :earned_badges, :earned_badges_attributes
+    :earned_badges_attributes, :earned, :submission, :submission_id, :badge_ids, 
+    :earned_badge_id, :earned_badges, :earned_badges_attributes
 
   belongs_to :course
   belongs_to :submission
   belongs_to :assignment
-  belongs_to :student
+  belongs_to :user, :foreign_key => :student_id
 
   has_many :earned_badges, :dependent => :destroy
 
@@ -25,7 +24,7 @@ class Grade < ActiveRecord::Base
   before_validation :set_assignment_and_course_and_student
 
   validates_presence_of :assignment
-  validates_uniqueness_of :assignment_id, :scope => [:gradeable_id, :gradeable_type]
+  validates_uniqueness_of :assignment_id, :scope => [:student_id]
 
   delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
@@ -81,7 +80,7 @@ class Grade < ActiveRecord::Base
   end
 
   def viewable_by?(user)
-    gradeable_id == user.id
+    student_id == user.id
   end
 
   def self.to_csv(options = {})
@@ -97,12 +96,11 @@ class Grade < ActiveRecord::Base
   private
 
   def save_student
-    student.save
+    user.save
   end
 
   def set_assignment_and_course_and_student
     self.assignment_id = submission.try(:assignment_id)
-    self.assignment_type = submission.try(:assignment_type)
     self.student_id = submission.try(:student_id)
     self.course_id = assignment.try(:course_id)
   end

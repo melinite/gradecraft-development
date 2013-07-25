@@ -18,8 +18,8 @@ class SubmissionsController < ApplicationController
     @assignment_type = @assignment.assignment_type
     
     if current_user.is_staff?
-      @gradeable = params[:gradeable_type].constantize.find(params[:gradeable_id])
-      if @gradeable.grade_for_assignment(@assignment)
+      @student = params[:student_id])
+      if @student.grade_for_assignment(@assignment)
         @grade = @assignment.assignment_grades.find(params[:grade_id])
       else 
         @grade = @assignment.assignment_grades.create(params[:grade])
@@ -42,25 +42,20 @@ class SubmissionsController < ApplicationController
     @groups = @assignment.groups 
     @teams = current_course.teams
     @students = @users.students
-    #@submission.user_id = params[:user_id]
-    #respond_with(@submission)
   end
 
   def edit
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students
-    @groups = @assignment.groups.all 
+    @groups = @assignment.groups 
     @teams = current_course.teams
     @title = "Edit Submission for #{@assignment.name}"
     @submission = Submission.find(params[:id])
-    #@submission = @assignment.submissions.find(params[:id])
-    #@submission = @submittable.submissions.build(params[:grade])
   end
 
   def create
     @assignment = Assignment.find(params[:assignment_id])
     @submission = @assignment.submissions.build(params[:submission])
-    #@submission.save
     respond_to do |format|
       if @submission.save
         if current_user.is_student?
@@ -100,7 +95,7 @@ class SubmissionsController < ApplicationController
     end
   end
   
-  def find_gradeable
+  def find_student
     params.each do |name, value|
       if name =~ /(.+)_id$/
         return $1.classify.constantize.find(value)

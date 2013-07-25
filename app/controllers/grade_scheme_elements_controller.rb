@@ -5,7 +5,7 @@ class GradeSchemeElementsController < ApplicationController
   def index 
     @grade_scheme = GradeScheme.find(params[:grade_scheme_id])
     @title = "#{@grade_scheme.name} Grading"
-    @grade_scheme_elements = @grade_scheme.grade_scheme_elements.all
+    @grade_scheme_elements = @grade_scheme.grade_scheme_elements
     respond_with(@grade_scheme_elements)
   end
 
@@ -17,7 +17,7 @@ class GradeSchemeElementsController < ApplicationController
   end
 
   def new
-    @grade_schemes = current_course.grade_schemes.all
+    @grade_schemes = current_course.grade_schemes
     @grade_scheme = GradeScheme.find(params[:grade_scheme_id])
     @title = "Create a New #{@grade_scheme.name} Grading Element"
     @button_title = "Create"

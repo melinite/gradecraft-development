@@ -3,7 +3,7 @@ class EarnedBadge < ActiveRecord::Base
 
   default_scope -> { where(:type => 'EarnedBadge') }
 
-  attr_accessible :badge, :gradeable, :submission
+  attr_accessible :badge, :student_id, :submission
 
   belongs_to :course
   belongs_to :badge, :foreign_key => :assignment_id
@@ -14,7 +14,7 @@ class EarnedBadge < ActiveRecord::Base
 
   before_validation :set_badge_and_course_and_student
 
-  validates_presence_of :badge, :course, :gradeable
+  validates_presence_of :badge, :course, :student_id
 
   delegate :name, :description, :to => :badge
 

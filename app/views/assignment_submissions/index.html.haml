@@ -22,15 +22,6 @@
       %td= raw submission.comment
       %td= raw submission.feedback
       %td= submission.grade.try(:unmultiplied_score)
-      - if @assignment.has_groups?
-        %td= link_to 'View', assignment_submission_path(@assignment, submission, :gradeable_id => submission.submittable.id, :gradeable_type => "Group", :grade_id => submission.grade.try(:id)), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Edit', edit_assignment_submission_path(@assignment, submission, :gradeable_id => submission.submittable.id, :gradeable_type => "Group"), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', assignment_submission_path(@assignment, submission), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
-      - elsif @assignment.has_teams? 
-        %td= link_to 'View', assignment_submission_path(@assignment, submission, :gradeable_id => submission.submittable.id, :gradeable_type => "Team", :grade_id => submission.grade.try(:id)), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Edit', edit_assignment_submission_path(@assignment, submission, :gradeable_id => submission.submittable.id, :gradeable_type => "Team"), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', assignment_submission_path(@assignment, submission), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
-      - elsif @assignment.is_individual? 
-        %td= link_to 'View', assignment_submission_path(@assignment, submission, :gradeable_id => submission.submittable.id, :gradeable_type => "User", :grade_id => submission.grade.try(:id)), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Edit', edit_assignment_submission_path(@assignment, submission, :gradeable_id => submission.submittable.id, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', assignment_submission_path(@assignment, submission), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+      %td= link_to 'View', assignment_submission_path(@assignment, submission, :student_id => submission.student_id, :grade_id => submission.grade.try(:id)), :class => 'btn btn-tiny btn-success'
+      %td= link_to 'Edit', edit_assignment_submission_path(@assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
+      %td= link_to 'Delete', assignment_submission_path(@assignment, submission), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete

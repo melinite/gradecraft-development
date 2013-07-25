@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
   def show
     @title = "Course Settings"
     @course = Course.find(params[:id])
-    @users = current_course.users.all
+    @users = current_course.users
     respond_to do |format|
       format.html
       format.json { render json: @course }

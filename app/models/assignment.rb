@@ -11,7 +11,7 @@ class Assignment < ActiveRecord::Base
   has_many :groups
   has_many :group_memberships, :through => :group_memberships
 
-  has_many :tasks, :dependent => :destroy
+  has_many :tasks, :as => :assignment, :dependent => :destroy
   has_many :submissions
   has_many :grades
   accepts_nested_attributes_for :grades
@@ -50,24 +50,12 @@ class Assignment < ActiveRecord::Base
   scope :grading_done, -> { where assignment_grades.present? == 1 }
 
   #grades per role
-  def grades_by_gradeable_id
-    @grades_by_gradeable_id ||= grades.group_by { |g| [g.gradeable_type,g.gradeable_id] }
+  def grades_by_student_id
+    @grades_by_student_id ||= grades.group_by { |g| [g.student_id] }
   end
 
   def grade_for_student(student)
-    grades_by_gradeable_id[['User',student.id]].try(:first)
-  end
-
-  def grade_for_group(group, user)
-    grades_by_gradeable_id[['Group',group.id]].try(:first)
-  end
-
-  def grade_for_whole_group(group)
-    grades_by_gradeable_id[['Group',group.id]].try(:first)
-  end
-
-  def grade_for_team(team)
-    grades_by_gradeable_id[['Team',team.id]].try(:first)
+    grades.where(:student_id => student).try(:first)
   end
 
   #submissions per role
@@ -77,7 +65,7 @@ class Assignment < ActiveRecord::Base
   end
   
   def submission_for_student(student)
-    submissions_by_student_id[student.id].try(:first)
+    submissions.where(:student_id => student).try(:first)
   end
 
   def submissions_by_assignment_id

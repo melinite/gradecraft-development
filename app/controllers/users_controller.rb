@@ -89,7 +89,7 @@ class UsersController < ApplicationController
   def analytics
     @users = current_course.users
     @students = current_course.users.students
-    @teams = current_course.teams.all
+    @teams = current_course.teams
     @sorted_students = @students.order('course_memberships.sortable_score DESC')
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
@@ -109,19 +109,19 @@ class UsersController < ApplicationController
     end
     @earned_badges = @user.earned_badges
     @assignment_types = current_course.assignment_types.includes(:assignments)
-    @student_assignment_type_weights = @user.student_assignment_type_weights.all
+    @student_assignment_type_weights = @user.student_assignment_type_weights
     @student_assignment_type_weight = @user.student_assignment_type_weights.new
     @assignments = current_course.assignments.includes(:submissions, :assignment_type)
-    @grades = @user.grades.all 
+    @grades = @user.grades 
     @badges = current_course.badges.includes(:earned_badges, :elements)
     respond_with @user
   end
   
   def predictor
     increment_predictor_views
-    @assignment_types = current_course.assignment_types.all
-    @assignments = current_course.assignments.all
-    @badges = current_course.badges.all
+    @assignment_types = current_course.assignment_types
+    @assignments = current_course.assignments
+    @badges = current_course.badges
     if current_user.is_staff?
       @user = User.find(params[:user_id])
     else
@@ -144,7 +144,7 @@ class UsersController < ApplicationController
 
   def new
     @title = "Create a New User"
-    @teams = current_course.teams.all
+    @teams = current_course.teams
     @courses = Course.all
     @user = current_course.users.new(params[:users])
     respond_with @user
@@ -152,14 +152,14 @@ class UsersController < ApplicationController
 
   def edit
     @title = "Edit #{current_course.user_term}"
-    @teams = current_course.teams.all
+    @teams = current_course.teams
     @courses = Course.all
     @user = current_course.users.find(params[:id])
     respond_with @user
   end
   
   def create
-    @teams = current_course.teams.all
+    @teams = current_course.teams
     @user = current_course.users.create(params[:user])
     @user.save
     
@@ -234,7 +234,7 @@ class UsersController < ApplicationController
     @title = "View all #{current_course.multiplier_term} Choices"
     @students = current_course.users.students
     @assignment_types = current_course.assignment_types
-    @teams = current_course.teams.all
+    @teams = current_course.teams
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = current_course.users.students.includes(:teams).where(user_search_options).order('course_memberships.sortable_score DESC')

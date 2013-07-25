@@ -4,11 +4,11 @@ class BadgesController < ApplicationController
 
   def index
     @title = "View All Badges"
-    @badges = current_course.badges.includes(:tasks)
+    @badges = current_course.badges
   end
 
   def show
-    @badge = Badge.find(params[:id])
+    @badge = current_course.badges.find(params[:id])
     @title = @badge.name
 
     respond_to do |format|
@@ -18,8 +18,8 @@ class BadgesController < ApplicationController
   end
 
   def new
-    @badge = Badge.new
-    @badge_sets = current_course.badge_sets.all
+    @badge = current_course.badges.new
+    @badge_sets = current_course.badge_sets
     respond_to do |format|
       format.html
       format.json { render json: @badge }
@@ -27,12 +27,12 @@ class BadgesController < ApplicationController
   end
 
   def edit
-    @badge = Badge.find(params[:id])
-    @badge_sets = current_course.badge_sets.all
+    @badge = current_course.badges.find(params[:id])
+    @badge_sets = current_course.badge_sets
   end
 
   def create
-    @badge = Badge.create(params[:badge])
+    @badge = current_course.badges.create(params[:badge])
 
     respond_to do |format|
       if @badge.save
@@ -46,7 +46,7 @@ class BadgesController < ApplicationController
   end
 
   def update
-    @badge = Badge.find(params[:id])
+    @badge = current_course.badges.find(params[:id])
 
     respond_to do |format|
       if @badge.update_attributes(params[:badge])
@@ -60,7 +60,7 @@ class BadgesController < ApplicationController
   end
 
   def destroy
-    @badge = Badge.find(params[:id])
+    @badge = current_course.badges.find(params[:id])
     @badge.destroy
 
     respond_to do |format|
@@ -69,7 +69,4 @@ class BadgesController < ApplicationController
     end
   end
   
-  def onetime
-    @badges = Badge.find_all_by_occurrence(true)
-  end
 end

@@ -23,7 +23,7 @@ class ScoreLevelsController < ApplicationController
   def new
     @score_level = ScoreLevel.new
     @users = current_course.users.students
-    @assignments = current_course.assignments.all
+    @assignments = current_course.assignments
     @assignment_types = current_course.assignment_types
     respond_to do |format|
       format.html 

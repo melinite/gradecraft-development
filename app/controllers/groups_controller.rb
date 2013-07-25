@@ -3,7 +3,6 @@ class GroupsController < ApplicationController
   before_filter :ensure_staff?
 
   def index
-    #@assignment = Assignment.find(params[:assignment_id])
     @groups = Group.all
  
     respond_to do |format|
@@ -26,7 +25,7 @@ class GroupsController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     @group = @assignment.groups.new
     @students = current_course.users.students
-    @assignments = current_course.assignments.all
+    @assignments = current_course.assignments
     respond_to do |format|
       format.html
       format.json { render json: @group }
