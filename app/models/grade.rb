@@ -6,9 +6,8 @@ class Grade < ActiveRecord::Base
   attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :user, :badge_ids, :grade,
-    :gradeable, :gradeable_id, :gradeable_type, :earned_badges_attributes,
-    :earned, :submission, :submission_id, :badge_ids, :earned_badge_id,
-    :gradeable_attributes, :earned_badges, :earned_badges_attributes
+    :earned_badges_attributes, :earned, :submission, :submission_id, :badge_ids, 
+    :earned_badge_id, :earned_badges, :earned_badges_attributes
 
   belongs_to :course
   belongs_to :submission
@@ -25,7 +24,7 @@ class Grade < ActiveRecord::Base
   before_validation :set_assignment_and_course_and_student
 
   validates_presence_of :assignment
-  validates_uniqueness_of :assignment_id, :scope => [:gradeable_id, :gradeable_type]
+  validates_uniqueness_of :assignment_id, :scope => [:student_id]
 
   delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
@@ -81,7 +80,7 @@ class Grade < ActiveRecord::Base
   end
 
   def viewable_by?(user)
-    gradeable_id == user.id
+    student_id == user.id
   end
 
   def self.to_csv(options = {})

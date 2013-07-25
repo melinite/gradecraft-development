@@ -27,7 +27,7 @@
                 - badge.tasks.each do |task|
                   %li= task.name
             - if current_course.valuable_badges?
-              %td= number_with_delimiter(badge.value)
+              %td= number_with_delimiter(badge.point_total)
             %td 
               - if badge.visible == "1"
                 Yes

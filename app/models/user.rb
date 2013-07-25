@@ -26,15 +26,15 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :courses
   accepts_nested_attributes_for :course_memberships
   belongs_to :default_course, :class_name => 'Course'
-  has_many :grades, :as => :gradeable, :dependent => :destroy
   has_many :assignment_weights, :foreign_key => :student_id
   has_many :assignments, :through => :grades
   has_many :submissions, :foreign_key => :student_id, :dependent => :destroy
   has_many :created_submissions, :as => :creator
-  has_many :earned_badges, :as => :gradeable, :dependent => :destroy
+  has_many :grades, :as => :student, :dependent => :destroy
+  has_many :earned_badges, :as => :student, :dependent => :destroy
+  has_many :badges, :through => :earned_badges
   accepts_nested_attributes_for :earned_badges, :reject_if => proc { |attributes| attributes['earned'] != '1' }
 
-  has_many :badges, :through => :earned_badges
 
   has_many :group_memberships, :dependent => :destroy
   with_options :through => :group_memberships, :source => :group do |u|
