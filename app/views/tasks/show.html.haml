@@ -1,0 +1,14 @@
+%div.col-lg-12#content_nav
+  = link_to 'Edit', edit_task_path(@task), :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+  = link_to 'Back', task_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+
+%p
+  %b Title:
+  = @task.title
+%p
+  %b Description:
+  = @task.description
+%p
+  %b Due Date:
+  = @task.due_at
+

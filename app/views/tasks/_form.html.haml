@@ -1,0 +1,12 @@
+= simple_form_for(@task) do |f|
+
+  .form-inputs
+    = f.input :title
+    = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
+    = f.datetime :due_at
+
+  .form-actions
+    %div.btn-toolbar    
+      %div.btn-group
+        = f.button :submit, :class => "btn-primary"
+      %div.btn-group

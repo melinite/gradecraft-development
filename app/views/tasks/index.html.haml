@@ -1,0 +1,23 @@
+%div.col-lg-12#content_nav
+  = link_to 'New Task', new_task_path, class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+
+%table.table.display.table-bordered
+  %tr
+    %th Title
+    %th Description
+    %th Due Date
+    %th
+    %th
+    %th
+
+  - @task.each do |task|
+    %tr
+      %td= task.title
+      %td= task.description
+      %td= task.due_at
+      %td= link_to 'Show', task
+      %td= link_to 'Edit', edit_task_path(task)
+      %td= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
