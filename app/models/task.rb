@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
   default_scope -> { where(:type => 'Task') }
 
-  attr_accessible :assignment, :assignment_id, :assignment_type
+  attr_accessible :assignment, :assignment_id, :assignment_type, :title, :description, :due_at
 
   belongs_to :assignment, :polymorphic => true
   belongs_to :badge, :foreign_key => :assignment_id

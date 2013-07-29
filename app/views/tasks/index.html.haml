@@ -1,0 +1,21 @@
+%div.col.col-lg-12#content_nav
+  = link_to 'New Task', new_assignment_task_path, :class => 'btn btn-info col col-sm-12 col-lg-1 btn-small pull-right'
+
+%table.display.table-bordered.table
+  %thead
+    %tr
+      %th Title
+      %th Description
+      %th Due Date
+      %th
+      %th
+      %th
+  %tbody
+    - for task in @tasks
+      %tr
+        %td= task.title
+        %td= raw task.description
+        %td= task.due_at
+        %td= link_to 'View', assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success'
+        %td= link_to 'Edit', edit_assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success'
+        %td= link_to 'Delete', assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
