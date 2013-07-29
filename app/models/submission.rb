@@ -20,10 +20,10 @@ class Submission < ActiveRecord::Base
 
   scope :ungraded, -> { where(graded: false) }
 
-  before_validation :set_assignment_and_course
+  before_validation :cache_associations
 
-  validates_presence_of :task, :student
-  validates_uniqueness_of :task, :scope => :student
+  validates_presence_of :student
+  validates_uniqueness_of :task, :scope => :student, :allow_nil => true
 
   #Canable permissions
   def updatable_by?(user)
@@ -67,9 +67,9 @@ class Submission < ActiveRecord::Base
 
   private
 
-  def set_assignment_and_course
-    self.assignment_id = task.try(:assignment_id)
-    self.assignment_type = task.try(:assignment_type)
-    self.course_id = assignment.try(:course_id)
+  def cache_associations
+    self.assignment_id ||= task.try(:assignment_id)
+    self.assignment_type ||= task.try(:assignment_type)
+    self.course_id ||= assignment.try(:course_id)
   end
 end

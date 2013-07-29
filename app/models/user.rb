@@ -28,15 +28,17 @@ class User < ActiveRecord::Base
   belongs_to :default_course, :class_name => 'Course'
   has_many :assignment_weights, :foreign_key => :student_id
   has_many :assignments, :through => :grades
+
   has_many :submissions, :foreign_key => :student_id, :dependent => :destroy
   has_many :created_submissions, :as => :creator
   has_many :grades, :foreign_key => :student_id, :dependent => :destroy
-  has_many :earned_badges, :as => :student, :dependent => :destroy
-  has_many :badges, :through => :earned_badges
+
+  has_many :earned_badges, :foreign_key => :student_id, :dependent => :destroy
   accepts_nested_attributes_for :earned_badges, :reject_if => proc { |attributes| attributes['earned'] != '1' }
 
+  has_many :badges, :through => :earned_badges
 
-  has_many :group_memberships, :dependent => :destroy
+  has_many :group_memberships
   with_options :through => :group_memberships, :source => :group do |u|
     u.has_many :teams, :source_type => 'Team'
     u.has_many :groups, :source_type => 'Group'

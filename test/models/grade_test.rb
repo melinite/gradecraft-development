@@ -5,6 +5,23 @@ class GradeTest < ActiveSupport::TestCase
     assert_equal 'Grade', Grade.new.type
   end
 
+  test "can exist without a task or submission" do
+    Grade.create!(:student => student, :assignment => assignment)
+  end
+
+  test "can exist with a task but no submission" do
+    Grade.create!(:student => student, :task => task)
+  end
+
+  test "can exist with a submission but no task" do
+    Grade.create!(:submission => submission)
+  end
+
+  test "can exist with a task and a submission" do
+    @submission = create_submission(:task => task)
+    Grade.create!(:submission => @submission)
+  end
+
   test "saves course membership's sortable score after creating" do
     assert_equal grade.raw_score, student.sortable_score_for_course(course)
   end

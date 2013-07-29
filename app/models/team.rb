@@ -3,11 +3,14 @@ class Team < ActiveRecord::Base
 
   default_scope -> { where(:type => 'Team') }
 
-  has_many :challenge_grades, :dependent => :destroy
+  attr_accessible :name, :course, :course_id
+
+  belongs_to :course
+
   has_many :group_memberships, :as => :group
   has_many :students, :through => :group_memberships
 
-  attr_accessible :name
+  validates_presence_of :course, :name
 
   def user_grades
     Grade.where(:student => members)
