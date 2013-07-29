@@ -40,12 +40,12 @@
           %td= assignment.required? ? 'Yes' : 'No'
           %td= assignment.grade_scope
           %td= assignment.grade_scheme_id
-          %td= assignment.has_submissions? ? 'Yes' : 'No'
+          %td= assignment.submissions_allowed? ? 'Yes' : 'No'
           %td= assignment.release_necessary? ? 'Yes' : 'No'
           %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
           %td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete 
-          //%td
-          //- if assignment.has_groups?
-          //= link_to 'Create Group', new_group_path("assignment_id"=>assignment.id)
-          //- else 
-          //= #{assignment.grade_scope}
+          %td
+            - if assignment.has_groups?
+              = link_to 'Create Group', new_assignment_group_path("assignment_id"=>assignment.id)
+            - else 
+              = #{assignment.grade_scope}
