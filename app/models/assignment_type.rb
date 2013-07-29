@@ -14,8 +14,6 @@ class AssignmentType < ActiveRecord::Base
 
   validates_presence_of :name, :points_predictor_display, :point_setting
 
-  #default_scope :order => 'order_placement ASC'
-
   scope :student_weightable, -> { where(:student_weightable => true) }
 
   #Displays how much the assignment type is worth in the list view
@@ -77,37 +75,11 @@ class AssignmentType < ActiveRecord::Base
   end
 
   def grade_radio?
-    mass_grade_type =="Radio Buttons"
+    mass_grade_type == "Radio Buttons"
   end
-
-  def group_grades_for_student(student)
-    grades = []
-    student.groups.each do |group|
-      grades += self.grades.where(:gradeable => group)
-    end
-    grades
-  end
-
-  def individual_grades_for_student(student)
-    self.grades.where(:gradeable => student)
-  end
-
-  def team_grades_for_student(student)
-    self.grades.where(:gradeable => student.teams.first)
-  end
-
-  def grades_for_student(student)
-    individual_grades_for_student(student) + ((group_grades_for_student(student) if student.groups.present?) || [])
-    #individual_grades_for_student(student) + team_grades_for_student(student) + ((group_grades_for_student(student) if student.groups.present?) || [])
-  end
-
 
   def score_for_student(student)
-    grades_for_student(student).sum { |g| g.score(student) }
-  end
-
-  def point_totals_by_student_id
-    # TODO: Build this method for performance
+    grades.where(:student => student).to_a.sum { |g| g.score(student) }
   end
 
   def point_total_for_student(student)

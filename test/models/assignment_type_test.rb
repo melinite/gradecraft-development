@@ -27,7 +27,11 @@ class AssignmentTypeTest < ActiveSupport::TestCase
     @assignment_type = create_assignment_type(:student_weightable => true)
     [200, 400].each do |raw_score|
       create_assignment do
-        create_grade(:raw_score => raw_score)
+        create_task do
+          create_submission do
+            create_grade(:raw_score => raw_score)
+          end
+        end
         create_assignment_weight(:weight => 2)
       end
     end

@@ -5,26 +5,26 @@ class Grade < ActiveRecord::Base
 
   attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
-    :finals, :status, :attempted, :substantial, :user, :badge_ids, :grade,
-    :earned_badges_attributes, :earned, :submission, :submission_id, :badge_ids, 
-    :earned_badge_id, :earned_badges, :earned_badges_attributes
+    :finals, :status, :attempted, :substantial, :user, :badge_ids,
+    :earned_badges_attributes, :earned, :submission, :submission_id,
+    :badge_ids, :earned_badge_id, :earned_badges, :earned_badges_attributes
 
   belongs_to :course
   belongs_to :submission
+  belongs_to :task
   belongs_to :assignment
-  belongs_to :user, :foreign_key => :student_id
+  belongs_to :student, :class_name => 'User'
 
-  has_many :earned_badges, :dependent => :destroy
+  has_many :earned_badges, :foreign_key => :parent_id, :dependent => :destroy
 
   has_many :badges, :through => :earned_badges
   accepts_nested_attributes_for :earned_badges
 
   has_many :grade_scheme_elements, :through => :assignment
 
-  before_validation :set_assignment_and_course_and_student
+  before_validation :set_assignment_and_course_and_student_and_task
 
-  validates_presence_of :assignment
-  validates_uniqueness_of :assignment_id, :scope => [:student_id]
+  validates_presence_of :assignment, :course, :student, :submission, :task
 
   delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
@@ -96,12 +96,13 @@ class Grade < ActiveRecord::Base
   private
 
   def save_student
-    user.save
+    student.save
   end
 
-  def set_assignment_and_course_and_student
-    self.assignment_id = submission.try(:assignment_id)
+  def set_assignment_and_course_and_student_and_task
+    self.task_id = submission.try(:task_id)
     self.student_id = submission.try(:student_id)
+    self.assignment_id = task.try(:assignment_id)
     self.course_id = assignment.try(:course_id)
   end
 end

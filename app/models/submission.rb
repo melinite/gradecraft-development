@@ -23,6 +23,7 @@ class Submission < ActiveRecord::Base
   before_validation :set_assignment_and_course
 
   validates_presence_of :task, :student
+  validates_uniqueness_of :task, :scope => :student
 
   #Canable permissions
   def updatable_by?(user)

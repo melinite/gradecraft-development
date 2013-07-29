@@ -64,7 +64,7 @@ class ActiveSupport::TestCase
   define_custom_fabricator :course
 
   define_custom_fabricator :grade do
-    { :gradeable => student, :submission => submission }
+    { :submission => submission }
   end
 
   define_custom_fabricator :earned_badge do
@@ -92,6 +92,14 @@ class ActiveSupport::TestCase
   end
 
   def create_grades(count = 2)
-    create_assignments(count).map { |assignment| create_grade(:assignment => assignment) }
+    1.upto(count).each do |n|
+      create_assignment(:point_total => 100 + n * 200) do
+        create_task do
+          create_submission do
+            create_grade(:raw_score => n * 200)
+          end
+        end
+      end
+    end
   end
 end
