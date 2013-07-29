@@ -6,7 +6,7 @@
   = @challenge.name
 %p
   %b Description:
-  = @challenge.description
+  = raw @challenge.description
 %p
   %b Point total:
   = @challenge.point_total
@@ -18,7 +18,7 @@
   = @challenge.visible? ? 'Yes' : 'No'
 %p
   %b Challenge Submissions:
-  = @challenge.has_challenge_submissions? ? 'Yes' : 'No'
+  = @challenge.submissions_allowed? ? 'Yes' : 'No'
 %p
   %b Release Necessary:
   = @challenge.release_necessary? ? 'Yes' : 'No'
