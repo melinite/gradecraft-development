@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_filter :ensure_staff?
   
   def index 
-    @asssignment = current_course.assignments.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @title = "#{@assignment.name} Task List"
     @tasks = @assignment.tasks
     respond_with(@tasks)
