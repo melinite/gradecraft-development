@@ -7,7 +7,7 @@ class Badge < ActiveRecord::Base
     :visible, :created_at, :updated_at, :image_file_name, :occurrence,
     :badge_set, :category_id, :value, :multiplier
 
-  has_many :earned_badges, :dependent => :destroy
+  has_many :earned_badges, :foreign_key => :assignment_id, :dependent => :destroy
   has_many :tasks, :foreign_key => :assignment_id, :dependent => :destroy
   belongs_to :badge_set, :foreign_key => :category_id
   belongs_to :course

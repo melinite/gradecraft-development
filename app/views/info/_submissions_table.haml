@@ -1,0 +1,14 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      %td Submitted by
+      %td Link
+      %td Comment
+      %td Date Submitted
+  %tbody
+    - submissions.each do |submission|
+      %tr
+        %td= link_to submission.student.name, submission.student
+        %td= link_to submission.link
+        %td= raw submission.text_comment
+        %td= submission.created_at

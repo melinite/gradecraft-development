@@ -12,6 +12,7 @@ class EarnedBadge < ActiveRecord::Base
   belongs_to :submission # Optional
   belongs_to :task # Optional
   belongs_to :grade, :foreign_key => :parent_id # Optional
+  belongs_to :group, :polymorphic => true # Optional
 
   before_validation :cache_associations
 

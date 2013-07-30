@@ -1,0 +1,24 @@
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= course.user_term
+      %th Score
+      %th Badges
+      %th Logins
+      %th Pageviews
+      %th Predictor Views
+      %th Email
+      %th= course.section_leader_term
+  %tbody
+    - students.each do |student|
+      %tr
+        %td= link_to student.name, user_path(student)
+        %td= student.course_memberships.where(:course => course).pluck('sortable_score').first
+        %td= student.earned_badges.count
+        %td= student.visit_count
+        %td= student.page_views
+        %td= student.predictor_views
+        %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
+        - student.team_leader.tap do |team_leader|
+          - if team_leader.present?
+            %td= mail_to team_leader.email, "Email GSI (#{team_leader.first_name})", :class => "btn btn-primary btn-tiny btn-success"

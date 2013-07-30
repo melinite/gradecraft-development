@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
     :shared_badges, :earned_badges, :earned_badges_attributes
 
   scope :alpha, -> { where order: 'last_name ASC' }
-  scope :winning, -> { where order: 'course_memberships.sortable_score DESC' }
+  scope :winning, -> { order 'course_memberships.sortable_score DESC' }
+  scope :losing, -> { order 'course_memberships.sortable_score ASC' }
 
   has_many :course_memberships
   has_many :courses, :through => :course_memberships
@@ -141,10 +142,6 @@ class User < ActiveRecord::Base
   #Badges
   def earned_badges_value(course)
     earned_badges.where(:course => course).pluck('raw_score').sum
-  end
-
-  def user_badge_count
-    earned_badges.count
   end
 
   def earned_badges_by_badge_id
