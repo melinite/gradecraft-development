@@ -11,9 +11,9 @@
   %p
     %b User:
     - if current_user.is_staff?
-      = link_to @submission.submittable.try(:name), @submission.submittable
+      = link_to @submission.student.try(:name), @submission.student
     - else 
-      = @submission.submittable.try(:name)
+      = @submission.student.try(:name)
 - elsif @submission.assignment.has_groups?
   %p
     %b Group:
@@ -30,6 +30,3 @@
 %p
   %b Comment:
   = raw @submission.text_comment
-
-- if current_user.is_staff? 
-  = render 'grade_form'

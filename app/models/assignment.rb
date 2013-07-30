@@ -1,6 +1,6 @@
 class Assignment < ActiveRecord::Base
-  #belongs_to :grade_scheme
-  #has_many :grade_scheme_elements, :through => :grade_scheme
+  belongs_to :grade_scheme
+  has_many :grade_scheme_elements, :through => :grade_scheme
 
   default_scope -> { where(:type => 'Assignment') }
 
