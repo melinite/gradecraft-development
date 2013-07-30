@@ -1,14 +1,13 @@
 class Course < ActiveRecord::Base
-  attr_accessible :badge_set_ids, :courseno, :name,
-    :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
-    :user_id, :course_id, :homepage_message, :group_setting,
-    :total_assignment_weight, :assignment_weight_close_date, :team_roles,
-    :section_leader_term, :group_term, :assignment_weight_type,
-    :has_submissions, :teams_visible, :badge_use_scope,
-    :weight_term, :badges_value, :predictor_setting, :max_group_size,
-    :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
-    :assignments, :default_assignment_weight, :grade_scheme_ids, :accepts_submissions
-    :grade_schemes
+  attr_accessible :badge_set_ids, :courseno, :name, :semester, :year,
+    :badge_setting, :team_setting, :team_term, :user_term, :user_id,
+    :course_id, :homepage_message, :group_setting, :total_assignment_weight,
+    :assignment_weight_close_date, :team_roles, :section_leader_term,
+    :group_term, :assignment_weight_type, :has_submissions, :teams_visible,
+    :badge_use_scope, :weight_term, :badges_value, :predictor_setting,
+    :max_group_size, :min_group_size, :shared_badges, :graph_display,
+    :max_assignment_weight, :assignments, :default_assignment_weight,
+    :grade_scheme_ids, :accepts_submissions, :grade_schemes
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -116,18 +115,6 @@ class Course < ActiveRecord::Base
 
   def membership_for_student(student)
     course_memberships.detect { |m| m.user_id == student.id }
-  end
-
-  def total_points(options = {})
-    (options[:past] ? assignments.past : assignments).to_a.sum(&:point_total)
-  end
-
-  def running_total_points
-    assignments.past.map { |assignment| assignment.point_total_for_student(student) }.sum
-  end
-
-  def badge_total
-    badges.sum(:value)
   end
 
   def assignment_weight_for_student(student)

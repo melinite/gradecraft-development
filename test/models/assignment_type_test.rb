@@ -1,39 +1,6 @@
 require 'test_helper'
 
 class AssignmentTypeTest < ActiveSupport::TestCase
-  test "calculates point total for student" do
-    [300, 500].each do |point_total|
-      create_assignment(:point_total => point_total)
-    end
-    assert_equal 800, assignment_type.point_total_for_student(student)
-  end
-
-  test "calculates weighted point total for student" do
-    @assignment_type = create_assignment_type(:student_weightable => true)
-    [300, 500].each do |point_total|
-      create_assignment(:point_total => point_total) do
-        create_assignment_weight(:weight => 2)
-      end
-    end
-    assert_equal 1600, assignment_type.point_total_for_student(student)
-  end
-
-  test "calculates score for student" do
-    create_grades(2) # raw scores: 200, 400
-    assert_equal 600, assignment_type.score_for_student(student)
-  end
-
-  test "calculates 2x score for student" do
-    @assignment_type = create_assignment_type(:student_weightable => true)
-    [200, 400].each do |raw_score|
-      create_assignment do
-        create_grade(:raw_score => raw_score)
-        create_assignment_weight(:weight => 2)
-      end
-    end
-    assert_equal 1200, assignment_type.score_for_student(student)
-  end
-
   # Max weight for any particular assignment type
   # Total weight equals total available weight
 

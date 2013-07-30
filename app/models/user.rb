@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
 
   include Canable::Cans
 
-  before_save :set_sortable_scores, :set_default_course
+  before_save :set_default_course
+  after_save :cache_scores
 
   ROLES = %w(student professor gsi admin)
 
@@ -19,8 +20,8 @@ class User < ActiveRecord::Base
     :shared_badges, :earned_badges, :earned_badges_attributes, :password, :password_confirmation
 
   scope :alpha, -> { where order: 'last_name ASC' }
-  scope :winning, -> { order 'course_memberships.sortable_score DESC' }
-  scope :losing, -> { order 'course_memberships.sortable_score ASC' }
+  scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
+  scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
 
   has_many :course_memberships
   has_many :courses, :through => :course_memberships
@@ -128,7 +129,7 @@ class User < ActiveRecord::Base
   end
 
   def earned_grades(course)
-    grades.where(:course => course).to_a.sum { |g| g.score(self) }
+    grades.where(:course => course).to_a.sum { |g| g.score }
   end
 
   def grades_by_assignment_id
@@ -148,8 +149,18 @@ class User < ActiveRecord::Base
     @earned_badges_by_badge ||= earned_badges.group_by(&:badge_id)
   end
 
-  def sortable_score_for_course(course)
-    course_memberships.where(:course => course).pluck('sortable_score').first
+  def score_for_course(course)
+    grades.where(course: course).score
+  end
+
+  # Calculates point total for graded assignments
+  def point_total_for_course(course)
+    c.assignments.joins('LEFT OUTER JOIN grades ON assignments.id = grades.assignment_id AND grades.student_id = 4').count
+    grades.where(course: course).point_total
+  end
+
+  def score_for_assignment_type(assignment_type)
+    grades.where(assignment_type: assignment_type).score
   end
 
   def weights_by_assignment_id
@@ -178,7 +189,7 @@ class User < ActiveRecord::Base
     CSV.generate(options) do |csv|
       csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Logins", "Pageviews", "Predictor Views"]
       students.each do |user|
-        csv << [user.first_name, user.last_name, user.email, user.earned_grades(course), user.grade_level(course), user.visit_count, user.page_views, user.predictor_views]
+        csv << [user.first_name, user.last_name, user.email, user.score_for_course(course), user.grade_level(course), user.visit_count, user.page_views, user.predictor_views]
       end
     end
   end
@@ -188,7 +199,7 @@ class User < ActiveRecord::Base
     CSV.generate(options) do |csv|
       csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Logins", "Pageviews", "Predictor Views"]
       course.users.students.each do |user|
-        csv << [user.first_name, user.last_name, user.email, user.earned_grades(course), user.grade_level(course), user.visit_count, user.page_views, user.predictor_views]
+        csv << [user.first_name, user.last_name, user.email, user.score_for_course(course), user.grade_level(course), user.visit_count, user.page_views, user.predictor_views]
       end
     end
   end
@@ -212,10 +223,9 @@ class User < ActiveRecord::Base
     self.default_course ||= courses.first
   end
 
-  def set_sortable_scores
-    course_memberships.each do |course_membership|
-      course_membership.update_attribute(:sortable_score, self.earned_grades(course_membership.course))
+  def cache_scores
+    course_memberships.each do |membership|
+      membership.update_attribute :score, grades.where(course_id: membership.course_id).score
     end
   end
-
 end

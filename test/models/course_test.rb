@@ -21,21 +21,6 @@ class CourseTest < ActiveSupport::TestCase
     assert_equal "Multiplier", course.weight_term
   end
 
-  test "point total" do
-    create_assignments
-    assert_equal 800, course.total_points
-  end
-
-  test "point total with past assignment" do
-    create_assignments
-    assert_equal 500, course.total_points(:past => true)
-  end
-
-  def create_assignments
-    create_assignment(:point_total => 300, :due_date => 1.day.from_now)
-    create_assignment(:point_total => 500, :due_date => 1.day.ago)
-  end
-
   def course
     @course ||= build_course
   end
