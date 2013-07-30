@@ -7,7 +7,8 @@ class Course < ActiveRecord::Base
     :has_submissions, :teams_visible, :badge_use_scope,
     :weight_term, :badges_value, :predictor_setting, :max_group_size,
     :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
-    :assignments, :default_assignment_weight
+    :assignments, :default_assignment_weight, :grade_scheme_ids, :accepts_submissions
+    :grade_schemes
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -29,9 +30,9 @@ class Course < ActiveRecord::Base
   end
 
   has_many :grade_scheme_elements, :through => :grade_schemes
-  has_many :team_assignments, :dependent => :destroy
+  belongs_to :grade_scheme
 
-  validates_presence_of :name, :badge_setting, :team_setting, :group_setting
+  validates_presence_of :name, :badge_setting, :team_setting, :group_setting, :max_assignment_weight, :total_assignment_weight
 
   def user_term
     super || "Player"
