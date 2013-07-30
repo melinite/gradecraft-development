@@ -6,10 +6,13 @@ class AssignmentWeight < ActiveRecord::Base
   belongs_to :student, :class_name => 'User'
   belongs_to :assignment_type
   belongs_to :assignment
+  belongs_to :course
 
-  before_save :set_assignment_type_id
+  before_validation :cache_associations, :cache_point_total
+  after_save :save_grades
 
-  validates_presence_of :student, :assignment
+  validates_presence_of :student, :assignment, :assignment_type, :course
+
   validate :course_total_assignment_weight_not_exceeded,
     :course_max_assignment_weight_not_exceeded
 
@@ -30,14 +33,14 @@ class AssignmentWeight < ActiveRecord::Base
     updatable_by?(user)
   end
 
-  def total_assignment_weight
+  def course_total_assignment_weight
     course.assignment_weight_for_student(student) + (persisted? ? 0 : weight)
   end
 
   private
 
   def course_total_assignment_weight_not_exceeded
-    if total_assignment_weight > course.total_assignment_weight
+    if course_total_assignment_weight > course.total_assignment_weight
       errors.add(:weight, "exceeded maximum total allowed for course. Please select a lower #{course.weight_term.downcase}")
     end
   end
@@ -48,7 +51,16 @@ class AssignmentWeight < ActiveRecord::Base
     end
   end
 
-  def set_assignment_type_id
-    self.assignment_type_id = assignment.assignment_type_id
+  def cache_associations
+    self.assignment_type_id ||= assignment.try(:assignment_type_id)
+    self.course_id ||= assignment.try(:course_id)
+  end
+
+  def cache_point_total
+    self.point_total = assignment.point_total_for_student(student, weight)
+  end
+
+  def save_grades
+    assignment.grades.where(student: student).each(&:save)
   end
 end

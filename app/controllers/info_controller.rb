@@ -8,8 +8,8 @@ class InfoController < ApplicationController
       @teams = current_course.teams.includes(:earned_badges)
       @users = current_course.users
       @students = @users.students
-      @top_ten_students = @students.winning.limit(10)
-      @bottom_ten_students = @students.losing.limit(10)
+      @top_ten_students = @students.order_by_high_score.limit(10)
+      @bottom_ten_students = @students.order_by_low_score.limit(10)
     end
     @badges = current_course.badges.includes(:tasks)
     @user = current_user
