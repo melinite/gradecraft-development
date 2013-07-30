@@ -15,7 +15,7 @@ class Team < ActiveRecord::Base
   has_many :assignments, -> { team_assignment }
   has_many :grades, :as => :group
 
-  after_validation :cache_score
+  #after_validation :cache_score
 
   validates_presence_of :course, :name
 
