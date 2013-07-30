@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
   before_filter :ensure_staff?, :only => [:new, :edit, :create, :destroy]
 
   def index
-    @teams = current_course.teams.includes(:challenge_grades, :earned_badges)
+    @teams = current_course.teams.includes(:earned_badges)
     @title = "#{current_course.team_term}s"
     respond_with @teams
   end
@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
   def show
     @team = current_course.teams.find(params[:id])
     @title = @team.name
-    @users = @team.users
+    @students = @team.students
     respond_with @team
   end
 

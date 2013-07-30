@@ -103,8 +103,8 @@
             %tr
               - assignment.submissions_for_assignment(assignment).tap do |submission|
                 - if submission.graded?
-                  %td= submission.submittable.teams.first.try(:name)
-                  %td= submission.submittable.try(:name)
+                  %td= submission.student.teams.first.try(:name)
+                  %td= submission.student.try(:name)
                   %td= link_to submission.link, submission.link
                   %td= submission.comment
                   %td= link_to 'Grade', assignment_submission_path(assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'

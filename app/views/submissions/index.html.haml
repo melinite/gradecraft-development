@@ -16,11 +16,11 @@
     %th.header
   - @assignment.submissions.each do |submission|
     %tr
-      %td= link_to submission.submittable.try(:name), assignment_group_path(@assignment, submission.submittable)
+      %td= link_to submission.student.try(:name), user_path(submission.student)
       %td= submission.updated_at
       %td= link_to submission.link, submission.link
-      %td= raw submission.comment
-      %td= raw submission.feedback
+      %td= raw submission.text_comment
+      %td= raw submission.text_feedback
       %td= submission.grade.try(:unmultiplied_score)
       %td= link_to 'View', assignment_submission_path(@assignment, submission, :student_id => submission.student_id, :grade_id => submission.grade.try(:id)), :class => 'btn btn-tiny btn-success'
       %td= link_to 'Edit', edit_assignment_submission_path(@assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'

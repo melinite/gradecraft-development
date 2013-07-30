@@ -21,7 +21,7 @@ GradeCraft::Application.routes.draw do
       get 'analytics'
       get 'my_badges'
     end
-    resources :student_assignment_type_weights
+    resources :assignment_weights
   end
   resources :user_sessions
 

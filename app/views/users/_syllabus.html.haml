@@ -34,7 +34,7 @@
                 - if assignment.has_submissions?
                   - assignment.submission_for_student(@user).tap do |submission|
                     - if submission && @user.grade_for_assignment(assignment)
-                      = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :submittable_id => @user, :submittable_type => "User", :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success btn-info'
+                      = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :student_id => @user, :student_type => "User", :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success btn-info'
                     - elsif submission
                       %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
                       %div.modal#myModal
@@ -51,7 +51,7 @@
                             %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
                             %a{:href => "#", :class => "btn btn-primary"} Save changes
                     - else
-                      = link_to "Submit", new_assignment_submission_path(assignment, @submission, :submittable_id => @user, :submittable_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
+                      = link_to "Submit", new_assignment_submission_path(assignment, @submission, :student_id => @user, :student_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
 
                   
                 - assignment.assignment_grades.where(:gradeable_id => @user).first.tap do |grade|
@@ -105,9 +105,9 @@
                         %h3
                           = "Submit #{assignment.name}"
                       %div.modal-body
-                        = simple_form_for([assignment, assignment.submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form form-horizontal' }) do |f|
+                        = simple_form_for([assignment, assignment.submissions.new(:student_id => @user, :user_id => @user)], :html => {:class => 'form form-horizontal' }) do |f|
                           %div.form-inputs
-                            = f.input :submittable_type, :input_html => { :value => "Individual" }, :as => :hidden
+                            = f.input :student_type, :input_html => { :value => "Individual" }, :as => :hidden
                             = f.input :assignment_id, :default => assignment, :as => :hidden
                             = f.input :user_id, :input_html => {:value => @user.id}, :as => :hidden
                             = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
@@ -132,7 +132,7 @@
                         - elsif submission
                           = link_to "See Submission", assignment_submission_path(assignment, submission, :gradeable_id => @user.groups.first, :gradeable_type => "Group"), :class => 'btn btn-tiny btn-success btn-info'
                         - else
-                          = link_to "Submit", new_assignment_submission_path(assignment, @submission, :submittable_id => @user.groups.first, :submittable_type => "Group"), :class => 'btn btn-tiny btn-success btn-primary'
+                          = link_to "Submit", new_assignment_submission_path(assignment, @submission, :student_id => @user.groups.first, :student_type => "Group"), :class => 'btn btn-tiny btn-success btn-primary'
                   - elsif assignment.has_teams?
                     - assignment.submission_for_team(@user.teams.first).tap do |submission|
                       - if submission && @user.teams.first.grade_for_assignment(assignment)
@@ -140,11 +140,11 @@
                       - elsif submission
                         = link_to "See Submission ", assignment_submission_path(assignment, submission, :gradeable_id => @user.teams.first, :gradeable_type => "Team"), :class => 'btn btn-tiny btn-success btn-info'
                       - else
-                        = link_to "Submit", new_assignment_submission_path(assignment, @submission, :submittable_id => @user.teams.first, :submittable_type => "Team"), :class => 'btn btn-tiny btn-success btn-primary'
+                        = link_to "Submit", new_assignment_submission_path(assignment, @submission, :student_id => @user.teams.first, :student_type => "Team"), :class => 'btn btn-tiny btn-success btn-primary'
                   - elsif assignment.is_individual?
                     - assignment.submission_for_student(@user).tap do |submission|
                       - if submission && @user.grade_for_assignment(assignment)
-                        = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :submittable_id => @user, :submittable_type => "User", :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success btn-info'
+                        = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :student_id => @user, :student_type => "User", :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success btn-info'
                       - elsif submission
                         %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
                         %div.modal#myModal
@@ -161,7 +161,7 @@
                               %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
                               %a{:href => "#", :class => "btn btn-primary"} Save changes
                       - else
-                        = link_to "Submit", new_assignment_submission_path(assignment, @submission, :submittable_id => @user, :submittable_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
+                        = link_to "Submit", new_assignment_submission_path(assignment, @submission, :student_id => @user, :student_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
 
                   
                 // Individually graded assignments
@@ -233,9 +233,9 @@
                           %span.editLink= button_to "Grade", new_assignment_grade_path("assignment_id" => assignment.id, :gradeable_id => @user.groups.where(:assignment_id => assignment.id).first.id, :gradeable_type => "Group"), :class => 'btn btn-primary btn-tiny btn-success'
                   - else
                     = button_to "Create a Group", new_assignment_group_path(assignment), :class => "btn btn-primary btn-tiny btn-success"
-                    = simple_form_for([assignment, assignment.submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form-horizontal' }) do |f|
+                    = simple_form_for([assignment, assignment.submissions.new(:student_id => @user, :user_id => @user)], :html => {:class => 'form-horizontal' }) do |f|
                       %div.form-inputs
-                        = f.input :submittable_type, :input_html => { :value => "Individual" }, :as => :hidden
+                        = f.input :student_type, :input_html => { :value => "Individual" }, :as => :hidden
                         = f.input :assignment_id, :default => assignment, :as => :hidden
                         = f.input :user_id, :input_html => {:value => @user.id}, :as => :hidden
                         = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }

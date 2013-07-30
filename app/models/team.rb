@@ -3,7 +3,7 @@ class Team < ActiveRecord::Base
 
   default_scope -> { where(:type => 'Team') }
 
-  attr_accessible :name, :course, :course_id
+  attr_accessible :name, :course, :course_id, :student_ids
 
   belongs_to :course
 
@@ -21,6 +21,10 @@ class Team < ActiveRecord::Base
 
   def score
     grades.pluck('raw_score').sum
+  end
+  
+  def member_count
+    students.count 
   end
 
   def team_leader
