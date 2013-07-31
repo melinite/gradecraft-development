@@ -1,5 +1,6 @@
-- if current_user.is_staff?
-  = link_to 'New Assignment', new_assignment_path, {:class => 'btn btn-info btn-small'}
+%div.col.col-lg-12#content_nav
+  - if current_user.is_staff?
+    = link_to 'Create a New Assignment', new_assignment_path, {:class => 'btn btn-info col col-sm-12 col-lg-2 btn-tiny pull-right'}
 
 %div
   %div.pull-right
