@@ -1,13 +1,13 @@
 class Course < ActiveRecord::Base
-  attr_accessible :badge_set_ids, :courseno, :name, :semester, :year,
-    :badge_setting, :team_setting, :team_term, :user_term, :user_id,
-    :course_id, :homepage_message, :group_setting, :total_assignment_weight,
-    :assignment_weight_close_date, :team_roles, :section_leader_term,
-    :group_term, :assignment_weight_type, :has_submissions, :teams_visible,
-    :badge_use_scope, :weight_term, :badges_value, :predictor_setting,
-    :max_group_size, :min_group_size, :shared_badges, :graph_display,
-    :max_assignment_weight, :assignments, :default_assignment_weight,
-    :grade_scheme_ids, :accepts_submissions, :grade_schemes
+  attr_accessible :badge_set_ids, :courseno, :name,
+    :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
+    :user_id, :course_id, :homepage_message, :group_setting,
+    :total_assignment_weight, :assignment_weight_close_date, :team_roles,
+    :section_leader_term, :group_term, :assignment_weight_type,
+    :has_submissions, :teams_visible, :badge_use_scope,
+    :weight_term, :badges_value, :predictor_setting, :max_group_size,
+    :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
+    :assignments, :default_assignment_weight, :grade_scheme_id, :accepts_submissions
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships

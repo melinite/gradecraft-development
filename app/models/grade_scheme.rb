@@ -1,9 +1,9 @@
 class GradeScheme < ActiveRecord::Base
-  has_many :assignments
-  belongs_to :courses
+  belongs_to :assignment
+  belongs_to :course
   has_many :grade_scheme_elements
   
-  attr_accessible :created_at, :updated_at, :name, :course_id
+  attr_accessible :created_at, :updated_at, :name, :course_id, :description
   
   validates_presence_of :name, :course_id
 
