@@ -10,6 +10,7 @@ Bundler.require(:default, Rails.env)
 module GradeCraft
   class Application < Rails::Application
     config.time_zone = 'America/Detroit'
+    config.autoload_paths += %W(#{Rails.root}/lib)
     config.generators do |g|
       g.integration_tool :mini_test
       g.orm :active_record

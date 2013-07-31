@@ -27,7 +27,9 @@
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
   %li.icn_group= link_to "Staff", staff_users_path
   %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
-  
+  %li.divider
+  %li.nav-header Tools
+  %li= link_to 'Piazza', launch_lti_provider_path(:piazza)
   - if current_user.is_admin?
     %li.divider
     %li.nav-header Admin
