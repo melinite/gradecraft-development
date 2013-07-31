@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730210736) do
+ActiveRecord::Schema.define(version: 20130731150226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,16 +169,6 @@ ActiveRecord::Schema.define(version: 20130730210736) do
     t.datetime "updated_at"
   end
 
-  create_table "faqs", force: true do |t|
-    t.string   "question"
-    t.text     "answer"
-    t.integer  "order"
-    t.string   "category"
-    t.string   "audience"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "grade_scheme_elements", force: true do |t|
     t.string   "name"
     t.integer  "low_range"
@@ -321,13 +311,6 @@ ActiveRecord::Schema.define(version: 20130730210736) do
   add_index "tasks", ["assignment_id", "assignment_type"], name: "index_tasks_on_assignment_id_and_assignment_type", using: :btree
   add_index "tasks", ["course_id"], name: "index_tasks_on_course_id", using: :btree
   add_index "tasks", ["id", "type"], name: "index_tasks_on_id_and_type", using: :btree
-
-  create_table "themes", force: true do |t|
-    t.string   "name"
-    t.string   "filename"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "users", force: true do |t|
     t.string   "username",                                            null: false
