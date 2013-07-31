@@ -35,23 +35,23 @@ class Course < ActiveRecord::Base
   validates_presence_of :name, :badge_setting, :team_setting, :group_setting, :max_assignment_weight, :total_assignment_weight
 
   def user_term
-    super || "Player"
+     "Player" || super
   end
 
   def team_term
-    super || "Team"
+    "Team" || super
   end
 
   def group_term
-    super || "Group"
+     "Group" || super
   end
 
   def section_leader_term
-    super || "Team Leader"
+    "Team Leader" || super
   end
 
   def weight_term
-    super || "Multiplier"
+    "Multiplier" || super
   end
 
   def students
