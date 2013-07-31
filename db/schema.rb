@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 20130730210736) do
     t.datetime "updated_at"
     t.integer  "course_id"
     t.string   "name"
+    t.text     "description"
   end
 
   create_table "grades", force: true do |t|

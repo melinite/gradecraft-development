@@ -5,7 +5,7 @@
     = f.input :courseno, :label => "Course Number"
     = f.input :semester, :collection => [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]]
     = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2) 
-    = f.association :grade_schemes, :as => :radio_buttons
+    = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :radio_buttons
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions" 
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
     = f.input :predictor_setting, :label => "Can the students see the predictor on their dashboard?", :as => :radio_buttons
