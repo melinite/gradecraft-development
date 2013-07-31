@@ -103,12 +103,15 @@
 
       $results.empty();
 
-      items
+      var itemsForDisplay = items
         .filter(function(item) {
           return filter(item, query);
         })
         .slice(0, options.numResults - 1)
-        .forEach(function(item, index) {
+      if (!itemsForDisplay.length) {
+        $results.append('No matches.');
+      }
+      itemsForDisplay.forEach(function(item, index) {
           id = itemId(item);
           item = renderItem(itemLabel(item), id, index);
           $item = item.jquery ? item : $(item);
