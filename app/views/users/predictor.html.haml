@@ -46,7 +46,7 @@
                   %span.assignmentRequired.label.label-important Required!
                 %div.assignmentScore
                 - if assignment.is_individual?
-                  - assignment.assignment_grades.where(:gradeable_id => @user).first.tap do |grade|
+                  - assignment.assignment_grades.where(:student_id => @user).first.tap do |grade|
                     - if grade
                       - if assignment.release_necessary? && grade.is_released? 
                         = "You earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"
@@ -75,7 +75,7 @@
                         = "#{assignment.point_total_for_student(@user)} possible points"
                         = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
                 - elsif assignment.has_teams?
-                  - assignment.assignment_grades.where(:gradeable_id => @user.teams.first).first.tap do |grade|
+                  - assignment.assignment_grades.where(:team_id => @user.teams.first).first.tap do |grade|
                     - if grade
                       - if assignment.release_necessary? && grade.is_released? 
                         = "Your team earned #{ grade.score(@user) } out of #{grade.point_total(@user)} points"
@@ -107,7 +107,7 @@
 
                 - elsif assignment.has_groups?
                   - if @user.group_for_assignment(assignment)
-                    - assignment.assignment_grades.where(:gradeable => @user.group_for_assignment(assignment)).first.tap do |grade|
+                    - assignment.assignment_grades.where(:group_id => @user.group_for_assignment(assignment)).first.tap do |grade|
                       - if grade
                         - if assignment.release_necessary? && grade.is_released? 
                           = "Your group earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"

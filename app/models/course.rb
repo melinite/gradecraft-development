@@ -116,7 +116,10 @@ class Course < ActiveRecord::Base
   def grade_level_for_score(score)
     grade_scheme.try(:grade_level_for_course, score)
   end
-
+  
+  def point_total
+    assignments.point_total.sum
+  end
 
   def membership_for_student(student)
     course_memberships.detect { |m| m.user_id == student.id }
