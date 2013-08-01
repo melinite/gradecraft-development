@@ -19,7 +19,7 @@
     - @challenges.each do |challenge|
       %tr
         %td= link_to challenge.name, challenge
-        %td= challenge.description
+        %td= raw challenge.description
         %td= challenge.point_total
         %td= challenge.due_date
         %td= challenge.visible? ? 'Yes' : 'No'

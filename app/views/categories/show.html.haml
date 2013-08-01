@@ -1,8 +1,8 @@
-= link_to 'Edit', edit_category_path(@category), {:class => 'btn btn-info btn-small'}
-= link_to 'Back', categories_path, {:class => 'btn btn-info btn-small'}
-
-= link_to 'Add New Assignment', new_assignment_path, :class => "btn btn-tiny btn-success btn-primary"
-%p
+%div.col.col-lg-12#content_nav
+  - if current_user.is_staff?
+    = link_to 'Edit', edit_category_path(@category), {:class => 'btn btn-info btn-small'}
+    = link_to 'Back', categories_path, {:class => 'btn btn-info btn-small'}
+    = link_to 'Add New Assignment', new_assignment_path, :class => "btn btn-small btn-success btn-primary"
 %table.display.table-bordered.table
   %thead
     %tr
