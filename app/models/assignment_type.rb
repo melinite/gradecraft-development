@@ -28,6 +28,10 @@ class AssignmentType < ActiveRecord::Base
       "#{total_points} possible points"
     end
   end
+  
+  def total_points 
+    assignments.pluck('point_total').sum
+  end
 
   def multiplier_open?
     course.student_weight_close_date > Date.today

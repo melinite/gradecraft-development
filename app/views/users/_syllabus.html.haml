@@ -1,13 +1,10 @@
 %div.col.col-lg-12
   - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
     %div.col.col-lg-12.section
-      %button.btn.btn-primary.col.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} - #{ number_with_delimiter(assignment_type.score_for_student(@user))} / #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points
+      //%button.btn.btn-primary.col.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} - #{ number_with_delimiter(assignment_type.score_for_student(@user))} / #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points
 
       %span.badge.badge-info.pull-right.col.col-lg-4.col-sm-12
-      - if assignment_type.present_weight_for_student(@user)
-        -# Should something go here?
-      %span.badge.badge-warning.pull-right
-        = number_with_delimiter(assignment_type.score_for_student(@user))
+        = number_with_delimiter(@user.assignment_type_score(assignment_type))
         = "/"
         = " #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points"
       - if assignment_type.student_weighted?(@user)
@@ -35,7 +32,7 @@
                 - if assignment.has_submissions?
                   - assignment.submission_for_student(@user).tap do |submission|
                     - if submission && @user.grade_for_assignment(assignment)
-                      = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :student_id => @user, :student_type => "User", :gradeable_id => @user, :gradeable_type => "User"), :class => 'btn btn-tiny btn-success btn-info'
+                      = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :student_id => @user), :class => 'btn btn-tiny btn-success btn-info'
                     - elsif submission
                       %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
                       %div.modal#myModal

@@ -136,6 +136,14 @@ class User < ActiveRecord::Base
   def grade_for_assignment(assignment)
     grades_by_assignment_id[assignment.id].try(:first)
   end
+  
+  def submissions_by_assignment_id
+    @submissions_by_assignment ||= submissions.group_by(&:assignment_id)
+  end
+  
+  def submission_for_assignment(assignment)
+    submissions_by_assignment_id[assignment.id].try(:first)
+  end
 
   #Badges
   def earned_badges_value(course)
@@ -177,7 +185,7 @@ class User < ActiveRecord::Base
   end
 
   def assignment_type_score(assignment_type)
-    grades.for_assignemnt_type(assignment_type).sum { |g| g.score(self) }
+    grades.for_assignment_type(assignment_type).sum { |g| g.score(self) }
   end
 
   #Import Users
