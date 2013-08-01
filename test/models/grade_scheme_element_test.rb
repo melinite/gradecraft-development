@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GradeSchemeTest < ActiveSupport::TestCase
+class GradeSchemeElementTest < ActiveSupport::TestCase
   include ValidAttribute::Method
 
   test "grade scheme elements require a high range" do
