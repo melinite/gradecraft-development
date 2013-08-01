@@ -16,23 +16,6 @@ class AssignmentType < ActiveRecord::Base
 
   scope :student_weightable, -> { where(:student_weightable => true) }
 
-  #Displays how much the assignment type is worth in the list view
-  def weight
-    if percentage_course?
-      percentage_course.to_s << "%"
-    elsif max_value?
-      max_value.to_s << " possible points"
-    elsif student_weightable?
-      "#{course.user_term.pluralize} decide!"
-    else
-      "#{total_points} possible points"
-    end
-  end
-  
-  def total_points 
-    assignments.pluck('point_total').sum
-  end
-
   def multiplier_open?
     course.student_weight_close_date > Date.today
   end
