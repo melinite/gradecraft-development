@@ -64,7 +64,7 @@ class BadgesController < ApplicationController
     @badge.destroy
 
     respond_to do |format|
-      format.html { redirect_to badges_path }
+      format.html { redirect_to badges_path, notice: "#{ @badge.name} successfully deleted."  }
       format.json { head :ok }
     end
   end
