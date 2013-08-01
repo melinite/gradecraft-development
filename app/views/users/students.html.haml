@@ -33,7 +33,7 @@
         - if current_user.is_staff?           
           %td= student.score_for_course(current_course) if student.respond_to?(:earned_grades)
           %td
-            //= student.grade_level_for_course(current_course)
+            = student.grade_level_for_course(current_course)
         - if current_course.has_badges? 
           %td
             - student.earned_badges.each do |badge|
