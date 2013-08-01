@@ -66,6 +66,14 @@ class ActiveSupport::TestCase
   define_custom_fabricator :grade do
     { :student => student, :assignment => assignment }
   end
+  
+  define_custom_fabricator :grade_scheme do 
+    { :course => course }
+  end
+  
+  define_custom_fabricator :grade_scheme_element do 
+    { :grade_scheme => grade_scheme }
+  end
 
   define_custom_fabricator :earned_badge do
     { :student => student, :badge => badge }

@@ -1,16 +1,19 @@
 class GradeSchemeElement < ActiveRecord::Base
-  attr_accessible :letter_grade, :low_range, :high_range, :name, :grade_scheme_id, :description
+  attr_accessible :letter, :low_range, :high_range, :level, :grade_scheme_id, :description
   
   belongs_to :grade_scheme
   
   validates_presence_of :low_range, :high_range
+  
 
   def element_name
-    if name?
-      name
+    if level?
+      level
     else 
-      letter_grade
+      letter
     end
   end
+  
+  
 
 end
