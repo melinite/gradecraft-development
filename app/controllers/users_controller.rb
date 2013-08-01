@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   skip_before_filter :require_login, :only=>[:create,:new]
   before_filter :'ensure_staff?', :only=>[:index,:destroy,:show, :edit, :new]
   before_filter :'ensure_admin?', :only=>[:all_users]
-  
+
   def import
     if request.post? && params[:file].present?
       infile = params[:file].read
@@ -53,25 +53,24 @@ class UsersController < ApplicationController
       format.xls { send_data @users.to_csv(col_sep: "\t") }
     end
   end
-  
+
   def all
     @title = "View all Users"
-    @users = User.all 
+    @users = User.all
     respond_to do |format|
       format.html
       format.json { render json: @all_users }
     end
   end
-  
+
   def students
     @title = "#{current_course.user_term} Roster"
     @users = current_course.users.includes(:earned_badges)
-    @students = current_course.users.students
+    @students = current_course.students
     @teams = current_course.teams
-    @sorted_students = @students.order('course_memberships.sortable_score DESC')
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = current_course.users.students.includes(:teams).where(user_search_options)
+    @sorted_students = @students.includes(:teams).where(user_search_options).order_by_high_score
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -79,21 +78,20 @@ class UsersController < ApplicationController
       format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
     end
   end
-    
+
   def staff
     @title = "Staff"
     @users = current_course.users
   end
-  
-  
+
+
   def analytics
     @users = current_course.users
-    @students = current_course.users.students
+    @students = current_course.students
     @teams = current_course.teams
-    @sorted_students = @students.order('course_memberships.sortable_score DESC')
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = current_course.users.students.includes(:teams).where(user_search_options)
+    @sorted_students = @students.includes(:teams).where(user_search_options).order_by_high_score
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -109,14 +107,14 @@ class UsersController < ApplicationController
     end
     @earned_badges = @user.earned_badges
     @assignment_types = current_course.assignment_types.includes(:assignments)
-    @student_assignment_type_weights = @user.student_assignment_type_weights
-    @student_assignment_type_weight = @user.student_assignment_type_weights.new
+    @assignment_weights = @user.assignment_weights
+    @assignment_weight = @user.assignment_weights.new
     @assignments = current_course.assignments.includes(:submissions, :assignment_type)
-    @grades = @user.grades 
-    @badges = current_course.badges.includes(:earned_badges, :elements)
+    @grades = @user.grades
+    @badges = current_course.badges.includes(:earned_badges)
     respond_with @user
   end
-  
+
   def predictor
     increment_predictor_views
     @assignment_types = current_course.assignment_types
@@ -157,20 +155,20 @@ class UsersController < ApplicationController
     @user = current_course.users.find(params[:id])
     respond_with @user
   end
-  
+
   def create
     @teams = current_course.teams
     @user = current_course.users.create(params[:user])
     @user.save
-    
+
     respond_with @user
     expire_action :action => :index
   end
-  
+
   def update
     @user = User.find(params[:id])
     @teams = Team.all
-    
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         @user.save
@@ -184,7 +182,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = current_course.users.find(params[:id])    
+    @user = current_course.users.find(params[:id])
     @user.destroy
 
     respond_to do |format|
@@ -204,15 +202,15 @@ class UsersController < ApplicationController
     @user.update_attribute(:password, params[:password]) if params[:password] == params[:confirm_password]
     respond_with(@user)
   end
-    
-  
+
+
   def import
     @title = "Import Users"
   end
-  
-  def upload 
-    require 'csv'    
-    
+
+  def upload
+    require 'csv'
+
     if params[:file].blank?
       flash[:notice] = "File missing"
       redirect_to users_path
@@ -220,8 +218,8 @@ class UsersController < ApplicationController
       CSV.foreach(params[:file].tempfile, :headers => false) do |row|
         User.create! do |u|
           u.first_name = row[0]
-          u.last_name = row[1] 
-          u.username = row[2] 
+          u.last_name = row[1]
+          u.username = row[2]
           u.email = row[3]
           u.role = 'student'
         end
@@ -229,30 +227,29 @@ class UsersController < ApplicationController
       redirect_to users_path, :notice => "Upload successful"
     end
   end
-  
+
   def choices
     @title = "View all #{current_course.multiplier_term} Choices"
-    @students = current_course.users.students
+    @students = current_course.students
     @assignment_types = current_course.assignment_types
     @teams = current_course.teams
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @students = current_course.users.students.includes(:teams).where(user_search_options).order('course_memberships.sortable_score DESC')
+    @students = @students.includes(:teams).where(user_search_options).order_by_high_score
   end
 
   def final_grades
     @course = current_course
   end
-  
+
   def search
     q = params[:user][:name]
     @users = User.find(:all, :conditions => ["name LIKE %?%",q])
   end
-  
-  private  
-  
+
+  private
+
   def increment_predictor_views
     User.increment_counter(:predictor_views, current_user.id) if current_user && request.format.html?
   end
-
 end

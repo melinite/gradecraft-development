@@ -21,7 +21,7 @@
         %td= course.year
         %td= course.semester
         %td= course.badge_set_id
-        %td= course.total_points
+        //%td= course.total_points
         %td= course.grade_scheme_id
         %td= link_to 'Edit', edit_course_path(course), :class => 'btn btn-tiny btn-success'
         %td= link_to 'Delete', course, :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete

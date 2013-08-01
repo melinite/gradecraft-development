@@ -1,6 +1,6 @@
 class Assignment < ActiveRecord::Base
-  #belongs_to :grade_scheme
-  #has_many :grade_scheme_elements, :through => :grade_scheme
+  belongs_to :grade_scheme
+  has_many :grade_scheme_elements, :through => :grade_scheme
 
   default_scope -> { where(:type => 'Assignment') }
 
@@ -24,9 +24,10 @@ class Assignment < ActiveRecord::Base
   has_many :score_levels, :through => :assignment_type
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
-  delegate :points_predictor_display, :mass_grade, :student_weightable?, :to => :assignment_type
+  delegate :points_predictor_display, :mass_grade?, :student_weightable?, :to => :assignment_type
 
-  before_validation :set_course
+  before_validation :cache_associations, :cache_point_total
+  after_save :save_grades, :save_weights
 
   validates_presence_of :assignment_type, :course, :name, :grade_scope
 
@@ -49,48 +50,24 @@ class Assignment < ActiveRecord::Base
 
   scope :grading_done, -> { where assignment_grades.present? == 1 }
 
-  #grades per role
-  def grades_by_student_id
-    @grades_by_student_id ||= grades.group_by { |g| [g.student_id] }
+  def self.point_total
+    pluck('SUM(point_total)').first || 0
   end
 
-  def grade_for_student(student)
-    grades.where(:student_id => student).try(:first)
-  end
-
-  #submissions per role
-  
-  def submissions_by_student_id
-    @submissions_by_student_id ||= submissions.group_by(&:student_id)
-  end
-  
-  def submission_for_student(student)
-    submissions.where(:student_id => student).try(:first)
-  end
-
-  def submissions_by_assignment_id
-    @submissions_by_assignment_id ||= submissions.group_by(&:assignment_id)
-  end
-
-  def submissions_for_assignment(assignment)
-    submissions_by_assignment_id[assignment.id].try(:first)
-  end
-
-  #Assignment grade data
-  def assignment_grades
-    Grade.where(:assignment_id => id)
+  def self.point_total_for_student(student)
+    joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{student.id}'").pluck('SUM(COALESCE(assignment_weights.point_total, assignments.point_total))').first
   end
 
   def high_score
-    assignment_grades.maximum(:raw_score)
+    grades.pluck('MAX(score)')
   end
 
   def low_score
-    assignment_grades.minimum(:raw_score)
+    grades.pluck('MIN(score)')
   end
 
   def average
-    assignment_grades.average(:raw_score).try(:round)
+    grades.pluck('AVG(score)')
   end
 
   def release_necessary?
@@ -113,20 +90,14 @@ class Assignment < ActiveRecord::Base
     super || assignment_type.universal_point_value
   end
 
-  def point_total_for_student(student)
-    (point_total * weight_for_student(student)).to_i
+  def point_total_for_student(student, weight = nil)
+    (point_total * weight_for_student(student, weight)).round
   end
 
-  def weight_for_student?(student)
-    student_weightable? && weights_by_student_id[student.id] > 0
-  end
-
-  def weight_for_student(student)
-    if weight_for_student?(student)
-      weights_by_student_id[student.id]
-    else
-      course.default_assignment_weight
-    end
+  def weight_for_student(student, weight = nil)
+    return 1 unless student_weightable?
+    weight ||= (weights.where(student: student).pluck('weight').first || 0)
+    weight > 0 ? weight : course.default_assignment_weight
   end
 
   def past?
@@ -144,7 +115,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def fixed?
-    points_predictor = "Fixed"
+    points_predictor == "Fixed"
   end
 
   def submissions_allowed?
@@ -156,11 +127,11 @@ class Assignment < ActiveRecord::Base
   end
 
   def slider?
-    points_predictor = "Slider"
+    points_predictor == "Slider"
   end
 
   def select?
-    points_predictor = "Select List"
+    points_predictor == "Select List"
   end
 
   def self_gradeable?
@@ -175,10 +146,6 @@ class Assignment < ActiveRecord::Base
     assignment_type.levels == true
   end
 
-  def mass_grade?
-    assignment_type.mass_grade = true
-  end
-
   def grade_checkboxes?
     assignment_type.mass_grade_type == "Checkbox"
   end
@@ -187,12 +154,8 @@ class Assignment < ActiveRecord::Base
     assignment_type.mass_grade_type == "Select List"
   end
 
-  def mass_grade?
-    mass_grade == true
-  end
-
   def grade_radio?
-    assignment_type.mass_grade_type =="Radio Buttons"
+    assignment_type.mass_grade_type == "Radio Buttons"
   end
 
   def open?
@@ -208,15 +171,19 @@ class Assignment < ActiveRecord::Base
 
   private
 
-  def weights_by_student_id
-    @weights_by_student_id ||= Hash.new { |h, k| h[k] = 0 }.tap do |weights_hash|
-      weights.each do |weight|
-        weights_hash[weight.student_id] = weight.weight
-      end
-    end
+  def cache_point_total
+    self.point_total = point_total
   end
 
-  def set_course
+  def cache_associations
     self.course_id = assignment_type.try(:course_id)
+  end
+
+  def save_grades
+    grades.reload.each(&:save)
+  end
+
+  def save_weights
+    weights.reload.each(&:save)
   end
 end

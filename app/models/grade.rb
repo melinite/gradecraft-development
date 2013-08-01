@@ -12,6 +12,7 @@ class Grade < ActiveRecord::Base
 
   belongs_to :course
   belongs_to :assignment
+  belongs_to :assignment_type
   belongs_to :student, :class_name => 'User'
   belongs_to :submission # Optional
   belongs_to :task # Optional
@@ -25,8 +26,9 @@ class Grade < ActiveRecord::Base
   has_many :grade_scheme_elements, :through => :assignment
 
   before_validation :cache_associations
+  before_save :cache_score_and_point_total
 
-  validates_presence_of :assignment, :course
+  validates_presence_of :assignment, :assignment_type, :course
 
   delegate :name, :description, :due_date, :assignment_type, :to => :assignment
 
@@ -36,31 +38,23 @@ class Grade < ActiveRecord::Base
   scope :completion, -> { where(order: "assignments.due_date ASC", :joins => :assignment) }
   scope :released, -> { where(status: "Released") }
 
+  def self.score
+    all.pluck('SUM(score)').first || 0
+  end
+
   def raw_score
     super || 0
   end
 
-  def score(student)
-    if final_score?
-      final_score
-    else
-      (raw_score * weight_for_student(student)).to_i
-    end
+  def score
+    final_score || (raw_score * assignment_weight).round
   end
 
-  def unweighted_score
-    if final_score?
-      final_score
-    else
-      raw_score
-    end
+  def point_total
+    assignment.point_total_for_student(student)
   end
 
-  def point_total(student)
-    assignment.point_total * weight_for_student(student)
-  end
-
-  def weight_for_student(student)
+  def assignment_weight
     assignment.weight_for_student(student)
   end
 
@@ -101,10 +95,16 @@ class Grade < ActiveRecord::Base
     student.save
   end
 
+  def cache_score_and_point_total
+    self.score = score
+    self.point_total = point_total
+  end
+
   def cache_associations
     self.student_id ||= submission.try(:student_id)
     self.task_id ||= submission.try(:task_id)
     self.assignment_id ||= submission.try(:assignment_id) || task.try(:assignment_id)
+    self.assignment_type_id ||= assignment.try(:assignment_type_id)
     self.course_id ||= assignment.try(:course_id)
   end
 end

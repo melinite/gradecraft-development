@@ -51,11 +51,8 @@
                       %h3
                         = "Submit #{assignment.name}"
                     %div.modal-body
-                      = simple_form_for([assignment, assignment.submissions.new(:submittable_id => @user, :user_id => @user)], :html => {:class => 'form form-horizontal' }) do |f|
+                      = simple_form_for([assignment, assignment.submissions.new(:student_id => @user, :user_id => @user)], :html => {:class => 'form form-horizontal' }) do |f|
                         %div.form-inputs
-                          = f.input :submittable_id, :input_html => { :value => @user.id }, :as => :hidden
-                          = f.input :submittable_type, :input_html => { :value => "User" }, :as => :hidden
-                          = f.input :assignment_id, :default => assignment, :as => :hidden
                           = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
                           = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'col-lg-12 col', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
                         

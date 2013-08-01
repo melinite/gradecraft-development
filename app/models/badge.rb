@@ -8,14 +8,13 @@ class Badge < ActiveRecord::Base
     :badge_set, :category_id, :value, :multiplier
 
   has_many :earned_badges, :foreign_key => :assignment_id, :dependent => :destroy
+
   has_many :tasks, :foreign_key => :assignment_id, :dependent => :destroy
   belongs_to :badge_set, :foreign_key => :category_id
   belongs_to :course
-  belongs_to :assignment
+  #belongs_to :assignment
 
   has_many :submissions
-  has_many :grades
-
   accepts_nested_attributes_for :badge_set
 
   before_validation :set_course

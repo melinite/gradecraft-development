@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
     :has_submissions, :teams_visible, :badge_use_scope,
     :weight_term, :badges_value, :predictor_setting, :max_group_size,
     :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
-    :assignments, :default_assignment_weight
+    :assignments, :default_assignment_weight, :grade_scheme_id, :accepts_submissions
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -19,6 +19,7 @@ class Course < ActiveRecord::Base
     c.has_many :badge_sets
     c.has_many :badges
     c.has_many :categories
+    c.has_many :challenges
     c.has_many :earned_badges
     c.has_many :grade_schemes
     c.has_many :grades
@@ -28,28 +29,28 @@ class Course < ActiveRecord::Base
   end
 
   has_many :grade_scheme_elements, :through => :grade_schemes
-  has_many :team_assignments, :dependent => :destroy
+  belongs_to :grade_scheme
 
-  validates_presence_of :name, :badge_setting, :team_setting, :group_setting
+  validates_presence_of :name, :badge_setting, :team_setting, :group_setting, :max_assignment_weight, :total_assignment_weight
 
   def user_term
-    super || "Player"
+     "Player" || super
   end
 
   def team_term
-    super || "Team"
+    "Team" || super
   end
 
   def group_term
-    super || "Group"
+     "Group" || super
   end
 
   def section_leader_term
-    super || "Team Leader"
+    "Team Leader" || super
   end
 
   def weight_term
-    super || "Multiplier"
+    "Multiplier" || super
   end
 
   def students
@@ -112,20 +113,13 @@ class Course < ActiveRecord::Base
     accepts_submissions == true
   end
 
+  def grade_level_for_score(score)
+    grade_scheme.try(:grade_level_for_course, score)
+  end
+
+
   def membership_for_student(student)
     course_memberships.detect { |m| m.user_id == student.id }
-  end
-
-  def total_points(options = {})
-    (options[:past] ? assignments.past : assignments).to_a.sum(&:point_total)
-  end
-
-  def running_total_points
-    assignments.past.map { |assignment| assignment.point_total_for_student(student) }.sum
-  end
-
-  def badge_total
-    badges.sum(:value)
   end
 
   def assignment_weight_for_student(student)

@@ -1,9 +1,9 @@
 class GradeScheme < ActiveRecord::Base
-  has_many :assignments
-  belongs_to :courses
+  belongs_to :assignment
+  belongs_to :course
   has_many :grade_scheme_elements
   
-  attr_accessible :created_at, :updated_at, :name, :course_id
+  attr_accessible :created_at, :updated_at, :name, :course_id, :description
   
   validates_presence_of :name, :course_id
 
@@ -17,7 +17,14 @@ class GradeScheme < ActiveRecord::Base
   
   def grade_level(unmultiplied_score)
     element_names.each do |range,name|
-      return name if unmultiplied_score.between?(*range)
+      #return name if unmultiplied_score.between?(*range)
+    end
+    nil
+  end
+  
+  def grade_level_for_score(score)
+    element_names.each do |range,name|
+      return name if score.between?(*range)
     end
     nil
   end

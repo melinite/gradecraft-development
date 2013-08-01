@@ -8,7 +8,7 @@ class AssignmentType < ActiveRecord::Base
   belongs_to :course
   belongs_to :grade_scheme
   has_many :assignments
-  has_many :grades, :through => :assignments
+  has_many :grades
   has_many :score_levels
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
@@ -23,23 +23,14 @@ class AssignmentType < ActiveRecord::Base
     elsif max_value?
       max_value.to_s << " possible points"
     elsif student_weightable?
-      "#{course.user_term}s decide!"
+      "#{course.user_term.pluralize} decide!"
     else
-      possible_score.to_s << " possible points"
+      "#{total_points} possible points"
     end
   end
 
   def multiplier_open?
     course.student_weight_close_date > Date.today
-  end
-
-  # the next two methods should be consolidated into one
-  def possible_score
-    self.assignments.sum(:point_total) || 0
-  end
-
-  def assignment_value_sum
-    assignments.sum(&:point_total)
   end
 
   def slider?
@@ -62,10 +53,6 @@ class AssignmentType < ActiveRecord::Base
     assignments.any?(&:soon?)
   end
 
-  def mass_grade?
-    mass_grade == true
-  end
-
   def grade_checkboxes?
     mass_grade_type == "Checkbox"
   end
@@ -76,13 +63,5 @@ class AssignmentType < ActiveRecord::Base
 
   def grade_radio?
     mass_grade_type == "Radio Buttons"
-  end
-
-  def score_for_student(student)
-    grades.where(:student => student).to_a.sum { |g| g.score(student) }
-  end
-
-  def point_total_for_student(student)
-    assignments.to_a.sum { |a| a.point_total_for_student(student) }
   end
 end

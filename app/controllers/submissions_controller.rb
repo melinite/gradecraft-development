@@ -18,15 +18,11 @@ class SubmissionsController < ApplicationController
     @assignment_type = @assignment.assignment_type
     
     if current_user.is_staff?
-      @student = params[:student_id])
-      if @student.grade_for_assignment(@assignment)
-        @grade = @assignment.assignment_grades.find(params[:grade_id])
-      else 
-        @grade = @assignment.assignment_grades.create(params[:grade])
-      end
+      @student = params[:student_id]
+      
       @score_levels = @assignment_type.score_levels
       @earned_badges = current_course.badges.map do |b|
-      EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
+      #EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
       @grade_scheme_elements = @assignment.grade_scheme_elements
       end
     end
@@ -38,7 +34,7 @@ class SubmissionsController < ApplicationController
     @title = "Submit #{@assignment.name}"
     @users = current_course.users
     @submission = @assignment.submissions.create(params[:submission])
-    @submission.submittable = params[:submittable_type].constantize.find(params[:submittable_id])
+    @submission.student = params[:student_type].constantize.find(params[:student_id])
     @groups = @assignment.groups 
     @teams = current_course.teams
     @students = @users.students
@@ -90,7 +86,7 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find(params[:id])
     @submission.destroy
     respond_to do |format|
-      format.html { redirect_to submissions_path(@assignment), notice: 'Submission was successfully deleted.' }
+      format.html { redirect_to assignment_submissions_path(@assignment), notice: 'Submission was successfully deleted.' }
       format.json { head :ok }
     end
   end
@@ -104,7 +100,7 @@ class SubmissionsController < ApplicationController
     nil
   end
   
-  def find_submittable
+  def find_student
     params.each do |name, value|
       if name =~ /(.+)_id$/
         return $1.classify.constantize.find(value)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130729213840) do
+ActiveRecord::Schema.define(version: 20130731150226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,13 +40,14 @@ ActiveRecord::Schema.define(version: 20130729213840) do
   end
 
   create_table "assignment_weights", force: true do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "student_id",         null: false
-    t.integer  "assignment_type_id", null: false
-    t.integer  "weight",             null: false
-    t.integer  "assignment_id",      null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "student_id",                     null: false
+    t.integer  "assignment_type_id",             null: false
+    t.integer  "weight",                         null: false
+    t.integer  "assignment_id",                  null: false
     t.integer  "course_id"
+    t.integer  "point_total",        default: 0, null: false
   end
 
   add_index "assignment_weights", ["assignment_id"], name: "index_assignment_weights_on_assignment_id", using: :btree
@@ -103,7 +104,7 @@ ActiveRecord::Schema.define(version: 20130729213840) do
   create_table "course_memberships", force: true do |t|
     t.integer "course_id"
     t.integer "user_id"
-    t.integer "sortable_score"
+    t.integer "score",         default: 0, null: false
     t.string  "shared_badges"
   end
 
@@ -185,6 +186,7 @@ ActiveRecord::Schema.define(version: 20130729213840) do
     t.datetime "updated_at"
     t.integer  "course_id"
     t.string   "name"
+    t.text     "description"
   end
 
   create_table "grades", force: true do |t|
@@ -209,11 +211,16 @@ ActiveRecord::Schema.define(version: 20130729213840) do
     t.integer  "parent_id"
     t.integer  "group_id"
     t.string   "group_type"
+    t.integer  "score"
+    t.integer  "assignment_type_id"
+    t.integer  "point_total"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
+  add_index "grades", ["assignment_type_id"], name: "index_grades_on_assignment_type_id", using: :btree
   add_index "grades", ["course_id"], name: "index_grades_on_course_id", using: :btree
   add_index "grades", ["group_id", "group_type"], name: "index_grades_on_group_id_and_group_type", using: :btree
+  add_index "grades", ["score"], name: "index_grades_on_score", using: :btree
   add_index "grades", ["task_id"], name: "index_grades_on_task_id", using: :btree
 
   create_table "group_memberships", force: true do |t|
