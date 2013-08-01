@@ -124,7 +124,7 @@ class User < ActiveRecord::Base
   end
 
   #Grades
-  def grade_level(course)
+  def grade_level_for_course(course)
     course.grade_scheme.grade_level_for_course(self.score)
   end
 
