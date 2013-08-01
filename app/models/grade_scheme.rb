@@ -22,7 +22,7 @@ class GradeScheme < ActiveRecord::Base
     nil
   end
   
-  def grade_level_for_course(score)
+  def grade_level_for_score(score)
     element_names.each do |range,name|
       return name if score.between?(*range)
     end
