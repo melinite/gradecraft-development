@@ -125,6 +125,10 @@ class User < ActiveRecord::Base
 
   #Grades
 
+  def grade_level_for_course(course)
+    course.grade_scheme.grade_level_for_course(score_for_course(course))
+  end
+
   def earned_grades(course)
     grades.where(:course => course).to_a.sum { |g| g.score }
   end
@@ -150,9 +154,6 @@ class User < ActiveRecord::Base
     grades.where(course: course).score
   end
   
-  def grade_level_for_course(course)
-    course.grade_scheme.grade_level_for_course(self.score_for_course(course))
-  end
 
   # Calculates point total for graded assignments
   def point_total_for_course(course)

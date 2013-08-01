@@ -30,10 +30,9 @@
         %td= student.teams.first.try(:name)
         - if current_course.team_roles?
           %td= student.try(:team_role)
-        - if current_user.is_staff?           
+        - if current_user.is_staff?      
           %td= student.score_for_course(current_course) if student.respond_to?(:earned_grades)
-          %td
-            = student.grade_level_for_course(current_course)
+          %td= student.grade_level_for_course(current_course)
         - if current_course.has_badges? 
           %td
             - student.earned_badges.each do |badge|

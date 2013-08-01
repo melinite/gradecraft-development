@@ -17,12 +17,12 @@ class GradeScheme < ActiveRecord::Base
   
   def grade_level(unmultiplied_score)
     element_names.each do |range,name|
-      return name if unmultiplied_score.between?(*range)
+      #return name if unmultiplied_score.between?(*range)
     end
     nil
   end
   
-  def grade_level_for_course(course)
+  def grade_level_for_course(score)
     element_names.each do |range,name|
       return name if score.between?(*range)
     end

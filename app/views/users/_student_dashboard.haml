@@ -1,42 +1,42 @@
 %div.pull-right.col.col-lg-3.sidebar
   - if current_user.is_staff?
     %div.section= gravatar_for @user, :size => 300, :d => "mm"
-  
-  - if current_course.has_badges? 
+
+  - if current_course.has_badges?
     %div.section#badges
       %h4.center Badges
       - @badges.each do |badge|
-        - @user.earned_badges_by_badge(badge).tap do |earned_badge|
+        - @user.earned_badges.where(badge: badge).first.tap do |earned_badge|
           - if earned_badge
             %div.badgeIcon
               - if current_course.valuable_badges?
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:value)} points"} 
+                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:value)} points"}
                   %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned", :width => "60", :height => "60"}
               - else
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"} 
+                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
                   %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned", :width => "60", :height => "60"}
           - else
             - if badge.visible?
-              %div.badgeIcon                  
+              %div.badgeIcon
                 - if current_course.valuable_badges?
-                  %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:value)} points"} 
+                  %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:value)} points"}
                     %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
                 - else
-                  %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"} 
+                  %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
                     %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
       %div.unEarnedText Badges you've earned will shine brightly!
-      
+
   %div.col.col-lg-12.btn.btn-success
     = link_to 'Predict Course Grade', predictor_users_path(:user_id => @user.id)
 
   - if current_user.is_student?
-    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => current_course.grade_level(@user)}
+    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
       %span.buttonTitle Check My Final Grade
-  - elsif current_user.is_staff? 
-    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => current_course.grade_level(@user)} 
-      %span.buttonTitle Check Their Final Grade      
-  
-  %div.btn.btn-danger.col.col-lg-12{"data-target" => "#toDoList", "data-toggle" => "collapse"} 
+  - elsif current_user.is_staff?
+    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
+      %span.buttonTitle Check Their Final Grade
+
+  %div.btn.btn-danger.col.col-lg-12{"data-target" => "#toDoList", "data-toggle" => "collapse"}
     %span.buttonTitle To Do List
     %i.caret
     %div{:id => "toDoList", :class => "collapse"}
@@ -45,42 +45,42 @@
           %h5
             = "#{assignment_type.try(:name)}"
           - assignments.each do |assignment|
-            - if assignment.soon? 
+            - if assignment.soon?
               %div
-                = "#{assignment.try(:name)}" 
+                = "#{assignment.try(:name)}"
                 %div= "Due: #{assignment.try(:due_date).strftime("%b-%d")}"
 
 %div.col.col-lg-9
   /[if IE]
     %a{ :href => 'https://www.google.com/intl/en/chrome/browser/' }
-      %h3 We highly recommend you install Google Chrome to use GradeCraft  
+      %h3 We highly recommend you install Google Chrome to use GradeCraft
   %div.section.col.col-lg-12
     %div
       - if current_user.is_staff?
-        = render "scoreboard" 
+        = render "scoreboard"
       - else
-        = render "users/scoreboard" 
+        = render "users/scoreboard"
       %ul.nav.nav-tabs
         %li.active
           %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Assignments
-        %li 
+        %li
           %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
         %li
           %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Syllabus
-        %li 
+        %li
           %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Badges
-        %li 
+        %li
           %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Timeline
       %div.tab-content
         %div.tab-pane.active#tab1
           = render "users/syllabus"
         %div.tab-pane#tab2
-          = render "users/assignments" 
+          = render "users/assignments"
         %div.tab-pane#tab2
-          = render "users/calendar" 
+          = render "users/calendar"
         %div.tab-pane#tab3
           = render "users/syllabus"
         %div.tab-pane#tab4
-          = render "users/badges" 
+          = render "users/badges"
         %div.tab-pane#tab5
-          = render "users/timeline" 
+          = render "users/timeline"
