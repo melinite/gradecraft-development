@@ -1,6 +1,6 @@
 Fabricator(:grade_scheme_element) do
-  name "MyString"
-  low_range 1
-  high_range 1
-  letter_grade "MyString"
+  name "Outstanding"
+  low_range 90
+  high_range 100
+  letter_grade "A"
 end
