@@ -62,11 +62,11 @@
         = render "users/scoreboard"
       %ul.nav.nav-tabs
         %li.active
-          %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Assignments
+          %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Syllabus
         %li
-          %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
+          %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Assignments
         %li
-          %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Syllabus
+          %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Calendar
         %li
           %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Badges
         %li
@@ -75,12 +75,10 @@
         %div.tab-pane.active#tab1
           = render "users/syllabus"
         %div.tab-pane#tab2
-          = render "users/assignments"
+          //= render "users/assignments"
         %div.tab-pane#tab2
           = render "users/calendar"
         %div.tab-pane#tab3
-          = render "users/syllabus"
+          //= render "users/badges"
         %div.tab-pane#tab4
-          = render "users/badges"
-        %div.tab-pane#tab5
           = render "users/timeline"
