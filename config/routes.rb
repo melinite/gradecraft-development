@@ -37,7 +37,7 @@ GradeCraft::Application.routes.draw do
   resources :course_memberships
   resources :badge_sets
   resources :badges do
-    resources :elements
+    resources :tasks
   end
   resources :earned_badges do
     collection do

@@ -4,6 +4,7 @@
  *= require flexslider
  *= require_self
  *= require icons
+ *= require datetimepicker
 */
 
 /* Branding colors */
@@ -350,6 +351,7 @@ footer .col-sm-12 {
 }
 
 .alert {
+  margin-top: 10px;
   color: #FFF !important;
 }
 

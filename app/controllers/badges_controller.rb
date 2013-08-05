@@ -10,6 +10,7 @@ class BadgesController < ApplicationController
   def show
     @badge = current_course.badges.find(params[:id])
     @title = @badge.name
+    @tasks = @badge.tasks
 
     respond_to do |format|
       format.html
