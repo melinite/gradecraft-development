@@ -12,7 +12,6 @@
 //= require best_in_place
 //= require best_in_place.purr
 //= require bootstrap
-//= require bootstrap-datetimepicker
 //= require flexslider
 //= require underscore.min
 //= require backbone.min
@@ -26,6 +25,7 @@
 //= require nested_fields
 //= require user_dashboard
 //= require users
+//= require grade_schemes
 
 $(document).ready(function(){
 
