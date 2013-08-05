@@ -392,3 +392,11 @@ grade_scheme_hash.each do |range,letter|
   end
 end
 puts "Installed N.E.W.T. grade scheme for each course"
+
+LTIProvider.create! do |p|
+  p.name = 'Piazza'
+  p.uid = 'piazza'
+  p.launch_url = 'https://piazza.com/connect'
+  p.consumer_key = 'piazza.sandbox'
+  p.consumer_secret = 'test_only_secret'
+end

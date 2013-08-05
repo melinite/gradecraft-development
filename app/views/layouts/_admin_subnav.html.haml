@@ -29,7 +29,8 @@
   %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
   %li.divider
   %li.nav-header Tools
-  %li= link_to 'Piazza', launch_lti_provider_path(:piazza)
+  - LTIProvider.all.each do |tool|
+    %li= link_to tool.name, launch_lti_provider_path(tool)
   - if current_user.is_admin?
     %li.divider
     %li.nav-header Admin
