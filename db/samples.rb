@@ -384,9 +384,9 @@ end
 puts "Group Game Design has been posted!"
 
 grade_scheme = GradeScheme.new(:name => 'N.E.W.T. Grades')
-grade_scheme_hash.each do |range,name|
-  grade_scheme.grade_scheme_elements.new do |e|
-    e.name = name
+grade_scheme_hash.each do |range,letter|
+  grade_scheme.elements.new do |e|
+    e.letter = letter
     e.low_range = range.first
     e.high_range = range.last
   end

@@ -118,10 +118,6 @@ class Assignment < ActiveRecord::Base
     points_predictor == "Fixed"
   end
 
-  def submissions_allowed?
-    submissions_allowed == true
-  end
-
   def has_ungraded_submissions?
     has_submissions == true && submissions.try(:ungraded)
   end

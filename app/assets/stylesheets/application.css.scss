@@ -53,6 +53,9 @@ h5.pageTitle {
   background-color: #FFF;
 }
 
+.center{
+  text-align: center;
+}
 .rounded {
   border-radius: 10px;
 }
@@ -254,6 +257,19 @@ ul.nav.nav-list > li > a {
   width: 100%;
   height: 2px;
 }
+
+/** Dashboard Sidebar **/
+#badges .badgeIcon {
+  float: left;
+  opacity: .5;
+  padding: 5px;
+}
+
+#badges img.earned {
+  opacity: 1;
+}
+
+
 
 
 /** Table Styles **/
