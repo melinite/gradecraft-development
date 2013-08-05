@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?
+  before_filter :ensure_staff?, :except => [:feed]
 
   def index
     @title = "Assignments"

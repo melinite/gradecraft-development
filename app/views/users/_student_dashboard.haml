@@ -1,6 +1,16 @@
 %div.pull-right.col.col-lg-3.sidebar
   - if current_user.is_staff?
     %div.section= gravatar_for @user, :size => 300, :d => "mm"
+    
+  - if current_user.is_student?
+    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
+      %span.buttonTitle Check My Final Grade
+  - elsif current_user.is_staff?
+    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
+      %span.buttonTitle Check Their Final Grade
+ 
+  %div.col.col-lg-12
+    %span Classwork
 
   - if current_course.has_badges?
     %div.section#badges
@@ -26,15 +36,6 @@
                     %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
       %div.unEarnedText Badges you've earned will shine brightly!
 
-  %div.col.col-lg-12.btn.btn-success
-    = link_to 'Predict Course Grade', predictor_users_path(:user_id => @user.id)
-
-  - if current_user.is_student?
-    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
-      %span.buttonTitle Check My Final Grade
-  - elsif current_user.is_staff?
-    %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
-      %span.buttonTitle Check Their Final Grade
 
   %div.btn.btn-danger.col.col-lg-12{"data-target" => "#toDoList", "data-toggle" => "collapse"}
     %span.buttonTitle To Do List
@@ -62,23 +63,21 @@
         = render "users/scoreboard"
       %ul.nav.nav-tabs
         %li.active
-          %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Syllabus
+          %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Assignments
         %li
-          %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Assignments
+          %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
         %li
-          %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Calendar
+          %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Badges
         %li
-          %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Badges
+          %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Timeline
         %li
-          %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Timeline
+          %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Grade Predictor
       %div.tab-content
         %div.tab-pane.active#tab1
           = render "users/syllabus"
         %div.tab-pane#tab2
-          //= render "users/assignments"
-        %div.tab-pane#tab2
           = render "users/calendar"
         %div.tab-pane#tab3
-          //= render "users/badges"
+          = render "users/badges"
         %div.tab-pane#tab4
           = render "users/timeline"
