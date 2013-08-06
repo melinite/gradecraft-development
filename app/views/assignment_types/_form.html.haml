@@ -21,13 +21,19 @@
     = f.input :levels, :label => "Will there be levels to the grading?", :hint => "This includes normal A - F grading schemes.", :as => :radio_buttons
     %div.well
       %h5 Score Levels
-      = f.simple_fields_for(:score_levels, :class => "form-inline") do |score_level|
-        = render 'score_level_fields', f: score_level
+      %script(id="score-level-template" type="text/x-template")
+        %fieldset.score-level
+          = f.simple_fields_for :score_levels, ScoreLevel.new, class: 'form-inline', child_index: 'child_index' do |slf|
+            = render 'score_level_fields', f: slf
+      - @assignment_type.score_levels.each do |score_level|
+        %fieldset.score-level
+          = f.simple_fields_for :score_levels, score_level, class: 'form-inline' do |slf|
+            = render 'score_level_fields', f: slf
       %hr
-      = link_to_add_fields "Add a Level", f, :score_levels
+      = link_to 'Add a Level', '#', class: 'add-level'
 
   .form-actions
-    %div.btn-toolbar    
+    %div.btn-toolbar
       %div.btn-group
         = f.button :submit, :class => "btn-primary"
       %div.btn-group

@@ -20,6 +20,7 @@
 //= require jquery.dynatable
 //= require best_in_place
 //= require best_in_place.purr
+//= require assignment_types
 //= require users
 
 $(document).ready(function(){
