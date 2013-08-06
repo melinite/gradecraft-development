@@ -20,10 +20,11 @@ FnordMetric.namespace :gradecraft do
     title: "Events per Minute",
     group: "Events",
     key_nouns: %w(Event Events),
-    series: [:all_events, :prediction_event],
+    series: [:all_events, :predictor_set],
+    calculate: :sum,
     tick: 60
 
-  event :prediction_event do
+  event :predictor_set do
     puts "Prediction event"
     observe :predictions_by_user, session_key
     incr :predictions_per_second, :by_users, 1
@@ -37,4 +38,6 @@ FnordMetric.namespace :gradecraft do
 
 end
 
-FnordMetric.standalone
+FnordMetric::Web.new(port: 4242)
+FnordMetric::Worker.new
+FnordMetric.run

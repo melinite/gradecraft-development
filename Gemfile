@@ -32,7 +32,7 @@ gem 'sorcery'
 gem 'twitter-bootstrap-rails'
 gem 'will_paginate'
 gem 'rdiscount'
-gem 'fnordmetric'
+gem 'fnordmetric', :git => 'git://github.com/JangoSteve/fnordmetric.git', :branch => 'gradecraft-hosted'
 
 group :development do
   gem 'bullet'
