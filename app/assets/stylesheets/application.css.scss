@@ -4,6 +4,7 @@
  *= require flexslider
  *= require_self
  *= require icons
+ *= require datetimepicker
 */
 
 /* Branding colors */
@@ -16,7 +17,7 @@ $red: #d64545;
 
 body {
   background: url("cloud_bg2.gif");
-  font-family: 'Pontano Sans',sans-serif !important;
+  font-family: 'Pontano Sans', sans-serif !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -140,6 +141,10 @@ h5.pageTitle {
     background-color: $blue;
   }
 
+}
+
+.form-horizontal input {
+  margin-top: 5px;
 }
 
 .navbar a {
@@ -347,6 +352,11 @@ footer .col-sm-12 {
 
 .btn.btn-primary, .badge.badge-primary{
   background-color: $blue !important;
+}
+
+.alert {
+  margin-top: 10px;
+  color: #FFF !important;
 }
 
 .btn.btn-info, .badge.badge-info, .alert.alert-info  {

@@ -21,7 +21,6 @@ class TasksController < ApplicationController
     @title = "Create a New #{@assignment.name} Task"
     @button_title = "Create"
     @task = @assignment.tasks.create(params[:task])
-
   end
 
   def edit

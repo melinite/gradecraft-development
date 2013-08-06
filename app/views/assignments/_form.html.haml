@@ -5,8 +5,8 @@
     = f.input :name
     = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Description"
     = f.input :point_total, :label => "Total Score Possible"
-    = f.input :open_date, :include_blank => true 
-    = f.input :due_date, :include_blank => true
+    = f.input :open_date, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
+    = f.input :due_date, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
 

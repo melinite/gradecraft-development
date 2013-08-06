@@ -21,6 +21,7 @@
 //= require best_in_place
 //= require best_in_place.purr
 //= require users
+//= require bootstrap-datetimepicker
 
 $(document).ready(function(){
   $('.ckeditor').ckeditor();
@@ -36,6 +37,10 @@ $(document).ready(function(){
     $('#easyTab a:last').tab('show'); // Select last tab
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
     
+  });
+  
+  $('.datetimepicker').datetimepicker({
+    format: 'yyyy-mm-dd hh:ii'
   });
   
   /* Activating Best In Place */
