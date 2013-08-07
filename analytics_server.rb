@@ -24,6 +24,16 @@ FnordMetric.namespace :gradecraft do
     calculate: :sum,
     tick: 60
 
+  gauge :events_per_minute_predictor,
+    title: "Events per Minute (predictions)"
+
+  widget "Events",
+    title: "Predictions per Minute",
+    gauges: [:events_per_minute_predictor],
+    type: :timeline,
+    width: 100,
+    autoupdate: 1
+
   event :predictor_set do
     puts "Prediction event"
     observe :predictions_by_user, session_key
@@ -34,10 +44,12 @@ FnordMetric.namespace :gradecraft do
     puts "received event: #{data.inspect}"
     incr :events_per_minute, :all_events, 1
     incr :events_per_minute, data[:_type], 1
+    incr :events_per_minute_predictor, 1 if data[:_type] == 'predictor_set'
   end
 
 end
 
 FnordMetric::Web.new(port: 4242)
+FnordMetric::Acceptor.new(:protocol => :tcp, :port => 2323)
 FnordMetric::Worker.new
 FnordMetric.run

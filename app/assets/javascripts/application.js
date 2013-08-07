@@ -16,6 +16,8 @@
 //= require backbone.min
 //= require selectToUISlider.jQuery
 //= require jquery.omniselect
+//= require fnordmetric-ui
+//= require analytics
 //= require gradecraft
 //= require_tree .
 //= require jquery.dynatable

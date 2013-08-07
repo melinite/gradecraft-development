@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/JangoSteve/fnordmetric.git
-  revision: 97ae6c2f2e1e2238bb211fe88bf33d9ef92f0563
+  revision: 5e38ce7f2c75fa55bbf24ba29c0a7484348d23fb
   branch: gradecraft-hosted
   specs:
     fnordmetric (1.2.9)

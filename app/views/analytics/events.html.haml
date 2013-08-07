@@ -1,0 +1,4 @@
+%h1 Events Analytics
+
+Events in the past 10 minutes:
+%div{:data => {:fnordmetric =>"timeseries", :since => "-10minutes", :until => "now", :gauges => "events_per_minute_predictor", :autoupdate => "1"}}

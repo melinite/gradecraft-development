@@ -6,6 +6,7 @@
  *= require jquery.ui
  *= require bootstrap
  *= require flexslider.css
+ *= require fnordmetric-ui
  *= require_tree .
 */
 
@@ -461,6 +462,9 @@ background: url(images/icn_screenshot.png) no-repeat center left;
 }
 #sidebar li.icn_charts a {
 background: url(images/icn_charts.png) no-repeat center left;
+}
+#sidebar li.icn_cardio a {
+background: url(images/icn_cardio.png) no-repeat center left;
 }
 #sidebar li.icn_calculator a {
 background: url(images/icn_calculator.png) no-repeat center left;

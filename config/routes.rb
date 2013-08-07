@@ -92,6 +92,9 @@ GradeCraft::Application.routes.draw do
   get 'using_gradecraft' => 'info#using_gradecraft'
   get 'home/index'
   get 'dashboard' => 'info#dashboard'
+  namespace :analytics do
+    get 'events'
+  end
   root :to => "home#index"
 
   post '/current_course/change' => 'current_courses#change', :as => :change_current_course
