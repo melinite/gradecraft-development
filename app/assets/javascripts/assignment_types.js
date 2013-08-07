@@ -1,17 +1,20 @@
 !function($) {
   var init = function() {
-    $('form').on('click', '.remove_fields', function(event) {
-      $(this).prev('input[type=hidden]').val('1');
-      $(this).closest('fieldset').hide();
-      event.preventDefault();
+    var $form = $('form');
+
+    $form.on('click', '.add-level', function(e) {
+      var $wrapper = $('.score-levels');
+      var template = $('#score-level-template').html().replace(/child_index/g, $wrapper.children('.score-level').length);
+      $wrapper.append(template);
+      return false;
     });
 
-    $('form').on('click', '.add_fields', function(event) {
-      time = new Date().getTime();
-      regexp = new RegExp($(this).data('id'), 'g');
-      $(this).before($(this).data('fields').replace(regexp, time));
-      event.preventDefault();
-    });
+    $form.on('click', '.remove-level', function(e) {
+      var $link = $(this);
+      $link.prev('input.destroy').val(true);
+      $link.closest('fieldset.score-level').hide();
+      return false;
+    })
   };
   $(init);
 }(jQuery);

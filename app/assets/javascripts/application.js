@@ -21,6 +21,8 @@
 //= require best_in_place
 //= require best_in_place.purr
 //= require users
+//= require assignment_types
+//= require grade_schemes
 //= require bootstrap-datetimepicker
 
 $(document).ready(function(){
