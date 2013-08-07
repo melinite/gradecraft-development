@@ -17,7 +17,7 @@ class Team < ActiveRecord::Base
 
   #after_validation :cache_score
 
-  validates_presence_of :course, :name
+  #validates_presence_of :course, :name
 
   def score
     grades.pluck('raw_score').sum

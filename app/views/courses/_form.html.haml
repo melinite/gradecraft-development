@@ -1,10 +1,10 @@
 = simple_form_for(@course, :html => {:class => 'form-horizontal' }, :validate => false)  do |f|
   %div.well
     %h4 THE BASICS
-    = f.input :name, :label => "Course Title"
-    = f.input :courseno, :label => "Course Number"
-    = f.input :semester, :collection => [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]]
-    = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2) 
+    = f.input :name, :label => "Course Title", :input_html => {:class => "col-lg-4"}
+    = f.input :courseno, :label => "Course Number", :input_html => {:class => "col-lg-2"}
+    = f.input :semester, :collection => [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]], :input_html => {:class => "col-lg-4 input-sm"}
+    = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2), :input_html => {:class => "col-lg-2 input-sm"}
     = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :radio_buttons
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions" 
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
@@ -14,14 +14,14 @@
     %h4 BADGES
     = f.input :badge_setting, :hint => "Do you want to use badges in your course?", :label => "Badges", :as => :radio_buttons
     = f.association :badge_sets, :collection => @badge_sets, :label => "Badge Set", :as => :check_boxes
-    = f.input :badge_use_scope, :label => "How will badges be used?", :collection => [["Awarded for Assignments", "Assignment"],["Awarded outside of Assignments","Course"],["Awarded in Both","Both"]]
+    = f.input :badge_use_scope, :label => "How will badges be used?", :collection => [["Awarded for Assignments", "Assignment"],["Awarded outside of Assignments","Course"],["Awarded in Both","Both"]], :input_html => {:class => "col-lg-4 input-sm"}
     = f.input :shared_badges, :label => "Social Badges", :hint => "Will earned badges be visible between students?", :as => :radio_buttons
     = f.input :badges_value, :label => "Will badges have points attached to them?", :as => :radio_buttons
   
   %div.well
     %h4 TEAMS & GROUPS
     = f.input :team_setting, :hint => "Will you have semester-long teams in your course?", :label => "Teams", :as => :radio_buttons
-    = f.input :team_term, :label => "Team Term", :hint => "What will you call these? Team, Group, Section..."
+    = f.input :team_term, :label => "Team Term", :hint => "What will you call these? Team, Group, Section...", :input_html => {:class => "col-lg-2"}
     = f.input :teams_visible, :label => "Can students see the teams, their points, and their badges?"
     = f.input :team_roles, :hint => "Do students self-declare their role within groups?"
     = f.input :section_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your team leaders?"
