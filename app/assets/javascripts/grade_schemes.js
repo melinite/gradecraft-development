@@ -3,9 +3,9 @@
     var $form = $('form');
 
     $form.on('click', '.add-element', function(e) {
-      var $elements = $('.grade-scheme-element');
-      var template = $('#grade-scheme-element-template').html().replace(/child_index/g, $elements.length);
-      $elements.last().after(template);
+      var $wrapper = $('.grade-scheme-elements');
+      var template = $('#grade-scheme-element-template').html().replace(/child_index/g, $wrapper.children('.grade-scheme-element').length);
+      $wrapper.append(template);
       return false;
     });
 

@@ -3,14 +3,15 @@
   = f.text_area :description, :class => "ckeditor"
   %div.well
     %h5 Grade Scheme Levels
-    %script(id="grade-scheme-element-template" type="text/x-template")
-      %fieldset.grade-scheme-element
-        = f.simple_fields_for :grade_scheme_elements, GradeSchemeElement.new, class: 'form-inline', child_index: 'child_index' do |gse|
-          = render 'grade_scheme_element_fields', f: gse
-    - @grade_scheme.elements.each do |element|
-      %fieldset.grade-scheme-element
-        = f.simple_fields_for :grade_scheme_elements, grade_scheme_element, class: 'form-inline' do |gse|
-          = render 'grade_scheme_element_fields', f: gse
+    .grade-scheme-elements
+      %script(id="grade-scheme-element-template" type="text/x-template")
+        %fieldset.grade-scheme-element
+          = f.simple_fields_for :grade_scheme_elements, GradeSchemeElement.new, class: 'form-inline', child_index: 'child_index' do |gse|
+            = render 'grade_scheme_element_fields', f: gse
+      - @grade_scheme.elements.each do |element|
+        %fieldset.grade-scheme-element
+          = f.simple_fields_for :grade_scheme_elements, grade_scheme_element, class: 'form-inline' do |gse|
+            = render 'grade_scheme_element_fields', f: gse
     %hr
     = link_to 'Add an element', '#', class: 'add-element'
 

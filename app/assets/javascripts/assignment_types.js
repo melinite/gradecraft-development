@@ -3,9 +3,9 @@
     var $form = $('form');
 
     $form.on('click', '.add-level', function(e) {
-      var $levels = $('.score-level');
-      var template = $('#score-level-template').html().replace(/child_index/g, $levels.length);
-      $levels.last().after(template);
+      var $wrapper = $('.score-levels');
+      var template = $('#score-level-template').html().replace(/child_index/g, $wrapper.children('.score-level').length);
+      $wrapper.append(template);
       return false;
     });
 
