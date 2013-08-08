@@ -39,9 +39,10 @@
                 %span{:class => 'caret'}
               %ul{:class => 'dropdown-menu dropdown form-inline login'}
                 = simple_form_for User.new, :url => user_sessions_path do |f|
-                  %li= f.input :email, :label => false
+                  %li= f.input :email, :label => false, :html => { :class => "col-lg-12"}
                   %li= f.input :password, :label => false
                   %li= submit_tag "Log in", :class => 'dropmenu btn pull-right'
+                %div.spacer
                 %div.divider.clear
                 = link_to 'Forget your password?', new_user_session_path, :class => "forgot"
     
