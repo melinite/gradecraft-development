@@ -38,6 +38,11 @@ h5.pageTitle {
 
 #page { 
   margin-top: 35px;
+  
+  .col-lg-9 {
+    padding-left: 0px;
+  }
+
 }
 
 #page.logged_out {
@@ -78,23 +83,13 @@ h5.pageTitle {
 
 /** Navbar **/
 .navbar {
-  padding-top: 3px;
-  background: #45484d; /* Old browsers */
-  background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #45484d 0%,#000000 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #45484d 0%,#000000 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-  font-family: 'Futura', sans-serif;
-  height: auto;
+  min-height: 35px !important;
   
-  
-  a.brand {
+    a.brand {
     font-family: 'Futura', sans-serif;
     font-size: 1.5em;
     color: #fff;
+    margin-bottom: 0px;
     text-shadow: 0 -1px 0 #000;
   }
   
@@ -108,33 +103,29 @@ h5.pageTitle {
     font-family: "Futura", sans-serif;
   }
     
-  .login {
-    width: 260px;
+  ul.login {
+    width: 230px;
+    background-color: $green;
+    padding: 10px 10px 15px 0px;
+    margin: 0;
   }
   
-  .login li, .forgot input, .forgot input.input {
-    margin-bottom: 10px;
-    clear: both;
+  .login input {
+    margin: 0px 0 10px 0px;
+    padding: 5px;
+    width: 190px;
   }
   
-  #remember .control-group .control-label {
-    font-weight: normal !important;
-    color: #666 !important;
+  .login .forgot {
+    color: $red;
     float: right;
-  }
-  
-  #remember .controls input.boolean {
-    top: -25px;
-    right: 105px;
-    position: relative;
-    float: right;
+    margin-right: 10px;
   }
   
   .login li input.btn {
-    position: relative;
-    margin-top: -20px;
     background-color: $lightblue;
     color: #FFF;
+    margin-right: 12px;
   }
   
   .login li input.btn:hover {
@@ -143,8 +134,20 @@ h5.pageTitle {
 
 }
 
+.form-horizontal {
+  background-color: #eee;
+}
+
 .form-horizontal input {
   margin-top: 5px;
+}
+
+.form-horizontal .help-inline {
+  color: $red;
+}
+
+.form-actions {
+  margin: 20px;
 }
 
 .navbar a {
@@ -157,7 +160,8 @@ h5.pageTitle {
 
 .navbar-fixed-bottom {
   clear: both;
-  height: 40px;
+  height: 30px;
+  padding-top: 10px;
 }
 
 .navbar a.btn {
@@ -174,10 +178,12 @@ h5.pageTitle {
 
 .navbar-fixed-bottom .course select {
   background-color: transparent; 
-  padding: 0px !important;
+  padding: 0 !important;
+  line-height: 16px;
   margin-top: -4px;
   background-image: url(../images/assignArrowDn.png) no-repeat center right;
   padding-right: 25px;
+  border-radius: 0 !important;
 }
 
 /** Page Navigation **/
@@ -193,7 +199,7 @@ h5.pageTitle {
 
 .sidebar-nav-fixed {
   background-image: image-url("sidebar.png");
-  padding: 10px 0px;
+  padding: 10px 0px 0;
 }
 
 ul.nav.nav-list > li > a {
@@ -208,7 +214,7 @@ ul.nav.nav-list > li > a {
   text-transform: uppercase;
   text-shadow: 0 1px 0 #fff;
   font-size: 13px;
-  margin: 20px 0 5px 20px !important;
+  margin: 20px 0 5px 35px !important;
   display: block;
   width: 90%;
 }
@@ -220,7 +226,7 @@ ul.nav.nav-list > li > a {
 .quick_search {
   text-align: center;
   padding: 4px 0 15px 5px;
-  margin: 5px 0 15px 15px !important;
+  margin: 10px 0 10px 15px !important;
 }
 
 .quick_search input[type=text] {
@@ -228,7 +234,7 @@ ul.nav.nav-list > li > a {
   -moz-border-radius: 20px;
   border-radius: 20px;
   border: 1px solid #bbb;
-  height: 10px !important;
+  height: 35px !important;
   width: 90%;
   color: #ccc;
   -webkit-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
@@ -302,7 +308,7 @@ footer {
   opacity: .7;
   padding: 10px 0px 10px;
   color: #FFF;
-  margin-bottom: 40px !important;
+  margin-bottom: 30px !important;
 }
 
 footer div {
@@ -407,6 +413,7 @@ ul.tabs li a {
 	display: block;
 	padding: 0 10px;
 	height: 24px;
+	cursor: pointer;
 }
 html ul.tabs li.active a {
   color: #FFF !important;

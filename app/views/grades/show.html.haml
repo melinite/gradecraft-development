@@ -6,7 +6,7 @@
   
 %p
   %b User:
-  = link_to @grade.student.try(:name), student
+  = link_to @grade.student.try(:name), @grade.student
 %p
   %b Assignment:
   = link_to @grade.assignment.name, assignment_path(@grade.assignment_id)

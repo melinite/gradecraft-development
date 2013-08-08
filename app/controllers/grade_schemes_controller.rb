@@ -3,6 +3,7 @@ class GradeSchemesController < ApplicationController
   before_filter :ensure_staff?
 
   def index
+    @title = "Grading Schemes"
     @grade_schemes = current_course.grade_schemes
 
     respond_to do |format|

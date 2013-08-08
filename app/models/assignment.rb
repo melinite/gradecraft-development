@@ -59,15 +59,15 @@ class Assignment < ActiveRecord::Base
   end
 
   def high_score
-    grades.pluck('MAX(score)')
+    grades.maximum('score')
   end
 
   def low_score
-    grades.pluck('MIN(score)')
+    grades.minimum('score')
   end
 
   def average
-    grades.pluck('AVG(score)')
+    grades.average('score')
   end
 
   def release_necessary?

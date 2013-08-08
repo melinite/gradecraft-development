@@ -2,7 +2,7 @@
   Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
 %form.quick_search
   %div.dropdown
-    %input.search-query.col.col-lg-9{ :type => "text", :placeholder => "Search Users", :label => false }
+    %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search Users", :label => false }
 %ul.nav.nav-list#sidebar
   %li.nav-header Students
   %li.icn_add_user= link_to "Add New #{current_course.user_term}s", new_student_path

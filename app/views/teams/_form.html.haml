@@ -2,9 +2,5 @@
   = f.input :name, :label => "#{current_course.team_term}s Name"
   = f.association :students, :collection => @students, :as => :check_boxes
   = f.input :course_id, :collection => @courses, :as => :hidden, :input_html => { :value => current_course.id }
-  .form-actions
-    %div.btn-toolbar
-      %div.btn-group
-        = f.button :submit, :class => 'btn btn-primary', :value => "Create #{current_course.team_term}"
-      %div.btn-group
-        = link_to 'Cancel', teams_path, :class => 'btn btn-info'
+  = f.button :submit, :class => 'btn btn-primary', :value => "Create #{current_course.team_term}"
+  = link_to 'Cancel', teams_path, :class => 'btn btn-info'
