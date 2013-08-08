@@ -43,17 +43,22 @@ class Assignment < ActiveRecord::Base
   scope :chronological, -> { order('due_date ASC') }
 
   scope :with_due_date, -> { where('assignments.due_date IS NOT NULL') }
-  scope :future, -> { with_due_date.where('assignments.due_date >= ?', Date.today) }
-  scope :past, -> { with_due_date.where('assignments.due_date < ?', Date.today) }
+  scope :without_due_date, ->  { where('assignments.due_date IS NULL') }
+  scope :future, -> { with_due_date.where('assignments.due_date >= ?', Time.now) }
+  scope :past, -> { with_due_date.where('assignments.due_date < ?', Time.now) }
+  scope :graded, -> { joins('LEFT OUTER JOIN grades ON assignments.id = grades.assignment_id').where('grades.id IS NOT NULL') }
+
+  # This returns assignments with due dates in the past and assignments without due dates
+  # scope :graded, -> { where('assignments.due_date IS NULL OR assignments.due_date <= ?', Date.today) }
 
   scope :grading_done, -> { where assignment_grades.present? == 1 }
 
   def self.point_total
-    pluck('SUM(point_total)').first || 0
+    pluck('SUM(assignments.point_total)').first || 0
   end
 
   def self.point_total_for_student(student)
-    joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{student.id}'").pluck('SUM(COALESCE(assignment_weights.point_total, assignments.point_total))').first
+    graded.joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{student.id}'").pluck('SUM(COALESCE(assignment_weights.point_total, assignments.point_total))').first || 0
   end
 
   def high_score

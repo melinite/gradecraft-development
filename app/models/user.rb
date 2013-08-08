@@ -124,53 +124,40 @@ class User < ActiveRecord::Base
 
   #Grades
 
-  def earned_grades(course)
-    grades.where(:course => course).to_a.sum { |g| g.score }
-  end
-
-  def grades_by_assignment_id
-    @grades_by_assignment ||= grades.group_by(&:assignment_id)
-  end
-
-  def grade_for_assignment(assignment)
-    grades_by_assignment_id[assignment.id].try(:first)
-  end
-  
   def submissions_by_assignment_id
     @submissions_by_assignment ||= submissions.group_by(&:assignment_id)
   end
-  
+
   def submission_for_assignment(assignment)
     submissions_by_assignment_id[assignment.id].try(:first)
   end
 
   #Badges
-  def earned_badges_value(course)
-    earned_badges.where(:course => course).pluck('raw_score').sum
-  end
 
   def earned_badges_by_badge_id
     @earned_badges_by_badge ||= earned_badges.group_by(&:badge_id)
   end
 
   def score_for_course(course)
-    grades.where(course: course).score
+    grades.where(course: course).score + earned_badge_score_for_course(course)
   end
-  
+
   def grade_level_for_course(course)
     course.grade_level_for_score(score_for_course(course))
   end
-  
-  # Calculates point total for graded assignments
+
   def point_total_for_course(course)
-    c.assignments.joins('LEFT OUTER JOIN grades ON assignments.id = grades.assignment_id AND grades.student_id = 4').count
-    grades.where(course: course).point_total
+    course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
+  end
+
+  def earned_badge_score_for_course(course)
+    earned_badges.where(:course => course).score
   end
 
   def score_for_assignment_type(assignment_type)
     grades.where(assignment_type: assignment_type).score
   end
-  
+
   def weights_by_assignment_id
     @weights_by_assignment_id ||= Hash.new { |h, k| h[k] = 0 }.tap do |weights_hash|
       assignment_weights.each do |assignment_weight|
@@ -182,7 +169,7 @@ class User < ActiveRecord::Base
   def weight_for_assignment(assignment)
     weights_by_assignment_id[assignment.id]
   end
-# 
+#
 #   def assignment_type_score(assignment_type)
 #     grades.for_assignment_type(assignment_type).sum { |g| g.score(self) }
 #   end
@@ -210,11 +197,6 @@ class User < ActiveRecord::Base
         csv << [user.first_name, user.last_name, user.email, user.score_for_course(course), user.grade_level(course), user.visit_count, user.page_views, user.predictor_views]
       end
     end
-  end
-
-  #Calculates the total points available in a course, assuming that badges act as extra credit
-  def total_points_for_course(course, in_progress = false)
-    course.total_points(in_progress) + earned_badges_value(course)
   end
 
   def team_score(course)

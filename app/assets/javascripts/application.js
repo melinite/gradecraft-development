@@ -7,23 +7,24 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery.dynatable
+//= require jquery.omniselect
 //= require twitter/bootstrap
+//= require best_in_place
+//= require best_in_place.purr
 //= require bootstrap
+//= require bootstrap-datetimepicker
 //= require flexslider 
 //= require underscore.min
 //= require backbone.min
 //= require selectToUISlider.jQuery
-//= require jquery.omniselect
 //= require gradecraft
 //= require preload_store
 //= require_self
-//= require jquery.dynatable
-//= require best_in_place
-//= require best_in_place.purr
-//= require users
 //= require assignment_types
 //= require grade_schemes
-//= require bootstrap-datetimepicker
+//= require user_dashboard
+//= require users
 
 $(document).ready(function(){
   $('.ckeditor').ckeditor();
@@ -73,8 +74,6 @@ $('#course_id').change(function() { $(this).closest('form').submit(); });
 
 $('.nav-tabs').button();
 
-    
-	
 	// handle 'select all' button
 	$(".select-all").click(function(e){
 		var $link = $(this);
@@ -92,6 +91,4 @@ $('.nav-tabs').button();
 		
 	});
 
-  
 });
-	

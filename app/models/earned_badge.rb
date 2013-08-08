@@ -16,6 +16,10 @@ class EarnedBadge < ActiveRecord::Base
 
   delegate :name, :description, :to => :badge
 
+  def self.score
+    all.pluck('SUM(grades.score)').first || 0
+  end
+
   private
 
   def cache_associations
