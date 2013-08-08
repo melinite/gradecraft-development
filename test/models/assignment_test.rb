@@ -44,36 +44,58 @@ class AssignmentTest < ActiveSupport::TestCase
     assert_equal 1500, course.assignments.point_total_for_student(student)
   end
 
-  test "point total does not include past assignments without grades released" do
-    create_assignment(:due_date => 1.day.ago, :point_total => 1000)
-    assert_equal 0, student.point_total_for_course(course)
+  test "graded point total does not include past assignments without grades" do
+    create_assignment(:due_at => 1.day.ago, :point_total => 1000)
+    assert_equal 0, course.assignments.graded_for_student(student).point_total
   end
 
-  test "point total includes past assignments with grade released to anyone" do
-    create_assignment(:due_date => 1.day.ago, :point_total => 1000) do
+  test "graded point total does not include future assignments without grades" do
+    create_assignment(:due_at => 1.day.from_now, :point_total => 1000)
+    assert_equal 0, course.assignments.graded_for_student(student).point_total
+  end
+
+  test "graded point total does not include past assignments with unreleased grades" do
+    create_assignment(:due_at => 1.day.from_now, :point_total => 1000) do
       create_grade(student: create_student)
     end
-    assert_equal 1000, student.point_total_for_course(course)
+    assert_equal 0, course.assignments.graded_for_student(student).point_total
   end
 
-  test "point total does not include future assignments without grades" do
-    create_assignment(:due_date => 1.day.from_now, :point_total => 1000)
-    assert_equal 0, student.point_total_for_course(course)
-  end
-
-  test "point total does not include future assignments with grade released to another student" do
-    create_assignment(:due_date => 1.day.from_now, :point_total => 1000) do
-      create_grade(student: create_student)
+  test "graded point total includes past assignments with grade released to anyone" do
+    create_assignment(:due_at => 1.day.ago, :point_total => 1000) do
+      create_grade(student: create_student, status: 'Released')
     end
-    assert_equal 0, student.point_total_for_course(course)
+    assert_equal 1000, course.assignments.graded_for_student(student).point_total
   end
 
-  test "point total includes future assignments with grade released to student" do
-    create_assignment(:due_date => 1.day.from_now, :point_total => 1000) do
-      create_grade
+  test "graded point total does not include future assignments with grade released to another student" do
+    create_assignment(:due_at => 1.day.from_now, :point_total => 1000) do
+      create_grade(student: create_student, status: 'Released')
     end
-    assert_equal 1000, student.point_total_for_course(course)
+    assert_equal 0, course.assignments.graded_for_student(student).point_total
   end
+
+  test "graded point total includes future assignments with grade released to student" do
+    create_assignment(:due_at => 1.day.from_now, :point_total => 1000) do
+      create_grade(status: 'Released')
+    end
+    assert_equal 1000, course.assignments.graded_for_student(student).point_total
+  end
+
+  test "graded point total does not include assignments without due dates with grade released to another student" do
+    create_assignment(:due_at => nil, :point_total => 1000) do
+      create_grade(status: 'Released', student: create_student)
+    end
+    assert_equal 0, course.assignments.graded_for_student(student).point_total
+  end
+
+  test "graded point total includes assignments without due dates with grade released to student" do
+    create_assignment(:due_at => nil, :point_total => 1000) do
+      create_grade(status: 'Released')
+    end
+    assert_equal 1000, course.assignments.graded_for_student(student).point_total
+  end
+
 
   test "sets course from assignment type before validation" do
     @assignment = build_assignment(:course => nil)

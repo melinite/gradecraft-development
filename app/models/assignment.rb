@@ -29,27 +29,24 @@ class Assignment < ActiveRecord::Base
 
   validates_presence_of :assignment_type, :course, :name, :grade_scope
 
-  attr_accessible :type, :name, :description, :point_total, :due_date,
+  attr_accessible :type, :name, :description, :point_total, :due_at,
     :created_at, :updated_at, :level, :present, :grades_attributes, :assignment_type,
     :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
     :open_time, :submissions_allowed, :student_logged_button_text,
     :student_logged, :badge_set_id, :release_necessary,
-    :score_levels_attributes, :open_date, :close_time, :course, :due_date
+    :score_levels_attributes, :open_date, :close_time, :course, :due_at
 
   scope :individual_assignment, -> { where grade_scope: "Individual" }
   scope :group_assignment, -> { where grade_scope: "Group" }
   scope :team_assignment, -> { where grade_scope: "Team" }
 
-  scope :chronological, -> { order('due_date ASC') }
+  scope :chronological, -> { order('due_at ASC') }
 
-  scope :with_due_date, -> { where('assignments.due_date IS NOT NULL') }
-  scope :without_due_date, ->  { where('assignments.due_date IS NULL') }
-  scope :future, -> { with_due_date.where('assignments.due_date >= ?', Time.now) }
-  scope :past, -> { with_due_date.where('assignments.due_date < ?', Time.now) }
-  scope :graded, -> { joins('LEFT OUTER JOIN grades ON assignments.id = grades.assignment_id').where('grades.id IS NOT NULL') }
-
-  # This returns assignments with due dates in the past and assignments without due dates
-  # scope :graded, -> { where('assignments.due_date IS NULL OR assignments.due_date <= ?', Date.today) }
+  scope :with_due_date, -> { where('assignments.due_at IS NOT NULL') }
+  scope :without_due_date, ->  { where('assignments.due_at IS NULL') }
+  scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
+  scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
+  scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
 
   scope :grading_done, -> { where assignment_grades.present? == 1 }
 
@@ -58,7 +55,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def self.point_total_for_student(student)
-    graded.joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{student.id}'").pluck('SUM(COALESCE(assignment_weights.point_total, assignments.point_total))').first || 0
+    joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{student.id}'").pluck('SUM(COALESCE(assignment_weights.point_total, assignments.point_total))').first || 0
   end
 
   def high_score
@@ -104,16 +101,16 @@ class Assignment < ActiveRecord::Base
   end
 
   def past?
-    due_date != nil && due_date < Date.today
+    due_at != nil && due_at < Date.today
   end
 
   def future?
-    due_date != nil && due_date >= Date.today
+    due_at != nil && due_at >= Date.today
   end
 
   def soon?
-    if due_date?
-      Time.now <= due_date && due_date < (Time.now + 7.days)
+    if due_at?
+      Time.now <= due_at && due_at < (Time.now + 7.days)
     end
   end
 
@@ -158,7 +155,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def open?
-    (open_date !=nil && open_date < Time.now) && (due_date != nil && due_date > Time.now)
+    (open_date != nil && open_date < Time.now) && (due_at != nil && due_at > Time.now)
   end
 
   def grade_level(grade)
