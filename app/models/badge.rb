@@ -1,23 +1,20 @@
 class Badge < ActiveRecord::Base
-  self.table_name = 'assignments'
-
-  default_scope -> { where(:type => 'Badge') }
-
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
     :visible, :created_at, :updated_at, :image_file_name, :occurrence,
     :badge_set, :category_id, :value, :multiplier
 
-  has_many :earned_badges, :foreign_key => :assignment_id, :dependent => :destroy
+  has_many :earned_badges, :dependent => :destroy
 
   has_many :tasks, :foreign_key => :assignment_id, :dependent => :destroy
-  belongs_to :badge_set, :foreign_key => :category_id
   belongs_to :course
   #belongs_to :assignment
 
-  has_many :submissions
+  belongs_to :badge_set
   accepts_nested_attributes_for :badge_set
 
-  before_validation :set_course
+  has_many :submissions
+
+  before_validation :cache_associations
 
   validates_presence_of :course, :name
 
@@ -25,14 +22,6 @@ class Badge < ActiveRecord::Base
 
   def can_earn_multiple_times
     super || false
-  end
-
-  def point_value
-    if value
-      value
-    else
-      0
-    end
   end
 
   #badges per role
@@ -50,7 +39,7 @@ class Badge < ActiveRecord::Base
 
   private
 
-  def set_course
-    self.course_id = badge_set.try(:course_id)
+  def cache_associations
+    self.course_id ||= badge_set.try(:course_id)
   end
 end

@@ -1,8 +1,4 @@
 class Challenge < ActiveRecord::Base
-  self.table_name = 'assignments'
-  
-  default_scope -> { where(:type => 'Challenge') }
-  
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
     :visible, :created_at, :updated_at, :image_file_name, :occurrence,
     :badge_set, :category_id, :value, :multiplier, :point_total, :due_date,

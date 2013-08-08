@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class GradeTest < ActiveSupport::TestCase
-  test "sets type automatically" do
-    assert_equal 'Grade', Grade.new.type
-  end
-
   test "can exist without a task or submission" do
     Grade.create!(:student => student, :assignment => assignment)
   end

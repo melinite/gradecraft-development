@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class EarnedBadgeTest < ActiveSupport::TestCase
-  test "sets type automatically" do
-    assert_equal 'EarnedBadge', EarnedBadge.new.type
-  end
-
   test "can exist without a task or submission" do
     EarnedBadge.create!(:student => student, :badge => badge)
   end

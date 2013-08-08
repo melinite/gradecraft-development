@@ -40,11 +40,10 @@ class User < ActiveRecord::Base
 
   has_many :badges, :through => :earned_badges
 
-  has_many :group_memberships
-  with_options :through => :group_memberships, :source => :group do |u|
-    u.has_many :teams, :source_type => 'Team'
-    u.has_many :groups, :source_type => 'Group'
-  end
+  has_many :group_memberships, :foreign_key => :student_id, :dependent => :destroy
+  has_many :groups, :through => :group_memberships
+  has_many :team_memberships, :foreign_key => :student_id, :dependent => :destroy
+  has_many :teams, :through => :team_memberships
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

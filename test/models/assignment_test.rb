@@ -3,10 +3,6 @@ require 'test_helper'
 class AssignmentTest < ActiveSupport::TestCase
   include ValidAttribute::Method
 
-  test "sets type automatically" do
-    assert_equal 'Assignment', Assignment.new.type
-  end
-
   test "returns default weight if no weight is set" do
     assert_in_delta 0.5, assignment.weight_for_student(student)
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130805184244) do
+ActiveRecord::Schema.define(version: 20130808131455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,8 +75,6 @@ ActiveRecord::Schema.define(version: 20130805184244) do
     t.string   "student_logged_button_text"
     t.boolean  "release_necessary"
     t.datetime "open_date"
-    t.string   "type"
-    t.integer  "parent_id"
     t.string   "icon"
     t.boolean  "can_earn_multiple_times"
     t.boolean  "visible",                    default: true
@@ -85,13 +83,32 @@ ActiveRecord::Schema.define(version: 20130805184244) do
     t.integer  "max_submissions"
   end
 
+  create_table "badge_sets", force: true do |t|
+    t.string   "name"
+    t.integer  "course_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "badges", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "point_total"
+    t.integer  "course_id"
+    t.integer  "assignment_id"
+    t.integer  "badge_set_id"
+    t.string   "icon"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "course_id"
-    t.string   "type"
   end
 
   add_index "categories", ["course_id"], name: "index_categories_on_course_id", using: :btree
@@ -169,6 +186,31 @@ ActiveRecord::Schema.define(version: 20130805184244) do
     t.datetime "updated_at"
   end
 
+  create_table "earned_badges", force: true do |t|
+    t.integer  "badge_id"
+    t.integer  "submission_id"
+    t.integer  "course_id"
+    t.integer  "student_id"
+    t.integer  "task_id"
+    t.integer  "grade_id"
+    t.integer  "group_id"
+    t.string   "group_type"
+    t.integer  "score"
+    t.text     "feedback"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.integer  "order"
+    t.string   "category"
+    t.string   "audience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "grade_scheme_elements", force: true do |t|
     t.string   "level"
     t.integer  "low_range"
@@ -208,7 +250,6 @@ ActiveRecord::Schema.define(version: 20130805184244) do
     t.boolean  "shared"
     t.integer  "student_id"
     t.integer  "task_id"
-    t.integer  "parent_id"
     t.integer  "group_id"
     t.string   "group_type"
     t.integer  "score"
@@ -225,7 +266,7 @@ ActiveRecord::Schema.define(version: 20130805184244) do
 
   create_table "group_memberships", force: true do |t|
     t.integer  "group_id"
-    t.integer  "user_id"
+    t.integer  "student_id"
     t.string   "accepted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -235,6 +276,7 @@ ActiveRecord::Schema.define(version: 20130805184244) do
 
   add_index "group_memberships", ["course_id"], name: "index_group_memberships_on_course_id", using: :btree
   add_index "group_memberships", ["group_id", "group_type"], name: "index_group_memberships_on_group_id_and_group_type", using: :btree
+  add_index "group_memberships", ["student_id"], name: "index_group_memberships_on_student_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name"
@@ -245,7 +287,6 @@ ActiveRecord::Schema.define(version: 20130805184244) do
     t.string   "approved"
     t.string   "proposal"
     t.text     "text_proposal"
-    t.string   "type"
   end
 
   create_table "lti_providers", force: true do |t|
@@ -321,6 +362,29 @@ ActiveRecord::Schema.define(version: 20130805184244) do
   add_index "tasks", ["assignment_id", "assignment_type"], name: "index_tasks_on_assignment_id_and_assignment_type", using: :btree
   add_index "tasks", ["course_id"], name: "index_tasks_on_course_id", using: :btree
   add_index "tasks", ["id", "type"], name: "index_tasks_on_id_and_type", using: :btree
+
+  create_table "team_memberships", force: true do |t|
+    t.integer  "team_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teams", force: true do |t|
+    t.string   "name"
+    t.integer  "course_id"
+    t.integer  "rank"
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "themes", force: true do |t|
+    t.string   "name"
+    t.string   "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: true do |t|
     t.string   "username",                                            null: false

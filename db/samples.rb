@@ -103,8 +103,6 @@ badges = badge_names.map do |badge_name|
     b.name = badge_name
     b.point_total = 100 * rand(10)
     b.icon = badge_icons.sample
-    b.visible = true
-    b.grade_scope = "Individual"
   end
 end
 puts "Did someone need motivation? We found these badges in the Room of Requirements..."

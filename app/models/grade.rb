@@ -1,8 +1,6 @@
 class Grade < ActiveRecord::Base
   include Canable::Ables
 
-  default_scope -> { where(:type => 'Grade') }
-
   attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :student, :student_id,
@@ -18,7 +16,7 @@ class Grade < ActiveRecord::Base
   belongs_to :task # Optional
   belongs_to :group, :polymorphic => true # Optional
 
-  has_many :earned_badges, :foreign_key => :parent_id, :dependent => :destroy
+  has_many :earned_badges, :dependent => :destroy
 
   has_many :badges, :through => :earned_badges
   accepts_nested_attributes_for :earned_badges
@@ -39,7 +37,7 @@ class Grade < ActiveRecord::Base
   scope :released, -> { where(status: "Released") }
 
   def self.score
-    all.pluck('SUM(score)').first || 0
+    all.pluck('SUM(grades.score)').first || 0
   end
 
   def raw_score
