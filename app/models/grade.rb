@@ -34,7 +34,7 @@ class Grade < ActiveRecord::Base
   after_destroy :save_student
 
   scope :completion, -> { where(order: "assignments.due_date ASC", :joins => :assignment) }
-  scope :released, -> { where(status: "Released") }
+  scope :released, -> { joins(:assignment).where('status = ? OR NOT assignments.release_necessary', 'Released') }
 
   def self.score
     all.pluck('SUM(grades.score)').first || 0

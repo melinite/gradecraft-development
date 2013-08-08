@@ -24,7 +24,7 @@
             - if assignment.is_required?
               %span.assignmentRequired.label.label-important Required!
             - if assignment.future?
-              %span.assignmentDate= "| Due: #{assignment.try(:due_date).strftime("%A, %B %d")}"
+              %span.assignmentDate= "| Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
               %span.assignmentDesc= raw assignment.description
             %div.grade
               - if assignment.submissions_allowed?
