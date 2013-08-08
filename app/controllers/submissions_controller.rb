@@ -19,12 +19,7 @@ class SubmissionsController < ApplicationController
     
     if current_user.is_staff?
       @student = params[:student_id]
-      
       @score_levels = @assignment_type.score_levels
-      @earned_badges = current_course.badges.map do |b|
-      #EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
-      @grade_scheme_elements = @assignment.grade_scheme_elements
-      end
     end
     respond_with(@grade)
   end

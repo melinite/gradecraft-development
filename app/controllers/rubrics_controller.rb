@@ -1,5 +1,6 @@
 class RubricsController < ApplicationController
   def index
+    @title = "Rubrics"
     @rubrics = Rubric.all
     respond_with(@rubrics)
   end
