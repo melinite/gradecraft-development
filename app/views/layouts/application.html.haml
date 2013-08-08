@@ -37,16 +37,13 @@
               %a{:class => 'btn btn-xs btn-primary dropdown-toggle', "data-toggle" => 'dropdown', :href => '#' }
                 Log In 
                 %span{:class => 'caret'}
-              %ul{:class => 'dropdown-menu dropdown well form-inline login'}
+              %ul{:class => 'dropdown-menu dropdown form-inline login'}
                 = simple_form_for User.new, :url => user_sessions_path do |f|
-                  %li= f.input :email, :label => false, :html => { :class => "col-lg-12"}
+                  %li= f.input :email, :label => false
                   %li= f.input :password, :label => false
-                  %li#remember.pull-right.col-lg-12.col-sm-12.col-12
-                    = f.input :remember_me, :as => :boolean
-                  %li= submit_tag "Log in", :class => 'dropmenu btn btn-small pull-right'
-                %div.spacer
+                  %li= submit_tag "Log in", :class => 'dropmenu btn pull-right'
                 %div.divider.clear
-                = link_to 'Forget your password?', new_user_session_path, :class => " "
+                = link_to 'Forget your password?', new_user_session_path, :class => "forgot"
     
     %div#page.bkg.row(class="#{'logged_out col-lg-10 col-lg-offset-1 rounded' if ! current_user}")
       - if current_user && current_user.is_staff? &&! current_page?(:controller => 'users', :action => 'predictor')
