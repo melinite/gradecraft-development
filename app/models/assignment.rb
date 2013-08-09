@@ -16,6 +16,7 @@ class Assignment < ActiveRecord::Base
 
   has_many :users, :through => :grades
   has_one :rubric
+
   belongs_to :category
   belongs_to :course
 

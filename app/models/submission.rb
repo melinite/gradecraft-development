@@ -4,9 +4,6 @@ class Submission < ActiveRecord::Base
     :creator, :creator_id, :text_feedback, :text_comment, :graded
 
   include Canable::Ables
-  #userstamps! # adds creator and updater
-
-  #has_attached_file :attachment
 
   belongs_to :task
   belongs_to :assignment, :polymorphic => true

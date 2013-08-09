@@ -29,12 +29,13 @@ gem 'puma'
 gem 'rdiscount'
 gem 'responders'
 gem 'sampler'
-gem 'sass-rails',   '~> 4.0.0.beta1'
+gem 'sass-rails', '~> 4.0.0.beta1'
 gem 'sendgrid'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'twitter-bootstrap-rails'
 gem 'quiet_assets', :group => :development
+gem 'rdiscount'
 
 group :development do
   gem 'bullet'
@@ -51,11 +52,12 @@ end
 
 group :test do
   gem 'faker'
-  gem 'launchy'
 end
 
 group :test, :development do
   gem 'debugger'
   gem 'fabrication'
-  gem 'poltergeist'
+  gem 'capybara-webkit'
+  gem 'capybara-screenshot'
+  gem 'launchy'
 end

@@ -10,6 +10,5 @@ class Group < ActiveRecord::Base
   has_many :group_memberships
   has_many :students, :through => :group_memberships
 
-  validates_presence_of :course, :name
-  # validates_presence_of :assignment
+  validates_presence_of :assignment, :course, :name
 end

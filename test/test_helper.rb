@@ -12,17 +12,13 @@ MiniTest::Reporters.use!
 require 'valid_attribute'
 require 'support/custom_fabricators'
 
+require 'minitest/capybara'
 require 'capybara/rails'
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+require 'capybara-screenshot/minitest'
 
+Capybara.javascript_driver = :webkit
 
-# for minitest/spec
-class ActionDispatch::IntegrationTest
-  include Capybara::DSL
-end
-
-class ActiveSupport::TestCase
+module CustomFabricatorDefinitions
   include CustomFabricators
 
   # Custom fabricator definitions
@@ -66,12 +62,12 @@ class ActiveSupport::TestCase
   define_custom_fabricator :grade do
     { :student => student, :assignment => assignment }
   end
-  
-  define_custom_fabricator :grade_scheme do 
+
+  define_custom_fabricator :grade_scheme do
     { :course => course }
   end
-  
-  define_custom_fabricator :grade_scheme_element do 
+
+  define_custom_fabricator :grade_scheme_element do
     { :grade_scheme => grade_scheme }
   end
 
@@ -80,6 +76,10 @@ class ActiveSupport::TestCase
   end
 
   define_custom_fabricator :student do
+    { :courses => [course] }
+  end
+
+  define_custom_fabricator :professor do
     { :courses => [course] }
   end
 
@@ -108,4 +108,14 @@ class ActiveSupport::TestCase
       end
     end
   end
+end
+
+class ActiveSupport::TestCase
+  include CustomFabricatorDefinitions
+end
+
+class ActionDispatch::IntegrationTest
+  include CustomFabricatorDefinitions
+  include Capybara::DSL
+  include Capybara::Assertions
 end
