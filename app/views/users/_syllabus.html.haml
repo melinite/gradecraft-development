@@ -24,13 +24,13 @@
             - if assignment.is_required?
               %span.assignmentRequired.label.label-important Required!
             - if assignment.future?
-              %span.assignmentDate= "| Due: #{assignment.try(:due_date).strftime("%A, %B %d")}"
+              %span.assignmentDate= "| Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
               %span.assignmentDesc= raw assignment.description
             %div.grade
               - if assignment.submissions_allowed?
                 - @user.submission_for_assignment(assignment).tap do |submission|
-                  - if submission && @user.grade_for_assignment(assignment)
-                    = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :student_id => @user), :class => 'btn btn-tiny btn-success btn-info'
+                  - if submission && @user.grades.where(assignment: assignment).present?
+                    = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grades(assignment: assignment).pluck('id').first, :student_id => @user), :class => 'btn btn-tiny btn-success btn-info'
                   - elsif submission
                     %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
                     %div.modal#myModal

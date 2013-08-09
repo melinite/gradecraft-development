@@ -21,7 +21,7 @@
         %td= link_to challenge.name, challenge
         %td= raw challenge.description
         %td= challenge.point_total
-        %td= challenge.due_date
+        %td= challenge.due_at
         %td= challenge.visible? ? 'Yes' : 'No'
         %td= challenge.submissions_allowed? ? 'Yes' : 'No'
         %td= challenge.release_necessary? ? 'Yes' : 'No'

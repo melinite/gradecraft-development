@@ -6,7 +6,7 @@
     = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Description"
     = f.input :point_total, :label => "Total Score Possible"
     = f.input :open_date, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
-    = f.input :due_date, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
+    = f.input :due_at, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
 
@@ -19,7 +19,7 @@
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
     = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text"
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
-  
+
   .form-actions
     %div.btn-toolbar
       %div.btn-group

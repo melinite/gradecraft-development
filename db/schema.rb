@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130808131455) do
+ActiveRecord::Schema.define(version: 20130808180628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignment_submissions", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.string   "feedback"
+    t.string   "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "link"
+    t.integer  "submittable_id"
+    t.string   "submittable_type"
+    t.text     "text_feedback"
+    t.text     "text_comment"
+  end
 
   create_table "assignment_types", force: true do |t|
     t.string   "name"
@@ -58,7 +76,7 @@ ActiveRecord::Schema.define(version: 20130808131455) do
     t.string   "name"
     t.text     "description"
     t.integer  "point_total"
-    t.datetime "due_date"
+    t.datetime "due_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "level"
@@ -91,6 +109,11 @@ ActiveRecord::Schema.define(version: 20130808131455) do
     t.datetime "updated_at"
   end
 
+  create_table "badge_sets_courses", id: false, force: true do |t|
+    t.integer "course_id"
+    t.integer "badge_set_id"
+  end
+
   create_table "badges", force: true do |t|
     t.string   "name"
     t.string   "description"
@@ -113,9 +136,55 @@ ActiveRecord::Schema.define(version: 20130808131455) do
 
   add_index "categories", ["course_id"], name: "index_categories_on_course_id", using: :btree
 
+  create_table "challenge_grades", force: true do |t|
+    t.integer  "challenge_id"
+    t.integer  "score"
+    t.string   "feedback"
+    t.boolean  "status"
+    t.integer  "team_id"
+    t.integer  "final_score"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "challenges", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "point_total"
+    t.datetime "due_date"
+    t.integer  "course_id"
+    t.string   "points_predictor_display"
+    t.boolean  "visible"
+    t.boolean  "has_challenge_submissions"
+    t.boolean  "release_necessary"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "course_badge_sets", force: true do |t|
+    t.integer "course_id"
+    t.integer "badge_set_id"
+  end
+
   create_table "course_categories", id: false, force: true do |t|
     t.integer "course_id"
     t.integer "category_id"
+  end
+
+  create_table "course_grade_scheme_elements", force: true do |t|
+    t.string   "name"
+    t.string   "letter_grade"
+    t.integer  "low_range"
+    t.integer  "high_range"
+    t.integer  "course_grade_scheme_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "course_grade_schemes", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "course_memberships", force: true do |t|
@@ -317,6 +386,14 @@ ActiveRecord::Schema.define(version: 20130808131455) do
     t.integer  "assignment_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "student_assignment_type_weights", force: true do |t|
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "student_id"
+    t.integer  "assignment_type_id"
+    t.integer  "weight",             null: false
   end
 
   create_table "submissions", force: true do |t|

@@ -28,13 +28,13 @@ class Grade < ActiveRecord::Base
 
   validates_presence_of :assignment, :assignment_type, :course
 
-  delegate :name, :description, :due_date, :assignment_type, :to => :assignment
+  delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
   after_save :save_student
   after_destroy :save_student
 
-  scope :completion, -> { where(order: "assignments.due_date ASC", :joins => :assignment) }
-  scope :released, -> { where(status: "Released") }
+  scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }
+  scope :released, -> { joins(:assignment).where('status = ? OR NOT assignments.release_necessary', 'Released') }
 
   def self.score
     all.pluck('SUM(grades.score)').first || 0

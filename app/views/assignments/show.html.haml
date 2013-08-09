@@ -6,20 +6,20 @@
   = raw @assignment.description
 %p
   %b Point Total:
-  = number_with_delimiter(@assignment.point_total, :delimiter => ',') 
+  = number_with_delimiter(@assignment.point_total, :delimiter => ',')
 %p
   %b Open date:
   = @assignment.open_date
 %p
   %b Close date:
-  = @assignment.due_date
+  = @assignment.due_at
 
 = form_tag assignment_path(@assignment), :method => :get do
   = hidden_field_tag :assignment_id, @assignment.id
   = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
   = submit_tag 'Filter', :class => 'btn btn-success btn-small'
 
-- if current_user.is_staff? 
+- if current_user.is_staff?
   %h4 Grades
   - if @assignment.assignment_type.mass_grade?
     %div.pull-right
@@ -62,8 +62,8 @@
                 %td
                   - if grade
                     = @assignment.grade_level(grade)
-                    
-              %td 
+
+              %td
                 - student.earned_badges.each do |badge|
                   %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
               - if @assignment.release_necessary?

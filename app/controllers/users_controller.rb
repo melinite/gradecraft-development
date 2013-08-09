@@ -117,27 +117,29 @@ class UsersController < ApplicationController
 
   def predictor
     increment_predictor_views
-    @assignment_types = current_course.assignment_types
-    @assignments = current_course.assignments
-    @badges = current_course.badges
+
     if current_user.is_staff?
-      @user = User.find(params[:user_id])
+      student = User.find(params[:user_id])
     else
-      @user = current_user
+      student = current_user
     end
-    if params[:in_progress]
-      @assignment_type_scores = @assignment_types.map { |assignment_type| { :data => [current_course.scores_by_assignment_type_for_student(@user)[assignment_type.id]], :name => assignment_type.name } }
-    else
-      @assignment_type_scores = @assignment_types.map { |assignment_type| { :data => [current_course.scores_by_assignment_type_for_student(@user)[assignment_type.id]], :name => assignment_type.name } }
+
+    scores = []
+    current_course.assignment_types.each do |assignment_type|
+      scores << { data: [student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
     end
-    @assignment_type_scores += [{ :data => [@user.earned_badges_value(current_course)], :name => 'Badges' }]
-    respond_with @user do |format|
-      format.json { render :json => {
-        :student_name => @user.name,
-        :scores => @assignment_type_scores,
-        :course_total => @user.total_points_for_course(current_course,params[:in_progress])
-      }.to_json }
-    end
+
+    earned_badge_score = student.earned_badges.where(course: current_course).score
+    scores << { :data => [earned_badge_score], :name => 'Badges' }
+
+    assignments = student.assignments.where(course: current_course)
+    assignments = assignments.graded_for_student(student) if params[:in_progress]
+
+    render :json => {
+      :student_name => student.name,
+      :scores => scores,
+      :course_total => assignments.point_total + earned_badge_score
+    }
   end
 
   def new
