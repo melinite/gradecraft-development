@@ -181,7 +181,7 @@ grinding_assignments = []
   grinding_assignments << assignment_types[:attendance].assignments.create! do |a|
     a.name = "Class #{n}"
     a.point_total = 5000
-    a.due_date = rand(n - 6).weeks.ago
+    a.due_at = rand(n - 6).weeks.ago
     a.submissions_allowed = false
     a.release_necessary = false
     a.grade_scope = "Individual"
@@ -190,7 +190,7 @@ grinding_assignments = []
   grinding_assignments << assignment_types[:reading_reaction].assignments.create! do |a|
     a.name = "Reading Reaction #{n}"
     a.point_total = 5000
-    a.due_date = rand(n - 6).weeks.ago
+    a.due_at = rand(n - 6).weeks.ago
     a.submissions_allowed = false
     a.release_necessary = true
     a.grade_scope = "Individual"
@@ -209,7 +209,7 @@ end
 puts "Attendance and Reading Reaction classes have been posted!"
 
 grinding_assignments.each do |assignment|
-  next unless assignment.due_date.past?
+  next unless assignment.due_at.past?
   students.each do |student|
     assignment.tasks.each do |task|
       submission = student.submissions.create! do |s|
@@ -237,7 +237,7 @@ blog_assignments = []
     a.release_necessary = false
     a.grade_scope = "Individual"
   end
-  
+
   blog_assignments << Assignment.create! do |a|
     a.assignment_type = assignment_types[:blogging]
     a.name = "Blog Comment #{n}"
@@ -259,7 +259,7 @@ end
 puts "Blogging assignments have been posted!"
 
 blog_assignments.each_with_index do |assignment, i|
-  next if i % 2 == 0 
+  next if i % 2 == 0
   students.each do |student|
     assignment.tasks.each do |task|
       submission = student.submissions.create! do |s|
@@ -282,7 +282,7 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Selection Paper"
   a.point_total = 80000
-  a.due_date = rand(3).weeks.ago
+  a.due_at = rand(3).weeks.ago
   a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
@@ -313,7 +313,7 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Update Paper 1"
   a.point_total = 120000
-  a.due_date = rand(3).weeks.from_now
+  a.due_at = rand(3).weeks.from_now
   a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
@@ -325,7 +325,7 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Update Paper 2"
   a.point_total = 120000
-  a.due_date = rand(5).weeks.from_now
+  a.due_at = rand(5).weeks.from_now
   a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
@@ -337,7 +337,7 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Reflection Paper"
   a.point_total = 160000
-  a.due_date = rand(7).weeks.from_now
+  a.due_at = rand(7).weeks.from_now
   a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
@@ -349,7 +349,7 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 1"
   a.point_total = 200000
-  a.due_date = rand(4).weeks.from_now
+  a.due_at = rand(4).weeks.from_now
   a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
@@ -361,7 +361,7 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
-  a.due_date = rand(7).weeks.from_now
+  a.due_at = rand(7).weeks.from_now
   a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"
@@ -373,7 +373,7 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Group Game Design Project"
   a.point_total = 400000
-  a.due_date = rand(7).weeks.from_now
+  a.due_at = rand(7).weeks.from_now
   a.submissions_allowed = true
   a.release_necessary = true
   a.open_date = "14/02/2013"

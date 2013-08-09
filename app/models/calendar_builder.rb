@@ -21,7 +21,7 @@ class CalendarBuilder
       if assignment.close_time
         ical << "DTEND;TZID=America/New_York::#{assignment.close_time.utc.strftime("%Y%m%dT%H%M%SZ")}"
       else
-        ical << "DTSTART;VALUE=DATE:#{assignment.due_date.strftime("%Y%m%d")}"
+        ical << "DTSTART;VALUE=DATE:#{assignment.due_at.strftime("%Y%m%d")}"
       end
       ical << "UID:#{assignment.id}@gradecraft.com"
       ical << "URL:https://gradecraft.com/assignments/#{assignment.id}/"

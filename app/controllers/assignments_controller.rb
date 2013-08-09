@@ -10,10 +10,10 @@ class AssignmentsController < ApplicationController
     @grade_schemes = current_course.grade_schemes
     respond_to do |format|
       format.html
-      format.json { render json: @assignments.as_json(only:[:id, :name, :description, :point_total, :due_date, :assignment_type_id, :grade_scheme_id, :grade_scope, :visible, :required ]) }
+      format.json { render json: @assignments.as_json(only:[:id, :name, :description, :point_total, :due_at, :assignment_type_id, :grade_scheme_id, :grade_scope, :visible, :required ]) }
     end
   end
-  
+
    def settings
     @title = "Assignments"
     @assignments = current_course.assignments
@@ -21,7 +21,7 @@ class AssignmentsController < ApplicationController
     @grade_schemes = current_course.grade_schemes
     respond_to do |format|
       format.html
-      format.json { render json: @assignments.as_json(only:[:id, :name, :description, :point_total, :due_date, :assignment_type_id, :grade_scheme_id, :grade_scope, :visible, :required ]) }
+      format.json { render json: @assignments.as_json(only:[:id, :name, :description, :point_total, :due_at, :assignment_type_id, :grade_scheme_id, :grade_scope, :visible, :required ]) }
     end
   end
 
@@ -38,7 +38,7 @@ class AssignmentsController < ApplicationController
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = current_course.users.students.where(user_search_options)
-    respond_with @assignment    
+    respond_with @assignment
   end
 
   def new
@@ -77,15 +77,15 @@ class AssignmentsController < ApplicationController
   def destroy
     @assignment = current_course.assignments.find(params[:id])
     @assignment.destroy
-    
+
     respond_to do |format|
       format.html { redirect_to assignments_url }
       format.json { head :ok }
     end
   end
-  
+
   def feed
-    @assignments = current_course.assignments 
+    @assignments = current_course.assignments
     respond_with @assignments.with_due_date do |format|
       format.ics do
         render :text => CalendarBuilder.new(:assignments => @assignments.with_due_date ).to_ics, :content_type => 'text/calendar'
