@@ -13,11 +13,12 @@ class User < ActiveRecord::Base
   end
 
   attr_accessor :remember_me
-  attr_accessible :username, :email, :crypted_password, :remember_me_token,
+  attr_accessible :username, :email, :password, :remember_me_token,
     :avatar_file_name, :role, :first_name, :last_name, :rank, :user_id,
     :display_name, :private_display, :default_course_id, :last_activity_at,
     :last_login_at, :last_logout_at, :team_ids, :courses, :course_ids,
-    :shared_badges, :earned_badges, :earned_badges_attributes, :password, :password_confirmation
+    :shared_badges, :earned_badges, :earned_badges_attributes, :password,
+    :password_confirmation
 
   scope :alpha, -> { where order: 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }

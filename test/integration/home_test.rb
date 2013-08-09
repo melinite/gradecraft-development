@@ -7,7 +7,7 @@ class HomeTest < ActionDispatch::IntegrationTest
   end
 
   test "log in" do
-    @professor = create_professor(email: 'dumbledore@hogwarts.edu', password: 'password')
+    create_professor(email: 'dumbledore@hogwarts.edu', password: 'password')
 
     visit '/'
     click_link 'Log In'

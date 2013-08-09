@@ -60,4 +60,5 @@ group :test, :development do
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
   gem 'launchy'
+  gem 'database_cleaner'
 end
