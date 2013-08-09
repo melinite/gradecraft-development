@@ -14,23 +14,23 @@
           %td
             - if badge.earned_badge_for_student(@user)
               %img{:src => "icn_check.png", :alt => "You've earned this badge!" }
-              = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d") 
+              = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d")
               %br
               = badge.earned_badge_for_student(@user).text_feedback
-              
+
           %td
             %img{:src => badge.icon, :alt => badge.name}
           %td
             = link_to badge.name, badge_path(badge)
             = raw badge.description
-          %td 
+          %td
             %ul
               - badge.tasks.each do |task|
-                %li= task.name
+                %li= task.title
           - if current_course.valuable_badges?
             %td= number_with_delimiter(badge.value)
       - else
-        - if badge.visible == "1"
+        - if badge.visible?
           %tr
             %td
               - if badge.earned_badge_for_student(@user)
@@ -40,9 +40,9 @@
             %td
               = badge.name
               = raw badge.description
-            %td 
+            %td
               %ul
                 - badge.tasks.each do |task|
-                  %li= task.name
+                  %li= task.title
             - if current_course.valuable_badges?
               %td= badge.value

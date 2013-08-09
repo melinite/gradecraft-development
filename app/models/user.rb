@@ -138,6 +138,10 @@ class User < ActiveRecord::Base
     @earned_badges_by_badge ||= earned_badges.group_by(&:badge_id)
   end
 
+  def earned_badge_score_for_course(course)
+    earned_badges.where(:course => course).score
+  end
+
   def score_for_course(course)
     grades.where(course: course).score + earned_badge_score_for_course(course)
   end
@@ -150,9 +154,6 @@ class User < ActiveRecord::Base
     course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
   end
 
-  def earned_badge_score_for_course(course)
-    earned_badges.where(:course => course).score
-  end
 
   def score_for_assignment_type(assignment_type)
     grades.where(assignment_type: assignment_type).score

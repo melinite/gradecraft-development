@@ -17,7 +17,7 @@ class EarnedBadge < ActiveRecord::Base
   delegate :name, :description, :to => :badge
 
   def self.score
-    all.pluck('SUM(grades.score)').first || 0
+    all.sum('score') || 0
   end
 
   private
