@@ -26,7 +26,7 @@
             %td
               %ul
                 - badge.tasks.each do |task|
-                  %li= task.name
+                  %li= task.title
                 %h5 Add a New Task
                 = simple_fields_for(:tasks, :class => "form-horizontal") do |task|
                   = task.input :title
