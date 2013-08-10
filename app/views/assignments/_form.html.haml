@@ -1,7 +1,7 @@
-= simple_form_for(@assignment, :html => {:class => 'form-horizontal' }) do |f|
-  %div.well
+= simple_form_for @assignment, :html => { :class => 'form-horizontal' }, :defaults => { :input_html => { :class => 'form-control' } } do |f|
+  .well
     %h3 The Basics
-    = f.association :assignment_type, :collection => @assignment_types
+    = f.association :assignment_type, :collection => current_course.assignment_types
     = f.input :name
     = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Description"
     = f.input :point_total, :label => "Total Score Possible"
@@ -9,20 +9,20 @@
     = f.input :due_at, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
-
-  %div.well
+  .well
     %h3 Grading
     = f.input :grade_scope, :as => :select, :collection => [["Individual"], ["Group"], ["Team"]]
-    = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :select, :label_method => :name
+    = f.input :grade_scheme_id, :collection => current_course.grade_schemes, :as => :select, :label_method => :name
     - if current_course.accepts_submissions?
       = f.input :submissions_allowed, :hint=> "Will you be using GradeCraft to accept submissions for this assignment?", :label => "Assignment Submissions"
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
     = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text"
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
+  .well
+    %h3 Rubrics
+    = f.simple_fields_for :rubrics
 
   .form-actions
-    %div.btn-toolbar
-      %div.btn-group
-        = f.button :submit, :class => "btn-primary"
-      %div.btn-group
-        = link_to 'Cancel', assignments_path, :class => 'btn btn-info'
+    .btn-toolbar
+      .btn-group= f.button :submit, :class => "btn-primary"
+      .btn-group= link_to 'Cancel', assignments_path, :class => 'btn btn-info'

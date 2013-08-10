@@ -4,14 +4,8 @@ class AssignmentsController < ApplicationController
   before_filter :ensure_staff?, :except => [:feed]
 
   def index
-    @title = "Assignments"
-    @assignments = current_course.assignments.where(:type => "Assignment")
-    @assignment_types = current_course.assignment_types
-    @grade_schemes = current_course.grade_schemes
-    respond_to do |format|
-      format.html
-      format.json { render json: @assignments.as_json(only:[:id, :name, :description, :point_total, :due_at, :assignment_type_id, :grade_scheme_id, :grade_scope, :visible, :required ]) }
-    end
+    @title = 'Assignments'
+    respond_with @assignments = current_course.assignments
   end
 
    def settings
@@ -49,10 +43,6 @@ class AssignmentsController < ApplicationController
   end
 
   def edit
-    @assignment = current_course.assignments.find(params[:id])
-    @assignment_types = current_course.assignment_types
-    @grade_schemes = current_course.grade_schemes
-    @title = "Edit #{@assignment.name}"
     respond_with @assignment = current_course.assignments.find(params[:id])
   end
 

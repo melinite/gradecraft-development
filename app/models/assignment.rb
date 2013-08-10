@@ -1,4 +1,6 @@
 class Assignment < ActiveRecord::Base
+  self.inheritance_column = 'something_you_will_not_use'
+
   belongs_to :grade_scheme
   has_many :grade_scheme_elements, :through => :grade_scheme
 
@@ -30,7 +32,7 @@ class Assignment < ActiveRecord::Base
 
   validates_presence_of :assignment_type, :course, :name, :grade_scope
 
-  attr_accessible :type, :name, :description, :point_total, :due_at,
+  attr_accessible :name, :description, :point_total, :due_at,
     :created_at, :updated_at, :level, :present, :grades_attributes, :assignment_type,
     :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
     :open_time, :submissions_allowed, :student_logged_button_text,
@@ -173,7 +175,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def cache_associations
-    self.course_id = assignment_type.try(:course_id)
+    self.course_id ||= assignment_type.try(:course_id)
   end
 
   def save_grades

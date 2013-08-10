@@ -1,12 +1,14 @@
-%div.col.col-lg-12#content_nav
+- content_for :title, 'Assignments'
+
+.col.col-lg-12#content_nav
   - if current_user.is_staff?
     = link_to 'Create a New Assignment', new_assignment_path, {:class => 'btn btn-info col col-sm-12 col-lg-2 btn-small pull-right'}
 
 %div
   %div.pull-right
-    = link_to "Assignments Info", settings_assignments_path, :class => "badge"
+    = link_to 'Assignments Info', settings_assignments_path, :class => 'badge'
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-  %span.assignmentTypeTitle= "#{assignment_type.try(:name)}"
+  %span.assignmentTypeTitle= assignment_type.name
   %span.assignmentTypeValue= "(#{assignment_type.try(:weight)})"
   = link_to "Edit Assignment Type", edit_assignment_type_path(assignment_type), :class => "btn btn-tiny btn-success"
   %table.table.display.table-bordered.tablesorter
@@ -19,10 +21,7 @@
         %th Average
         %th Range
         %th # Submitted
-        %th
-        %th
-        %th
-        %th
+        %th(colspan="4")
     %tbody
       - assignments.each do |assignment|
         %tr

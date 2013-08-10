@@ -4,6 +4,7 @@ gem 'rails', '4.0.0'
 
 gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
+gem 'active_model_serializers'
 gem 'airbrake'
 gem 'best_in_place', git: 'git@github.com:bernat/best_in_place.git', branch: 'rails-4'
 gem 'canable'
@@ -33,7 +34,6 @@ gem 'sass-rails', '~> 4.0.0.beta1'
 gem 'sendgrid'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
-gem 'twitter-bootstrap-rails'
 gem 'quiet_assets', :group => :development
 gem 'rdiscount'
 

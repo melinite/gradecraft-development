@@ -3,7 +3,9 @@
   %head
     %meta(charset="utf-8")
     %meta(name="viewport" content="width=device-width, initial-scale=1")
-    %title= content_for?(:title) ? yield(:title) : (current_course.try(:name) || 'GradeCraft')
+    %title
+      = "#{yield :title} - " if content_for? :title
+      = current_course.try(:name) || 'GradeCraft'
     = csrf_meta_tags
     /[if lt IE 9]
       = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"

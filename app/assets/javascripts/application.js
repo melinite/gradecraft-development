@@ -9,7 +9,7 @@
 //= require jquery_ujs
 //= require jquery.dynatable
 //= require jquery.omniselect
-//= require twitter/bootstrap
+//= require bootstrap
 //= require best_in_place
 //= require best_in_place.purr
 //= require bootstrap
@@ -49,7 +49,8 @@ $(document).ready(function(){
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
   
-  $('.toolTip').tooltip();
+  $("a[rel=popover]").popover();
+  $('.tooltip, a[rel="tooltip"]').tooltip();
 	
 	$('#navbar').affix();
  
@@ -90,5 +91,4 @@ $('.nav-tabs').button();
 		$link.parents().find("input").prop("checked", false);
 		
 	});
-
 });
