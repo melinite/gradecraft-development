@@ -42,7 +42,7 @@
                 %br= badge.try(:name)
 
     - if @assignment.release_necessary?
-      = f.input :status, :as => :radio_buttons, :collection => [["New"], ["Graded"],["Released"]]
+      = f.input :status, :as => :radio_buttons, :collection => Grade::STATUSES
   %div.clear
   .form-actions
     %div.btn-toolbar

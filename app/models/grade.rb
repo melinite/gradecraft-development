@@ -8,6 +8,8 @@ class Grade < ActiveRecord::Base
     :submission_id, :badge_ids, :earned_badge_id, :earned_badges,
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id
 
+  STATUSES=%w(New Graded Released)
+
   belongs_to :course
   belongs_to :assignment
   belongs_to :assignment_type

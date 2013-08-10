@@ -15,20 +15,23 @@ $red: #d64545;
 
 @import url(http://fonts.googleapis.com/css?family=Pontano+Sans);
 
+@import 'forms';
+@import 'tables';
+
 body {
   background: url("cloud_bg2.gif");
-  font-family: 'Pontano Sans', sans-serif !important;
+  font-family: 'Pontano Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Futura", sans-serif !important;
+  font-family: "Futura", sans-serif;
 }
 
 h5.pageTitle {
   background-color: $blue;
   padding: 10px 15px;
   color: #FFF;
-  font-size: 16px !important;
+  font-size: 16px;
   text-transform: uppercase;
   font-weight: bold;
   border-top-left-radius: 15px;
@@ -36,9 +39,9 @@ h5.pageTitle {
   margin-bottom: 0px;
 }
 
-#page { 
+#page {
   margin-top: 35px;
-  
+
   .col-lg-9 {
     padding-left: 0px;
   }
@@ -84,7 +87,7 @@ h5.pageTitle {
 /** Navbar **/
 .navbar {
   min-height: 35px !important;
-  
+
     a.brand {
     font-family: 'Futura', sans-serif;
     font-size: 1.5em;
@@ -92,42 +95,42 @@ h5.pageTitle {
     margin-bottom: 0px;
     text-shadow: 0 -1px 0 #000;
   }
-  
+
   a.brand:hover {
     text-decoration: none;
     color: #FFF;
   }
-  
+
   a.username.btn {
     color: $green;
     font-family: "Futura", sans-serif;
   }
-    
+
   ul.login {
     width: 230px;
     background-color: $green;
     padding: 10px 10px 15px 0px;
     margin: 0;
   }
-  
+
   .login input {
     margin: 0px 0 10px 0px;
     padding: 5px;
     width: 190px;
   }
-  
+
   .login .forgot {
     color: $red;
     float: right;
     margin-right: 10px;
   }
-  
+
   .login li input.btn {
     background-color: $lightblue;
     color: #FFF;
     margin-right: 12px;
   }
-  
+
   .login li input.btn:hover {
     background-color: $blue;
   }
@@ -177,7 +180,7 @@ h5.pageTitle {
 }
 
 .navbar-fixed-bottom .course select {
-  background-color: transparent; 
+  background-color: transparent;
   padding: 0 !important;
   line-height: 16px;
   margin-top: -4px;
@@ -319,7 +322,7 @@ footer ul, footer li {
   list-style-type: none;
   margin: 0;
   padding: 0;
-} 
+}
 
 footer a {
   color: $green;
@@ -442,6 +445,3 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
 	-moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px;
 	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
 }
-
-
-

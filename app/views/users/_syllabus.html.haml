@@ -1,52 +1,53 @@
 %div.col.col-lg-12
   - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
     %div.col.col-lg-12.section
-      %button.btn.btn-primary.col.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} - #{ number_with_delimiter(@user.score_for_assignment_type(assignment_type))} / 
+      %button.btn.btn-primary.col.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} - #{ number_with_delimiter(@user.score_for_assignment_type(assignment_type))} /
 
-      %span.badge.badge-info.pull-right.col.col-lg-4.col-sm-12
-        = number_with_delimiter(@user.score_for_assignment_type(assignment_type))
-        = "/"
-        //= " #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points"
+      %div.collapse{:id => "assignment_type-#{assignment_type.id}"}
+        %span.badge.badge-info.pull-right.col.col-lg-4.col-sm-12
+          = number_with_delimiter(@user.score_for_assignment_type(assignment_type))
+          = "/"
+          //= " #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points"
 
-      - if assignment_type.student_weightable?
-        %span.badge.badge-important
-          = "#{@user.weights_for_assignment_type_id(assignment_type).value} #{current_course.multiplier_term} "
-          - if (assignment_type.student_weightable? && assignment_type.multiplier_open?) || (assignment_type.student_weightable? && current_user.is_staff?)
-            - assignment_type.weight_for_student(@user).tap do |weight|
-              - if weight
-                = link_to "(Change)", edit_user_user_assignment_type_weight_path(@user, weight, :assignment_type_id => assignment_type)
-        %span.badge.badge-important= link_to "Set #{current_course.multiplier_term}", new_user_user_assignment_type_weight_path(@user, :assignment_type_id => assignment_type)
-        %div.col.col-lg-12{:id => "assignment_type-#{assignment_type.id}", :class => "collapse"}
-      - assignments.each do |assignment|
-        %div.col.col-lg-12
-          %h5
-            = assignment.try(:name)
-            - if assignment.is_required?
-              %span.assignmentRequired.label.label-important Required!
-            - if assignment.future?
-              %span.assignmentDate= "| Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
-              %span.assignmentDesc= raw assignment.description
-            %div.grade
-              - if assignment.submissions_allowed?
-                - @user.submission_for_assignment(assignment).tap do |submission|
-                  - if submission && @user.grades.where(assignment: assignment).present?
-                    = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grades(assignment: assignment).pluck('id').first, :student_id => @user), :class => 'btn btn-tiny btn-success btn-info'
-                  - elsif submission
-                    %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
-                    %div.modal#myModal
-                      %div.modal-content
-                        %div.modal-header
-                          %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x
-                          %h3= assignment.name
-                        %div.modal-body
-                          %h4= link_to submission.link, submission.link
-                          - if submission.link?
-                            %iframe{:src => submission.link}
-                          %p= submission.comment
-                          %div.modal-footer
-                          %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"} Close
-                          %a{:href => "#", :class => "btn btn-primary"} Save changes
-                  - else
-                    = link_to "Submit", new_assignment_submission_path(assignment, @submission, :student_id => @user, :student_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
+        - if assignment_type.student_weightable?
+          %span.badge.badge-important
+            = "#{@user.weights_for_assignment_type_id(assignment_type).value} #{current_course.multiplier_term} "
+            - if (assignment_type.student_weightable? && assignment_type.multiplier_open?) || (assignment_type.student_weightable? && current_user.is_staff?)
+              - assignment_type.weight_for_student(@user).tap do |weight|
+                - if weight
+                  = link_to "(Change)", edit_user_user_assignment_type_weight_path(@user, weight, :assignment_type_id => assignment_type)
+          %span.badge.badge-important= link_to "Set #{current_course.multiplier_term}", new_user_user_assignment_type_weight_path(@user, :assignment_type_id => assignment_type)
+          %div.col.col-lg-12{:id => "assignment_type-#{assignment_type.id}", :class => "collapse"}
+        - assignments.each do |assignment|
+          %div.col.col-lg-12
+            %h5
+              = assignment.try(:name)
+              - if assignment.is_required?
+                %span.assignmentRequired.label.label-important Required!
+              - if assignment.future?
+                %span.assignmentDate= "| Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
+                %span.assignmentDesc= raw assignment.description
+              %div.grade
+                - if assignment.submissions_allowed?
+                  - @user.submission_for_assignment(assignment).tap do |submission|
+                    - if submission && @user.grades.where(assignment: assignment).present?
+                      = link_to "See Submission (#{submission.created_at})", assignment_submission_path(assignment, submission, :grade_id => @user.grades(assignment: assignment).pluck('id').first, :student_id => @user), :class => 'btn btn-tiny btn-success btn-info'
+                    - elsif submission
+                      %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
+                      %div.modal#myModal
+                        %div.modal-content
+                          %div.modal-header
+                            %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x
+                            %h3= assignment.name
+                          %div.modal-body
+                            %h4= link_to submission.link, submission.link
+                            - if submission.link?
+                              %iframe{:src => submission.link}
+                            %p= submission.comment
+                            %div.modal-footer
+                            %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"} Close
+                            %a{:href => "#", :class => "btn btn-primary"} Save changes
+                    - else
+                      = link_to "Submit", new_assignment_submission_path(assignment, @submission, :student_id => @user, :student_type => "User"), :class => 'btn btn-tiny btn-success btn-primary'
 
-              
+

@@ -23,6 +23,8 @@ GEM
       actionpack (>= 4.0.0.beta, < 5.0)
     actionpack-page_caching (1.0.0)
       actionpack (>= 4.0.0.beta, < 5.0)
+    active_model_serializers (0.8.1)
+      activemodel (>= 3.0)
     activemodel (4.0.0)
       activesupport (= 4.0.0)
       builder (~> 3.1.0)
@@ -83,8 +85,6 @@ GEM
     dotenv-rails (0.8.0)
       dotenv (= 0.8.0)
     erubis (2.7.0)
-    execjs (1.4.0)
-      multi_json (~> 1.0)
     fabrication (2.7.2)
     faker (1.1.2)
       i18n (~> 0.5)
@@ -252,11 +252,6 @@ GEM
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.2.7)
-      actionpack (>= 3.1)
-      execjs
-      rails (>= 3.1)
-      railties (>= 3.1)
     tzinfo (0.3.37)
     uniform_notifier (1.2.0)
     uuid (2.3.7)
@@ -271,6 +266,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
+  active_model_serializers
   airbrake
   best_in_place!
   bullet
@@ -318,5 +314,4 @@ DEPENDENCIES
   sendgrid
   simple_form (~> 3.0.0.rc)
   sorcery
-  twitter-bootstrap-rails
   valid_attribute
