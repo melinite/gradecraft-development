@@ -9,12 +9,11 @@
 //= require jquery_ujs
 //= require jquery.dynatable
 //= require jquery.omniselect
-//= require bootstrap
 //= require best_in_place
 //= require best_in_place.purr
 //= require bootstrap
 //= require bootstrap-datetimepicker
-//= require flexslider 
+//= require flexslider
 //= require underscore.min
 //= require backbone.min
 //= require selectToUISlider.jQuery
@@ -30,7 +29,9 @@ $(document).ready(function(){
   $('.ckeditor').ckeditor();
 
   $('#gradeCurious').popover();
-  
+
+  $('collapse').collapse('toggle');
+
   $('#myModal').modal('hide');
 
   $('#easyTab a').click(function (e) {
@@ -39,21 +40,21 @@ $(document).ready(function(){
     $('#easyTab a:first').tab('show'); // Select first tab
     $('#easyTab a:last').tab('show'); // Select last tab
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
-    
+
   });
-  
+
   $('.datetimepicker').datetimepicker({
     format: 'yyyy-mm-dd hh:ii'
   });
-  
+
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
-  
+
   $("a[rel=popover]").popover();
   $('.tooltip, a[rel="tooltip"]').tooltip();
-	
+
 	$('#navbar').affix();
- 
+
   $('.slider').each(function(i,slider) {
     $slider = $(slider)
     $slider.slider({
@@ -63,13 +64,13 @@ $(document).ready(function(){
       $(slider).prev("div.assignment > span").html(ui.value)
     });
   });
-  
+
   // Fix input element click problem
   $('.dropdown input, .dropdown label').click(function(e) {
     e.stopPropagation();
   });
-    
-	$('#userBarTotalSim').show();	
+
+	$('#userBarTotalSim').show();
 
 $('#course_id').change(function() { $(this).closest('form').submit(); });
 
@@ -78,17 +79,17 @@ $('.nav-tabs').button();
 	// handle 'select all' button
 	$(".select-all").click(function(e){
 		var $link = $(this);
-		
+
 		e.preventDefault();
 		$link.parents().find("input").prop("checked", "checked");
 	});
-		
+
 	// handle 'select none' button
 	$(".select-none").click(function(e){
 	 var $link = $(this);
-	 
+
 		e.preventDefault();
 		$link.parents().find("input").prop("checked", false);
-		
+
 	});
 });
