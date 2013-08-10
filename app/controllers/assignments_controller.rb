@@ -4,7 +4,6 @@ class AssignmentsController < ApplicationController
   before_filter :ensure_staff?, :except => [:feed]
 
   def index
-    @title = 'Assignments'
     respond_with @assignments = current_course.assignments
   end
 

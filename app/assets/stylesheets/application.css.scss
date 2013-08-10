@@ -43,27 +43,35 @@ h5.pageTitle {
   margin-bottom: 0px;
 }
 
-#page {
-  margin-top: 35px;
-
-  .col-lg-9 {
-    padding-left: 0px;
-  }
-
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-#page.logged_out {
-  margin-top: 45px;
-  margin-bottom: 10px;
+.logged-out {
+  .container {
+    max-width: 1070px;
+    margin-top: 45px;
+  }
+  .content {
+    background-color: #fff;
+  }
+}
+
+.logged-in {
+  .container {
+    margin-top: 35px;
+    max-width:  none;
+    background-color: #fff;
+  }
+  .content {
+    padding-left: 0;
+  }
 }
 
 .section {
   padding: 1em 0 .5em;
-  background: image-url("sidebar_divider.png") bottom repeat-x;
-}
-
-.bkg {
-  background-color: #FFF;
+  // background: image-url("sidebar_divider.png") bottom repeat-x;
 }
 
 .center{
@@ -304,6 +312,7 @@ thead {
 
 /** Footer **/
 footer {
+  margin-top: 10px;
   background: #3f4c6b; /* Old browsers */
   background: -moz-linear-gradient(top,  #3f4c6b 0%, #3f4c6b 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f4c6b), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */

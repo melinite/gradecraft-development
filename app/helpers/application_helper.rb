@@ -1,4 +1,16 @@
 module ApplicationHelper
+  def body_class
+    if current_user
+      if current_user.is_staff?
+        'logged-in staff'
+      else
+        'logged-in student'
+      end
+    else
+      'logged-out'
+    end
+  end
+
   # Return a title on a per-page basis.
   def title
     base_title = ""
@@ -42,4 +54,13 @@ module ApplicationHelper
     end
   end
 
+  def success_button_class(classes = nil)
+    [classes, 'btn btn-tiny btn-success'].compact.join(' ')
+  end
+
+  def table_link_to(name = nil, options = nil, html_options = nil, &block)
+    html_options ||= {}
+    html_options[:class] = [html_options[:class], 'btn btn-tiny btn-success'].compact.join(' ')
+    link_to name, options, html_options, &block
+  end
 end

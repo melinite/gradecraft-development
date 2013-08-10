@@ -1,19 +1,15 @@
 class RubricsController < ApplicationController
   def index
-    @title = "Rubrics"
-    @rubrics = Rubric.all
-    respond_with(@rubrics)
+    respond_with @rubrics = current_course.rubrics
   end
 
   def show
-    @rubric = Rubric.find(params[:id])
-    respond_with(@rubric)
+    respond_with @rubric = current_course.rubrics.find(params[:id])
   end
 
   def new
     @rubric = Rubric.new
     @assignment = Assignment.find(params[:assignment_id])
-    
     @title = "Create a Rubric for #{@assignment.name} "
     respond_with assignment_rubric_path(@assignment, @rubric)
   end
