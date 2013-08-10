@@ -71,8 +71,8 @@ h5.pageTitle {
 
 /** Jumbotron **/
 .jumbotron {
-  padding: 0.5em 1em !important;
-  background-color: transparent !important;
+  padding: 0.5em 1em;
+  background-color: transparent;
 }
 
 
@@ -86,7 +86,7 @@ h5.pageTitle {
 
 /** Navbar **/
 .navbar {
-  min-height: 35px !important;
+  min-height: 35px;
 
     a.brand {
     font-family: 'Futura', sans-serif;
@@ -181,12 +181,12 @@ h5.pageTitle {
 
 .navbar-fixed-bottom .course select {
   background-color: transparent;
-  padding: 0 !important;
+  padding: 0;
   line-height: 16px;
   margin-top: -4px;
   background-image: url(../images/assignArrowDn.png) no-repeat center right;
   padding-right: 25px;
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 
 /** Page Navigation **/
@@ -197,7 +197,7 @@ h5.pageTitle {
 
 /** Sidebar **/
 .sidebar .section, .sidebar .btn {
-  margin-bottom: 15px !important;
+  margin-bottom: 15px;
 }
 
 .sidebar-nav-fixed {
@@ -206,7 +206,7 @@ h5.pageTitle {
 }
 
 ul.nav.nav-list > li > a {
-  padding: 4px 0px 5px 25px !important;
+  padding: 4px 0px 5px 25px;
   margin-left: 34px;
   color: #333;
 }
@@ -217,7 +217,7 @@ ul.nav.nav-list > li > a {
   text-transform: uppercase;
   text-shadow: 0 1px 0 #fff;
   font-size: 13px;
-  margin: 20px 0 5px 35px !important;
+  margin: 20px 0 5px 35px;
   display: block;
   width: 90%;
 }
@@ -229,7 +229,7 @@ ul.nav.nav-list > li > a {
 .quick_search {
   text-align: center;
   padding: 4px 0 15px 5px;
-  margin: 10px 0 10px 15px !important;
+  margin: 10px 0 10px 15px;
 }
 
 .quick_search input[type=text] {
@@ -237,7 +237,7 @@ ul.nav.nav-list > li > a {
   -moz-border-radius: 20px;
   border-radius: 20px;
   border: 1px solid #bbb;
-  height: 35px !important;
+  height: 35px;
   width: 90%;
   color: #ccc;
   -webkit-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
@@ -288,7 +288,7 @@ ul.nav.nav-list > li > a {
 
 /** Table Styles **/
 table {
-  background-color: #FFF !important;
+  background-color: #FFF;
   font-size: 80%;
   border-bottom: 2px solid #333;
 }
@@ -311,7 +311,7 @@ footer {
   opacity: .7;
   padding: 10px 0px 10px;
   color: #FFF;
-  margin-bottom: 30px !important;
+  margin-bottom: 30px;
 }
 
 footer div {
@@ -342,7 +342,7 @@ footer .col-sm-12 {
 .btn.btn-primary, .btn-info, .btn.btn-success, .btn.btn-error  {
   background-image: none;
   margin: 5px;
-  font-family: 'Pontano Sans',sans-serif !important;
+  font-family: 'Pontano Sans',sans-serif;
 }
 
 .btn.btn-primary:hover, .btn-group.open .btn-primary.dropdown-toggle {
@@ -360,16 +360,16 @@ footer .col-sm-12 {
 }
 
 .btn.btn-primary, .badge.badge-primary{
-  background-color: $blue !important;
+  background-color: $blue;
 }
 
 .alert {
   margin-top: 10px;
-  color: #FFF !important;
+  color: #FFF;
 }
 
 .btn.btn-info, .badge.badge-info, .alert.alert-info  {
-  background-color: $lightblue !important;
+  background-color: $lightblue;
 }
 
 .btn.btn-success, .badge.badge-success, .alert.alert-success {
@@ -419,7 +419,7 @@ ul.tabs li a {
 	cursor: pointer;
 }
 html ul.tabs li.active a {
-  color: #FFF !important;
+  color: #FFF;
 }
 
 ul.tabs li a:hover {
@@ -430,7 +430,7 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	-webkit-box-shadow: inset 0 2px 3px #818181;
 	-moz-box-shadow: inset 0 2px 3px #818181;
 	box-shadow: inset 0 2px 3px #818181;
-  background-color: $lightblue !important;
+  background-color: $lightblue;
 	text-shadow: none;
 }
 
