@@ -1,0 +1,15 @@
+= content_nav_for "Edit #{term_for :weights}"
+
+#{term_for :weights} remaining: #{current_course.total_assignment_weight}
+
+= simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+  = f.simple_fields_for :assignment_type_weights do |atwf|
+    = atwf.hidden_field :assignment_type_id
+    .panel
+      .panel-heading
+        %h3.panel-title Test
+      = atwf.input :weight
+      .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)}
+  .form-actions
+    = f.button :submit, "Update #{term_for :weights}"
+    = link_to 'Cancel', dashboard_path, class: 'btn'

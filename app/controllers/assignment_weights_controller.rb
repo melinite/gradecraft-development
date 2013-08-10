@@ -53,7 +53,15 @@ class AssignmentWeightsController < ApplicationController
 
   private
 
+  def student_params
+    params.require(:user).permit(:id, :assignment_type_weights_attributes => [:assignment_type_id, :weight])
+  end
+
   def set_student
-    @student = User.find(params[:user_id])
+    if current_user.is_staff?
+      @student = User.find(params.fetch[:user_id])
+    else
+      @student = current_user
+    end
   end
 end

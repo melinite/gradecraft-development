@@ -8,6 +8,7 @@ class AssignmentType < ActiveRecord::Base
   belongs_to :course
   belongs_to :grade_scheme
   has_many :assignments
+  has_many :assignment_weights
   has_many :grades
   has_many :score_levels
   accepts_nested_attributes_for :score_levels, allow_destroy: true
@@ -15,10 +16,6 @@ class AssignmentType < ActiveRecord::Base
   validates_presence_of :name, :points_predictor_display, :point_setting
 
   scope :student_weightable, -> { where(:student_weightable => true) }
-
-  def multiplier_open?
-    course.student_weight_close_date > Date.today
-  end
 
   def slider?
     points_predictor_display == "Slider"
@@ -50,5 +47,9 @@ class AssignmentType < ActiveRecord::Base
 
   def grade_radio?
     mass_grade_type == "Radio Buttons"
+  end
+
+  def weight_for_student(student)
+    return 1 unless student_weightable?
   end
 end
