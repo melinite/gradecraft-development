@@ -1,9 +1,12 @@
 class Rubric < ActiveRecord::Base
-  attr_accessible :assignment_id, :description, :name
+  attr_accessible :description, :name
 
-  has_many :assignments
+  has_many :assignment_rubrics, dependent: :destroy
+  has_many :assignments, through: :assignment_rubrics
+  belongs_to :course
 
-  belongs_to :assignment
+  validates_presence_of :course, :name, :description
+
   has_many :criteria
   has_many :criteria_levels, :through => :criteria
 end

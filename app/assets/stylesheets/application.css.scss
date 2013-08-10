@@ -1,6 +1,7 @@
 /*
  *= require jquery.ui
  *= require bootstrap
+ *= require bootstrap-glyphicons
  *= require flexslider
  *= require_self
  *= require icons
@@ -13,7 +14,10 @@ $lightblue: #00BFE5;
 $green: #a2d344;
 $red: #d64545;
 
-@import url(http://fonts.googleapis.com/css?family=Pontano+Sans);
+@font-face {
+  font-family: 'Pontano Sans';
+  src: font-url('pontano-sans-regular.ttf') format('truetype');
+}
 
 @import 'forms';
 @import 'tables';
@@ -444,4 +448,12 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
 	-webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px;
 	-moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px;
 	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+}
+
+.glyphicon {
+  vertical-align: middle;
+}
+
+.close {
+  font-family: 'Helvetica', sans-serif;
 }

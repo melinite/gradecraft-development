@@ -21,6 +21,7 @@
 //= require preload_store
 //= require_self
 //= require assignment_types
+//= require assignments
 //= require grade_schemes
 //= require user_dashboard
 //= require users

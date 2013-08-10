@@ -18,9 +18,7 @@
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
     = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text"
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
-  .well
-    %h3 Rubrics
-    = f.simple_fields_for :rubrics
+  .well= render 'assignments/rubrics_form', f: f, assignment: @assignment, assignment_rubrics: @assignment_rubrics
 
   .form-actions
     .btn-toolbar

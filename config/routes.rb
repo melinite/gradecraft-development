@@ -64,11 +64,6 @@ GradeCraft::Application.routes.draw do
     resources :submissions
     resources :tasks
     resources :groups
-    resources :rubrics do
-      resources :criteria do
-        resources :criteria_levels
-      end
-    end
     resources :grades do
       collection do
         get :mass_edit
@@ -79,6 +74,11 @@ GradeCraft::Application.routes.draw do
         post :self_log_create
       end
       resources :earned_badges
+    end
+  end
+  resources :rubrics do
+    resources :criteria do
+      resources :criteria_levels
     end
   end
   resources :grade_schemes do

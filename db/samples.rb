@@ -90,6 +90,13 @@ students << User.create! do |u|
 end
 puts "Percy Weasley has arrived on campus, on time as usual"
 
+rubrics = 1.upto(3).map do |n|
+  course.rubrics.create! do |r|
+    r.name = "Rubric #{n}"
+    r.description = "Test Rubric"
+  end
+end
+
 assignment_types = {}
 
 #Generate badge set
@@ -194,6 +201,7 @@ grinding_assignments = []
     a.submissions_allowed = false
     a.release_necessary = true
     a.grade_scope = "Individual"
+    a.rubrics << rubrics.sample
   end
 end
 
@@ -236,6 +244,7 @@ blog_assignments = []
     a.submissions_allowed = true
     a.release_necessary = false
     a.grade_scope = "Individual"
+    a.rubrics << rubrics.sample
   end
 
   blog_assignments << Assignment.create! do |a|
