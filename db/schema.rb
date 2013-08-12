@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130812031407) do
+ActiveRecord::Schema.define(version: 20130812122844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20130812031407) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "visible"
+    t.boolean  "can_earn_multiple_times"
   end
 
   create_table "categories", force: true do |t|
@@ -376,6 +377,14 @@ ActiveRecord::Schema.define(version: 20130812031407) do
     t.integer  "assignment_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "student_assignment_type_weights", force: true do |t|
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "student_id"
+    t.integer  "assignment_type_id"
+    t.integer  "weight",             null: false
   end
 
   create_table "submissions", force: true do |t|

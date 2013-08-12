@@ -1,6 +1,6 @@
 class Badge < ActiveRecord::Base
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
-    :visible, :created_at, :updated_at, :image_file_name, :occurrence,
+    :visible, :created_at, :updated_at, :image_file_name, :can_earn_multiple_times,
     :badge_set, :category_id, :value, :multiplier
 
   has_many :earned_badges, :dependent => :destroy
