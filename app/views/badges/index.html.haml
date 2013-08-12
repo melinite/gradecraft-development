@@ -41,7 +41,7 @@
             - if current_course.valuable_badges?
               %td= number_with_delimiter(badge.point_total)
             %td
-              - if badge.visible == "1"
+              - if badge.visible?
                 Yes
               - else
                 No
@@ -56,4 +56,4 @@
                 = badge.name
                 = raw badge.description
               - if current_course.valuable_badges?
-                %td= badge.value
+                %td= badge.point_total

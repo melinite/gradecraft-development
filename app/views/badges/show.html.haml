@@ -7,7 +7,7 @@
   %img{:src => @badge.icon, :alt => @badge.name}
 %p
   %b Value:
-  //= "#{@badge.value} points"
+  = "#{@badge.point_total} points"
 %p
   %b Description:
   = raw @badge.description
