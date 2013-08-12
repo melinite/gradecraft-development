@@ -1,6 +1,6 @@
 Fabricator(:submission) do
   assignment
   student
-  feedback "MyString"
-  comment "MyString"
+  text_feedback "MyString"
+  text_comment "MyString"
 end
