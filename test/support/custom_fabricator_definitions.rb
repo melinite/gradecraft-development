@@ -30,11 +30,27 @@ module CustomFabricatorDefinitions
     { :course => course }
   end
 
+  define_custom_fabricator :assignment_weight do
+    { :student => student, :assignment => assignment }
+  end
+
   define_custom_fabricator :badge do
     { :badge_set => badge_set }
   end
 
   define_custom_fabricator :badge_set do
+    { :course => course }
+  end
+
+  define_custom_fabricator :category do
+    { :course => course }
+  end
+
+  define_custom_fabricator :challenge do
+    { :course => course }
+  end
+
+  define_custom_fabricator :challenge_grade do
     { :course => course }
   end
 
@@ -52,6 +68,10 @@ module CustomFabricatorDefinitions
     { :grade_scheme => grade_scheme }
   end
 
+  define_custom_fabricator :group do
+    { :course => course }
+  end
+
   define_custom_fabricator :earned_badge do
     { :student => student, :badge => badge }
   end
@@ -64,16 +84,16 @@ module CustomFabricatorDefinitions
     { :courses => [course] }
   end
 
-  define_custom_fabricator :assignment_weight do
-    { :student => student, :assignment => assignment }
-  end
-
   define_custom_fabricator :submission do
     { :assignment => assignment, :student => student }
   end
 
   define_custom_fabricator :task do
     { :assignment => assignment }
+  end
+
+  define_custom_fabricator :team do
+    { :course => course }
   end
 
   def create_assignments(count = 2)
