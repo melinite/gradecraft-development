@@ -1,8 +1,0 @@
-- if assignment.has_submissions?
-  - assignment.submission_for_student(@user).tap do |submission|
-    - if submission && @user.grade_for_assignment(assignment)
-      = link_to "See Submission ", assignment_submission_path(assignment, submission, :grade_id => @user.grade_for_assignment(assignment).id, :student_id => @user), :class => 'btn-link'
-    - elsif submission
-      = link_to "See Submission ", assignment_submission_path(assignment, submission, :student_id => @user), :class => 'btn-link'
-    - else
-      = link_to "Submit", new_assignment_submission_path(assignment, @submission, :student_id => @user), :class => 'btn btn-tiny btn-success btn-primary'
