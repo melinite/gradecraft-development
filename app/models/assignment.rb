@@ -17,7 +17,10 @@ class Assignment < ActiveRecord::Base
   accepts_nested_attributes_for :grades
 
   has_many :users, :through => :grades
-  has_one :rubric
+
+  has_many :assignment_rubrics, dependent: :destroy
+  accepts_nested_attributes_for :assignment_rubrics, allow_destroy: true
+  has_many :rubrics, through: :assignment_rubrics, dependent: :destroy
 
   belongs_to :category
   belongs_to :course
@@ -32,12 +35,13 @@ class Assignment < ActiveRecord::Base
 
   validates_presence_of :assignment_type, :course, :name, :grade_scope
 
-  attr_accessible :name, :description, :point_total, :due_at,
-    :created_at, :updated_at, :level, :present, :grades_attributes, :assignment_type,
+  attr_accessible :name, :description, :point_total, :due_at, :created_at,
+    :updated_at, :level, :present, :grades_attributes, :assignment_type,
     :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
     :open_time, :submissions_allowed, :student_logged_button_text,
     :student_logged, :badge_set_id, :release_necessary,
-    :score_levels_attributes, :open_date, :close_time, :course, :due_at
+    :score_levels_attributes, :open_date, :close_time, :course, :due_at,
+    :assignment_rubrics_attributes, :rubrics_attributes
 
   scope :individual_assignment, -> { where grade_scope: "Individual" }
   scope :group_assignment, -> { where grade_scope: "Group" }

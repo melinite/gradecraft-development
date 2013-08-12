@@ -90,6 +90,27 @@ students << User.create! do |u|
 end
 puts "Percy Weasley has arrived on campus, on time as usual"
 
+rubric = course.rubrics.create! do |r|
+  r.name = "The Rubric"
+  r.description = "Test Rubric"
+end
+
+criteria = 1.upto(3).map do |n|
+  criteria = rubric.criteria.create! do |c|
+    c.name = "Criterium #{n}"
+    c.category = %w(Category1 Category2 Category3).sample
+  end
+end
+
+criteria.each do |criterium|
+  1.upto(3).each do |n|
+    criterium.levels.create! do |l|
+      l.name = "Level #{n}"
+      l.value = 100 * n
+    end
+  end
+end
+
 assignment_types = {}
 
 #Generate badge set
@@ -194,6 +215,7 @@ grinding_assignments = []
     a.submissions_allowed = false
     a.release_necessary = true
     a.grade_scope = "Individual"
+    a.rubrics << rubric
   end
 end
 
@@ -236,6 +258,7 @@ blog_assignments = []
     a.submissions_allowed = true
     a.release_necessary = false
     a.grade_scope = "Individual"
+    a.rubrics << rubric
   end
 
   blog_assignments << Assignment.create! do |a|

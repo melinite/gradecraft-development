@@ -1,6 +1,7 @@
 /*
  *= require jquery.ui
  *= require bootstrap
+ *= require bootstrap-glyphicons
  *= require flexslider
  *= require_self
  *= require icons
@@ -13,7 +14,13 @@ $lightblue: #00BFE5;
 $green: #a2d344;
 $red: #d64545;
 
-@import url(http://fonts.googleapis.com/css?family=Pontano+Sans);
+@font-face {
+  font-family: 'Pontano Sans';
+  src: font-url('pontano-sans-regular.ttf') format('truetype');
+}
+
+@import 'compass';
+@import 'compass/css3';
 
 @import 'forms';
 @import 'tables';
@@ -39,27 +46,36 @@ h5.pageTitle {
   margin-bottom: 0px;
 }
 
-#page {
-  margin-top: 35px;
-
-  .col-lg-9 {
-    padding-left: 0px;
-  }
-
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-#page.logged_out {
-  margin-top: 45px;
-  margin-bottom: 10px;
+.logged-out {
+  .container {
+    max-width: 1070px;
+    margin-top: 45px;
+  }
+  .content {
+    background-color: #fff;
+  }
+}
+
+.logged-in {
+  .container {
+    margin-top: 35px;
+    max-width:  none;
+    background-color: #fff;
+  }
+  .content {
+    padding-left: 0;
+    margin-top: 10px;
+  }
 }
 
 .section {
   padding: 1em 0 .5em;
-  background: image-url("sidebar_divider.png") bottom repeat-x;
-}
-
-.bkg {
-  background-color: #FFF;
+  // background: image-url("sidebar_divider.png") bottom repeat-x;
 }
 
 .center{
@@ -195,6 +211,34 @@ h5.pageTitle {
   padding: 5px;
 }
 
+.content-nav {
+  margin-top: 10x;
+  .breadcrumb {
+    background-color: $blue;
+    @include border-top-radius(15px);
+    @include border-bottom-radius(0);
+    margin-bottom: 0;
+    font-family: 'Futura', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    a {
+      color: #fff;
+      font-size: 16px;
+    }
+    li {
+      color: rgba(#fff, .8);
+    }
+  }
+  .navbar {
+    @include border-radius(0);
+  }
+}
+
+.breadcrumb > li + li:before {
+  color: rgba(#fff, .7);
+  content: '\203A';
+}
+
 /** Sidebar **/
 .sidebar .section, .sidebar .btn {
   margin-bottom: 15px;
@@ -300,6 +344,7 @@ thead {
 
 /** Footer **/
 footer {
+  margin-top: 10px;
   background: #3f4c6b; /* Old browsers */
   background: -moz-linear-gradient(top,  #3f4c6b 0%, #3f4c6b 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f4c6b), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */
@@ -444,4 +489,12 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
 	-webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px;
 	-moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px;
 	border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+}
+
+.glyphicon {
+  vertical-align: middle;
+}
+
+.close {
+  font-family: 'Helvetica', sans-serif;
 }

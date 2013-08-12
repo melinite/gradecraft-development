@@ -24,6 +24,7 @@ class Course < ActiveRecord::Base
     c.has_many :grade_schemes
     c.has_many :grades
     c.has_many :groups
+    c.has_many :rubrics
     c.has_many :submissions
     c.has_many :teams
   end

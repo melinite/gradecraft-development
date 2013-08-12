@@ -1,0 +1,24 @@
+%h3 Rubrics
+- if assignment_rubrics.present?
+  .assignment-rubrics
+    - assignment_rubrics.each do |assignment_rubric|
+      .assignment_rubric.panel(id="rubric-#{assignment_rubric.rubric_id}" class="#{'hidden' unless assignment_rubric.persisted?}")
+        = f.simple_fields_for :assignment_rubrics, assignment_rubric do |arf|
+          .panel-heading.clearfix
+            = arf.hidden_field :rubric_id
+            = arf.hidden_field :_destroy, value: !assignment_rubric.persisted?, class: 'destroy'
+            = link_to "#rubric-#{assignment_rubric.rubric_id}", class: 'btn btn-xs btn-warning remove-assignment-rubric pull-right' do
+              %span.glyphicon.glyphicon-remove
+              Remove Rubric
+            %h3.panel-title= assignment_rubric.name
+          = assignment_rubric.description
+  .btn-group.add-assignment-rubric
+    %button(type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown")
+      Add a Rubric
+      %span.caret
+    %ul.dropdown-menu
+      - assignment_rubrics.each do |assignment_rubric|
+        %li(class="#{'disabled' if assignment_rubric.persisted?}")
+          = link_to assignment_rubric.name, "#rubric-#{assignment_rubric.rubric_id}"
+- else
+  .panel No rubrics exist for this course yet! Would you like to #{link_to 'add one?', new_rubric_path}

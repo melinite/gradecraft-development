@@ -4,7 +4,6 @@ class AssignmentsController < ApplicationController
   before_filter :ensure_staff?, :except => [:feed]
 
   def index
-    @title = 'Assignments'
     respond_with @assignments = current_course.assignments
   end
 
@@ -43,7 +42,11 @@ class AssignmentsController < ApplicationController
   end
 
   def edit
-    respond_with @assignment = current_course.assignments.find(params[:id])
+    @assignment = current_course.assignments.find(params[:id])
+    @assignment_rubrics = current_course.rubric_ids.map do |rubric_id|
+      @assignment.assignment_rubrics.where(rubric_id: rubric_id).first_or_initialize
+    end
+    respond_with @assignment
   end
 
   def create
@@ -57,11 +60,8 @@ class AssignmentsController < ApplicationController
 
   def update
     @assignment = current_course.assignments.find(params[:id])
-    if @assignment.update_attributes(params[:assignment])
-      respond_with @assignment, :location => assignment_path(@assignment), :notice => 'Assignment was successfully updated.'
-    else
-      respond_with @assignment
-    end
+    @assignment.update_attributes(assignment_params)
+    respond_with @assignment
   end
 
   def destroy
@@ -81,5 +81,11 @@ class AssignmentsController < ApplicationController
         render :text => CalendarBuilder.new(:assignments => @assignments.with_due_date ).to_ics, :content_type => 'text/calendar'
       end
     end
+  end
+
+  private
+
+  def assignment_params
+    params.require(:assignment).permit(:assignment_rubrics_attributes => [:id, :rubric_id, :_destroy])
   end
 end

@@ -11,4 +11,5 @@
 #
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'LTI'
+  inflect.irregular 'criterium', 'criteria'
 end
