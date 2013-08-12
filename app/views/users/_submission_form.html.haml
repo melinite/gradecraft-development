@@ -1,11 +1,11 @@
-%div.modal{ :id => "submission-#{submission.id}"}
+%div.modal
   %div.modal-content
     %div.modal-header
-      %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x 
+      %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x
       %h3= assignment.name
     %div.modal-body
       %h4= best_in_place submission, :link, :path => assignment_submission_path(assignment, @user)
-      - if submission.link? 
+      - if submission.link?
         %iframe{:src => submission.link}
       %p= best_in_place submission, :comment, :path => assignment_submission_path(assignment, @user)
       %div.modal-footer
