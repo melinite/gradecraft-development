@@ -1,5 +1,5 @@
-%div.col.col-lg-12#content_nav
-  = link_to 'New Assignment Type', new_assignment_type_path, {:class => 'btn btn-info col col-sm-12 col-lg-2 btn-small pull-right'}
+= content_nav_for AssignmentType do
+  %li= link_to 'New Assignment Type', new_assignment_type_path
 
 %table.table-bordered.table-condensed.table#sortableTable.tablesorter
   %thead

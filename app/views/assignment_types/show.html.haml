@@ -1,5 +1,6 @@
-= link_to 'Edit', edit_assignment_type_path(@assignment_type), :class => 'btn btn-info btn-small'
-= link_to 'Back', assignment_types_path, :class => 'btn btn-info btn-small'
+= content_nav_for @assignment_type do
+  %li= link_to 'Edit', edit_assignment_type_path(@assignment_type)
+  %li= link_to 'Back', assignment_types_path
 
 %div.well
   %h4 The Basics
