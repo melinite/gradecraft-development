@@ -77,9 +77,7 @@ GradeCraft::Application.routes.draw do
     end
   end
   resources :rubrics do
-    resources :criteria do
-      resources :criteria_levels
-    end
+    resources :criteria
   end
   resources :grade_schemes do
     resources :grade_scheme_elements
@@ -98,8 +96,8 @@ GradeCraft::Application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-  
-  
+
+
   get 'submit_a_bug' => 'info#submit_a_bug'
   get 'features' => 'info#features'
   get 'research' => 'info#research'

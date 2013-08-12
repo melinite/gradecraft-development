@@ -1,23 +1,24 @@
-%div.col.col-lg-12#content_nav
-  = link_to 'New Criterium', new_criterium_path, class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+= content_nav_for @rubric, Criterium do
+  %li= link_to 'Add Criterium', new_rubric_criterium_path(@rubric)
 
-%table.table.display.table-bordered
-  %tr
-    %th Name
-    %th Ruberic
-    %th Description
-    %th
-    %th
-    %th
-
-  - @criteria.each do |criterium|
-    %tr
-      %td= criterium.name
-      %td= criterium.ruberic_id
-      %td= criterium.description
-      %td= link_to 'Show', criterium
-      %td= link_to 'Edit', edit_criterium_path(criterium)
-      %td= link_to 'Destroy', criterium, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
+- @criteria.group_by(&:category).each do |category, criteria|
+  .panel
+    .panel-heading.clearfix
+      = link_to new_criterium_path(@rubric, category: category), class: 'btn btn-xs btn-info pull-right' do
+        %span.glyphicon.glyphicon-plus
+        Add '#{category}' Criterium
+      %h3.panel-title= category
+    %table.table.display.table-bordered
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th
+      %tbody
+        - @criteria.each do |criterium|
+          %tr
+            %td= criterium.name
+            %td= criterium.description
+            %td
+              = table_link_to 'Edit', [:edit, @rubric, criterium]
+              = table_link_to 'Destroy', [@rubric, criterium], method: :delete, data: { confirm: 'Are you sure?' }

@@ -1,38 +1,47 @@
 class CriteriaController < ApplicationController
+  before_filter :set_rubric
+
   def index
-    @criteria = Criterium.all
-    respond_with(@criteria)
+    respond_with @criteria = @rubric.criteria
   end
 
   def show
-    @criterium = Criterium.find(params[:id])
-    respond_with(@criterium)
+    respond_with @criterium = @rubric.criteria.find(params[:id])
   end
 
   def new
-    @criterium = Criterium.new
-    respond_with(@criterium)
-  end
-
-  def edit
-    @criterium = Criterium.find(params[:id])
+    respond_with @criterium = @rubric.criteria.new(params.permit(:category))
   end
 
   def create
-    @criterium = Criterium.new(params[:criterium])
+    @criterium = @rubric.criteria.new(criterium_params)
     @criterium.save
-    respond_with(@criterium)
+    respond_with @rubric, @criterium
+  end
+
+  def edit
+    respond_with @criterium = @rubric.criteria.find(params[:id])
   end
 
   def update
-    @criterium = Criterium.find(params[:id])
-    @criterium.update_attributes(params[:criterium])
-    respond_with(@criterium)
+    @criterium = @rubric.criteria.find(params[:id])
+    @criterium.update_attributes(criterium_params)
+    respond_with @rubric, @criterium
   end
 
   def destroy
-    @criterium = Criterium.find(params[:id])
+    respond_with @criterium = @rubric.criteria.find(params[:id])
     @criterium.destroy
-    respond_with(@criterium)
+    respond_with @rubric, @criterium
+  end
+
+  private
+
+  def criterium_params
+    params.require(:criterium).permit!
+  end
+
+  def set_rubric
+    @rubric = Rubric.find params[:rubric_id]
   end
 end

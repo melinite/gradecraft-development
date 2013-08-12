@@ -1,14 +1,16 @@
 module ApplicationHelper
+  include CustomNamedRoutes
+
   def body_class
-    if current_user
-      if current_user.is_staff?
-        'logged-in staff'
-      else
-        'logged-in student'
-      end
+    classes = []
+    if logged_in?
+      classes << 'logged-in'
+      classes << 'staff' if current_user.is_staff?
+      classes << current_user.role
     else
-      'logged-out'
+      classes << 'logged-out'
     end
+    classes.join ' '
   end
 
   # Return a title on a per-page basis.

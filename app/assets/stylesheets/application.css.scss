@@ -19,6 +19,9 @@ $red: #d64545;
   src: font-url('pontano-sans-regular.ttf') format('truetype');
 }
 
+@import 'compass';
+@import 'compass/css3';
+
 @import 'forms';
 @import 'tables';
 
@@ -66,6 +69,7 @@ h5.pageTitle {
   }
   .content {
     padding-left: 0;
+    margin-top: 10px;
   }
 }
 
@@ -205,6 +209,33 @@ h5.pageTitle {
 #content_nav {
   background-color: #333;
   padding: 5px;
+}
+
+.content-nav {
+  margin-top: 10x;
+  .breadcrumb {
+    background-color: $blue;
+    @include border-top-radius(15px);
+    @include border-bottom-radius(0);
+    margin-bottom: 0;
+    font-family: 'Futura', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    a {
+      color: #fff;
+    }
+    li {
+      color: #ddd;
+    }
+  }
+  .navbar {
+    @include border-radius(0);
+  }
+}
+
+.breadcrumb > li + li:before {
+  color: rgba(#fff, .8);
+  content: '\203A';
 }
 
 /** Sidebar **/

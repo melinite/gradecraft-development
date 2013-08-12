@@ -1,12 +1,14 @@
-= simple_form_for(@criterium) do |f|
-
+= simple_form_for [@rubric, @criterium] do |f|
   .form-inputs
     = f.input :name
-    = f.input :ruberic_id
-    = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
+    = f.input :description, as: :text, input_html: { :class => :ckeditor, 'ckeditor-toolbar' => 'Mini' }
+    - if @criterium.category
+      = f.input :category, :as => :hidden
+    - else
+      = f.input :category
 
   .form-actions
-    %div.btn-toolbar    
+    %div.btn-toolbar
       %div.btn-group
         = f.button :submit, :class => "btn-primary"
       %div.btn-group

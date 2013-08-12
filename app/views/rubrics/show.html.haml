@@ -1,5 +1,6 @@
-= link_to 'Edit', edit_rubric_path(@rubric), :class => "btn btn-info btn-small"
-= link_to 'Back', rubrics_path, :class => "btn btn-info btn-small"
+= content_nav_for @rubric do
+  %li= link_to 'Edit', edit_rubric_path(@rubric)
+  %li= link_to 'Criteria', rubric_criteria_path(@rubric)
 
 %p
   %b Name:
