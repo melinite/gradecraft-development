@@ -1,0 +1,20 @@
+%ul.nav.nav-tabs
+  %li.active
+    %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Assignments
+  %li
+    %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
+  %li
+    %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Badges
+  %li
+    %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Timeline
+  %li
+    %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Grade Predictor
+%div.tab-content
+  %div.tab-pane.active#tab1
+    = render "users/syllabus"
+  %div.tab-pane#tab2
+    = render "users/calendar"
+  %div.tab-pane#tab3
+    = render "users/badges"
+  %div.tab-pane#tab4
+    = render "users/timeline"
