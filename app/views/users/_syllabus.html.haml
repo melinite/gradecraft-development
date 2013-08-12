@@ -31,8 +31,8 @@
                 - if assignment.submissions_allowed?
                   - @user.submission_for_assignment(assignment).tap do |submission|
                     - if submission
-                      %a{:href => "#myModal", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
-                      .modal.fade#myModal
+                      %a{:href => "#submission_for_assignment-#{assignment.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
+                      .modal.fade{:id => "submission_for_assignment-#{assignment.id}"}
                         .modal-dialog
                           .modal-content
                             .modal-header{"role" => "dialog", "tabindex" => "-1" }
@@ -47,4 +47,5 @@
                               %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"} Close
                               %a{:href => "#", :class => "btn btn-primary"} Save changes
                     - else
-                      = render "users/submission_form"
+                      %a{:href => "#submission_for_assignment-#{assignment.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Submit
+                      = render "users/submission_form", assignment: assignment, submission: submission

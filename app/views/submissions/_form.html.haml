@@ -7,13 +7,13 @@
         %br
         = f.input :student_id, :input_html => { :value => current_user.groups.first.id }, :as => :hidden
         = f.input :student_type, :input_html => { :value => "Group" }, :as => :hidden
-      - elsif @assignment.has_teams? 
+      - elsif @assignment.has_teams?
         %b= "You are submitting this assignment as a representative of #{current_course.team_term} #{current_user.teams.first.try(:name)}"
         %br
         %br
         = f.input :student_id, :input_html => { :value => current_user.teams.first.id}, :as => :hidden
         = f.input :student_type, :input_html => { :value => "Team" }, :as => :hidden
-      - elsif @assignment.is_individual? 
+      - elsif @assignment.is_individual?
         = f.input :student_id, :input_html => { :value => current_user.id }, :as => :hidden
         = f.input :student_type, :input_html => { :value => "User" }, :as => :hidden
       - else
@@ -23,21 +23,21 @@
       - if @assignment.has_groups?
         = f.input :student_id, :collection => @groups, :label => "#{current_course.group_term}"
         = f.input :student_type, :input_html => { :value => "Group" }, :as => :hidden
-      - elsif @assignment.has_teams? 
+      - elsif @assignment.has_teams?
         = f.input :student_id, :collection => @teams, :label => "#{current_course.team_term}"
         = f.input :student_type, :input_html => { :value => "Team" }, :as => :hidden
-      - elsif @assignment.is_individual? 
+      - elsif @assignment.is_individual?
         = f.input :student_id, :collection => @students, :label => "#{current_course.user_term}"
         = f.input :student_type, :input_html => { :value => "User" }, :as => :hidden
       - else
         = f.input :student_id, :collection => @students, :label => "#{current_course.user_term}", :include_blank => false
-        = f.input :student_type, :as => :hidden, :input_html => { :value => 'User' }        
+        = f.input :student_type, :as => :hidden, :input_html => { :value => 'User' }
     = f.association :assignment, :default => @assignment, :as => :hidden
     = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
     = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
 
   .form-actions
-    %div.btn-toolbar    
+    %div.btn-toolbar
       %div.btn-group
         = f.button :submit, "Submit", :class => "btn-primary"
       %div.btn-group
