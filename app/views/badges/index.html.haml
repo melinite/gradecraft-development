@@ -1,7 +1,6 @@
-%div.col.col-lg-12#content_nav
-  - if current_user.is_staff?
-    = link_to 'Create a New Badge', new_badge_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-tiny pull-right"
-    
+= content_nav_for Badge do
+  %li= link_to 'Create a New Badge', new_badge_path
+
 %table.display.table-bordered.table#sortableTable.tablesorter
   %thead
     %tr
@@ -35,13 +34,13 @@
                   = task.input :accepts_submissions, :as => :boolean
                   = task.input :group, :as => :boolean
                   .form-actions
-                    %div.btn-toolbar    
+                    %div.btn-toolbar
                       %div.btn-group
                         = task.button :submit, @button_title, :class => "btn-primary btn-tiny"
-  
+
             - if current_course.valuable_badges?
               %td= number_with_delimiter(badge.point_total)
-            %td 
+            %td
               - if badge.visible == "1"
                 Yes
               - else

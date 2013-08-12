@@ -56,6 +56,14 @@ module CustomFabricatorDefinitions
 
   define_custom_fabricator :course
 
+  define_custom_fabricator :criterium_level do
+    { :course => course }
+  end
+
+  define_custom_fabricator :criterium do
+    { :course => course }
+  end
+
   define_custom_fabricator :grade do
     { :student => student, :assignment => assignment }
   end
@@ -82,6 +90,10 @@ module CustomFabricatorDefinitions
 
   define_custom_fabricator :professor do
     { :courses => [course] }
+  end
+
+  define_custom_fabricator :rubric do
+    { :course => course }
   end
 
   define_custom_fabricator :submission do
