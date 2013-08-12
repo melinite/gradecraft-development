@@ -1,0 +1,13 @@
+.btn.btn-danger.col.col-lg-12{"data-target" => "#toDoList", "data-toggle" => "collapse"}
+  %span.buttonTitle To Do List
+  %i.caret
+  %div{:id => "toDoList", :class => "collapse"}
+    - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+      - if assignment_type.has_soon_assignments?
+        %h5
+          = "#{assignment_type.try(:name)}"
+        - assignments.each do |assignment|
+          - if assignment.soon?
+            %div
+              = "#{assignment.try(:name)}"
+              %div= "Due: #{assignment.try(:due_at).strftime("%b-%d")}"
