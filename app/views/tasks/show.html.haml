@@ -3,6 +3,10 @@
   = link_to 'Back', assignment_tasks_path, :class => "btn btn-info col col-sm-12 col-lg-1 btn-small pull-right"
 
 %p
+  %b Assignment:
+  = @assignment.name
+
+%p
   %b Title:
   = @task.title
 %p

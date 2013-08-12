@@ -2,7 +2,7 @@
   - if current_user.is_staff?
     = link_to "Add a #{current_course.team_term}", new_team_path, :class => "btn btn-info btn-small pull-right"
     = link_to "Grade a #{current_course.team_term} Challenge", challenges_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
-  
+
 %table.table.table-bordered#sortableTable.tablesorter
   %thead
     %tr
@@ -21,7 +21,7 @@
       %tr
         //%td= team.rank
         %td= link_to team.name, team
-        %td= team.member_count
+        //%td= team.member_count
         %td= team.score
         - if current_user.is_staff?
           %td

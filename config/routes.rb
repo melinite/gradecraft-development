@@ -97,13 +97,13 @@ GradeCraft::Application.routes.draw do
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
 
-
-  get 'submit_a_bug' => 'info#submit_a_bug'
-  get 'features' => 'info#features'
-  get 'research' => 'info#research'
-  get 'news' => 'info#news'
-  get 'using_gradecraft' => 'info#using_gradecraft'
-  get 'people' => 'info#people'
+  get 'submit_a_bug' => 'pages#submit_a_bug'
+  get 'features' => 'pages#features'
+  get 'research' => 'pages#research'
+  get 'news' => 'pages#news'
+  get 'using_gradecraft' => 'pages#using_gradecraft'
+  get 'people' => 'pages#people'
+  get 'contact' => 'pages#contact'
 
   # get 'cosign_test' => 'info#cosign_test'
 end
