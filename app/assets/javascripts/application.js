@@ -23,6 +23,7 @@
 //= require assignment_types
 //= require assignments
 //= require grade_schemes
+//= require nested_fields
 //= require user_dashboard
 //= require users
 

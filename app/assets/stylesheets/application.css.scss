@@ -223,9 +223,10 @@ h5.pageTitle {
     text-transform: uppercase;
     a {
       color: #fff;
+      font-size: 16px;
     }
     li {
-      color: #ddd;
+      color: rgba(#fff, .8);
     }
   }
   .navbar {
@@ -234,7 +235,7 @@ h5.pageTitle {
 }
 
 .breadcrumb > li + li:before {
-  color: rgba(#fff, .8);
+  color: rgba(#fff, .7);
   content: '\203A';
 }
 

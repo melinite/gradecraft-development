@@ -1,11 +1,13 @@
 = simple_form_for [@rubric, @criterium] do |f|
-  .form-inputs
+  .well.clearfix
     = f.input :name
     = f.input :description, as: :text, input_html: { :class => :ckeditor, 'ckeditor-toolbar' => 'Mini' }
     - if @criterium.category
       = f.input :category, :as => :hidden
     - else
       = f.input :category
+
+  .well.clearfix= render 'levels_form', f: f, rubric: @rubric, criterium: @criterium
 
   .form-actions
     %div.btn-toolbar

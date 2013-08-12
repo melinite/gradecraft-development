@@ -29,4 +29,12 @@ module CustomNamedRoutes
       super
     end
   end
+
+  def edit_criterium_url(record, options = {})
+    if record.is_a?(Criterium)
+      edit_rubric_criterium_url(record.rubric, record, options)
+    else
+      super
+    end
+  end
 end

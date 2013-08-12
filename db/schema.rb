@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130811164021) do
+ActiveRecord::Schema.define(version: 20130812031407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,13 +253,13 @@ ActiveRecord::Schema.define(version: 20130811164021) do
     t.string   "category"
   end
 
-  create_table "criteria_levels", force: true do |t|
+  create_table "criterium_levels", force: true do |t|
     t.string   "name"
-    t.integer  "criteria_id"
+    t.integer  "criterium_id"
     t.text     "description"
     t.integer  "value"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "dashboards", force: true do |t|
