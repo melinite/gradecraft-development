@@ -1,6 +1,6 @@
-%div.col.col-lg-12#content_nav
+= content_nav_for BadgeSet do
   - if current_user.is_staff?
-    = link_to 'New Badge set', new_badge_set_path, {:class => 'btn btn-info btn-small pull-right'}
+    %li= link_to 'New Badge set', new_badge_set_path
 
 %table.table.display.table-bordered.tablesorter
   %thead

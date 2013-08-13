@@ -1,4 +1,4 @@
-= content_nav_for Badge do
+= content_nav_for Badge, "Edit #{breadcrumb_link_for(@badge)}".html_safe
   %li= link_to 'Back', badges_path
 
 = render 'form'
