@@ -1,1 +1,19 @@
+.help-block {
+  clear: both;
+}
 
+.form-horizontal {
+  background-color: #eee;
+}
+
+.form-horizontal input {
+  margin-top: 5px;
+}
+
+.form-horizontal .help-inline {
+  color: $red;
+}
+
+.form-actions {
+  margin: 20px;
+}

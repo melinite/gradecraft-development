@@ -1,23 +1,22 @@
-- if current_course.has_badges?
-  %div.section#badges
-    %h4.center Badges
-    - @badges.each do |badge|
-      - @user.earned_badges.where(badge: badge).first.tap do |earned_badge|
-        - if earned_badge
-          %div.badgeIcon
+.section#badges
+  %h4.center Badges
+  - @badges.each do |badge|
+    - @user.earned_badges.where(badge: badge).first.tap do |earned_badge|
+      - if earned_badge
+        .badgeIcon
+          - if current_course.valuable_badges?
+            %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
+              %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
+          - else
+            %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
+              %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
+      - else
+        - if badge.visible?
+          .badgeIcon
             - if current_course.valuable_badges?
-              %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:value)} points"}
-                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned", :width => "60", :height => "60"}
+              %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
+                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
             - else
               %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
-                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned", :width => "60", :height => "60"}
-        - else
-          - if badge.visible?
-            %div.badgeIcon
-              - if current_course.valuable_badges?
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:value)} points"}
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
-              - else
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
-    %div.unEarnedText Badges you've earned will shine brightly!
+                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
+  .clear.center Badges you've earned will shine brightly!

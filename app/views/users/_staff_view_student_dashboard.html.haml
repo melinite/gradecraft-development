@@ -1,23 +1,24 @@
-%div.pull-right.col.col-lg-3.sidebar
-  %div.section= gravatar_for @user, :size => 300, :d => "mm"
+.pull-right.col.col-lg-3.sidebar
+  = gravatar_for @user, :size => "240", :d => "mm"
+  .section.center
+    = link_to @user.email, "mailto:#{@user.email}"
+    - @user.team_leader.tap do |team_leader|
+      - if team_leader.present?
+        = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
 
-  %div.col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
+  .col.col-lg-12#gradeCurious.btn.btn-primary{:title => "Current Final Grade:", "data-content" => @user.score_for_course(current_course)}
     %span.buttonTitle Check Their Final Grade
 
-  %div.col.col-lg-12
-    = render "sidebar_history"
+  .section= render "sidebar_history"
 
-  %div.col.col-lg-12
-    = render "sidebar_work"
+  .section= render "sidebar_work"
 
-  %div.col.col-lg-12
-    = render "sidebar_badges"
+  .section= render "sidebar_badges"
 
-  %div.col.col-lg-12
-    = render "sidebar_to_do_list"
+  .section= render "sidebar_to_do_list"
 
-%div.col.col-lg-9
-  %div.section.col.col-lg-12
+.col.col-lg-9
+  .section.col.col-lg-12
     = render "users/scoreboard"
-  %div.col.col-lg-12
+  .col.col-lg-12
     = render "users/main_tabs"

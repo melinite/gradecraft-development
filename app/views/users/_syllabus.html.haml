@@ -1,51 +1,27 @@
-%div.col.col-lg-12
+.col.col-lg-12
   - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-    %div.col.col-lg-12.section
+    .col.col-lg-12
       %button.btn.btn-primary.col.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} - #{ number_with_delimiter(@user.score_for_assignment_type(assignment_type))} /
 
-      %div.collapse{:id => "assignment_type-#{assignment_type.id}"}
+      .collapse{:id => "assignment_type-#{assignment_type.id}"}
         %span.badge.badge-info.pull-right.col.col-lg-4.col-sm-12
           = number_with_delimiter(@user.score_for_assignment_type(assignment_type))
           = "/"
           //= " #{number_with_delimiter(assignment_type.point_total_for_student(@user))} possible points"
 
         - if assignment_type.student_weightable?
-          %span.badge.badge-important
-            = "#{@user.weights_for_assignment_type_id(assignment_type).value} #{current_course.multiplier_term} "
-            - if (assignment_type.student_weightable? && assignment_type.multiplier_open?) || (assignment_type.student_weightable? && current_user.is_staff?)
-              - assignment_type.weight_for_student(@user).tap do |weight|
-                - if weight
-                  = link_to "(Change)", edit_user_user_assignment_type_weight_path(@user, weight, :assignment_type_id => assignment_type)
-          %span.badge.badge-important= link_to "Set #{current_course.multiplier_term}", new_user_user_assignment_type_weight_path(@user, :assignment_type_id => assignment_type)
-          %div.col.col-lg-12{:id => "assignment_type-#{assignment_type.id}", :class => "collapse"}
+          = render "users/assignment_weights"
+
         - assignments.each do |assignment|
-          %div.col.col-lg-12
-            %h5
-              = assignment.try(:name)
-              - if assignment.is_required?
-                %span.assignmentRequired.label.label-important Required!
-              - if assignment.future?
-                %span.assignmentDate= "| Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
-                %span.assignmentDesc= raw assignment.description
-              %div.grade
-                - if assignment.submissions_allowed?
-                  - @user.submission_for_assignment(assignment).tap do |submission|
-                    - if submission
-                      %a{:href => "#submission_for_assignment-#{assignment.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
-                      .modal.fade{:id => "submission_for_assignment-#{assignment.id}"}
-                        .modal-dialog
-                          .modal-content
-                            .modal-header{"role" => "dialog", "tabindex" => "-1" }
-                              %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x
-                              %h3= assignment.name
-                            .modal-body
-                              %h4= link_to submission.link, submission.link
-                              - if submission.link?
-                                %iframe.col-lg-12{:src => submission.link}
-                              %p= submission.comment
-                            .modal-footer
-                              %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"} Close
-                              %a{:href => "#", :class => "btn btn-primary"} Save changes
-                    - else
-                      %a{:href => "#submission_for_assignment-#{assignment.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Submit
-                      = render "users/submission_form", assignment: assignment, submission: submission
+          .col.col-lg-12
+            %h5= assignment.name
+            - if assignment.is_required?
+              %span.label.label-important Required!
+            - if assignment.future?
+              = "| Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
+              = raw assignment.description
+            .grade
+              = render "users/grade", assignment: assignment
+            - if assignment.submissions_allowed?
+              .submission
+                = render "users/submissions", assignment: assignment

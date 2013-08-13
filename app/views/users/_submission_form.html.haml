@@ -4,17 +4,10 @@
       .modal-header
         %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x
         %h3= assignment.name
-      .modal-body
-        = simple_form_for([assignment, submission], :html => {:class => 'form-horizontal' }) do |f|
-          .form-inputs
-            = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-12' }
-            = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
-          .form-actions
-            .btn-toolbar
-              .btn-group
-                = f.button :submit, "Submit", :class => "btn-primary"
-              .btn-group
-                = link_to 'Cancel', assignments_path, :class => 'btn btn-info'
-      .modal-footer
-        %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"}Close
-        %a{:href => "#", :class => "btn btn-primary"} Save changes
+        %p= assignment.description
+      = simple_form_for([assignment, submission], :html => {:class => 'form-horizontal' }) do |f|
+        = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => "col col-lg-9"}
+        = f.text_area :text_comment, :class => :ckeditor, :input_html => { :maxlength => 1000 }, :label => "Text"
+        .modal-footer
+          %a{:href => "#", :class => " btn btn-info", "data-dismiss" => "modal", "aria-hidden" => "true"}Cancel
+          = f.button :submit, "Submit", :class => "pull-right btn btn-primary"

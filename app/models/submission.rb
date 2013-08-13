@@ -12,6 +12,8 @@ class Submission < ActiveRecord::Base
   belongs_to :group
   belongs_to :course
 
+  before_save :clean_html
+
   has_one :grade, :dependent => :destroy
   accepts_nested_attributes_for :grade
 
@@ -63,6 +65,10 @@ class Submission < ActiveRecord::Base
   end
 
   private
+
+  def clean_html
+    self.text_comment = Sanitize.clean(text_comment, Sanitize::Config::RESTRICTED)
+  end
 
   def cache_associations
     self.assignment_id ||= task.try(:assignment_id)

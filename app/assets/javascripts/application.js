@@ -28,7 +28,6 @@
 //= require users
 
 $(document).ready(function(){
-  $('.ckeditor').ckeditor();
 
   $('#gradeCurious').popover();
 

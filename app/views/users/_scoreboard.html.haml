@@ -1,10 +1,3 @@
-%div.btn-group.pull-right
-  - if current_user.is_staff?
-    - @user.team_leader.tap do |team_leader|
-      - if team_leader.present?
-        = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
-    = link_to "Email #{@user.first_name}", "mailto:#{@user.email}", :class => "btn btn-info btn-tiny" 
-
 %div#userID{ :'data-user-id' => @user.id }
 %div#userPointValues
   - if current_user.is_student?

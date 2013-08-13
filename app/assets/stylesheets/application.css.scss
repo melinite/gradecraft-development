@@ -73,9 +73,13 @@ h5.pageTitle {
   }
 }
 
+.clear {
+  clear: both;
+}
+
 .section {
   padding: 1em 0 .5em;
-  // background: image-url("sidebar_divider.png") bottom repeat-x;
+  //background: image-url("sidebar_divider.png") bottom repeat-x;
 }
 
 .center{
@@ -124,7 +128,7 @@ h5.pageTitle {
 
   ul.login {
     width: 230px;
-    background-color: $green;
+    background-color: #5ed38d;
     padding: 10px 10px 15px 0px;
     margin: 0;
   }
@@ -136,7 +140,7 @@ h5.pageTitle {
   }
 
   .login .forgot {
-    color: $red;
+    color: #FFF;
     float: right;
     margin-right: 10px;
   }
@@ -153,21 +157,6 @@ h5.pageTitle {
 
 }
 
-.form-horizontal {
-  background-color: #eee;
-}
-
-.form-horizontal input {
-  margin-top: 5px;
-}
-
-.form-horizontal .help-inline {
-  color: $red;
-}
-
-.form-actions {
-  margin: 20px;
-}
 
 .navbar a {
   color: $lightblue;
@@ -317,17 +306,33 @@ ul.nav.nav-list > li > a {
 }
 
 /** Dashboard Sidebar **/
+.section #badges {
+  text-align: center;
+}
+
 #badges .badgeIcon {
+  position: relative;
   float: left;
   opacity: .5;
-  padding: 5px;
+  margin: 10px;
+  width: 15%;
+
+  img {
+    width: 90%;
+  }
 }
+
 
 #badges img.earned {
   opacity: 1;
 }
 
+/** Modals **/
+.modal-content {
 
+  .form_inline, .simple_form {
+  }
+}
 
 
 /** Table Styles **/
