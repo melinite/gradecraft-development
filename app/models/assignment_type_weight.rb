@@ -6,7 +6,7 @@ class AssignmentTypeWeight < Struct.new(:student, :assignment_type)
   attr_accessor :weight
 
   def weight
-    assignment_weights
+    @weight ||= assignment_type.assignment_weights.where(student: student).weight
   end
 
   def assignment_type_id

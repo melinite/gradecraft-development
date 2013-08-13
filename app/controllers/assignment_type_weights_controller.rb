@@ -8,11 +8,10 @@ class AssignmentTypeWeightsController < ApplicationController
   def mass_update
     @form = AssignmentTypeWeightForm.new(@student, current_course)
     @form.update_attributes(student_params)
-    debugger
     if @form.save
       redirect_to dashboard_path
     else
-      render :mass_edit
+      respond_with @form, flash: true, action: :mass_edit
     end
   end
 

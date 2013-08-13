@@ -20,6 +20,10 @@ class AssignmentWeight < ActiveRecord::Base
 
   delegate :course, :to => :assignment, :allow_nil => false
 
+  def self.weight
+    limit(1).pluck(:weight).first || 0
+  end
+
   def updatable_by?(user)
     self.student_id == student.id
   end
