@@ -10,7 +10,8 @@
 
   .sidebar_section= render "sidebar_work"
 
-  .sidebar_section= render "sidebar_badges"
+  - if current_course.has_badges?
+    .sidebar_section= render "sidebar_badges"
 
   .sidebar_section= render "sidebar_to_do_list"
 

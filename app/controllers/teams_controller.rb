@@ -24,7 +24,7 @@ class TeamsController < ApplicationController
   end
 
   def new
-    @team =  Team.new
+    @team =  current_course.teams.new
     @title = "Create a New #{current_course.team_term}"
     @courses = Course.all
     @users = current_course.users
