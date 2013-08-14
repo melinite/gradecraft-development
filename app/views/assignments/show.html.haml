@@ -41,7 +41,7 @@
           %th Badges Earned
           - if @assignment.release_necessary?
             %th Status
-          - if @assignment.submissions_allowed?
+          - if @assignment.accepts_submissions?
             %th Submission
           %th Grade
       %tbody

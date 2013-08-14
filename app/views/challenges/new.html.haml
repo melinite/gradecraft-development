@@ -1,4 +1,6 @@
-= content_nav_for @challenge do
-  %li= render 'form'
+= content_nav_for Challenge, "Create a New Challenge" do
+  %li= link_to 'Back', challenges_path
 
-= link_to 'Back', challenges_path
+= render 'form'
+
+
