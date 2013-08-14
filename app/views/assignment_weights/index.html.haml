@@ -1,4 +1,5 @@
-= link_to "Back to My Dashboard", dashboard_path, :class => "btn btn-info btn-small"
+= content_nav_for AssignmentWeight do
+  %li= link_to "Back to My Dashboard", dashboard_path
 
 - if current_user.is_staff?
   %h3= "#{@user.try(:name)}'s #{current_course.multiplier_term} Choices"

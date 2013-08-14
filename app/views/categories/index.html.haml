@@ -1,5 +1,5 @@
-%div.col.col-lg-12#content_nav
-  = link_to 'New Category', new_category_path, {:class => 'btn btn-info col col-sm-12 col-lg-2 btn-small pull-right'}
+= content_nav_for Category do
+  %li= link_to 'New Category', new_category_path
 
 %table.table.display.table-bordered.tablesorter
   %thead

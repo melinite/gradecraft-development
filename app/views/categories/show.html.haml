@@ -1,8 +1,8 @@
-%div.col.col-lg-12#content_nav
+= content_nav_for @category do
   - if current_user.is_staff?
-    = link_to 'Edit', edit_category_path(@category), {:class => 'btn btn-info btn-small'}
-    = link_to 'Back', categories_path, {:class => 'btn btn-info btn-small'}
-    = link_to 'Add New Assignment', new_assignment_path, :class => "btn btn-small btn-success btn-primary"
+    %li= link_to 'Edit', edit_category_path(@category)
+    %li= link_to 'Back', categories_path
+    %li= link_to 'Add New Assignment', new_assignment_path
 %table.display.table-bordered.table
   %thead
     %tr

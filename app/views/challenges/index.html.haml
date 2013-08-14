@@ -1,6 +1,6 @@
-%div.col.col-lg-12#content_nav
+= content_nav_for Challenge do
   - if current_user.is_staff?
-    = link_to 'New Challenge', new_challenge_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+    %li= link_to 'New Challenge', new_challenge_path
 
 %table.table-bordered.table.display
   %thead
