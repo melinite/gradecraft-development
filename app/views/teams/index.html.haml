@@ -1,7 +1,6 @@
-%div.col.col-lg-12#content_nav
-  - if current_user.is_staff?
-    = link_to "Add a #{current_course.team_term}", new_team_path, :class => "btn btn-info btn-small pull-right"
-    = link_to "Grade a #{current_course.team_term} Challenge", challenges_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+= content_nav_for Team do
+  %li= link_to "Add a #{current_course.team_term}", new_team_path
+  %li= link_to "Grade a #{current_course.team_term} Challenge", challenges_path
 
 %table.table.table-bordered#sortableTable.tablesorter
   %thead

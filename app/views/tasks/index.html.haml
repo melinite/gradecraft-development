@@ -1,5 +1,5 @@
-%div.col.col-lg-12#content_nav
-  = link_to 'New Task', new_assignment_task_path, :class => 'btn btn-info col col-sm-12 col-lg-1 btn-small pull-right'
+= content_nav_for Task do
+  %li= link_to 'New Task', new_assignment_task_path
 
 %table.display.table-bordered.table
   %thead

@@ -1,2 +1,3 @@
-= render 'form'
+= content_nav_for Task, "Edit #{breadcrumb_link_for(@task)}".html_safe
 
+= render 'form'

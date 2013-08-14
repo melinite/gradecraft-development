@@ -1,10 +1,11 @@
-= link_to 'Edit', edit_grade_scheme_path(@grade_scheme), :class => 'btn btn-small btn-info'
-= link_to 'Back', grade_schemes_path, :class => 'btn btn-info btn-small'
+= content_nav_for @grade_scheme do
+  %li= link_to 'Edit', edit_grade_scheme_path(@grade_scheme)
+  %li= link_to 'Back', grade_schemes_path
 
 %p
   %b Scheme Name:
   = @grade_scheme.name
-  
+
 %h3
 Scheme Elements:
 
@@ -21,10 +22,10 @@ Scheme Elements:
   %tbody
     - @grade_scheme.elements.each do |element|
       %tr
-        %td #{element.level} 
+        %td #{element.level}
         %td #{number_with_delimiter(element.low_range, :delimiter => ',') }
         %td #{number_with_delimiter(element.high_range, :delimiter => ',') }
-        %td #{element.letter} 
+        %td #{element.letter}
         %td= link_to "View", grade_scheme_element_path(@grade_scheme.id, element.id)
         %td= link_to "Edit", edit_grade_scheme_element_path(@grade_scheme.id, element.id)
         %td= link_to "Delete", grade_scheme_grade_scheme_element_path(@grade_scheme.id, element.id), :data => { :confirm => 'Are you sure?' }, :method => :delete

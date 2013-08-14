@@ -1,9 +1,10 @@
-= link_to 'Edit', edit_team_path(@team), :class => "btn btn-info btn-tiny btn-success"
-= link_to 'Back', teams_path, :class => "btn btn-info btn-tiny btn-success"
-= link_to 'See Activity', activity_teams_path(@team), :class => "btn btn-info btn-tiny btn-success"
+= content_nav_for Team do
+  %li= link_to 'Edit', edit_team_path(@team)
+  %li= link_to 'Back', teams_path
+  %li= link_to 'See Activity', activity_teams_path(@team)
 
 %p
-  %b Points: 
+  %b Points:
   = @team.score
 %p
   %b Rank:
@@ -21,21 +22,21 @@
       %th Role
       %th Score
       %th Logins
-      - if current_course.has_badges? 
+      - if current_course.has_badges?
         %th Badges Earned
-      %th 
+      %th
       %th
       %th
       %th
       - @students.each do |student|
-        %tr  
+        %tr
           %td= student.email
           %td= link_to student.name, user_path(student)
           %td= student.role
           %td
             = student.earned_grades(current_course)
           %td= student.visit_count
-          - if current_course.has_badges? 
+          - if current_course.has_badges?
             %td
               - student.earned_badges.each do |badge|
                 %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}

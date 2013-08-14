@@ -5,6 +5,7 @@
       %td Link
       %td Comment
       %td Date Submitted
+      %td Grade
   %tbody
     - submissions.each do |submission|
       %tr
@@ -12,3 +13,4 @@
         %td= link_to submission.link
         %td= raw submission.text_comment
         %td= submission.created_at
+        %td= link_to 'Grade', new_assignment_grade_path("assignment_id"=>submission.assignment.id, :student_id => submission.student.id), :class => 'btn btn-tiny btn-success'
