@@ -29,11 +29,10 @@
           %td= number_with_delimiter(assignment.point_total, :delimiter => ',')
           %td= number_with_delimiter(assignment.average, :delimiter => ',')
           %td= "#{number_with_delimiter(assignment.low_score, :delimiter => ',')} - #{number_with_delimiter(assignment.high_score, :delimiter => ',')}"
+          - if assignment.accepts_submissions?
+            %td= "#{assignment.submissions.count}"
           %td
-            - if assignment.submissions_allowed?
-              = "#{assignment.submissions.count}"
-          %td
-            - if assignment.submissions_allowed?
+            - if assignment.accepts_submissions?
               = link_to "View Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
           %td= link_to 'Log Grades',  mass_edit_assignment_grades_path("assignment_id"=>assignment.id), :class => 'btn btn-tiny btn-success'
           %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'

@@ -1,10 +1,13 @@
+= content_nav_for @assignment, Submission do
+  %li= link_to "New Submission", new_assignment_submission_path(@assignment)
+
 %table.table.table-bordered.display#sortableTable.tablesorter
   %tr
     - if @assignment.has_groups?
-      %th Group 
-    - elsif @assignment.has_teams? 
+      %th Group
+    - elsif @assignment.has_teams?
       %th Team
-    - elsif @assignment.is_individual? 
+    - elsif @assignment.is_individual?
       %th #{current_course.user_term}
     %th Submitted
     %th Link

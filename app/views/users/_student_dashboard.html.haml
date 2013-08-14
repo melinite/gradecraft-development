@@ -1,4 +1,6 @@
 - if current_user.is_staff?
+  = content_nav_for @user do
+    %li Back
   = render 'staff_view_student_dashboard'
 - elsif current_user.is_student?
   = render 'users/student_view_student_dashboard'

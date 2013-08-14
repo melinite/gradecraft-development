@@ -41,7 +41,7 @@
           %td= assignment.required? ? 'Yes' : 'No'
           %td= assignment.grade_scope
           %td= assignment.grade_scheme_id
-          %td= assignment.submissions_allowed? ? 'Yes' : 'No'
+          %td= assignment.accepts_submissions? ? 'Yes' : 'No'
           %td= assignment.release_necessary? ? 'Yes' : 'No'
           %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
           %td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete

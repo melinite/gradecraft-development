@@ -8,7 +8,7 @@
   %table#massGrade
     - @grades.each_with_index do |grade,i|
       %tr
-        %td= link_to grade.student, grade.student
+        %td= link_to grade.student.name, grade.student
         %td
           - "assignment[grades_attributes][#{i}][raw_score]".tap do |raw_score_field_name|
             - if grade.persisted?
@@ -17,16 +17,16 @@
               //= hidden_field_tag "assignment[grades_attributes][#{i}][student_id]", grade.student.id
             = label_tag do
               - if @assignment.grade_checkboxes?
-                
+
                 = hidden_field_tag raw_score_field_name, 0
                 - if grade.raw_score > 0
                   = check_box_tag raw_score_field_name, @assignment.point_total, grade
-                - else 
+                - else
                   = check_box_tag raw_score_field_name, @assignment.point_total
-                
+
               - elsif @assignment.grade_select?
                 = select_tag raw_score_field_name, options_from_collection_for_select(@score_levels, "value", "name", grade.raw_score), :include_blank => false
-                
+
               - elsif @assignment.grade_radio?
                 - @score_levels.each do |score_level|
                   %td
@@ -35,14 +35,14 @@
               - else
                 = hidden_field_tag raw_score_field_name, 0
                 = check_box_tag raw_score_field_name, @assignment.point_total, grade
-   
-    - if @assignment.grade_checkboxes? 
+
+    - if @assignment.grade_checkboxes?
       %div.btn-group
         %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
         %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
 
   .form-actions.massGrades
-    %div.btn-toolbar    
+    %div.btn-toolbar
       %div.btn-group
         = f.button :submit, :class => "btn btn-primary"
         = link_to 'Cancel', assignments_path, :class => 'btn btn-info'

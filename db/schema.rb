@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130812122844) do
+ActiveRecord::Schema.define(version: 20130814202405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20130812122844) do
     t.datetime "close_time"
     t.datetime "open_time"
     t.boolean  "required"
-    t.boolean  "submissions_allowed"
+    t.boolean  "accepts_submissions"
     t.boolean  "student_logged"
     t.string   "student_logged_button_text"
     t.boolean  "release_necessary"
@@ -145,14 +145,14 @@ ActiveRecord::Schema.define(version: 20130812122844) do
     t.string   "name"
     t.string   "description"
     t.integer  "point_total"
-    t.datetime "due_date"
+    t.datetime "due_at"
     t.integer  "course_id"
     t.string   "points_predictor_display"
     t.boolean  "visible"
-    t.boolean  "has_challenge_submissions"
+    t.boolean  "accepts_submissions"
     t.boolean  "release_necessary"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "course_badge_sets", force: true do |t|
@@ -415,7 +415,7 @@ ActiveRecord::Schema.define(version: 20130812122844) do
 
   create_table "tasks", force: true do |t|
     t.integer  "assignment_id"
-    t.string   "title"
+    t.string   "name"
     t.text     "description"
     t.datetime "due_at"
     t.boolean  "accepts_submissions"

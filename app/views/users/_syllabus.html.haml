@@ -17,7 +17,7 @@
           %span.points= "(#{number_with_delimiter(assignment.point_total)} points)"
           - if assignment.future?
             %span.italic= "• Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
-          - if assignment.submissions_allowed?
+          - if assignment.accepts_submissions?
             = render "users/submissions", assignment: assignment
           - if assignment.is_required?
             %span.label.label-important Required!

@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.all
- 
+
     respond_to do |format|
       format.html
       format.json { render json: @groups }
@@ -22,8 +22,8 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @assignment = Assignment.find(params[:assignment_id])
-    @group = @assignment.groups.new
+    @assignment = current_course.assignments.all
+    @group = Group.new
     @students = current_course.users.students
     @assignments = current_course.assignments
     respond_to do |format|

@@ -23,7 +23,7 @@
 - if current_user.is_staff?
   %h4 Grades
   - if @assignment.assignment_type.mass_grade?
-    %div.pull-right
+    .pull-right
       = link_to 'Log Grades', mass_edit_assignment_grades_path(:assignment_id => @assignment.id), :class => "btn btn-tiny btn-success btn-primary"
 
   = simple_form_for @assignment do
@@ -41,7 +41,9 @@
           %th Badges Earned
           - if @assignment.release_necessary?
             %th Status
-          %th.header(colspan="4")
+          - if @assignment.accepts_submissions?
+            %th Submission
+          %th Grade
       %tbody
         - @students.each do |student|
           - grade = @assignment.grades.find_by student: student
@@ -51,35 +53,33 @@
                 - if grade
                   = check_box_tag "grade_ids[]", grade.id
             %td= link_to student.name, student
-            %td= grade.score
+            %td
+              - if grade
+                = grade.score
             - if @assignment.assignment_type.student_weightable?
-              %td
-                - if grade
-                  = grade.score(student)
+              %td= "Multiplied Score"
             - if @assignment.has_levels?
               %td
                 - if grade
                   = @assignment.grade_level(grade)
-
             %td
               - student.earned_badges.each do |badge|
                 %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
             - if @assignment.release_necessary?
               %td= grade.try(:status)
-            - student.submission_for_assignment(@assignment).tap do |submission|
-              - if submission && grade
-                %td= link_to "See Submission", assignment_submission_path(@assignment.id, submission, :grade_id => grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
-              - elsif submission
-                %td= link_to "See Submission", assignment_submission_path(@assignment.id, submission, :student_id => student.id, :student_type => "User", :gradeable_type => "User", :gradeable_id => student.id), :class => 'btn btn-tiny btn-success'
+            - if @assignment.accepts_submissions?
+              %td
+                - student.submission_for_assignment(@assignment).tap do |submission|
+                  - if submission && grade
+                    = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :grade_id => grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
+                  - elsif submission
+                    = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :student_id => student.id, :student_type => "User", :gradeable_type => "User", :gradeable_id => student.id), :class => 'btn btn-tiny btn-success'
+                  - else
+                    = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :student_id => student.id, :student_type => "User"), :class => 'btn btn-tiny btn-success'
+            %td
+              - if grade
+                = link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
               - else
-                %td= link_to "Submit", new_assignment_submission_path(@assignment, @submission, :student_id => student.id, :student_type => "User"), :class => 'btn btn-tiny btn-success'
-            - if grade
-              %td= link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
-              %td= link_to "Edit Grade", edit_assignment_grade_path(@assignment, grade, :student_id => student.id), :class => 'btn btn-tiny btn-success'
-              %td= link_to "Delete Grade", assignment_grade_path(@assignment, grade, :student_id => student.id), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
-            - else
-              %td= link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
-              %td
-              %td
+                = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
     - if @assignment.release_necessary?
       = submit_tag "Update Grade Statuses", :class => "btn btn-info"

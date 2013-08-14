@@ -34,7 +34,7 @@ class ChallengesController < ApplicationController
 
     respond_to do |format|
       if @challenge.save
-        format.html { redirect_to @challenge, notice: 'challenge was successfully created.' }
+        format.html { redirect_to @challenge, notice: 'Challenge was successfully created.' }
         format.json { render json: @challenge, status: :created, location: @challenge }
       else
         format.html { render action: "new" }
@@ -48,7 +48,7 @@ class ChallengesController < ApplicationController
 
     respond_to do |format|
       if @challenge.update_attributes(params[:challenge])
-        format.html { redirect_to @challenge, notice: 'challenge was successfully updated.' }
+        format.html { redirect_to @challenge, notice: 'Challenge was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -66,5 +66,5 @@ class ChallengesController < ApplicationController
       format.json { head :ok }
     end
   end
-  
+
 end

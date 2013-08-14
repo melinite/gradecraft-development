@@ -19,7 +19,7 @@
   = @challenge.visible? ? 'Yes' : 'No'
 %p
   %b Challenge Submissions:
-  = @challenge.submissions_allowed? ? 'Yes' : 'No'
+  = @challenge.accepts_submissions? ? 'Yes' : 'No'
 %p
   %b Release Necessary:
   = @challenge.release_necessary? ? 'Yes' : 'No'
