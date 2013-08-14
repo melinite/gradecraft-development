@@ -47,6 +47,7 @@ GradeCraft::Application.routes.draw do
       get :chart
     end
   end
+  resources :groups
   resources :teams do
     collection do
       get :activity
@@ -63,7 +64,6 @@ GradeCraft::Application.routes.draw do
     end
     resources :submissions
     resources :tasks
-    resources :groups
     resources :grades do
       collection do
         get :mass_edit
