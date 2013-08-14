@@ -13,7 +13,7 @@
               %iframe.col-lg-12{:src => submission.link}
             %p= submission.comment
           .modal-footer
-            %a{:href => "#", :class => "btn close", "data-dismiss" => "modal", "aria-hidden" => "true"} Close
+            %a{:href => "#", :class => "btn btn-info", "data-dismiss" => "modal", "aria-hidden" => "true"} Close
             %a{:href => "#", :class => "btn btn-primary"} Save changes
   - else
     %a{:href => "#submission_for_assignment-#{assignment.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Submit

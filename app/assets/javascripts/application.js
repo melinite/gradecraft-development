@@ -33,6 +33,8 @@ $(document).ready(function(){
 
   $('collapse').collapse('toggle');
 
+  $('#toDoList').collapse('hide');
+
   $('#myModal').modal('hide');
 
   $('#easyTab a').click(function (e) {

@@ -160,6 +160,10 @@ class User < ActiveRecord::Base
     grades.where(assignment_type: assignment_type).score
   end
 
+  def point_total_for_assignment_type(assignment_type)
+    assignments.point_total_for_student(self)
+  end
+
   def weights_by_assignment_id
     @weights_by_assignment_id ||= Hash.new { |h, k| h[k] = 0 }.tap do |weights_hash|
       assignment_weights.each do |assignment_weight|
@@ -171,10 +175,6 @@ class User < ActiveRecord::Base
   def weight_for_assignment(assignment)
     weights_by_assignment_id[assignment.id]
   end
-#
-#   def assignment_type_score(assignment_type)
-#     grades.for_assignment_type(assignment_type).sum { |g| g.score(self) }
-#   end
 
   #Import Users
   def self.csv_header

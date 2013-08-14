@@ -1,10 +1,12 @@
 %div#userID{ :'data-user-id' => @user.id }
-%div#userPointValues
+%h4
   - if current_user.is_student?
     Your current score is
   - elsif current_user.is_staff?
     Current Score:
   %span#userScoreNum #{number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')}
+  - if current_user.is_staff?
+    Current Final Grade: #{@user.grade_level_for_course(current_course)}
 - if current_course.graph_display?
   #userBarInProgressSim
   #userBarTotalSim
