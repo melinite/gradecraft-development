@@ -64,6 +64,10 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def name
+    student.name
+  end
+
   private
 
   def clean_html

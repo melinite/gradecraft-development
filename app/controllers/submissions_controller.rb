@@ -29,7 +29,6 @@ class SubmissionsController < ApplicationController
     @title = "Submit #{@assignment.name}"
     @users = current_course.users
     @submission = @assignment.submissions.create(params[:submission])
-    @submission.student = params[:student_type].constantize.find(params[:student_id])
     @groups = @assignment.groups
     @teams = current_course.teams
     @students = @users.students
