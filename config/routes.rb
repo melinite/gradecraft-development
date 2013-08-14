@@ -86,7 +86,6 @@ GradeCraft::Application.routes.draw do
     end
   end
 
-  get 'gradebook' => 'grades#gradebook'
   get 'home/index'
   get 'dashboard' => 'info#dashboard'
   root :to => "home#index"

@@ -1,14 +1,12 @@
 .pull-right.col.col-lg-3.sidebar
   = render 'users/sidebar_grade'
 
-  .col.col-lg-12
-    = render 'users/sidebar_work'
+  .sidebar_section= render 'users/sidebar_work'
 
   - if current_course.has_badges?
-    = render 'users/sidebar_badges'
+    .sidebar_section= render 'users/sidebar_badges'
 
-  .col.col-lg-12
-    = render 'users/sidebar_to_do_list'
+  .sidebar_section= render 'users/sidebar_to_do_list'
 
 .col.col-lg-9
   .section.col.col-lg-12

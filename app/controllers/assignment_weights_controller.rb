@@ -6,7 +6,8 @@ class AssignmentWeightsController < ApplicationController
   before_filter :set_student
 
   def index
-    @title = "View all #{current_course.multiplier_term}"
+    @student = current_course.users.find(params[:user_id])
+    @title = "View all #{current_course.weight_term}"
     @assignment_weights = @student.assignment_weights
     @assignment_types = current_course.assignment_types
     respond_with @assignment_weights
