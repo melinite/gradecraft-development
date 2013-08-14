@@ -67,7 +67,7 @@
                 %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
             - if @assignment.release_necessary?
               %td= grade.try(:status)
-            - if @assignment.submissions_allowed?
+            - if @assignment.accepts_submissions?
               %td
                 - student.submission_for_assignment(@assignment).tap do |submission|
                   - if submission && grade
