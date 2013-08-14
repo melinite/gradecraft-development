@@ -28,11 +28,12 @@
 //= require users
 
 $(document).ready(function(){
-  $('.ckeditor').ckeditor();
 
   $('#gradeCurious').popover();
 
   $('collapse').collapse('toggle');
+
+  $('#toDoList').collapse('hide');
 
   $('#myModal').modal('hide');
 

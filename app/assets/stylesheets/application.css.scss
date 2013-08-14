@@ -13,11 +13,28 @@ $blue: #2ab2cd;
 $lightblue: #00BFE5;
 $green: #a2d344;
 $red: #d64545;
+$aquagreen: #5ed38d;
 
 @font-face {
   font-family: 'Pontano Sans';
   src: font-url('pontano-sans-regular.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'IMF';
+  src: font-url('IMFeDPrm28P.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'IMF italic';
+  src: font-url('IMFeDPit28P.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Overlock';
+  src: font-url('Overlock-Regular.ttf') format('truetype');
+}
+
 
 @import 'compass';
 @import 'compass/css3';
@@ -32,6 +49,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Futura", sans-serif;
+}
+
+.assignmentName {
+  font-family: "IMF", sans-serif;
 }
 
 h5.pageTitle {
@@ -73,9 +94,21 @@ h5.pageTitle {
   }
 }
 
+.clear {
+  clear: both;
+}
+
 .section {
   padding: 1em 0 .5em;
-  // background: image-url("sidebar_divider.png") bottom repeat-x;
+  //background: image-url("sidebar_divider.png") bottom repeat-x;
+}
+
+.section %h4.center {
+  text-shadow: 1px 1px #333;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .center{
@@ -83,6 +116,38 @@ h5.pageTitle {
 }
 .rounded {
   border-radius: 10px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-family: 'IMF italic', sans-serif;
+}
+
+.smallcaps {
+  text-transform: uppercase;
+}
+
+.points {
+  font-family: 'Overlock', sans-serif;
+}
+
+.earned {
+  color: $green;
+}
+
+.missed {
+  color: $red;
+}
+
+.possible {
+  color: $blue;
+}
+
+.tab-pane {
+  padding-top: 15px;
 }
 
 /** Jumbotron **/
@@ -124,7 +189,7 @@ h5.pageTitle {
 
   ul.login {
     width: 230px;
-    background-color: $green;
+    background-color: $aquagreen;
     padding: 10px 10px 15px 0px;
     margin: 0;
   }
@@ -136,7 +201,7 @@ h5.pageTitle {
   }
 
   .login .forgot {
-    color: $red;
+    color: #FFF;
     float: right;
     margin-right: 10px;
   }
@@ -153,21 +218,6 @@ h5.pageTitle {
 
 }
 
-.form-horizontal {
-  background-color: #eee;
-}
-
-.form-horizontal input {
-  margin-top: 5px;
-}
-
-.form-horizontal .help-inline {
-  color: $red;
-}
-
-.form-actions {
-  margin: 20px;
-}
 
 .navbar a {
   color: $lightblue;
@@ -240,7 +290,7 @@ h5.pageTitle {
 }
 
 /** Sidebar **/
-.sidebar .section, .sidebar .btn {
+.sidebar .section {
   margin-bottom: 15px;
 }
 
@@ -317,17 +367,57 @@ ul.nav.nav-list > li > a {
 }
 
 /** Dashboard Sidebar **/
-#badges .badgeIcon {
-  float: left;
-  opacity: .5;
-  padding: 5px;
+
+.sidebar_section #badges {
+  border-radius: 5px;
+  margin-bottom: 15px;
+
+
+  .clear.center {
+    padding: 10px;
+    width: 80%;
+  }
+
 }
+
+.sidebar_section #badges #badgeIcons {
+  text-align: center;
+  width: 95%;
+  margin: 0 auto;
+}
+
+#badges .badgeIcon {
+  position: relative;
+  float: left;
+  margin: 5px;
+  width: 15%;
+
+  img {
+    width: 99%;
+    opacity: .5;
+  }
+
+  img:hover {
+    opacity: 1;
+  }
+}
+
 
 #badges img.earned {
   opacity: 1;
 }
 
+.submitted {
+  text-decoration: line-through;
+}
 
+/** Modals **/
+
+.modal-header {
+  background-color: $green;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
 
 
 /** Table Styles **/
@@ -497,4 +587,17 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
 
 .close {
   font-family: 'Helvetica', sans-serif;
+}
+
+#userScoreNum {
+  color: $green;
+}
+
+#userBarInProgress .highcharts-container, #userBarTotal .highcharts-container {
+  position: relative;
+  margin-left: -20px;
+}
+
+.highcharts-legend .highcharts-legend-item {
+  color: #333 !important;
 }

@@ -1,5 +1,5 @@
-%div.col.col-lg-12#content_nav
-  = link_to 'New Group', new_assignment_group_path(@assignment), :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+= content_nav_for Group do
+  %li= link_to 'New Group', new_assignment_group_path(@assignment)
 
 %table.table.display.table-bordered
   %thead
@@ -8,7 +8,7 @@
       %th Group Name
       %th Status
       %th Grade
-      %th 
+      %th
       %th
       %th
   %tbody

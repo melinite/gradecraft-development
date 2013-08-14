@@ -19,6 +19,7 @@
         %td= student.page_views
         %td= student.predictor_views
         %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
-        - student.team_leader.tap do |team_leader|
-          - if team_leader.present?
-            %td= mail_to team_leader.email, "Email GSI (#{team_leader.first_name})", :class => "btn btn-primary btn-tiny btn-success"
+        %td
+          - student.team_leader.tap do |team_leader|
+            - if team_leader.present?
+              = mail_to team_leader.email, "Email GSI (#{team_leader.first_name})", :class => "btn btn-primary btn-tiny btn-success"

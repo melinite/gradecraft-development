@@ -1,11 +1,11 @@
-%div.col-lg-12#content_nav
-  = link_to 'New Grade Scheme', new_grade_scheme_path, {:class => 'btn btn-info col col-sm-12 col-lg-2 btn-sm pull-right'}
+= content_nav_for GradeScheme do
+  %li= link_to 'New Grade Scheme', new_grade_scheme_path
 
 %table.display.table-bordered.table
   %thead
     %tr
       %th Scheme Name
-      %th 
+      %th
       %th
       %th
   %tbody

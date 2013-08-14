@@ -12,6 +12,8 @@ class Submission < ActiveRecord::Base
   belongs_to :group
   belongs_to :course
 
+  before_save :clean_html
+
   has_one :grade, :dependent => :destroy
   accepts_nested_attributes_for :grade
 
@@ -25,17 +27,17 @@ class Submission < ActiveRecord::Base
   #Canable permissions
   def updatable_by?(user)
     if assignment.is_individual?
-      submittable_id == user.id
+      student_id == user.id
     elsif assignment.has_teams?
-      submittable_id == user.teams.first.id
+      student_id == user.teams.first.id
     elsif assignment.has_groups?
-      submittable_id == user.groups.first.id
+      student_id == user.groups.first.id
     end
   end
 
   def destroyable_by?(user)
     if assignment.is_individual?
-      submittable_id == user.id
+      student_id == user.id
     elsif assignment.has_teams?
       submittable_id == user.teams.first.id
     elsif assignment.has_groups?
@@ -45,7 +47,7 @@ class Submission < ActiveRecord::Base
 
   def viewable_by?(user)
     if assignment.is_individual?
-      submittable_id == user.id
+      student_id == user.id
     elsif assignment.has_teams?
       submittable_id == user.teams.first.id
     elsif assignment.has_groups?
@@ -63,6 +65,10 @@ class Submission < ActiveRecord::Base
   end
 
   private
+
+  def clean_html
+    self.text_comment = Sanitize.clean(text_comment, Sanitize::Config::RESTRICTED)
+  end
 
   def cache_associations
     self.assignment_id ||= task.try(:assignment_id)

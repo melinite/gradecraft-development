@@ -37,6 +37,7 @@ gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'quiet_assets', :group => :development
 gem 'rdiscount'
+gem 'sanitize'
 
 group :development do
   gem 'bullet'

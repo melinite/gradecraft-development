@@ -1,17 +1,12 @@
-%div.btn-group.pull-right
-  - if current_user.is_staff?
-    - @user.team_leader.tap do |team_leader|
-      - if team_leader.present?
-        = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
-    = link_to "Email #{@user.first_name}", "mailto:#{@user.email}", :class => "btn btn-info btn-tiny" 
-
 %div#userID{ :'data-user-id' => @user.id }
-%div#userPointValues
+%h4
   - if current_user.is_student?
     Your current score is
   - elsif current_user.is_staff?
     Current Score:
   %span#userScoreNum #{number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')}
+  - if current_user.is_staff?
+    Current Final Grade: #{@user.grade_level_for_course(current_course)}
 - if current_course.graph_display?
   #userBarInProgressSim
   #userBarTotalSim

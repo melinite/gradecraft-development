@@ -16,7 +16,7 @@ class SubmissionsController < ApplicationController
       enforce_view_permission(@submission)
     end
     @assignment_type = @assignment.assignment_type
-    
+
     if current_user.is_staff?
       @student = params[:student_id]
       @score_levels = @assignment_type.score_levels
@@ -30,7 +30,7 @@ class SubmissionsController < ApplicationController
     @users = current_course.users
     @submission = @assignment.submissions.create(params[:submission])
     @submission.student = params[:student_type].constantize.find(params[:student_id])
-    @groups = @assignment.groups 
+    @groups = @assignment.groups
     @teams = current_course.teams
     @students = @users.students
   end
@@ -38,7 +38,7 @@ class SubmissionsController < ApplicationController
   def edit
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students
-    @groups = @assignment.groups 
+    @groups = @assignment.groups
     @teams = current_course.teams
     @title = "Edit Submission for #{@assignment.name}"
     @submission = Submission.find(params[:id])
@@ -52,7 +52,7 @@ class SubmissionsController < ApplicationController
         if current_user.is_student?
           format.html { redirect_to dashboard_path, notice: "#{@assignment.name} was successfully submitted." }
           format.json { render json: @assignment, status: :created, location: @assignment }
-        else 
+        else
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully submitted." }
         end
       else
@@ -85,7 +85,7 @@ class SubmissionsController < ApplicationController
       format.json { head :ok }
     end
   end
-  
+
   def find_student
     params.each do |name, value|
       if name =~ /(.+)_id$/
@@ -94,7 +94,7 @@ class SubmissionsController < ApplicationController
     end
     nil
   end
-  
+
   def find_student
     params.each do |name, value|
       if name =~ /(.+)_id$/
@@ -103,5 +103,5 @@ class SubmissionsController < ApplicationController
     end
     nil
   end
-  
+
 end

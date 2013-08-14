@@ -1,9 +1,9 @@
-%div.col.col-lg-12#content_nav
-  = link_to "Create a New #{current_course.user_term}", new_user_path, :class => "btn btn-info col col-lg-2 btn-sm pull-right"
-  %div.col.col-lg-5.col-sm-12
-    = form_tag users_path, :method => :get do
-      = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-10 col-sm-10"
-      = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-2 pull-right'
+= content_nav_for User do
+  %li= link_to "Create a New #{current_course.user_term}", new_user_path
+%div.col.col-lg-5.col-sm-12
+  = form_tag students_users_path, :method => :get do
+    = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-10 input-sm"
+    = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-2 pull-right'
 
 %table.table.display.table-bordered#sortableTable.tablesorter
   %thead
@@ -14,7 +14,7 @@
       %th Team
       %th Score
       %th Logins
-      - if current_course.has_badges? 
+      - if current_course.has_badges?
         %th Badges Earned
       %th.header
       %th.header
@@ -24,12 +24,12 @@
         %td= link_to user.name, user_path(user)
         %td= user.email
         %td= user.role
-        %td 
+        %td
           - user.teams.each do |team|
             = team.name
-        %td= user.earned_grades(current_course) if user.is_student?
+        %td= user.score_for_course(current_course) if user.is_student?
         %td= user.visit_count
-        - if current_course.has_badges? 
+        - if current_course.has_badges?
           %td
             - user.earned_badges.each do |badge|
               %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}

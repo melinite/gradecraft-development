@@ -17,4 +17,5 @@ class InfoController < ApplicationController
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @submissions = current_course.submissions.includes(:student)
   end
+
 end
