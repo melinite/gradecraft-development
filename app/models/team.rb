@@ -8,18 +8,28 @@ class Team < ActiveRecord::Base
 
   has_many :earned_badges, :as => :group
 
-  has_many :assignments, -> { team_assignment }
-  has_many :grades, :as => :group
+  has_many :challenges
+  has_many :challenge_grades
 
-  #after_validation :cache_score
+  after_validation :cache_score
 
-  #validates_presence_of :course, :name
+  validates_presence_of :course, :name
 
   def score
-    grades.pluck('raw_score').sum
+    challenge_grades.pluck('score').sum
   end
 
   def team_leader
     students.gsis.first
+  end
+
+  def member_count
+    students.count
+  end
+
+  private
+
+  def cache_score
+    #self.update_attribute :score, challenge_grades.score
   end
 end

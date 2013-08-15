@@ -3,24 +3,72 @@
   %li= link_to 'Back', challenges_path
 
 %p
-  %b Name:
-  = @challenge.name
-%p
   %b Description:
   = raw @challenge.description
 %p
-  %b Point total:
-  = @challenge.point_total
+  %b Point Total:
+  = number_with_delimiter(@challenge.point_total, :delimiter => ',')
 %p
-  %b Due date:
+  %b Open date:
+  = @challenge.open_at
+%p
+  %b Close date:
   = @challenge.due_at
-%p
-  %b Visible to students:
-  = @challenge.visible? ? 'Yes' : 'No'
-%p
-  %b Challenge Submissions:
-  = @challenge.accepts_submissions? ? 'Yes' : 'No'
-%p
-  %b Release Necessary:
-  = @challenge.release_necessary? ? 'Yes' : 'No'
 
+= form_tag challenge_path(@challenge), :method => :get do
+  = hidden_field_tag :challenge_id, @challenge.id
+  = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
+  = submit_tag 'Filter', :class => 'btn btn-success btn-small'
+
+- if current_user.is_staff?
+  %h4 Grades
+  - if @challenge.mass_grade?
+    .pull-right
+      = link_to 'Log Grades', mass_edit_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
+
+  = simple_form_for @challenge do
+    %table.display.table-bordered.table#sortableTable.tablesorter
+      %thead
+        %tr
+          - if @challenge.release_necessary?
+            %th
+          %th= term_for :team
+          %th Score
+          - if @challenge.has_levels?
+            %th Level
+          %th Badges Earned
+          - if @challenge.release_necessary?
+            %th Status
+          - if @challenge.accepts_submissions?
+            %th Submission
+          %th Grade
+      %tbody
+        - @teams.each do |team|
+          - challenge_grade = @challenge.challenge_grades.find_by team: team
+          %tr
+            - if @challenge.release_necessary?
+              %td
+                - if challenge_grade
+                  = check_box_tag "challenge_grade_ids[]", challenge_grade.id
+            %td= link_to team.name, team
+            %td
+              - if challenge_grade
+                = challenge_grade.score
+            - if @challenge.has_levels?
+              %td
+                - if challenge_grade
+                  = @challenge.grade_level(grade)
+            %td
+              - team.earned_badges.each do |badge|
+                %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
+            - if @challenge.release_necessary?
+              %td= challenge_grade.try(:status)
+            - if @challenge.accepts_submissions?
+              %td
+            %td
+              - if challenge_grade
+                = link_to "See Grade", challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
+              - else
+                = link_to 'Grade', new_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
+    - if @challenge.release_necessary?
+      = submit_tag "Update Grade Statuses", :class => "btn btn-info"

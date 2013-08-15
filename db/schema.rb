@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130814202405) do
+ActiveRecord::Schema.define(version: 20130815141039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20130814202405) do
     t.integer  "course_id"
     t.integer  "assignment_type_id"
     t.integer  "grade_scheme_id"
-    t.string   "grade_scope",                default: "Individual", null: false
+    t.string   "grade_scope",                 default: "Individual", null: false
     t.datetime "close_time"
     t.datetime "open_time"
     t.boolean  "required"
@@ -84,13 +84,16 @@ ActiveRecord::Schema.define(version: 20130814202405) do
     t.boolean  "student_logged"
     t.string   "student_logged_button_text"
     t.boolean  "release_necessary"
-    t.datetime "open_date"
+    t.datetime "open_at"
     t.string   "icon"
     t.boolean  "can_earn_multiple_times"
-    t.boolean  "visible",                    default: true
+    t.boolean  "visible",                     default: true
     t.integer  "category_id"
     t.boolean  "resubmissions_allowed"
     t.integer  "max_submissions"
+    t.datetime "accepts_submissions_until"
+    t.datetime "accepts_resubmissions_until"
+    t.datetime "grading_due_at"
   end
 
   create_table "badge_sets", force: true do |t|
@@ -153,6 +156,10 @@ ActiveRecord::Schema.define(version: 20130814202405) do
     t.boolean  "release_necessary"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.datetime "open_at"
+    t.boolean  "mass_grade"
+    t.string   "mass_grade_type"
+    t.boolean  "levels"
   end
 
   create_table "course_badge_sets", force: true do |t|
@@ -225,6 +232,8 @@ ActiveRecord::Schema.define(version: 20130814202405) do
     t.boolean  "shared_badges"
     t.boolean  "graph_display"
     t.decimal  "default_assignment_weight",    precision: 4, scale: 1, default: 1.0
+    t.string   "tagline"
+    t.boolean  "academic_history_visible"
   end
 
   create_table "criteria", force: true do |t|
@@ -309,6 +318,7 @@ ActiveRecord::Schema.define(version: 20130814202405) do
     t.integer  "score"
     t.integer  "assignment_type_id"
     t.integer  "point_total"
+    t.text     "admin_notes"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree

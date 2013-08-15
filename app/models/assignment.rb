@@ -40,7 +40,7 @@ class Assignment < ActiveRecord::Base
     :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
     :open_time, :accepts_submissions, :student_logged_button_text,
     :student_logged, :badge_set_id, :release_necessary,
-    :score_levels_attributes, :open_date, :close_time, :course, :due_at,
+    :score_levels_attributes, :open_at, :close_time, :course, :due_at,
     :assignment_rubrics_attributes, :rubrics_attributes
 
   scope :individual_assignment, -> { where grade_scope: "Individual" }
@@ -162,7 +162,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def open?
-    (open_date != nil && open_date < Time.now) && (due_at != nil && due_at > Time.now)
+    (open_at != nil && open_at < Time.now) && (due_at != nil && due_at > Time.now)
   end
 
   def grade_level(grade)
