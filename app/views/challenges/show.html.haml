@@ -15,16 +15,11 @@
   %b Close date:
   = @challenge.due_at
 
-= form_tag challenge_path(@challenge), :method => :get do
-  = hidden_field_tag :challenge_id, @challenge.id
-  = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
-  = submit_tag 'Filter', :class => 'btn btn-success btn-small'
-
 - if current_user.is_staff?
   %h4 Grades
   - if @challenge.mass_grade?
     .pull-right
-      = link_to 'Log Grades', mass_edit_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
+      = link_to 'Log Grades', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
 
   = simple_form_for @challenge do
     %table.display.table-bordered.table#sortableTable.tablesorter
@@ -67,8 +62,8 @@
               %td
             %td
               - if challenge_grade
-                = link_to "See Grade", challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
+                = link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
               - else
-                = link_to 'Grade', new_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
+                = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
     - if @challenge.release_necessary?
       = submit_tag "Update Grade Statuses", :class => "btn btn-info"

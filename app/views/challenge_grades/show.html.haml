@@ -1,5 +1,6 @@
 = content_nav_for ChallengeGrade do
-%p#notice= notice
+  %li= link_to 'Edit', edit_challenge_grade_path(@challenge_grade)
+  %li= link_to 'Back', challenge_grades_path
 
 %p
   %b Challenge:
@@ -20,6 +21,3 @@
   %b Final score:
   = @challenge_grade.final_score
 
-= link_to 'Edit', edit_challenge_grade_path(@challenge_grade)
-\|
-= link_to 'Back', challenge_grades_path

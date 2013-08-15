@@ -1,10 +1,12 @@
 GradeCraft::Application.routes.draw do
-  resources :challenge_grades do
-    collection do
-      get 'mass_edit'
+
+  resources :challenges do
+    resources :challenge_grades do
+      collection do
+        get 'mass_edit'
+      end
     end
   end
-  resources :challenges
 
   %w{students gsis professors admins}.each do |role|
     get "users/#{role}/new" => 'users#new', :as => "new_#{role.singularize}", :role => role.singularize

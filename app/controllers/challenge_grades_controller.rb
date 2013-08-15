@@ -4,11 +4,13 @@ class ChallengeGradesController < ApplicationController
 
   def index
     @title = "View All Challenge Grades"
-    @challenge_grades_grades = current_course.challenge_grades
+    @challenge = current_course.challenges.find(params[:challenge_id])
+    @challenge_grades = current_course.challenge_grades
   end
 
   def show
-    @challenge_grades_grades = current_course.challenge_grades.find(params[:id])
+    @challenge = current_course.challenges.find(params[:challenge_id])
+    @challenge_grades = @challenge.challenge_grades.find(params[:id])
     @title = @challenge_grades_grades.name
 
     respond_to do |format|
@@ -18,11 +20,8 @@ class ChallengeGradesController < ApplicationController
   end
 
   def new
-    @challenge_grades = current_course.challenge_grades.new
-    respond_to do |format|
-      format.html
-      format.json { render json: @challenge_grades }
-    end
+    @challenge = current_course.challenges.find(params[:challenge_id])
+    @challenge_grade = ChallengeGrade.new
   end
 
   def edit
@@ -52,12 +51,13 @@ class ChallengeGradesController < ApplicationController
 
 
   def create
-    @challenge_grades = current_course.challenge_grades.create(params[:challenge])
+    @challenge = current_course.challenges.find(params[:challenge_id])
+    @challenge_grades = @challenge.challenge_grades.create(params[:challenge_grade])
 
     respond_to do |format|
       if @challenge_grades.save
-        format.html { redirect_to @challenge_grades, notice: 'Challenge was successfully created.' }
-        format.json { render json: @challenge_grades, status: :created, location: @challenge_grades }
+        format.html { redirect_to @challenge, notice: 'Challenge was successfully created.' }
+        format.json { render json: @challenge, status: :created, location: @challenge_grades }
       else
         format.html { render action: "new" }
         format.json { render json: @challenge_grades.errors, status: :unprocessable_entity }
