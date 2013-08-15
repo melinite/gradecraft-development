@@ -25,17 +25,20 @@ class TeamsController < ApplicationController
 
   def new
     @team =  current_course.teams.new
+    @team_memberships = @team.team_memberships.new
     @title = "Create a New #{current_course.team_term}"
     @courses = Course.all
     @users = current_course.users
+    @team.team_memberships.build
     @students = @users.students
     @submit_message = "Create #{current_course.team_term}"
     respond_with @team
   end
 
   def create
-    @team =  Team.new(params[:team])
+    @team =  current_course.teams.new(params[:team])
     @team.save
+    @team.team_memberships.build
     respond_with @team
   end
 

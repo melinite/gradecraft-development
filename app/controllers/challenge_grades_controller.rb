@@ -10,8 +10,8 @@ class ChallengeGradesController < ApplicationController
 
   def show
     @challenge = current_course.challenges.find(params[:challenge_id])
-    @challenge_grades = @challenge.challenge_grades.find(params[:id])
-    @title = @challenge_grades_grades.name
+    @challenge_grade = @challenge.challenge_grades.find(params[:id])
+    @title = @challenge_grade.name
 
     respond_to do |format|
       format.html
@@ -25,7 +25,8 @@ class ChallengeGradesController < ApplicationController
   end
 
   def edit
-    @challenge_grades = current_course.challenge_grades.find(params[:id])
+    @challenge = current_course.challenges.find(params[:challenge_id])
+    @challenge_grade = @challenge.challenge_grades.find(params[:id])
   end
 
   def mass_edit
