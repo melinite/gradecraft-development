@@ -25,6 +25,6 @@ class Team < ActiveRecord::Base
 
   private
   def cache_score
-    self.score = challenge_grades
+    self.score = challenge_grades.pluck('score').sum
   end
 end
