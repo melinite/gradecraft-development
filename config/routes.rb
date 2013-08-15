@@ -1,5 +1,9 @@
 GradeCraft::Application.routes.draw do
-  resources :challenge_grades
+  resources :challenge_grades do
+    collection do
+      get 'mass_edit'
+    end
+  end
   resources :challenges
 
   %w{students gsis professors admins}.each do |role|

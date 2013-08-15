@@ -10,6 +10,7 @@ class ChallengesController < ApplicationController
   def show
     @challenge = current_course.challenges.find(params[:id])
     @title = @challenge.name
+    @teams = current_course.teams.all
 
     respond_to do |format|
       format.html

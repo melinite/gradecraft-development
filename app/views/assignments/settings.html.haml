@@ -31,7 +31,7 @@
         %tr
           %td= link_to assignment.name, assignment
           %td= raw assignment.description
-          %td= assignment.try(:open_date)
+          %td= assignment.try(:open_at)
           %td= assignment.try(:due_at)
           %td
             - if assignment.self_gradeable?

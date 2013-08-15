@@ -24,7 +24,7 @@
       - assignments.each do |assignment|
         %tr
           %td= link_to assignment.name, assignment
-          %td= assignment.try(:open_date)
+          %td= assignment.try(:open_at)
           %td= assignment.try(:due_at)
           %td= number_with_delimiter(assignment.point_total, :delimiter => ',')
           %td= number_with_delimiter(assignment.average, :delimiter => ',')

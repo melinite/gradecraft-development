@@ -18,10 +18,10 @@
     - i = 1
     - @teams.each do |team|
       %tr
-        //%td= team.rank
+        %td= team.rank
         %td= link_to team.name, team
-        //%td= team.member_count
-        %td= team.score
+        %td= team.member_count
+        %td= team.try(:score)
         - if current_user.is_staff?
           %td
             - team.earned_badges.each do |badge|

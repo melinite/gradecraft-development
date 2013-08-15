@@ -8,8 +8,17 @@ class Challenge < ActiveRecord::Base
   has_many :tasks, :foreign_key => :assignment_id, :dependent => :destroy
   belongs_to :course
   has_many :submissions
+  has_many :challenge_grades
+  has_many :score_levels
 
   validates_presence_of :course, :name
 
+  def has_levels?
+    levels == true
+  end
+
+  def mass_grade?
+    mass_grade = true
+  end
 
 end
