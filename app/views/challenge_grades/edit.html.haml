@@ -1,7 +1,5 @@
-= content_nav_for ChallengeGrade, "Edit #{breadcrumb_link_for(@challenge_grade)}".html_safe
+= content_nav_for @challenge do
+  %li= link_to 'Show', challenge_challenge_grade_path(@challenge, @challenge_grade)
+  %li= link_to 'Back', challenges_path(@challenge)
 
 = render 'form'
-
-= link_to 'Show', @challenge_grade
-\|
-= link_to 'Back', challenge_grades_path

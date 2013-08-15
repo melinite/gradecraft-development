@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-  attr_accessible :name, :course, :course_id, :student_ids, :score
+  attr_accessible :name, :course, :course_id, :student_ids, :score, :students
 
   belongs_to :course
 
@@ -14,6 +14,8 @@ class Team < ActiveRecord::Base
   after_validation :cache_score
 
   validates_presence_of :course, :name
+
+  accepts_nested_attributes_for :team_memberships
 
   def team_leader
     students.gsis.first

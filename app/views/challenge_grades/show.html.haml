@@ -1,10 +1,10 @@
 = content_nav_for ChallengeGrade do
-  %li= link_to 'Edit', edit_challenge_grade_path(@challenge_grade)
-  %li= link_to 'Back', challenge_grades_path
+  %li= link_to 'Edit', edit_challenge_challenge_grade_path(@challenge, @challenge_grade)
+  %li= link_to 'Back', challenge_challenge_grades_path(@challenge)
 
 %p
   %b Challenge:
-  = @challenge_grade.challenge_id
+  = @challenge.name
 %p
   %b Score:
   = @challenge_grade.score
