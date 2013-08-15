@@ -48,13 +48,13 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team =  current_course.teams.find(params[:id])
+    @team = current_course.teams.find(params[:id])
     @team.update_attributes(params[:team])
     respond_with @team
   end
 
   def destroy
-    @team =  current_course.teams.find(params[:id])
+    @team = current_course.teams.find(params[:id])
     @team.destroy
     respond_with @team
   end

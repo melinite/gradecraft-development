@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-  attr_accessible :name, :course, :course_id, :student_ids
+  attr_accessible :name, :course, :course_id, :student_ids, :score
 
   belongs_to :course
 
@@ -8,16 +8,12 @@ class Team < ActiveRecord::Base
 
   has_many :earned_badges, :as => :group
 
-  has_many :challenges
+  has_many :challenges, :through => :challenge_grades
   has_many :challenge_grades
 
   after_validation :cache_score
 
   validates_presence_of :course, :name
-
-  def score
-    challenge_grades.pluck('score').sum
-  end
 
   def team_leader
     students.gsis.first
@@ -28,8 +24,7 @@ class Team < ActiveRecord::Base
   end
 
   private
-
   def cache_score
-    #self.update_attribute :score, challenge_grades.score
+    self.score = challenge_grades
   end
 end

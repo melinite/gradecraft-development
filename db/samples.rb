@@ -309,7 +309,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(3).weeks.ago
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_date = "14/02/2013"
+  a.open_at = "14/02/2013"
   a.grade_scope = "Individual"
   a.save
   a.tasks.create! do |t|
@@ -340,7 +340,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(3).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_date = "14/02/2013"
+  a.open_at = "14/02/2013"
   a.grade_scope = "Individual"
 end
 puts "Game Play Update Paper 1 has been posted!"
@@ -352,7 +352,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(5).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_date = "14/02/2013"
+  a.open_at = "14/02/2013"
   a.grade_scope = "Individual"
 end
 puts "Game Play Update Paper 2 has been posted!"
@@ -364,7 +364,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(7).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_date = "14/02/2013"
+  a.open_at = "14/02/2013"
   a.grade_scope = "Individual"
 end
 puts "Game Play Reflection Paper has been posted!"
@@ -376,7 +376,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(4).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_date = "14/02/2013"
+  a.open_at = "14/02/2013"
   a.grade_scope = "Individual"
 end
 puts "Individual Project 1 has been posted!"
@@ -388,7 +388,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(7).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_date = "14/02/2013"
+  a.open_at = "14/02/2013"
   a.grade_scope = "Individual"
 end
 puts "Individual Project 2 has been posted!"
@@ -400,7 +400,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(7).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_date = "14/02/2013"
+  a.open_at = "14/02/2013"
   a.grade_scope = "Group"
 end
 puts "Group Game Design has been posted!"
