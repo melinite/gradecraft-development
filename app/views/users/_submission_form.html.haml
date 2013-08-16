@@ -5,8 +5,20 @@
         %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x
         %h3= assignment.name
         %p= assignment.description
-      = simple_form_for([assignment, submission], :html => {:class => 'form-horizontal' }) do |f|
+      = simple_form_for([assignment, submission], :multipart => true, :html => {:class => 'form-horizontal' }) do |f|
+        = f.association :student, :default => @student
         = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => "col col-lg-9"}
+        .submission-files
+          %script(id="submission-file-template" type="text/x-template")
+            %fieldset.submission-file
+              = f.simple_fields_for :submission_files, SubmissionFile.new, class: 'form-inline', child_index: 'child_index' do |sf|
+                = render 'submission_file_fields', f: sf
+          - submission.submission_files.each do |submission_file|
+            %fieldset.submission-file
+              = f.simple_fields_for :submission_files, submission_file, class: 'form-inline' do |sf|
+                = render 'submission_file_fields', f: sf, submission: submission
+        %hr
+        = link_to 'Add an Attachment', '#', class: 'add-file'
         = f.text_area :text_comment, :class => :ckeditor, :input_html => { :maxlength => 1000 }, :label => "Text"
         .modal-footer
           %a{:href => "#", :class => "btn btn-info", "data-dismiss" => "modal", "aria-hidden" => "true"}Cancel

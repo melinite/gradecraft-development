@@ -11,6 +11,9 @@
             %h4= link_to submission.link, submission.link
             - if submission.link?
               %iframe.col-lg-12{:src => submission.link}
+            - if submission.submission_files.present?
+              - submission.submission_files.each do |submission_file|
+                = link_to submission_file.filename, submission_file.filename_url.to_s
             %p= submission.comment
           .modal-footer
             %a{:href => "#", :class => "btn btn-info", "data-dismiss" => "modal", "aria-hidden" => "true"} Close

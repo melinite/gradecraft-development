@@ -397,6 +397,11 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.integer  "weight",             null: false
   end
 
+  create_table "submission_files", force: true do |t|
+    t.string  "filename",      null: false
+    t.integer "submission_id", null: false
+  end
+
   create_table "submissions", force: true do |t|
     t.integer  "assignment_id"
     t.integer  "student_id"

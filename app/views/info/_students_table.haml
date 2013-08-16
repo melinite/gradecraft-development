@@ -3,6 +3,7 @@
     %tr
       %th= course.user_term
       %th Score
+      %th= course.team_term
       %th Badges
       %th Logins
       %th Pageviews
@@ -14,6 +15,7 @@
       %tr
         %td= link_to student.name, user_path(student)
         %td= student.score_for_course(course)
+        %td= student.teams.first.try(:name)
         %td= student.earned_badges.count
         %td= student.visit_count
         %td= student.page_views

@@ -1,4 +1,5 @@
-//= link_to "Award a Badge", new_earned_badge_path(@earnable), :class => "btn btn-info btn-small"
+= content_nav_for EarnedBadge do
+  %li= link_to "Award a Badge", new_earned_badge_path(@earnable)
 
 %table.table.table-bordered.table-condensed
   %thead

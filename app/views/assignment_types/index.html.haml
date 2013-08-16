@@ -4,7 +4,7 @@
 %table.table-bordered.table-condensed.table#sortableTable.tablesorter
   %thead
     %tr
-      %th Order
+      %th Student Display Order
       %th Name
       %th Points
       %th Grading Levels
@@ -21,7 +21,7 @@
       - current_course.assignment_types.each do |assignment_type|
         %tr
           %td= assignment_type.order_placement
-          %td= assignment_type.name
+          %td= link_to assignment_type.name, assignment_type
           %td= assignment_type.point_setting
           %td= assignment_type.levels? ? "Yes" : "No"
           %td= assignment_type.points_predictor_display

@@ -4,7 +4,7 @@
       %th= course.team_term
       %th Score
       %th Badges
-      %th Average Grade
+      %th Average #{course.user_term} Grade
       %th= course.section_leader_term
   %tbody
     - teams.each do |team|
@@ -14,5 +14,5 @@
         %td
           - team.earned_badges.each do |badge|
             = image_tag badge.icon, :alt => badge.name, :width => 25
-        %td
-        %td= team.team_leader.try(:name)
+        %td= team.try(:average_grade)
+        %td= link_to team.team_leader.try(:name), team.team_leader

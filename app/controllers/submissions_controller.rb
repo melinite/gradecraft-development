@@ -27,8 +27,9 @@ class SubmissionsController < ApplicationController
   def new
     @assignment = Assignment.find(params[:assignment_id])
     @title = "Submit #{@assignment.name}"
-    @users = current_course.users
-    @submission = @assignment.submissions.create(params[:submission])
+    @student = current_course.users.find(params[:id])
+    @submission = @assignment.submissions.new
+    @submission.submission_files.build
     @groups = @assignment.groups
     @teams = current_course.teams
     @students = @users.students
