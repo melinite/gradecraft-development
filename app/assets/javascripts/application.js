@@ -5,7 +5,7 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery-fileupload
+//= require jquery.fileupload
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery.dynatable

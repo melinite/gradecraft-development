@@ -1,5 +1,6 @@
 = content_nav_for @team do
-  %li= link_to 'Edit', edit_team_path(@team)
+  %li= link_to "Edit #{current_course.team_term}", edit_team_path(@team)
+  %li= link_to "Add #{current_course.user_term}s", edit_team_path(@team)
   %li= link_to 'Back', teams_path
 
 %p
