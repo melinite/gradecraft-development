@@ -1,0 +1,22 @@
+timeline
+  headline @course.name
+  type "default"
+  text @course.description
+  asset
+    media "link here"
+    credit ""
+    caption ""
+  @assignments.each do |assignment|
+    date
+      startDate assignment.open_at
+      endDate assignment.due_at
+      headline assignment.name
+      text assignment.description
+      tag assignment.assignment_type
+    era
+      startDate assignment.open_at
+      endDate assignment.due_at
+      headline assignment.name
+      text assignment.description
+  end
+end

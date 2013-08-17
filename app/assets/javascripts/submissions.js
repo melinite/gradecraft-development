@@ -1,10 +1,8 @@
 !function($) {
   var init = function() {
-    console.log('clicked');
     var $form = $('form');
 
     $form.on('click', '.add-file', function(e) {
-      console.log('clicked');
       var $wrapper = $('.submission-files');
       var template = $('#submission-file-template').html().replace(/child_index/g, $wrapper.children('.submission-file').length);
       $wrapper.append(template);

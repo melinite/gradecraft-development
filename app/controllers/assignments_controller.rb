@@ -4,7 +4,11 @@ class AssignmentsController < ApplicationController
   before_filter :ensure_staff?, :except => [:feed]
 
   def index
-    respond_with @assignments = current_course.assignments
+    @assignments = current_course.assignments
+    respond_to do |format|
+      format.html
+      format.json { render :text => TimelineBuilder.new(:assignments => @assignments).to_json }
+    end
   end
 
    def settings

@@ -14,5 +14,7 @@
         %td
           - team.earned_badges.each do |badge|
             = image_tag badge.icon, :alt => badge.name, :width => 25
-        %td= team.try(:average_grade)
-        %td= link_to team.team_leader.try(:name), team.team_leader
+        %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
+        %td
+          - if team.team_leader.present?
+            = link_to team.team_leader.try(:name), team.team_leader

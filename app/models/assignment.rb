@@ -40,7 +40,7 @@ class Assignment < ActiveRecord::Base
     :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
     :open_time, :accepts_submissions, :student_logged_button_text,
     :student_logged, :badge_set_id, :release_necessary,
-    :score_levels_attributes, :open_at, :close_time, :course, :due_at,
+    :score_levels_attributes, :open_at, :close_time, :course,
     :assignment_rubrics_attributes, :rubrics_attributes
 
   scope :individual_assignment, -> { where grade_scope: "Individual" }

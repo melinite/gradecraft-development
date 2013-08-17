@@ -29,6 +29,8 @@
 //= require submissions
 //= require submission_file
 //= require underscore.min
+//= require timelineJS/embed
+//= require timeline
 
 $(document).ready(function(){
 

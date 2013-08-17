@@ -14,14 +14,15 @@
     - students.each do |student|
       %tr
         %td= link_to student.name, user_path(student)
-        %td= student.score_for_course(course)
-        %td= student.teams.first.try(:name)
+        %td= number_with_delimiter(student.score_for_course(course), :delimiter => ',')
+        %td
+          - if student.teams.present?
+            = link_to student.teams.first.try(:name), student.teams.first
         %td= student.earned_badges.count
         %td= student.visit_count
         %td= student.page_views
         %td= student.predictor_views
         %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
         %td
-          - student.team_leader.tap do |team_leader|
-            - if team_leader.present?
-              = mail_to team_leader.email, "Email GSI (#{team_leader.first_name})", :class => "btn btn-primary btn-tiny btn-success"
+          - if student.team_leader.present?
+            = mail_to team_leader.email, "Email GSI (#{team_leader.first_name})", :class => "btn btn-primary btn-tiny btn-success"
