@@ -9,7 +9,7 @@
     = atwf.hidden_field :assignment_type_id
     .panel
       .panel-heading
-        %h3.panel-title Test
+        %h3.panel-title= atwf.object.assignment_type.name
       = atwf.input :weight
       .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)}
   .form-actions

@@ -157,6 +157,10 @@ class User < ActiveRecord::Base
     course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
   end
 
+  def point_total_for_assignment_type(assignment_type)
+    assignment_type.assignments.point_total_for_student(self)
+  end
+
   def score_for_assignment_type(assignment_type)
     grades.where(assignment_type: assignment_type).score
   end

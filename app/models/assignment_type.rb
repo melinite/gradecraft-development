@@ -51,5 +51,6 @@ class AssignmentType < ActiveRecord::Base
 
   def weight_for_student(student)
     return 1 unless student_weightable?
+    assignment_weights.where(student: student).weight
   end
 end
