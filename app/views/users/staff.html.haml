@@ -1,5 +1,5 @@
-%div.col.col-lg-12#content_nav
-  = link_to 'Create a New Staff Member', new_user_path, :class => "btn btn-info col col-lg-2 btn-small pull-right"
+= content_nav_for User do
+  %li= link_to 'Create a New Staff Member', new_user_path
 
 %table.table.display.table-bordered#sortableTable.tablesorter
   %thead
@@ -14,7 +14,7 @@
       %th.header
   %tbody
     - current_course.users.each do |user|
-      - if user.is_staff? 
+      - if user.is_staff?
         %tr
           %td= user.username
           %td= link_to user.name, user_path(user)
@@ -25,7 +25,7 @@
               %br
           %td
             //= user.team.try(:score)
-            
+
           %td
             //- user.team_badges.each do |badge|
             //%img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}

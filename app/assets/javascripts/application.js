@@ -31,6 +31,7 @@
 //= require underscore.min
 //= require timelineJS/embed
 //= require timeline
+//= require stupidtable
 
 $(document).ready(function(){
 
@@ -41,6 +42,8 @@ $(document).ready(function(){
   $('#toDoList').collapse('hide');
 
   $('#myModal').modal('hide');
+
+  $("#simpleTable").stupidtable();
 
   $('#easyTab a').click(function (e) {
     e.preventDefault();

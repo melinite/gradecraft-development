@@ -12,10 +12,15 @@
 
 /* Branding colors */
 $blue: #2ab2cd;
-$lightblue: #00BFE5;
+$lightblue: #4EE2FF;
 $green: #a2d344;
+$lightgreen: #B0E54A;
 $red: #d64545;
 $aquagreen: #5ed38d;
+$yellow: #FFEC45;
+$lightpurple: #D552FF;
+$darkpurple: #4F2DCC;
+$pink: #D5417F;
 
 @font-face {
   font-family: 'Pontano Sans';
@@ -92,6 +97,11 @@ h5.pageTitle {
   }
   .content {
     margin-top: 10px;
+    background-color: #eee;
+  }
+
+  .well {
+    margin: 10px;
   }
 }
 
@@ -175,6 +185,7 @@ h5.pageTitle {
 /** Navbar **/
 .navbar {
   min-height: 35px;
+  margin-bottom: 0;
 
     a.brand {
     font-family: 'Futura', sans-serif;
@@ -303,7 +314,9 @@ h5.pageTitle {
 
 .sidebar-nav-fixed {
   background-image: image-url("sidebar.png");
-  padding: 10px 0px 0;
+  padding: 10px 0px 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 ul.nav.nav-list > li > a {
@@ -435,8 +448,8 @@ table {
 }
 
 thead {
-  background-color: #777;
-  color: #FFF;
+  background-color: $lightgreen;
+  color: #000;
 }
 
 /** Footer **/
@@ -502,7 +515,7 @@ footer .col-sm-12 {
 }
 
 .btn.btn-primary, .badge.badge-primary{
-  background-color: $blue;
+  background-color: $green;
 }
 
 .alert {
@@ -511,7 +524,7 @@ footer .col-sm-12 {
 }
 
 .btn.btn-info, .badge.badge-info, .alert.alert-info  {
-  background-color: $lightblue;
+  background-color: $blue;
 }
 
 .btn.btn-success, .badge.badge-success, .alert.alert-success {

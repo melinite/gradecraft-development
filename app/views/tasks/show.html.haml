@@ -1,6 +1,6 @@
-%div.col.col-lg-12#content_nav
-  = link_to 'Edit Task', edit_assignment_task_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
-  = link_to 'Back', assignment_tasks_path, :class => "btn btn-info col col-sm-12 col-lg-1 btn-small pull-right"
+= content_nav_for Task do
+  %li= link_to 'Edit Task', edit_assignment_task_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
+  %li= link_to 'Back', assignment_tasks_path, :class => "btn btn-info col col-sm-12 col-lg-1 btn-small pull-right"
 
 %p
   %b Assignment:
@@ -8,7 +8,7 @@
 
 %p
   %b Title:
-  = @task.title
+  = @task.name
 %p
   %b Description:
   = raw @task.description

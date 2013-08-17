@@ -13,7 +13,7 @@
   %tbody
     - for task in @tasks
       %tr
-        %td= task.title
+        %td= task.name
         %td= raw task.description
         %td= task.due_at
         %td= link_to 'View', assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success'

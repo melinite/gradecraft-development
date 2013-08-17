@@ -1,19 +1,19 @@
 = content_nav_for AssignmentType do
   %li= link_to 'New Assignment Type', new_assignment_type_path
 
-%table.table-bordered.table-condensed.table#sortableTable.tablesorter
+%table.table#simpleTable
   %thead
     %tr
-      %th Student Display Order
-      %th Name
-      %th Points
-      %th Grading Levels
-      %th Predictor Display
-      %th Due Date
-      %th Resubmission
-      %th Max value
-      %th % Course
-      %th Predictor Description
+      %th{"data-sort" => "int"} Student Display Order
+      %th{"data-sort" => "string"} Name
+      %th{"data-sort" => "string"} Points
+      %th{"data-sort" => "string"} Grading Levels
+      %th{"data-sort" => "string"} Predictor Display
+      %th{"data-sort" => "string"} Due Date
+      %th{"data-sort" => "string"} Resubmission
+      %th{"data-sort" => "int"} Max value
+      %th{"data-sort" => "int"} % Course
+      %th{"data-sort" => "string"} Predictor Description
       %th.header
       %th.header
       %th.header
