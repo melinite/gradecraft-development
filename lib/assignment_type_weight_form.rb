@@ -3,18 +3,14 @@ class AssignmentTypeWeightForm < Struct.new(:student, :course)
   include ActiveModel::Validations
   include ActiveModel::Conversion
 
-  def initialize(student, course)
-    super(student, course)
-    @errors = ActiveModel::Errors.new(self)
-  end
+  attr_reader :assignment_type_weights
 
-  attr_reader :assignment_type_weights, :errors
-
-  validate :course_total_assignment_weight_not_exceeded
+  validate :validate_course_total_assignment_weight
+  validate :validate_assignment_type_weights
 
   def update_attributes(attributes)
     self.assignment_type_weights_attributes = attributes[:assignment_type_weights_attributes]
-    self.save
+    save
   end
 
   def save
@@ -24,10 +20,6 @@ class AssignmentTypeWeightForm < Struct.new(:student, :course)
     else
       false
     end
-  end
-
-  def valid?
-    super && assignment_type_weights.all?(&:valid?)
   end
 
   def assignment_type_weights
@@ -50,9 +42,23 @@ class AssignmentTypeWeightForm < Struct.new(:student, :course)
 
   private
 
-  def course_total_assignment_weight_not_exceeded
+  def validate_course_total_assignment_weight
     if course_total_assignment_weight > course.total_assignment_weight
-      errors.add :base, "exceeded maximum total allowed for course"
+      errors.add :base, "You have allocated more than the course total"
+    elsif course_total_assignment_weight < course.total_assignment_weight
+      errors.add :base, "You must allocate the entire course total"
+    end
+  end
+
+  def validate_assignment_type_weights
+    assignment_type_weights.each do |assignment_type_weight|
+      if !assignment_type_weight.valid?
+        assignment_type_weight.errors.each do |attribute, message|
+          attribute = "assignment_type_weights.#{attribute}"
+          errors[attribute] << message
+          errors[attribute].uniq!
+        end
+      end
     end
   end
 end

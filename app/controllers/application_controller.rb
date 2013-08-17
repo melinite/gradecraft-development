@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Canable::Enforcers
   include Omniauth::Lti::Context
   include CustomNamedRoutes
+  include CourseTerms
   delegate :can_view?, :to => :current_user
   helper_method :can_view?
   hide_action :can_view?

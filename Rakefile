@@ -5,3 +5,5 @@
 require File.expand_path('../config/application', __FILE__)
 
 GradeCraft::Application.load_tasks
+
+MINITEST_TASKS << 'lib'

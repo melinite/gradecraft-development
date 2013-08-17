@@ -18,6 +18,10 @@ en:
       destroy:
         notice: "%{resource_name} was successfully deleted."
         alert: "Could not delete %{resource_name}."
+    assignment_type_weights:
+      mass_update:
+        notice: "%{weights_term} were successfully updated."
+        alert: "Could not update %{weights_term}."
   sessions:
     lti:
       success: 'You have been succesfully logged in'

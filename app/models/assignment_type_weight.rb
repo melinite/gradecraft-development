@@ -5,6 +5,8 @@ class AssignmentTypeWeight < Struct.new(:student, :assignment_type)
 
   attr_accessor :weight
 
+  validate :course_max_assignment_weight_not_exceeded
+
   def weight
     @weight ||= assignment_type.assignment_weights.where(student: student).weight
   end
@@ -26,9 +28,19 @@ class AssignmentTypeWeight < Struct.new(:student, :assignment_type)
     end
   end
 
+  private
+
   def save_assignment_weights
     assignment_type.assignments.each do |assignment|
-      assignment.weights.where(student: student).first_or_initialize.update_attributes(weight: weight)
+      assignment_weight = assignment.weights.where(student: student).first_or_initialize
+      assignment_weight.weight = weight
+      assignment_weight.save!
+    end
+  end
+
+  def course_max_assignment_weight_not_exceeded
+    if weight > assignment_type.course.max_assignment_weight
+      errors.add :weight, "exceeded maximum allowed for course"
     end
   end
 end

@@ -11,7 +11,7 @@ class AssignmentTypeWeightsController < ApplicationController
     if @form.save
       redirect_to dashboard_path
     else
-      respond_with @form, flash: true, action: :mass_edit
+      respond_with @form, action: :mass_edit
     end
   end
 
@@ -27,5 +27,9 @@ class AssignmentTypeWeightsController < ApplicationController
     else
       @student = current_user
     end
+  end
+
+  def interpolation_options
+    { weights_term: term_for(:weights) }
   end
 end

@@ -3,6 +3,8 @@
 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
 
 = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+  - if @form.errors.has_key?(:base)
+    .alert.alert-error= f.error :base
   = f.simple_fields_for :assignment_type_weights do |atwf|
     = atwf.hidden_field :assignment_type_id
     .panel
