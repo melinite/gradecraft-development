@@ -156,6 +156,7 @@ assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.order_placement = 2
   at.mass_grade = true
   at.mass_grade_type = "Select"
+  at.student_weightable = true
 end
 puts "Do your readings."
 
@@ -170,6 +171,7 @@ assignment_types[:blogging] = AssignmentType.create! do |at|
   at.order_placement = 3
   at.mass_grade = true
   at.mass_grade_type = "Radio"
+  at.student_weightable = true
 end
 puts "Blogging is great for filling in missed points in other areas"
 
@@ -182,6 +184,7 @@ assignment_types[:lfpg] = AssignmentType.create! do |at|
   at.due_date_present = true
   at.order_placement = 4
   at.mass_grade = false
+  at.student_weightable = true
 end
 puts "This is the good stuff :)"
 

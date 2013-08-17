@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130815141039) do
+ActiveRecord::Schema.define(version: 20130809205352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,21 +204,21 @@ ActiveRecord::Schema.define(version: 20130815141039) do
     t.string   "year"
     t.string   "semester"
     t.integer  "grade_scheme_id"
-    t.datetime "created_at",                                                           null: false
-    t.datetime "updated_at",                                                           null: false
-    t.boolean  "badge_setting",                                        default: true
-    t.boolean  "team_setting",                                         default: false
+    t.datetime "created_at",                                                         null: false
+    t.datetime "updated_at",                                                         null: false
+    t.boolean  "badge_setting",                                      default: true
+    t.boolean  "team_setting",                                       default: false
     t.string   "user_term"
     t.string   "team_term"
     t.string   "homepage_message"
-    t.boolean  "status",                                               default: true
+    t.boolean  "status",                                             default: true
     t.boolean  "group_setting"
     t.integer  "badge_set_id"
-    t.integer  "total_assignment_weight",                                              null: false
-    t.integer  "max_assignment_weight",                                                null: false
-    t.datetime "assignment_weight_close_date"
+    t.integer  "total_assignment_weight",                                            null: false
+    t.integer  "max_assignment_weight",                                              null: false
+    t.datetime "assignment_weight_close_at"
     t.boolean  "team_roles"
-    t.string   "section_leader_term"
+    t.string   "team_leader_term"
     t.string   "group_term"
     t.string   "assignment_weight_type"
     t.boolean  "accepts_submissions"
@@ -231,7 +231,7 @@ ActiveRecord::Schema.define(version: 20130815141039) do
     t.integer  "min_group_size"
     t.boolean  "shared_badges"
     t.boolean  "graph_display"
-    t.decimal  "default_assignment_weight",    precision: 4, scale: 1, default: 1.0
+    t.decimal  "default_assignment_weight",  precision: 4, scale: 1, default: 1.0
     t.string   "tagline"
     t.boolean  "academic_history_visible"
   end

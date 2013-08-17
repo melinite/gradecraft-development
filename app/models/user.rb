@@ -29,7 +29,9 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :courses
   accepts_nested_attributes_for :course_memberships
   belongs_to :default_course, :class_name => 'Course'
+
   has_many :assignment_weights, :foreign_key => :student_id
+
   has_many :assignments, :through => :grades
 
   has_many :submissions, :foreign_key => :student_id, :dependent => :destroy
@@ -155,25 +157,12 @@ class User < ActiveRecord::Base
     course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
   end
 
+  def point_total_for_assignment_type(assignment_type)
+    assignment_type.assignments.point_total_for_student(self)
+  end
 
   def score_for_assignment_type(assignment_type)
     grades.where(assignment_type: assignment_type).score
-  end
-
-  def point_total_for_assignment_type(assignment_type)
-    assignments.point_total_for_student(self)
-  end
-
-  def weights_by_assignment_id
-    @weights_by_assignment_id ||= Hash.new { |h, k| h[k] = 0 }.tap do |weights_hash|
-      assignment_weights.each do |assignment_weight|
-        weights_hash[assignment_weight.assignment_id] = assignment_weight.weight
-      end
-    end
-  end
-
-  def weight_for_assignment(assignment)
-    weights_by_assignment_id[assignment.id]
   end
 
   #Import Users

@@ -27,8 +27,8 @@ GradeCraft::Application.routes.draw do
       get 'analytics'
       get 'my_badges'
     end
-    resources :assignment_weights
   end
+  resources :assignment_weights
   resources :user_sessions
 
   match 'auth/:provider/callback', to: 'user_sessions#lti_create', via: [:get, :post]
@@ -61,12 +61,15 @@ GradeCraft::Application.routes.draw do
     resources :earned_badges
   end
   resources :assignment_types
+  get 'assignment_type_weights' => 'assignment_type_weights#mass_edit', as: :assignment_type_weights
+  put 'assignment_type_weights' => 'assignment_type_weights#mass_update'
   resources :score_levels
   resources :groups, :only => :index
   resources :assignments do
     collection do
-      get :settings
       get :feed
+      get :settings
+      get 'weights' => 'assignment_weights#mass_edit', :as => :mass_edit_weights
     end
     resources :submissions
     resources :tasks

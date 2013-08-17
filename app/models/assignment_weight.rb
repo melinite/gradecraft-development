@@ -13,13 +13,16 @@ class AssignmentWeight < ActiveRecord::Base
 
   validates_presence_of :student, :assignment, :assignment_type, :course
 
-  validate :course_total_assignment_weight_not_exceeded,
-    :course_max_assignment_weight_not_exceeded
+  # validate :course_total_assignment_weight_not_exceeded, :course_max_assignment_weight_not_exceeded
 
   scope :except_weight, ->(weight) { where('assignment_weights.id != ?', weight.id) }
   scope :for_course, ->(course) { where(:assignment_id => course.assignments.pluck(:id)) }
 
   delegate :course, :to => :assignment, :allow_nil => false
+
+  def self.weight
+    limit(1).pluck(:weight).first || 0
+  end
 
   def updatable_by?(user)
     self.student_id == student.id

@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class AssignmentTypeTest < ActiveSupport::TestCase
+  test "sets weight for a particular student" do
+    assignment_type.
+  end
+
   # Max weight for any particular assignment type
   # Total weight equals total available weight
 

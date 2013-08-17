@@ -34,26 +34,26 @@ class Course < ActiveRecord::Base
   has_many :grade_scheme_elements, :through => :grade_schemes
   belongs_to :grade_scheme
 
-  validates_presence_of :name, :badge_setting, :group_setting, :max_assignment_weight, :total_assignment_weight
+  validates_presence_of :name, :badge_setting, :team_setting, :group_setting, :max_assignment_weight, :total_assignment_weight
 
   def user_term
-     "Player" || super
+     super || 'Player'
   end
 
   def team_term
-    "Team" || super
+    super || 'Team'
   end
 
   def group_term
-     "Group" || super
+    super || 'Group'
   end
 
-  def section_leader_term
-    "Team Leader" || super
+  def team_leader_term
+    super || 'Team Leader'
   end
 
   def weight_term
-    "Multiplier" || super
+    super || 'Multiplier'
   end
 
   def students
@@ -106,6 +106,10 @@ class Course < ActiveRecord::Base
 
   def student_weighted?
     total_assignment_weight > 0
+  end
+
+  def assignment_weight_open?
+    assignment_weight_close_at.nil? || assignment_weight_close_at < Time.now
   end
 
   def team_roles?

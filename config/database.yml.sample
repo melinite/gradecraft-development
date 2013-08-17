@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   database: gradecraft_development
   min_messages: warning
-  pool: 5
+  pool: 16
   username: cait
 
 test:
@@ -10,5 +10,5 @@ test:
   database: gradecraft_test
   encoding: unicode
   min_messages: warning
-  pool: 5
+  pool: 16
   username: cait

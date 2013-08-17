@@ -89,13 +89,18 @@ h5.pageTitle {
     background-color: #fff;
   }
   .content {
-    padding-left: 0;
     margin-top: 10px;
   }
 }
 
 .clear {
   clear: both;
+}
+
+.staff {
+  .content {
+    padding-left: 0;
+  }
 }
 
 .section {
