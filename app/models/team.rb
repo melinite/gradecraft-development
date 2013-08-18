@@ -8,8 +8,8 @@ class Team < ActiveRecord::Base
 
   has_many :earned_badges, :as => :group
 
-  has_many :challenges, :through => :challenge_grades
   has_many :challenge_grades
+  has_many :challenges, :through => :challenge_grades
 
   after_validation :cache_score
 

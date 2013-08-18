@@ -27,13 +27,13 @@
       = link_to 'Log Grades', mass_edit_assignment_grades_path(:assignment_id => @assignment.id), :class => "btn btn-tiny btn-success btn-primary"
 
   = simple_form_for @assignment do
-    %table.display.table-bordered.table#sortableTable.tablesorter
+    %table.display.table-bordered.table.simpleTable
       %thead
         %tr
           - if @assignment.release_necessary?
             %th
-          %th= term_for :student
-          %th Score
+          %th{"data-sort" => "string"}= term_for :student
+          %th{"data-sort" => "string"} Score
           - if @assignment.assignment_type.student_weightable?
             %th Multiplied Score
           - if @assignment.has_levels?
@@ -43,7 +43,7 @@
             %th Status
           - if @assignment.accepts_submissions?
             %th Submission
-          %th Grade
+          %th
       %tbody
         - @students.each do |student|
           - grade = @assignment.grades.find_by student: student

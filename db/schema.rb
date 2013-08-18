@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130818123239) do
+ActiveRecord::Schema.define(version: 20130818192130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignment_files", force: true do |t|
+    t.string  "filename"
+    t.integer "assignment_id"
+  end
+
+  create_table "assignment_groups", force: true do |t|
+    t.integer "group_id"
+    t.integer "assignment_id"
+  end
 
   create_table "assignment_rubrics", force: true do |t|
     t.integer  "assignment_id"
@@ -95,6 +105,15 @@ ActiveRecord::Schema.define(version: 20130818123239) do
     t.datetime "accepts_resubmissions_until"
     t.datetime "grading_due_at"
     t.string   "role_necessary_for_release"
+    t.string   "media"
+    t.string   "thumbnail"
+    t.string   "media_credit"
+    t.string   "media_caption"
+  end
+
+  create_table "badge_files", force: true do |t|
+    t.string  "filename"
+    t.integer "badge_id"
   end
 
   create_table "badge_sets", force: true do |t|
@@ -133,6 +152,11 @@ ActiveRecord::Schema.define(version: 20130818123239) do
   end
 
   add_index "categories", ["course_id"], name: "index_categories_on_course_id", using: :btree
+
+  create_table "challenge_files", force: true do |t|
+    t.string  "filename"
+    t.integer "challenge_id"
+  end
 
   create_table "challenge_grades", force: true do |t|
     t.integer  "challenge_id"
@@ -355,7 +379,6 @@ ActiveRecord::Schema.define(version: 20130818123239) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "assignment_id"
     t.integer  "course_id"
     t.string   "approved"
     t.string   "proposal"
