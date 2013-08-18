@@ -19,10 +19,10 @@
     - @challenges.each do |challenge|
       %tr
         %td= link_to challenge.name, challenge
-        %td= raw challenge.description
+        %td= challenge.description
         %td= challenge.point_total
         %td= challenge.due_at
-        %td= challenge.visible? ? 'Yes' : 'No'
+        %td= challenge.visible? ? 'Visible' : 'Hidden'
         %td= challenge.accepts_submissions? ? 'Yes' : 'No'
         %td= challenge.release_necessary? ? 'Yes' : 'No'
         %td= link_to 'Edit', edit_challenge_path(challenge), :class => 'btn btn-tiny btn-success'

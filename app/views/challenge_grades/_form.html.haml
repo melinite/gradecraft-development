@@ -1,10 +1,9 @@
 = simple_form_for([@challenge, @challenge_grade], :html => {:class => 'form-horizontal' }) do |f|
   .form-inputs
-    = f.association :challenge, :input_html => {:class => "col-lg-3 input-sm"}
+    = f.association :team, :input_html => {:class => "col-lg-3 input-sm"}
     = f.input :score, :input_html => {:class => "col-lg-3"}
     = f.input :feedback, :input_html => {:style => "width: 90%; height: 200px;"}
-    = f.input :status, :input_html => {:class => "col-lg-3"}
-    = f.association :team, :input_html => {:class => "col-lg-3 input-sm"}
+    = f.input :status, :as => :radio_buttons, :collection => Grade::STATUSES
     = f.input :final_score, :input_html => {:class => "col-lg-3"}
 
   .form-actions.col-lg-offset-3

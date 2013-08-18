@@ -1,8 +1,8 @@
 class GradeSchemeElementsController < ApplicationController
 
   before_filter :ensure_staff?
-  
-  def index 
+
+  def index
     @grade_scheme = GradeScheme.find(params[:grade_scheme_id])
     @title = "#{@grade_scheme.name} Grading"
     @grade_scheme_elements = @grade_scheme.grade_scheme_elements
@@ -29,7 +29,7 @@ class GradeSchemeElementsController < ApplicationController
     @grade_scheme = GradeScheme.find(params[:grade_scheme_id])
     @title = "Edit #{@grade_scheme.name} Grading Element"
     @button_title = "Update"
-    @grade_scheme_element = @grade_scheme.grade_scheme_elements.find(params[:id])
+    @grade_scheme_element = @grade_scheme.elements.find(params[:id])
     respond_with(@grade_scheme)
   end
 
@@ -56,9 +56,9 @@ class GradeSchemeElementsController < ApplicationController
 
   def destroy
     @grade_scheme = GradeScheme.find(params[:grade_scheme_id])
-    @grade_scheme_element = @grade_scheme.grade_scheme_elements.find(params[:id])
+    @grade_scheme_element = @grade_scheme.elements.find(params[:id])
     @grade_scheme_element.destroy
-    
+
     respond_to do |format|
       format.html { redirect_to grade_scheme_path(@grade_scheme), notice: 'Grade Scheme Element was successfully deleted.' }
       format.json { head :ok }

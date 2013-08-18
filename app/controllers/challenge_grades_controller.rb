@@ -21,11 +21,12 @@ class ChallengeGradesController < ApplicationController
 
   def new
     @challenge = current_course.challenges.find(params[:challenge_id])
-    @challenge_grade = ChallengeGrade.new
+    @challenge_grade = @challenge.challenge_grades.new
   end
 
   def edit
     @challenge = current_course.challenges.find(params[:challenge_id])
+    @teams = current_course.teams
     @challenge_grade = @challenge.challenge_grades.find(params[:id])
   end
 
@@ -67,11 +68,12 @@ class ChallengeGradesController < ApplicationController
   end
 
   def update
+    @challenge = current_course.challenges.find(params[:challenge_id])
     @challenge_grades = current_course.challenge_grades.find(params[:id])
 
     respond_to do |format|
       if @challenge_grades.update_attributes(params[:challenge])
-        format.html { redirect_to @challenge_grades, notice: 'Challenge was successfully updated.' }
+        format.html { redirect_to @challenge, notice: 'Challenge was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

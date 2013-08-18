@@ -14,8 +14,8 @@
     %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
     = @team.earned_badges.count
 
-- if current_user.is_staff?
-  %table.table.table-bordered
+%table.table.table-bordered.simpleTable
+  %thead
     %tr
       %th Email
       %th Name
@@ -28,23 +28,44 @@
       %th
       %th
       %th
-      - @students.each do |student|
-        %tr
-          %td= student.email
-          %td= link_to student.name, user_path(student)
-          %td= student.role
+  %tbody
+    - @students.each do |student|
+      %tr
+        %td= student.email
+        %td= link_to student.name, user_path(student)
+        %td= student.role
+        %td
+          = student.score_for_course(current_course) if student.respond_to?(:grades)
+        %td= student.visit_count
+        - if current_course.has_badges?
           %td
-            = student.score_for_course(current_course) if student.respond_to?(:grades)
-          %td= student.visit_count
-          - if current_course.has_badges?
-            %td
-              - student.earned_badges.each do |badge|
-                %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
-          - if student.is_student?
-            %td= link_to 'Dashboard', student, :class => 'btn btn-tiny btn-success'
-            %td= link_to 'Predictor', predictor_users_path(:student_id => student.id), :class => 'btn btn-tiny btn-success'
+            - student.earned_badges.each do |badge|
+              %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
+        - if student.is_student?
+          %td= link_to 'Dashboard', student, :class => 'btn btn-tiny btn-success'
+          %td= link_to 'Predictor', predictor_users_path(:student_id => student.id), :class => 'btn btn-tiny btn-success'
+        - else
+          %td
+          %td
+        %td= link_to 'Edit', edit_user_path(student), :class => 'btn btn-tiny btn-success'
+        //%td= link_to 'Delete', group_membership_path, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+
+%table.table-bordered.table.simpleTable
+  %thead
+    %tr
+      %th{"data-sort" => "string"} Name
+      %th Grade
+      %th
+      %th
+
+  %tbody
+    - @challenges.each do |challenge|
+      %tr
+        %td= link_to challenge.name, challenge
+        %td= challenge.challenge_grade_for_team(@team).try(:score)
+        %td
+          - if challenge.challenge_grade_for_team(@team).present?
+            = link_to 'Edit Grade', edit_challenge_challenge_grade_path(:challenge_id => challenge, :id => challenge.challenge_grade_for_team(@team).id), :class => 'btn btn-tiny btn-success'
           - else
-            %td
-            %td
-          %td= link_to 'Edit', edit_user_path(student), :class => 'btn btn-tiny btn-success'
-          //%td= link_to 'Delete', group_membership_path, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+            = link_to "Grade", new_challenge_challenge_grade_path(:challenge_id => challenge, :team_id => @team.id), :class => 'btn btn-tiny btn-success'
+        %td= link_to 'Delete', challenge, :class => 'btn btn-tiny btn-success', :method => :delete, data: { confirm: 'Are you sure?' }

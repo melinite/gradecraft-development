@@ -57,7 +57,7 @@
               - team.earned_badges.each do |badge|
                 %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
             - if @challenge.release_necessary?
-              %td= challenge_grade.try(:status)
+              %td= challenge_grade.try(:status) ? 'Released' : ''
             - if @challenge.accepts_submissions?
               %td
             %td
