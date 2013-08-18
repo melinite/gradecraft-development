@@ -29,6 +29,33 @@ FnordMetric.namespace :gradecraft do
     width: 100,
     autoupdate: 1
 
+  # pageviews
+  gauge :pageviews_daily_unique, :tick => 1.day.to_i, :unique => true, :title => "Unique Visits (Daily)"
+  gauge :pageviews_hourly_unique, :tick => 1.hour.to_i, :unique => true, :title => "Unique Visits (Hourly)"
+  gauge :pageviews_monthly_unique, :tick => 40.days.to_i, :unique => true, :title => "Unique Visits (Month)"
+
+  gauge :pageviews_per_url_daily,
+    :tick => 1.day.to_i,
+    :title => "Daily Pageviews per URL",
+    :three_dimensional => true
+
+  gauge :pageviews_per_url_monthly,
+    :tick => 30.days.to_i,
+    :title => "Monthly Pageviews per URL",
+    :three_dimensional => true
+  
+
+  # pageviews per student
+  gauge :pageviews_per_student_daily,
+    :tick => 1.day.to_i,
+    :title => "Daily Pageviews per Student",
+    :three_dimensional => true
+
+  gauge :pageviews_per_student_monthly,
+    :tick => 30.days.to_i,
+    :title => "Monthly Pageviews per Student",
+    :three_dimensional => true
+
   # login events
   gauge :logins_per_day,
     tick: 1.day.to_i
@@ -48,20 +75,40 @@ FnordMetric.namespace :gradecraft do
     tick: 1.week.to_i,
     three_dimensional: true
 
-  # prediction events per student
-  # prediction scores per student per assignment (3-dim)
+  # events per student
+  gauge :events_per_user,
+    tick: 1.day.to_i
+
   # average prediction scores
-  # average prediction scores per assignment
-  # average prediction scores per student
-  # average prediction scores
-  # average prediction scores per assignment
-  # average prediction scores per student
-  # pageviews
-  # pageviews per student
+  gauge :average_prediction_scores,
+    average: true,
+    tick: 1.week.to_i
+
+  # average prediction scores per student (3-dim)
+  gauge :average_prediction_scores_per_student,
+    average: true,
+    tick: 1.week.to_i,
+    three_dimensional: true
+
+  # average prediction scores per assignment (3-dim)
+  gauge :average_prediction_scores_per_assignment,
+    average: true,
+    tick: 1.week.to_i,
+    three_dimensional: true
 
   #--------#
   # Events #
   #--------#
+
+  event :_pageview do
+    incr :pageviews_daily_unique
+    incr :pageviews_hourly_unique
+    incr :pageviews_monthly_unique
+    incr_field :pageviews_per_url_daily, data[:url]
+    incr_field :pageviews_per_url_monthly, data[:url]
+    incr_field :pageviews_per_user, session_key
+    incr_field :pageviews_per_user_monthly, session_key
+  end
 
   event :predictor_set do
     puts "Prediction event"
