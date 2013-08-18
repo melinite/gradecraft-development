@@ -96,8 +96,17 @@ h5.pageTitle {
     background-color: #fff;
   }
   .content {
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: #eee;
+    padding-bottom: 5px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    h1, h2, h3, h4, h5, h6, p {
+      //padding: 20px;
+    }
   }
 
   .well {

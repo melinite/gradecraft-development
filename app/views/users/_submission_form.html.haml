@@ -12,7 +12,7 @@
           %script(id="submission-file-template" type="text/x-template")
             %fieldset.submission-file
               = f.simple_fields_for :submission_files, SubmissionFile.new, child_index: 'child_index' do |sf|
-                = render 'submission_file_fields', f: sf
+                = render 'users/submission_file_fields', f: sf
           - submission.submission_files.each do |submission_file|
             %fieldset.submission-file
               = f.simple_fields_for :submission_files, submission_file, class: 'form-inline' do |sf|

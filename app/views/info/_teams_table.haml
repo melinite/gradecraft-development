@@ -1,11 +1,11 @@
-%table.table.table-bordered
+%table.table.table-bordered.simpleTable
   %thead
     %tr
       %th= course.team_term
       %th Score
       %th Badges
       %th Average #{course.user_term} Grade
-      %th= course.section_leader_term
+      %th= course.team_leader_term
   %tbody
     - teams.each do |team|
       %tr

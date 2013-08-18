@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130809205352) do
+ActiveRecord::Schema.define(version: 20130818123239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.datetime "accepts_submissions_until"
     t.datetime "accepts_resubmissions_until"
     t.datetime "grading_due_at"
+    t.string   "role_necessary_for_release"
   end
 
   create_table "badge_sets", force: true do |t|
@@ -234,6 +235,14 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.decimal  "default_assignment_weight",  precision: 4, scale: 1, default: 1.0
     t.string   "tagline"
     t.boolean  "academic_history_visible"
+    t.string   "office"
+    t.string   "phone"
+    t.string   "class_email"
+    t.string   "twitter_handle"
+    t.string   "twitter_hashtag"
+    t.string   "location"
+    t.string   "office_hours"
+    t.text     "meeting_times"
   end
 
   create_table "criteria", force: true do |t|

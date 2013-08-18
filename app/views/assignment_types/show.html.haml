@@ -2,7 +2,7 @@
   %li= link_to 'Edit', edit_assignment_type_path(@assignment_type)
   %li= link_to 'Back', assignment_types_path
 
-%div.well
+.well
   %h4 The Basics
   %p
     %b Point setting:
@@ -26,7 +26,7 @@
     %b Students set course weight?
     = @assignment_type.student_weightable? ? "Yes" : "No"
 
-%div.well
+.well
   %h4 Predictor Settings
   %p
     %b Order:
@@ -38,7 +38,7 @@
     %b Predictor description:
     = raw @assignment_type.predictor_description
 
-%div.well
+.well
   %h4 Grading
   %p
     %b Is this assignment mass gradeable?
@@ -50,7 +50,7 @@
     %b Are there levels to the grading? (This includes normal A - F grading schemes.)
     = @assignment_type.levels? ? "Yes" : "No"
 
-  %div.well
+  .well
     %h5 Score Levels
     %ul
     - @score_levels.each do |sl|

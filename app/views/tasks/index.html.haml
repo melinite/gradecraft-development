@@ -18,4 +18,4 @@
         %td= task.due_at
         %td= link_to 'View', assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success'
         %td= link_to 'Edit', edit_assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+        %td= link_to 'Delete', assignment_task_path(@assignment, task), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete

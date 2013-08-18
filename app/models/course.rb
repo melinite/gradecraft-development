@@ -7,7 +7,9 @@ class Course < ActiveRecord::Base
     :has_submissions, :teams_visible, :badge_use_scope,
     :weight_term, :badges_value, :predictor_setting, :max_group_size,
     :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
-    :assignments, :default_assignment_weight, :grade_scheme_id, :accepts_submissions
+    :assignments, :default_assignment_weight, :grade_scheme_id, :accepts_submissions,
+    :tagline, :academic_history_visible, :office, :phone, :class_email,
+    :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships

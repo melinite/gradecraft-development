@@ -29,4 +29,4 @@
         %td= earned_badge.score
         %td= link_to 'View', user_earned_badge_path(@earnable, earned_badge), :class => 'btn btn-tiny btn-success'
         %td= link_to 'Edit', edit_user_earned_badge_path(@earnable, earned_badge), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', user_earned_badge_path(@earnable, earned_badge), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+        %td= link_to 'Delete', user_earned_badge_path(@earnable, earned_badge), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete

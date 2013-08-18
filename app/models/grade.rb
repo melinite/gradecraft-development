@@ -32,7 +32,7 @@ class Grade < ActiveRecord::Base
 
   delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
-  after_save :save_student
+  #after_save :save_student
   after_destroy :save_student
 
   scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }

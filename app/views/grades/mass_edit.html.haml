@@ -37,12 +37,12 @@
                 = check_box_tag raw_score_field_name, @assignment.point_total, grade
 
     - if @assignment.grade_checkboxes?
-      %div.btn-group
+      .btn-group
         %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
         %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
 
   .form-actions.massGrades
-    %div.btn-toolbar
-      %div.btn-group
+    .btn-toolbar
+      .btn-group
         = f.button :submit, :class => "btn btn-primary"
         = link_to 'Cancel', assignments_path, :class => 'btn btn-info'

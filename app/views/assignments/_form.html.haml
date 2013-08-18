@@ -1,26 +1,25 @@
-= simple_form_for @assignment, :defaults => { :input_html => { :class => 'form-control' } } do |f|
+= simple_form_for(@assignment, :html => { :class => 'form-horizontal' } ) do |f|
   .well
-    %h3 The Basics
-    = f.association :assignment_type, :collection => current_course.assignment_types
-    = f.input :name
-    = f.text_area :description, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Description"
-    = f.input :point_total, :label => "Total Score Possible"
-    = f.input :open_at, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
-    = f.input :due_at, :as => :text, :include_blank => true, :input_html => { :class => 'datetimepicker' }
+    %h4 The Basics
+    = f.association :assignment_type, :collection => current_course.assignment_types, :input_html => {:class => 'input-sm col-lg-3'}
+    = f.input :name, :input_html => {:class => 'col-lg-3'}
+    = f.input :point_total, :label => "Total Score Possible", :input_html => {:class => 'col-lg-3'}
+    = f.input :open_at, :include_blank => true
+    = f.input :due_at, :include_blank => true
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
+    = f.input :description, :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
   .well
-    %h3 Grading
-    = f.input :grade_scope, :as => :select, :collection => [["Individual"], ["Group"], ["Team"]]
-    = f.input :grade_scheme_id, :collection => current_course.grade_schemes, :as => :select, :label_method => :name
+    %h4 Grading
+    = f.input :grade_scope, :as => :select, :collection => [["Individual"], ["Group"], ["Team"]], :input_html => {:class => 'input-sm col-lg-3'}
+    = f.input :grade_scheme_id, :collection => current_course.grade_schemes, :as => :select, :label_method => :name, :input_html => {:class => 'input-sm col-lg-3'}
     - if current_course.accepts_submissions?
       = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept submissions for this assignment?", :label => "Assignment Submissions"
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
-    = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text"
+    = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
   .well= render 'assignments/rubrics_form', f: f, assignment: @assignment, assignment_rubrics: @assignment_rubrics
 
-  .form-actions
-    .btn-toolbar
-      .btn-group= f.button :submit, :class => "btn-primary"
-      .btn-group= link_to 'Cancel', assignments_path, :class => 'btn btn-info'
+  .form-actions.col-lg-offset-3
+    = f.button :submit, :class => "btn-primary"
+    = link_to 'Cancel', assignments_path, :class => 'btn btn-info'

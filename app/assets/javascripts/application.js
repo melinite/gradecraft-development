@@ -8,7 +8,6 @@
 //= require jquery.fileupload
 //= require jquery-ui
 //= require jquery_ujs
-//= require jquery.dynatable
 //= require jquery.omniselect
 //= require backbone.min
 //= require best_in_place
@@ -43,7 +42,7 @@ $(document).ready(function(){
 
   $('#myModal').modal('hide');
 
-  $("#simpleTable").stupidtable();
+  $(".simpleTable").stupidtable();
 
   $('#easyTab a').click(function (e) {
     e.preventDefault();

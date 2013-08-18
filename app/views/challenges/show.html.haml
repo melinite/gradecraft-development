@@ -1,6 +1,6 @@
 = content_nav_for @challenge do
-  %li= link_to 'Edit', edit_challenge_path(@challenge)
-  %li= link_to 'Back', challenges_path
+  %li= link_to 'See All Challenges', challenges_path
+  %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge)
 
 %p
   %b Description:
@@ -22,20 +22,20 @@
       = link_to 'Log Grades', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
 
   = simple_form_for @challenge do
-    %table.display.table-bordered.table#sortableTable.tablesorter
+    %table.display.table-bordered.table.simpleTable
       %thead
         %tr
           - if @challenge.release_necessary?
             %th
-          %th= term_for :team
-          %th Score
+          %th{"data-sort" => "string"}= current_course.team_term
+          %th{"data-sort" => "int"} Score
           - if @challenge.has_levels?
-            %th Level
-          %th Badges Earned
+            %th{"data-sort" => "string"} Level
+          %th{"data-sort" => "string"} Badges Earned
           - if @challenge.release_necessary?
-            %th Status
+            %th{"data-sort" => "string"} Status
           - if @challenge.accepts_submissions?
-            %th Submission
+            %th{"data-sort" => "string"} Submission
           %th Grade
       %tbody
         - @teams.each do |team|

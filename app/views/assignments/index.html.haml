@@ -2,24 +2,18 @@
   - if current_user.is_staff?
     %li= link_to 'Create a New Assignment', new_assignment_path
 
-%div
-  %div.pull-right
-    = link_to 'Assignments Info', settings_assignments_path, :class => 'badge'
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-  %span.assignmentTypeTitle= assignment_type.name
-  %span.assignmentTypeValue= "(#{assignment_type.try(:weight)})"
-  = link_to "Edit Assignment Type", edit_assignment_type_path(assignment_type), :class => "btn btn-tiny btn-success"
-  %table.table.display.table-bordered.tablesorter
+  %h4.assignmentName= link_to assignment_type.name, assignment_type
+  %table.table.simpleTable.table-bordered
     %thead
       %tr
-        %th Name
-        %th Open Date
-        %th Due Date
-        %th Total Points
-        %th Average
-        %th Range
-        %th # Submitted
-        %th(colspan="4")
+        %th{"data-sort" => "string"} Name
+        %th{"data-sort" => "date"} Open Date
+        %th{"data-sort" => "date"} Due Date
+        %th{"data-sort" => "int"} Total Points
+        %th{"data-sort" => "string"} Average
+        %th{"data-sort" => "int"} Range
+        %th(colspan="1")
     %tbody
       - assignments.each do |assignment|
         %tr
@@ -29,11 +23,14 @@
           %td= number_with_delimiter(assignment.point_total, :delimiter => ',')
           %td= number_with_delimiter(assignment.average, :delimiter => ',')
           %td= "#{number_with_delimiter(assignment.low_score, :delimiter => ',')} - #{number_with_delimiter(assignment.high_score, :delimiter => ',')}"
-          - if assignment.accepts_submissions?
-            %td= assignment.submissions.count
           %td
-            - if assignment.accepts_submissions?
-              = link_to "View Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
-          %td= link_to 'Log Grades',  mass_edit_assignment_grades_path("assignment_id"=>assignment.id), :class => 'btn btn-tiny btn-success'
-          %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-          %td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+            - if assignment_type.mass_grade?
+              = link_to 'Log Grades',  mass_edit_assignment_grades_path("assignment_id"=>assignment.id), :class => 'btn btn-tiny btn-success'
+            - elsif assignment.accepts_submissions? && assignment.submissions.present?
+              = link_to "Grade #{ assignment.submissions.count } Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
+            - else
+              = link_to "Grade", :class => "btn btn-tiny btn-success"
+
+          //%td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
+          //%td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+  %hr

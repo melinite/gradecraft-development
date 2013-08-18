@@ -12,13 +12,15 @@ class User < ActiveRecord::Base
     scope role.pluralize, -> { where role: role }
   end
 
-  attr_accessor :remember_me
-  attr_accessible :username, :email, :password, :remember_me_token,
+  attr_accessor :remember_me, :password, :password_confirmation
+  attr_accessible :username, :email, :password, :password_confirmation,
     :avatar_file_name, :role, :first_name, :last_name, :rank, :user_id,
     :display_name, :private_display, :default_course_id, :last_activity_at,
     :last_login_at, :last_logout_at, :team_ids, :courses, :course_ids,
-    :shared_badges, :earned_badges, :earned_badges_attributes, :password,
-    :password_confirmation
+    :shared_badges, :earned_badges, :earned_badges_attributes,
+    :remember_me_token
+
+  has_secure_password
 
   scope :alpha, -> { where order: 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
@@ -50,8 +52,6 @@ class User < ActiveRecord::Base
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  #validates_length_of :password, :minimum => 3, :message => "password must be at least 3 characters long", :if => :password
-  #validates_confirmation_of :password, :message => "should match confirmation", :if => :password
   validates :username, :presence => true,
                     :length => { :maximum => 50 }
   validates :email, :presence => true,

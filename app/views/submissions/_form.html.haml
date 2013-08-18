@@ -37,8 +37,8 @@
     = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
 
   .form-actions
-    %div.btn-toolbar
-      %div.btn-group
+    .btn-toolbar
+      .btn-group
         = f.button :submit, "Submit", :class => "btn-primary"
-      %div.btn-group
+      .btn-group
         = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'

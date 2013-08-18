@@ -7,16 +7,13 @@
     = f.input :password, :as => :password, :input_html => { :class => "col-lg-4"}
     = f.input :password_confirmation, :as => :password, :input_html => { :class => "col-lg-4"}
   - if current_user.is_staff?
-    = f.input :role, :collection => [["Student", "student"],["GSI", "gsi"],["Professor", "professor"],["Admin", "admin"]], :prompt => "Select Role", :input_html => { :class => "col-lg-4"}
+    = f.input :role, :collection => [["Student", "student"],["GSI", "gsi"],["Professor", "professor"],["Admin", "admin"]], :prompt => "Select Role", :input_html => { :class => "col-lg-4 input-sm"}
     - if current_course.has_teams?
       = f.association :teams, :collection => @teams, :prompt => "Select a #{current_course.team_term}", :label => "#{current_course.team_term}", :as => :check_boxes
 
     = f.association :courses, :as => :check_boxes
-    = f.input :default_course_id, :collection => @courses, :input_html => { :class => "col-lg-4"}
-  
-  %div.form-actions
-    %div.btn-toolbar
-      %div.btn-group
-        = f.button :submit, :class => "btn-primary"
-      %div.btn-group
-        = link_to 'Cancel', users_path, :class => 'btn btn-info'
+    = f.input :default_course_id, :collection => @courses, :input_html => { :class => "col-lg-4 input-sm"}
+
+  .form-actions.col-lg-offset-3
+    = f.button :submit, :class => "btn-primary"
+    = link_to 'Cancel', users_path, :class => 'btn btn-info'

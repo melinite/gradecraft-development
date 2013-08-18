@@ -35,12 +35,12 @@ gem 'quiet_assets', :group => :development
 gem 'rdiscount'
 gem 'responders'
 gem 'sampler'
+gem 'sanitize'
 gem 'sass-rails', '~> 4.0.0.beta1'
 gem 'sendgrid'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'timelineJS-rails', '~> 1.1.1'
-gem 'sanitize'
 
 group :development do
   gem 'bullet'

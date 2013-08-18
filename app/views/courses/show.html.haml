@@ -2,7 +2,7 @@
   %li= link_to 'Edit', edit_course_path(@course)
   %li= link_to 'Back', courses_path
 
-%div.well
+.well
   %h4 THE BASICS
   %p
     %b Course Title:
@@ -27,12 +27,38 @@
     = @course.status? ? 'Active' : 'Archived'
   %p
     %b Display current progress and total points charts simultaneously?
-    = @course.graph_display? ? 'Simultaneous' : 'Toggle' 
+    = @course.graph_display? ? 'Simultaneous' : 'Toggle'
   %p
     %b The Predictor is:
     = @course.predictor_setting? ? 'On' : 'Off'
 
-%div.well  
+  %p
+    %b Professor's Office Location:
+    = @course.office
+  %p
+    %b Official Phone Number:
+    = @course.phone
+  %p
+    %b Class Email:
+    = @course.class_email
+  %p
+    %b Twitter Handle:
+    = @course.twitter_handle
+  %p
+    %b Hashtag:
+    = @course.twitter_hashtag
+  %p
+    %b Meeting Location:
+    = @course.location
+  %p
+    %b Office Hours:
+    = @course.office_hours
+  %p
+    %b Meeting Time:
+    = @course.meeting_times
+
+
+.well
   %h4 BADGES
   %p
     %b Badges will be used:
@@ -51,8 +77,8 @@
     %b Badges are valuable:
     = @course.badges_value? ? 'Yes' : 'No'
 
-%div.well
-  %h4 TEAMS & GROUPS  
+.well
+  %h4 TEAMS & GROUPS
   %p
     %b Students will be grouped into teams or sections:
     = @course.team_setting? ? 'Yes' : 'No'
@@ -62,18 +88,18 @@
   %p
     %b Students can see the teams, the team's points, and the team's badges:
     = @course.teams_visible? ? 'Yes' : 'No'
-  %p 
+  %p
     %b Students will work in groups:
-    = @course.group_setting? ? 'Yes' : 'No'    
-  %p 
+    = @course.group_setting? ? 'Yes' : 'No'
+  %p
     %b Groups will be called:
     = @course.group_term
   %p
     %b Students self-declare their group roles:
     = @course.team_roles? ? 'Yes' : 'No'
-  %p 
+  %p
     %b Section Leaders will be called:
-    = @course.section_leader_term
+    = @course.team_leader_term
   %p
     %b Max Group Size:
     = @course.max_group_size
@@ -81,28 +107,28 @@
     %b Min Group Size:
     = @course.min_group_size
 
-    
-%div.well
+
+.well
   %h4 STUDENTS
-  %p 
+  %p
     %b Students will be called:
     = @course.user_term
 
-%div.well
+.well
   %h4 MULTIPLIERS
   %p
-    %b User's set: 
+    %b User's set:
     = @course.max_assignment_weight
     = @course.assignment_weight_type
   %p
     %b Minimum size:
     //= @course.min_size
   %p
-    %b Maximium size: 
+    %b Maximium size:
     = @course.max_assignment_weight
   %p
-    %b Multipliers must be set by: 
-    = @course.assignment_weight_close_date
+    %b Multipliers must be set by:
+    = @course.assignment_weight_close_at
   %p
     %b Multiplier/weight term:
     = @course.weight_term

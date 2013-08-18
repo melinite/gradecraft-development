@@ -14,7 +14,7 @@
             = "Predicted Final Grade:"
             %span#predictedCourseGrade= student.grade_level_for_course(current_course)
         %span#expectedPointsValue
-        %div#prediction
+        #prediction
 
 #predictorPage{ 'data-student-name' => student.name, 'data-course-total' => student.point_total_for_course(current_course) }
   .flexslider.col.col-lg-12
@@ -63,7 +63,7 @@
                       - elsif assignment_type.slider?
                         %span.pScore= "0 "
                         = "/ #{assignment.point_total_for_student(student)} multiplied possible points"
-                        %div.slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(student)) , :value => 0 }
+                        .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(student)) , :value => 0 }
 
                         //- if assignment_type.has_levels?
                         //%select{:name => "#{assignment.name}", :id => "#{assignment.id}"}
@@ -93,7 +93,7 @@
                       - elsif assignment_type.slider?
                         %span.pScore= "0 "
                         = "/ #{assignment.point_total_for_student(student)} multiplied possible points"
-                        %div.slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(student)) , :value => 0 }
+                        .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(student)) , :value => 0 }
 
                         //- if assignment_type.has_levels?
                         //%select{:name => "#{assignment.name}", :id => "#{assignment.id}"}
@@ -125,7 +125,7 @@
                     - elsif assignment_type.slider?
                       %span.pScore= "0 "
                       = "/ #{assignment.point_total_for_student(student)} multiplied possible points"
-                      %div.slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(student)) , :value => 0 }
+                      .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(student)) , :value => 0 }
 
                       //- if assignment_type.has_levels?
                       //%select{:name => "#{assignment.name}", :id => "#{assignment.id}"}
@@ -139,8 +139,8 @@
 
       - if current_course.valuable_badges?
         %li#slide-badges{ :data => { 'assignment-type-id' => 'badges', 'assignment-type-name' => 'Badges' } }
-          %div.slide-panel.col.col-lg-12
-            %div.assignmentType
+          .slide-panel.col.col-lg-12
+            .assignmentType
               %span.assignmentTypeTitle Badges
               %span.badge.badge-warning.pull-right= "#{student.earned_badges_value(current_course)} points"
             %p.lead
@@ -148,19 +148,19 @@
               - current_course.badges.each do |badge|
                 - badge.badges_earned.where(:earnable_id => student.id).first.tap do |eb|
                   - if eb
-                    %div.earnedBadgeField
+                    .earnedBadgeField
                       %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
-                      %div.clearfix= badge.name
-                      %div.clearfix
+                      .clearfix= badge.name
+                      .clearfix
                         %b= "#{badge.point_value} points"
                       = hidden_field_tag badge.name, badge.point_value
                   - else
-                    %div.badgeField
+                    .badgeField
                       %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
-                      %div.clearfix= badge.name
-                      %div.clearfix
+                      .clearfix= badge.name
+                      .clearfix
                         %b= "#{badge.point_value} points"
-                      %div.clearfix= check_box_tag badge.name, badge.point_value, student.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
+                      .clearfix= check_box_tag badge.name, badge.point_value, student.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
   - if current_user.is_student?
     = link_to "Back to the Dashboard", user_path(student), :class => 'btn btn-primary'
   - elsif current_user.is_staff?

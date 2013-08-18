@@ -6,6 +6,8 @@
       - if team_leader.present?
         = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
 
+  .sidebar_section= render "sidebar_class_info"
+
   .sidebar_section= render "sidebar_history"
 
   .sidebar_section= render "sidebar_work"

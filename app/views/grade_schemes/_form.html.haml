@@ -17,9 +17,6 @@
 
   = link_to 'Add an Element', '#', class: 'add-element'
 
-  .form-actions
-    %div.btn-toolbar
-      %div.btn-group
-        = f.button :submit, :class => "btn-primary"
-      %div.btn-group
-        = link_to 'Cancel', grade_schemes_path, :class => 'btn btn-info'
+  .form-actions.col-lg-offset-3
+    = f.button :submit, :class => "btn-primary"
+    = link_to 'Cancel', grade_schemes_path, :class => 'btn btn-info'

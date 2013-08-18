@@ -2,18 +2,18 @@
   %li= link_to "Add a #{current_course.team_term}", new_team_path
   %li= link_to "Grade a #{current_course.team_term} Challenge", challenges_path
 
-%table.table.table-bordered#sortableTable.tablesorter
+%table.table.table-bordered.simpleTable
   %thead
     %tr
-      %th Rank
-      %th Name
-      %th No. of Students
-      %th Score
+      %th{"data-sort" => "int"} Rank
+      %th{"data-sort" => "string"} Name
+      %th{"data-sort" => "int"} No. of Students
+      %th{"data-sort" => "int"} Score
       - if current_user.is_staff?
-        %th Badges Earned
-        %th Total Badges
-        %th.header
-        %th.header
+        %th{"data-sort" => "string"} Badges Earned
+        %th{"data-sort" => "int"} Total Badges
+        %th
+        %th
   %tbody
     - i = 1
     - @teams.each do |team|
@@ -26,6 +26,6 @@
           %td
             - team.earned_badges.each do |badge|
               %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
-          //%td= team.student_badge_count
+          %td= team.try(:student_badge_count)
           %td= link_to 'Edit', edit_team_path(team), :class => 'btn btn-tiny btn-success'
-          %td= link_to 'Delete', team, :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+          %td= link_to 'Delete', team, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete

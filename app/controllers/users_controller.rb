@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     @users =  current_course.users.order(:last_name)
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @users = current_course.users.includes(:teams).where(user_search_options)
+    @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options)
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -65,8 +65,8 @@ class UsersController < ApplicationController
 
   def students
     @title = "#{current_course.user_term} Roster"
-    @users = current_course.users.includes(:earned_badges)
-    @students = current_course.students
+    @users = current_course.users
+    @students = current_course.students.includes(:earned_badges)
     @teams = current_course.teams
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
@@ -146,7 +146,7 @@ class UsersController < ApplicationController
     @title = "Create a New User"
     @teams = current_course.teams
     @courses = Course.all
-    @user = current_course.users.new(params[:users])
+    @user = current_course.users.new
     respond_with @user
   end
 
@@ -160,10 +160,12 @@ class UsersController < ApplicationController
 
   def create
     @teams = current_course.teams
-    @user = current_course.users.create(params[:user])
-    @user.save
-
-    respond_with @user
+    @user = current_course.users.new(params[:user])
+    if @user.save
+      redirect_to students_path, :notice => "User was successfully created!"
+    else
+      render :new
+    end
     expire_action :action => :index
   end
 
