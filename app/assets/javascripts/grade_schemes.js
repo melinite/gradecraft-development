@@ -1,20 +1,25 @@
 !function($) {
+  var $document = $(document);
+
   var init = function() {
-    var $form = $('form');
+    $document.on('click', '.add-element', addElement);
+    $document.on('click', '.remove-element', removeElement);
+  }
 
-    $form.on('click', '.add-element', function(e) {
-      var $wrapper = $('.grade-scheme-elements');
-      var template = $('#grade-scheme-element-template').html().replace(/child_index/g, $wrapper.children('.grade-scheme-element').length);
-      $wrapper.append(template);
-      return false;
-    });
-
-    $form.on('click', '.remove-element', function(e) {
-      var $link = $(this);
-      $link.prev('input.destroy').val(true);
-      $link.closest('fieldset.grade-scheme-element').hide();
-      return false;
-    })
+  var addElement = function() {
+    console.log('Add');
+    var $elements = $('fieldset.element');
+    var template = $('#element-template').html().replace(/child_index/g, $elements.length);
+    $('fieldset.elements').append(template);
+    return false;
   };
-  $(init);
+
+  var removeElement = function() {
+    var $link = $(this);
+    $link.prev('input.destroy').val(true);
+    $link.closest('fieldset.element').hide();
+    return false;
+  };
+
+  init();
 }(jQuery);
