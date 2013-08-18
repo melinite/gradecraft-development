@@ -4,17 +4,23 @@ $stdout.sync = true
 require "fnordmetric"
 
 FnordMetric.namespace :gradecraft do
+  # login events
+  # login events per student (3-dim)
+  # average login frequency (calculated from [1 / time-from-last-login])
+  # average login frequency per student (3-dim)
+  # prediction events per student
+  # prediction scores per student per assignment (3-dim)
+  # average prediction scores
+  # average prediction scores per assignment
+  # average prediction scores per student
+  # average prediction scores
+  # average prediction scores per assignment
+  # average prediction scores per student
+  # pageviews
+  # pageviews per student
   toplist_gauge :predictions_by_user,
     group: "Predictions",
     title: "Predictions by User"
-
-  timeseries_gauge :predictions_per_second,
-    title: "Predictions per Second",
-    group: "Predictions",
-    key_nouns: %w(Prediction Predictions),
-    series: [:by_users],
-    flush_interval: 1,
-    tick: 1
 
   timeseries_gauge :events_per_minute,
     title: "Events per Minute",
@@ -37,14 +43,13 @@ FnordMetric.namespace :gradecraft do
   event :predictor_set do
     puts "Prediction event"
     observe :predictions_by_user, session_key
-    incr :predictions_per_second, :by_users, 1
+    incr :events_per_minute_predictor, 1
   end
 
   event :"*" do
     puts "received event: #{data.inspect}"
     incr :events_per_minute, :all_events, 1
     incr :events_per_minute, data[:_type], 1
-    incr :events_per_minute_predictor, 1 if data[:_type] == 'predictor_set'
   end
 
 end
