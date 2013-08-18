@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   Roles = %w{student professor gsi admin}
 
-  attr_accessor :remember_me
+  attr_accessor :remember_me, :cached_last_login_at
   attr_accessible :username, :email, :crypted_password, :remember_me_token,
     :avatar_file_name, :role, :first_name, :last_name, :rank, :user_id,
     :display_name, :private_display, :default_course_id, :last_activity_at,
@@ -220,6 +220,10 @@ class User < ActiveRecord::Base
     course_memberships.each do |course_membership|
       course_membership.update_attribute(:sortable_score, self.earned_grades(course_membership.course))
     end
+  end
+
+  def cache_last_login
+    self.cached_last_login_at = self.last_login_at
   end
 
 end

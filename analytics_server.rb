@@ -145,11 +145,13 @@ FnordMetric.namespace :gradecraft do
 
   event :"*" do
     puts "received event: #{data.inspect}"
-    observe :events_by_user, session_key
-    incr :events_per_minute, :all_events, 1
-    incr :events_per_minute, data[:_type], 1
-    incr :events, 1
-    incr_field :events_per_user, session_key, 1
+    unless %w(_set_name _set_picture).include? data[:_type]
+      observe :events_by_user, session_key
+      incr :events_per_minute, :all_events, 1
+      incr :events_per_minute, data[:_type], 1
+      incr :events, 1
+      incr_field :events_per_user, session_key, 1
+    end
   end
 
 end
