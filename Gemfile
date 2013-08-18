@@ -43,6 +43,7 @@ group :development do
   gem 'minitest-matchers'
   gem 'minitest-reporters'
   gem 'valid_attribute'
+  gem 'railroady'
 end
 
 group :test do
