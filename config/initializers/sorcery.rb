@@ -177,7 +177,7 @@ Rails.application.config.sorcery.configure do |config|
      user.last_login_at_attribute_name = :last_login_at                              # last login attribute name.
      user.last_logout_at_attribute_name = :last_logout_at                            # last logout attribute name.
      user.last_activity_at_attribute_name = :last_activity_at                        # last activity attribute name.
-     user.activity_timeout = 10 * 60                                                 # how long since last activity is
+     user.activity_timeout = 60 * 60                                                 # how long since last activity is
                                                                                       # the user defined logged out?
 
     # -- external --

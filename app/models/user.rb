@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     :shared_badges, :earned_badges, :earned_badges_attributes,
     :remember_me_token
 
-  has_secure_password
+  #has_secure_password
 
   scope :alpha, -> { where order: 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
