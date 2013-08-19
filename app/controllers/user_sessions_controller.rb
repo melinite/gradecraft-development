@@ -9,7 +9,7 @@ class UserSessionsController < ApplicationController
   def create
     respond_to do |format|
       if @user = login(params[:user][:email],params[:user][:password],params[:user][:remember_me])
-        send_login_event(current_user)
+        FNORD_METRIC_EVENTS[:login].call(current_user)
         #User.increment_counter(:visit_count, current_user.id) if current_user
         format.html { redirect_back_or_to dashboard_path }
         format.xml { render :xml => @users, :status => :created, :location => @user }
@@ -27,10 +27,5 @@ class UserSessionsController < ApplicationController
   end
 
   private
-  def send_login_event(user)
-    FNORD_METRIC.event(_type: "login", last_login: user.cached_last_login_at, _session: user.id.to_s, _namespace: 'gradecraft')
-    FNORD_METRIC.event(_type: "_set_name", name: user.public_name, _session: user.id.to_s, _namespace: 'gradecraft')
-    FNORD_METRIC.event(_type: "_set_picture", url: GravatarImageTag::gravatar_url(user.email.downcase), _session: user.id.to_s, _namespace: 'gradecraft')
-  end
 
 end

@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   private 
   def increment_page_views
     User.increment_counter(:page_views, current_user.id) if current_user && request.format.html?
-    FNORD_METRIC.event(_type: "_pageview", url: request.path, _session: current_user ? current_user.id.to_s : "0", _namespace: 'gradecraft') unless request.xhr?
+    FNORD_METRIC_EVENTS[:pageview].call(request.path, current_user) unless request.xhr?
   end
 
   def enforce_view_permission(resource)

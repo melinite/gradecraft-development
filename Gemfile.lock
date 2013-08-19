@@ -141,6 +141,8 @@ GEM
     highline (1.6.19)
     hike (1.2.3)
     hiredis (0.4.5)
+    hoe (3.7.0)
+      rake (>= 0.8, < 11.0)
     httpauth (0.2.0)
     i18n (0.6.4)
     jquery-rails (2.2.1)
@@ -233,6 +235,8 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.1.3)
       sexp_processor (~> 4.1)
+    rubystats (0.2.3)
+      hoe (>= 1.7.0)
     sass (3.2.9)
     sass-rails (4.0.0.rc1)
       railties (>= 4.0.0.beta, < 5.0)
@@ -339,6 +343,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rdiscount
   responders
+  rubystats
   sass-rails (~> 4.0.0.beta1)
   sendgrid
   simple_form (~> 3.0.0.rc)
