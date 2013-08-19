@@ -30,7 +30,7 @@ class Badge < ActiveRecord::Base
   end
 
   def earned_badge_for_student(student)
-    earned_badges_by_student_id[['User',student.id]].try(:first)
+    earned_badges_by_student_id[[student.id]].try(:first)
   end
 
   def grade_scope

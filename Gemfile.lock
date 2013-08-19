@@ -261,6 +261,8 @@ GEM
     sendgrid (1.2.0)
       json
       json
+    simple_calendar (0.1.9)
+      rails (>= 3.0)
     simple_form (3.0.0.rc)
       actionpack (>= 4.0.0.rc1, < 4.1)
       activemodel (>= 4.0.0.rc1, < 4.1)
@@ -353,6 +355,7 @@ DEPENDENCIES
   sanitize
   sass-rails (~> 4.0.0.beta1)
   sendgrid
+  simple_calendar (~> 0.1.9)
   simple_form (~> 3.0.0.rc)
   sorcery
   timelineJS-rails (~> 1.1.1)

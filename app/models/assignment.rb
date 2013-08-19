@@ -57,6 +57,10 @@ class Assignment < ActiveRecord::Base
 
   scope :grading_done, -> { where assignment_grades.present? == 1 }
 
+  def start_time
+    due_at
+  end
+
   def self.point_total
     pluck('SUM(assignments.point_total)').first || 0
   end

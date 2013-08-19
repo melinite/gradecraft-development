@@ -105,13 +105,14 @@ class UsersController < ApplicationController
     if current_user.is_staff?
       @title = @user.name
     end
-    @earned_badges = @user.earned_badges
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = @user.assignment_weights
     @assignment_weight = @user.assignment_weights.new
     @assignments = current_course.assignments.includes(:submissions, :assignment_type)
+    @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = @user.grades
-    @badges = current_course.badges.includes(:earned_badges)
+    @badges = current_course.badges.includes(:earned_badges, :tasks)
+    @earned_badges = @user.earned_badges
     respond_with @user
   end
 

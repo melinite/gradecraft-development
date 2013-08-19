@@ -1,69 +1,29 @@
 %table.table.table-striped
   %thead
     %tr
-      %th#check Earned?
       %th#icon Icon
       %th#description Description
       %th Tasks
       - if current_course.valuable_badges?
         %th Value
+      %th#check Earned?
   %tbody
     - @badges.each do |badge|
-      - if current_user.is_staff?
-        %tr
-          %td
-            - if badge.earned_badge_for_student(@user)
-              %img{:src => "icn_check.png", :alt => "You've earned this badge!" }
-              = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d")
-              %br
-              = badge.earned_badge_for_student(@user).text_feedback
-
-          %td
-            %img{:src => badge.icon, :alt => badge.name}
-          %td
-            = link_to badge.name, badge_path(badge)
-            = raw badge.description
-          %td
-            %ul
-              - badge.tasks.each do |task|
-                %li= task.title
-          - if current_course.valuable_badges?
-            %td= number_with_delimiter(badge.value)
-      - else
-        - if badge.visible?
-          %tr
-            %td
-              - if badge.earned_badge_for_student(@user)
-                %img{:src => "icn_circle_ok.png"}
-            %td
-              %img{:src => badge.icon, :alt => badge.name}
-            %td
-              = badge.name
-              = raw badge.description
-            %td
-              %ul
-                - badge.tasks.each do |task|
-                  %li= task.title
-                  %p= task.description
-                  - @user.submissions.where(assignment: badge).first_or_initialize.tap do |submission|
-                    - if submission.persisted?
-                      %a{:href => "#submission_for_assignment-#{badge.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} See Submission
-                      .modal.fade{:id => "submission_for_assignment-#{badge.id}"}
-                        .modal-dialog
-                          .modal-content
-                            .modal-header{"role" => "dialog", "tabindex" => "-1" }
-                              %button{:type => "button", :class => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} x
-                              %h3= badge.name
-                            .modal-body
-                              %h4= link_to submission.link, submission.link
-                              - if submission.link?
-                                %iframe.col-lg-12{:src => submission.link}
-                              %p= submission.comment
-                            .modal-footer
-                              %a{:href => "#", :class => "btn btn-info", "data-dismiss" => "modal", "aria-hidden" => "true"} Close
-                              %a{:href => "#", :class => "btn btn-primary"} Save changes
-                    - else
-                      %a{:href => "#submission_for_assignment-#{badge.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Submit
-                      = render "users/submission_form", assignment: badge, submission: submission
-            - if current_course.valuable_badges?
-              %td= badge.value
+      %tr
+        %td
+          %img{:src => badge.icon, :alt => badge.name}
+        %td
+          = link_to badge.name, badge_path(badge)
+          = badge.description
+        %td
+          %ul
+            - badge.tasks.each do |task|
+              %li= task.title
+        - if current_course.valuable_badges?
+          %td= number_with_delimiter(badge.value)
+        %td
+          - if badge.earned_badge_for_student(@user)
+            %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
+            = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d")
+            %br
+            = badge.earned_badge_for_student(@user).feedback
