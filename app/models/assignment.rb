@@ -57,6 +57,10 @@ class Assignment < ActiveRecord::Base
 
   scope :grading_done, -> { where assignment_grades.present? == 1 }
 
+  def start_time
+    due_at
+  end
+
   def self.point_total
     pluck('SUM(assignments.point_total)').first || 0
   end
@@ -101,6 +105,10 @@ class Assignment < ActiveRecord::Base
     return 1 unless student_weightable?
     weight ||= (weights.where(student: student).pluck('weight').first || 0)
     weight > 0 ? weight : course.default_assignment_weight
+  end
+
+  def grade_for_student(student)
+    grades.where(student: student).pluck('score').first
   end
 
   def past?

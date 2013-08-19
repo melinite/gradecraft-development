@@ -5,13 +5,14 @@ class EarnedBadgesController < ApplicationController
 
   def index
     @title = "Awarded Badges"
-    @earned_badges = EarnedBadge.all
+    @badge = current_course.badges.find(params[:badge_id])
+    @earned_badges = @badge.earned_badges
     respond_to do |format|
       format.html
       format.json { render json: @earned_badges }
     end
   end
-  
+
   def my_badges
     @title = "Awarded Badges"
     @earned_badges = @earnable.earned_badges
@@ -23,22 +24,23 @@ class EarnedBadgesController < ApplicationController
 
   def show
     @title = "Awarded Badge"
-    @earned_badge = @earnable.earned_badges.find(params[:id])
+    @badge = current_course.badges.find(params[:badge_id])
+    @earned_badge = @badge.earned_badges.find(params[:id])
 
     respond_to do |format|
       format.html
       format.json { render json: @earned_badge }
     end
   end
-  
+
   def new
     @title = "Award a New Badge"
-    @badge = Badge.find(params[:id])
     @badges = current_course.badges
+    @badge = @badges.find(params[:badge_id])
     @earned_badge = EarnedBadge.new
     @students = current_course.users.students
   end
-  
+
   def new_via_student
     @title = "Award a New Badge"
     @badges = current_course.badges
@@ -51,9 +53,9 @@ class EarnedBadgesController < ApplicationController
     @assignments = current_course.assignments
     @badges = current_course.badges
     @earned_badge = @earnable.earned_badges.new
-    #@earned_badge.earnable = params[:earnable_type].constantize.find(params[:earnable_id])    
+    #@earned_badge.earnable = params[:earnable_type].constantize.find(params[:earnable_id])
   end
-  
+
   def edit
     @title = "Edit Awarded Badge"
     @badges = current_course.badges
@@ -61,16 +63,16 @@ class EarnedBadgesController < ApplicationController
     @earned_badge = EarnedBadge.find(params[:id])
     respond_with @earned_badge
   end
-  
+
 
   def create
-    @badge_sets = current_course.badge_sets 
+    @badge_sets = current_course.badge_sets
     @badges = current_course.badges
-    @earned_badge = @earnable.earned_badges.build(params[:earned_badge])
+    @badge = @badges.find(params[:badge_id])
+    @earned_badge = @badge.earned_badges.build(params[:earned_badge])
     respond_to do |format|
       if @earned_badge.save
-        format.html { redirect_to @earnable, notice: 'Badge was successfully awarded.' }
-        format.json { render json: @earnable, status: :created, location: @earnable}
+        format.html { redirect_to badge_earned_badges_path(@badge), notice: 'Badge was successfully awarded.' }
       else
         format.html { render action: "new" }
         format.json { render json: @earned_badge.errors, status: :unprocessable_entity }
@@ -79,8 +81,8 @@ class EarnedBadgesController < ApplicationController
   end
 
   def update
-    @badge_sets = current_course.badge_sets 
-    @badges = Badge.all
+    @badge_sets = current_course.badge_sets
+    @badges = current_course.badges
     @earned_badge = EarnedBadge.find(params[:id])
 
     respond_to do |format|
@@ -93,10 +95,10 @@ class EarnedBadgesController < ApplicationController
       end
     end
   end
-  
-  
+
+
   def mass_award
-    @badges = Badge.all
+    @badges = current_course.badges
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = current_course.users.students.includes(:teams).where(user_search_options)
@@ -104,10 +106,10 @@ class EarnedBadgesController < ApplicationController
       EarnedBadge.where(:earnable_id => s.id, :earnable_type => 'User').first || EarnedBadge.new(:earnable => s, :earnable_type => "User")
     end
   end
-  
+
   def mass_update
     @earnable = find_earnable
-    
+
     respond_to do |format|
       if @earnable.update_attributes(params[:earned_badge])
       redirect_to chart_earned_badges_path
@@ -116,7 +118,7 @@ class EarnedBadgesController < ApplicationController
       end
     end
   end
-  
+
   def chart
     @badges = current_course.badges
     @students = current_course.users.students
@@ -131,8 +133,8 @@ class EarnedBadgesController < ApplicationController
       format.json { head :ok }
     end
   end
-  
-    
+
+
   def find_earnable
     unless new || index
       klass = [User, Grade, Team, Group].detect { |c| params["#{c.name.underscore}_id"]}

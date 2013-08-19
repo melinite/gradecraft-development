@@ -14,7 +14,7 @@ class EarnedBadge < ActiveRecord::Base
 
   validates_presence_of :badge, :course, :student
 
-  delegate :name, :description, :to => :badge
+  delegate :name, :description, :icon, :to => :badge
 
   def self.score
     all.sum('score') || 0

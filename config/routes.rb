@@ -47,12 +47,12 @@ GradeCraft::Application.routes.draw do
   resources :badge_sets
   resources :badges do
     resources :tasks
-  end
-  resources :earned_badges do
-    collection do
-      get :mass_award
-      put :mass_update
-      get :chart
+    resources :earned_badges do
+      collection do
+        get :mass_award
+        put :mass_update
+        get :chart
+      end
     end
   end
   resources :groups

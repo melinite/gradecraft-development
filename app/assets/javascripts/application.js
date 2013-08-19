@@ -71,6 +71,19 @@ $(document).ready(function(){
     });
   });
 
+
+  $('#userBarInProgress').show();
+	$('#userBarTotal').hide();
+	$('#userBarInProgressSim').show();
+	$('#userBarTotalSim').show();
+	$('#totalScoreToggle').show();
+  $('#soFarScoreToggle').hide();
+
+  $('a.dashboard-toggle').click(function(){
+    $('.dashboard-toggle').toggle();
+      return false;
+	});
+
   // Fix input element click problem
   $('.dropdown input, .dropdown label').click(function(e) {
     e.stopPropagation();
