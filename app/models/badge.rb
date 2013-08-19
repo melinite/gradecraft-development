@@ -25,12 +25,12 @@ class Badge < ActiveRecord::Base
   end
 
   #badges per role
-  def earned_badges_by_earnable_id
-    @earned_badges_by_earnable_id ||= earned_badges.group_by { |eb| [eb.earnable_type, eb.earnable_id] }
+  def earned_badges_by_student_id
+    @earned_badges_by_student_id ||= earned_badges.group_by { |eb| [eb.student_id] }
   end
 
   def earned_badge_for_student(student)
-    earned_badges_by_earnable_id[['User',student.id]].try(:first)
+    earned_badges_by_student_id[['User',student.id]].try(:first)
   end
 
   def grade_scope

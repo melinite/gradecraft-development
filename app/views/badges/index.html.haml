@@ -27,16 +27,13 @@
                 - badge.tasks.each do |task|
                   %li= task.title
                 %h5 Add a New Task
-                = simple_fields_for(:tasks, :class => "form-horizontal") do |task|
+                = simple_fields_for(:tasks, :class => "form-inline") do |task|
                   = task.input :title
                   = task.input :description
-                  = task.input :due_at, :id => "datetimepicker"
-                  = task.input :accepts_submissions, :as => :boolean
-                  = task.input :group, :as => :boolean
                   .form-actions
-                    %div.btn-toolbar
-                      %div.btn-group
-                        = task.button :submit, @button_title, :class => "btn-primary btn-tiny"
+                    .btn-toolbar
+                      .btn-group
+                        = task.button :submit, "Add Task", :class => "btn-primary btn-tiny"
 
             - if current_course.valuable_badges?
               %td= number_with_delimiter(badge.point_total)

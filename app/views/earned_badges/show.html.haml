@@ -1,10 +1,10 @@
-= content_nav_for @earned_badge do
-  %li= link_to 'Edit', [:edit, @earnable, :earned_badge]
-  %li= link_to 'Back', [@earnable]
+= content_nav_for @badge, @earned_badge do
+  %li= link_to 'Edit', [:edit, :badge, :earned_badge]
+  %li= link_to 'Back', [:badge, :earned_badges]
 
-%p= raw @earned_badge.text_feedback
+%p= @earned_badge.feedback
 
 %img{:src => @earned_badge.badge.try(:icon), :alt => @earned_badge.badge.try(:name), :width => "25", :height => "25"}
 %p
   %b= @earned_badge.name
-  = "(#{@earned_badge.value} points)"
+  = "(#{@earned_badge.score} points)"
