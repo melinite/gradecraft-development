@@ -32,7 +32,8 @@ class Grade < ActiveRecord::Base
 
   delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
-  #after_save :save_student
+  before_save :clean_html
+  after_save :save_student
   after_destroy :save_student
 
   scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }
@@ -90,6 +91,10 @@ class Grade < ActiveRecord::Base
   end
 
   private
+
+  def clean_html
+    self.feedback = Sanitize.clean(feedback, Sanitize::Config::RESTRICTED)
+  end
 
   def save_student
     student.save
