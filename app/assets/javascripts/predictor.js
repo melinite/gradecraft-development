@@ -139,9 +139,9 @@ var PredictorView = Backbone.View.extend({
     courseTotal += parseInt(this.$el.data('course-total'));
     return courseTotal;
   },
-  calculateScores: function() {
-    var assignmentTypes = this.collection,
-        scores = {assignments: {}, types: {}};
+  calculateScores: function(e) {
+    var assignmentTypes = this.collection;
+
     $.each(this.$el.find('.slides li').not('.clone'),function(i,slide) {
       var $slide = $(slide);
       if ($slide.attr('id') == 'slide-required') {
@@ -151,25 +151,41 @@ var PredictorView = Backbone.View.extend({
       var score = 0;
       $.each($slide.find('input, select, .slider'), function(i,item) {
         var $item = $(item),
-            itemScore;
-        if($item.is(':checkbox') && $item.is(':checked')) {
-          itemScore = parseInt($item.val());
-        } else if ($item.is('select')) {
-          itemScore = parseInt($item.children('option:selected').val() || 0);
-        } else if ($item.is('input[type="hidden"]')) {
-          itemScore = parseInt($item.val());
-        } else if ($item.is('.ui-slider')) {
-          itemScore = parseInt($item.slider('value'));
-        }
+            itemScore = getScore($item);
+
         score += itemScore;
-        scores['types'][assignmentTypeId] = score;
-        scores['assignments'][$item.attr('id')] = itemScore;
       });
       assignmentTypes.get(assignmentTypeId).set('score',score);
     });
-    $.ajax('/users/predictor_event', {method: 'post', data: scores});
+    if (e) {
+      var $item = $(e.target),
+          $assignment = $item.closest('.assignment'),
+          assignmentId = $assignment.data('assignment'),
+          score = getScore($item),
+          possibleScore = $assignment.data('possible-points');
+      $.ajax('/users/predictor_event', {
+        method: 'post',
+        data: {
+          assignment: assignmentId,
+          score: score,
+          possible: possibleScore
+        }
+      });
+    }
   }
 });
+
+function getScore($item) {
+  if($item.is(':checkbox') && $item.is(':checked')) {
+    return parseInt($item.val());
+  } else if ($item.is('select')) {
+    return parseInt($item.children('option:selected').val() || 0);
+  } else if ($item.is('input[type="hidden"]')) {
+    return parseInt($item.val());
+  } else if ($item.is('.ui-slider')) {
+    return parseInt($item.slider('value'));
+  }
+}
 
 $(document).ready(function() {
   var $wrapper = $('#prediction');

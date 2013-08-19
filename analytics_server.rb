@@ -3,14 +3,12 @@ $stdout.sync = true
 
 require "fnordmetric"
 
-def frequency_in_weeks(last_time, this_time)
-  ( 7.days.to_f / (this_time - last_time) ).round(2)
-end
-
 FnordMetric.namespace :gradecraft do
+
   #--------#
   # GAUGES #
   #--------#
+
   toplist_gauge :events_by_user,
     group: "Events",
     title: "Events by User"
@@ -19,11 +17,11 @@ FnordMetric.namespace :gradecraft do
     title: "Events per Minute",
     group: "Events",
     key_nouns: %w(Event Events),
-    series: [:all_events, :login, :predictor_set],
+    series: [:all_events, :login, :predictor_set, :_pageview],
     calculate: :sum,
     tick: 1.minute.to_i
 
-  gauge :predictions_per_miniute,
+  gauge :predictions_per_minute,
     tick: 1.minute.to_i
 
   widget "Events",
@@ -47,17 +45,16 @@ FnordMetric.namespace :gradecraft do
     :tick => 30.days.to_i,
     :title => "Monthly Pageviews per URL",
     :three_dimensional => true
-  
 
-  # pageviews per student
-  gauge :pageviews_per_student_daily,
+  # pageviews per user
+  gauge :pageviews_per_user_daily,
     :tick => 1.day.to_i,
-    :title => "Daily Pageviews per Student",
+    :title => "Daily Pageviews per User",
     :three_dimensional => true
 
-  gauge :pageviews_per_student_monthly,
+  gauge :pageviews_per_user_monthly,
     :tick => 30.days.to_i,
-    :title => "Monthly Pageviews per Student",
+    :title => "Monthly Pageviews per User",
     :three_dimensional => true
 
   # login events
@@ -72,25 +69,25 @@ FnordMetric.namespace :gradecraft do
     tick: 1.week.to_i,
     average: true
 
-  # login events per student (3-dim)
-  gauge :logins_per_student_daily,
+  # login events per user (3-dim)
+  gauge :logins_per_user_daily,
     tick: 1.day.to_i,
     three_dimensional: true
 
-  # login events per student (3-dim)
-  gauge :logins_per_student_monthly,
+  # login events per user (3-dim)
+  gauge :logins_per_user_monthly,
     tick: 30.days.to_i,
     three_dimensional: true
 
-  # average login frequency per student (3-dim)
-  gauge :average_login_frequency_per_student,
+  # average login frequency per user (3-dim)
+  gauge :average_login_frequency_per_user,
     tick: 1.week.to_i,
     three_dimensional: true
 
   gauge :events,
     tick: 1.day.to_i
 
-  # events per student
+  # events per user
   gauge :events_per_user,
     tick: 1.day.to_i,
     three_dimensional: true
@@ -100,8 +97,8 @@ FnordMetric.namespace :gradecraft do
     average: true,
     tick: 1.week.to_i
 
-  # average prediction scores per student (3-dim)
-  gauge :average_prediction_scores_per_student,
+  # average prediction scores per user (3-dim)
+  gauge :average_prediction_scores_per_user,
     average: true,
     tick: 1.week.to_i,
     three_dimensional: true
@@ -112,39 +109,59 @@ FnordMetric.namespace :gradecraft do
     tick: 1.week.to_i,
     three_dimensional: true
 
+  #---------------#
+  # EVENT HELPERS #
+  #---------------#
+
+  frequency_in_weeks = lambda do |last_time, this_time|
+    ( 7.days.to_f / (this_time - last_time.to_i) ).round(2)
+  end
+
+  percentage = lambda do |score, possible|
+    ((score.to_f / possible.to_i) * 100).to_i
+  end
+
   #--------#
   # Events #
   #--------#
 
   event :_pageview do
+    puts "Pageview event"
+
     incr :pageviews_daily_unique
     incr :pageviews_hourly_unique
     incr :pageviews_monthly_unique
     incr_field :pageviews_per_url_daily, data[:url]
     incr_field :pageviews_per_url_monthly, data[:url]
-    incr_field :pageviews_per_user, session_key
+    incr_field :pageviews_per_user_daily, session_key
     incr_field :pageviews_per_user_monthly, session_key
   end
 
   event :predictor_set do
     puts "Prediction event"
+    score_percentage = percentage.call(data[:score], data[:possible])
+
     incr :predictions_per_minute, 1
-    incr :average_prediction_scores, data[:score]
-    incr_field :average_prediction_scores_per_student, session_key, data[:score]
-    incr_field :average_prediction_scores_per_assignment, data[:assignment_id], data[:score]
+    incr :average_prediction_scores, score_percentage
+    incr_field :average_prediction_scores_per_user, session_key, score_percentage
+    incr_field :average_prediction_scores_per_assignment, data[:assignment], score_percentage
   end
 
   event :login do
+    puts "Login event"
+    frequency = frequency_in_weeks.call(data[:last_login], time)
+
     incr :logins_per_day
     incr :logins_per_month
-    incr :average_login_frequency, frequency_in_weeks(data[:last_login], timestamp)
-    incr_field :logins_per_student_daily, session_key
-    incr_field :logins_per_student_monthly, session_key
-    incr_field :average_login_frequency_per_student, session_key, frequency_in_weeks(data[:last_login], timestamp)
+    incr :average_login_frequency, frequency
+    incr_field :logins_per_user_daily, session_key
+    incr_field :logins_per_user_monthly, session_key
+    incr_field :average_login_frequency_per_user, session_key, frequency
   end
 
   event :"*" do
     puts "received event: #{data.inspect}"
+
     unless %w(_set_name _set_picture).include? data[:_type]
       observe :events_by_user, session_key
       incr :events_per_minute, :all_events, 1

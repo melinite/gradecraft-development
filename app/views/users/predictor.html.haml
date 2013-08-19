@@ -39,7 +39,7 @@
                   %span.badge.badge-important= link_to "Set #{current_course.multiplier_term}", new_user_user_assignment_type_weight_path(@user, :assignment_type_id => assignment_type.id)
           %p.lead= raw assignment_type.predictor_description
           - assignments.each do |assignment|
-            %div.assignment
+            %div.assignment{:data => {:assignment => assignment.id, :'possible-points' => assignment.point_total_for_student(@user)}}
               %span.assignmentTitle= assignment.try(:name)
               - if assignment.is_required?
                 %span.assignmentRequired.label.label-important Required!

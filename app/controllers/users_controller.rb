@@ -142,7 +142,14 @@ class UsersController < ApplicationController
   end
 
   def predictor_event
-    FNORD_METRIC.event(params.merge(_session: current_user.id.to_s, _type: :predictor_set, _namespace: 'gradecraft'))
+    FNORD_METRIC.event(
+      _session: current_user.id.to_s,
+      _type: :predictor_set,
+      _namespace: 'gradecraft',
+      assignment: params[:assignment],
+      score: params[:score],
+      possible: params[:possible]
+    )
     render :nothing => true, :status => :ok
   end
 
