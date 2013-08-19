@@ -162,7 +162,7 @@ class UsersController < ApplicationController
     @teams = current_course.teams
     @user = current_course.users.new(params[:user])
     if @user.save
-      redirect_to students_path, :notice => "User was successfully created!"
+      redirect_to students_users_path, :notice => "User was successfully created!"
     else
       render :new
     end
