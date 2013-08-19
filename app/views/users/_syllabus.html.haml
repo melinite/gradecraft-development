@@ -11,12 +11,18 @@
       - assignments.each do |assignment|
         .col.col-lg-12
           %span.assignmentName= assignment.name
-          %span.points= "(#{number_with_delimiter(assignment.point_total)} points)"
+          %span.points= "("
+          - if assignment.grade_for_student(@user).present? && assignment.grade_for_student(@user) > 0
+            %span.points.earned= "#{number_with_delimiter(assignment.grade_for_student(@user))} "
+            %span.points= "/"
+          - elsif assignment.grade_for_student(@user).present?
+            %span.points.missed= "#{number_with_delimiter(assignment.grade_for_student(@user))}  / "
+          %span.points.total= "#{number_with_delimiter(assignment.point_total)} points )"
           - if assignment.future?
-            %span.italic= "• Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
+            %span.italic= " • Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
           - if assignment.accepts_submissions?
             = render "users/submissions", assignment: assignment
           - if assignment.is_required?
             %span.label.label-important Required!
-          %p= raw assignment.description
+          %p= assignment.description
           = render "users/grade", assignment: assignment

@@ -8,12 +8,12 @@
   - if current_user.is_staff?
     Current Final Grade: #{@user.grade_level_for_course(current_course)}
 - if current_course.graph_display?
-  #userBarInProgressSim
-  #userBarTotalSim
+  #userBarInProgress
+  .dashboard-toggle#userBarTotal
 - else
-  // Show me my score out of total course points
-  = link_to '#', id: 'totalScoreToggle', class: 'dashboard-toggle' do
-    .dashboard-toggle#userBarInProgress
-  //Show me my score out of available points so far
-  = link_to '#', id: 'soFarScoreToggle', class: 'dashboard-toggle' do
-    .dashboard-toggle#userBarTotal
+  %a{:href => "#", :id => "totalScoreToggle", :class => "dashboard-toggle"}
+    Show me my score out of the total course points
+    %div#userBarInProgress{:class => "dashboard-toggle"}
+  %a{:href => "#", :id => "soFarScoreToggle", :class => "dashboard-toggle"}
+    Show me my score out of the points available points so far
+    %div#userBarTotal{:class => "dashboard-toggle"}

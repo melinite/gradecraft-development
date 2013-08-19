@@ -103,6 +103,10 @@ class Assignment < ActiveRecord::Base
     weight > 0 ? weight : course.default_assignment_weight
   end
 
+  def grade_for_student(student)
+    grades.where(student: student).pluck('score').first
+  end
+
   def past?
     due_at != nil && due_at < Date.today
   end
