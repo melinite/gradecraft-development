@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  respond_to :html, :json
+  respond_to :html
 
   before_filter :ensure_staff?, :except => [:feed]
 
@@ -7,7 +7,7 @@ class AssignmentsController < ApplicationController
     @assignments = current_course.assignments
     respond_to do |format|
       format.html
-      format.json { render :text => TimelineBuilder.new(:assignments => @assignments).to_json }
+      #format.json { render json: @assignments }
     end
   end
 

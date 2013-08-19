@@ -8,8 +8,8 @@ class Assignment < ActiveRecord::Base
   accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'
-  has_many :groups
-  has_many :group_memberships, :through => :group_memberships
+  has_many :assignment_groups
+  has_many :groups, :through => :assignment_groups
 
   has_many :tasks, :as => :assignment, :dependent => :destroy
   has_many :submissions, :as => :assignment
@@ -82,15 +82,11 @@ class Assignment < ActiveRecord::Base
   end
 
   def is_individual?
-    !['Group','Team'].include? grade_scope
+    !['Group'].include? grade_scope
   end
 
   def has_groups?
     grade_scope=="Group"
-  end
-
-  def has_teams?
-    grade_scope=="Team"
   end
 
   def point_total

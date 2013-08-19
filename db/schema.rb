@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130818192130) do
+ActiveRecord::Schema.define(version: 20130818214741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -239,8 +239,8 @@ ActiveRecord::Schema.define(version: 20130818192130) do
     t.boolean  "status",                                             default: true
     t.boolean  "group_setting"
     t.integer  "badge_set_id"
-    t.integer  "total_assignment_weight",                                            null: false
-    t.integer  "max_assignment_weight",                                              null: false
+    t.string   "total_assignment_weight"
+    t.string   "max_assignment_weight"
     t.datetime "assignment_weight_close_at"
     t.boolean  "team_roles"
     t.string   "team_leader_term"

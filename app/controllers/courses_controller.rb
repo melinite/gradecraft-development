@@ -88,7 +88,12 @@ class CoursesController < ApplicationController
       format.ics do
         render :text => CalendarBuilder.new(:assignments => @assignments).to_ics, :content_type => 'text/calendar'
       end
-      format.json { render :text => TimelineBuilder.new.to_json }
     end
+  end
+
+  def timeline
+    @course = current_course
+    @assignments = current_course.assignments
+
   end
 end

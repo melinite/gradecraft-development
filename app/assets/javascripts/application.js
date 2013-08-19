@@ -53,10 +53,6 @@ $(document).ready(function(){
 
   });
 
-  $('.datetimepicker').datetimepicker({
-    format: 'yyyy-mm-dd hh:ii'
-  });
-
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
 

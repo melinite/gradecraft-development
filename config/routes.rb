@@ -40,7 +40,9 @@ GradeCraft::Application.routes.draw do
   resources :home
   resources :group_memberships
   resources :categories
-  resources :courses
+  resources :courses do
+    get 'timeline'
+  end
   resources :course_memberships
   resources :badge_sets
   resources :badges do

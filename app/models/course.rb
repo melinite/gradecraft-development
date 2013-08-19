@@ -36,7 +36,7 @@ class Course < ActiveRecord::Base
   has_many :grade_scheme_elements, :through => :grade_schemes
   belongs_to :grade_scheme
 
-  validates_presence_of :name, :badge_setting, :team_setting, :group_setting, :max_assignment_weight, :total_assignment_weight
+  validates_presence_of :name
 
   def user_term
      'Player' || super

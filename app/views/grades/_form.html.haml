@@ -12,7 +12,7 @@
     = f.input :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{@assignment.point_total}", :input_html => {:class => "col-lg-3"}
   = f.input :feedback, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}
   - if @assignment.release_necessary?
-    = f.input :status, :as => :radio_buttons, :collection => ChallengeGrade::STATUSES
+    = f.input :status, :as => :radio_buttons, :collection => Grade::STATUSES
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"
     = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'
