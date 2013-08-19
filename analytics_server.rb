@@ -28,6 +28,7 @@ FnordMetric.namespace :gradecraft do
     title: "Predictions per Minute",
     gauges: [:predictions_per_minute],
     type: :timeline,
+    include_current: true,
     width: 100,
     autoupdate: 1
 
@@ -45,6 +46,15 @@ FnordMetric.namespace :gradecraft do
     :tick => 30.days.to_i,
     :title => "Monthly Pageviews per URL",
     :three_dimensional => true
+
+  widget "Events",
+    title: "Pageviews per URL Daily",
+    gauges: [:pageviews_per_url_daily],
+    type: :timeline,
+    include_current: true,
+    order_by: :field,
+    width: 50,
+    autoupdate: 1
 
   # pageviews per user
   gauge :pageviews_per_user_daily,
@@ -64,10 +74,34 @@ FnordMetric.namespace :gradecraft do
   gauge :logins_per_month,
     tick: 30.days.to_i
 
+  widget "Events",
+    title: "Logins per Day",
+    gauges: [:logins_per_day],
+    type: :timeline,
+    include_current: true,
+    width: 50,
+    autoupdate: 1
+
+  widget "Events",
+    title: "Logins per Month",
+    gauges: [:logins_per_month],
+    type: :timeline,
+    include_current: true,
+    width: 50,
+    autoupdate: 1
+
   # average login frequency (calculated from [1 / time-from-last-login])
   gauge :average_login_frequency,
     tick: 1.week.to_i,
     average: true
+
+  widget "Events",
+    title: "Average Weekly Login Frequency",
+    gauges: [:average_login_frequency],
+    type: :timeline,
+    include_current: true,
+    width: 50,
+    autoupdate: 1
 
   # login events per user (3-dim)
   gauge :logins_per_user_daily,
@@ -97,6 +131,14 @@ FnordMetric.namespace :gradecraft do
     average: true,
     tick: 1.week.to_i
 
+  widget "Predictions",
+    title: "Average Prediction Scores (%)",
+    gauges: [:average_prediction_scores],
+    type: :timeline,
+    include_current: true,
+    width: 100,
+    autoupdate: 1
+
   # average prediction scores per user (3-dim)
   gauge :average_prediction_scores_per_user,
     average: true,
@@ -108,6 +150,15 @@ FnordMetric.namespace :gradecraft do
     average: true,
     tick: 1.week.to_i,
     three_dimensional: true
+
+  widget "Predictions",
+    title: "Average Prediction Scores per Assignment (%)",
+    gauges: [:average_prediction_scores_per_assignment],
+    type: :timeline,
+    include_current: true,
+    order_by: :field,
+    width: 100,
+    autoupdate: 1
 
   #---------------#
   # EVENT HELPERS #

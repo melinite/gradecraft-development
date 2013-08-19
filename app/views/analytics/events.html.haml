@@ -4,24 +4,27 @@
 
 %h3 Logins
 (per day, over time)
+%div{:data => {:fnordmetric =>"timeseries", :since => "-7days", :until => "now", :gauges => "logins_per_day", :autoupdate => "1"}}
+%div{:data => {:fnordmetric =>"timeseries", :since => "-90days", :until => "now", :gauges => "logins_per_month", :autoupdate => "1"}}
 
 %h3 Average Login Frequency
 (per week, over time)
+%div{:data => {:fnordmetric =>"timeseries", :since => "-30days", :until => "now", :gauges => "average_login_frequency", :autoupdate => "1"}}
 
 %h3 Pageviews
-(per hour, over time)
+(per day, over time)
+%div{:data => {:fnordmetric =>"timeseries", :since => "-7days", :until => "now", :gauges => "pageviews_daily_unique,pageviews_per_url_daily", :autoupdate => "1"}}
 
 %h3 Events in the Past 10 Minutes:
-%div{:data => {:fnordmetric =>"timeseries", :since => "-10minutes", :until => "now", :gauges => "predictions_per_minute", :autoupdate => "1"}}
+%div{:data => {:fnordmetric =>"timeseries", :since => "-30minutes", :until => "now", :gauges => "events_per_minute", :autoupdate => "1"}}
 
 %h3 Average Predictor Scores Set (%):
 (per week, over time, to see when students start predicting higher or lower scores)
+%div{:data => {:fnordmetric =>"timeseries", :since => "-30days", :until => "now", :gauges => "average_prediction_scores", :autoupdate => "1"}}
 
 %h3 Average Predictor Scores per Assignment:
-(all-time)
-
-%h3 Predictor Events per Assignment:
-(per day, over time)
+(per week)
+%div{:data => {:fnordmetric =>"timeseries", :since => "-30days", :until => "now", :gauges => "average_prediction_scores_per_assignment", :autoupdate => "1"}}
 
 %h2 Metrics for Student:
 = select_tag :user, options_from_collection_for_select(@sorted_students, "id", "name"), :id => 'user-events'
