@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130809205352) do
+ActiveRecord::Schema.define(version: 20130818214741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignment_files", force: true do |t|
+    t.string  "filename"
+    t.integer "assignment_id"
+  end
+
+  create_table "assignment_groups", force: true do |t|
+    t.integer "group_id"
+    t.integer "assignment_id"
+  end
 
   create_table "assignment_rubrics", force: true do |t|
     t.integer  "assignment_id"
@@ -94,6 +104,16 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.datetime "accepts_submissions_until"
     t.datetime "accepts_resubmissions_until"
     t.datetime "grading_due_at"
+    t.string   "role_necessary_for_release"
+    t.string   "media"
+    t.string   "thumbnail"
+    t.string   "media_credit"
+    t.string   "media_caption"
+  end
+
+  create_table "badge_files", force: true do |t|
+    t.string  "filename"
+    t.integer "badge_id"
   end
 
   create_table "badge_sets", force: true do |t|
@@ -132,6 +152,11 @@ ActiveRecord::Schema.define(version: 20130809205352) do
   end
 
   add_index "categories", ["course_id"], name: "index_categories_on_course_id", using: :btree
+
+  create_table "challenge_files", force: true do |t|
+    t.string  "filename"
+    t.integer "challenge_id"
+  end
 
   create_table "challenge_grades", force: true do |t|
     t.integer  "challenge_id"
@@ -214,8 +239,8 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.boolean  "status",                                             default: true
     t.boolean  "group_setting"
     t.integer  "badge_set_id"
-    t.integer  "total_assignment_weight",                                            null: false
-    t.integer  "max_assignment_weight",                                              null: false
+    t.string   "total_assignment_weight"
+    t.string   "max_assignment_weight"
     t.datetime "assignment_weight_close_at"
     t.boolean  "team_roles"
     t.string   "team_leader_term"
@@ -234,6 +259,14 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.decimal  "default_assignment_weight",  precision: 4, scale: 1, default: 1.0
     t.string   "tagline"
     t.boolean  "academic_history_visible"
+    t.string   "office"
+    t.string   "phone"
+    t.string   "class_email"
+    t.string   "twitter_handle"
+    t.string   "twitter_hashtag"
+    t.string   "location"
+    t.string   "office_hours"
+    t.text     "meeting_times"
   end
 
   create_table "criteria", force: true do |t|
@@ -346,7 +379,6 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "assignment_id"
     t.integer  "course_id"
     t.string   "approved"
     t.string   "proposal"
@@ -395,6 +427,11 @@ ActiveRecord::Schema.define(version: 20130809205352) do
     t.integer  "student_id"
     t.integer  "assignment_type_id"
     t.integer  "weight",             null: false
+  end
+
+  create_table "submission_files", force: true do |t|
+    t.string  "filename",      null: false
+    t.integer "submission_id", null: false
   end
 
   create_table "submissions", force: true do |t|

@@ -1,11 +1,11 @@
 = content_nav_for Category do
   %li= link_to 'New Category', new_category_path
 
-%table.table.display.table-bordered.tablesorter
+%table.table.display.table-bordered.simpleTable
   %thead
     %tr
-      %th Name
-      %th Description
+      %th{"data-sort" => "string"} Name
+      %th{"data-sort" => "string"} Description
       %th.header
       %th.header
   %tbody
@@ -14,5 +14,5 @@
         %td= link_to category.name, category
         %td= raw category.description
         %td= link_to 'Edit', edit_category_path(category), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', category, :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+        %td= link_to 'Delete', category, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
 

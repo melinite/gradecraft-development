@@ -1,7 +1,7 @@
-%div.row
-  %div.col.col-lg-12
-    %div.col.col-lg-12
-      %h4= "Top 10" 
+.row
+  .col.col-lg-12
+    .col.col-lg-12
+      %h4= "Top 10"
       %table.table.table-bordered
         %thead
           %tr
@@ -27,8 +27,8 @@
                 - student.team_leader.tap do |team_leader|
                   - if team_leader.present?
                     %div= link_to "Email GSI (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-primary btn-tiny btn-success"
-  %div.clear
-    %div.col.col-lg-12
+  .clear
+    .col.col-lg-12
       %h4= "Bottom 10"
       %table.table.table-bordered
         %thead
@@ -55,9 +55,9 @@
                 - student.team_leader.tap do |team_leader|
                   - if team_leader.present?
                     %div= link_to "Email GSI (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-primary btn-tiny btn-success"
-      
-  %div.clear        
-    %div.col.col-lg-12
+
+  .clear
+    .col.col-lg-12
       %h4= current_course.team_term
       %table.table.table-bordered
         %thead
@@ -72,33 +72,33 @@
             %tr
               %td= link_to team.name, team_path(team)
               //%td= team.try(:score)
-              %td 
+              %td
                 - team.earned_badges.each do |badge|
-                  %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"} 
+                  %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
               %td
               %td= team.team_leader.try(:name)
-  
-  
-  %div.clear 
-    %div.col.col-lg-12
+
+
+  .clear
+    .col.col-lg-12
       %hr
       %h3= "Ungraded Assignment Submissions"
       - @submissions.group_by(&:assignment).each do |assignment, submissions|
         %span.assignmentTypeTitle= link_to "#{assignment.try(:name)}", assignment_path(assignment)
-        %span.assignmentTypeValue= "(#{assignment.try(:point_total)} total points)" 
+        %span.assignmentTypeValue= "(#{assignment.try(:point_total)} total points)"
         %table.table.table-bordered
           %thead
-          %tr            
+          %tr
             - if assignment.is_individual?
               %th= current_course.team_term
               %th= current_course.user_term
-            - elsif assignment.has_groups? 
+            - elsif assignment.has_groups?
               %th= current_course.group_term
             - elsif assignment.has_teams?
               %th= current_course.team_term
             %th Link
             %th Comment
-            %th 
+            %th
           %tbody
             %tr
               - assignment.submissions_for_assignment(assignment).tap do |submission|
@@ -110,5 +110,5 @@
                   %td= submission.comment
                   %td= link_to 'Grade', assignment_submission_path(assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
                   %td= link_to 'Edit', edit_assignment_submission_path(assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
-                  %td= link_to 'Delete', assignment_submission_path(assignment, submission), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+                  %td= link_to 'Delete', assignment_submission_path(assignment, submission), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
 

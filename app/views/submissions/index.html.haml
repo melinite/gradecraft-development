@@ -27,4 +27,4 @@
       %td= submission.grade.try(:unmultiplied_score)
       %td= link_to 'View', assignment_submission_path(@assignment, submission, :student_id => submission.student_id, :grade_id => submission.grade.try(:id)), :class => 'btn btn-tiny btn-success'
       %td= link_to 'Edit', edit_assignment_submission_path(@assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
-      %td= link_to 'Delete', assignment_submission_path(@assignment, submission), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+      %td= link_to 'Delete', assignment_submission_path(@assignment, submission), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete

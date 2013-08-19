@@ -1,16 +1,16 @@
 = content_nav_for Badge do
   %li= link_to 'Create a New Badge', new_badge_path
 
-%table.display.table-bordered.table#sortableTable.tablesorter
+%table.table-bordered.table.simpleTable.table-striped
   %thead
     %tr
       %th#icon Icon
-      %th#title Description
+      %th#title{"data-sort" => "string"} Description
       %th#tasks Tasks
       - if current_course.valuable_badges?
-        %th Value
+        %th{"data-sort" => "int"} Value
       - if current_user.is_staff?
-        %th#visible Visible to Students
+        %th#visible{"data-sort" => "string"} Visible to Students
         %th.header
         %th.header
   %tbody
@@ -46,7 +46,7 @@
               - else
                 No
             %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-success'
-            %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+            %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
       - else
         - if badge.visible == "1"
           %tr

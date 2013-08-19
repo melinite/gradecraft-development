@@ -2,7 +2,7 @@
   - if current_user.is_staff?
     %li= link_to 'New Badge set', new_badge_set_path
 
-%table.table.display.table-bordered.tablesorter
+%table.table.display.table-bordered
   %thead
     %tr
       %th Name
@@ -13,7 +13,7 @@
     - @badge_sets.each do |badge_set|
       %tr
         %td= link_to badge_set.name, badge_set
-        %td= raw badge_set.description
+        %td= badge_set.description
         %td= link_to 'Edit', edit_badge_set_path(badge_set), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', badge_set, :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+        %td= link_to 'Delete', badge_set, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
 

@@ -1,12 +1,13 @@
 class Submission < ActiveRecord::Base
   attr_accessible :task, :task_id, :assignment, :assignment_id, :assignment_type, :comment,
     :feedback, :group, :group_id, :attachment, :link, :student, :student_id,
-    :creator, :creator_id, :text_feedback, :text_comment, :graded
+    :creator, :creator_id, :text_feedback, :text_comment, :graded, :submission_file, :submission_files_attributes
 
   include Canable::Ables
 
   belongs_to :task
   belongs_to :assignment, :polymorphic => true
+  belongs_to :submission
   belongs_to :student, :class_name => 'User'
   belongs_to :creator, :class_name => 'User'
   belongs_to :group
@@ -16,6 +17,8 @@ class Submission < ActiveRecord::Base
 
   has_one :grade, :dependent => :destroy
   accepts_nested_attributes_for :grade
+  has_many :submission_files, :dependent => :destroy
+  accepts_nested_attributes_for :submission_files
 
   scope :ungraded, -> { where(graded: false) }
 

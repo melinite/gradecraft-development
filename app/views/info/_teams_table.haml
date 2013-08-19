@@ -1,11 +1,11 @@
-%table.table.table-bordered
+%table.table.table-bordered.simpleTable
   %thead
     %tr
       %th= course.team_term
       %th Score
       %th Badges
-      %th Average Grade
-      %th= course.section_leader_term
+      %th Average #{course.user_term} Grade
+      %th= course.team_leader_term
   %tbody
     - teams.each do |team|
       %tr
@@ -14,5 +14,7 @@
         %td
           - team.earned_badges.each do |badge|
             = image_tag badge.icon, :alt => badge.name, :width => 25
+        %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
         %td
-        %td= team.team_leader.try(:name)
+          - if team.team_leader.present?
+            = link_to team.team_leader.try(:name), team.team_leader

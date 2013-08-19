@@ -16,12 +16,12 @@
   %tbody
     - @category.assignments.each do |assignment|
       %tr
-        %td 
+        %td
           %img{:src => assignment.icon, :alt => assignment.name}
         %td= assignment.name
         %td= assignment.point_total
         %td= raw assignment.description
         %td= link_to "View", assignment_path(assignment), :class => 'btn btn-tiny btn-success'
         %td= link_to "Edit", edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-        %td= link_to "Delete", assignment_path(assignment), :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-tiny btn-success', :method => :delete
+        %td= link_to "Delete", assignment_path(assignment), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-success', :method => :delete
 

@@ -1,16 +1,25 @@
 = simple_form_for(@course, :html => {:class => 'form-horizontal' }, :validate => false)  do |f|
-  %div.well
+  .well
     %h4 THE BASICS
     = f.input :name, :label => "Course Title", :input_html => {:class => "col-lg-4"}
+    = f.input :tagline, :label => "Tagline", :input_html => {:class => "col-lg-4"}
     = f.input :courseno, :label => "Course Number", :input_html => {:class => "col-lg-2"}
     = f.input :semester, :collection => [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]], :input_html => {:class => "col-lg-4 input-sm"}
-    = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2), :input_html => {:class => "col-lg-2 input-sm"}
-    = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :radio_buttons
+    = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2), :input_html => {:class => "col-lg-4 input-sm"}
+    = f.input :office, :label => "Professor's Office", :input_html => {:class => "col-lg-4"}
+    = f.input :phone, :label => "Contact Phone #", :input_html => {:class => "col-lg-4"}
+    = f.input :class_email, :label => "Class Email", :input_html => {:class => "col-lg-4"}
+    = f.input :twitter_handle, :label => "Twitter Handle", :input_html => {:class => "col-lg-4"}
+    = f.input :twitter_hashtag, :label => "Hashtag", :input_html => {:class => "col-lg-4"}
+    = f.input :location, :label => "Location", :input_html => {:class => "col-lg-4"}
+    = f.input :office_hours, :label => "Office Hours", :input_html => {:class => "col-lg-4"}
+    = f.input :meeting_times, :label => "Class Meeting Times", :input_html => {:class => "col-lg-4"}
+    = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :select, :input_html => {:class => "col-lg-4 input-sm"}
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
     = f.input :predictor_setting, :label => "Can the students see the predictor on their dashboard?", :as => :radio_buttons
 
-  %div.well
+  .well
     %h4 BADGES
     = f.input :badge_setting, :hint => "Do you want to use badges in your course?", :label => "Badges", :as => :radio_buttons
     = f.association :badge_sets, :collection => @badge_sets, :label => "Badge Set", :as => :check_boxes
@@ -18,34 +27,32 @@
     = f.input :shared_badges, :label => "Social Badges", :hint => "Will earned badges be visible between students?", :as => :radio_buttons
     = f.input :badges_value, :label => "Will badges have points attached to them?", :as => :radio_buttons
 
-  %div.well
+  .well
     %h4 TEAMS & GROUPS
     = f.input :team_setting, :hint => "Will you have semester-long teams in your course?", :label => "Teams"
-    = f.input :team_term, :label => "Team Term", :hint => "What will you call these? Team, Group, Section...", :input_html => {:class => "col-lg-2"}
+    = f.input :team_term, :label => "Team Term", :hint => "What will you call these? Team, Group, Section...", :input_html => {:class => "col-lg-4"}
     = f.input :teams_visible, :label => "Can students see the teams, their points, and their badges?"
     = f.input :team_roles, :hint => "Do students self-declare their role within groups?"
-    = f.input :section_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your team leaders?"
+    = f.input :team_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your team leaders?", :input_html => {:class => "col-lg-4"}
     = f.input :group_setting, :hint => "Will students work in groups on any assignments, and thus all receive the same grade?", :as => :radio_buttons
-    = f.input :group_term, :hint => "What will these groups be called?"
-    = f.input :max_group_size
-    = f.input :min_group_size
+    = f.input :group_term, :hint => "What will these groups be called?", :input_html => {:class => "col-lg-4"}
+    = f.input :max_group_size, :input_html => {:class => "col-lg-2"}
+    = f.input :min_group_size, :input_html => {:class => "col-lg-2"}
 
-  %div.well
+  .well
     %h4 STUDENTS
-    = f.input :user_term, :hint => "What will you call your user? Student, Learner, Player...", :label => "User Term"
+    = f.input :user_term, :hint => "What will you call your user? Student, Learner, Player...", :label => "User Term", :input_html => {:class => "col-lg-4"}
+    = f.input :academic_history_visible, :label => "Academic History Visible to GSIs", :as => :boolean
 
-  %div.well
+  .well
     %h4 MULTIPLIERS
-    = f.input :total_assignment_weight, :label => "Student set what amount of the course?"
-    = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"],["Percent"]]
-    = f.input :assignment_weight_close_date, :label => "What date must they make this decision by?", :as => :date
-    = f.input :max_assignment_weight, :label => "Maximum amount that students may set"
-    = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false
-    = f.input :weight_term, :label => "What do you want to call these weights/multipliers?"
+    = f.input :total_assignment_weight, :label => "Student set what amount of the course?", :input_html => {:class => "col-lg-2"}
+    = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"],["Percent"]], :input_html => {:class => "col-lg-2 input-sm"}
+    = f.input :assignment_weight_close_at, :label => "What date must they make this decision by?", :as => :date, :input_html => {:class => "input-sm"}
+    = f.input :max_assignment_weight, :label => "Maximum amount that students may set", :input_html => {:class => "col-lg-2"}
+    = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
+    = f.input :weight_term, :label => "What do you want to call these weights/multipliers?", :input_html => {:class => "col-lg-2"}
 
-  .form-actions
-    %div.btn-toolbar
-      %div.btn-group
-        = f.button :submit, :class => "btn-primary"
-      %div.btn-group
-        = link_to 'Cancel', courses_path, :class => 'btn btn-info'
+  .form-actions.col-lg-offset-3
+    = f.button :submit, :class => "btn-primary"
+    = link_to 'Cancel', courses_path, :class => 'btn btn-info'

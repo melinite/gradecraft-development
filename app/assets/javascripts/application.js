@@ -5,27 +5,32 @@
 // the compiled file.
 //
 //= require jquery
+//= require jquery.fileupload
 //= require jquery-ui
 //= require jquery_ujs
-//= require jquery.dynatable
 //= require jquery.omniselect
+//= require backbone.min
 //= require best_in_place
 //= require best_in_place.purr
 //= require bootstrap
 //= require flexslider
-//= require underscore.min
-//= require backbone.min
-//= require selectToUISlider.jQuery
 //= require gradecraft
+//= require grade_schemes
 //= require preload_store
 //= require_self
 //= require assignment_types
 //= require assignments
 //= require grade_schemes
 //= require nested_fields
-//= require user_dashboard
 //= require users
-//= require grade_schemes
+//= require user_dashboard
+//= require selectToUISlider.jQuery
+//= require submissions
+//= require submission_file
+//= require underscore.min
+//= require timelineJS/embed
+//= require timeline
+//= require stupidtable
 
 $(document).ready(function(){
 
@@ -37,6 +42,8 @@ $(document).ready(function(){
 
   $('#myModal').modal('hide');
 
+  $(".simpleTable").stupidtable();
+
   $('#easyTab a').click(function (e) {
     e.preventDefault();
     $('#easyTab a[href="#basic"]').tab('show'); // Select tab by name
@@ -44,10 +51,6 @@ $(document).ready(function(){
     $('#easyTab a:last').tab('show'); // Select last tab
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
 
-  });
-
-  $('.datetimepicker').datetimepicker({
-    format: 'yyyy-mm-dd hh:ii'
   });
 
   /* Activating Best In Place */

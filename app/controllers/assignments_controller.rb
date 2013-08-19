@@ -1,10 +1,14 @@
 class AssignmentsController < ApplicationController
-  respond_to :html, :json
+  respond_to :html
 
   before_filter :ensure_staff?, :except => [:feed]
 
   def index
-    respond_with @assignments = current_course.assignments
+    @assignments = current_course.assignments
+    respond_to do |format|
+      format.html
+      #format.json { render json: @assignments }
+    end
   end
 
    def settings

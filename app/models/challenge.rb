@@ -21,4 +21,20 @@ class Challenge < ActiveRecord::Base
     mass_grade = true
   end
 
+  def challenge_grades_by_team_id
+    @challenge_grade_for_team ||= challenge_grades.group_by(&:team_id)
+  end
+
+  def challenge_grade_for_team(team)
+    challenge_grades_by_team_id[team.id].try(:first)
+  end
+
+  def challenge_submissions_by_team_id
+    @challenge_submissions_by_team ||= challenge_submissions.group_by(&:team_id)
+  end
+
+  def challenge_submission_for_team(team)
+    challenge_submissions_by_team_id[team.id].try(:first)
+  end
+
 end

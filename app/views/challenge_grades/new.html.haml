@@ -1,4 +1,5 @@
-= content_nav_for ChallengeGrade do
+= content_nav_for @challenge, "New Grade" do
   %li= link_to 'Back', challenge_challenge_grades_path(@challenge)
 
+%p
 = render 'form'

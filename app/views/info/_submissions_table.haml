@@ -2,6 +2,7 @@
   %thead
     %tr
       %td Submitted by
+      %td Assignment
       %td Link
       %td Comment
       %td Date Submitted
@@ -10,6 +11,7 @@
     - submissions.each do |submission|
       %tr
         %td= link_to submission.student.name, submission.student
+        %td= link_to submission.assignment.name, submission.assignment
         %td= link_to submission.link
         %td= raw submission.text_comment
         %td= submission.created_at

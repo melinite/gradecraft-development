@@ -1,4 +1,4 @@
-%div.col.col-lg-12.col-sm-12.section
+.col.col-lg-12.col-sm-12.section
   %ul.tabs
     %li.active
       %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Top 10
@@ -6,26 +6,26 @@
       %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Bottom 10
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab3"}= current_course.team_term.pluralize
-  %div.tab-content
-    %div.tab-pane.active#tab1
+  .tab-content
+    .tab-pane.active#tab1
       %h4 Top 10
       = render 'students_table', :course => current_course, :students => @top_ten_students
-    %div.tab-pane#tab2
+    .tab-pane#tab2
       %h4 Bottom 10
       = render 'students_table', :course => current_course, :students => @bottom_ten_students.reverse
-    %div.tab-pane#tab3
+    .tab-pane#tab3
       %h4= current_course.team_term.pluralize
-      %div#teamChart= render 'teams_table', :course => current_course, :teams => @teams
-%div.col.col-lg-12.section
+      #teamChart= render 'teams_table', :course => current_course, :teams => @teams
+.col.col-lg-12.section
   %ul.tabs
     %li.active
       %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Submissions
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Badges
-  %div.tab-content
-    %div.tab-pane#tab4.active
+  .tab-content
+    .tab-pane#tab4.active
       %h4 Ungraded Assignment Submissions
       = render 'submissions_table', :course => current_course, :submissions => @submissions
-    %div.tab-pane#tab5
+    .tab-pane#tab5
       %h4 Badges
       = render 'badges_table', :course => current_course, :badges => @badges

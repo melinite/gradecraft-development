@@ -1,4 +1,4 @@
-= f.input :name, :label => "Score Name"
-= f.input :value, :label => "Value"
+= f.input :name, :label => "Score Name", :input_html => {:class => "col-lg-3"}
+= f.input :value, :label => "Value", :input_html => {:class => "col-lg-3"}
 = f.hidden_field :_destroy, class: 'destroy'
 = link_to 'Remove Level', '#', class: 'remove-level'

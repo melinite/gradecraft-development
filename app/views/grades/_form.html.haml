@@ -1,52 +1,18 @@
 = simple_form_for([@assignment, @grade], :html => {:class => 'form-horizontal' }) do |f|
-  %div.control-group
-    %h4= @assignment.name
+  %h4= @assignment.name
   - if @assignment.is_individual?
-    = f.input :student_id, :collection => @students, :label => "#{current_course.user_term}", :include_blank => false
+    = f.input :student_id, :collection => @students, :label => "#{current_course.user_term}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
   - elsif @assignment.has_groups?
-    = f.input :group_id, :collection => @groups, :label => "#{current_course.group_term}", :include_blank => false
+    = f.input :group_id, :collection => @groups, :label => "#{current_course.group_term}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
   - elsif @assignment.has_teams?
-    = f.input :team_id, :collection => @teams, :label => "#{current_course.team_term}"
+    = f.input :team_id, :collection => @teams, :label => "#{current_course.team_term}", :input_html => {:class => "input-sm col-lg-3"}
   - if @assignment.has_levels?
-    = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select
+    = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select, :input_html => {:class => "col-lg-3"}
   - else
-    = f.input :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{@assignment.point_total}"
-  = f.text_area :feedback, :claas => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
-  %div#badges.form
-    %h5 Badges
-    = f.simple_fields_for :gradeable do |gf|
-      - @badges.each do |badge|
-        - @grade.gradeable.earned_badges_by_badge(badge).tap do |earned_badge|
-          - earned_badge ||= @grade.gradeable.earned_badges.new(:badge => badge, :grade => @grade)
-          - if earned_badge.persisted?
-            %div.badgeIcon
-              - if current_course.valuable_badges?
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:value)} points"} 
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned", :width => "60", :height => "60"}
-              - else
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"} 
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned", :width => "60", :height => "60"}
-              %br= "Already Earned"
-          - else
-            %div.badgeIcon
-              - if current_course.valuable_badges?
-                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
-              - else
-                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)} badge", :class => "unearned", :width => "60", :height => "60"}
-                = gf.simple_fields_for :earned_badges, earned_badge do |ebf|
-                  = ebf.input :earned, :as => :boolean, :label => false
-                  = ebf.input :earnable_id, :as => :hidden
-                  = ebf.input :earnable_type, :as => :hidden
-                  = ebf.input :badge_id, :as => :hidden
-                  = ebf.input :grade_id, :as => :hidden
-                %br= badge.try(:name)
-
-    - if @assignment.release_necessary?
-      = f.input :status, :as => :radio_buttons, :collection => Grade::STATUSES
-  %div.clear
-  .form-actions
-    %div.btn-toolbar
-      %div.btn-group
-        = f.button :submit, :class => "btn-primary"
-      %div.btn-group
-        = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'
+    = f.input :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{@assignment.point_total}", :input_html => {:class => "col-lg-3"}
+  = f.input :feedback, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}
+  - if @assignment.release_necessary?
+    = f.input :status, :as => :radio_buttons, :collection => Grade::STATUSES
+  .form-actions.col-lg-offset-3
+    = f.button :submit, :class => "btn-primary"
+    = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'

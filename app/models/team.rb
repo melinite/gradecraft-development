@@ -8,8 +8,8 @@ class Team < ActiveRecord::Base
 
   has_many :earned_badges, :as => :group
 
-  has_many :challenges, :through => :challenge_grades
   has_many :challenge_grades
+  has_many :challenges, :through => :challenge_grades
 
   after_validation :cache_score
 
@@ -23,6 +23,16 @@ class Team < ActiveRecord::Base
 
   def member_count
     students.count
+  end
+
+  def average_grade
+    total_score = 0
+    students.each do |student|
+      total_score += student.score_for_course(course)
+    end
+    if member_count > 0
+      average_grade = total_score / member_count
+    end
   end
 
   private

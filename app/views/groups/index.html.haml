@@ -4,21 +4,24 @@
 %table.table.display.table-bordered
   %thead
     %tr
-      %th Assignment
       %th Group Name
+      %th= "#{current_course.user_term}s"
       %th Status
-      %th Grade
+      %th Assignments
       %th
       %th
       %th
   %tbody
     - @groups.each do |group|
       %tr
-        %td= link_to group.assignment.name, group.assignment
-        %td= link_to group.name, assignment_group_path(group.assignment, group)
+        %td= link_to group.name, group_path(group)
+        %td
+          - group.group_memberships.each do |gm|
+            %li= link_to gm.student.name, gm.student
         %td= group.approved
         %td
-        //%td= group.grade
-        %td= link_to 'See Group', assignment_group_path(group.assignment, group), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Edit', edit_assignment_group_path(group.assignment, group), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', assignment_group_path(group.assignment, group), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+          - group.assignment_groups.each do |ag|
+            %li= link_to ag.assignment.name, ag.assignment
+        %td= link_to 'See Group', group_path(group), :class => 'btn btn-tiny btn-success'
+        %td= link_to 'Edit', edit_group_path(group), :class => 'btn btn-tiny btn-success'
+        %td= link_to 'Delete', group_path(group), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete

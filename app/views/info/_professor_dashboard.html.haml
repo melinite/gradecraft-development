@@ -1,6 +1,6 @@
-%div.row
-  %div.col.col-lg-12
-    %div.col.col-lg-12
+.row
+  .col.col-lg-12
+    .col.col-lg-12
       %h4 Top 10
       %table.table.table-bordered
         %thead
@@ -27,8 +27,8 @@
                 - student.team_leader.tap do |team_leader|
                   - if team_leader.present?
                     %div= link_to "Email GSI (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-primary btn-tiny btn-success"
-  %div.clear
-    %div.col.col-lg-12
+  .clear
+    .col.col-lg-12
       %h4 Bottom 10
       %table.table.table-bordered
         %thead
@@ -56,8 +56,8 @@
                   - if team_leader.present?
                     %div= link_to "Email GSI (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-primary btn-tiny btn-success"
 
-  %div.clear
-    %div.col.col-lg-12
+  .clear
+    .col.col-lg-12
       %h4= current_course.team_term
       %table.table.table-bordered
         %thead
@@ -79,8 +79,8 @@
               %td= team.team_leader.try(:name)
 
 
-  %div.clear
-    %div.col.col-lg-12
+  .clear
+    .col.col-lg-12
       %hr
       %h3= "Ungraded Assignment Submissions"
       - @submissions.group_by(&:assignment).each do |assignment, submissions|
@@ -109,4 +109,4 @@
                   %td= submission.comment
                   %td= link_to 'Grade', assignment_submission_path(assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
                   %td= link_to 'Edit', edit_assignment_submission_path(assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
-                  %td= link_to 'Delete', assignment_submission_path(assignment, submission), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+                  %td= link_to 'Delete', assignment_submission_path(assignment, submission), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete

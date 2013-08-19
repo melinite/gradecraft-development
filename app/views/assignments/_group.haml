@@ -1,0 +1,57 @@
+= simple_form_for @assignment do
+  %table.display.table-bordered.table.simpleTable
+    %thead
+      %tr
+        - if @assignment.release_necessary?
+          %th
+        %th{"data-sort" => "string"}= current_course.group_term
+        %th{"data-sort" => "string"} Score
+        - if @assignment.assignment_type.student_weightable?
+          %th Multiplied Scores
+        - if @assignment.has_levels?
+          %th Level
+        %th Badges Earned
+        - if @assignment.release_necessary?
+          %th Status
+        - if @assignment.accepts_submissions?
+          %th Submission
+        %th
+    %tbody
+      - @groups.each do |group|
+        - grade = @assignment.grades.find_by group_id: group
+        %tr
+          - if @assignment.release_necessary?
+            %td
+              - if grade
+                = check_box_tag "grade_ids[]", grade.id
+          %td= link_to group.name, group
+          %td
+            - if grade
+              = grade.score
+          - if @assignment.assignment_type.student_weightable?
+            %td= "Multiplied Score"
+          - if @assignment.has_levels?
+            %td
+              - if grade
+                = @assignment.grade_level(grade)
+          %td
+            - group.earned_badges.each do |badge|
+              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
+          - if @assignment.release_necessary?
+            %td= grade.try(:status)
+          - if @assignment.accepts_submissions?
+            %td
+              - group.submission_for_assignment(@assignment).tap do |submission|
+                - if submission && grade
+                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :grade_id => grade.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+                - elsif submission
+                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :group_id => group.id, :gradeable_type => "User", :gradeable_id => group.id), :class => 'btn btn-tiny btn-success'
+                - else
+                  = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+          %td
+            - if grade
+              = link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+            - else
+              = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+  - if @assignment.release_necessary?
+    = submit_tag "Update Grade Statuses", :class => "btn btn-info"

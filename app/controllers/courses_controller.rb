@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
     @courses = Course.all
 
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @courses }
     end
   end
@@ -40,7 +40,7 @@ class CoursesController < ApplicationController
     @grade_schemes = GradeScheme.all
     @badge_sets = BadgeSet.all
     @grade_schemes = GradeScheme.all
-    
+
   end
 
   def create
@@ -81,7 +81,7 @@ class CoursesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def assignments
     @assignments = EventSearch.new(:current_user => current_user, :events => @artist.events).find
     respond_with @assignments do |format|
@@ -89,5 +89,11 @@ class CoursesController < ApplicationController
         render :text => CalendarBuilder.new(:assignments => @assignments).to_ics, :content_type => 'text/calendar'
       end
     end
+  end
+
+  def timeline
+    @course = current_course
+    @assignments = current_course.assignments
+
   end
 end

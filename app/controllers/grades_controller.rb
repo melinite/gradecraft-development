@@ -6,12 +6,7 @@ class GradesController < ApplicationController
 
   def index
     @assignment = Assignment.find(params[:assignment_id])
-    @groups = @assignment.groups
-    @teams = current_course.teams
-    @grades = @assignment.grades.where(params[:assignment_id])
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @students = current_course.users.students.includes(:teams).where(user_search_options)
+    redirect_to assignment_path(@assignment)
   end
 
   def show
@@ -33,14 +28,14 @@ class GradesController < ApplicationController
   def new
     @assignment = Assignment.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
-    @grade = @assignment.assignment_grades.create(params[:grade])
-    @grade.student = current_course.grades.where(params[:student_id])
+    @grade = @assignment.grades.create(params[:grade])
+    #@grade.student = current_course.grades.where(params[:student_id])
     @badges = current_course.badges
     @score_levels = @assignment_type.score_levels
     @earned_badge = EarnedBadge.new
-    @earned_badges = current_course.badges.map do |b|
-      EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
-    end
+    #@earned_badges = current_course.badges.map do |b|
+      #EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
+    #end
     @teams = current_course.teams
     @groups = current_course.groups
     @students = current_course.users.students
@@ -55,11 +50,11 @@ class GradesController < ApplicationController
     @students = current_course.users.students
     @teams = current_course.teams
     @groups = current_course.groups
-    @grade = @assignment.assignment_grades.find(params[:id])
-    @earned_badges = current_course.badges.map do |b|
-      EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
-    end
-    @grade.student = current_course.grades.where(params[:student_id])
+    @grade = @assignment.grades.find(params[:id])
+    #@earned_badges = current_course.badges.map do |b|
+      #EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
+    #end
+    #@grade.student = current_course.grades.where(params[:student_id])
     respond_with @grade
   end
 
@@ -67,7 +62,7 @@ class GradesController < ApplicationController
     @student = find_student
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students
-    @grade = @student.assignment_grades.build(params[:grade])
+    @grade = @student.grades.build(params[:grade])
     @earnable = find_earnable
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
@@ -84,7 +79,7 @@ class GradesController < ApplicationController
 
   def update
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @assignment.assignment_grades.find(params[:id])
+    @grade = @assignment.grades.find(params[:id])
     @earnable = find_earnable
     @badges = current_course.badges
     respond_to do |format|
@@ -100,7 +95,7 @@ class GradesController < ApplicationController
 
   def destroy
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @assignment.assignment_grades.find(params[:id])
+    @grade = @assignment.grades.find(params[:id])
     @grade.destroy
 
     respond_to do |format|
@@ -111,14 +106,14 @@ class GradesController < ApplicationController
 
   def self_log
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @assignment.assignment_grades.create(params[:grade])
+    @grade = @assignment.grades.create(params[:grade])
     @grade.student = current_course.grades.where(params[:student_id])
   end
 
   def self_log_create
     @student = find_student
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @student.assignment_grades.build(params[:grade])
+    @grade = @student.grades.build(params[:grade])
     respond_to do |format|
       if @grade.save
         format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }
