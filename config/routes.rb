@@ -1,5 +1,4 @@
 GradeCraft::Application.routes.draw do
-
   resources :challenges do
     resources :challenge_grades do
       collection do
@@ -97,6 +96,8 @@ GradeCraft::Application.routes.draw do
     member do
       get 'mass_grade' => 'grades#mass_edit', as: :mass_grade
       put 'mass_grade' => 'grades#mass_update'
+      get 'speed_grade' => 'grades#new_speed_grade'
+      put 'speed_grade' => 'grades#create_speed_grade'
     end
     resources :submissions
     resources :tasks

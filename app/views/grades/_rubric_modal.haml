@@ -1,0 +1,14 @@
+.modal.fade#rubric-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        = button_tag class: 'close', 'data-dismiss' => 'modal', 'aria-hidden' => true do
+          &times;
+        %h4.modal-title Rubric
+      .modal-body
+        Rubric
+      .modal-footer
+        = button_tag class: 'btn btn-default', 'data-dismiss' => 'modal' do
+          Close
+        = button_tag class: 'btn btn-primary' do
+          Save Changes

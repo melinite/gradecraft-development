@@ -1,0 +1,15 @@
+= content_nav_for @assignment, 'Speed Grade' do
+  %li
+    = link_to speed_grade_assignment_path do
+      &lsaquo; Previous Student
+  %li= link_to @student.name, '#'
+  %li
+    = link_to speed_grade_assignment_path do
+      Next Student &rsaquo;
+
+.panel
+  Assignment goes here
+
+= link_to 'Use Rubric', '#rubric-modal', class: 'btn btn-primary', 'data-toggle' => 'modal'
+
+= render 'grades/rubric_modal'

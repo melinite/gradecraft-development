@@ -146,6 +146,13 @@ class GradesController < ApplicationController
     end
   end
 
+  def new_speed_grade
+    @assignment = Assignment.find(params[:id])
+    @student = Student.find(params[:student_id]) if params[:student_id]
+    @student ||= current_course.students.first
+    respond_with @assignment
+  end
+
   def edit_status
     @assignment = Assignment.find(params[:assignment_id])
     @title = "#{@assignment.name} Grade Statuses"
