@@ -1,6 +1,6 @@
-## Gradecraft is a gamified learning management system.
+# Gradecraft is a gamified learning management system.
 
-### Current features:
+## Current features:
 * Badges
 * Teams (course-long memberships)
 * Groups (single-assignment memberships)
@@ -18,11 +18,11 @@
 * Student-logged assignment scoring
 * Multipliers (students decide assignment weight)
 
-### Upcoming:
+## Upcoming:
 * Interactive rubrics
 * Learning analytics suite
 
-### Installation instructions for development:
+## Installation instructions for development:
 1. Clone repository
 1. Run `cp config/database.yml.sample config/database.yml` (replace username with your current username)
 1. Run `cp .env.sample .env`
