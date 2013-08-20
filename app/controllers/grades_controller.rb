@@ -3,7 +3,6 @@ class GradesController < ApplicationController
 
   before_filter :ensure_staff?, :except=>[:self_log, :self_log_create]
 
-
   def index
     @assignment = Assignment.find(params[:assignment_id])
     redirect_to assignment_path(@assignment)
@@ -125,8 +124,7 @@ class GradesController < ApplicationController
   end
 
   def mass_edit
-    @assignment = Assignment.find(params[:assignment_id])
-    @title = "Mass Grade #{@assignment.name}"
+    @assignment = Assignment.find(params[:id])
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
     user_search_options = {}
@@ -139,12 +137,9 @@ class GradesController < ApplicationController
 
   def mass_update
     @student = find_student
-    @assignment = Assignment.find(params[:assignment_id])
-    if @assignment.update_attributes(params[:assignment])
-      redirect_to assignment_path(@assignment)
-    else
-      redirect_to mass_edit_assignment_grades_path(@assignment)
-    end
+    @assignment = Assignment.find(params[:id])
+    @assignment.update_attributes(params[:assignment])
+    respond_with @assignment
   end
 
   def edit_status

@@ -1,14 +1,8 @@
 class AssignmentsController < ApplicationController
-  respond_to :html
-
-  before_filter :ensure_staff?, :except => [:feed]
+  before_filter :ensure_staff?, :except => :feed
 
   def index
-    @assignments = current_course.assignments
-    respond_to do |format|
-      format.html
-      #format.json { render json: @assignments }
-    end
+    respond_with @assignments = current_course.assignments
   end
 
    def settings
@@ -24,17 +18,8 @@ class AssignmentsController < ApplicationController
 
   def show
     @assignment = current_course.assignments.find(params[:id])
-    @students = current_course.users.students.includes(:grades)
-    @student = @students.where(params[:id])
-    @grades = @assignment.grades
-    @groups = @assignment.groups
-    @title = "View #{@assignment.name}"
-    @teams = current_course.teams
-    @submissions = @assignment.submissions
-    @earnables = current_course.earned_badges
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @students = current_course.users.students.where(user_search_options)
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    @students = @team ? @team.students : current_course.students
     respond_with @assignment
   end
 

@@ -1,5 +1,6 @@
 = content_nav_for @assignment do
   %li= link_to 'Edit', edit_assignment_path(@assignment)
+  %li= link_to 'Log Grades', mass_grade_assignment_path(@assignment)
   %li= link_to 'Back', assignments_path
 
 %p
@@ -24,7 +25,7 @@
   %h4 Grades
   - if @assignment.assignment_type.mass_grade?
     .pull-right
-      = link_to 'Log Grades', mass_edit_assignment_grades_path(:assignment_id => @assignment.id), :class => "btn btn-tiny btn-success btn-primary"
+      = link_to 'Log Grades', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-success btn-primary"
 
 - if @assignment.has_groups?
   = render 'group'

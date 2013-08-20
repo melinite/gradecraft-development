@@ -73,12 +73,14 @@ GradeCraft::Application.routes.draw do
       get :settings
       get 'weights' => 'assignment_weights#mass_edit', :as => :mass_edit_weights
     end
+    member do
+      get 'mass_grade' => 'grades#mass_edit', as: :mass_grade
+      put 'mass_grade' => 'grades#mass_update'
+    end
     resources :submissions
     resources :tasks
     resources :grades do
       collection do
-        get :mass_edit
-        put :mass_update
         post :edit_status
         put :update_status
         get :self_log

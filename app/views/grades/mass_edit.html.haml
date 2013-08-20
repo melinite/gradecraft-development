@@ -1,10 +1,12 @@
+= content_nav_for @assignment, "Log Grades"
+
 .filters
-  = form_tag mass_edit_assignment_grades_path, :method => :get do
+  = form_tag mass_grade_assignment_path, :method => :get do
     = hidden_field_tag :assignment_id, @assignment.id
     = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
     = submit_tag 'Filter', :class => 'btn'
 
-= simple_form_for @assignment, :html => {:class => 'form-horizontal' }, :url => mass_update_assignment_grades_path(:assignment_id => @assignment.id) do |f|
+= simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
   %table#massGrade
     - @grades.each_with_index do |grade,i|
       %tr
