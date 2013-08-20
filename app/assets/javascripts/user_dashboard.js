@@ -3,7 +3,6 @@ $(document).ready(function() {
 	var options = {
     chart: {
       type: 'bar',
-      height:150,
       backgroundColor:null,
     },
     title: {
@@ -71,9 +70,8 @@ $(document).ready(function() {
       $.getJSON('/users/predictor.json?in_progress=true', { user_id: userID }, function(data) {
         options.chart.renderTo = 'userBarInProgress';
         options.title = { text: 'My Points' };
-        options.chart.width = '750',
-        options.chart.height = '150',
         options.xAxis.categories = { text: ' ' };
+        options.chart.height = '150';
         options.yAxis.max = data.course_total
         options.series = data.scores
         chart = new Highcharts.Chart(options);
@@ -81,9 +79,8 @@ $(document).ready(function() {
 
       $.getJSON('/users/predictor.json', { user_id: userID }, function(data) {
         options.chart.renderTo = 'userBarTotal';
+        options.chart.height = '165';
         options.title = { text: 'Total Possible Points' };
-        options.chart.height = '150',
-        options.chart.width = '750',
         options.xAxis.categories = { text: ' ' };
         options.yAxis.max = data.course_total
         options.series = data.scores

@@ -1,5 +1,5 @@
-.pull-right.col.col-lg-3.sidebar
-  = gravatar_for @user, :size => "240", :d => "mm"
+.pull-right.col-lg-3.col-md-3.col-sm-3.col-xs-12.sidebar
+  = gravatar_for @user, :size => "100%", :d => "mm"
   .section.center
     = link_to @user.email, "mailto:#{@user.email}"
     - @user.team_leader.tap do |team_leader|
@@ -17,8 +17,8 @@
 
   .sidebar_section= render "sidebar_to_do_list"
 
-.col.col-lg-9
-  .section.col.col-lg-12
+.section.col-lg-9.col-md-9.col-sm-9.col-xs-12
+  .col.col-lg-12.col-md-12.col-sm-12.col-xs-12
     = render "users/scoreboard"
-  .col.col-lg-12
+  .col.col-lg-12.col-md-12.col-sm-12.col-xs-12
     = render "users/main_tabs"

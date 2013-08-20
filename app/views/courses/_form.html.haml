@@ -53,6 +53,13 @@
     = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
     = f.input :weight_term, :label => "What do you want to call these weights/multipliers?", :input_html => {:class => "col-lg-2"}
 
+  .well
+    %h4 TIMELINE
+    = f.input :use_timeline, :label => "Would you like to use the interactive timeline to display your syllabus?"
+    = f.input :media_file, :label => "What video or image file (on YouTube, Flickr or Vimeo) would you like to display here?"
+    = f.input :media_credit, :label => "Media Credit"
+    = f.input :media_caption, :label => "Media Caption"
+
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"
     = link_to 'Cancel', courses_path, :class => 'btn btn-info'

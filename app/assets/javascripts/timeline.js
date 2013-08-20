@@ -1,7 +1,7 @@
 $(document).ready(function() {
     createStoryJS({
       type: 'timeline',
-      width: '700',
+      width: '100%',
       height: '600',
       hash_bookmark: 'false',
       debug: 'true',

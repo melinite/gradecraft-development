@@ -19,13 +19,13 @@
   %body(class="#{body_class}")
     .navbar.navbar-fixed-top.navbar-inverse
       .navbar-inner
-        %div.col-lg-6.col-sm-12.col-12
+        %div.col-lg-3.col-sm-5.col-md-5.col-xs-5
           %a.brand(href="/dashboard")
             - if current_course
               #{current_course.name}
             - else
               GradeCraft
-        .pull-right.col-lg-4.col-sm-12.col-12
+        .pull-right.col-lg-4.col-sm-5.col-12.col-md-5.col-xs-5
           - if current_user
             %div{:class => 'btn-group pull-right'}
               %a{:class => 'username btn dropdown-toggle', "data-toggle" => 'dropdown', :href => '#' }

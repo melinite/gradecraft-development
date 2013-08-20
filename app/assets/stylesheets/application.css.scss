@@ -523,8 +523,8 @@ footer .col-sm-12 {
   color: #FFF;
 }
 
-.btn.btn-primary, .badge.badge-primary{
-  background-color: $green;
+.btn.btn-primary, .badge.badge-primary {
+  background-color: $blue;
 }
 
 .alert {
@@ -533,7 +533,7 @@ footer .col-sm-12 {
 }
 
 .btn.btn-info, .badge.badge-info, .alert.alert-info  {
-  background-color: $blue;
+  background-color: $yellow;
 }
 
 .btn.btn-success, .badge.badge-success, .alert.alert-success {
@@ -625,6 +625,10 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
 #userBarInProgress .highcharts-container, #userBarTotal .highcharts-container {
   position: relative;
   margin-left: -20px;
+}
+
+.charts {
+  padding-bottom: 40px;
 }
 
 .highcharts-legend .highcharts-legend-item {

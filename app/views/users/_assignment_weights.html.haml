@@ -1,4 +1,4 @@
-%span.badge.badge-important
+%span.badge.badge-info
   #{assignment_type.weight_for_student(@user)} #{term_for :weight}
   - if assignment_type.student_weightable?
     - if current_course.assignment_weight_open? || current_user.is_staff?
