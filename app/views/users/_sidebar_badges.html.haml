@@ -1,6 +1,6 @@
-.col-sm-12.col-md-12.col-lg-12.col-xs-12.center#badges{"data-target" => "#badgesInfo", "data-toggle" => "collapse"}
-  %h4 Badges
-  #badgesInfo.collapse
+.col-sm-12.col-md-12.col-lg-12.col-xs-12.center#badges.badge-success{"data-target" => "#badgesInfo", "data-toggle" => "collapse"}
+  %h4.center Badges
+  #badgesInfo.collapse.clear
     - @badges.each do |badge|
       - @user.earned_badges.where(badge: badge).first.tap do |earned_badge|
         - if earned_badge

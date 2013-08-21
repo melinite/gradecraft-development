@@ -1,6 +1,6 @@
-.col.col-lg-12.col-md-12.col-sm-12.col-xs-12.center{"data-target" => "#toDoList", "data-toggle" => "collapse"}
-  %h4 To Do List
-  %div{:id => "toDoList", :class => "collapse"}
+.col.col-lg-12.col-md-12.col-sm-12.col-xs-12.center.badge-info#todo{"data-target" => "#toDoList", "data-toggle" => "collapse"}
+  %h4.center To Do List
+  %div{:id => "toDoList", :class => "collapse clear"}
     - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
       - if assignment_type.has_soon_assignments?
         %h5= "#{assignment_type.try(:name)}"

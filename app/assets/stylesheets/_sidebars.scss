@@ -76,15 +76,28 @@ ul.nav.nav-list > li > a {
 /** Student Dashboard Sidebar **/
 
 .sidebar_section  {
-  text-wrap: normal;
   margin-top: 10px;
   margin-bottom: 15px;
-  border-radius: 5px;
 
+  #gradeCurious {
+    font-family: "Futura", sans-serif;
+  }
+
+  #badges, #todo, #historyInfo, #classInfo {
+  padding: 10px;
+  border-radius: 5px;
+  color: #FFF;
+  }
   .clear.center {
     padding: 10px;
     width: 80%;
   }
+
+  h4.center {
+    float: none;
+    text-align: center;
+  }
+
 }
 
 .sidebar_section #badges #badgeIcons {

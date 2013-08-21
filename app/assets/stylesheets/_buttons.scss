@@ -5,8 +5,12 @@
   border: none;
 }
 
-.btn.btn-primary, .btn-group.open .btn-primary.dropdown-toggle {
-  background-color: $green;
+.btn.btn-primary, .btn-group.open .btn-primary.dropdown-toggle, .badge-primary {
+  background-color: $lightblue;
+}
+
+.badge-secondary-info {
+  background-color: $blue;
 }
 
 .btn a {
@@ -24,15 +28,15 @@
   color: #FFF;
 }
 
-.btn.btn-info, .badge.badge-info, .alert.alert-info  {
+.btn-info, .badge-info, .alert-info  {
   background-color: $orange;
 }
 
-.btn.btn-success, .badge.badge-success, .alert.alert-success {
+.btn-success, .badge-success, .alert-success {
   background-color: $green;
 }
 
-.btn.btn-warning, .badge.badge-warning, .alert.alert-error {
+.btn-warning, .badge-warning, .alert-error {
   background-color: $red;
 }
 

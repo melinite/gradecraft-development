@@ -1,4 +1,5 @@
-= content_nav_for @assignment, Submission, "New Submission"
+= content_nav_for @assignment, Submission, "New Submission" do
+  %li= link_to "Back to #{@assignment.name}", @assignment
 
 = render 'form'
 

@@ -32,7 +32,7 @@ class SubmissionsController < ApplicationController
     @submission.submission_files.build
     @groups = @assignment.groups
     @teams = current_course.teams
-    @students = @users.students
+    @students = current_course.users.students
   end
 
   def edit

@@ -95,6 +95,5 @@ class CoursesController < ApplicationController
   def timeline
     @course = current_course
     @assignments = current_course.assignments
-
   end
 end
