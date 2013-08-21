@@ -111,4 +111,25 @@ $('.nav-tabs').button();
 		$link.parents().find("input").prop("checked", false);
 
 	});
+
+  //Testing graph stuff
+  var students;
+  $.getJSON('/users/top_ten.json', function (data) {
+    students = data.students;
+    for (var i=0; i < students.length; i++) {
+      $.ajax({
+        url: '/users/predictor.json',
+        dataType: 'json',
+        async: false,
+        data: {user_id: students[i].id},
+        success: function (data) {
+          var scores = []
+          for (var j=0; j < data.scores.length; j++) {
+            scores.push(data.scores[j].data[0])
+          }
+          $('#bar-chart_' + students[i].id).sparkline(scores, { type: 'bar', barColor: 'black' })
+        }
+      })
+    }
+  })
 });

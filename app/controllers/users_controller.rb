@@ -143,6 +143,13 @@ class UsersController < ApplicationController
     }
   end
 
+  def top_ten
+    students = current_course.users.order_by_high_score.limit(10)
+    render :json => {
+      students => students
+    }
+  end
+
   def new
     @title = "Create a New User"
     @teams = current_course.teams
