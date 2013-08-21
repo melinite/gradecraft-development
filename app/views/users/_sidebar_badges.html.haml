@@ -1,6 +1,6 @@
-.btn.btn-info.col-sm-12.col-md-12.col-lg-12.col-xs-12#badges
-  %h4.center Badges
-  #badgeIcons
+.col-sm-12.col-md-12.col-lg-12.col-xs-12.center#badges{"data-target" => "#badgesInfo", "data-toggle" => "collapse"}
+  %h4 Badges
+  #badgesInfo.collapse
     - @badges.each do |badge|
       - @user.earned_badges.where(badge: badge).first.tap do |earned_badge|
         - if earned_badge
@@ -20,4 +20,4 @@
               - else
                 %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
                   %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
-  .clear.center Badges you've earned will shine brightly!
+    .col-lg-12.clear Badges you've earned will shine brightly!

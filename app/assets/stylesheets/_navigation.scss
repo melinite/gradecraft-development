@@ -1,0 +1,148 @@
+
+
+/** Navbar **/
+.navbar {
+  min-height: 35px;
+  margin-bottom: 0;
+
+    a.brand {
+    font-family: 'Futura', sans-serif;
+    font-size: 1.5em;
+    color: white;
+    margin-bottom: 0px;
+    text-shadow: 0 -1px 0 #000;
+  }
+
+  a.brand:hover {
+    text-decoration: none;
+    color: white;
+  }
+
+  a.username.btn {
+    margin-top: 7px;
+    font-family: "Pontano Sans", sans-serif;
+  }
+
+  ul.login {
+    width: 230px;
+    background-color: $green;
+    padding: 10px 10px 15px 0px;
+    margin: 0;
+  }
+
+  .login input {
+    margin: 0px 0 10px 0px;
+    padding: 5px;
+    width: 190px;
+  }
+
+  .login .forgot {
+    color: white;
+    float: right;
+    margin-right: 10px;
+  }
+
+  .login li input.btn {
+    background-color: $lightblue;
+    color: white;
+    margin-right: 12px;
+  }
+
+  .login li input.btn:hover {
+    background-color: $blue;
+  }
+
+}
+
+
+.navbar a {
+  color: $lightblue;
+}
+
+.navbar .navbar-inner {
+  padding: 0;
+}
+
+.navbar-fixed-bottom {
+  clear: both;
+  height: 30px;
+  padding-top: 10px;
+}
+
+.navbar a.btn {
+  color: white;
+}
+
+.navbar-fixed-bottom .course {
+  padding-left: 15px;
+}
+
+.navbar-fixed-bottom .course select, .course {
+  color: $lightblue;
+  padding: 0;
+  font-size: 14px;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+.navbar-fixed-bottom .course select {
+  background-color: transparent;
+  padding: 0;
+  line-height: 16px;
+  margin-top: -4px;
+  background-image: url(../images/assignArrowDn.png) no-repeat center right;
+  padding-right: 25px;
+  border-radius: 0;
+}
+
+
+
+/** Page Navigation **/
+
+.content-nav {
+  margin-top: 10x;
+
+  .breadcrumb {
+    background-color: $blue;
+    @include border-top-radius(15px);
+    @include border-bottom-radius(0);
+    margin-bottom: 0;
+    font-family: 'Futura', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    a {
+      color: white;
+      font-size: 16px;
+    }
+    li {
+      color: rgba(#fff, .8);
+
+    }
+  }
+  .navbar {
+    @include border-radius(0);
+    background-color: #333;
+  }
+}
+
+.breadcrumb > li + li:before {
+  color: rgba(#fff, .7);
+  content: '\203A';
+}
+
+.content-nav .navbar-nav li a:hover {
+  color: orange;
+}
+
+.col-sm-9 .navbar-nav li a {
+ text-align: center;
+}
+
+.filters {
+  padding: 5px;
+}
+
+.filters select {
+  margin-bottom: 5px;
+}
+

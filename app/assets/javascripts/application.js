@@ -40,6 +40,12 @@ $(document).ready(function(){
 
   $('#toDoList').collapse('hide');
 
+  $('#courseInfo').collapse('hide');
+
+  $('#badgesInfo').collapse('hide');
+
+  $('#academicInfo').collapse('hide');
+
   $('#myModal').modal('hide');
 
   $(".simpleTable").stupidtable();

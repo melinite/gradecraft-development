@@ -1,0 +1,23 @@
+
+
+
+.assignmentName {
+  font-family: "IMF", sans-serif;
+}
+
+#userScoreNum {
+  color: $green;
+}
+
+#userBarInProgress .highcharts-container, #userBarTotal .highcharts-container {
+  position: relative;
+  margin-left: -20px;
+}
+
+.charts {
+  padding-bottom: 40px;
+}
+
+.highcharts-legend .highcharts-legend-item {
+  color: #333 !important;
+}

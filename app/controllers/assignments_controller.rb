@@ -18,6 +18,7 @@ class AssignmentsController < ApplicationController
 
   def show
     @assignment = current_course.assignments.find(params[:id])
+    @groups = @assignment.groups
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     @students = @team ? @team.students : current_course.students
     respond_with @assignment

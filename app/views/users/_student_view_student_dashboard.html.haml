@@ -1,7 +1,7 @@
 .pull-right.col.col-lg-3.sidebar
   = render 'users/sidebar_grade'
 
-  .sidebar_section= render 'users/sidebar_work'
+  .sidebar_section= render "users/sidebar_class_info"
 
   - if current_course.has_badges?
     .sidebar_section= render 'users/sidebar_badges'

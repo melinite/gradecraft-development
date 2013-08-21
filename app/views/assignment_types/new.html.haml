@@ -1,4 +1,5 @@
-= content_nav_for AssignmentType, "New Assignment Type"
+= content_nav_for AssignmentType, "New Assignment Type" do
+  %li= link_to 'See All Assignment Types', assignment_types_path
 
 = render 'form'
 

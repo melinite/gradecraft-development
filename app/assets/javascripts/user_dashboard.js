@@ -71,7 +71,7 @@ $(document).ready(function() {
         options.chart.renderTo = 'userBarInProgress';
         options.title = { text: 'My Points' };
         options.xAxis.categories = { text: ' ' };
-        options.chart.height = '150';
+        options.chart.height = '165';
         options.yAxis.max = data.course_total
         options.series = data.scores
         chart = new Highcharts.Chart(options);

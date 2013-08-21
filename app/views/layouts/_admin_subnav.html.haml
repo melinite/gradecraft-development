@@ -1,7 +1,7 @@
 :javascript
   Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
 %form.quick_search
-  %div.dropdown
+  .dropdown
     %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search Users", :label => false }
 %ul.nav.nav-list#sidebar
   %li.nav-header Students

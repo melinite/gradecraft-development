@@ -1,24 +1,19 @@
-.pull-right.col-lg-3.col-md-3.col-sm-3.col-xs-12.sidebar
-  = gravatar_for @user, :size => "100%", :d => "mm"
-  .section.center
-    = link_to @user.email, "mailto:#{@user.email}"
-    - @user.team_leader.tap do |team_leader|
-      - if team_leader.present?
-        = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
+.col.col-lg-9.col-md-9.col-sm-9.col-xs-12
+  .col.col-lg-12.col-md-12.col-sm-12.col-xs-12
+    = render "users/scoreboard"
+  .col.col-lg-12.col-md-12.col-sm-12.col-xs-12
+    = render "users/main_tabs"
+
+.pull-right.col.col-lg-3.col-md-3.col-sm-3.col-xs-12.sidebar
+  .sidebar_section= gravatar_for @user, :size => "100%", :d => "mm"
+
+  .sidebar_section.center.section= link_to @user.email, "mailto:#{@user.email}"
 
   .sidebar_section= render "sidebar_class_info"
 
   .sidebar_section= render "sidebar_history"
 
-  .sidebar_section= render "sidebar_work"
-
   - if current_course.has_badges?
     .sidebar_section= render "sidebar_badges"
 
   .sidebar_section= render "sidebar_to_do_list"
-
-.section.col-lg-9.col-md-9.col-sm-9.col-xs-12
-  .col.col-lg-12.col-md-12.col-sm-12.col-xs-12
-    = render "users/scoreboard"
-  .col.col-lg-12.col-md-12.col-sm-12.col-xs-12
-    = render "users/main_tabs"

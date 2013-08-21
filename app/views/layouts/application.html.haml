@@ -28,10 +28,10 @@
         .pull-right.col-lg-4.col-sm-5.col-12.col-md-5.col-xs-5
           - if current_user
             %div{:class => 'btn-group pull-right'}
-              %a{:class => 'username btn dropdown-toggle', "data-toggle" => 'dropdown', :href => '#' }
+              %a{:class => 'username btn btn-info btn-xs dropdown-toggle', "data-toggle" => 'dropdown', :href => '#' }
                 = current_user.public_name
-                %i.caret
-              %ul{:class => 'dropdown-menu well'}
+                %span.caret
+              %ul{:class => 'dropdown-menu'}
                 %li= link_to "My Account", edit_profile_users_path
                 %li= link_to "Logout", :logout
           - else

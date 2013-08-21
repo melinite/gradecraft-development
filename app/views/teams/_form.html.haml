@@ -4,5 +4,5 @@
     = f.association :students, :collection => @students, :as => :check_boxes
   = f.input :course_id, :collection => @courses, :as => :hidden, :input_html => { :value => current_course.id }
   .form-actions.col-lg-offset-3
-    = f.button :submit, :class => 'btn btn-primary'
+    = f.button :submit, :class => 'btn-primary'
     = link_to 'Cancel', teams_path, :class => 'btn btn-info'

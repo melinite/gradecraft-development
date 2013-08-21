@@ -1,0 +1,36 @@
+
+/** Footer **/
+footer {
+  margin: 10px 0px 30px;
+  padding: 10px 0px 10px;
+  background: $blue; /* Old browsers */
+  background: -moz-linear-gradient(top,  $blue 0%, $blue 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$blue), color-stop(100%,$blue)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  $blue 0%,$blue 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $blue 0%,$blue 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $blue 0%,$blue 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  $blue 0%,$blue 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$blue', endColorstr='$blue',GradientType=0 ); /* IE6-9 */
+  opacity: .7;
+  color: #FFF;
+}
+
+footer div {
+  padding: 15px 15px 20px;
+}
+
+footer ul, footer li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer a {
+  color: $green;
+}
+
+footer a:hover {
+  color: $green;
+  opacity: .7;
+}
+
