@@ -1,0 +1,10 @@
+<script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js"></script>
+
+
+<div id="bar-chart" />
+<script type="text/javascript">
+  $(function() {
+    $('#bar-chart').sparkline([20, 45, 30, 35, 10], { type: 'box', barColor: 'black' })
+  })
+</script>
