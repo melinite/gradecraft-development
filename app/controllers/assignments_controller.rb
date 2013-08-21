@@ -50,7 +50,7 @@ class AssignmentsController < ApplicationController
 
   def update
     @assignment = current_course.assignments.find(params[:id])
-    @assignment.update_attributes(assignment_params)
+    @assignment.update_attributes(params[:assignment])
     respond_with @assignment
   end
 

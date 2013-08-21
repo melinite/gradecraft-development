@@ -43,12 +43,12 @@ class Grade < ActiveRecord::Base
     all.pluck('SUM(grades.score)').first || 0
   end
 
-  def raw_score
-    super || 0
-  end
-
   def score
     final_score || (raw_score * assignment_weight).round
+  end
+
+  def unmultiplied_score
+    final_score || raw_score
   end
 
   def point_total
