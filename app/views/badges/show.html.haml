@@ -1,27 +1,27 @@
 = content_nav_for @badge do
   %li= link_to 'See All Badges', badges_path
-  %li= link_to 'Edit', edit_badge_path(@badge)
-  %li= link_to 'Back', badges_path
+  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge)
   %li= link_to 'New Badge', new_badge_path
   %li= link_to 'Award this Badge', new_badge_earned_badge_path(:badge_id => @badge)
 
+%h3= @badge.name
 %p
   %img{:src => @badge.icon, :alt => @badge.name}
-%p
-  %b Value:
-  = "#{@badge.point_total} points"
-%p
-  %b Description:
-  = raw @badge.description
-%p
-  %b Icon URL:
-  = @badge.icon
 
-%h3
-Badge tasks:
-(#{link_to 'Add task', new_badge_task_path(@badge)})
+.info.clear
+  %p
+    %b Value:
+    = "#{@badge.point_total} points"
+  %p
+    %b Description:
+    = raw @badge.description
+  %p
+    %b Icon URL:
+    = @badge.icon
 
-%table.display.table-bordered.table
+%h5 Badge tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})
+
+%table.display.table-striped.table
   %thead
     %tr
       %th Name
@@ -35,3 +35,26 @@ Badge tasks:
         %td= task.description
         %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-success'
         %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-success', :method => :delete
+
+%hr
+
+%h5 Awarded Badges:
+
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th= current_course.user_term
+      %th Feedback
+      %th Date Awarded
+      %th
+      %th
+      %th
+  %tbody
+    - @earned_badges.each do |earned_badge|
+      %tr
+        %td= link_to earned_badge.student.try(:name), earned_badge.student
+        %td= earned_badge.feedback
+        %td= earned_badge.created_at
+        %td= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-success'
+        %td= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-info'
+        %td= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete

@@ -1,3 +1,5 @@
-= content_nav_for Badge, "Edit #{breadcrumb_link_for(@badge)}".html_safe
+= content_nav_for Badge, "Edit #{breadcrumb_link_for(@badge)}".html_safe do
+  %li= link_to 'See All Badges', badges_path
+  %li= link_to 'Award this Badge', new_badge_earned_badge_path(:badge_id => @badge)
 
 = render 'form'

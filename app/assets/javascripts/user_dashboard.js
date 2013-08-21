@@ -71,7 +71,6 @@ $(document).ready(function() {
         options.chart.renderTo = 'userBarInProgress';
         options.title = { text: 'My Points' };
         options.xAxis.categories = { text: ' ' };
-        options.chart.height = '165';
         options.yAxis.max = data.course_total
         options.series = data.scores
         chart = new Highcharts.Chart(options);
@@ -79,7 +78,6 @@ $(document).ready(function() {
 
       $.getJSON('/users/predictor.json', { user_id: userID }, function(data) {
         options.chart.renderTo = 'userBarTotal';
-        options.chart.height = '165';
         options.title = { text: 'Total Possible Points' };
         options.xAxis.categories = { text: ' ' };
         options.yAxis.max = data.course_total

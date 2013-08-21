@@ -9,6 +9,7 @@ class BadgesController < ApplicationController
 
   def show
     @badge = current_course.badges.find(params[:id])
+    @earned_badges = @badge.earned_badges
     @title = @badge.name
     @tasks = @badge.tasks
 
@@ -69,5 +70,5 @@ class BadgesController < ApplicationController
       format.json { head :ok }
     end
   end
-  
+
 end

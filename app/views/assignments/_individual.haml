@@ -5,11 +5,11 @@
         - if @assignment.release_necessary?
           %th
         %th{"data-sort" => "string"}= term_for :student
-        %th{"data-sort" => "string"} Score
+        %th{"data-sort" => "int"} Score
         - if @assignment.assignment_type.student_weightable?
           %th Multiplied Score
         - if @assignment.has_levels?
-          %th Level
+          %th{"data-sort" => "string"} Level
         %th Badges Earned
         - if @assignment.release_necessary?
           %th Status

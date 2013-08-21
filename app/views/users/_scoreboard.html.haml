@@ -11,10 +11,10 @@
   #userBarInProgress
   #userBarTotal
 - else
-  %div.charts
+  %div.charts.clear
+    %div#userBarInProgress{:class => "dashboard-toggle"}
     %a{:href => "#", :id => "totalScoreToggle", :class => "dashboard-toggle"}
       Show me my score out of the total course points
-      %div#userBarInProgress{:class => "dashboard-toggle"}
+    %div#userBarTotal{:class => "dashboard-toggle"}
     %a{:href => "#", :id => "soFarScoreToggle", :class => "dashboard-toggle"}
       Show me my score out of the points available points so far
-      %div#userBarTotal{:class => "dashboard-toggle"}

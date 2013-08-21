@@ -1,33 +1,34 @@
 = content_nav_for @assignment, @grade do
-  %li= link_to 'Edit', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :student_id => @grade.student_id)
-  %li= link_to 'Back', assignment_path(@grade.assignment_id)
+  %li= link_to "All #{@grade.assignment.name } Grades", assignment_path(@grade.assignment_id)
+  %li= link_to 'Edit Grade', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :student_id => @grade.student_id)
   %li= link_to "Grade Another " +@grade.assignment.name, new_assignment_grade_path("assignment_id"=>@grade.assignment.id)
 
-%p
-  %b User:
-  = link_to @grade.student.try(:name), @grade.student
-%p
-  %b Assignment:
-  = link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
-%p
-  %b Raw Score:
-  = @grade.raw_score
-%p
-  %b Final Score:
-  = @grade.final_score
-%p
-  %b Feedback:
-  %br
-  = raw @grade.feedback
+.info
+  %p
+    %b User:
+    = link_to @grade.student.try(:name), @grade.student
+  %p
+    %b Assignment:
+    = link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
+  %p
+    %b Raw Score:
+    = @grade.raw_score
+  %p
+    %b Final Score:
+    = @grade.final_score
+  %p
+    %b Feedback:
+    %br
+    = raw @grade.feedback
 
-%p
-  %b Badges:
-  - @grade.earned_badges.each do |badge|
-    %img{:src => badge.try(:icon), :alt => badge.name, :width => "50", :height => "50"}
-%p
-  %b Status:
-  = @grade.status
+  %p
+    %b Badges:
+    - @grade.earned_badges.each do |badge|
+      %img{:src => badge.try(:icon), :alt => badge.name, :width => "50", :height => "50"}
+  %p
+    %b Status:
+    = @grade.status
 
-%p
-  %b Submission:
-  = @grade.submission_id
+  %p
+    %b Submission:
+    = @grade.submission_id

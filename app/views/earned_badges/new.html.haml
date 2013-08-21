@@ -1,5 +1,6 @@
-= content_nav_for @badge, EarnedBadge
+= content_nav_for @badge, EarnedBadge do
+  %li= link_to 'See All Badges', badges_path
+  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge)
 
-//%h5= "You are awarding a badge to #{@earnable.name}"
 = render 'form'
 
