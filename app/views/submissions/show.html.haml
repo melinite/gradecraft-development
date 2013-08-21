@@ -2,32 +2,33 @@
   %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id)
   %li= link_to 'Back', assignment_path(@assignment)
 
-%p
-  %b Assignment:
-  - if current_user.is_staff?
-    = link_to @submission.assignment.try(:name), @submission.assignment
-  - else
-    = @submission.assignment.try(:name)
-- if @submission.assignment.is_individual?
+.info
   %p
-    %b User:
+    %b Assignment:
     - if current_user.is_staff?
-      = link_to @submission.student.try(:name), @submission.student
+      = link_to @submission.assignment.try(:name), @submission.assignment
     - else
-      = @submission.student.try(:name)
-- elsif @submission.assignment.has_groups?
+      = @submission.assignment.try(:name)
+  - if @submission.assignment.is_individual?
+    %p
+      %b User:
+      - if current_user.is_staff?
+        = link_to @submission.student.try(:name), @submission.student
+      - else
+        = @submission.student.try(:name)
+  - elsif @submission.assignment.has_groups?
+    %p
+      %b Group:
+      = link_to @submission.student.try(:name), assignment_group_path(@submission, @submission.student)
   %p
-    %b Group:
-    = link_to @submission.student.try(:name), assignment_group_path(@submission, @submission.student)
-%p
-  %b Submitted:
-  = @submission.created_at
-%p
-  %b Updated:
-  = @submission.updated_at
-%p
-  %b Link:
-  = link_to @submission.link, @submission.link
-%p
-  %b Comment:
-  = raw @submission.text_comment
+    %b Submitted:
+    = @submission.created_at
+  %p
+    %b Updated:
+    = @submission.updated_at
+  %p
+    %b Link:
+    = link_to @submission.link, @submission.link
+  %p
+    %b Comment:
+    = raw @submission.text_comment
