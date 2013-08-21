@@ -1,5 +1,11 @@
 .row
   .content.col-lg-12.col-sm-12.col-md-12
+    - if flash[:notice]
+      .alert.alert-success= flash[:notice]
+    - if flash[:error]
+      .alert.alert-error= flash[:error]
+    - if flash[:alert]
+      .alert.alert-info= flash[:alert]
     = render 'layouts/content'
 %footer.row
   .col-lg-12.col-md-12.col-sm-12.rounded
