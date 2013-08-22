@@ -8,6 +8,8 @@ badge_icons = ['/badges/above_and_beyond.png','/badges/always_learning.png','/ba
 
 grade_scheme_hash = { [0,600000] => 'F', [600000,649000] => 'D+', [650000,699999] => 'C-', [700000,749999] => 'C', [750000,799999] => 'C+', [800000,849999] => 'B-', [850000,899999] => 'B', [900000,949999] => 'B+', [950000,999999] => 'A-', [100000,1244999] => 'A', [1245000,1600000] => 'A+'}
 
+majors = ['Obliviator','Knight Bus Driver','Magizoologist','Wandmaker','Mediwizard','Dragonologist','Floo Network Regulator','Curse-Breaker','Broom-maker','Arithmancer','Hit Wizard','Auror']
+
 # Generate sample courses
 course = Course.create! do |c|
   c.name = "Videogames & Learning"
@@ -238,7 +240,7 @@ end
 
 grinding_assignments.each do |a|
   a.tasks.create! do |t|
-    t.assignment = a
+    t.taskable = a
     t.name = "Task 1"
     t.due_at = rand.weeks.from_now
     t.accepts_submissions = true

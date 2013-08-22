@@ -3,6 +3,7 @@
   #academicInfo.collapse.clear
     %p
       %b Major
+      = @user.student_academic_history.try(:major)
     %p
       %b UM GPA
     %p
