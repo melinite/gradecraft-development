@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130820202127) do
+ActiveRecord::Schema.define(version: 20130822003705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -426,6 +426,20 @@ ActiveRecord::Schema.define(version: 20130820202127) do
     t.integer  "assignment_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "student_academic_histories", force: true do |t|
+    t.integer "student_id"
+    t.string  "major"
+    t.decimal "gpa"
+    t.integer "current_term_credits"
+    t.integer "accumulated_credits"
+    t.string  "year_in_school"
+    t.string  "state_of_residence"
+    t.string  "high_school"
+    t.boolean "athlete"
+    t.integer "act_score"
+    t.integer "sat_score"
   end
 
   create_table "student_assignment_type_weights", force: true do |t|
