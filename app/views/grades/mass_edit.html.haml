@@ -9,6 +9,10 @@
 
 .col-lg-12#massGrade
   = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
+    - if !@assignment.grade_select? && !@assignment.grade_radio?
+      .btn-group
+        %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
+        %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
     %table
       - @grades.each_with_index do |grade, i|
         %tr
@@ -17,23 +21,14 @@
             = f.simple_fields_for :grades, grade do |gf|
               = gf.hidden_field :student_id
               = label_tag do
-                - if @assignment.grade_checkboxes?
-                  = gf.check_box :raw_score, {}, @assignment.point_total
-                - elsif @assignment.grade_select?
+                - if @assignment.grade_select?
                   = gf.select_tag options_from_collection_for_select(@option_levels, :name, :value), include_blank: false
                 - elsif @assignment.grade_radio?
                   - @score_levels.each do |score_level|
-                    %td
-                      = label_tag "#{raw_score_field_name}_#{score_level.name}", score_level.name, :class => "radio_label"
-                      = radio_button_tag raw_score_field_name, score_level.value, grade.raw_score == score_level.value, :class => "radio_button"
+                    = gf.label_tag :raw_score, score_level.name, value: score_level.value
+                    = gf.radio_button :raw_score, score_level.value
                 - else
-                  = hidden_field_tag raw_score_field_name, 0
-                  = check_box_tag raw_score_field_name, @assignment.point_total, grade
-
-      - if @assignment.grade_checkboxes?
-        .btn-group
-          %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
-          %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
+                  = gf.check_box :raw_score, {}, @assignment.point_total
 
     .form-actions
       = f.button :submit, :class => "btn btn-primary"
