@@ -14,6 +14,6 @@
         %td
           %ul
             - badge.tasks.each do |task|
-              %li= link_to task.title, badge_task_path(badge, task)
+              %li= link_to task.name, badge_task_path(badge, task)
         %td= badge.earned_badges.count
         %td= link_to "Award", new_badge_earned_badge_path(:badge_id => badge), :class => "btn btn-tiny btn-success"

@@ -11,8 +11,9 @@
         %th{"data-sort" => "int"} Value
       - if current_user.is_staff?
         %th#visible{"data-sort" => "string"} Visible to Students
-        %th.header
-        %th.header
+        %th
+        %th
+        %th
   %tbody
     - @badges.each do |badge|
       - if current_user.is_staff?
@@ -25,7 +26,7 @@
             %td
               %ul
                 - badge.tasks.each do |task|
-                  %li= task.title
+                  %li= task.name
                 %h5 Add a New Task
                 = simple_fields_for(:tasks, :class => "form-inline") do |task|
                   = task.input :title
@@ -42,8 +43,8 @@
                 Yes
               - else
                 No
-            %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-success'
-            %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+            %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-info'
+            %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
       - else
         - if badge.visible == "1"
           %tr

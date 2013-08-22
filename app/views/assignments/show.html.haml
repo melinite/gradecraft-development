@@ -30,7 +30,27 @@
     .pull-right
       = link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-warning"
 
-%h4 Grades
+%h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
+
+- if @assignment.tasks.present?
+  %table.display.table-striped.table
+    %thead
+      %tr
+        %th Name
+        %th Description
+        %th
+        %th
+        %th
+    %tbody
+      - @assignment.tasks.each do |task|
+        %tr
+          %td= task.name
+          %td= task.description
+          %td= link_to "View", assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-success'
+          %td= link_to "Edit", edit_assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-info'
+          %td= link_to "Delete", assignment_task_path(@assignment.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
+
+%h4.clear  Grades
 
 - if @assignment.has_groups?
   = render 'group'

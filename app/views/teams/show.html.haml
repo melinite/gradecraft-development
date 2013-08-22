@@ -16,6 +16,8 @@
       %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
       = @team.earned_badges.count
 
+%h4= "#{current_course.user_term}s"
+
 %table.table.table-striped.simpleTable
   %thead
     %tr
@@ -46,6 +48,8 @@
         %td= link_to 'Edit', edit_user_path(student), :class => 'btn btn-tiny btn-success'
 
 %hr
+
+%h4 Challenge Grades
 
 %table.table-striped.table.simpleTable
   %thead

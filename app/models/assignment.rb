@@ -11,7 +11,7 @@ class Assignment < ActiveRecord::Base
   has_many :assignment_groups
   has_many :groups, :through => :assignment_groups
 
-  has_many :tasks, :as => :assignment, :dependent => :destroy
+  has_many :tasks, :as => :taskable, :dependent => :destroy
   has_many :submissions, :as => :assignment
   has_many :grades
   accepts_nested_attributes_for :grades

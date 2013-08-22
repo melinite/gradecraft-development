@@ -1,0 +1,3 @@
+class StudentAcademicHistoriesController < ApplicationController
+
+end

@@ -18,7 +18,7 @@
         %td
           %ul
             - badge.tasks.each do |task|
-              %li= task.title
+              %li= task.name
         - if current_course.valuable_badges?
           %td= number_with_delimiter(badge.value)
         %td

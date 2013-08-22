@@ -13,11 +13,11 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :key_5, "#{current_course.team_term}s", teams_path
     primary.item :key_6, "Badge Sets", badge_sets_path
     primary.item :key_7, "Badges", badges_path
-    primary.item :key_8, "Themes", themes_path
+    primary.item :key_8, "Tasks", tasks_path
     primary.item :key_9, "#{current_course.team_term}s", teams_path
 
     primary.item :key_10, "Users", users_path do |sub_nav|
-      sub_nav.item :key_10_1, "Students", students_users_path
+      sub_nav.item :key_10_1, "{current_course.user_term}", students_users_path
       sub_nav.item :key_10_2, "Staff", staff_users_path
       sub_nav.item :key_10_3, "All Users", all_users_path
     end
@@ -25,7 +25,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :key_13, "Import Users", import_users_path
     primary.item :key_14, "Themes", themes_path
     primary.item :key_16, "Course Index", courses_path
-    primary.item :key_17, "New Course", new_course_path    
+    primary.item :key_17, "New Course", new_course_path
 
   end
 

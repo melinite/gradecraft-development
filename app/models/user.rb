@@ -27,13 +27,14 @@ class User < ActiveRecord::Base
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
 
   has_many :course_memberships
+  has_many :student_academic_history, :foreign_key => :student_id
   has_many :courses, :through => :course_memberships
   accepts_nested_attributes_for :courses
   accepts_nested_attributes_for :course_memberships
+  accepts_nested_attributes_for :student_academic_history
   belongs_to :default_course, :class_name => 'Course'
 
   has_many :assignment_weights, :foreign_key => :student_id
-
   has_many :assignments, :through => :grades
 
   has_many :submissions, :foreign_key => :student_id, :dependent => :destroy
