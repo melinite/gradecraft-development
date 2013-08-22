@@ -17,7 +17,7 @@
             - "assignment[grades_attributes][#{i}][raw_score]".tap do |raw_score_field_name|
               - if grade.persisted?
                 = hidden_field_tag "assignment[grades_attributes][#{i}][id]", grade.id
-              - else
+                = f.hidden_field :student_id
                 //= hidden_field_tag "assignment[grades_attributes][#{i}][student_id]", grade.student.id
               = label_tag do
                 - if @assignment.grade_checkboxes?

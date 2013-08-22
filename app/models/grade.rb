@@ -28,7 +28,7 @@ class Grade < ActiveRecord::Base
   before_validation :cache_associations
   before_save :cache_score_and_point_total
 
-  validates_presence_of :assignment, :assignment_type, :course
+  validates_presence_of :assignment, :assignment_type, :course, :student
 
   delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
@@ -45,10 +45,6 @@ class Grade < ActiveRecord::Base
 
   def score
     final_score || (raw_score * assignment_weight).round
-  end
-
-  def unmultiplied_score
-    final_score || raw_score
   end
 
   def point_total

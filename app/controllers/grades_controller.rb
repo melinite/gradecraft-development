@@ -27,7 +27,7 @@ class GradesController < ApplicationController
   def new
     @assignment = Assignment.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
-    @grade = @assignment.grades.create(params[:grade])
+    @grade = @assignment.grades.new
     #@grade.student = current_course.grades.where(params[:student_id])
     @badges = current_course.badges
     @score_levels = @assignment_type.score_levels
