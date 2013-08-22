@@ -113,9 +113,8 @@ $('.nav-tabs').button();
 	});
 
   //Testing graph stuff
-  var students;
-  $.getJSON('/users/top_ten.json', function (data) {
-    students = data.students;
+  $.get('/users/top_ten.json', function (data) {
+    var students = data.students;
     for (var i=0; i < students.length; i++) {
       $.ajax({
         url: '/users/predictor.json',
@@ -127,7 +126,7 @@ $('.nav-tabs').button();
           for (var j=0; j < data.scores.length; j++) {
             scores.push(data.scores[j].data[0])
           }
-          $('#bar-chart_' + students[i].id).sparkline(scores, { type: 'bar', barColor: 'black' })
+          $('#bar-chart_' + students[i].id).sparkline(scores, { type: 'bar', barColor: 'blue' })
         }
       })
     }

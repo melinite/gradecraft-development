@@ -146,7 +146,7 @@ class UsersController < ApplicationController
   def top_ten
     students = current_course.users.order_by_high_score.limit(10)
     render :json => {
-      students => students
+      :students => students
     }
   end
 
