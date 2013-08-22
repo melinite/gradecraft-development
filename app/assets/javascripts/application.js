@@ -5,29 +5,29 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery.fileupload
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery.omniselect
+//= require jquery.fileupload
+//= require underscore.min
 //= require backbone.min
 //= require best_in_place
 //= require best_in_place.purr
 //= require bootstrap
 //= require flexslider
 //= require gradecraft
-//= require grade_schemes
 //= require preload_store
+//= require selectToUISlider.jQuery
 //= require_self
 //= require assignment_types
 //= require assignments
 //= require grade_schemes
 //= require nested_fields
 //= require users
+//= require grade_schemes
 //= require user_dashboard
-//= require selectToUISlider.jQuery
 //= require submissions
 //= require submission_file
-//= require underscore.min
 //= require timelineJS/embed
 //= require timeline
 //= require stupidtable

@@ -1,5 +1,6 @@
 # Gradecraft is a gamified learning management system.
 
+
 ## Current features:
 * Badges
 * Teams (course-long memberships)
