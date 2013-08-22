@@ -25,7 +25,7 @@
             %td
               %ul
                 - badge.tasks.each do |task|
-                  %li= task.title
+                  %li= task.name
                 %h5 Add a New Task
                 = simple_fields_for(:tasks, :class => "form-inline") do |task|
                   = task.input :title
