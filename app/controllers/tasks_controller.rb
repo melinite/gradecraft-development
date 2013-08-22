@@ -9,7 +9,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @assignment = current_course.assignments.find(params[:assignment_id])
     @task = Task.find(params[:id])
   end
 

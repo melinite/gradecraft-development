@@ -28,11 +28,13 @@
       %th Description
       %th
       %th
+      %th
   %tbody
     - @badge.tasks.each do |task|
       %tr
         %td= task.name
         %td= task.description
+        %td= link_to "View", badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-success'
         %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-info'
         %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
 

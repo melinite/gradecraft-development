@@ -11,8 +11,9 @@
         %th{"data-sort" => "int"} Value
       - if current_user.is_staff?
         %th#visible{"data-sort" => "string"} Visible to Students
-        %th.header
-        %th.header
+        %th
+        %th
+        %th
   %tbody
     - @badges.each do |badge|
       - if current_user.is_staff?
@@ -42,8 +43,8 @@
                 Yes
               - else
                 No
-            %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-success'
-            %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+            %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-info'
+            %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
       - else
         - if badge.visible == "1"
           %tr
