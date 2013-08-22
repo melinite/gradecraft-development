@@ -113,22 +113,24 @@ $('.nav-tabs').button();
 	});
 
   //Testing graph stuff
-  $.get('/users/top_ten.json', function (data) {
-    var students = data.students;
-    for (var i=0; i < students.length; i++) {
-      $.ajax({
-        url: '/users/predictor.json',
-        dataType: 'json',
-        async: false,
-        data: {user_id: students[i].id},
-        success: function (data) {
-          var scores = []
-          for (var j=0; j < data.scores.length; j++) {
-            scores.push(data.scores[j].data[0])
+  if ($('#student_table').length) {
+    $.get('/users/top_ten.json', function (data) {
+      var students = data.students;
+      for (var i=0; i < students.length; i++) {
+        $.ajax({
+          url: '/users/predictor.json',
+          dataType: 'json',
+          async: false,
+          data: {user_id: students[i].id},
+          success: function (data) {
+            var scores = []
+            for (var j=0; j < data.scores.length; j++) {
+              scores.push(data.scores[j].data[0])
+            }
+            $('#bar-chart_' + students[i].id).sparkline(scores, { type: 'bar', barColor: 'blue' })
           }
-          $('#bar-chart_' + students[i].id).sparkline(scores, { type: 'bar', barColor: 'blue' })
-        }
-      })
-    }
-  })
+        })
+      }
+    })
+  }
 });
