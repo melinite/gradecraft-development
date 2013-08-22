@@ -23,5 +23,5 @@
           - group.assignment_groups.each do |ag|
             %li= link_to ag.assignment.name, ag.assignment
         %td= link_to 'See Group', group_path(group), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Edit', edit_group_path(group), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', group_path(group), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+        %td= link_to 'Edit', edit_group_path(group), :class => 'btn btn-tiny btn-info'
+        %td= link_to 'Delete', group_path(group), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete

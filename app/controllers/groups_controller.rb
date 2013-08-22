@@ -70,12 +70,11 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @assignment = current_course.assignments.find(params[:assignment_id])
     @group = Group.find(params[:id])
     @group.destroy
 
     respond_to do |format|
-      format.html { redirect_to assignment_path(@assignment) }
+      format.html { redirect_to groups_path }
       format.json { head :ok }
     end
   end
