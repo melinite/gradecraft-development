@@ -2,18 +2,21 @@
   %li= link_to 'See All Challenges', challenges_path
   %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge)
 
-%p
-  %b Description:
-  = raw @challenge.description
-%p
-  %b Point Total:
-  = number_with_delimiter(@challenge.point_total, :delimiter => ',')
-%p
-  %b Open date:
-  = @challenge.open_at
-%p
-  %b Close date:
-  = @challenge.due_at
+%h3= @title
+
+.info.clear
+  %p
+    %b Description:
+    = raw @challenge.description
+  %p
+    %b Point Total:
+    = number_with_delimiter(@challenge.point_total, :delimiter => ',')
+  %p
+    %b Open date:
+    = @challenge.open_at
+  %p
+    %b Close date:
+    = @challenge.due_at
 
 - if current_user.is_staff?
   %h4 Grades
@@ -22,7 +25,7 @@
       = link_to 'Log Grades', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
 
   = simple_form_for @challenge do
-    %table.display.table-bordered.table.simpleTable
+    %table.display.table-striped.table.simpleTable
       %thead
         %tr
           - if @challenge.release_necessary?

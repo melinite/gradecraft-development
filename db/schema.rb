@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130818214741) do
+ActiveRecord::Schema.define(version: 20130820202127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -267,6 +267,13 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.string   "location"
     t.string   "office_hours"
     t.text     "meeting_times"
+    t.string   "media_file"
+    t.string   "media_credit"
+    t.string   "media_caption"
+    t.string   "badge_term"
+    t.string   "assignment_term"
+    t.string   "challenge_term"
+    t.boolean  "use_timeline"
   end
 
   create_table "criteria", force: true do |t|

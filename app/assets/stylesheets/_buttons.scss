@@ -1,0 +1,48 @@
+/** Buttons **/
+
+.btn {
+  font-family: 'Pontano Sans',sans-serif;
+  border: none;
+}
+
+.btn.btn-primary, .btn-group.open .btn-primary.dropdown-toggle, .badge-primary {
+  background-color: $lightblue;
+}
+
+.badge-secondary-info {
+  background-color: $blue;
+}
+
+.btn a {
+  color: #FFF;
+}
+
+.btn a:hover {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.alert {
+  padding: 5px;
+  margin-top: 10px;
+  color: #FFF;
+}
+
+.btn-info, .badge-info, .alert-info  {
+  background-color: $orange;
+}
+
+.btn-success, .badge-success, .alert-success {
+  background-color: $green;
+}
+
+.btn-warning, .badge-warning, .alert-error {
+  background-color: $red;
+}
+
+.btn.btn-tiny {
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 1.0;
+  border-radius: 3px;
+}

@@ -5,8 +5,6 @@
   %tr
     - if @assignment.has_groups?
       %th Group
-    - elsif @assignment.has_teams?
-      %th Team
     - elsif @assignment.is_individual?
       %th #{current_course.user_term}
     %th Submitted

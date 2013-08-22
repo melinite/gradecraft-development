@@ -32,7 +32,7 @@ class SubmissionsController < ApplicationController
     @submission.submission_files.build
     @groups = @assignment.groups
     @teams = current_course.teams
-    @students = @users.students
+    @students = current_course.users.students
   end
 
   def edit
@@ -67,8 +67,12 @@ class SubmissionsController < ApplicationController
     @submission = @assignment.submissions.find(params[:id])
     respond_to do |format|
       if @submission.update_attributes(params[:submission])
-        format.html { redirect_to dashboard_path, notice: "Your #{@assignment.name} was successfully updated." }
-        format.json { head :ok }
+        if current_user.is_student?
+          format.html { redirect_to dashboard_path, notice: "#{@assignment.name} was successfully update." }
+          format.json { render json: @assignment, status: :created, location: @assignment }
+        else
+          format.html { redirect_to assignments_path(@assignment), notice: "#{@assignment.name} was successfully update." }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @submission.errors, status: :unprocessable_entity }

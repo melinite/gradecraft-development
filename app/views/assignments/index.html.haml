@@ -3,8 +3,8 @@
     %li= link_to 'Create a New Assignment', new_assignment_path
 
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-  %h4.assignmentName= link_to assignment_type.name, assignment_type
-  %table.table.simpleTable.table-bordered
+  %h3= link_to assignment_type.name, assignment_type
+  %table.table.simpleTable.table-striped
     %thead
       %tr
         %th{"data-sort" => "string"} Name
@@ -31,6 +31,3 @@
             - else
               = link_to "Grade", :class => "btn btn-tiny btn-success"
 
-          //%td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-          //%td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
-  %hr

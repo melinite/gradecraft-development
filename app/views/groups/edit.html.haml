@@ -1,4 +1,4 @@
-= content_nav_for @group do
-  %li= link_to 'New Group', new_group_path(@assignment)
+= content_nav_for Group, "Editing #{@group.name}" do
+  %li= link_to 'See All Groups', groups_path
 
 = render 'form'

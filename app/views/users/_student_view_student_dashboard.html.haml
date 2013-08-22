@@ -1,14 +1,15 @@
-.pull-right.col.col-lg-3.sidebar
-  = render 'users/sidebar_grade'
+.col.col-lg-9.col-md-9.col-sm-8.col-xs-12
+  .section.col.col-lg-12
+    = render "users/scoreboard"
+    = render "users/main_tabs"
 
-  .sidebar_section= render 'users/sidebar_work'
+.pull-right.col.col-lg-3.col-md-2.col-sm-4.col-xs-12.sidebar
+
+  .sidebar_section= render "users/sidebar_class_info"
+
+  .sidebar_section= render 'users/sidebar_grade'
 
   - if current_course.has_badges?
     .sidebar_section= render 'users/sidebar_badges'
 
   .sidebar_section= render 'users/sidebar_to_do_list'
-
-.col.col-lg-9
-  .section.col.col-lg-12
-    = render "users/scoreboard"
-    = render "users/main_tabs"

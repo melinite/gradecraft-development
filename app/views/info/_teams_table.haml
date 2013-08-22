@@ -1,10 +1,10 @@
-%table.table.table-bordered.simpleTable
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %th= course.team_term
-      %th Score
+      %th{"data-sort" => "string"}= course.team_term
+      %th{"data-sort" => "int"} Score
       %th Badges
-      %th Average #{course.user_term} Grade
+      %th{"data-sort" => "int"} Average #{course.user_term} Grade
       %th= course.team_leader_term
   %tbody
     - teams.each do |team|

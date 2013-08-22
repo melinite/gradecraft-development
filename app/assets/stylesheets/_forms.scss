@@ -4,10 +4,13 @@
 
 .form-horizontal {
   background-color: #eee;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .form-horizontal input {
   margin-top: 5px;
+
 }
 
 .form-horizontal .help-inline {
@@ -15,9 +18,12 @@
 }
 
 .form-actions {
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .form-group {
   clear: left;
+}
+.form-actions input {
+  margin-top: 0px;
 }

@@ -72,7 +72,7 @@ class EarnedBadgesController < ApplicationController
     @earned_badge = @badge.earned_badges.build(params[:earned_badge])
     respond_to do |format|
       if @earned_badge.save
-        format.html { redirect_to badge_earned_badges_path(@badge), notice: 'Badge was successfully awarded.' }
+        format.html { redirect_to badge_path(@badge), notice: 'Badge was successfully awarded.' }
       else
         format.html { render action: "new" }
         format.json { render json: @earned_badge.errors, status: :unprocessable_entity }

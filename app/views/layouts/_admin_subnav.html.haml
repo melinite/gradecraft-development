@@ -1,7 +1,7 @@
 :javascript
   Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
 %form.quick_search
-  %div.dropdown
+  .dropdown
     %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search Users", :label => false }
 %ul.nav.nav-list#sidebar
   %li.nav-header Students
@@ -16,7 +16,7 @@
   %li.icn_cup= link_to "#{current_course.team_term} Challenges", challenges_path
   %li.icn_star= link_to "Assignments", assignments_path
   %li.icn_categories= link_to "Assignment Types", assignment_types_path
-  %li.icn_screenshot= link_to "Learning Objectives"
+  //%li.icn_screenshot= link_to "Learning Objectives"
   %li.icn_star= link_to 'Rubrics', rubrics_path
   %li.divider
   %li.nav-header Analytics

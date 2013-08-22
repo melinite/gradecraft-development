@@ -29,6 +29,19 @@ course = Course.create! do |c|
   c.accepts_submissions = true
   c.predictor_setting = true
   c.graph_display = false
+  c.tagline = "You Game the Grade"
+  c.academic_history_visible = true
+  c.media_file = "http://www.youtube.com/watch?v=LOiQUo9nUFM&feature=youtu.be"
+  c.media_credit = "Albus Dumbledore"
+  c.media_caption = "The Greatest Wizard Ever Known"
+  c.office = "Room 4121 SEB"
+  c.phone = "734-644-3674"
+  c.class_email = "staff-educ222@umich.edu"
+  c.twitter_handle = "barryfishman"
+  c.twitter_hashtag = "EDUC222"
+  c.location = "Whitney Auditorium, Room 1309 School of Education Building"
+  c.office_hours = "Tuesdays, 1:30 pm – 3:30 pm"
+  c.meeting_times = "Mondays and Wednesdays, 10:30 am – 12:00 noon"
 end
 puts "Videogames and Learning has been installed"
 
@@ -312,7 +325,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(3).weeks.ago
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(3).weeks.ago
   a.grade_scope = "Individual"
   a.save
   a.tasks.create! do |t|
@@ -343,7 +356,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(3).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(2).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Game Play Update Paper 1 has been posted!"
@@ -352,10 +365,10 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Update Paper 2"
   a.point_total = 120000
-  a.due_at = rand(5).weeks.from_now
+  a.due_at = rand(4).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(3).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Game Play Update Paper 2 has been posted!"
@@ -364,10 +377,10 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Reflection Paper"
   a.point_total = 160000
-  a.due_at = rand(7).weeks.from_now
+  a.due_at = rand(5).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(4).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Game Play Reflection Paper has been posted!"
@@ -379,7 +392,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(4).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(3).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Individual Project 1 has been posted!"
@@ -388,10 +401,10 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
-  a.due_at = rand(7).weeks.from_now
+  a.due_at = rand(5).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(4).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Individual Project 2 has been posted!"
@@ -403,7 +416,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(7).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(6).weeks.from_now
   a.grade_scope = "Group"
 end
 puts "Group Game Design has been posted!"
@@ -417,6 +430,32 @@ grade_scheme_hash.each do |range,letter|
   end
 end
 puts "Installed N.E.W.T. grade scheme for each course"
+
+challenges = []
+
+challenges << Challenge.create! do |c|
+  c.course = course
+  c.name = "House Cup"
+  c.point_total = 1000000
+  c.due_at = rand(7).weeks.from_now
+  c.accepts_submissions = true
+  c.release_necessary = true
+  c.open_at = rand(6).weeks.from_now
+  c.visible = true
+end
+puts "The House Cup Competition begins... "
+
+challenges << Challenge.create! do |c|
+  c.course = course
+  c.name = "Tri-Wizard Tournament"
+  c.point_total = 10000000
+  c.due_at = rand(8).weeks.from_now
+  c.accepts_submissions = true
+  c.release_necessary = true
+  c.open_at = rand(8).weeks.from_now
+  c.visible = true
+end
+puts "Are you willing to brave the Tri-Wizard Tournament?"
 
 LTIProvider.create! do |p|
   p.name = 'Piazza'

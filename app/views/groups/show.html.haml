@@ -1,19 +1,20 @@
 = content_nav_for @group do
-  %li= link_to 'Edit', edit_group_path(@group)
-  %li= link_to 'Back', groups_path
+  %li= link_to "Edit #{@group.name}", edit_group_path(@group)
+  %li= link_to 'See All Groups', groups_path
 
-%p
-  %b Group Name:
-  = @group.name
+.info
+  %p
+    %b Group Name:
+    = @group.name
 
-%p
-  %b Assignment:
+  %p
+    %b Assignment:
 
-%p
-  %b Proposal:
-  = raw @group.text_proposal
+  %p
+    %b Proposal:
+    = raw @group.text_proposal
 
-%p
-  %b Members:
-- @group.group_memberships.each do |gm|
-  %li= link_to gm.student.name, gm.student
+  %p
+    %b Members:
+  - @group.group_memberships.each do |gm|
+    %li= link_to gm.student.name, gm.student

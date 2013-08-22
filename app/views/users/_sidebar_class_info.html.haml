@@ -1,32 +1,38 @@
-.badge.badge-info.col.col-lg-12
-  %h5= current_course.name
-  %p
-    %b Professor
-  - if current_course.phone.present?
+.col-lg-12.col-md-12.col-sm-12.col-xs-12.center#classInfo.badge-secondary-info.section{"data-target" => "#courseInfo", "data-toggle" => "collapse"}
+  %h4= current_course.name
+  #courseInfo.collapse
     %p
-      %b Phone Number:
-      = current_course.phone
-  - if current_course.class_email.present?
-    %p
-      %b Class Email:
-      = mail_to current_course.class_email, current_course.class_email
-  - if current_course.twitter_handle.present?
-    %p
-      %b Twitter Handle:
-      = link_to current_course.twitter_handle, "http://www.twitter.com/#{current_course.twitter_handle}"
-  - if current_course.twitter_hashtag.present?
-    %p
-      %b Hashtag:
-      = link_to current_course.twitter_hashtag, "http://www.twitter.com/#{current_course.twitter_hashtag}"
-  - if current_course.meeting_times.present?
-    %b Classes Meet:
-    %br= current_course.meeting_times
-    %br= current_course.location
-  - if current_course.office.present?
-    %p
-    %b Professor's Office:
-    = current_course.office
-  - if current_course.office_hours.present?
-    %p
-      %b Office Hours:
-      = current_course.office_hours
+      %b Professor
+
+    - @user.team_leader.tap do |team_leader|
+      - if team_leader.present?
+        = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
+    - if current_course.phone.present?
+      %p
+        %b Phone Number:
+        = current_course.phone
+    - if current_course.class_email.present?
+      %p
+        %b Class Email:
+        %p= mail_to current_course.class_email, current_course.class_email
+    - if current_course.twitter_handle.present?
+      %p
+        %b Twitter Handle:
+        = link_to current_course.twitter_handle, "http://www.twitter.com/#{current_course.twitter_handle}"
+    - if current_course.twitter_hashtag.present?
+      %p
+        %b Hashtag:
+        = link_to "##{current_course.twitter_hashtag}", "http://www.twitter.com/##{current_course.twitter_hashtag}"
+    - if current_course.meeting_times.present?
+      %p
+        %b Classes Meet:
+        %p= current_course.meeting_times
+        %p= current_course.location
+    - if current_course.office.present?
+      %p
+        %b Professor's Office:
+        %p= current_course.office
+    - if current_course.office_hours.present?
+      %p
+        %b Office Hours:
+        %p= current_course.office_hours

@@ -1,11 +1,11 @@
-%table.table.table-bordered
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %td Submitted by
-      %td Assignment
-      %td Link
-      %td Comment
-      %td Date Submitted
+      %td{"data-sort" => "string"} Submitted by
+      %td{"data-sort" => "string"} Assignment
+      %td{"data-sort" => "string"} Link
+      %td{"data-sort" => "string"} Comment
+      %td{"data-sort" => "int"} Date Submitted
       %td Grade
   %tbody
     - submissions.each do |submission|

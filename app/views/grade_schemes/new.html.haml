@@ -1,4 +1,5 @@
-= content_nav_for GradeScheme, "New Grade Scheme"
+= content_nav_for GradeScheme, "New Grade Scheme" do
+  %li= link_to 'See All Grade Schemes', grade_schemes_path
 
 %p
 = render 'form'

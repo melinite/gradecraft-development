@@ -1,6 +1,9 @@
 - if current_user.is_staff?
   = content_nav_for @user do
-    %li Back
+    %li= link_to "See All #{current_course.user_term}s", students_users_path
+    %li= link_to "Edit  #{@user.name}'s Profile", edit_user_path(@user)
+
   = render 'staff_view_student_dashboard'
+
 - elsif current_user.is_student?
   = render 'users/student_view_student_dashboard'

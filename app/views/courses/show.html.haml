@@ -1,10 +1,10 @@
 = content_nav_for @course do
-  %li= link_to 'Edit', edit_course_path(@course)
-  %li= link_to 'Back', courses_path
+  %li= link_to 'See All Courses', courses_path
+  %li= link_to "Edit #{@course.name}", edit_course_path(@course)
 
 .well
   %h4 THE BASICS
-  %p
+  %p.clear
     %b Course Title:
     = @course.name
   %p
@@ -60,7 +60,7 @@
 
 .well
   %h4 BADGES
-  %p
+  %p.clear
     %b Badges will be used:
     = @course.badge_setting? ? 'Yes' : 'No'
   %p
@@ -79,7 +79,7 @@
 
 .well
   %h4 TEAMS & GROUPS
-  %p
+  %p.clear
     %b Students will be grouped into teams or sections:
     = @course.team_setting? ? 'Yes' : 'No'
   %p
@@ -110,13 +110,13 @@
 
 .well
   %h4 STUDENTS
-  %p
+  %p.clear
     %b Students will be called:
     = @course.user_term
 
 .well
   %h4 MULTIPLIERS
-  %p
+  %p.clear
     %b User's set:
     = @course.max_assignment_weight
     = @course.assignment_weight_type
