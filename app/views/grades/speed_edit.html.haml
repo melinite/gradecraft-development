@@ -1,0 +1,32 @@
+= content_nav_for @assignment, @student.name do
+  %li
+    = link_to speed_grade_assignment_path(student_id: @previous)  do
+      &lsaquo; #{@previous.name}
+  %li= link_to @student.name, '#'
+  %li
+    = link_to speed_grade_assignment_path(student_id: @next) do
+      #{@next.name} &rsaquo;
+
+.well
+  .panel.panel-default
+    - if @assignment.tasks.present?
+      - @assignment.tasks.each do |task|
+        .panel-heading.clearfix
+          = task.name
+          = link_to 'Use Rubric', '#rubric-modal', class: 'btn btn-xs btn-primary pull-right', 'data-toggle' => 'modal'
+        .panel-body
+          - @student.submissions.find_by(task: task).tap do |submission|
+            - if submission
+              = render 'grades/submission', submission: submission
+            - else
+              %p No submission.
+    - elsif @assignment.submissions.present?
+      - @assignment.submissions.each do |submission|
+        .panel-heading.clearfix
+          Submission
+          = link_to 'Use Rubric', '#rubric-modal', class: 'btn btn-xs btn-primary pull-right', 'data-toggle' => 'modal'
+        .panel-body
+          = render 'grades/submission', submission: submission
+    - else
+      %p No submissions.
+= render 'grades/rubric_modal'

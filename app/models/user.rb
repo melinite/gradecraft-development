@@ -89,6 +89,14 @@ class User < ActiveRecord::Base
     where(kerberos_uid: auth_hash['uid']).first
   end
 
+  def self.previous(user)
+    where('users.last_name < ?', user.last_name).reverse_order.first || last
+  end
+
+  def self.next(user)
+    where('users.last_name > ?', user.last_name).first || first
+  end
+
   #Course
   def find_scoped_courses(course_id)
     if is_admin? || self.course_ids.include?(course_id)

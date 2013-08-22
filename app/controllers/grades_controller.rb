@@ -146,11 +146,17 @@ class GradesController < ApplicationController
     end
   end
 
-  def new_speed_grade
-    @assignment = Assignment.find(params[:id])
-    @student = Student.find(params[:student_id]) if params[:student_id]
-    @student ||= current_course.students.first
+  def speed_edit
+    @assignment = current_course.assignments.find(params[:id])
+    students = current_course.students.alpha
+    @student = students.find_by(id: params[:student_id]) if params[:student_id]
+    @student ||= students.first
+    @previous = students.previous(@student)
+    @next = students.next(@student)
     respond_with @assignment
+  end
+
+  def speed_update
   end
 
   def edit_status

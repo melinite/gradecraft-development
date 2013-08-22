@@ -11,6 +11,9 @@ en:
       submission:
         submission_files:
           filename: 'File'
+    hints:
+      submission:
+        link: 'Where is the assignment located on the web?'
   flash:
     actions:
       create:

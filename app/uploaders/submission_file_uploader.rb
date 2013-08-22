@@ -42,6 +42,10 @@ class SubmissionFileUploader < CarrierWave::Uploader::Base
     #%w(pdf doc docx jpeg gif png)
   #end
 
+  def filename
+    original_filename
+  end
+
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename
