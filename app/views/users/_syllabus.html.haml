@@ -25,5 +25,8 @@
             = render "users/submissions", assignment: assignment
           - if assignment.is_required?
             %span.label.label-important Required!
+          //- if assignment.self_gradeable?
+          //= simple_form_for([assignment, grade], :html => {:class => 'form-horizontal' }) do |f|
+          //= f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary", "data-toggle" => "button" }
           %p= assignment.description
           = render "users/grade", assignment: assignment
