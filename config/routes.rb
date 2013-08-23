@@ -16,6 +16,7 @@ GradeCraft::Application.routes.draw do
     collection do
       get 'edit_profile'
       get 'predictor'
+      get 'top_ten'
       put 'update_profile'
       get 'students'
       get 'staff'

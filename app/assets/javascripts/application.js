@@ -91,9 +91,9 @@ $(document).ready(function(){
 
 	$('#userBarTotalSim').show();
 
-$('#course_id').change(function() { $(this).closest('form').submit(); });
+  $('#course_id').change(function() { $(this).closest('form').submit(); });
 
-$('.nav-tabs').button();
+  $('.nav-tabs').button();
 
 	// handle 'select all' button
 	$(".select-all").click(function(e){
@@ -111,4 +111,12 @@ $('.nav-tabs').button();
 		$link.parents().find("input").prop("checked", false);
 
 	});
+
+  if ($('#grade_distro').length) {
+    $.getJSON('/users/top_ten.json', function (data) {
+      //Make a fancy thing here later maybe
+      console.log(data)
+      $('#grade_distro').sparkline(data.scores, { type: 'box' } )
+    })
+  }
 });
