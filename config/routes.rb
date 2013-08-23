@@ -13,11 +13,11 @@ GradeCraft::Application.routes.draw do
   end
 
   resources :users do
-    get 'predictor'
     collection do
       get 'edit_profile'
       put 'update_profile'
       get 'students'
+      get 'predictor'
       get 'staff'
       get 'final_grades'
       get 'test'
