@@ -171,4 +171,8 @@ class Course < ActiveRecord::Base
   def median_course_score
     #len % 2 == 1 ? sorted[len/2] : (sorted[len/2 - 1] + sorted[len/2]).to_f / 2
   end
+
+  def professor
+    users.where(:role => "professor").first
+  end
 end
