@@ -6,7 +6,7 @@
         %h5= "#{assignment_type.try(:name)}"
         - assignments.each do |assignment|
           - if assignment.soon?
-            - if @user.submissions.where(assignment: assignment)
+            - if @user.submissions.where(assignment.id)
               %div.submitted
                 = "#{assignment.try(:name)}"
                 %div= "Due: #{assignment.try(:due_at).strftime("%b-%d")}"

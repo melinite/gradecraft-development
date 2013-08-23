@@ -122,7 +122,14 @@
   .navbar {
     @include border-radius(0);
     background-color: #333;
+    height: 25px;
+
   }
+
+   .navbar ul.navbar-nav li a {
+      margin: 0;
+      padding: 6px 10px 5px 15px;
+    }
 }
 
 .breadcrumb > li + li:before {
