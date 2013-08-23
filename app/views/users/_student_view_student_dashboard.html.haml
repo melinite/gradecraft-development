@@ -1,4 +1,16 @@
 .col.col-lg-12.col-md-12.col-sm-12.col-xs-12
+  = render 'users/sidebar_grade'
+
+  .sidebar_section= render 'users/sidebar_work'
+
+  - if current_course.has_badges?
+    .sidebar_section= render 'users/sidebar_badges'
+
+  .sidebar_section= render 'users/sidebar_to_do_list'
+
+  %div{:id => "grade_distro"}
+
+.col.col-lg-9
   .section.col.col-lg-12
     = render "users/scoreboard"
     = render "users/main_tabs"
