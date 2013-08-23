@@ -41,7 +41,8 @@ class Assignment < ActiveRecord::Base
     :open_time, :accepts_submissions, :student_logged_button_text,
     :student_logged, :badge_set_id, :release_necessary,
     :score_levels_attributes, :open_at, :close_time, :course,
-    :assignment_rubrics_attributes, :rubrics_attributes
+    :assignment_rubrics_attributes, :rubrics_attributes, :media,
+    :thumbnail, :media_credit, :caption, :media_caption
 
   scope :individual_assignment, -> { where grade_scope: "Individual" }
   scope :group_assignment, -> { where grade_scope: "Group" }

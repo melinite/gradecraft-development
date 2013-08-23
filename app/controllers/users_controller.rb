@@ -112,6 +112,7 @@ class UsersController < ApplicationController
     @badges = current_course.badges.includes(:earned_badges, :tasks)
     @earned_badges = @user.earned_badges
 
+    @form = AssignmentTypeWeightForm.new(@user, current_course)
 
     scores = []
     current_course.assignment_types.each do |assignment_type|
@@ -130,7 +131,7 @@ class UsersController < ApplicationController
     end
   end
 
-    def predictor
+  def predictor
     increment_predictor_views
 
     if current_user.is_staff?

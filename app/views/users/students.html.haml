@@ -19,7 +19,7 @@
       - if current_course.team_roles?
         %th{"data-sort" => "string"} Role
       - if current_user.is_staff?
-        %th Score
+        %th{"data-sort" => "int"} Score
         %th{"data-sort" => "string"} Current Grade
       - if current_course.has_badges?
         %th Badges Earned
