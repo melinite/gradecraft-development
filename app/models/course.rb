@@ -137,7 +137,11 @@ class Course < ActiveRecord::Base
   end
 
   def grade_level_for_score(score)
-    grade_scheme.try(:grade_level_for_course, score)
+    grade_scheme.try(:level, score)
+  end
+
+  def grade_letter_for_score(score)
+    grade_scheme.try(:letter, score)
   end
 
   def membership_for_student(student)
