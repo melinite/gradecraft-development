@@ -2,7 +2,7 @@
 function addCommas(i){
 	numWithCommas = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return numWithCommas;
-};	
+};
 
 var chartOptions = {
   chart: {
@@ -122,7 +122,7 @@ var PredictorView = Backbone.View.extend({
     chartOptions.yAxis.max = this.calculateCourseTotal();
     this.model = new Highcharts.Chart(chartOptions);
   },
-  events: { 
+  events: {
     'change input': 'calculateScores',
     'change select': 'calculateScores',
     'slidestop .slider': 'calculateScores'

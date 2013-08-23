@@ -10,7 +10,7 @@
   %li
     %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Grade Predictor
 .tab-content
-  .tab-pane#tab1.active
+  .tab-pane#tab1
     = render "users/timeline"
   .tab-pane#tab2
     = render "users/calendar"
@@ -18,5 +18,5 @@
     = render "users/badges"
   .tab-pane#tab4
     = render "users/syllabus"
-  .tab-pane#tab5
+  .tab-pane#tab5.active
     = render "users/predictor"

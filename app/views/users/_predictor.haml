@@ -4,7 +4,7 @@
       #projectedPoints
         %h3#pointTally
         = "Your projected points:"
-        %span#predictor-score-display= number_with_delimiter(@user.earned_grades(current_course), :delimiter => ',') if @user.respond_to?(:earned_grades)
+        %span#predictor-score-display= number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')
         = "/"
         %span#predictor-course-total-display= number_with_delimiter(@user.point_total_for_course(current_course), :delimiter => ',')
         %p
@@ -33,12 +33,14 @@
                 - assignment.grades.where(:student_id => @user).first.tap do |grade|
                   - if grade
                     - if assignment.release_necessary? && grade.is_released?
-                      = "You earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"
+                      %span.points.earned= grade.score(@user)
+                      = " out of #{assignment.point_total_for_student(@user)} points"
                       = hidden_field_tag assignment.name, grade.score(@user), :'data-assignment-type-id' => assignment.assignment_type_id
                     - elsif assignment.release_necessary?
                       = "#{assignment.point_total_for_student(@user)} points possible"
                     - else
-                      = "You earned #{ grade.score} out of #{assignment.point_total_for_student(@user)} points"
+                      %span.points.earned= grade.score
+                      %span.points="/ #{assignment.point_total_for_student(@user)} points"
                       = hidden_field_tag assignment.name, grade.score, :'data-assignment-type-id' => assignment.assignment_type_id
                   - else
                     - if assignment_type.fixed?
