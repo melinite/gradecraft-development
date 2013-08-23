@@ -20,42 +20,38 @@
         %li{:id => "slide-#{assignment_type.id}", :data => { :'assignment-type-id' => assignment_type.id, :'assignment-type-name' => assignment_type.name } }
           .slide-panel.col.col-lg-12
             .assignmentType
-              %span.assignmentTypeTitle= assignment_type.name
+              %h4= assignment_type.name
               .pull-right
                 %span.badge.badge-warning
                   = "#{@user.score_for_assignment_type(assignment_type)} / "
                   = "#{assignment_type.assignments.point_total_for_student(@user)} possible points"
-            %p.lead= raw assignment_type.predictor_description
             - assignments.each do |assignment|
-              .assignment
-                %span.assignmentTitle= assignment.try(:name)
+              .assignment.clear
+                %span.assignmentName= assignment.name
                 - if assignment.is_required?
-                  %span.assignmentRequired.label.label-important Required!
-                .assignmentScore
-                - if assignment.is_individual?
-                  - assignment.grades.where(:student_id => @user).first.tap do |grade|
-                    - if grade
-                      - if assignment.release_necessary? && grade.is_released?
-                        = "You earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"
-                        = hidden_field_tag assignment.name, grade.score(@user), :'data-assignment-type-id' => assignment.assignment_type_id
-                      - elsif assignment.release_necessary?
-                        = "#{assignment.point_total_for_student(@user)} points possible"
-                      - else
-                        = "You earned #{ grade.score} out of #{assignment.point_total_for_student(@user)} points"
-                        = hidden_field_tag assignment.name, grade.score, :'data-assignment-type-id' => assignment.assignment_type_id
-
+                  %span.label.label-important Required!
+                - assignment.grades.where(:student_id => @user).first.tap do |grade|
+                  - if grade
+                    - if assignment.release_necessary? && grade.is_released?
+                      = "You earned #{ grade.score(@user) } out of #{assignment.point_total_for_student(@user)} points"
+                      = hidden_field_tag assignment.name, grade.score(@user), :'data-assignment-type-id' => assignment.assignment_type_id
+                    - elsif assignment.release_necessary?
+                      = "#{assignment.point_total_for_student(@user)} points possible"
                     - else
-                      - if assignment_type.fixed?
-                        = "#{assignment.point_total_for_student(@user)} possible points"
-                        %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(@user)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
-                      - elsif assignment_type.slider?
-                        %span.pScore= "0 "
-                        = "/ #{assignment.point_total_for_student(@user)} multiplied possible points"
-                        .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(@user)) , :value => 0 }
+                      = "You earned #{ grade.score} out of #{assignment.point_total_for_student(@user)} points"
+                      = hidden_field_tag assignment.name, grade.score, :'data-assignment-type-id' => assignment.assignment_type_id
+                  - else
+                    - if assignment_type.fixed?
+                      = "#{assignment.point_total_for_student(@user)} possible points"
+                      %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(@user)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
+                    - elsif assignment_type.slider?
+                      %span.pScore= "0 "
+                      = "/ #{assignment.point_total_for_student(@user)} multiplied possible points"
+                      .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(@user)) , :value => 0 }
 
-                      - elsif assignment_type.select?
-                        = "#{assignment.point_total_for_student(@user)} possible points"
-                        = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+                    - elsif assignment_type.select?
+                      = "#{assignment.point_total_for_student(@user)} possible points"
+                      = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
 
       - if current_course.valuable_badges?
         %li#slide-badges{ :data => { 'assignment-type-id' => 'badges', 'assignment-type-name' => 'Badges' } }

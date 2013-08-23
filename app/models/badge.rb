@@ -1,7 +1,8 @@
 class Badge < ActiveRecord::Base
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
     :visible, :created_at, :updated_at, :image_file_name, :can_earn_multiple_times,
-    :badge_set, :category_id, :value, :multiplier, :badge_set_id, :point_total
+    :badge_set, :category_id, :value, :multiplier, :badge_set_id, :point_total,
+    :earned_badges, :earned_badges_attributes, :score
 
   has_many :earned_badges, :dependent => :destroy
 
@@ -11,6 +12,7 @@ class Badge < ActiveRecord::Base
 
   belongs_to :badge_set
   accepts_nested_attributes_for :badge_set
+  accepts_nested_attributes_for :earned_badges
 
   has_many :submissions
 

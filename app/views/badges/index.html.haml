@@ -1,5 +1,5 @@
 = content_nav_for Badge do
-  %li= link_to 'Create a New Badge', new_badge_path
+  %li= link_to "Create New #{current_course.badge_term}", new_badge_path
 
 %table.table.simpleTable.table-striped
   %thead

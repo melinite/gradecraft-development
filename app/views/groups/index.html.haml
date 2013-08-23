@@ -1,5 +1,5 @@
 = content_nav_for Group do
-  %li= link_to 'New Group', new_group_path(@assignment)
+  %li= link_to "New #{current_course.group_term}", new_group_path(@assignment)
 
 %table.table.display.table-bordered
   %thead

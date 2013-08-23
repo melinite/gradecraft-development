@@ -44,6 +44,12 @@ course = Course.create! do |c|
   c.location = "Whitney Auditorium, Room 1309 School of Education Building"
   c.office_hours = "Tuesdays, 1:30 pm – 3:30 pm"
   c.meeting_times = "Mondays and Wednesdays, 10:30 am – 12:00 noon"
+  c.badge_term = "Achievement"
+  c.user_term = "Learner"
+  c.assignment_term = "Quest"
+  c.group_term = "League"
+  c.team_term = "Horde"
+  c.challenge_term = "Battle"
 end
 puts "Videogames and Learning has been installed"
 
@@ -164,7 +170,7 @@ assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Reading Reactions"
   at.point_setting = "Individually"
-  at.points_predictor_display = "Select"
+  at.points_predictor_display = "Select List"
   at.resubmission = false
   at.predictor_description = "Each week, you must write a concise summary or analysis of the reading for that week of no more than 200 words! (200 words is roughly equivalent to one-half page, double-spaced.) Your 201st word will suffer a terrible fate... "
   at.due_date_present = true
@@ -257,11 +263,11 @@ grinding_assignments.each do |assignment|
         s.task = task
         s.text_comment = "Wingardium Leviosa"
         s.link = " "
-      end
-      student.grades.create! do |g|
-        g.submission = submission
-        g.raw_score = assignment.point_total * [0, 1].sample
-      end
+      end#
+#       student.grades.create! do |g|
+#         g.submission = submission
+#         g.raw_score = assignment.point_total * [0, 1].sample
+#       end
     end
   end
 end
