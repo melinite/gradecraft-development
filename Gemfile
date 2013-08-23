@@ -42,6 +42,7 @@ gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
 gem 'timelineJS-rails', '~> 1.1.1'
 gem 'uglifier'
+gem 'whenever'
 
 group :development do
   gem 'bullet'
