@@ -1,24 +1,27 @@
-.filters
-  = form_tag mass_award_earned_badges_path, :method => :get do
-    %br
-    %br
-    %br
-    = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
-    = submit_tag 'Filter', :class => 'btn'
+= content_nav_for @badge, EarnedBadge do
+  %li= link_to 'See All Badges', badges_path
+  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge)
 
-#massAward  
-  %ul.badges
-    = simple_form_for @badges, :html => {:class => 'form-horizontal' }, :url => mass_award_earned_badges_path(:badge_id => @badge.id) do |f|
-      - @earned_badges.each_with_index do |eb,i|
-        - "badge[earned_badges_attributes][#{i}][raw_score]".tap do |raw_score_field_name|
-          - if earned_badge.persisted?
-            = hidden_field_tag "badge[earned_badges_attributes][#{i}][id]", eb.id
-          - else
-            = hidden_field_tag "badge[earned_badges_attributes][#{i}][earnable_id]", eb.earnable.id
-            = hidden_field_tag "badge[earned_badges_attributes][#{i}][earnable_type]", eb.earnable.class.name        
-          = label_tag do
-            = hidden_field_tag raw_score_field_name, 0
-            = check_box_tag raw_score_field_name, eb.value
-            = eb.earnable.try(:name)
-      = f.button :submit
-      = link_to 'Cancel', badges_path, :class => 'btn btn-primary'
+.info
+  .filters
+    = form_tag mass_award_badge_path, :method => :get do
+      = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
+      = submit_tag 'Filter', :class => 'btn'
+
+.col-lg-12#massGrade
+  = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_award_badge_path(@badge) do |f|
+    .btn-group
+      %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
+      %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
+    %table
+      - @earned_badges.each_with_index do |earned_badge, i|
+        %tr
+          %td= link_to earned_badge.student.try(:name), earned_badge.student
+          %td
+            = f.simple_fields_for :earned_badges, earned_badge do |eb|
+              = eb.hidden_field :student_id
+              = label_tag do
+                = eb.check_box :score
+    .form-actions.col-lg-offset-3
+      = f.button :submit, "Award", :class => "btn btn-primary"
+      = link_to 'Cancel', badges_path, :class => 'btn btn-info'

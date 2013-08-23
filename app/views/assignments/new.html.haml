@@ -1,5 +1,5 @@
-= content_nav_for Assignment, "New Assignment" do
-  %li= link_to 'See All Assignments', assignments_path
+= content_nav_for Assignment, "New #{current_course.assignment_term}" do
+  %li= link_to "See All #{current_course.assignment_term}s", assignments_path
 
 = render 'form'
 

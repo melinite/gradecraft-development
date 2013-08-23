@@ -1,6 +1,5 @@
 = content_nav_for Assignment do
-  - if current_user.is_staff?
-    %li= link_to 'Create a New Assignment', new_assignment_path
+  %li= link_to "Create a New #{current_course.assignment_term}", new_assignment_path
 
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
   %h3= link_to assignment_type.name, assignment_type

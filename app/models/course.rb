@@ -10,7 +10,8 @@ class Course < ActiveRecord::Base
     :assignments, :default_assignment_weight, :grade_scheme_id, :accepts_submissions,
     :tagline, :academic_history_visible, :office, :phone, :class_email,
     :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times,
-    :use_timeline, :media_file, :media_credit, :media_caption
+    :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
+    :challenge_term, :badge_term
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -40,23 +41,35 @@ class Course < ActiveRecord::Base
   validates_presence_of :name
 
   def user_term
-     'Player' || super
+    super.presence || 'Player'
   end
 
   def team_term
-    'Team' || super
+    super.presence || 'Team'
   end
 
   def group_term
-    'Group' || super
+    super.presence || 'Group'
   end
 
   def team_leader_term
-    'Team Leader' || super
+    super.presence || 'Team Leader'
   end
 
   def weight_term
-    'Multiplier' || super
+    super.presence || 'Multiplier'
+  end
+
+  def badge_term
+    super.presence || 'Badge'
+  end
+
+  def assignment_term
+    super.presence || 'Assignment'
+  end
+
+  def challenge_term
+    super.presence || 'Challenge'
   end
 
   def students
@@ -124,7 +137,11 @@ class Course < ActiveRecord::Base
   end
 
   def grade_level_for_score(score)
-    grade_scheme.try(:grade_level_for_course, score)
+    grade_scheme.try(:level, score)
+  end
+
+  def grade_letter_for_score(score)
+    grade_scheme.try(:letter, score)
   end
 
   def membership_for_student(student)

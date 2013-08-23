@@ -6,15 +6,12 @@ class TeamsController < ApplicationController
   def index
     @teams = current_course.teams.includes(:earned_badges)
     @title = "#{current_course.team_term}s"
-    respond_with @teams
   end
 
   def show
     @team = current_course.teams.find(params[:id])
-    @title = @team.name
     @challenges = current_course.challenges
     @students = @team.students
-    respond_with @team
   end
 
   def activity

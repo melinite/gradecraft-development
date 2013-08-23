@@ -15,9 +15,9 @@ GradeCraft::Application.routes.draw do
   resources :users do
     collection do
       get 'edit_profile'
-      get 'predictor'
       put 'update_profile'
       get 'students'
+      get 'predictor'
       get 'staff'
       get 'final_grades'
       get 'test'
@@ -49,10 +49,12 @@ GradeCraft::Application.routes.draw do
     resources :tasks
     resources :earned_badges do
       collection do
-        get :mass_award
-        put :mass_update
         get :chart
       end
+    end
+    member do
+      get 'mass_award' => 'earned_badges#mass_award', as: :mass_award
+      put 'mass_award' => 'earned_badges#mass_update'
     end
   end
   resources :groups

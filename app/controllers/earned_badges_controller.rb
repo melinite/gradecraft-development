@@ -96,27 +96,21 @@ class EarnedBadgesController < ApplicationController
     end
   end
 
-
   def mass_award
-    @badges = current_course.badges
+    @badge = Badge.find(params[:id])
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = current_course.users.students.includes(:teams).where(user_search_options)
     @earned_badges = @students.map do |s|
-      EarnedBadge.where(:earnable_id => s.id, :earnable_type => 'User').first || EarnedBadge.new(:earnable => s, :earnable_type => "User")
+      @badge.earned_badges.where(:student_id => s).first || @badge.earned_badges.new(:student => s, :badge => @badge)
     end
   end
 
   def mass_update
-    @earnable = find_earnable
-
-    respond_to do |format|
-      if @earnable.update_attributes(params[:earned_badge])
-      redirect_to chart_earned_badges_path
-      else
-        redirect_to mass_edit_earned_badges_path(@badge)
-      end
-    end
+    @student = find_student
+    @badge = Badge.find(params[:id])
+    @badge.update_attributes(params[:badge])
+    respond_with @badge
   end
 
   def chart
@@ -134,12 +128,13 @@ class EarnedBadgesController < ApplicationController
     end
   end
 
-
-  def find_earnable
-    unless new || index
-      klass = [User, Grade, Team, Group].detect { |c| params["#{c.name.underscore}_id"]}
-      @earnable = klass.find(params["#{klass.name.underscore}_id"])
+  def find_student
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
     end
+    nil
   end
 
 end
