@@ -15,7 +15,7 @@
       %tr
         %td= link_to student.name, user_path(student)
         %td= number_with_delimiter(student.score_for_course(course), :delimiter => ',')
-        %td{:id => "bar-chart_" + student.id.to_s}
+        %td{:data => { :id => student.id.to_s}, :class => "bar-chart" }
         -#%td
           - if student.teams.present?
             = link_to student.teams.first.try(:name), student.teams.first

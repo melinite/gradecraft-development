@@ -143,10 +143,19 @@ class UsersController < ApplicationController
     }
   end
 
-  def top_ten
-    students = current_course.users.order_by_high_score.limit(10)
+  def scores
+    if params.has_key?(:top_ten)
+      scores = current_course.grades.group(:student_id).order('SUM(score)').limit(10)
+      scores = scores.pluck('student_id', 'SUM(score)')
+    elsif params.has_key?(:one)
+      student = User.find params[:user_id]
+      scores = student.scores_by_assignment_type
+    else
+      scores = current_course.grades.group(:student_id).order('SUM(score)')
+      scores = scores.pluck('SUM(score)')
+    end
     render :json => {
-      :students => students
+      :scores => scores
     }
   end
 

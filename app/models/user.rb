@@ -161,6 +161,10 @@ class User < ActiveRecord::Base
     assignment_type.assignments.point_total_for_student(self)
   end
 
+  def scores_by_assignment_type
+    grades.group(:assignment_type_id).pluck('assignment_type_id, SUM(score)')
+  end
+
   def score_for_assignment_type(assignment_type)
     grades.where(assignment_type: assignment_type).score
   end
