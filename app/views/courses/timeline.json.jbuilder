@@ -25,15 +25,15 @@ json.set! :timeline do
       end
     end
   end
-
-  json.set! :era do
-    json.array! @assignments do |assignment|
-      json.startDate "2013,1,9"
-      json.endDate assignment.due_at.utc.strftime("%Y,%m,%d") if assignment.due_at
-      json.headline assignment.name
-      json.text assignment.description
-      #json.tag assignment.assignment_type.name
-    end
-  end
+#
+#   json.set! :era do
+#     json.array! @assignments do |assignment|
+#       json.startDate "2013,1,9"
+#       json.endDate assignment.due_at.utc.strftime("%Y,%m,%d") if assignment.due_at
+#       json.headline assignment.name
+#       json.text assignment.description
+#       #json.tag assignment.assignment_type.name
+#     end
+#   end
 
 end

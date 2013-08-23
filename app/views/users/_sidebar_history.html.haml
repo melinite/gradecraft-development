@@ -1,6 +1,6 @@
 .col.col-lg-12.col-md-12.col-sm-12.col-xs-12#historyInfo.badge-primary{"data-target" => "#academicInfo", "data-toggle" => "collapse"}
   %h4.center Academic History
-  #academicInfo.collapse.clear
+  #academicInfo.collapse
     %p
       %b Major
       = @user.student_academic_history.try(:major)

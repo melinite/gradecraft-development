@@ -1,5 +1,5 @@
 = content_nav_for Badge do
-  %li= link_to 'Create a New Badge', new_badge_path
+  %li= link_to "Create New #{current_course.badge_term}", new_badge_path
 
 %table.table.simpleTable.table-striped
   %thead
@@ -27,15 +27,6 @@
               %ul
                 - badge.tasks.each do |task|
                   %li= task.name
-                %h5 Add a New Task
-                = simple_fields_for(:tasks, :class => "form-inline") do |task|
-                  = task.input :title
-                  = task.input :description
-                  .form-actions
-                    .btn-toolbar
-                      .btn-group
-                        = task.button :submit, "Add Task", :class => "btn-primary btn-tiny"
-
             - if current_course.valuable_badges?
               %td= number_with_delimiter(badge.point_total)
             %td

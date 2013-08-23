@@ -102,9 +102,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    if current_user.is_staff?
-      @title = @user.name
-    end
+
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = @user.assignment_weights
     @assignment_weight = @user.assignment_weights.new
@@ -113,10 +111,26 @@ class UsersController < ApplicationController
     @grades = @user.grades
     @badges = current_course.badges.includes(:earned_badges, :tasks)
     @earned_badges = @user.earned_badges
-    respond_with @user
+
+
+    scores = []
+    current_course.assignment_types.each do |assignment_type|
+      scores << { data: [@user.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
+    end
+
+    earned_badge_score = @user.earned_badges.where(course: current_course).score
+    scores << { :data => [earned_badge_score], :name => 'Badges' }
+
+    assignments = @user.assignments.where(course: current_course)
+    assignments = assignments.graded_for_student(@user) if params[:in_progress]
+
+    respond_to do |format|
+      format.html
+      format.json { render json: { :student_name => @user.name, :scores => scores, :course_total => assignments.point_total + earned_badge_score } }
+    end
   end
 
-  def predictor
+    def predictor
     increment_predictor_views
 
     if current_user.is_staff?

@@ -3,6 +3,7 @@
   %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge)
   %li= link_to 'New Badge', new_badge_path
   %li= link_to 'Award this Badge', new_badge_earned_badge_path(:badge_id => @badge)
+  %li= link_to 'Mass Award this Badge', mass_award_badge_path(:badge_id => @badge)
 
 %h3= @badge.name
 %p

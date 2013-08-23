@@ -12,9 +12,9 @@
   %li.divider
   %li.nav-header Assignments
   //%li.icn_attendance= link_to "Attendance"
-  %li.icn_certificate= link_to "Badges", badges_path
-  %li.icn_cup= link_to "#{current_course.team_term} Challenges", challenges_path
-  %li.icn_star= link_to "Assignments", assignments_path
+  %li.icn_certificate= link_to "#{current_course.badge_term}s", badges_path
+  %li.icn_cup= link_to "#{current_course.team_term} #{current_course.challenge_term}s", challenges_path
+  %li.icn_star= link_to "#{current_course.assignment_term}s", assignments_path
   %li.icn_categories= link_to "Assignment Types", assignment_types_path
   //%li.icn_screenshot= link_to "Learning Objectives"
   %li.icn_star= link_to 'Rubrics', rubrics_path

@@ -8,7 +8,7 @@
     %b Point setting:
     = @assignment_type.point_setting
   %p
-    %b Each Assignment is worth:
+    %b= "Each #{current_course.assignment_term} is worth:"
     = @assignment_type.universal_point_value
   %p
     %b Are there due dates?
