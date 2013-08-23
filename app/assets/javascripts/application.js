@@ -142,7 +142,7 @@ $(document).ready(function(){
 	});
 
   if ($('#grade_distro').length) {
-    $.getJSON('/users/top_ten.json', function (data) {
+    $.getJSON('/users/scores.json', function (data) {
       //Make a fancy thing here later maybe
       console.log(data)
       $('#grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '30px' } )
