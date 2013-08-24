@@ -19,7 +19,8 @@
   %li.nav-header= term_for(:students)
   %li.icn_add_user= link_to "Add New #{term_for(:student)}", new_student_path
   %li.icn_view_users= link_to term_for(:students), students_users_path
-  %li.icn_team= link_to term_for(:teams), teams_path
+  - if current_course.has_teams?
+    %li.icn_team= link_to term_for(:teams), teams_path
   %li.icn_fishes= link_to term_for(:groups), groups_path
   %li.divider
   %li.nav-header= term_for(:assignments)
