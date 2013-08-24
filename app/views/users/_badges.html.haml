@@ -7,6 +7,8 @@
       - if current_course.valuable_badges?
         %th Value
       %th#check Earned?
+      - if current_course.shared_badges?
+        %th Share this with the class?
   %tbody
     - @badges.each do |badge|
       %tr
@@ -27,3 +29,7 @@
             = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d")
             %br
             = badge.earned_badge_for_student(@user).feedback
+        - if current_course.shared_badges?
+          %td
+            - if badge.earned_badge_for_student(@user)
+              %input{ :type=>"checkbox" }
