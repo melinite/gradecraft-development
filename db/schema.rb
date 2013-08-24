@@ -361,6 +361,24 @@ ActiveRecord::Schema.define(version: 20130825015120) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "elements", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "badge_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.integer  "order"
+    t.string   "category"
+    t.string   "audience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "grade_scheme_elements", force: true do |t|
     t.string   "level"
     t.integer  "low_range"
