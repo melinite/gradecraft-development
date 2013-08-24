@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
 
   has_many :course_memberships
-  has_many :student_academic_history, :foreign_key => :student_id
+  has_one :student_academic_history, :foreign_key => :student_id
   has_many :courses, :through => :course_memberships
   accepts_nested_attributes_for :courses
   accepts_nested_attributes_for :course_memberships
