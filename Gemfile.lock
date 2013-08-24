@@ -1,13 +1,4 @@
 GIT
-  remote: git@github.com:bernat/best_in_place.git
-  revision: 366413be357d65cdf47031e928aea969f72e3659
-  branch: rails-4
-  specs:
-    best_in_place (2.0.3)
-      jquery-rails
-      rails (~> 4)
-
-GIT
   remote: https://github.com/milgner/compass-rails
   revision: c86e7fd9c2605c80816a2f64a3fb8b7c3a09e494
   branch: rails4
@@ -305,7 +296,6 @@ DEPENDENCIES
   actionpack-page_caching
   active_model_serializers
   airbrake
-  best_in_place!
   bullet
   canable
   capybara
