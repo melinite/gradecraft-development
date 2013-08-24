@@ -9,6 +9,8 @@
     %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Assignments
   %li
     %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Grade Predictor
+  %li
+    %a{ "data-toggle" => "tab", "data-target" => "#tab6"} Grading Philosophy
 .tab-content
   .tab-pane#tab1.active
     = render "users/timeline"
@@ -20,3 +22,5 @@
     = render "users/syllabus"
   .tab-pane#tab5
     = render "users/predictor"
+  .tab-pane#tab6
+    = render "users/grading_philosophy"

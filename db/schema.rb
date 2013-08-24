@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130822134106) do
+ActiveRecord::Schema.define(version: 20130824184813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,24 @@ ActiveRecord::Schema.define(version: 20130822134106) do
   add_index "assignment_rubrics", ["assignment_id"], name: "index_assignment_rubrics_on_assignment_id", using: :btree
   add_index "assignment_rubrics", ["rubric_id"], name: "index_assignment_rubrics_on_rubric_id", using: :btree
 
+  create_table "assignment_submissions", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.string   "feedback"
+    t.string   "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "link"
+    t.integer  "submittable_id"
+    t.string   "submittable_type"
+    t.text     "text_feedback"
+    t.text     "text_comment"
+  end
+
   create_table "assignment_types", force: true do |t|
     t.string   "name"
     t.string   "point_setting"
@@ -44,7 +62,7 @@ ActiveRecord::Schema.define(version: 20130822134106) do
     t.integer  "resubmission"
     t.integer  "max_value"
     t.integer  "percentage_course"
-    t.string   "predictor_description"
+    t.text     "predictor_description"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.integer  "course_id"
@@ -274,6 +292,7 @@ ActiveRecord::Schema.define(version: 20130822134106) do
     t.string   "assignment_term"
     t.string   "challenge_term"
     t.boolean  "use_timeline"
+    t.text     "grading_philosophy"
   end
 
   create_table "criteria", force: true do |t|
@@ -283,6 +302,15 @@ ActiveRecord::Schema.define(version: 20130822134106) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "category"
+  end
+
+  create_table "criteria_levels", force: true do |t|
+    t.string   "name"
+    t.integer  "criteria_id"
+    t.text     "description"
+    t.integer  "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "criterium_levels", force: true do |t|
@@ -312,6 +340,24 @@ ActiveRecord::Schema.define(version: 20130822134106) do
     t.text     "feedback"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "elements", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "badge_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.integer  "order"
+    t.string   "category"
+    t.string   "audience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "grade_scheme_elements", force: true do |t|
@@ -514,6 +560,13 @@ ActiveRecord::Schema.define(version: 20130822134106) do
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "themes", force: true do |t|
+    t.string   "name"
+    t.string   "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: true do |t|

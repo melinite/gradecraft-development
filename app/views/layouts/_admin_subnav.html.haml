@@ -2,14 +2,14 @@
   Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
 %form.quick_search
   .dropdown
-    %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search Users", :label => false }
+    %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
 %ul.nav.nav-list#sidebar
   %li.nav-header Students
-  %li.icn_add_user= link_to "Add New #{current_course.user_term}s", new_student_path
-  %li.icn_view_users= link_to "#{current_course.user_term}s", students_users_path
+  %li.icn_add_user= link_to "Add New #{current_course.user_term.pluralize}", new_student_path
+  %li.icn_view_users= link_to "#{current_course.user_term.pluralize}", students_users_path
   - if current_course.has_teams?
-    %li.icn_team= link_to "#{current_course.team_term}s", teams_path
-  %li.icn_fishes= link_to "#{current_course.group_term}s", groups_path
+    %li.icn_team= link_to "#{current_course.team_term.pluralize}", teams_path
+  %li.icn_fishes= link_to "#{current_course.group_term.pluralize}", groups_path
   %li.divider
   %li.nav-header Assignments
   //%li.icn_attendance= link_to "Attendance"
