@@ -114,7 +114,7 @@ puts "Percy Weasley has arrived on campus, on time as usual"
 
 students.each do |s|
   StudentAcademicHistory.create! do |ah|
-    ah.student_id = s
+    ah.student_id = s.id
     ah.major = majors.sample
     ah.gpa = [1.5, 2.0, 2.25, 2.5, 2.75, 3.0, 3.33, 3.5, 3.75, 4.0, 4.1].sample
     ah.current_term_credits = rand(12)

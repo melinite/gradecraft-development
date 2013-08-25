@@ -184,6 +184,7 @@ class UsersController < ApplicationController
     @teams = current_course.teams
     @courses = Course.all
     @user = current_course.users.find(params[:id])
+    @academic_history = @user.academic_history
     respond_with @user
   end
 
