@@ -8,7 +8,7 @@
     = f.input :due_at, :include_blank => true
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
-    = f.input :description, :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
+    = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
   .well
     %h4 Timeline
     = f.input :media, :input_html => {:class => 'col-lg-3'}
@@ -18,7 +18,6 @@
   .well
     %h4 Grading
     = f.input :grade_scope, :as => :select, :collection => [["Individual"], ["Group"], ["Team"]], :input_html => {:class => 'input-sm col-lg-3'}
-    = f.input :grade_scheme_id, :collection => current_course.grade_schemes, :as => :select, :label_method => :name, :input_html => {:class => 'input-sm col-lg-3'}
     - if current_course.accepts_submissions?
       = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept submissions for this assignment?", :label => "Assignment Submissions"
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
