@@ -6,7 +6,8 @@
 %ul.nav.nav-list#sidebar
   %li.nav-header Course Setup
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
-  %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
+  - if current_course.grade_scheme_id?
+    %li.icn_calculator= link_to "Grading Scheme", grade_scheme_path(current_course.grade_scheme)
   %li.icn_group= link_to "Staff", staff_users_path
   %li.nav-header Students
   %li.icn_view_users= link_to "#{current_course.user_term.pluralize}", students_users_path
