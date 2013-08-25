@@ -155,6 +155,10 @@ class User < ActiveRecord::Base
     course_memberships.first.shared_badges == 1
   end
 
+  def badges_shared(course)
+    course_memberships.first.shared_badges == 1
+  end
+
   def grade_level_for_course(course)
     course.grade_level_for_score(score_for_course(course))
   end
