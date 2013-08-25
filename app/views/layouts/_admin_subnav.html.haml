@@ -17,6 +17,8 @@
   - if current_course.has_teams?
     %li.icn_team= link_to term_for(:teams), teams_path
   %li.icn_fishes= link_to term_for(:groups), groups_path
+  - if current_course.shared_badges?
+    %li= link_to "Class #{current_course.badge_term.pluralize}", class_badges_users_path
   %li.divider
   %li.nav-header= term_for(:assignments)
   //%li.icn_attendance= link_to "Attendance"
