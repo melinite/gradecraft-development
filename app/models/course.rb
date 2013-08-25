@@ -120,6 +120,15 @@ class Course < ActiveRecord::Base
     shared_badges == true
   end
 
+  def dynamic_office_hours?
+    uri = URI.parse(office_hours)
+    if %w( http https ).include?(uri.scheme)
+      return true
+    else
+      false
+    end
+  end
+
   def student_weighted?
     total_assignment_weight > 0
   end

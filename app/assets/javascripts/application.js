@@ -47,7 +47,19 @@ $(document).ready(function(){
 
   $('#myModal').modal('hide');
 
-  $(".simpleTable").stupidtable();
+  var table = $(".simpleTable").stupidtable({
+    // Sort functions here
+  });
+
+  table.bind('aftertablesort', function (event, data) {
+    // data.column - the index of the column sorted after a click
+    // data.direction - the sorting direction (either asc or desc)
+
+    var th = $(this).find("th");
+    th.find(".arrow").remove();
+    var arrow = data.direction === "asc" ? "↑" : "↓";
+    th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
+  });
 
   $('#easyTab a').click(function (e) {
     e.preventDefault();

@@ -7,8 +7,8 @@
   - if current_course.use_timeline?
     %li.active
       %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Timeline
-  %li
-    %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
+  //%li
+  //%a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
   - if current_course.has_badges?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Badges
@@ -24,8 +24,8 @@
   - if current_course.use_timeline?
     .tab-pane#tab1
       = render "users/timeline"
-  .tab-pane#tab2
-    = render "users/calendar"
+  //.tab-pane#tab2
+  //= render "users/calendar"
   - if current_course.predictor_on?
     .tab-pane#tab3
       = render "users/badges"
