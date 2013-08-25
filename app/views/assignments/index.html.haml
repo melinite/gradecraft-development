@@ -13,6 +13,7 @@
         %th{"data-sort" => "string"} Average
         %th{"data-sort" => "int"} Range
         %th(colspan="1")
+        %th
     %tbody
       - assignments.each do |assignment|
         %tr
@@ -29,4 +30,5 @@
               = link_to "Grade #{ assignment.submissions.count } Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
             - else
               = link_to "Grade", :class => "btn btn-tiny btn-success"
+          %td= link_to "Edit", edit_assignment_path(assignment), :class => 'btn btn-tiny btn-info'
 
