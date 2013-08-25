@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
 gem 'rails', '4.0.0'
 
 gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
 gem 'active_model_serializers'
 gem 'airbrake'
-gem 'best_in_place', git: 'git@github.com:bernat/best_in_place.git', branch: 'rails-4'
 gem 'canable'
 gem 'carrierwave'
 gem 'coffee-rails'
@@ -32,6 +32,7 @@ gem 'protected_attributes'
 gem 'puma'
 gem 'quiet_assets', :group => :development
 gem 'rdiscount'
+gem 'rails_12factor'
 gem 'responders'
 gem 'sampler'
 gem 'sanitize'

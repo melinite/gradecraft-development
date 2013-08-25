@@ -111,6 +111,23 @@ students << User.create! do |u|
 end
 puts "Percy Weasley has arrived on campus, on time as usual"
 
+students.each do |s|
+  StudentAcademicHistory.create! do |ah|
+    ah.student_id = s
+    ah.major = majors.sample
+    ah.gpa = [1.5, 2.0, 2.25, 2.5, 2.75, 3.0, 3.33, 3.5, 3.75, 4.0, 4.1].sample
+    ah.current_term_credits = rand(12)
+    ah.accumulated_credits = rand(40)
+    ah.year_in_school = [1, 2, 3, 4, 5, 6, 7].sample
+    ah.state_of_residence = "Michigan"
+    ah.high_school = "Hogwarts School of Witchcraft & Wizardry"
+    ah.athlete = [false, true].sample
+    ah.act_score = 1 * rand(10)
+    ah.sat_score = 100 * rand(10)
+  end
+end
+puts "And gave students some background"
+
 rubric = course.rubrics.create! do |r|
   r.name = "The Rubric"
   r.description = "Test Rubric"

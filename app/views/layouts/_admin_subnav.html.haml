@@ -2,18 +2,23 @@
   Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
 %form.quick_search
   .dropdown
-    %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search Users", :label => false }
+    %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
 %ul.nav.nav-list#sidebar
+  %li.nav-header Course Setup
+  %li.icn_settings= link_to "Options", edit_course_path(current_course)
+  %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
+  %li.icn_group= link_to "Staff", staff_users_path
   %li.nav-header Students
-  %li.icn_add_user= link_to "Add New #{current_course.user_term}s", new_student_path
-  %li.icn_view_users= link_to "#{current_course.user_term}s", students_users_path
-  %li.icn_team= link_to "#{current_course.team_term}s", teams_path
-  %li.icn_fishes= link_to "#{current_course.group_term}s", groups_path
+  %li.icn_view_users= link_to "#{current_course.user_term.pluralize}", students_users_path
+  - if current_course.has_teams?
+    %li.icn_team= link_to "#{current_course.team_term.pluralize}", teams_path
+  %li.icn_fishes= link_to "#{current_course.group_term.pluralize}", groups_path
   %li.divider
   %li.nav-header Assignments
   //%li.icn_attendance= link_to "Attendance"
   %li.icn_certificate= link_to "#{current_course.badge_term}s", badges_path
-  %li.icn_cup= link_to "#{current_course.team_term} #{current_course.challenge_term}s", challenges_path
+  - if current_course.has_teams?
+    %li.icn_cup= link_to "#{current_course.team_term} #{current_course.challenge_term}s", challenges_path
   %li.icn_star= link_to "#{current_course.assignment_term}s", assignments_path
   %li.icn_categories= link_to "Assignment Types", assignment_types_path
   //%li.icn_screenshot= link_to "Learning Objectives"
@@ -25,16 +30,12 @@
   //%li.icn_stats= link_to "Explore Class Trends"
   //%li.icn_charts= link_to "Compare Teams"
   %li.divider
-  %li.nav-header Course Settings
-  %li.icn_settings= link_to "Options", edit_course_path(current_course)
-  %li.icn_group= link_to "Staff", staff_users_path
-  %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
-  %li.divider
   %li.nav-header Tools
   - LTIProvider.all.each do |tool|
     %li= link_to tool.name, launch_lti_provider_path(tool)
   - if current_user.is_admin?
     %li.divider
     %li.nav-header Admin
+    %li.icn_add_user= link_to "Add New #{current_course.user_term.pluralize}", new_student_path
     %li= link_to "All Users", users_path
     %li= link_to "Course Index", courses_path

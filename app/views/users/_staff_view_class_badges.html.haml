@@ -1,0 +1,20 @@
+= content_nav_for Badge do
+  %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{current_course.badge_term.pluralize}", badges_path, :class => "btn btn-tiny btn-info"
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th #{current_course.user_term}
+      %th #{current_course.badge_term.pluralize}
+      - if current_course.valuable_badges?
+        %th Total Badge Score
+  %tbody
+    - @students.each do |student|
+      %tr
+        %td= student.name
+        %td
+          - student.earned_badges.each do |eb|
+            %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "25"}
+        - if current_course.valuable_badges?
+          %td= student.earned_badges_value(current_course)

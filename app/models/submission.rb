@@ -78,7 +78,7 @@ class Submission < ActiveRecord::Base
   end
 
   def cache_associations
-    self.assignment_id ||= task.try(:assignment_id)
+    self.assignment_id ||= task.try(:taskable_id)
     self.assignment_type ||= task.try(:assignment_type)
     self.course_id ||= assignment.try(:course_id)
   end

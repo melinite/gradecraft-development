@@ -1,5 +1,5 @@
 = content_nav_for User do
-  %li= link_to "Create a New #{current_course.user_term}", new_user_path
+  %li= link_to "Create a New #{current_course.user_term}", new_user_path, :class => "btn btn-tiny btn-info"
 
 .col.col-lg-5.col-sm-5.col-md-5.filters
   = form_tag students_users_path, :method => :get do
