@@ -129,12 +129,13 @@
    .navbar ul.navbar-nav li a {
       margin: 5px;
       color: #FFF;
+      background-color: rgba(245,198,8,1);
       padding: 6px 10px 5px 10px;
     }
 
     .navbar ul.navbar-nav li a:hover {
       background-color: $orange;
-      opacity: .8;
+      opacity: 1;
     }
 }
 

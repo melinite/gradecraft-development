@@ -9,6 +9,7 @@
       - if assignment_type.student_weightable?
         %a{:href => "#weight_for_assignment_type-#{assignment_type.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Set Weight
         //= render "users/assignment_weights", assignment_type: assignment_type, student: @user.id
+      = raw assignment_type.predictor_description
       - assignments.each do |assignment|
         .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
           %span.assignmentName= assignment.name
