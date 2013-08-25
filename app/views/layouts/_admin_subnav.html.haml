@@ -4,8 +4,11 @@
   .dropdown
     %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
 %ul.nav.nav-list#sidebar
+  %li.nav-header Course Setup
+  %li.icn_settings= link_to "Options", edit_course_path(current_course)
+  %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
+  %li.icn_group= link_to "Staff", staff_users_path
   %li.nav-header Students
-  %li.icn_add_user= link_to "Add New #{current_course.user_term.pluralize}", new_student_path
   %li.icn_view_users= link_to "#{current_course.user_term.pluralize}", students_users_path
   - if current_course.has_teams?
     %li.icn_team= link_to "#{current_course.team_term.pluralize}", teams_path
@@ -27,16 +30,12 @@
   //%li.icn_stats= link_to "Explore Class Trends"
   //%li.icn_charts= link_to "Compare Teams"
   %li.divider
-  %li.nav-header Course Settings
-  %li.icn_settings= link_to "Options", edit_course_path(current_course)
-  %li.icn_group= link_to "Staff", staff_users_path
-  %li.icn_calculator= link_to "Grading Scheme", grade_schemes_path
-  %li.divider
   %li.nav-header Tools
   - LTIProvider.all.each do |tool|
     %li= link_to tool.name, launch_lti_provider_path(tool)
   - if current_user.is_admin?
     %li.divider
     %li.nav-header Admin
+    %li.icn_add_user= link_to "Add New #{current_course.user_term.pluralize}", new_student_path
     %li= link_to "All Users", users_path
     %li= link_to "Course Index", courses_path

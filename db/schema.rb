@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130824190030) do
+ActiveRecord::Schema.define(version: 20130825015120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20130824190030) do
     t.integer "course_id"
     t.integer "user_id"
     t.integer "score",         default: 0, null: false
-    t.string  "shared_badges"
+    t.boolean "shared_badges"
   end
 
   add_index "course_memberships", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree

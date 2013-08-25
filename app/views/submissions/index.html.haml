@@ -1,5 +1,5 @@
 = content_nav_for @assignment, Submission do
-  %li= link_to "New Submission", new_assignment_submission_path(@assignment)
+  %li= link_to "New Submission", new_assignment_submission_path(@assignment), :class => "btn btn-tiny btn-info"
 
 %table.table.table-bordered.display#sortableTable.tablesorter
   %tr

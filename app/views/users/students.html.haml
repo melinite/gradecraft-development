@@ -1,7 +1,7 @@
 = content_nav_for User, "#{current_course.user_term}s" do
-  %li= link_to "Create a New #{current_course.user_term}", new_user_path
-  %li= link_to "Download CSV", students_users_path(format: "csv") |
-  %li= link_to "Download Excel", students_users_path(format: "xls")
+  %li= link_to "Create a New #{current_course.user_term}", new_user_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Download CSV", students_users_path(format: "csv"), :class => "btn btn-tiny btn-info" |
+  %li= link_to "Download Excel", students_users_path(format: "xls"), :class => "btn btn-tiny btn-info"
 
 .col.col-lg-12.filters
   .col.col-lg-5.col-sm-5.col-md-5

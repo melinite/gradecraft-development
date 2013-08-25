@@ -1,6 +1,6 @@
 = content_nav_for ChallengeGrade do
-  %li= link_to 'Edit', edit_challenge_challenge_grade_path(@challenge, @challenge_grade)
-  %li= link_to 'Back', challenge_challenge_grades_path(@challenge)
+  %li= link_to 'Edit', edit_challenge_challenge_grade_path(@challenge, @challenge_grade), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Back', challenge_challenge_grades_path(@challenge), :class => "btn btn-tiny btn-info"
 
 %p
   %b Challenge:

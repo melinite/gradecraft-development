@@ -1,6 +1,6 @@
 = content_nav_for User do
-  %li= link_to "See All #{current_course.user_term}s", students_users_path
-  %li= link_to "View #{@user.name}'s Dashboard", @user
+  %li= link_to "See All #{current_course.user_term}s", students_users_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "View #{@user.name}'s Dashboard", @user, :class => "btn btn-tiny btn-info"
 
 - if current_user.is_staff?
   = render 'form'

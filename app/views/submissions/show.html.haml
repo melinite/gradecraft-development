@@ -1,6 +1,6 @@
 = content_nav_for Submission do
-  %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id)
-  %li= link_to 'Back', assignment_path(@assignment)
+  %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Back', assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
 .info
   %p

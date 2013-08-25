@@ -1,6 +1,6 @@
 = content_nav_for @challenge do
-  %li= link_to 'See All Challenges', challenges_path
-  %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge)
+  %li= link_to 'See All Challenges', challenges_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "btn btn-tiny btn-info"
 
 %h3= @title
 
