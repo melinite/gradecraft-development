@@ -7,7 +7,8 @@
         = "/"
         = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
       - if assignment_type.student_weightable?
-        %a{:href => "#weight_for_assignment_type-#{assignment_type.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Set Weight
+        .clear
+        %a{:href => "#weight_for_assignment_type-#{assignment_type.id}", :role => "button", :class => "span badge badge-primary badge-xs pull-right", "data-toggle" => "modal"} Set Weight
         //= render "users/assignment_weights", assignment_type: assignment_type, student: @user.id
       %p= raw assignment_type.predictor_description
       - assignments.each do |assignment|
