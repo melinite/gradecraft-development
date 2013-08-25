@@ -2,6 +2,8 @@
   %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "btn btn-tiny btn-info"
   %li= link_to "See All #{current_course.badge_term.pluralize}", badges_path, :class => "btn btn-tiny btn-info"
 
+%h4 Class #{current_course.badge_term.pluralize}
+
 %table.table.table-striped
   %thead
     %tr

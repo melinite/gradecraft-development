@@ -8,8 +8,9 @@
   Current Level:
   %span#userScoreNum #{@user.grade_level_for_course(current_course)}
 - if current_course.graph_display?
-  #userBarInProgress
-  #userBarTotal
+  %div.charts.clear
+    %div#userBarInProgress{:class => "dashboard-toggle"}
+    %div#userBarTotal{:class => "dashboard-toggle"}
 - else
   %div.charts.clear
     %div#userBarInProgress{:class => "dashboard-toggle"}
