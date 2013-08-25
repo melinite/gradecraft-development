@@ -129,17 +129,18 @@
    .navbar ul.navbar-nav li a {
       margin: 5px;
       color: #FFF;
-      padding: 6px 10px 5px 15px;
+      padding: 6px 10px 5px 10px;
+    }
+
+    .navbar ul.navbar-nav li a:hover {
+      background-color: $orange;
+      opacity: .8;
     }
 }
 
 .breadcrumb > li + li:before {
   color: rgba(#fff, .7);
   content: '\203A';
-}
-
-.content-nav .navbar-nav li a:hover {
-  color: orange;
 }
 
 .col-sm-9 .navbar-nav li a {

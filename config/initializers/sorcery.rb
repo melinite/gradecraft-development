@@ -23,7 +23,7 @@ Rails.application.config.sorcery.configure do |config|
                                                                       # Useful for remember_me submodule
 
   # -- session timeout --
-   config.session_timeout = 3600                                     # how long in seconds to keep the session alive.
+   config.session_timeout = 36000                                     # how long in seconds to keep the session alive.
    config.session_timeout_from_last_action = true                    # use the last action as the beginning of
                                                                       # session timeout.
 
