@@ -9,6 +9,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery.omniselect
+//= require jquery.sparkline.min
 //= require backbone.min
 //= require best_in_place
 //= require best_in_place.purr
