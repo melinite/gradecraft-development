@@ -60,9 +60,15 @@ module BreadcrumbsHelper
     when Array
       breadcrumb_text_for(object[0], options = {})
     when Class
-      object.model_name.human.pluralize.titleize
+      plural = object.model_name.plural
+      term_for plural.to_sym, plural.titleize
     when ActiveRecord::Base
-      object.persisted? ? object.name : object.class.model_name.human.titleize
+      if object.persisted?
+        object.name
+      else
+        plural = object.class.model_name.plural
+        term_for plural.to_sym, plural.titleize
+      end
     else
       if options[:prevous]
         object % breadcrumb_link_for(options[:previous])
