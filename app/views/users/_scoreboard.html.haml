@@ -7,15 +7,12 @@
   %span#userScoreNum #{number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')}
   Current Level:
   %span#userScoreNum #{@user.grade_level_for_course(current_course)}
-- if current_course.graph_display?
-  %div.charts.clear
-    %div#userBarInProgress{:class => "dashboard-toggle"}
-    %div#userBarTotal{:class => "dashboard-toggle"}
-- else
-  %div.charts.clear
-    %div#userBarInProgress{:class => "dashboard-toggle"}
-    %a{:href => "#", :id => "totalScoreToggle", :class => "dashboard-toggle"}
+.charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")
+  .chart-wrapper.user-bar-in-progress-chart
+    .chart#userBarInProgress
+    = link_to '#', 'data-shows' => '.user-bar-total-chart', class: 'dashboard-toggle' do
       Show me my score out of the total course points
-    %div#userBarTotal{:class => "dashboard-toggle"}
-    %a{:href => "#", :id => "soFarScoreToggle", :class => "dashboard-toggle"}
+  .chart-wrapper.user-bar-total-chart
+    .chart#userBarTotal
+    = link_to '#', 'data-shows' => '.user-bar-in-progress-chart', class: 'dashboard-toggle' do
       Show me my score out of the points available points so far
