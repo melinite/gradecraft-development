@@ -3,7 +3,7 @@
   #courseInfo.collapse
     %p
       %b Professor
-
+      = current_course.professor.try(:name)
     - @user.team_leader.tap do |team_leader|
       - if team_leader.present?
         = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
@@ -35,4 +35,4 @@
     - if current_course.office_hours.present?
       %p
         %b Office Hours:
-        %p= current_course.office_hours
+        = current_course.office_hours

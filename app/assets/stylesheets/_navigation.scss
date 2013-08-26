@@ -52,6 +52,10 @@
     background-color: $blue;
   }
 
+  select.btn-tiny {
+    background-color: $lightblue;
+  }
+
 }
 
 
@@ -122,16 +126,26 @@
   .navbar {
     @include border-radius(0);
     background-color: #333;
+    height: 25px;
+
   }
+
+   .navbar ul.navbar-nav li a {
+      margin: 5px;
+      color: #FFF;
+      background-color: #666666;
+      padding: 6px 10px 5px 10px;
+    }
+
+    .navbar ul.navbar-nav li a:hover {
+      background-color: $orange;
+      opacity: 1;
+    }
 }
 
 .breadcrumb > li + li:before {
   color: rgba(#fff, .7);
   content: '\203A';
-}
-
-.content-nav .navbar-nav li a:hover {
-  color: orange;
 }
 
 .col-sm-9 .navbar-nav li a {

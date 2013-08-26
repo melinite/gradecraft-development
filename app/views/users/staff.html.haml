@@ -1,6 +1,6 @@
 = content_nav_for User, "Staff" do
-  %li= link_to 'See All Users', users_path
-  %li= link_to 'Create a New Staff Member', new_user_path
+  %li= link_to 'See All Users', users_path, :class => "btn btn-tiny btn-info"
+  %li= link_to 'Create a New Staff Member', new_user_path, :class => "btn btn-tiny btn-info"
 
 %table.table.display.table-bordered#sortableTable.tablesorter
   %thead

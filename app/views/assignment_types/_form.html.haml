@@ -13,7 +13,8 @@
     %h4 Predictor Settings
     = f.input :order_placement, :label => "Assignment Type Order", :hint => "What order would you like the assignment types to appear in?", :input_html => {:class => "col-lg-3"}
     = f.input :points_predictor_display, :collection => [["Fixed"], ["Slider"], ["Select List"], ["Set per Assignment"]], :input_html => {:class => "input-sm col-lg-3"}
-    = f.input :predictor_description, :as => :text, :input_html => {:style => "width: 100%; height: 200px;"}, :label => "Predictor Display Text", :hint => "How would you like to describe this assignment type in the predictor? Are there hints that you can give students that will help them understand how to succeed?"
+    %h4 Predictor Description
+    = f.text_area :predictor_description, :class => :ckeditor, :input_html => {:style => "width: 100%; height: 200px;"}, :label => "Predictor Display Text", :hint => "How would you like to describe this assignment type in the predictor? Are there hints that you can give students that will help them understand how to succeed?"
   .well
     %h4 Grading
     = f.input :mass_grade, :label => "Mass Grading", :hint => "Do you want to be able to grade all students who submit this assignment in a single screen?"

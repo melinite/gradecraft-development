@@ -18,22 +18,22 @@ $orange: #F4A425;
 
 @font-face {
   font-family: 'Pontano Sans';
-  src: font-url('pontano-sans-regular.ttf') format('truetype');
+  src: url('/assets/pontano-sans-regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'IMF';
-  src: font-url('IMFeDPrm28P.ttf') format('truetype');
+  src: url('/assets/IMFeDPrm28P.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'IMF italic';
-  src: font-url('IMFeDPit28P.ttf') format('truetype');
+  src: url('/assets/IMFeDPit28P.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Overlock';
-  src: font-url('Overlock-Regular.ttf') format('truetype');
+  src: url('/assets/Overlock-Regular.ttf') format('truetype');
 }
 
 
@@ -61,7 +61,6 @@ h1, h2, h3, h4, h5, h6 {
 .primaryContent {
   h1, h2, h3, h4, h5, h6 {
     padding: 5px 15px 5px 15px;
-    float: left;
   }
 }
 
@@ -72,6 +71,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   .primaryContent {
     background-color: white;
+    padding: 10px;
     p {
       width: 70%;
       margin: 25px 15px;
@@ -152,6 +152,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .info {
   padding: 10px 15px;
+}
+
+p {
+ font-family: "Georgia",Times New Roman,Times,serif !important;
 }
 
 

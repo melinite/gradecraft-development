@@ -9,7 +9,7 @@
   background-color: $lightblue;
 }
 
-.badge-secondary-info {
+.badge-secondary-info, .btn-secondary {
   background-color: $blue;
 }
 
@@ -28,7 +28,7 @@
   color: #FFF;
 }
 
-.btn-info, .badge-info, .alert-info  {
+.btn-info, .badge-info, .alert-info {
   background-color: $orange;
 }
 
@@ -41,8 +41,16 @@
 }
 
 .btn.btn-tiny {
-  padding: 3px 5px;
   font-size: 11px;
   line-height: 1.0;
-  border-radius: 3px;
+  border-radius: 4px;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.open .dropdown-toggle.btn-info {
+  color: #ffffff;
+  background-color: $orange;
 }

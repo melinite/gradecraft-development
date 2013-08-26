@@ -11,7 +11,7 @@ class Course < ActiveRecord::Base
     :tagline, :academic_history_visible, :office, :phone, :class_email,
     :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times,
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
-    :challenge_term, :badge_term
+    :challenge_term, :badge_term, :grading_philosophy
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -120,6 +120,15 @@ class Course < ActiveRecord::Base
     shared_badges == true
   end
 
+  def dynamic_office_hours?
+    uri = URI.parse(office_hours)
+    if %w( http https ).include?(uri.scheme)
+      return true
+    else
+      false
+    end
+  end
+
   def student_weighted?
     total_assignment_weight > 0
   end
@@ -170,5 +179,9 @@ class Course < ActiveRecord::Base
 
   def median_course_score
     #len % 2 == 1 ? sorted[len/2] : (sorted[len/2 - 1] + sorted[len/2]).to_f / 2
+  end
+
+  def professor
+    users.where(:role => "professor").first
   end
 end

@@ -6,19 +6,28 @@
       = @user.student_academic_history.try(:major)
     %p
       %b UM GPA
+      = @user.student_academic_history.try(:gpa)
     %p
       %b Credits enrolled this term
+      = @user.student_academic_history.try(:current_term_credits)
     %p
       %b Accumulated credits
+      = @user.student_academic_history.try(:accumulated_credits)
     %p
       %b Year in School
+      = @user.student_academic_history.try(:year_in_school)
     %p
       %b State of Residence
+      = @user.student_academic_history.try(:state_of_residence)
     %p
       %b High School
+      = @user.student_academic_history.try(:high_school)
     %p
       %b Athlete
+      = @user.student_academic_history.try(:athlete)
     %p
       %b ACT score
+      = @user.student_academic_history.try(:act_score)
     %p
       %b SAT score
+      = @user.student_academic_history.try(:sat_score)

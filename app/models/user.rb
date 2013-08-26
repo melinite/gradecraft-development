@@ -18,7 +18,8 @@ class User < ActiveRecord::Base
     :display_name, :private_display, :default_course_id, :last_activity_at,
     :last_login_at, :last_logout_at, :team_ids, :courses, :course_ids,
     :shared_badges, :earned_badges, :earned_badges_attributes,
-    :remember_me_token
+    :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
+    :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score
 
   #has_secure_password
 
@@ -27,11 +28,11 @@ class User < ActiveRecord::Base
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
 
   has_many :course_memberships
-  has_many :student_academic_history, :foreign_key => :student_id
+  has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
+  accepts_nested_attributes_for :student_academic_history
   has_many :courses, :through => :course_memberships
   accepts_nested_attributes_for :courses
   accepts_nested_attributes_for :course_memberships
-  accepts_nested_attributes_for :student_academic_history
   belongs_to :default_course, :class_name => 'Course'
 
   has_many :assignment_weights, :foreign_key => :student_id
@@ -147,7 +148,11 @@ class User < ActiveRecord::Base
   end
 
   def score_for_course(course)
-    grades.where(course: course).score + earned_badge_score_for_course(course)
+    grades.released.where(course: course).score + earned_badge_score_for_course(course)
+  end
+
+  def badges_shared(course)
+    course_memberships.first.shared_badges == 1
   end
 
   def grade_level_for_course(course)

@@ -1,5 +1,5 @@
 = content_nav_for @challenge, "New Grade" do
-  %li= link_to 'Back', challenge_challenge_grades_path(@challenge)
+  %li= link_to 'Back', challenge_challenge_grades_path(@challenge), :class => "btn btn-tiny btn-info"
 
 %p
 = render 'form'

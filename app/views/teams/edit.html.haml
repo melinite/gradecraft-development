@@ -1,4 +1,4 @@
 = content_nav_for Team, "Edit #{breadcrumb_link_for(@team)}".html_safe do
-  %li= link_to 'See All Teams', teams_path
+  %li= link_to 'See All Teams', teams_path, :class => "btn btn-tiny btn-info"
 
 = render 'form'

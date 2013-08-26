@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
 
-  before_filter :ensure_staff?
+  before_filter :ensure_staff?, :only=>[:index]
 
   def index
     @groups = current_course.groups
@@ -21,6 +21,8 @@ class GroupsController < ApplicationController
   end
 
   def new
+    @user = current_user
+    @badges = @user.badges
     @group = current_course.groups.new
     @assignment = current_course.assignments
     @students = current_course.users.students

@@ -23,7 +23,7 @@ Rails.application.config.sorcery.configure do |config|
                                                                       # Useful for remember_me submodule
 
   # -- session timeout --
-   config.session_timeout = 3600                                     # how long in seconds to keep the session alive.
+   config.session_timeout = 100000                                     # how long in seconds to keep the session alive.
    config.session_timeout_from_last_action = true                    # use the last action as the beginning of
                                                                       # session timeout.
 
@@ -177,8 +177,6 @@ Rails.application.config.sorcery.configure do |config|
      user.last_login_at_attribute_name = :last_login_at                              # last login attribute name.
      user.last_logout_at_attribute_name = :last_logout_at                            # last logout attribute name.
      user.last_activity_at_attribute_name = :last_activity_at                        # last activity attribute name.
-     user.activity_timeout = 60 * 60                                                 # how long since last activity is
-                                                                                      # the user defined logged out?
 
     # -- external --
     # user.authentications_class = nil                                                # class which holds the various

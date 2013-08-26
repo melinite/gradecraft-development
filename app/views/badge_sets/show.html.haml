@@ -1,7 +1,7 @@
 = content_nav_for @badge_set do
-  %li= link_to 'See All Badge Sets', badge_sets_path
-  %li= link_to "Edit #{@badge_set.name}", edit_badge_set_path(@badge_set)
-  %li= link_to 'Add New Badge', new_badge_path
+  %li= link_to 'See All Badge Sets', badge_sets_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Edit #{@badge_set.name}", edit_badge_set_path(@badge_set), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Add New Badge', new_badge_path, :class => "btn btn-tiny btn-info"
 
 %table.display.table-striped.table.simpleTable
   %thead

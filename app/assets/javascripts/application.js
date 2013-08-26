@@ -47,7 +47,19 @@ $(document).ready(function(){
 
   $('#myModal').modal('hide');
 
-  $(".simpleTable").stupidtable();
+  var table = $(".simpleTable").stupidtable({
+    // Sort functions here
+  });
+
+  table.bind('aftertablesort', function (event, data) {
+    // data.column - the index of the column sorted after a click
+    // data.direction - the sorting direction (either asc or desc)
+
+    var th = $(this).find("th");
+    th.find(".arrow").remove();
+    var arrow = data.direction === "asc" ? "↑" : "↓";
+    th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
+  });
 
   $('#easyTab a').click(function (e) {
     e.preventDefault();
@@ -78,16 +90,27 @@ $(document).ready(function(){
 
 
   $('#userBarInProgress').show();
-	$('#userBarTotal').hide();
+	// $('#userBarTotal').hide();
 	$('#userBarInProgressSim').show();
 	$('#userBarTotalSim').show();
 	$('#totalScoreToggle').show();
   $('#soFarScoreToggle').hide();
+  var $totalChart = $('.user-bar-total-chart');
+  var $inProgressChart = $('#user-bar-in-progress-chart');
 
-  $('a.dashboard-toggle').click(function(){
-    $('.dashboard-toggle').toggle();
-      return false;
-	});
+  var $toggleCharts = $('.toggle-charts'), $toggles = $toggleCharts.find('.dashboard-toggle');
+
+  $toggleCharts.on('click', '.dashboard-toggle', function() {
+    var $toggle = $(this), selector = $toggle.data('shows');
+    $(selector).removeClass('hidden-chart');
+    $toggleCharts.children('.chart-wrapper').not(selector).addClass('hidden-chart');
+    return false;
+  });
+
+  if ($toggleCharts.length) {
+    $toggles.show();
+    $totalChart.addClass('hidden-chart');
+  }
 
   // Fix input element click problem
   $('.dropdown input, .dropdown label').click(function(e) {

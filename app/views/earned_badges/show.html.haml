@@ -1,6 +1,6 @@
 = content_nav_for @badge, @earned_badge do
-  %li= link_to 'Edit', [:edit, :badge, :earned_badge]
-  %li= link_to 'Back', [:badge, :earned_badges]
+  %li= link_to 'Edit', [:edit, :badge, :earned_badge], :class => "btn btn-tiny btn-info"
+  %li= link_to 'Back', [:badge, :earned_badges], :class => "btn btn-tiny btn-info"
 
 %p= @earned_badge.feedback
 

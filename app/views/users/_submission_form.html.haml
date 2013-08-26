@@ -19,7 +19,7 @@
                 = render 'submission_file_fields', f: sf, submission: submission
         %hr
         = link_to 'Add an Attachment', '#', class: 'add-file'
-        = f.text_area :text_comment, :class => :ckeditor, :input_html => { :maxlength => 1000 }, :label => "Text"
+        = f.text_area :text_comment, :class => :ckeditor, :label => "Text"
         .modal-footer
           %a{:href => "#", :class => "btn btn-info", "data-dismiss" => "modal", "aria-hidden" => "true"}Cancel
           = f.button :submit, "Submit", :class => "pull-right btn btn-primary"

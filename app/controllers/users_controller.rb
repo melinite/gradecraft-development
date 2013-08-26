@@ -84,6 +84,21 @@ class UsersController < ApplicationController
     @users = current_course.users
   end
 
+  def class_badges
+    @students = current_course.students.includes(:earned_badges)
+    @user = current_user
+    @assignments = @user.assignments
+    @badges = current_course.badges
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    respond_to do |format|
+      format.html
+      format.json { render json: @users }
+      format.csv { send_data User.csv_for_course(current_course) }
+      format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
+    end
+  end
+
 
   def analytics
     @users = current_course.users
@@ -101,6 +116,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @students = current_course.students.includes(:earned_badges)
     @user = User.find(params[:id])
 
     @assignment_types = current_course.assignment_types.includes(:assignments)
@@ -112,6 +128,7 @@ class UsersController < ApplicationController
     @badges = current_course.badges.includes(:earned_badges, :tasks)
     @earned_badges = @user.earned_badges
 
+    @form = AssignmentTypeWeightForm.new(@user, current_course)
 
     scores = []
     current_course.assignment_types.each do |assignment_type|
@@ -130,7 +147,7 @@ class UsersController < ApplicationController
     end
   end
 
-    def predictor
+  def predictor
     increment_predictor_views
 
     if current_user.is_staff?
@@ -213,15 +230,16 @@ class UsersController < ApplicationController
 
   def edit_profile
     @title = "Edit My Account"
-    respond_with @user = current_user
+    @badges = current_course.badges
+    @user = current_user
+    @assignments = @user.assignments
   end
 
   def update_profile
     @user = current_user
-    @user.update_attribute(:password, params[:password]) if params[:password] == params[:confirm_password]
-    respond_with(@user)
+    @user.update_attributes(params[:user])
+    redirect_to dashboard_path
   end
-
 
   def import
     @title = "Import Users"

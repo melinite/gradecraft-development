@@ -50,6 +50,7 @@ course = Course.create! do |c|
   c.group_term = "League"
   c.team_term = "Horde"
   c.challenge_term = "Battle"
+  c.grading_philosophy ="I believe a grading system should put the learner in control of their own destiny, promote autonomy, and reward effort and risk-taking. Whereas most grading systems start you off with 100% and then chips away at that “perfect grade” by averaging in each successive assignment, the grading system in this course starts everyone off at zero, and then gives you multiple ways to progress towards your goals. Different types of assignments are worth differing amounts of points. Some assignments are required of everyone, others are optional. Some assignments can only be done once, others can be repeated for more points. In most cases, the points you earn for an assignment are based on the quality of your work on that assignment. Do poor work, earn fewer points. Do high-quality work, earn more points. You decide what you want your grade to be. Learning in this class should be an active and engaged endeavor."
 end
 puts "Videogames and Learning has been installed"
 
@@ -110,6 +111,23 @@ students << User.create! do |u|
   u.courses << course
 end
 puts "Percy Weasley has arrived on campus, on time as usual"
+
+students.each do |s|
+  StudentAcademicHistory.create! do |ah|
+    ah.student_id = s.id
+    ah.major = majors.sample
+    ah.gpa = [1.5, 2.0, 2.25, 2.5, 2.75, 3.0, 3.33, 3.5, 3.75, 4.0, 4.1].sample
+    ah.current_term_credits = rand(12)
+    ah.accumulated_credits = rand(40)
+    ah.year_in_school = [1, 2, 3, 4, 5, 6, 7].sample
+    ah.state_of_residence = "Michigan"
+    ah.high_school = "Hogwarts School of Witchcraft & Wizardry"
+    ah.athlete = [false, true].sample
+    ah.act_score = 1 * rand(10)
+    ah.sat_score = 100 * rand(10)
+  end
+end
+puts "And gave students some background"
 
 rubric = course.rubrics.create! do |r|
   r.name = "The Rubric"
@@ -263,11 +281,11 @@ grinding_assignments.each do |assignment|
         s.task = task
         s.text_comment = "Wingardium Leviosa"
         s.link = " "
-      end#
-#       student.grades.create! do |g|
-#         g.submission = submission
-#         g.raw_score = assignment.point_total * [0, 1].sample
-#       end
+      end
+      student.grades.create! do |g|
+        g.submission = submission
+        g.raw_score = assignment.point_total * [0, 1].sample
+      end
     end
   end
 end

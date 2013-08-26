@@ -1,0 +1,17 @@
+.primaryContent
+  %table.table.table-striped
+    %thead
+      %tr
+        %th #{current_course.user_term}
+        %th #{current_course.badge_term.pluralize}
+        - if current_course.valuable_badges?
+          %th Total Badge Score
+    %tbody
+      - @students.each do |s|
+        - if s.badges_shared(current_course)
+          %tr
+            %td= s.name
+            %td
+              - s.earned_badges.each do |eb|
+                - if eb.shared?
+                  %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "25"}

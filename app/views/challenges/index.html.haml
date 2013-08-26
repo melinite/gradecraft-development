@@ -1,6 +1,6 @@
 = content_nav_for Challenge do
   - if current_user.is_staff?
-    %li= link_to 'New Challenge', new_challenge_path
+    %li= link_to 'New Challenge', new_challenge_path, :class => "btn btn-tiny btn-info"
 
 %table.table-striped.table.simpleTable
   %thead

@@ -1,6 +1,6 @@
 = content_nav_for @group do
-  %li= link_to "Edit #{@group.name}", edit_group_path(@group)
-  %li= link_to 'See All Groups', groups_path
+  %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
+  %li= link_to 'See All Groups', groups_path, :class => "btn btn-tiny btn-info"
 
 .info
   %p

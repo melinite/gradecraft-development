@@ -19,6 +19,9 @@
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
     = f.input :predictor_setting, :label => "Can the students see the predictor on their dashboard?", :as => :radio_buttons
+    %h4 Grading Philosophy
+    %p What would you like to tell students about how they should expected to be graded?
+    = f.text_area :grading_philosophy, :class => :ckeditor, :label => "What would you like to tell students about how they should expected to be graded?", :input_html => {:style => "width: 100%; height: 200px;"}
 
   .well
     %h4 BADGES

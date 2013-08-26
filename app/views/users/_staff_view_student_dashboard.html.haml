@@ -9,7 +9,8 @@
 
   .sidebar_section.center.section= link_to @user.email, "mailto:#{@user.email}"
 
-  .sidebar_section= render "sidebar_class_info"
+  - if current_user.is_prof? || current_user.is_staff? && current_course.academic_history_visible?
+    .sidebar_section= render "sidebar_class_info"
 
   .sidebar_section= render "sidebar_history"
 

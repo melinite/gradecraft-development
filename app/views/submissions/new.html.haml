@@ -1,5 +1,5 @@
 = content_nav_for @assignment, Submission, "New Submission" do
-  %li= link_to "Back to #{@assignment.name}", @assignment
+  %li= link_to "Back to #{@assignment.name}", @assignment, :class => "btn btn-tiny btn-info"
 
 = render 'form'
 
