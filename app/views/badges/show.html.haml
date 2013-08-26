@@ -1,9 +1,9 @@
 = content_nav_for @badge do
-  %li= link_to 'See All Badges', badges_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
-  %li= link_to 'New Badge', new_badge_path, :class => "btn btn-tiny btn-info"
-  %li= link_to 'Award this Badge', new_badge_earned_badge_path(:badge_id => @badge), :class => "btn btn-tiny btn-info"
-  %li= link_to 'Mass Award this Badge', mass_award_badge_path(@badge), :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :badges}", badges_path
+  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge)
+  %li= link_to "New #{term_for :badge}", new_badge_path
+  %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge)
+  %li= link_to "Mass Award this #{term_for :badge}", mass_award_badge_path(@badge)
 
 %h3= @badge.name
 %p
@@ -42,7 +42,7 @@
 
   %hr
 
-%h4.clear Awarded Badges:
+%h4.clear Awarded #{term_for :badges}
 
 %table.table.table-striped.table-condensed
   %thead

@@ -1,4 +1,4 @@
 = content_nav_for AssignmentType, "Edit #{breadcrumb_link_for(@assignment_type)}".html_safe do
-  %li= link_to 'See All Assignment Types', assignment_types_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :assignment} Types", assignment_types_path
 
 = render 'form'

@@ -1,5 +1,5 @@
-= content_nav_for BadgeSet do
-  %li= link_to 'New Badge Set', new_badge_set_path, :class => "btn btn-tiny btn-info"
+= content_nav_for "#{term_for :badge} Sets" do
+  %li= link_to "New #{term_for :badge} Set", new_badge_set_path
 
 %table.table.display.table-bordered
   %thead

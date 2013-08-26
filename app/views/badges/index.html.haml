@@ -1,6 +1,5 @@
 = content_nav_for Badge do
-  %li= link_to "Create New #{current_course.badge_term.singularize}", new_badge_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Class #{current_course.badge_term.pluralize}", class_badges_users_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create New #{term_for :badge}", new_badge_path
 
 %table.table.simpleTable.table-striped
   %thead

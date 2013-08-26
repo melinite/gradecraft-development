@@ -1,12 +1,7 @@
 = content_nav_for @assignment do
-<<<<<<< HEAD
-  %li= link_to 'See All Assignments', assignments_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Create a New #{current_course.assignment_term}", new_assignment_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
-=======
-  %li= link_to 'See All Assignments', assignments_path
-  %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment)
->>>>>>> Fixed breadcrumbs for course terms
   - if @assignment.assignment_type.mass_grade?
     %li= link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
