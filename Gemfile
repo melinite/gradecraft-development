@@ -32,7 +32,6 @@ gem 'protected_attributes'
 gem 'puma'
 gem 'quiet_assets', :group => :development
 gem 'rdiscount'
-gem 'rails_12factor'
 gem 'responders'
 gem 'sampler'
 gem 'sanitize'

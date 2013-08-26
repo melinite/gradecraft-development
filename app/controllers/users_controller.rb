@@ -188,6 +188,7 @@ class UsersController < ApplicationController
     @courses = Course.all
     @user = current_course.users.find(params[:id])
     @academic_history = @user.student_academic_history
+
     respond_with @user
   end
 

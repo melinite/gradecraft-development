@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
     :last_login_at, :last_logout_at, :team_ids, :courses, :course_ids,
     :shared_badges, :earned_badges, :earned_badges_attributes,
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
-    :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score
+    :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
+    :student_academic_history_attributes
 
   #has_secure_password
 
