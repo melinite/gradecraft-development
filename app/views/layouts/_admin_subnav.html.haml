@@ -23,7 +23,7 @@
   - if current_course.has_teams?
     %li.icn_cup= link_to "#{current_course.team_term} #{current_course.challenge_term}s", challenges_path
   %li.icn_star= link_to "#{current_course.assignment_term}s", assignments_path
-  %li.icn_categories= link_to "Assignment Types", assignment_types_path
+  %li.icn_categories= link_to "#{current_course.assignment_term} Types", assignment_types_path
   //%li.icn_screenshot= link_to "Learning Objectives"
   %li.icn_star= link_to 'Rubrics', rubrics_path
   %li.divider
