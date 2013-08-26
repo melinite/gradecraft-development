@@ -86,6 +86,8 @@ class UsersController < ApplicationController
 
   def class_badges
     @students = current_course.students.includes(:earned_badges)
+    @user = current_user
+    @assignments = @user.assignments
     @badges = current_course.badges
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
@@ -114,6 +116,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @students = current_course.students.includes(:earned_badges)
     @user = User.find(params[:id])
 
     @assignment_types = current_course.assignment_types.includes(:assignments)
@@ -184,7 +187,6 @@ class UsersController < ApplicationController
     @teams = current_course.teams
     @courses = Course.all
     @user = current_course.users.find(params[:id])
-    @academic_history = @user.academic_history
     respond_with @user
   end
 
@@ -228,7 +230,9 @@ class UsersController < ApplicationController
 
   def edit_profile
     @title = "Edit My Account"
-    respond_with @user = current_user
+    @badges = current_course.badges
+    @user = current_user
+    @assignments = @user.assignments
   end
 
   def update_profile
@@ -236,7 +240,6 @@ class UsersController < ApplicationController
     @user.update_attributes(params[:user])
     redirect_to dashboard_path
   end
-
 
   def import
     @title = "Import Users"

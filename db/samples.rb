@@ -281,11 +281,11 @@ grinding_assignments.each do |assignment|
         s.task = task
         s.text_comment = "Wingardium Leviosa"
         s.link = " "
-      end#
-#       student.grades.create! do |g|
-#         g.submission = submission
-#         g.raw_score = assignment.point_total * [0, 1].sample
-#       end
+      end
+      student.grades.create! do |g|
+        g.submission = submission
+        g.raw_score = assignment.point_total * [0, 1].sample
+      end
     end
   end
 end

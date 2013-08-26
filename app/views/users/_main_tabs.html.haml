@@ -11,7 +11,10 @@
   //%a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
   - if current_course.has_badges?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Badges
+      %a{ "data-toggle" => "tab", "data-target" => "#tab3"} My #{ current_course.badge_term.pluralize}
+  - if current_course.shared_badges?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tab7"} Class #{ current_course.badge_term.pluralize}
   - if current_course.predictor_on?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Grade Predictor
@@ -32,3 +35,6 @@
   - if current_course.predictor_on?
     .tab-pane#tab5
       = render "users/predictor"
+  - if current_course.shared_badges?
+    .tab-pane#tab7
+      //= render "users/student_view_class_badges"

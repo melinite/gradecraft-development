@@ -8,8 +8,8 @@
         = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
       - if assignment_type.student_weightable?
         .clear
-        %a{:href => "#weight_for_assignment_type-#{assignment_type.id}", :role => "button", :class => "span badge badge-primary badge-xs pull-right", "data-toggle" => "modal"} Set Weight
-        //= render "users/assignment_weights", assignment_type: assignment_type, student: @user.id
+        %br
+        %span.pull-right.btn.badge-primary= link_to "Set #{current_course.weight_term}"
       %p= raw assignment_type.predictor_description
       - assignments.each do |assignment|
         .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
@@ -30,5 +30,7 @@
           - if assignment.self_gradeable?
             = simple_form_for([assignment, grade], :html => {:class => 'form-horizontal' }) do |f|
               = f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary", "data-toggle" => "button" }
+          - if assignment.has_groups?
+            = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-sm"
           %p= raw assignment.description
           = render "users/grade", assignment: assignment
