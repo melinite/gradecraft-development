@@ -7,8 +7,9 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
-//= require jquery.omniselect
+//= require jquery.omnisel
 //= require jquery.fileupload
+//= require jquery.sparkline.min
 //= require underscore.min
 //= require backbone.min
 //= require best_in_place
