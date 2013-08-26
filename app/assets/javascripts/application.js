@@ -9,6 +9,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery.omniselect
+//= require jquery.sparkline.min
 //= require backbone.min
 //= require best_in_place
 //= require best_in_place.purr
@@ -118,7 +119,11 @@ $('.nav-tabs').button();
       (function (cell) {
         var id = cell.getAttribute('data-id')
         $.getJSON('/users/scores.json', { one: true, user_id: id }, function (data) {
-          console.log(data)
+          scores = []
+          for (var i=0; i < data.scores.length; i++) {
+            scores.push(data.scores[i][1])
+          }
+          $(cell).sparkline(scores, { type: 'bar', barColor: 'blue' } )
         })
       })($cells[i])
     }
