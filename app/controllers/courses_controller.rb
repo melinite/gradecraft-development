@@ -14,7 +14,7 @@ class CoursesController < ApplicationController
 
   def show
     @title = "Course Settings"
-    @course = Course.find(params[:id])
+    @course = current_course
     @users = current_course.users
     respond_to do |format|
       format.html
@@ -94,6 +94,6 @@ class CoursesController < ApplicationController
 
   def timeline
     @course = current_course
-    @assignments = current_course.assignments
+    @assignments = @course.assignments
   end
 end

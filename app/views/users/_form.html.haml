@@ -14,7 +14,7 @@
     = f.association :courses, :as => :check_boxes
     = f.input :default_course_id, :collection => @courses, :input_html => { :class => "col-lg-4 input-sm"}
 
-    - if @user.is_student?
+    - if @user.persisted? && @user.is_student?
       = f.simple_fields_for(@academic_history) do |ah|
         = ah.input :student_id, :as => :hidden
         = ah.input :major, :input_html => { :class => "col-lg-4"}
