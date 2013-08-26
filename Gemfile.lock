@@ -359,7 +359,7 @@ DEPENDENCIES
   simple_calendar (~> 0.1.9)
   simple_form (~> 3.0.0.rc)
   sorcery
-  timelineJS-rails (~> 1.1.1)
+  timelineJS-rails
   uglifier
   valid_attribute
   whenever

@@ -42,7 +42,7 @@ gem 'sendgrid'
 gem 'simple_calendar', '~> 0.1.9'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'sorcery'
-gem 'timelineJS-rails', '~> 1.1.1'
+gem 'timelineJS-rails'
 gem 'uglifier'
 gem 'whenever'
 
