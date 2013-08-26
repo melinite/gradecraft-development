@@ -90,16 +90,27 @@ $(document).ready(function(){
 
 
   $('#userBarInProgress').show();
-	$('#userBarTotal').hide();
+	// $('#userBarTotal').hide();
 	$('#userBarInProgressSim').show();
 	$('#userBarTotalSim').show();
 	$('#totalScoreToggle').show();
   $('#soFarScoreToggle').hide();
+  var $totalChart = $('.user-bar-total-chart');
+  var $inProgressChart = $('#user-bar-in-progress-chart');
 
-  $('a.dashboard-toggle').click(function(){
-    $('.dashboard-toggle').toggle();
-      return false;
-	});
+  var $toggleCharts = $('.toggle-charts'), $toggles = $toggleCharts.find('.dashboard-toggle');
+
+  $toggleCharts.on('click', '.dashboard-toggle', function() {
+    var $toggle = $(this), selector = $toggle.data('shows');
+    $(selector).removeClass('hidden-chart');
+    $toggleCharts.children('.chart-wrapper').not(selector).addClass('hidden-chart');
+    return false;
+  });
+
+  if ($toggleCharts.length) {
+    $toggles.show();
+    $totalChart.addClass('hidden-chart');
+  }
 
   // Fix input element click problem
   $('.dropdown input, .dropdown label').click(function(e) {
