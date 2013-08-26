@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
   end
 
   def score_for_course(course)
-    grades.where(course: course).score + earned_badge_score_for_course(course)
+    grades.released.where(course: course).score + earned_badge_score_for_course(course)
   end
 
   def badges_shared(course)
