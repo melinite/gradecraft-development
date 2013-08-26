@@ -6,13 +6,6 @@ GradeCraft::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.active_support.deprecation = :log
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.bullet_logger = true
-    Bullet.console = true
-    Bullet.rails_logger = true
-    Bullet.airbrake = true
-  end
   config.assets.compress = false
   config.assets.debug = true
   config.cache_classes = false

@@ -32,8 +32,6 @@ gem 'protected_attributes'
 gem 'puma'
 gem 'quiet_assets', :group => :development
 gem 'rdiscount'
-gem 'rails_12factor'
-gem 'rails_autolink'
 gem 'responders'
 gem 'sampler'
 gem 'sanitize'
@@ -47,7 +45,6 @@ gem 'uglifier'
 gem 'whenever'
 
 group :development do
-  gem 'bullet'
   gem 'guard'
   gem 'guard-minitest'
   gem 'haml-rails'

@@ -3,7 +3,7 @@
   %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
   %li= link_to 'New Badge', new_badge_path, :class => "btn btn-tiny btn-info"
   %li= link_to 'Award this Badge', new_badge_earned_badge_path(:badge_id => @badge), :class => "btn btn-tiny btn-info"
-  %li= link_to 'Mass Award this Badge', mass_award_badge_path(:badge_id => @badge), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Mass Award this Badge', mass_award_badge_path(@badge), :class => "btn btn-tiny btn-info"
 
 %h3= @badge.name
 %p
@@ -47,7 +47,8 @@
 %table.table.table-striped.table-condensed
   %thead
     %tr
-      %th= current_course.user_term
+      %th= term_for(:student)
+      %th Score
       %th Feedback
       %th Date Awarded
       %th
@@ -56,6 +57,7 @@
   %tbody
     - @earned_badges.each do |earned_badge|
       %tr
+        %td= earned_badge.score
         %td= link_to earned_badge.student.try(:name), earned_badge.student
         %td= earned_badge.feedback
         %td= earned_badge.created_at
