@@ -124,7 +124,7 @@ class GradesController < ApplicationController
   end
 
   def mass_edit
-    @assignment = Assignment.find(params[:id])
+    @assignment = current_course.assignments.find(params[:id])
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
     user_search_options = {}

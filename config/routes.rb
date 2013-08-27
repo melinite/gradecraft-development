@@ -53,7 +53,7 @@ GradeCraft::Application.routes.draw do
       end
     end
     member do
-      get 'mass_award' => 'earned_badges#mass_award', as: :mass_award
+      get 'mass_award' => 'earned_badges#mass_edit', as: :mass_award
       put 'mass_award' => 'earned_badges#mass_update'
     end
   end

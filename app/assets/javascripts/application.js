@@ -30,6 +30,7 @@
 //= require timelineJS/embed
 //= require timeline
 //= require stupidtable
+//= require earned_badges
 
 $(document).ready(function(){
 
@@ -128,7 +129,7 @@ $('.nav-tabs').button();
 		var $link = $(this);
 
 		e.preventDefault();
-		$link.parents().find("input").prop("checked", "checked");
+		$link.parents().find('input[type="checkbox"]').prop('checked', 'checked').trigger('change');
 	});
 
 	// handle 'select none' button
@@ -136,7 +137,7 @@ $('.nav-tabs').button();
 	 var $link = $(this);
 
 		e.preventDefault();
-		$link.parents().find("input").prop("checked", false);
+		$link.parents().find('input[type="checkbox"]').prop('checked', false).trigger('change');
 
 	});
 });

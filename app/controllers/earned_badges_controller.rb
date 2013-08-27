@@ -96,14 +96,10 @@ class EarnedBadgesController < ApplicationController
     end
   end
 
-  def mass_award
-    @badge = Badge.find(params[:id])
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @students = current_course.users.students.includes(:teams).where(user_search_options)
-    @earned_badges = @students.map do |s|
-      @badge.earned_badges.where(:student_id => s).first || @badge.earned_badges.new(:student => s, :badge => @badge)
-    end
+  def mass_edit
+    @badge = current_course.badges.find(params[:id])
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    @students = @team ? @team.students : current_course.students
   end
 
   def mass_update

@@ -12,7 +12,7 @@ class Badge < ActiveRecord::Base
 
   belongs_to :badge_set
   accepts_nested_attributes_for :badge_set
-  accepts_nested_attributes_for :earned_badges
+  accepts_nested_attributes_for :earned_badges, allow_destroy: true
 
   has_many :submissions
 
