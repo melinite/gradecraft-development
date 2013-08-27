@@ -19,10 +19,12 @@
   %body(class="#{body_class}")
     .navbar.navbar-fixed-top.navbar-inverse
       .navbar-inner
-        %div.col-lg-11.col-sm-11.col-md-11.col-xs-12
+        .col-lg-9.col-sm-11.col-md-11.col-xs-12
           %a.brand(href="/dashboard")
             - if current_course
               #{current_course.name}
+              |
+              %span.earned= current_course.try(:tagline)
             - else
               GradeCraft
         .pull-right.col-lg-3.col-sm-1.col-md-1.col-xs-12
