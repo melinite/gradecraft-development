@@ -122,7 +122,7 @@ class UsersController < ApplicationController
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = @user.assignment_weights
     @assignment_weight = @user.assignment_weights.new
-    @assignments = current_course.assignments.includes(:submissions, :assignment_type)
+    @assignments = current_course.assignments.includes(:submissions, :assignment_type).order('due_at ASC')
     @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = @user.grades
     @badges = current_course.badges.includes(:earned_badges, :tasks)

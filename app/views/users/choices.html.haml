@@ -1,4 +1,4 @@
-%div
+- if current_course.has_teams?
   = form_tag choices_users_path, :method => :get do
     = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
     = submit_tag 'Filter', :class => 'btn'

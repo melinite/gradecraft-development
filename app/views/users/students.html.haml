@@ -3,7 +3,7 @@
   %li= link_to "Download CSV", students_users_path(format: "csv"), :class => "btn btn-tiny btn-info" |
   %li= link_to "Download Excel", students_users_path(format: "xls"), :class => "btn btn-tiny btn-info"
 
-.col.col-lg-12.filters
+- if current_course.has_teams?
   .col.col-lg-5.col-sm-5.col-md-5
     = form_tag students_users_path, :method => :get do
       = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
