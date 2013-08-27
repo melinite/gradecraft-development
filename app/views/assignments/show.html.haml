@@ -1,6 +1,6 @@
 = content_nav_for @assignment do
   %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Create a New #{current_course.assignment_term}", new_assignment_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
   - if @assignment.assignment_type.mass_grade?
     %li= link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
@@ -34,7 +34,7 @@
 %h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
 
 - if @assignment.tasks.present?
-  %table.display.table-striped.simpleTable
+  %table.table.display.table-striped.simpleTable
     %thead
       %tr
         %th.sortable{"data-sort" => "string"} Name

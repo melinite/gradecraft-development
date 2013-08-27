@@ -19,7 +19,7 @@
   %body(class="#{body_class}")
     .navbar.navbar-fixed-top.navbar-inverse
       .navbar-inner
-        .col-lg-9.col-sm-11.col-md-11.col-xs-12
+        %div.col-lg-9.col-sm-11.col-md-11.col-xs-12
           %a.brand(href="/dashboard")
             - if current_course
               #{current_course.name}
@@ -28,6 +28,7 @@
             - else
               GradeCraft
         .pull-right.col-lg-3.col-sm-1.col-md-1.col-xs-12
+
           - if current_user
             - if current_user.is_admin?
               %div{:class => 'btn-group pull-right'}

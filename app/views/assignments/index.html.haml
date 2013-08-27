@@ -1,5 +1,5 @@
 = content_nav_for Assignment do
-  %li= link_to "Create a New #{current_course.assignment_term}", new_assignment_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
 
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
   %h3= link_to assignment_type.name, assignment_type
