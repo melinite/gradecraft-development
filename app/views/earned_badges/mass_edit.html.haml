@@ -2,7 +2,7 @@
   %li= link_to 'See All Badges', badges_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
 
-.info
+- if current_course.has_teams?
   .filters
     = form_tag mass_award_badge_path, :method => :get do
       = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"

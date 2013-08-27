@@ -1,19 +1,19 @@
 = content_nav_for AssignmentType do
-  %li= link_to 'New Assignment Type', new_assignment_type_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "New #{term_for :assignment} Type", new_assignment_type_path, :class => "btn btn-tiny btn-info"
 
 %table.table.simpleTable
   %thead
     %tr
-      %th{"data-sort" => "int"} Display Order
-      %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "string"} Points
-      %th{"data-sort" => "string"} Grading Levels
-      %th{"data-sort" => "string"} Predictor Display
-      %th{"data-sort" => "string"} Due Date
-      %th{"data-sort" => "string"} Resubmission
-      %th{"data-sort" => "int"} Max value
-      %th{"data-sort" => "int"} % Course
-      %th{"data-sort" => "string"} Predictor Description
+      %th.sortable{"data-sort" => "int"} Display Order
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Points
+      %th.sortable{"data-sort" => "string"} Grading Levels
+      %th.sortable{"data-sort" => "string"} Predictor Display
+      %th.sortable{"data-sort" => "string"} Due Date
+      %th.sortable{"data-sort" => "string"} Resubmission
+      %th.sortable{"data-sort" => "int"} Max value
+      %th.sortable{"data-sort" => "int"} % Course
+      %th.sortable{"data-sort" => "string"} Predictor Description
       %th.header
       %th.header
       %th.header

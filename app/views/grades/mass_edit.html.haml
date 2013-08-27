@@ -1,6 +1,6 @@
 = content_nav_for @assignment, "Log Grades"
 
-.info
+- if current_course.has_teams?
   .filters
     = form_tag mass_grade_assignment_path, :method => :get do
       = hidden_field_tag :assignment_id, @assignment.id
@@ -27,6 +27,8 @@
                   - @score_levels.each do |score_level|
                     = gf.label_tag :raw_score, score_level.name, value: score_level.value
                     = gf.radio_button :raw_score, score_level.value
+                - elsif @assignment.grade_text?
+                  = gf.text_field :raw_score
                 - else
                   = gf.check_box :raw_score, {}, @assignment.point_total
 

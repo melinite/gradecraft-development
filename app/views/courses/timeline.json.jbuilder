@@ -16,7 +16,6 @@ json.set! :timeline do
       json.endDate assignment.due_at.strftime("%Y,%m,%d") if assignment.due_at
       json.headline assignment.name
       json.text assignment.description
-      json.tag assignment.assignment_type.name
       json.set! :asset do
         json.media assignment.media
         json.thumbnail assignment.thumbnail

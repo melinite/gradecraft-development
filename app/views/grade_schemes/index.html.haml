@@ -1,10 +1,10 @@
 = content_nav_for GradeScheme do
   %li= link_to 'New Grade Scheme', new_grade_scheme_path, :class => "btn btn-tiny btn-info"
 
-%table.display.table-bordered.table
+%table.display.table-striped.table
   %thead
     %tr
-      %th Scheme Name
+      %th.sortable{"data-sort" => "string"} Scheme Name
       %th
       %th
       %th

@@ -1,9 +1,9 @@
 %table.table.table-striped.simpleTable
   %thead
     %tr
-      %th Badge
-      %th Tasks
-      %th # Earned
+      %th.sortable{"data-sort" => "string"} Badge
+      %th.sortable{"data-sort" => "string"} Tasks
+      %th.sortable{"data-sort" => "string"} # Earned
       %th
   %tbody
     - badges.each do |badge|

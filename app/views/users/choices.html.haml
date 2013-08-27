@@ -1,23 +1,23 @@
-%div
+- if current_course.has_teams?
   = form_tag choices_users_path, :method => :get do
     = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
     = submit_tag 'Filter', :class => 'btn'
 
-%table.table.table-bordered#sortableTable.tablesorter
+%table.table.table-striped.simpleTable
   %thead
   %tr
     %th #{current_course.user_term}
     - @assignment_types.each do |assignment_type|
-      - if assignment_type.student_weightable? 
-        %th= assignment_type.name
-    %th #{current_course.multiplier_term} Sum
-    %th #{current_course.multiplier_term} Awarded?
+      - if assignment_type.student_weightable?
+        %th.sortable{"data-sort" => "string"}= assignment_type.name
+    %th.sortable{"data-sort" => "string"} #{current_course.multiplier_term} Sum
+    %th.sortable{"data-sort" => "string"} #{current_course.multiplier_term} Awarded?
   %tbody
     - @students.each do |student|
-      %tr 
+      %tr
         %td= link_to student.name, user_path(student)
         - @assignment_types.each do |assignment_type|
-          - if assignment_type.student_weightable? 
+          - if assignment_type.student_weightable?
             - student.weights_for_assignment_type_id(assignment_type).tap do |weight|
               - if weight
                 %td= weight.value
@@ -25,6 +25,6 @@
                 %td
         %td= current_course.multiplier_count(student)
         %td
-          = current_course.multipliers_spent?(student) ? "Yes" : "No"            
+          = current_course.multipliers_spent?(student) ? "Yes" : "No"
           - if current_course.multiplier_count(student) > 6
             = "More than!"

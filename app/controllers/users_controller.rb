@@ -122,7 +122,7 @@ class UsersController < ApplicationController
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = @user.assignment_weights
     @assignment_weight = @user.assignment_weights.new
-    @assignments = current_course.assignments.includes(:submissions, :assignment_type)
+    @assignments = current_course.assignments.includes(:submissions, :assignment_type).order('due_at ASC')
     @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = @user.grades
     @badges = current_course.badges.includes(:earned_badges, :tasks)
@@ -187,6 +187,8 @@ class UsersController < ApplicationController
     @teams = current_course.teams
     @courses = Course.all
     @user = current_course.users.find(params[:id])
+    @academic_history = @user.student_academic_history
+
     respond_with @user
   end
 
@@ -204,7 +206,6 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @teams = Team.all
-
     respond_to do |format|
       if @user.update_attributes(params[:user])
         @user.save

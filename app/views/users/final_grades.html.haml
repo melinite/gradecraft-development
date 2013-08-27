@@ -1,9 +1,9 @@
-%table.table.display.table-bordered#sortableTable.tablesorter
+%table.table.display.table-striped.simpleTable
   %thead
     %tr
-      %th Username
-      %th Current Score
-      %th Final Grade
+      %th.sortable{"data-sort" => "string"} Username
+      %th.sortable{"data-sort" => "int"} Current Score
+      %th.sortable{"data-sort" => "string"} Final Grade
   %tbody
     - current_course.users.each do |user|
       %tr

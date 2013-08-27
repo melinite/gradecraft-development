@@ -2,7 +2,7 @@ class AssignmentsController < ApplicationController
   before_filter :ensure_staff?, :except => :feed
 
   def index
-    respond_with @assignments = current_course.assignments
+    respond_with @assignments = current_course.assignments.order('due_at ASC')
   end
 
    def settings

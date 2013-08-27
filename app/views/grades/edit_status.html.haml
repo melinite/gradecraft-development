@@ -1,14 +1,14 @@
-%table.table.table-bordered
+%table.table.table-striped.simpleTable
   %tr
-    %th User
-    %th Score
-    %th Current Status
-  - for grade in @grades 
+    %th.sortable{"data-sort" => "string"} User
+    %th.sortable{"data-sort" => "int"} Score
+    %th.sortable{"data-sort" => "string"} Current Status
+  - for grade in @grades
     %tr
       %td= grade.student.name
       %td= grade.raw_score
       %td= grade.status
-      
+
 = simple_form_for :grade, :url => update_status_assignment_grades_path, :html => { :method => :put, :class => "form-horizontal" } do |f|
   - for grade in @grades
     = hidden_field_tag "grade_ids[]", grade.id

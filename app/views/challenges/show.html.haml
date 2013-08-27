@@ -30,15 +30,15 @@
         %tr
           - if @challenge.release_necessary?
             %th
-          %th{"data-sort" => "string"}= current_course.team_term
-          %th{"data-sort" => "int"} Score
+          %th.sortable{"data-sort" => "string"}= current_course.team_term
+          %th.sortable{"data-sort" => "int"} Score
           - if @challenge.has_levels?
-            %th{"data-sort" => "string"} Level
-          %th{"data-sort" => "string"} Badges Earned
+            %th.sortable{"data-sort" => "string"} Level
+          %th.sortable{"data-sort" => "string"} Badges Earned
           - if @challenge.release_necessary?
-            %th{"data-sort" => "string"} Status
+            %th.sortable{"data-sort" => "string"} Status
           - if @challenge.accepts_submissions?
-            %th{"data-sort" => "string"} Submission
+            %th.sortable{"data-sort" => "string"} Submission
           %th Grade
       %tbody
         - @teams.each do |team|

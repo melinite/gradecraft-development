@@ -1,17 +1,17 @@
 = content_nav_for Assignment do
-  %li= link_to "Create a New #{current_course.assignment_term}", new_assignment_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
 
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
   %h3= link_to assignment_type.name, assignment_type
   %table.table.simpleTable.table-striped
     %thead
       %tr
-        %th{"data-sort" => "string"} Name
-        %th{"data-sort" => "date"} Open Date
-        %th{"data-sort" => "date"} Due Date
-        %th{"data-sort" => "int"} Total Points
-        %th{"data-sort" => "string"} Average
-        %th{"data-sort" => "int"} Range
+        %th.sortable{"data-sort" => "string"} Name
+        %th.sortable{"data-sort" => "date"} Open Date
+        %th.sortable{"data-sort" => "date"} Due Date
+        %th.sortable{"data-sort" => "int"} Total Points
+        %th.sortable{"data-sort" => "string"} Average
+        %th.sortable{"data-sort" => "int"} Range
         %th(colspan="1")
         %th
     %tbody

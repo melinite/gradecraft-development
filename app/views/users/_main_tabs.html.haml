@@ -29,7 +29,7 @@
       = render "users/timeline"
   //.tab-pane#tab2
   //= render "users/calendar"
-  - if current_course.predictor_on?
+  - if current_course.has_badges?
     .tab-pane#tab3
       = render "users/badges"
   - if current_course.predictor_on?
@@ -38,3 +38,5 @@
   - if current_course.shared_badges?
     .tab-pane#tab7
       //= render "users/student_view_class_badges"
+  .tab-pane#tab5
+    = render "users/predictor"

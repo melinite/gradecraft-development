@@ -49,6 +49,10 @@ class AssignmentType < ActiveRecord::Base
     mass_grade_type == "Radio Buttons"
   end
 
+  def grade_text?
+    mass_grade_type == "Text"
+  end
+
   def weight_for_student(student)
     return 1 unless student_weightable?
     assignment_weights.where(student: student).weight

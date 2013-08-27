@@ -6,24 +6,24 @@
 %ul.nav.nav-list#sidebar
   %li.nav-header Course Setup
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
+  %li.icn_film= link_to "Timeline", dashboard_path
   - if current_course.grade_scheme_id?
     %li.icn_calculator= link_to "Grading Scheme", grade_scheme_path(current_course.grade_scheme)
   %li.icn_group= link_to "Staff", staff_users_path
-  %li.nav-header Students
-  %li.icn_view_users= link_to "#{current_course.user_term.pluralize}", students_users_path
+  %li.nav-header= term_for(:students)
+  %li.icn_view_users= link_to term_for(:students), students_users_path
   - if current_course.has_teams?
-    %li.icn_team= link_to "#{current_course.team_term.pluralize}", teams_path
-  %li.icn_fishes= link_to "#{current_course.group_term.pluralize}", groups_path
+    %li.icn_team= link_to term_for(:teams), teams_path
+  %li.icn_fishes= link_to term_for(:groups), groups_path
   - if current_course.shared_badges?
-    %li= link_to "Class #{current_course.badge_term.pluralize}", class_badges_users_path
+    %li.icn_gamepad= link_to "Class #{current_course.badge_term.pluralize}", class_badges_users_path
   %li.divider
-  %li.nav-header Assignments
+  %li.nav-header= term_for(:assignments)
   //%li.icn_attendance= link_to "Attendance"
-  %li.icn_certificate= link_to "#{current_course.badge_term}s", badges_path
-  - if current_course.has_teams?
-    %li.icn_cup= link_to "#{current_course.team_term} #{current_course.challenge_term}s", challenges_path
-  %li.icn_star= link_to "#{current_course.assignment_term}s", assignments_path
-  %li.icn_categories= link_to "Assignment Types", assignment_types_path
+  %li.icn_certificate= link_to term_for(:badges), badges_path
+  %li.icn_cup= link_to term_for(:challenges), challenges_path
+  %li.icn_flash= link_to term_for(:assignments), assignments_path
+  %li.icn_categories= link_to term_for(:assignment_types), assignment_types_path
   //%li.icn_screenshot= link_to "Learning Objectives"
   %li.icn_star= link_to 'Rubrics', rubrics_path
   %li.divider

@@ -3,7 +3,7 @@
   %li= link_to "Edit #{@team.name}", edit_team_path(@team), :class => "btn btn-tiny btn-info"
   %li= link_to "Add #{current_course.user_term}s", edit_team_path(@team), :class => "btn btn-tiny btn-info"
 
-%h4= @team.name
+%h3= @team.name
 .info
   %p.clear
     %b Points:
@@ -21,13 +21,13 @@
 %table.table.table-striped.simpleTable
   %thead
     %tr
-      %th Email
-      %th Name
-      %th Role
-      %th Score
-      %th Logins
+      %th.sortable{"data-sort" => "string"} Email
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Role
+      %th.sortable{"data-sort" => "int"} Score
+      %th.sortable{"data-sort" => "int"} Logins
       - if current_course.has_badges?
-        %th Badges Earned
+        %th.sortable{"data-sort" => "int"} Badges Earned
       %th
   %tbody
     - @students.each do |student|

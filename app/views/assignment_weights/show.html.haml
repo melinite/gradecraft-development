@@ -1,7 +1,7 @@
 = content_nav_for @assignment_weight do
-  %li= link_to 'Edit', edit_user_assignment_weight_path(@user, @assignment_weight)
-  %li= link_to 'Back', user_assignment_weights_path(@user)
-  
+  %li= link_to 'Edit', edit_user_assignment_weight_path(@user, @assignment_weight), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Back', user_assignment_weights_path(@user), :class => "btn btn-tiny btn-info"
+
 %p
   %b User:
   = @assignment_weight.user.try(:name)
