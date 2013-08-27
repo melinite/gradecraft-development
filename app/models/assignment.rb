@@ -44,9 +44,9 @@ class Assignment < ActiveRecord::Base
     :assignment_rubrics_attributes, :rubrics_attributes, :media,
     :thumbnail, :media_credit, :caption, :media_caption
 
-  scope :individual_assignment, -> { where grade_scope: "Individual" }
-  scope :group_assignment, -> { where grade_scope: "Group" }
-  scope :team_assignment, -> { where grade_scope: "Team" }
+  scope :individual_assignments, -> { where grade_scope: "Individual" }
+  scope :group_assignments, -> { where grade_scope: "Group" }
+  scope :team_assignments, -> { where grade_scope: "Team" }
 
   scope :chronological, -> { order('due_at ASC') }
 
