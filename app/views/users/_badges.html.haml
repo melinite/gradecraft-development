@@ -1,12 +1,12 @@
-%table.table.table-striped
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %th#icon Icon
-      %th#description Description
-      %th Tasks
+      %th.sortable{"data-sort" => "string"} Icon
+      %th.sortable{"data-sort" => "string"} Description
+      %th.sortable{"data-sort" => "string"} Tasks
       - if current_course.valuable_badges?
-        %th Value
-      %th#check Earned?
+        %th.sortable{"data-sort" => "string"} Value
+      %th.sortable{"data-sort" => "string"} Earned?
       - if current_course.shared_badges?
         %th Share this with the class?
   %tbody

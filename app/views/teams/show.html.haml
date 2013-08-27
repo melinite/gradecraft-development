@@ -21,13 +21,13 @@
 %table.table.table-striped.simpleTable
   %thead
     %tr
-      %th Email
-      %th Name
-      %th Role
-      %th Score
-      %th Logins
+      %th.sortable{"data-sort" => "string"} Email
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Role
+      %th.sortable{"data-sort" => "int"} Score
+      %th.sortable{"data-sort" => "int"} Logins
       - if current_course.has_badges?
-        %th Badges Earned
+        %th.sortable{"data-sort" => "int"} Badges Earned
       %th
   %tbody
     - @students.each do |student|

@@ -8,11 +8,11 @@
         %span.glyphicon.glyphicon-plus
         Add '#{category}' Criterium
       %h3.panel-title= category
-    %table.table.display.table-bordered
+    %table.table.display.table-striped.simpleTable
       %thead
         %tr
-          %th Name
-          %th Description
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "string"} Description
           %th
       %tbody
         - @criteria.each do |criterium|

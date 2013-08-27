@@ -1,13 +1,13 @@
 = content_nav_for "#{term_for :badge} Sets" do
-  %li= link_to "New #{term_for :badge} Set", new_badge_set_path
+  %li= link_to "New #{term_for :badge} Set", new_badge_set_path, :class => "btn btn-tiny btn-info"
 
-%table.table.display.table-bordered
+%table.table.display.table-striped.simpleTable
   %thead
     %tr
-      %th Name
-      %th Notes
-      %th.header
-      %th.header
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Notes
+      %th
+      %th
   %tbody
     - @badge_sets.each do |badge_set|
       %tr

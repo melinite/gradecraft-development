@@ -4,13 +4,13 @@
 
 %h4 Class #{current_course.badge_term.pluralize}
 
-%table.table.table-striped
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %th #{current_course.user_term}
-      %th #{current_course.badge_term.pluralize}
+      %th.sortable{"data-sort" => "string"} #{current_course.user_term}
+      %th.sortable{"data-sort" => "string"} #{current_course.badge_term.pluralize}
       - if current_course.valuable_badges?
-        %th Total Badge Score
+        %th.sortable{"data-sort" => "int"} Total Badge Score
   %tbody
     - @students.each do |student|
       %tr

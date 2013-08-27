@@ -1,11 +1,11 @@
 %table.table.table-striped.simpleTable
   %thead
     %tr
-      %th{"data-sort" => "string"}= course.team_term
-      %th{"data-sort" => "int"} Score
-      %th Badges
-      %th{"data-sort" => "int"} Average #{course.user_term} Grade
-      %th= course.team_leader_term
+      %th.sortable{"data-sort" => "string"}= course.team_term
+      %th.sortable{"data-sort" => "int"} Score
+      %th.sortable{"data-sort" => "string"} Badges
+      %th.sortable{"data-sort" => "int"} Average #{course.user_term} Grade
+      %th.sortable{"data-sort" => "string"}= course.team_leader_term
   %tbody
     - teams.each do |team|
       %tr

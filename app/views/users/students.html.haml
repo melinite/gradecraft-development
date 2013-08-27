@@ -12,17 +12,17 @@
 %table.table.simpleTable.table-striped
   %thead
     %tr
-      %th{"data-sort" => "int"} Rank
-      %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "string"} Email
-      %th{"data-sort" => "string"} #{current_course.team_term}
+      %th.sortable{"data-sort" => "int"} Rank
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Email
+      %th.sortable{"data-sort" => "string"} #{current_course.team_term}
       - if current_course.team_roles?
-        %th{"data-sort" => "string"} Role
+        %th.sortable{"data-sort" => "string"} Role
       - if current_user.is_staff?
-        %th{"data-sort" => "int"} Score
-        %th{"data-sort" => "string"} Current Grade
+        %th.sortable{"data-sort" => "int"} Score
+        %th.sortable{"data-sort" => "string"} Current Grade
       - if current_course.has_badges?
-        %th Badges Earned
+        %th.sortable{"data-sort" => "string"} Badges Earned
       %th
   %tbody
     - i = 1

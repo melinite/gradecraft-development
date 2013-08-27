@@ -4,17 +4,17 @@
       %tr
         - if @assignment.release_necessary?
           %th
-        %th{"data-sort" => "string"}= term_for :student
-        %th{"data-sort" => "int"} Score
+        %th.sortable{"data-sort" => "string"}= term_for :student
+        %th.sortable{"data-sort" => "int"} Score
         - if @assignment.assignment_type.student_weightable?
-          %th Multiplied Score
+          %th.sortable{"data-sort" => "int"} Multiplied Score
         - if @assignment.has_levels?
           %th{"data-sort" => "string"} Level
-        %th Badges Earned
+        %th.sortable{"data-sort" => "int"} Badges Earned
         - if @assignment.release_necessary?
-          %th Status
+          %th.sortable{"data-sort" => "int"} Status
         - if @assignment.accepts_submissions?
-          %th Submission
+          %th.sortable{"data-sort" => "int"} Submission
         %th
     %tbody
       - @students.each do |student|

@@ -1,12 +1,12 @@
 = content_nav_for Task do
-  //%li= link_to 'New Task', new_assignment_task_path
+  //%li= link_to 'New Task', new_assignment_task_path, :class => "btn btn-tiny btn-info"
 
-%table.display.table-striped.table
+%table.display.table-striped.simpleTable
   %thead
     %tr
-      %th Title
-      %th Description
-      %th Due Date
+      %th.sortable{"data-sort" => "string"} Title
+      %th.sortable{"data-sort" => "string"} Description
+      %th.sortable{"data-sort" => "string"} Due Date
       %th
       %th
       %th

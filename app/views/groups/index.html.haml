@@ -1,13 +1,13 @@
 = content_nav_for Group do
   %li= link_to "New #{current_course.group_term}", new_group_path(@assignment), :class => "btn btn-tiny btn-info"
 
-%table.table.display.table-bordered
+%table.table.display.table-striped.simpleTable
   %thead
     %tr
-      %th Group Name
-      %th= "#{current_course.user_term}s"
-      %th Status
-      %th Assignments
+      %th.sortable{"data-sort" => "string"} Group Name
+      %th.sortable{"data-sort" => "string"}= "#{current_course.user_term}s"
+      %th.sortable{"data-sort" => "string"} Status
+      %th.sortable{"data-sort" => "string"} Assignments
       %th
       %th
       %th

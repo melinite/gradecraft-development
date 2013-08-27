@@ -1,16 +1,16 @@
 = content_nav_for Badge do
-  %li= link_to "Create New #{term_for :badge}", new_badge_path
+  %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
 
 %table.table.simpleTable.table-striped
   %thead
     %tr
-      %th#icon Icon
-      %th#title{"data-sort" => "string"} Description
-      %th#tasks Tasks
+      %th.sortable{"data-sort" => "string"} Icon
+      %th.sortable{"data-sort" => "string"} Description
+      %th.sortable{"data-sort" => "string"} Tasks
       - if current_course.valuable_badges?
         %th{"data-sort" => "int"} Value
       - if current_user.is_staff?
-        %th#visible{"data-sort" => "string"} Visible to Students
+        %th.sortable{"data-sort" => "string"} Visible to Students
         %th
         %th
         %th

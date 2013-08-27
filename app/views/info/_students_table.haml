@@ -1,15 +1,15 @@
-%table.table.table-striped
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %th= course.user_term
-      %th Score
-      %th= course.team_term
-      %th Badges
-      %th Logins
-      %th Pageviews
-      %th Predictor Views
-      %th Email
-      %th= course.team_leader_term
+      %th.sortable{"data-sort" => "string"}= course.user_term
+      %th.sortable{"data-sort" => "int"} Score
+      %th.sortable{"data-sort" => "string"}= course.team_term
+      %th.sortable{"data-sort" => "int"} Badges
+      %th.sortable{"data-sort" => "int"} Logins
+      %th.sortable{"data-sort" => "int"} Pageviews
+      %th.sortable{"data-sort" => "int"} Predictor Views
+      %th.sortable{"data-sort" => "string"} Email
+      %th.sortable{"data-sort" => "string"}= course.team_leader_term
   %tbody
     - students.each do |student|
       %tr

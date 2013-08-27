@@ -9,13 +9,13 @@
 
 %h5 Scheme Elements: (#{link_to 'Add element', edit_grade_scheme_path(@grade_scheme)})
 
-%table.display.table-bordered.table
+%table.display.table-striped.table
   %thead
     %tr
-      %th Name
-      %th Low Range
-      %th High Range
-      %th Letter Grade
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "int"} Low Range
+      %th.sortable{"data-sort" => "int"} High Range
+      %th.sortable{"data-sort" => "string"} Letter Grade
       %th
       %th
   %tbody

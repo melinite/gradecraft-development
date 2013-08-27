@@ -6,19 +6,19 @@
     = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
     = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
 
-%table.table.table-bordered.simpleTable.table-striped
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "string"} Email
-      %th{"data-sort" => "string"} Role
-      %th{"data-sort" => "string"} Team
-      %th{"data-sort" => "int"} Score
-      %th{"data-sort" => "int"} Logins
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Email
+      %th.sortable{"data-sort" => "string"} Role
+      %th.sortable{"data-sort" => "string"} Team
+      %th.sortable{"data-sort" => "int"} Score
+      %th.sortable{"data-sort" => "int"} Logins
       - if current_course.has_badges?
-        %th Badges Earned
-      %th.header
-      %th.header
+        %th.sortable{"data-sort" => "string"} Badges Earned
+      %th
+      %th
   %tbody
     - @users.each do |user|
       %tr
