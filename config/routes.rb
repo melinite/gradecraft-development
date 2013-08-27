@@ -119,6 +119,7 @@ GradeCraft::Application.routes.draw do
   get 'using_gradecraft' => 'pages#using_gradecraft'
   get 'people' => 'pages#people'
   get 'contact' => 'pages#contact'
+  get 'documentation' => 'pages#documentation'
 
   # get 'cosign_test' => 'info#cosign_test'
 end
