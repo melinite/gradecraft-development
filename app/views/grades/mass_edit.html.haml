@@ -27,6 +27,8 @@
                   - @score_levels.each do |score_level|
                     = gf.label_tag :raw_score, score_level.name, value: score_level.value
                     = gf.radio_button :raw_score, score_level.value
+                - elsif @assignment.grade_text?
+                  = gf.text_field :raw_score
                 - else
                   = gf.check_box :raw_score, {}, @assignment.point_total
 

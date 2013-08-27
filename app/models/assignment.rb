@@ -166,6 +166,10 @@ class Assignment < ActiveRecord::Base
     assignment_type.mass_grade_type == "Radio Buttons"
   end
 
+  def grade_text?
+    assignment_type.mass_grade_type == "Text"
+  end
+
   def open?
     (open_at != nil && open_at < Time.now) && (due_at != nil && due_at > Time.now)
   end
