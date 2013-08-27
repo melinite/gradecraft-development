@@ -1,7 +1,6 @@
 class EarnedBadgesController < ApplicationController
 
   before_filter :ensure_staff?
-  #before_filter :find_earnable
 
   def index
     @title = "Awarded Badges"
