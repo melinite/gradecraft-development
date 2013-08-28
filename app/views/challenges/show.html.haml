@@ -1,10 +1,10 @@
 = content_nav_for @challenge do
-  %li= link_to 'See All Challenges', challenges_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "btn btn-tiny btn-info"
 
-%h3= @title
+.col-lg-12
+  %h3= @title
 
-.info.clear
   %p
     %b Description:
     = raw @challenge.description
@@ -19,10 +19,11 @@
     = @challenge.due_at
 
 - if current_user.is_staff?
-  %h4 Grades
-  - if @challenge.mass_grade?
-    .pull-right
-      = link_to 'Log Grades', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
+  .col-lg-12
+    - if @challenge.mass_grade?
+      .pull-right
+        = link_to 'Log Grades', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
+    %h3 Grades
 
   = simple_form_for @challenge do
     %table.display.table-striped.table.simpleTable
@@ -39,7 +40,7 @@
             %th.sortable{"data-sort" => "string"} Status
           - if @challenge.accepts_submissions?
             %th.sortable{"data-sort" => "string"} Submission
-          %th Grade
+          %th
       %tbody
         - @teams.each do |team|
           - challenge_grade = @challenge.challenge_grades.find_by team: team
@@ -68,5 +69,6 @@
                 = link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
               - else
                 = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
-    - if @challenge.release_necessary?
-      = submit_tag "Update Grade Statuses", :class => "btn btn-info"
+
+    - if @challenge.release_necessary? && @challenge.challenge_grades.present?
+      = submit_tag "Update Grade Statuses", :class => "btn btn-info pull-right"

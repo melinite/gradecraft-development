@@ -1,6 +1,9 @@
 = content_nav_for Badge do
   %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
 
+.col-lg-12
+  %h3= @title
+
 %table.table.simpleTable.table-striped
   %thead
     %tr

@@ -1,8 +1,10 @@
-= content_nav_for Task do
-  //%li= link_to 'Edit Task', edit_assignment_task_path, :class => "btn btn-info col col-sm-12 col-lg-2 btn-small pull-right"
-  //%li= link_to 'Back', assignment_tasks_path, :class => "btn btn-info col col-sm-12 col-lg-1 btn-small pull-right"
+= content_nav_for @taskable, @task do
+  %li= link_to "See #{@taskable.name}", @taskable, :class => "btn btn-info btn-tiny"
+  //%li= link_to 'Edit Task', edit_assignment_task_path, :class => "btn btn-info btn-tiny"
+  //%li= link_to 'Create a New Task', new_assignment_task_path, :class => "btn btn-info btn-tiny"
 
-%div.info
+.col-lg-12
+  %h3= @title
   %p
     %b Assignment:
     = @taskable.name

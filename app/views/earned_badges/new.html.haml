@@ -1,6 +1,7 @@
-= content_nav_for @badge, EarnedBadge do
-  %li= link_to 'See All Badges', badges_path, :class => "btn btn-tiny btn-info"
+= content_nav_for @badge, "Award #{term_for :badge}" do
+  %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
 
-= render 'form'
+.col-lg-12
+  = render 'form'
 

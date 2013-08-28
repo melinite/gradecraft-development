@@ -1,4 +1,6 @@
 = content_nav_for Group, "Editing #{@group.name}" do
-  %li= link_to 'See All Groups', groups_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
 
-= render 'form'
+.col-lg-12
+  %h3= @title
+  = render 'form'

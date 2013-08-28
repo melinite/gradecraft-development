@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   before_filter :load_taskable
 
   def index
-    @tasks = @taskable.tasks
+    redirect_to @taskable
   end
 
   def show

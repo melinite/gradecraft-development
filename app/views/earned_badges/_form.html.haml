@@ -1,13 +1,13 @@
 = simple_form_for([@badge, @earned_badge], :html => {:class => 'form-horizontal' }) do |f|
-  %h5= "You are awarding the #{@badge.name} badge"
+  %h3= "You are awarding the #{@badge.name} #{term_for :badge} to..."
   = f.input :badge_id, :as => :hidden, :collection => @badges
-  = f.input :student_id, :collection => @students, :label => "Player"
+  = f.input :student_id, :collection => @students, :label => "#{term_for :student}"
   //= f.text_area :text_feedback, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
   = hidden_field_tag "earned_badge[badge_ids][]", nil
 
-  .form-actions
+  .form-actions.col-lg-offset-3
     .btn-toolbar
       .btn-group
-        = f.button :submit, "Award Badge", :class => "btn-primary"
+        = f.button :submit, "Award Badge", :class => "btn-primary btn-sm"
       .btn-group
-      //= link_to 'Cancel', user_earned_badges_path(@user), :class => 'btn'
+        = link_to 'Cancel', badge_path(@badge), :class => 'btn btn-info btn-sm'

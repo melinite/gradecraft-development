@@ -1,4 +1,6 @@
-= content_nav_for @category do
-  %li
+= content_nav_for Category, "New Category" do
+  %li= link_to "See All Categories", categories_path, :class => "btn btn-tiny btn-info"
 
-= render 'form'
+.col-lg-12
+  %h3= @title
+  = render 'form'

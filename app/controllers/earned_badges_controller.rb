@@ -3,13 +3,8 @@ class EarnedBadgesController < ApplicationController
   before_filter :ensure_staff?
 
   def index
-    @title = "Awarded Badges"
     @badge = current_course.badges.find(params[:badge_id])
-    @earned_badges = @badge.earned_badges
-    respond_to do |format|
-      format.html
-      format.json { render json: @earned_badges }
-    end
+    redirect_to @badge
   end
 
   def my_badges
