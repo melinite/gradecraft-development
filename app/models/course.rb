@@ -130,7 +130,7 @@ class Course < ActiveRecord::Base
   end
 
   def student_weighted?
-    total_assignment_weight > 0
+    total_assignment_weight.to_i > 0
   end
 
   def assignment_weight_open?
@@ -162,7 +162,7 @@ class Course < ActiveRecord::Base
   end
 
   def assignment_weight_spent_for_student(student)
-    assignment_weight_for_student(student) >= total_assignment_weight
+    assignment_weight_for_student(student) >= total_assignment_weight.to_i
   end
 
   def minimum_course_score

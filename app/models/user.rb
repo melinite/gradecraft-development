@@ -172,6 +172,14 @@ class User < ActiveRecord::Base
     grades.where(assignment_type: assignment_type).score
   end
 
+  def weights_for_assignment_type_id(assignment_type)
+    assignment_weights.where(assignment_type: assignment_type).weight
+  end
+
+  def weight_count(course)
+    assignment_weights.where(course: course).pluck('weight').sum
+  end
+
   #Import Users
   def self.csv_header
     "First Name,Last Name,Email,Username".split(',')
