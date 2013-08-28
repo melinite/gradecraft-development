@@ -28,6 +28,11 @@
       %b Close date:
       = @assignment.due_at
 
+  - if @assignment.accepts_submissions_until?
+    %p
+      %b Accept submissions until:
+      = @assignment.accepts_submissions_until
+
   - if current_course.has_teams?
     = form_tag assignment_path(@assignment), :method => :get do
       = hidden_field_tag :assignment_id, @assignment.id

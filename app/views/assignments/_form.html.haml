@@ -20,6 +20,7 @@
     = f.input :grade_scope, :as => :select, :collection => [["Individual"], ["Group"], ["Team"]], :input_html => {:class => 'input-sm col-lg-3'}
     - if current_course.accepts_submissions?
       = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept submissions for this assignment?", :label => "Assignment Submissions"
+      = f.input :accepts_submissions_until, :hint => "", :label => "When would you like to accept submissions until?"
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
     = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
