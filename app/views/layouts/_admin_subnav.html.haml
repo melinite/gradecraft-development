@@ -17,6 +17,8 @@
   %li.icn_fishes= link_to term_for(:groups), groups_path
   - if current_course.shared_badges?
     %li.icn_gamepad= link_to "Class #{current_course.badge_term.pluralize}", class_badges_path
+  - if current_course.student_weighted?
+    %li= link_to "#{term_for :weight} Chart", choices_users_path
   %li.divider
   %li.nav-header= term_for(:assignments)
   //%li.icn_attendance= link_to "Attendance"
