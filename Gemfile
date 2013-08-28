@@ -44,6 +44,9 @@ gem 'sorcery'
 gem 'timelineJS-rails'
 gem 'uglifier'
 gem 'whenever'
+gem 'mongoid', :git => 'https://github.com/mongoid/mongoid.git'
+gem 'sidekiq'
+gem 'kiqstand', :git => 'https://github.com/mongoid/kiqstand.git'
 
 group :development do
   gem 'guard'
