@@ -9,6 +9,7 @@
 //= require jquery_ujs
 //= require jquery.omniselect
 //= require jquery.fileupload
+//= require jquery.sparkline.min
 //= require underscore.min
 //= require backbone.min
 //= require best_in_place
@@ -120,9 +121,9 @@ $(document).ready(function(){
 
 	$('#userBarTotalSim').show();
 
-$('#course_id').change(function() { $(this).closest('form').submit(); });
+  $('#course_id').change(function() { $(this).closest('form').submit(); });
 
-$('.nav-tabs').button();
+  $('.nav-tabs').button();
 
 	// handle 'select all' button
 	$(".select-all").click(function(e){
@@ -140,4 +141,5 @@ $('.nav-tabs').button();
 		$link.parents().find('input[type="checkbox"]').prop('checked', false).trigger('change');
 
 	});
+
 });

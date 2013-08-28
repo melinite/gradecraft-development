@@ -174,6 +174,15 @@ class UsersController < ApplicationController
     }
   end
 
+  def scores
+    scores = current_course.grades.released.group(:student_id).order('SUM(score)')
+    scores = scores.limit(10) if params.has_key?(:top_ten)
+    scores = scores.pluck('student_id', 'SUM(score)')
+    render :json => {
+      :scores => scores
+    }
+  end
+
   def new
     @title = "Create a New User"
     @teams = current_course.teams

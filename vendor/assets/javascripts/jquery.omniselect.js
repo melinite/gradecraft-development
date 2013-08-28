@@ -3,7 +3,7 @@
   "use strict";
 
   var omniselect = function(spec) {
-    
+
     var defaults = {
       source: [],
       resultsClass: 'omniselect-results',
