@@ -182,7 +182,7 @@ $(document).ready(function() {
       for (var i=0; i < data.scores.length; i++) {
         scores.push(data.scores[i][1])
       }
-      $('#grade_distro').sparkline(scores, { type: 'box', width: '100%', height: '30px' } )
+      $('#grade_distro').sparkline(scores, { type: 'box', width: '100%', height: '30px', tooltipChartTitle: 'Course Score Distribution' } )
     })
   }
 

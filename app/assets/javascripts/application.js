@@ -7,7 +7,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
-//= require jquery.omnisel
+//= require jquery.omniselect
 //= require jquery.fileupload
 //= require jquery.sparkline.min
 //= require underscore.min
