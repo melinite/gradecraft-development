@@ -267,7 +267,7 @@ class UsersController < ApplicationController
   end
 
   def choices
-    @title = "View all #{current_course.multiplier_term} Choices"
+    @title = "View all #{current_course.weight_term} Choices"
     @students = current_course.students
     @assignment_types = current_course.assignment_types
     @teams = current_course.teams
