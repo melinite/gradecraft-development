@@ -7,12 +7,13 @@
         = "/"
         = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
       - if assignment_type.student_weightable?
-        .clear
-        %br
-        %span.pull-right.btn.badge-primary= link_to "Set #{current_course.weight_term}"
-        %a{:href => "#weight_for_assignment_type-#{assignment_type.id}", :role => "button", :class => "btn btn-info btn-tiny", "data-toggle" => "modal"} Set Weight
-        //= render "users/assignment_weights", assignment_type: assignment_type, student: @user.id
-      %p= raw assignment_type.predictor_description
+        - if @user.assignment_weights.present?
+          .hint
+            = "You've set #{@user.weights_for_assignment_type_id(assignment_type)} #{term_for :weights} on this #{term_for :assignment_type}"
+            = link_to "[Change]", assignment_type_weights_path, assignment_type: assignment_type, student: @user.id
+        - else
+          = link_to "Set #{term_for :weights}", assignment_type_weights_path, assignment_type: assignment_type, student: @user.id
+      %p.clear= raw assignment_type.predictor_description
       - assignments.each do |assignment|
         .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
           %span.assignmentName= assignment.name

@@ -6,7 +6,7 @@
       .alert.alert-error= flash[:error]
     - if flash[:alert]
       .alert.alert-info= flash[:alert]
-    = render 'layouts/content'
+    .primaryContent= render 'layouts/content'
   .col-lg-3.col-sm-3.col-md-3
     = render 'layouts/student_sidebar'
 %footer.row

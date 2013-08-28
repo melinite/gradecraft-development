@@ -1,17 +1,23 @@
-= content_nav_for "Edit #{term_for :weights}"
+- if current_user.is_student?
+  = content_nav_for "Editing My #{term_for :weights}" do
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 
-#{term_for :weights} remaining: #{current_course.total_assignment_weight}
+.col-lg-12
+  %h3 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
+  .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
 
-= simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
-  - if @form.errors.has_key?(:base)
-    .alert.alert-error= f.error :base
-  = f.simple_fields_for :assignment_type_weights do |atwf|
-    = atwf.hidden_field :assignment_type_id
-    .panel
-      .panel-heading
-        %h3.panel-title= atwf.object.assignment_type.name
-      = atwf.input :weight
-      .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)}
-  .form-actions
-    = f.button :submit, "Update #{term_for :weights}"
-    = link_to 'Cancel', dashboard_path, class: 'btn'
+  %hr
+
+  = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+    - if @form.errors.has_key?(:base)
+      .alert.alert-error= f.error :base
+    = f.simple_fields_for :assignment_type_weights do |atwf|
+      = atwf.hidden_field :assignment_type_id
+      .panel
+        .panel-heading
+          %h3.panel-title= atwf.object.assignment_type.name
+        .panel-body
+          = atwf.input :weight
+    .form-actions.col-lg-offset-3
+      = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
+      = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
