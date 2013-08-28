@@ -8,6 +8,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery.omniselect
+//= require jquery.sparkline.min
 //= require jquery.fileupload
 //= require jquery.sparkline.min
 //= require underscore.min
@@ -142,4 +143,19 @@ $(document).ready(function(){
 
 	});
 
+  var $cells = $('.bar-chart')
+  if ($cells.length) {
+    for (var i = 0; i < $cells.length; i++) {
+      (function (cell) {
+        var id = cell.getAttribute('data-id')
+        $.getJSON('/users/scores.json', { one: true, user_id: id }, function (data) {
+          scores = []
+          for (var i=0; i < data.scores.length; i++) {
+            scores.push(data.scores[i][1])
+          }
+          $(cell).sparkline(scores, { type: 'bar', barColor: 'blue' } )
+        })
+      })($cells[i])
+    }
+  }
 });
