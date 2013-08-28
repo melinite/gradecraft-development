@@ -18,9 +18,18 @@
     color: white;
   }
 
-  a.username.btn {
+  a.username.btn, .course-list {
     margin-top: 7px;
     font-family: "Pontano Sans", sans-serif;
+  }
+
+  .course-list {
+    margin-right: 5px;
+  }
+
+  .course-list select {
+    color: #FFF;
+    width: 60px;
   }
 
   ul.login {
@@ -56,8 +65,13 @@
     background-color: $lightblue;
   }
 
-}
+  .course-list select {
+    background: transparent;
+    border: none;
+    -webkit-appearance: none;
+  }
 
+}
 
 .navbar a {
   color: $lightblue;
