@@ -12,11 +12,3 @@
 %footer.row
   .col-lg-12.col-md-12.col-sm-12.rounded
     = render 'layouts/footer'
-
-- if current_user.is_admin?
-  .navbar.navbar-fixed-bottom.navbar-inverse
-    .navbar-inner
-      .course
-        Current Course:
-        = form_tag change_current_course_path, :class => 'btn btn-tiny' do
-          = select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name', current_course.id)

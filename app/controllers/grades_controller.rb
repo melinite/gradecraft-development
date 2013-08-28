@@ -79,7 +79,6 @@ class GradesController < ApplicationController
   def update
     @assignment = Assignment.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
-    @earnable = find_earnable
     @badges = current_course.badges
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
