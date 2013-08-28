@@ -4,7 +4,8 @@
   - elsif current_user.is_student?
     = render 'pages/student_documentation'
 - else
-  %h3 Working With GradeCraft
-  %hr
-  .col-lg-6= render 'pages/instructor_documentation'
-  .col-lg-6= render 'pages/student_documentation'
+  .col-lg-12
+    %h3 Working With GradeCraft
+    %hr
+    = render 'pages/instructor_documentation'
+    = render 'pages/student_documentation'
