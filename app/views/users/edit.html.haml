@@ -2,5 +2,6 @@
   %li= link_to "See All #{current_course.user_term}s", students_users_path, :class => "btn btn-tiny btn-info"
   %li= link_to "View #{@user.name}'s Dashboard", @user, :class => "btn btn-tiny btn-info"
 
-- if current_user.is_staff?
+.col-lg-12
+  %h3= @title
   = render 'form'

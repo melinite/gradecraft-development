@@ -5,21 +5,28 @@
   - if @assignment.assignment_type.mass_grade?
     %li= link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
-%h3= @assignment.name
-
 .col-lg-12
-  %p
-    %b Description:
-    = raw @assignment.description
-  %p
-    %b Point Total:
-    = number_with_delimiter(@assignment.point_total, :delimiter => ',')
-  %p
-    %b Open date:
-    = @assignment.open_at
-  %p
-    %b Close date:
-    = @assignment.due_at
+  %h3= @assignment.name
+
+  - if @assignment.description?
+    %p
+      %b Description:
+      = raw @assignment.description
+
+  - if @assignment.point_total?
+    %p
+      %b Point Total:
+      = number_with_delimiter(@assignment.point_total, :delimiter => ',')
+
+  - if @assignment.open_at?
+    %p
+      %b Open date:
+      = @assignment.open_at
+
+  - if @assignment.due_at?
+    %p
+      %b Close date:
+      = @assignment.due_at
 
   - if current_course.has_teams?
     = form_tag assignment_path(@assignment), :method => :get do
@@ -31,7 +38,8 @@
     .pull-right
       = link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-warning"
 
-%h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
+.col-lg-12
+  %h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
 
 - if @assignment.tasks.present?
   %table.table.display.table-striped.simpleTable
@@ -51,7 +59,8 @@
           %td= link_to "Edit", edit_assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-info'
           %td= link_to "Delete", assignment_task_path(@assignment.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
 
-%h4.clear  Grades
+.col-lg-12
+  %h4.clear  Grades
 
 - if @assignment.has_groups?
   = render 'group'

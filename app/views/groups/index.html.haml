@@ -1,5 +1,8 @@
 = content_nav_for Group do
-  %li= link_to "New #{current_course.group_term}", new_group_path(@assignment), :class => "btn btn-tiny btn-info"
+  %li= link_to "New #{term_for :group}", new_group_path(@assignment), :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+  %h3= @title
 
 %table.table.display.table-striped.simpleTable
   %thead
@@ -22,6 +25,6 @@
         %td
           - group.assignment_groups.each do |ag|
             %li= link_to ag.assignment.name, ag.assignment
-        %td= link_to 'See Group', group_path(group), :class => 'btn btn-tiny btn-success'
+        %td= link_to "See #{term_for :group}", group_path(group), :class => 'btn btn-tiny btn-success'
         %td= link_to 'Edit', edit_group_path(group), :class => 'btn btn-tiny btn-info'
         %td= link_to 'Delete', group_path(group), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete

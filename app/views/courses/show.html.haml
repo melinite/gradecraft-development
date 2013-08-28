@@ -2,6 +2,9 @@
   %li= link_to 'See All Courses', courses_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Edit #{@course.name}", edit_course_path(@course), :class => "btn btn-tiny btn-info"
 
+.col-lg-12
+  %h3= @title
+
 .well
   %h4 THE BASICS
   %p.clear

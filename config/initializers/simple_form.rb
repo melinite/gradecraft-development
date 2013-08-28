@@ -55,7 +55,7 @@ SimpleForm.setup do |config|
       ba.use :hint,  :wrap_with => { :tag => 'p', :class => 'help-block' }
     end
   end
-  
+
   config.wrappers :inline_checkbox, :tag => 'div', :class => 'form-group', :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
@@ -102,7 +102,7 @@ SimpleForm.setup do |config|
   # Defaults to :nested for bootstrap config.
   #   :inline => input + label
   #   :nested => label > input
-  config.boolean_style = :nested
+  config.boolean_style = :inline
 
   # Default class for buttons
   config.button_class = 'btn'
@@ -145,7 +145,7 @@ SimpleForm.setup do |config|
   # config.label_text = lambda { |label, required| "#{required} #{label}" }
 
   # You can define the class to use on all labels. Default is nil.
-  config.label_class = 'control-label col-lg-3'
+  config.label_class = 'control-label col-lg-3 col-md-3 col-sm-3 col-xs-12'
 
   # You can define the class to use on all forms. Default is simple_form.
   # config.form_class = :simple_form

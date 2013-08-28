@@ -1,6 +1,9 @@
 = content_nav_for GradeScheme do
   %li= link_to 'New Grade Scheme', new_grade_scheme_path, :class => "btn btn-tiny btn-info"
 
+.col-lg-12
+  %h3= @title
+
 %table.display.table-striped.table
   %thead
     %tr

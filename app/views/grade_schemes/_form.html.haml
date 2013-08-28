@@ -2,23 +2,23 @@
   = f.input :name, :as => :string
   = f.input :description, :as => :text, :input_html => { :style => "width: 90%; height: 200px;"}
 
-  .well
-    Grade Scheme Elements
+  .col-lg-offset-3
+    %h5 Grade Scheme Elements
 
     %script(id="element-template" type="text/x-template")
       %fieldset.element
         = f.simple_fields_for :elements, GradeSchemeElement.new, child_index: 'child_index' do |ef|
           = render 'element_fields', f: ef
 
-    %fieldset.elements
+    .well.elements.col-lg-9
       - @grade_scheme.elements.each do |element|
         %fieldset.element
           = f.simple_fields_for :elements, element do |ef|
             = render 'element_fields', f: ef
 
-    .col-lg-offset-3
+
       = link_to 'Add an Element', '#', class: 'add-element'
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn-primary"
+  .form-actions.col-lg-offset-3.clear
+    = f.button :submit, "Create Grade Scheme", :class => "btn-primary btn"
     = link_to 'Cancel', grade_schemes_path, :class => 'btn btn-info'

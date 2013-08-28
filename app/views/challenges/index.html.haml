@@ -1,6 +1,9 @@
 = content_nav_for Challenge do
   - if current_user.is_staff?
-    %li= link_to 'New Challenge', new_challenge_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "New #{term_for :challenge}", new_challenge_path, :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+  %h3= @title
 
 %table.table-striped.table.simpleTable
   %thead
@@ -25,6 +28,6 @@
         %td= challenge.visible? ? 'Visible' : 'Hidden'
         %td= challenge.accepts_submissions? ? 'Yes' : 'No'
         %td= challenge.release_necessary? ? 'Yes' : 'No'
-        %td= link_to 'Edit', edit_challenge_path(challenge), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', challenge, :class => 'btn btn-tiny btn-success', :method => :delete, data: { confirm: 'Are you sure?' }
+        %td= link_to 'Edit', edit_challenge_path(challenge), :class => 'btn btn-tiny btn-info'
+        %td= link_to 'Delete', challenge, :class => 'btn btn-tiny btn-warning', :method => :delete, data: { confirm: 'Are you sure?' }
 

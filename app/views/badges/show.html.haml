@@ -5,25 +5,29 @@
   %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "btn btn-tiny btn-info"
   %li= link_to "Mass Award this #{term_for :badge}", mass_award_badge_path(@badge), :class => "btn btn-tiny btn-info"
 
-%h3= @badge.name
-%p
-  %img{:src => @badge.icon, :alt => @badge.name}
+.col-lg-12
+  %h3= @badge.name
+  %p
+    %img{:src => @badge.icon, :alt => @badge.name}
 
-.info.clear
-  %p
-    %b Value:
-    = "#{@badge.point_total} points"
-  %p
-    %b Description:
-    = raw @badge.description
+  - if @badge.point_total?
+    %p
+      %b Value:
+      = "#{@badge.point_total} points"
+
+  - if @badge.description?
+    %p
+      %b Description:
+      = raw @badge.description
   %p
     %b Icon URL:
     = @badge.icon
 
-%h4 Tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})
+.col-lg-12
+  %h4 Tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})
 
 - if @badge.tasks.present?
-  %table.display.table-striped.simpleTable
+  %table.table.display.table-striped.simpleTable
     %thead
       %tr
         %th.sortable{"data-sort" => "string"} Name
@@ -40,9 +44,10 @@
           %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-info'
           %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
 
-  %hr
+%hr
 
-%h4.clear Awarded #{term_for :badges}
+.col-lg-12
+  %h4.clear Awarded #{term_for :badges}
 
 %table.table.table-striped.table-condensed
   %thead

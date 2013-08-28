@@ -1,6 +1,8 @@
-= content_nav_for Challenge, "Create a New Challenge" do
-  %li= link_to 'See All', challenges_path, :class => "btn btn-tiny btn-info"
+= content_nav_for Challenge, "Create a New #{term_for :challenge}" do
+  %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "btn btn-tiny btn-info"
 
-= render 'form'
+.col-lg-12
+  %h3= @title
+  = render 'form'
 
 

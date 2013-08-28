@@ -1,3 +1,6 @@
-= content_nav_for Grade
+= content_nav_for @assignment, "New Grade" do
+  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
-= render 'form'
+
+.col-lg-12
+  = render 'form'

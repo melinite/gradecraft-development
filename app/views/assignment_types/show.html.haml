@@ -3,6 +3,9 @@
   %li= link_to "Edit #{@assignment_type.name}", edit_assignment_type_path(@assignment_type), :class => "btn btn-tiny btn-info"
   %li= link_to "Create New #{term_for :assignment} Type", new_assignment_type_path, :class => "btn btn-tiny btn-info"
 
+.col-lg-12
+  %h3= @title
+
 .well
   %h4 The Basics
   %p.clear

@@ -1,6 +1,9 @@
 = content_nav_for Team do
-  %li= link_to "Add a #{current_course.team_term}", new_team_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Grade a #{current_course.team_term} Challenge", challenges_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Add a #{term_for :team}", new_team_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Grade a #{term_for :challenge}", challenges_path, :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+  %h3= @title
 
 %table.table.table-striped.simpleTable
   %thead

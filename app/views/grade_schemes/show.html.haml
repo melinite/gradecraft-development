@@ -2,12 +2,12 @@
   %li= link_to "Edit #{@grade_scheme.name}", edit_grade_scheme_path(@grade_scheme), :class => "btn btn-tiny btn-info"
   %li= link_to 'See All Grade Schemes', grade_schemes_path, :class => "btn btn-tiny btn-info"
 
-%h3= @grade_scheme.name
+.col-lg-12
+  %h3= @grade_scheme.name
 
-.info.clear
   %p= @grade_scheme.description
 
-%h5 Scheme Elements: (#{link_to 'Add element', edit_grade_scheme_path(@grade_scheme)})
+  %h4 Scheme Elements: (#{link_to 'Add element', edit_grade_scheme_path(@grade_scheme)})
 
 %table.display.table-striped.table
   %thead
