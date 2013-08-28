@@ -1,19 +1,25 @@
 = content_nav_for @group do
-  %li= link_to 'Edit', edit_group_path(@group)
-  %li= link_to 'Back', groups_path
+  %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
+  %li= link_to "New #{term_for :group}", new_group_path, :class => "btn btn-tiny btn-info"
 
-%p
-  %b Group Name:
-  = @group.name
+.col-lg-12
+  %h3= @title
+  %p
+    %b Group Name:
+    = @group.name
 
-%p
-  %b Assignment:
+  %p
+    %b Assignment:
+    - @group.assignment_groups.each do |ag|
+      = link_to ag.assignment.name, ag.assignment
 
-%p
-  %b Proposal:
-  = raw @group.text_proposal
-
-%p
-  %b Members:
-- @group.group_memberships.each do |gm|
-  %li= link_to gm.student.name, gm.student
+  - if @group.text_proposal?
+    %p
+      %b Proposal:
+      = raw @group.text_proposal
+  %p
+    %b Members:
+  %ul
+    - @group.group_memberships.each do |gm|
+      %li= link_to gm.student.name, gm.student

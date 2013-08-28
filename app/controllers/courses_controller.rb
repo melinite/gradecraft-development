@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
 
-  before_filter :ensure_staff?
+  before_filter :ensure_staff?, :except => :timeline
 
   def index
     @title = "Course Index"
@@ -14,7 +14,7 @@ class CoursesController < ApplicationController
 
   def show
     @title = "Course Settings"
-    @course = Course.find(params[:id])
+    @course = current_course
     @users = current_course.users
     respond_to do |format|
       format.html
@@ -83,7 +83,8 @@ class CoursesController < ApplicationController
   end
 
   def assignments
-    @assignments = EventSearch.new(:current_user => current_user, :events => @artist.events).find
+    @course = current_course
+    @assignments = EventSearch.new(:current_user => current_user, :events => @course.events).find
     respond_with @assignments do |format|
       format.ics do
         render :text => CalendarBuilder.new(:assignments => @assignments).to_ics, :content_type => 'text/calendar'
@@ -93,7 +94,6 @@ class CoursesController < ApplicationController
 
   def timeline
     @course = current_course
-    @assignments = current_course.assignments
-
+    @assignments = @course.assignments
   end
 end

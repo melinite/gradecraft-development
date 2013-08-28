@@ -1,18 +1,21 @@
 = content_nav_for Course do
-  %li= link_to 'New Course', new_course_path
+  %li= link_to 'New Course', new_course_path, :class => "btn btn-tiny btn-info"
 
-%table.table-bordered.table
+.col-lg-12
+  %h3= @title
+
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %th Name
-      %th Course No
-      %th Year
-      %th Semester
-      %th Badge Set
-      %th Total Points
-      %th Grade Scheme
-      %th.header
-      %th.header
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Course No
+      %th.sortable{"data-sort" => "string"} Year
+      %th.sortable{"data-sort" => "string"} Semester
+      %th.sortable{"data-sort" => "string"} Badge Set
+      %th.sortable{"data-sort" => "string"} Total Points
+      %th.sortable{"data-sort" => "string"} Grade Scheme
+      %th
+      %th
   %tbody
     - @courses.each do |course|
       %tr
@@ -24,5 +27,5 @@
         %td
           //= course.total_points
         %td= course.grade_scheme_id
-        %td= link_to 'Edit', edit_course_path(course), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', course, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+        %td= link_to 'Edit', edit_course_path(course), :class => 'btn btn-tiny btn-info'
+        %td= link_to 'Delete', course, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete

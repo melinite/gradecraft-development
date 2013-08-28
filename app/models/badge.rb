@@ -1,16 +1,18 @@
 class Badge < ActiveRecord::Base
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
     :visible, :created_at, :updated_at, :image_file_name, :can_earn_multiple_times,
-    :badge_set, :category_id, :value, :multiplier, :badge_set_id, :point_total
+    :badge_set, :category_id, :value, :multiplier, :badge_set_id, :point_total,
+    :earned_badges, :earned_badges_attributes, :score
 
   has_many :earned_badges, :dependent => :destroy
 
-  has_many :tasks, :as => :assignment, :dependent => :destroy
+  has_many :tasks, :as => :taskable, :dependent => :destroy
   belongs_to :course
   #belongs_to :assignment
 
   belongs_to :badge_set
   accepts_nested_attributes_for :badge_set
+  accepts_nested_attributes_for :earned_badges, allow_destroy: true
 
   has_many :submissions
 

@@ -1,0 +1,19 @@
+= content_nav_for Badge do
+  %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{current_course.badge_term.pluralize}", badges_path, :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+
+  %h4 #{current_course.badge_term.pluralize} Leaderboard
+
+%ul.nav.nav-tabs
+  %li.active
+    %a{ "data-toggle" => "tab", "data-target" => "#tab1"} Shared #{current_course.badge_term.pluralize}
+  %li
+    %a{ "data-toggle" => "tab", "data-target" => "#tab2"} All #{current_course.badge_term.pluralize}
+
+.tab-content
+  .tab-pane#tab1.active
+    = render "users/public_class_badges"
+  .tab-pane#tab2
+    = render "users/all_class_badges"

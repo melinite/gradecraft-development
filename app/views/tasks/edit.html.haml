@@ -1,3 +1,4 @@
-= content_nav_for Task, "Edit #{breadcrumb_link_for(@task)}".html_safe
+= content_nav_for @taskable, "Editing #{(@task.name)}".html_safe do
+  %li= link_to "See #{@taskable.try(:name)}", @taskable, :class => "btn btn-tiny btn-info"
 
 = render 'form'

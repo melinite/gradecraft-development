@@ -1,3 +1,6 @@
 = content_nav_for User do
-  %li= link_to 'Back', users_path
-= render 'form'
+  %li= link_to 'See All Users', users_path, :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+  %h3= "Create a New #{term_for(:student)}"
+  = render 'form'

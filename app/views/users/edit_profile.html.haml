@@ -1,26 +1,27 @@
-= content_nav_for @user, "Edit My Profile"
+.primaryContent
+  = content_nav_for @user, "Edit My Profile", :class => "btn btn-tiny btn-info"
 
-%p
-.col-lg-offset-3
-  = gravatar_for @user, :size => 250
   %p
-    Need a Gravatar?
-    = link_to "Get One Here!", "https://en.gravatar.com/"
+  .col-lg-offset-3
+    = gravatar_for @user, :size => 250
+    %p
+      Need a Gravatar?
+      = link_to "Get One Here!", "https://en.gravatar.com/"
 
-= simple_form_for(@user, :html => {:class => 'form-horizontal' }) do |f|
-  = f.input :email
-  = f.input :first_name
-  = f.input :last_name
-  = f.input :display_name
-  = f.input :private_display, :label => "Private Browsing", :hint => "For privacy purposes would you like to hide all identifying information (name and email address) while browsing?"
-  = f.input :team_role, :hint => "What will you contribute to your team?"
-  = f.simple_fields_for :course_memberships do |p|
-    = p.input :shared_badges, :label => "Social Badges", as: :boolean, :hint => "Do you want to publically display the badges you earn?", :collection => [["Yes"],["No"],["Decide per Badge"]]
-  // Taken out bc of cosign
-  //= f.input :password
-  //= f.input :password_confirmation
+  = simple_form_for(@user, method: :put, :html => {:class => 'form-horizontal' }, :url => update_profile_users_path(@user)) do |f|
+    = f.input :email
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :display_name
+    = f.input :private_display, :label => "Private Browsing", :hint => "For privacy purposes would you like to hide all identifying information (name and email address) while browsing?"
+    = f.input :team_role, :hint => "What will you contribute to your team?"
+    = f.simple_fields_for :course_memberships do |p|
+      = p.input :shared_badges, :label => "Social Badges", as: :boolean, :hint => "Do you want to publically display the badges you earn?", :collection => [["Yes"],["No"],["Decide per Badge"]]
+    // Taken out bc of cosign
+    //= f.input :password
+    //= f.input :password_confirmation
 
 
-  .form-actions.col-lg-offset-3
-    = submit_tag 'Update Settings', :class => 'btn btn-primary'
-    = link_to 'Cancel', root_path, :class => 'btn btn-info'
+    .form-actions.col-lg-offset-3
+      = submit_tag 'Update Settings', :class => 'btn btn-primary'
+      = link_to 'Cancel', root_path, :class => 'btn btn-info'

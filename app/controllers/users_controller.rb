@@ -84,6 +84,21 @@ class UsersController < ApplicationController
     @users = current_course.users
   end
 
+  def class_badges
+    @students = current_course.students.includes(:earned_badges)
+    @user = current_user
+    @assignments = @user.assignments
+    @badges = current_course.badges
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    respond_to do |format|
+      format.html
+      format.json { render json: @users }
+      format.csv { send_data User.csv_for_course(current_course) }
+      format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
+    end
+  end
+
 
   def analytics
     @users = current_course.users
@@ -101,19 +116,35 @@ class UsersController < ApplicationController
   end
 
   def show
+    @students = current_course.students.includes(:earned_badges)
     @user = User.find(params[:id])
-    if current_user.is_staff?
-      @title = @user.name
-    end
+
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = @user.assignment_weights
     @assignment_weight = @user.assignment_weights.new
-    @assignments = current_course.assignments.includes(:submissions, :assignment_type)
+    @assignments = current_course.assignments.includes(:submissions, :assignment_type).order('due_at ASC')
     @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = @user.grades
     @badges = current_course.badges.includes(:earned_badges, :tasks)
     @earned_badges = @user.earned_badges
-    respond_with @user
+
+    @form = AssignmentTypeWeightForm.new(@user, current_course)
+
+    scores = []
+    current_course.assignment_types.each do |assignment_type|
+      scores << { data: [@user.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
+    end
+
+    earned_badge_score = @user.earned_badges.where(course: current_course).score
+    scores << { :data => [earned_badge_score], :name => 'Badges' }
+
+    assignments = @user.assignments.where(course: current_course)
+    assignments = assignments.graded_for_student(@user) if params[:in_progress]
+
+    respond_to do |format|
+      format.html
+      format.json { render json: { :student_name => @user.name, :scores => scores, :course_total => assignments.point_total + earned_badge_score } }
+    end
   end
 
   def predictor
@@ -144,16 +175,9 @@ class UsersController < ApplicationController
   end
 
   def scores
-    if params.has_key?(:top_ten)
-      scores = current_course.grades.group(:student_id).order('SUM(score)').limit(10)
-      scores = scores.pluck('student_id', 'SUM(score)')
-    elsif params.has_key?(:one)
-      student = User.find params[:user_id]
-      scores = student.scores_by_assignment_type
-    else
-      scores = current_course.grades.group(:student_id).order('SUM(score)')
-      scores = scores.pluck('SUM(score)')
-    end
+    scores = current_course.grades.released.group(:student_id).order('SUM(score)')
+    scores = scores.limit(10) if params.has_key?(:top_ten)
+    scores = scores.pluck('student_id', 'SUM(score)')
     render :json => {
       :scores => scores
     }
@@ -172,6 +196,8 @@ class UsersController < ApplicationController
     @teams = current_course.teams
     @courses = Course.all
     @user = current_course.users.find(params[:id])
+    @academic_history = @user.student_academic_history
+
     respond_with @user
   end
 
@@ -189,7 +215,6 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @teams = Team.all
-
     respond_to do |format|
       if @user.update_attributes(params[:user])
         @user.save
@@ -215,15 +240,16 @@ class UsersController < ApplicationController
 
   def edit_profile
     @title = "Edit My Account"
-    respond_with @user = current_user
+    @badges = current_course.badges
+    @user = current_user
+    @assignments = @user.assignments
   end
 
   def update_profile
     @user = current_user
-    @user.update_attribute(:password, params[:password]) if params[:password] == params[:confirm_password]
-    respond_with(@user)
+    @user.update_attributes(params[:user])
+    redirect_to dashboard_path
   end
-
 
   def import
     @title = "Import Users"
@@ -250,7 +276,7 @@ class UsersController < ApplicationController
   end
 
   def choices
-    @title = "View all #{current_course.multiplier_term} Choices"
+    @title = "View all #{current_course.weight_term} Choices"
     @students = current_course.students
     @assignment_types = current_course.assignment_types
     @teams = current_course.teams

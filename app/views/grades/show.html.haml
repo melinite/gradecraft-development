@@ -1,33 +1,40 @@
 = content_nav_for @assignment, @grade do
-  %li= link_to 'Edit', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :student_id => @grade.student_id)
-  %li= link_to 'Back', assignment_path(@grade.assignment_id)
-  %li= link_to "Grade Another " +@grade.assignment.name, new_assignment_grade_path("assignment_id"=>@grade.assignment.id)
+  %li= link_to "All #{@grade.assignment.name } Grades", assignment_path(@grade.assignment_id), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Edit Grade', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :student_id => @grade.student_id), :class => "btn btn-tiny btn-info"
+  %li= link_to "Grade Another " +@grade.assignment.name, new_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
 
-%p
-  %b User:
-  = link_to @grade.student.try(:name), @grade.student
-%p
-  %b Assignment:
-  = link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
-%p
-  %b Raw Score:
-  = @grade.raw_score
-%p
-  %b Final Score:
-  = @grade.final_score
-%p
-  %b Feedback:
-  %br
-  = raw @grade.feedback
+.col-lg-12
+  %h3= @grade.assignment.name
+  %p
+    %b= "#{term_for :student}:"
+    = link_to @grade.student.try(:name), @grade.student
+  %p
+    %b= "#{term_for :assignment}:"
+    = link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
+  - if @grade.raw_score?
+    %p
+      %b Raw Score:
+      = @grade.raw_score
+  - if @grade.final_score?
+    %p
+      %b Final Score:
+      = @grade.final_score
+  - if @grade.feedback?
+    %p
+      %b Feedback:
+      %br
+      = raw @grade.feedback
+  - if @grade.earned_badges.present?
+    %p
+      %b= "#{term_for :badges}:"
+      - @grade.earned_badges.each do |badge|
+        %img{:src => badge.try(:icon), :alt => badge.name, :width => "50", :height => "50"}
 
-%p
-  %b Badges:
-  - @grade.earned_badges.each do |badge|
-    %img{:src => badge.try(:icon), :alt => badge.name, :width => "50", :height => "50"}
-%p
-  %b Status:
-  = @grade.status
+  - if @grade.assignment.release_necessary?
+    %p
+      %b Status:
+      = @grade.status
 
-%p
-  %b Submission:
-  = @grade.submission_id
+  %p
+    %b Submission:
+    = @grade.submission_id

@@ -1,20 +1,20 @@
 = simple_form_for @assignment do
-  %table.display.table-bordered.table.simpleTable
+  %table.display.table-striped.table.simpleTable
     %thead
       %tr
         - if @assignment.release_necessary?
           %th
-        %th{"data-sort" => "string"}= term_for :student
-        %th{"data-sort" => "string"} Score
+        %th.sortable{"data-sort" => "string"}= term_for :student
+        %th.sortable{"data-sort" => "int"} Score
         - if @assignment.assignment_type.student_weightable?
-          %th Multiplied Score
+          %th.sortable{"data-sort" => "int"} Multiplied Score
         - if @assignment.has_levels?
-          %th Level
-        %th Badges Earned
+          %th{"data-sort" => "string"} Level
+        %th.sortable{"data-sort" => "int"} Badges Earned
         - if @assignment.release_necessary?
-          %th Status
+          %th.sortable{"data-sort" => "int"} Status
         - if @assignment.accepts_submissions?
-          %th Submission
+          %th.sortable{"data-sort" => "int"} Submission
         %th
     %tbody
       - @students.each do |student|
@@ -29,7 +29,8 @@
             - if grade
               = grade.score
           - if @assignment.assignment_type.student_weightable?
-            %td= "Multiplied Score"
+            %td
+              = grade.try(:unmultiplied_score)
           - if @assignment.has_levels?
             %td
               - if grade
@@ -45,9 +46,9 @@
                 - if submission && grade
                   = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :grade_id => grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
                 - elsif submission
-                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :student_id => student.id, :student_type => "User", :gradeable_type => "User", :gradeable_id => student.id), :class => 'btn btn-tiny btn-success'
+                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
                 - else
-                  = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :student_id => student.id, :student_type => "User"), :class => 'btn btn-tiny btn-success'
+                  = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :id => student.id, :student_type => "User"), :class => 'btn btn-tiny btn-success'
           %td
             - if grade
               = link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'

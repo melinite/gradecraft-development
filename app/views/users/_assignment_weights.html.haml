@@ -1,5 +1,33 @@
-%span.badge.badge-important
-  #{assignment_type.weight_for_student(@user)} #{term_for :weight}
-  - if assignment_type.student_weightable?
-    - if current_course.assignment_weight_open? || current_user.is_staff?
-      = link_to '(Change)', assignment_type_weights_path
+.modal.fade{:id => "weight_for_assignment_type-#{assignment_type.id}"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{"type" => "button", "class" => "close", "data-dismiss" => "modal", "aria-hidden" => "true"} ×
+        - if current_user.is_staff?
+          %h3= "#{@user.try(:name)}'s #{current_course.weight_term} Choices"
+        - else
+          %h3= "My #{current_course.weight_term} Choices"
+      .modal-body
+        %span.badge.badge-info
+        #{assignment_type.weight_for_student(@user)} #{term_for :weight}
+        - if assignment_type.student_weightable?
+          - if current_course.assignment_weight_open? || current_user.is_staff?
+            #{term_for :weights} remaining: #{current_course.total_assignment_weight}
+
+            = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+              - if @form.errors.has_key?(:base)
+                .alert.alert-error= f.error :base
+              = f.simple_fields_for :assignment_type_weights do |atwf|
+                = atwf.hidden_field :assignment_type_id
+                .panel
+                  .panel-heading
+                    %h3.panel-title= atwf.object.assignment_type.name
+                  = atwf.input :weight
+                  .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)}
+              .form-actions
+                = f.button :submit, "Update #{term_for :weights}"
+                = link_to 'Cancel', dashboard_path, class: 'btn'
+
+      .modal-footer
+        %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}Close
+        %button.btn.btn-primary Save Changes

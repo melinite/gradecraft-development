@@ -1,0 +1,30 @@
+
+/** Table Styles **/
+table {
+  background-color: #FFF;
+  font-size: 80%;
+  border-bottom: 2px solid #333;
+}
+
+thead {
+  background-color: $lightblue;
+  color: #000;
+}
+
+#massGrade table {
+  margin-left: 20px;
+  background-color: #eee;
+}
+
+#massGrade table td {
+  padding: 5px 10px;
+}
+
+#massGrade .form-actions {
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+#massGrade .btn-group  {
+  padding: 20px 20px 0px;
+}

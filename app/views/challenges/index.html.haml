@@ -1,17 +1,20 @@
 = content_nav_for Challenge do
   - if current_user.is_staff?
-    %li= link_to 'New Challenge', new_challenge_path
+    %li= link_to "New #{term_for :challenge}", new_challenge_path, :class => "btn btn-tiny btn-info"
 
-%table.table-bordered.table.display.simpleTable
+.col-lg-12
+  %h3= @title
+
+%table.table-striped.table.simpleTable
   %thead
     %tr
-      %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "string"} Description
-      %th{"data-sort" => "int"} Point total
-      %th{"data-sort" => "string"} Due date
-      %th{"data-sort" => "string"} Visible
-      %th{"data-sort" => "int"} Submissions?
-      %th{"data-sort" => "string"} Release necessary
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Description
+      %th.sortable{"data-sort" => "int"} Point total
+      %th.sortable{"data-sort" => "string"} Due date
+      %th.sortable{"data-sort" => "string"} Visible
+      %th.sortable{"data-sort" => "int"} Submissions?
+      %th.sortable{"data-sort" => "string"} Release necessary
       %th
       %th
 
@@ -25,6 +28,6 @@
         %td= challenge.visible? ? 'Visible' : 'Hidden'
         %td= challenge.accepts_submissions? ? 'Yes' : 'No'
         %td= challenge.release_necessary? ? 'Yes' : 'No'
-        %td= link_to 'Edit', edit_challenge_path(challenge), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', challenge, :class => 'btn btn-tiny btn-success', :method => :delete, data: { confirm: 'Are you sure?' }
+        %td= link_to 'Edit', edit_challenge_path(challenge), :class => 'btn btn-tiny btn-info'
+        %td= link_to 'Delete', challenge, :class => 'btn btn-tiny btn-warning', :method => :delete, data: { confirm: 'Are you sure?' }
 

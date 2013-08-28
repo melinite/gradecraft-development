@@ -1,0 +1,140 @@
+/** Admin Sidebar **/
+.sidebar-nav-fixed {
+  background-image: image-url("sidebar.png");
+  padding: 10px 0px 20px;
+  border-bottom-right-radius: 15px;
+}
+
+ul.nav.nav-list > li > a {
+  padding: 4px 0px 5px 25px;
+  margin-left: 34px;
+  color: #333;
+}
+
+.sidebar-nav-fixed li.nav-header {
+  font-family: Helvetica, sans-serif;
+  color: $blue;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 #fff;
+  font-size: 13px;
+  margin: 20px 0 5px 35px;
+  display: block;
+  width: 90%;
+}
+
+#sidebar li a:hover {
+  text-decoration: underline;
+}
+
+.quick_search {
+  text-align: center;
+  padding: 4px 0 5px 5px;
+  margin: 10px 0 10px 25px;
+}
+
+.quick_search input[type=text] {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  border: 1px solid #bbb;
+  height: 35px;
+  width: 90%;
+  color: #ccc;
+  -webkit-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+  -moz-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+  box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+  text-indent: 30px;
+  background: #fff url("/icons/icn_search.png") no-repeat;
+  background-position: 12px 8px;
+}
+
+.quick_search input[type=text]:focus {
+  outline: none;
+  color: #666666;
+  border: 1px solid #77BACE;
+  -webkit-box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
+  -moz-box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
+  box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
+}
+
+.quick_search .dropdown {
+  position: relative;
+  height: 36px;
+}
+
+.divider {
+  margin: 10px 0px;
+  border: none;
+  outline: none;
+  background: image-url("sidebar_divider.png");
+  display: block;
+  width: 100%;
+  height: 2px;
+}
+
+
+/** Student Dashboard Sidebar **/
+
+.sidebar_section  {
+  margin-top: 10px;
+  margin-bottom: 15px;
+
+  #gradeCurious {
+    font-family: "Futura", sans-serif;
+  }
+
+  #badges, #todo, #historyInfo, .classInfo {
+  padding: 10px;
+  border-radius: 5px;
+  color: #FFF;
+  }
+  .clear.center {
+    padding: 10px;
+    width: 80%;
+  }
+
+  h4.center {
+    float: none;
+    text-align: center;
+  }
+
+  p {
+    font-family: 'Pontano Sans', sans-serif !important;
+  }
+
+}
+
+.sidebar_section #badges #badgeIcons {
+  text-align: center;
+  width: 95%;
+  margin: 0 auto;
+}
+
+#badges .badgeIcon {
+  position: relative;
+  float: left;
+  padding: 2px;
+  width: 15%;
+
+  img {
+    width: 99%;
+    opacity: .5;
+  }
+
+  img:hover {
+    opacity: 1;
+  }
+}
+
+
+#badges img.earned {
+  opacity: 1;
+}
+
+.submitted {
+  text-decoration: line-through;
+}
+
+.sparklineTooltip {
+  background-color: #FFF;
+}

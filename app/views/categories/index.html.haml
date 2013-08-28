@@ -1,13 +1,16 @@
 = content_nav_for Category do
-  %li= link_to 'New Category', new_category_path
+  %li= link_to 'New Category', new_category_path, :class => "btn btn-tiny btn-info"
 
-%table.table.display.table-bordered.simpleTable
+.col-lg-12
+  %h3= @title
+
+%table.table.table-striped.simpleTable
   %thead
     %tr
-      %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "string"} Description
-      %th.header
-      %th.header
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Description
+      %th
+      %th
   %tbody
     - @categories.each do |category|
       %tr

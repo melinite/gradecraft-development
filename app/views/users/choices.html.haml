@@ -1,30 +1,34 @@
-%div
-  = form_tag choices_users_path, :method => :get do
-    = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
-    = submit_tag 'Filter', :class => 'btn'
+= content_nav_for User, "#{term_for :weights} Choices" do
+  %li= link_to 'See All Users', users_path, :class => "btn btn-tiny btn-info"
 
-%table.table.table-bordered#sortableTable.tablesorter
+.col-lg-12
+  .filters
+    - if current_course.has_teams?
+      = form_tag choices_users_path, :method => :get do
+        = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+        = submit_tag 'Filter', :class => 'btn'
+
+
+%table.table.table-striped.simpleTable
   %thead
-  %tr
-    %th #{current_course.user_term}
-    - @assignment_types.each do |assignment_type|
-      - if assignment_type.student_weightable? 
-        %th= assignment_type.name
-    %th #{current_course.multiplier_term} Sum
-    %th #{current_course.multiplier_term} Awarded?
+    %tr
+      %th.sortable{"data-sort" => "string"} #{current_course.user_term}
+      - @assignment_types.each do |assignment_type|
+        - if assignment_type.student_weightable?
+          %th.sortable{"data-sort" => "string"}= assignment_type.name
+      %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Sum
+      %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Awarded?
   %tbody
     - @students.each do |student|
-      %tr 
+      %tr
         %td= link_to student.name, user_path(student)
         - @assignment_types.each do |assignment_type|
-          - if assignment_type.student_weightable? 
+          - if assignment_type.student_weightable?
             - student.weights_for_assignment_type_id(assignment_type).tap do |weight|
               - if weight
-                %td= weight.value
+                %td= weight
               - else
                 %td
-        %td= current_course.multiplier_count(student)
+        %td= student.weight_count(current_course)
         %td
-          = current_course.multipliers_spent?(student) ? "Yes" : "No"            
-          - if current_course.multiplier_count(student) > 6
-            = "More than!"
+          = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"

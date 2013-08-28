@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130818214741) do
+ActiveRecord::Schema.define(version: 20130825015120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,24 @@ ActiveRecord::Schema.define(version: 20130818214741) do
   add_index "assignment_rubrics", ["assignment_id"], name: "index_assignment_rubrics_on_assignment_id", using: :btree
   add_index "assignment_rubrics", ["rubric_id"], name: "index_assignment_rubrics_on_rubric_id", using: :btree
 
+  create_table "assignment_submissions", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.string   "feedback"
+    t.string   "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "link"
+    t.integer  "submittable_id"
+    t.string   "submittable_type"
+    t.text     "text_feedback"
+    t.text     "text_comment"
+  end
+
   create_table "assignment_types", force: true do |t|
     t.string   "name"
     t.string   "point_setting"
@@ -44,7 +62,7 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.integer  "resubmission"
     t.integer  "max_value"
     t.integer  "percentage_course"
-    t.string   "predictor_description"
+    t.text     "predictor_description"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.integer  "course_id"
@@ -217,7 +235,7 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.integer "course_id"
     t.integer "user_id"
     t.integer "score",         default: 0, null: false
-    t.string  "shared_badges"
+    t.boolean "shared_badges"
   end
 
   add_index "course_memberships", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree
@@ -267,6 +285,14 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.string   "location"
     t.string   "office_hours"
     t.text     "meeting_times"
+    t.string   "media_file"
+    t.string   "media_credit"
+    t.string   "media_caption"
+    t.string   "badge_term"
+    t.string   "assignment_term"
+    t.string   "challenge_term"
+    t.boolean  "use_timeline"
+    t.text     "grading_philosophy"
   end
 
   create_table "criteria", force: true do |t|
@@ -276,6 +302,15 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "category"
+  end
+
+  create_table "criteria_levels", force: true do |t|
+    t.string   "name"
+    t.integer  "criteria_id"
+    t.text     "description"
+    t.integer  "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "criterium_levels", force: true do |t|
@@ -305,6 +340,43 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.text     "feedback"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "shared"
+  end
+
+  create_table "elements", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "badge_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.integer  "order"
+    t.string   "category"
+    t.string   "audience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "elements", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "badge_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.integer  "order"
+    t.string   "category"
+    t.string   "audience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "grade_scheme_elements", force: true do |t|
@@ -421,6 +493,20 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "student_academic_histories", force: true do |t|
+    t.integer "student_id"
+    t.string  "major"
+    t.decimal "gpa"
+    t.integer "current_term_credits"
+    t.integer "accumulated_credits"
+    t.string  "year_in_school"
+    t.string  "state_of_residence"
+    t.string  "high_school"
+    t.boolean "athlete"
+    t.integer "act_score"
+    t.integer "sat_score"
+  end
+
   create_table "student_assignment_type_weights", force: true do |t|
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -461,7 +547,7 @@ ActiveRecord::Schema.define(version: 20130818214741) do
   add_index "submissions", ["course_id"], name: "index_submissions_on_course_id", using: :btree
 
   create_table "tasks", force: true do |t|
-    t.integer  "assignment_id"
+    t.integer  "taskable_id"
     t.string   "name"
     t.text     "description"
     t.datetime "due_at"
@@ -472,11 +558,12 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.integer  "course_id"
     t.string   "assignment_type"
     t.string   "type"
+    t.string   "taskable_type"
   end
 
-  add_index "tasks", ["assignment_id", "assignment_type"], name: "index_tasks_on_assignment_id_and_assignment_type", using: :btree
   add_index "tasks", ["course_id"], name: "index_tasks_on_course_id", using: :btree
   add_index "tasks", ["id", "type"], name: "index_tasks_on_id_and_type", using: :btree
+  add_index "tasks", ["taskable_id", "assignment_type"], name: "index_tasks_on_taskable_id_and_assignment_type", using: :btree
 
   create_table "team_memberships", force: true do |t|
     t.integer  "team_id"
@@ -492,6 +579,13 @@ ActiveRecord::Schema.define(version: 20130818214741) do
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "themes", force: true do |t|
+    t.string   "name"
+    t.string   "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: true do |t|

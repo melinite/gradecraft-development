@@ -1,19 +1,21 @@
 = content_nav_for Assignment do
-  - if current_user.is_staff?
-    %li= link_to 'Create a New Assignment', new_assignment_path
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
+
 
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-  %h4.assignmentName= link_to assignment_type.name, assignment_type
-  %table.table.simpleTable.table-bordered
+  .col-lg-12
+    %h3= link_to assignment_type.name, assignment_type
+  %table.table.simpleTable.table-striped
     %thead
       %tr
-        %th{"data-sort" => "string"} Name
-        %th{"data-sort" => "date"} Open Date
-        %th{"data-sort" => "date"} Due Date
-        %th{"data-sort" => "int"} Total Points
-        %th{"data-sort" => "string"} Average
-        %th{"data-sort" => "int"} Range
+        %th.sortable{"data-sort" => "string"} Name
+        %th.sortable{"data-sort" => "date"} Open Date
+        %th.sortable{"data-sort" => "date"} Due Date
+        %th.sortable{"data-sort" => "int"} Total Points
+        %th.sortable{"data-sort" => "string"} Average
+        %th.sortable{"data-sort" => "int"} Range
         %th(colspan="1")
+        %th
     %tbody
       - assignments.each do |assignment|
         %tr
@@ -30,7 +32,5 @@
               = link_to "Grade #{ assignment.submissions.count } Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
             - else
               = link_to "Grade", :class => "btn btn-tiny btn-success"
+          %td= link_to "Edit", edit_assignment_path(assignment), :class => 'btn btn-tiny btn-info'
 
-          //%td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-          //%td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
-  %hr

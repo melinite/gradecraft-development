@@ -1,4 +1,6 @@
-= content_nav_for Group, "Create New Group" do
-  %li= link_to "Cancel", groups_path
+= content_nav_for Group, "Create A New #{term_for :group}" do
+  %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
 
-= render 'form'
+.col-lg-12
+  %h3= @title
+  = render 'form'

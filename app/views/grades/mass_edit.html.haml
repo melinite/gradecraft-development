@@ -1,50 +1,41 @@
-= content_nav_for @assignment, "Log Grades"
+= content_nav_for @assignment, "Log Grades"do
+  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
-.filters
-  = form_tag mass_grade_assignment_path, :method => :get do
-    = hidden_field_tag :assignment_id, @assignment.id
-    = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
-    = submit_tag 'Filter', :class => 'btn'
+- if current_course.has_teams?
+  .filters
+    = form_tag mass_grade_assignment_path, :method => :get do
+      = hidden_field_tag :assignment_id, @assignment.id
+      = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+      = submit_tag 'Filter', :class => 'btn btn-primary'
 
-= simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
-  %table#massGrade
-    - @grades.each_with_index do |grade,i|
-      %tr
-        %td= link_to grade.student.name, grade.student
-        %td
-          - "assignment[grades_attributes][#{i}][raw_score]".tap do |raw_score_field_name|
-            - if grade.persisted?
-              = hidden_field_tag "assignment[grades_attributes][#{i}][id]", grade.id
-            - else
-              //= hidden_field_tag "assignment[grades_attributes][#{i}][student_id]", grade.student.id
-            = label_tag do
-              - if @assignment.grade_checkboxes?
+.col-lg-12#massGrade
+  %h3= @title
+  = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
+    .col-lg-offset-3
+      - if !@assignment.grade_select? && !@assignment.grade_radio? && ! @assignment.grade_text?
+        .btn-group
+          %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
+          %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
 
-                = hidden_field_tag raw_score_field_name, 0
-                - if grade.raw_score > 0
-                  = check_box_tag raw_score_field_name, @assignment.point_total, grade
-                - else
-                  = check_box_tag raw_score_field_name, @assignment.point_total
+      %table
+        - @grades.each_with_index do |grade, i|
+          %tr
+            %td= link_to grade.student.name, grade.student
+            %td
+              = f.simple_fields_for :grades, grade do |gf|
+                = gf.hidden_field :student_id
+                = label_tag do
+                  - if @assignment.grade_select?
+                    = gf.select_tag options_from_collection_for_select(@option_levels, :name, :value), include_blank: false
+                  - elsif @assignment.grade_radio?
+                    - @score_levels.each do |score_level|
+                      = gf.label_tag :raw_score, score_level.name, value: score_level.value
+                      = gf.radio_button :raw_score, score_level.value
+                  - elsif @assignment.grade_text?
+                    = gf.text_field :raw_score
+                  - else
+                    = gf.check_box :raw_score, {}, @assignment.point_total
 
-              - elsif @assignment.grade_select?
-                = select_tag raw_score_field_name, options_from_collection_for_select(@score_levels, "value", "name", grade.raw_score), :include_blank => false
-
-              - elsif @assignment.grade_radio?
-                - @score_levels.each do |score_level|
-                  %td
-                    = label_tag "#{raw_score_field_name}_#{score_level.name}", score_level.name, :class => "radio_label"
-                    = radio_button_tag raw_score_field_name, score_level.value, grade.raw_score == score_level.value, :class => "radio_button"
-              - else
-                = hidden_field_tag raw_score_field_name, 0
-                = check_box_tag raw_score_field_name, @assignment.point_total, grade
-
-    - if @assignment.grade_checkboxes?
-      .btn-group
-        %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
-        %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
-
-  .form-actions.massGrades
-    .btn-toolbar
-      .btn-group
-        = f.button :submit, :class => "btn btn-primary"
-        = link_to 'Cancel', assignments_path, :class => 'btn btn-info'
+    .form-actions.col-lg-offset-3
+      = f.button :submit, :class => "btn btn-primary"
+      = link_to 'Cancel', assignments_path, :class => 'btn btn-info'

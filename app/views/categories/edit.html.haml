@@ -1,3 +1,6 @@
-= content_nav_for Category, "Edit #{breadcrumb_link_for(@category)}".html_safe
+= content_nav_for Category, "Edit #{breadcrumb_link_for(@category)}".html_safe do
+  %li= link_to 'See All Categories', categories_path, :class => "btn btn-tiny btn-info"
 
-= render 'form'
+.col-lg-12
+  %h3= @title
+  = render 'form'

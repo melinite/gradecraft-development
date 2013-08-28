@@ -15,13 +15,18 @@
     = f.input :office_hours, :label => "Office Hours", :input_html => {:class => "col-lg-4"}
     = f.input :meeting_times, :label => "Class Meeting Times", :input_html => {:class => "col-lg-4"}
     = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :select, :input_html => {:class => "col-lg-4 input-sm"}
+    = f.input :assignment_term, :label => "Assignment Term", :hint => "Would you like to call assignments something else?"
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
     = f.input :predictor_setting, :label => "Can the students see the predictor on their dashboard?", :as => :radio_buttons
+    %h4 Grading Philosophy
+    %p What would you like to tell students about how they should expected to be graded?
+    = f.text_area :grading_philosophy, :class => :ckeditor, :label => "What would you like to tell students about how they should expected to be graded?", :input_html => {:style => "width: 100%; height: 200px;"}
 
   .well
     %h4 BADGES
     = f.input :badge_setting, :hint => "Do you want to use badges in your course?", :label => "Badges", :as => :radio_buttons
+    = f.input :badge_term, :label => "Badge Term", :hint => "Would you like to call badges something else?"
     = f.association :badge_sets, :collection => @badge_sets, :label => "Badge Set", :as => :check_boxes
     = f.input :badge_use_scope, :label => "How will badges be used?", :collection => [["Awarded for Assignments", "Assignment"],["Awarded outside of Assignments","Course"],["Awarded in Both","Both"]], :input_html => {:class => "col-lg-4 input-sm"}
     = f.input :shared_badges, :label => "Social Badges", :hint => "Will earned badges be visible between students?", :as => :radio_buttons
@@ -31,6 +36,7 @@
     %h4 TEAMS & GROUPS
     = f.input :team_setting, :hint => "Will you have semester-long teams in your course?", :label => "Teams"
     = f.input :team_term, :label => "Team Term", :hint => "What will you call these? Team, Group, Section...", :input_html => {:class => "col-lg-4"}
+    = f.input :challenge_term, :label => "Challenge Term", :hint => "What will you call the challenges they face? Quests, Boss Battles...", :input_html => {:class => "col-lg-4"}
     = f.input :teams_visible, :label => "Can students see the teams, their points, and their badges?"
     = f.input :team_roles, :hint => "Do students self-declare their role within groups?"
     = f.input :team_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your team leaders?", :input_html => {:class => "col-lg-4"}
@@ -52,6 +58,13 @@
     = f.input :max_assignment_weight, :label => "Maximum amount that students may set", :input_html => {:class => "col-lg-2"}
     = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
     = f.input :weight_term, :label => "What do you want to call these weights/multipliers?", :input_html => {:class => "col-lg-2"}
+
+  .well
+    %h4 TIMELINE
+    = f.input :use_timeline, :label => "Would you like to use the interactive timeline to display your syllabus?"
+    = f.input :media_file, :label => "What video or image file (on YouTube, Flickr or Vimeo) would you like to display here?"
+    = f.input :media_credit, :label => "Media Credit"
+    = f.input :media_caption, :label => "Media Caption"
 
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"

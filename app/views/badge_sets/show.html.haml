@@ -1,16 +1,18 @@
 = content_nav_for @badge_set do
-  %li= link_to 'Edit', edit_badge_set_path(@badge_set)
-  %li= link_to 'Back', badge_sets_path
+  %li= link_to 'See All Badge Sets', badge_sets_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Edit #{@badge_set.name}", edit_badge_set_path(@badge_set), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Add New Badge', new_badge_path, :class => "btn btn-tiny btn-info"
 
-= link_to 'Add New Badge', new_badge_path, :class => "btn btn-tiny btn-success btn-primary"
-%p
-%table.display.table-bordered.table
+.col-lg-12
+  %h3= @title
+
+%table.display.table-striped.table.simpleTable
   %thead
     %tr
       %th Badge
-      %th Name
-      %th Value
-      %th Description
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "int"} Value
+      %th.sortable{"data-sort" => "string"} Description
       %th
       %th
       %th
@@ -18,11 +20,11 @@
     - @badge_set.badges.each do |badge|
       %tr
         %td
-          %img{:src => badge.icon, :alt => badge.name}
+          %img{:src => badge.icon, :alt => badge.name, :width => "40"}
         %td= badge.name
         %td= badge.point_total
         %td= raw badge.description
         %td= link_to "View", badge_path(badge), :class => 'btn btn-tiny btn-success'
-        %td= link_to "Edit", edit_badge_path(badge), :class => 'btn btn-tiny btn-success'
-        %td= link_to "Delete", badge_path(badge), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-success', :method => :delete
+        %td= link_to "Edit", edit_badge_path(badge), :class => 'btn btn-tiny btn-info'
+        %td= link_to "Delete", badge_path(badge), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
 

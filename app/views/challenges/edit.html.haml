@@ -1,3 +1,5 @@
 = content_nav_for Challenge, "Edit #{breadcrumb_link_for(@challenge)}".html_safe
 
-= render 'form'
+.col-lg-12
+  %h3= @title
+  = render 'form'

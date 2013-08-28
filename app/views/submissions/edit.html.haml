@@ -1,3 +1,6 @@
-= content_nav_for @assignment, Submission, "Editing #{breadcrumb_link_for([@submission, [@assignment, @submission]])}'s Submission".html_safe
+= content_nav_for @assignment, Submission, "Editing #{breadcrumb_link_for([@submission, [@assignment, @submission]])}'s Submission".html_safe do
+  %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
-= render 'form'
+.col-lg-12
+  %h3= @title
+  = render 'form'

@@ -28,7 +28,7 @@ class Grade < ActiveRecord::Base
   before_validation :cache_associations
   before_save :cache_score_and_point_total
 
-  validates_presence_of :assignment, :assignment_type, :course
+  validates_presence_of :assignment, :assignment_type, :course, :student
 
   delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
@@ -41,10 +41,6 @@ class Grade < ActiveRecord::Base
 
   def self.score
     all.pluck('SUM(grades.score)').first || 0
-  end
-
-  def raw_score
-    super || 0
   end
 
   def score
@@ -108,7 +104,7 @@ class Grade < ActiveRecord::Base
   def cache_associations
     self.student_id ||= submission.try(:student_id)
     self.task_id ||= submission.try(:task_id)
-    self.assignment_id ||= submission.try(:assignment_id) || task.try(:assignment_id)
+    self.assignment_id ||= submission.try(:assignment_id) || task.try(:taskable_id)
     self.assignment_type_id ||= assignment.try(:assignment_type_id)
     self.course_id ||= assignment.try(:course_id)
   end

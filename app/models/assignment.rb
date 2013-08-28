@@ -11,7 +11,7 @@ class Assignment < ActiveRecord::Base
   has_many :assignment_groups
   has_many :groups, :through => :assignment_groups
 
-  has_many :tasks, :as => :assignment, :dependent => :destroy
+  has_many :tasks, :as => :taskable, :dependent => :destroy
   has_many :submissions, :as => :assignment
   has_many :grades
   accepts_nested_attributes_for :grades
@@ -41,11 +41,12 @@ class Assignment < ActiveRecord::Base
     :open_time, :accepts_submissions, :student_logged_button_text,
     :student_logged, :badge_set_id, :release_necessary,
     :score_levels_attributes, :open_at, :close_time, :course,
-    :assignment_rubrics_attributes, :rubrics_attributes
+    :assignment_rubrics_attributes, :rubrics_attributes, :media,
+    :thumbnail, :media_credit, :caption, :media_caption
 
-  scope :individual_assignment, -> { where grade_scope: "Individual" }
-  scope :group_assignment, -> { where grade_scope: "Group" }
-  scope :team_assignment, -> { where grade_scope: "Team" }
+  scope :individual_assignments, -> { where grade_scope: "Individual" }
+  scope :group_assignments, -> { where grade_scope: "Group" }
+  scope :team_assignments, -> { where grade_scope: "Team" }
 
   scope :chronological, -> { order('due_at ASC') }
 
@@ -103,7 +104,7 @@ class Assignment < ActiveRecord::Base
 
   def weight_for_student(student, weight = nil)
     return 1 unless student_weightable?
-    weight ||= (weights.where(student: student).pluck('weight').first || 0)
+    weight ||= (weights.where(student_id: student).pluck('weight').first || 0)
     weight > 0 ? weight : course.default_assignment_weight
   end
 
@@ -163,6 +164,10 @@ class Assignment < ActiveRecord::Base
 
   def grade_radio?
     assignment_type.mass_grade_type == "Radio Buttons"
+  end
+
+  def grade_text?
+    assignment_type.mass_grade_type == "Text"
   end
 
   def open?

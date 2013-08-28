@@ -1,31 +1,66 @@
 = content_nav_for @assignment do
-  %li= link_to 'Edit', edit_assignment_path(@assignment)
-  %li= link_to 'Log Grades', mass_grade_assignment_path(@assignment)
-  %li= link_to 'Back', assignments_path
+  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+  - if @assignment.assignment_type.mass_grade?
+    %li= link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
-%p
-  %b Description:
-  = raw @assignment.description
-%p
-  %b Point Total:
-  = number_with_delimiter(@assignment.point_total, :delimiter => ',')
-%p
-  %b Open date:
-  = @assignment.open_at
-%p
-  %b Close date:
-  = @assignment.due_at
+.col-lg-12
+  %h3= @assignment.name
 
-= form_tag assignment_path(@assignment), :method => :get do
-  = hidden_field_tag :assignment_id, @assignment.id
-  = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
-  = submit_tag 'Filter', :class => 'btn btn-success btn-small'
+  - if @assignment.description?
+    %p
+      %b Description:
+      = raw @assignment.description
 
-- if current_user.is_staff?
-  %h4 Grades
+  - if @assignment.point_total?
+    %p
+      %b Point Total:
+      = number_with_delimiter(@assignment.point_total, :delimiter => ',')
+
+  - if @assignment.open_at?
+    %p
+      %b Open date:
+      = @assignment.open_at
+
+  - if @assignment.due_at?
+    %p
+      %b Close date:
+      = @assignment.due_at
+
+  - if current_course.has_teams?
+    = form_tag assignment_path(@assignment), :method => :get do
+      = hidden_field_tag :assignment_id, @assignment.id
+      = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+      = submit_tag 'Filter', :class => 'btn btn-success btn-small'
+
   - if @assignment.assignment_type.mass_grade?
     .pull-right
-      = link_to 'Log Grades', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-success btn-primary"
+      = link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-warning"
+
+.col-lg-12
+  %h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
+
+- if @assignment.tasks.present?
+  %table.table.display.table-striped.simpleTable
+    %thead
+      %tr
+        %th.sortable{"data-sort" => "string"} Name
+        %th.sortable{"data-sort" => "string"} Description
+        %th
+        %th
+        %th
+    %tbody
+      - @assignment.tasks.each do |task|
+        %tr
+          %td= task.name
+          %td= task.description
+          %td= link_to "View", assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-success'
+          %td= link_to "Edit", edit_assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-info'
+          %td= link_to "Delete", assignment_task_path(@assignment.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
+
+.col-lg-12
+  %h4.clear  Grades
 
 - if @assignment.has_groups?
   = render 'group'

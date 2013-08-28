@@ -27,7 +27,7 @@ class GradesController < ApplicationController
   def new
     @assignment = Assignment.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
-    @grade = @assignment.grades.create(params[:grade])
+    @grade = @assignment.grades.new
     #@grade.student = current_course.grades.where(params[:student_id])
     @badges = current_course.badges
     @score_levels = @assignment_type.score_levels
@@ -79,7 +79,6 @@ class GradesController < ApplicationController
   def update
     @assignment = Assignment.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
-    @earnable = find_earnable
     @badges = current_course.badges
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
@@ -124,7 +123,7 @@ class GradesController < ApplicationController
   end
 
   def mass_edit
-    @assignment = Assignment.find(params[:id])
+    @assignment = current_course.assignments.find(params[:id])
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
     user_search_options = {}
@@ -159,15 +158,6 @@ class GradesController < ApplicationController
   end
 
   def find_student
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
-    end
-    nil
-  end
-
-  def find_earnable
     params.each do |name, value|
       if name =~ /(.+)_id$/
         return $1.classify.constantize.find(value)

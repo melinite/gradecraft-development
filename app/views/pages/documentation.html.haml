@@ -1,0 +1,11 @@
+- if current_user
+  - if current_user.is_staff?
+    = render 'pages/instructor_documentation'
+  - elsif current_user.is_student?
+    = render 'pages/student_documentation'
+- else
+  .col-lg-12
+    %h3 Working With GradeCraft
+    %hr
+    = render 'pages/instructor_documentation'
+    = render 'pages/student_documentation'

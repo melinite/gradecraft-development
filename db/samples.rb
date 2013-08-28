@@ -8,6 +8,8 @@ badge_icons = ['/badges/above_and_beyond.png','/badges/always_learning.png','/ba
 
 grade_scheme_hash = { [0,600000] => 'F', [600000,649000] => 'D+', [650000,699999] => 'C-', [700000,749999] => 'C', [750000,799999] => 'C+', [800000,849999] => 'B-', [850000,899999] => 'B', [900000,949999] => 'B+', [950000,999999] => 'A-', [100000,1244999] => 'A', [1245000,1600000] => 'A+'}
 
+majors = ['Obliviator','Knight Bus Driver','Magizoologist','Wandmaker','Mediwizard','Dragonologist','Floo Network Regulator','Curse-Breaker','Broom-maker','Arithmancer','Hit Wizard','Auror']
+
 # Generate sample courses
 course = Course.create! do |c|
   c.name = "Videogames & Learning"
@@ -29,6 +31,26 @@ course = Course.create! do |c|
   c.accepts_submissions = true
   c.predictor_setting = true
   c.graph_display = false
+  c.tagline = "You Game the Grade"
+  c.academic_history_visible = true
+  c.media_file = "http://www.youtube.com/watch?v=LOiQUo9nUFM&feature=youtu.be"
+  c.media_credit = "Albus Dumbledore"
+  c.media_caption = "The Greatest Wizard Ever Known"
+  c.office = "Room 4121 SEB"
+  c.phone = "734-644-3674"
+  c.class_email = "staff-educ222@umich.edu"
+  c.twitter_handle = "barryfishman"
+  c.twitter_hashtag = "EDUC222"
+  c.location = "Whitney Auditorium, Room 1309 School of Education Building"
+  c.office_hours = "Tuesdays, 1:30 pm – 3:30 pm"
+  c.meeting_times = "Mondays and Wednesdays, 10:30 am – 12:00 noon"
+  c.badge_term = "Achievement"
+  c.user_term = "Learner"
+  c.assignment_term = "Quest"
+  c.group_term = "League"
+  c.team_term = "Horde"
+  c.challenge_term = "Battle"
+  c.grading_philosophy ="I believe a grading system should put the learner in control of their own destiny, promote autonomy, and reward effort and risk-taking. Whereas most grading systems start you off with 100% and then chips away at that “perfect grade” by averaging in each successive assignment, the grading system in this course starts everyone off at zero, and then gives you multiple ways to progress towards your goals. Different types of assignments are worth differing amounts of points. Some assignments are required of everyone, others are optional. Some assignments can only be done once, others can be repeated for more points. In most cases, the points you earn for an assignment are based on the quality of your work on that assignment. Do poor work, earn fewer points. Do high-quality work, earn more points. You decide what you want your grade to be. Learning in this class should be an active and engaged endeavor."
 end
 puts "Videogames and Learning has been installed"
 
@@ -90,6 +112,23 @@ students << User.create! do |u|
 end
 puts "Percy Weasley has arrived on campus, on time as usual"
 
+students.each do |s|
+  StudentAcademicHistory.create! do |ah|
+    ah.student_id = s.id
+    ah.major = majors.sample
+    ah.gpa = [1.5, 2.0, 2.25, 2.5, 2.75, 3.0, 3.33, 3.5, 3.75, 4.0, 4.1].sample
+    ah.current_term_credits = rand(12)
+    ah.accumulated_credits = rand(40)
+    ah.year_in_school = [1, 2, 3, 4, 5, 6, 7].sample
+    ah.state_of_residence = "Michigan"
+    ah.high_school = "Hogwarts School of Witchcraft & Wizardry"
+    ah.athlete = [false, true].sample
+    ah.act_score = 1 * rand(10)
+    ah.sat_score = 100 * rand(10)
+  end
+end
+puts "And gave students some background"
+
 rubric = course.rubrics.create! do |r|
   r.name = "The Rubric"
   r.description = "Test Rubric"
@@ -149,7 +188,7 @@ assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Reading Reactions"
   at.point_setting = "Individually"
-  at.points_predictor_display = "Select"
+  at.points_predictor_display = "Select List"
   at.resubmission = false
   at.predictor_description = "Each week, you must write a concise summary or analysis of the reading for that week of no more than 200 words! (200 words is roughly equivalent to one-half page, double-spaced.) Your 201st word will suffer a terrible fate... "
   at.due_date_present = true
@@ -225,7 +264,7 @@ end
 
 grinding_assignments.each do |a|
   a.tasks.create! do |t|
-    t.assignment = a
+    t.taskable = a
     t.name = "Task 1"
     t.due_at = rand.weeks.from_now
     t.accepts_submissions = true
@@ -312,7 +351,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(3).weeks.ago
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(3).weeks.ago
   a.grade_scope = "Individual"
   a.save
   a.tasks.create! do |t|
@@ -343,7 +382,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(3).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(2).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Game Play Update Paper 1 has been posted!"
@@ -352,10 +391,10 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Update Paper 2"
   a.point_total = 120000
-  a.due_at = rand(5).weeks.from_now
+  a.due_at = rand(4).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(3).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Game Play Update Paper 2 has been posted!"
@@ -364,10 +403,10 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:lfpg]
   a.name = "Game Play Reflection Paper"
   a.point_total = 160000
-  a.due_at = rand(7).weeks.from_now
+  a.due_at = rand(5).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(4).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Game Play Reflection Paper has been posted!"
@@ -379,7 +418,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(4).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(3).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Individual Project 1 has been posted!"
@@ -388,10 +427,10 @@ assignments << Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
-  a.due_at = rand(7).weeks.from_now
+  a.due_at = rand(5).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(4).weeks.from_now
   a.grade_scope = "Individual"
 end
 puts "Individual Project 2 has been posted!"
@@ -403,7 +442,7 @@ assignments << Assignment.create! do |a|
   a.due_at = rand(7).weeks.from_now
   a.accepts_submissions = true
   a.release_necessary = true
-  a.open_at = "14/02/2013"
+  a.open_at = rand(6).weeks.from_now
   a.grade_scope = "Group"
 end
 puts "Group Game Design has been posted!"
@@ -417,6 +456,32 @@ grade_scheme_hash.each do |range,letter|
   end
 end
 puts "Installed N.E.W.T. grade scheme for each course"
+
+challenges = []
+
+challenges << Challenge.create! do |c|
+  c.course = course
+  c.name = "House Cup"
+  c.point_total = 1000000
+  c.due_at = rand(7).weeks.from_now
+  c.accepts_submissions = true
+  c.release_necessary = true
+  c.open_at = rand(6).weeks.from_now
+  c.visible = true
+end
+puts "The House Cup Competition begins... "
+
+challenges << Challenge.create! do |c|
+  c.course = course
+  c.name = "Tri-Wizard Tournament"
+  c.point_total = 10000000
+  c.due_at = rand(8).weeks.from_now
+  c.accepts_submissions = true
+  c.release_necessary = true
+  c.open_at = rand(8).weeks.from_now
+  c.visible = true
+end
+puts "Are you willing to brave the Tri-Wizard Tournament?"
 
 LTIProvider.create! do |p|
   p.name = 'Piazza'

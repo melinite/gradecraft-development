@@ -1,16 +1,14 @@
 .row
-  .col-lg-3.col-sm-3
-    .sidebar-nav-fixed
-      = render 'layouts/admin_subnav'
-  .col-lg-9.col-sm-9
-    .content= render 'layouts/content'
-%footer.col-lg-12.rounded
-  = render 'layouts/footer'
-
-- if current_user.is_admin?
-  .navbar.navbar-fixed-bottom.navbar-inverse
-    .navbar-inner
-      .course
-        Current Course:
-        = form_tag change_current_course_path, :class => 'btn btn-tiny' do
-          = select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name', current_course.id)
+  .col-lg-2.col-sm-3.col-md-3.col-sm-3.sidebar-nav-fixed
+    = render 'layouts/admin_subnav'
+  .col-lg-10.col-sm-9.col-md-9
+    - if flash[:notice]
+      .alert.alert-success= flash[:notice]
+    - if flash[:error]
+      .alert.alert-error= flash[:error]
+    - if flash[:alert]
+      .alert.alert-info= flash[:alert]
+    .primaryContent.row= render 'layouts/content'
+%footer.row
+  .col-lg-12.col-md-12.col-sm-12.rounded
+    = render 'layouts/footer'

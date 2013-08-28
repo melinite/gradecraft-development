@@ -1,20 +1,20 @@
 = simple_form_for @assignment do
-  %table.display.table-bordered.table.simpleTable
+  %table.display.table-striped.table.simpleTable
     %thead
       %tr
         - if @assignment.release_necessary?
           %th
-        %th{"data-sort" => "string"}= current_course.group_term
-        %th{"data-sort" => "string"} Score
+        %th.sortable{"data-sort" => "string"}= current_course.group_term
+        %th.sortable{"data-sort" => "string"} Score
         - if @assignment.assignment_type.student_weightable?
-          %th Multiplied Scores
+          %th.sortable{"data-sort" => "int"} Multiplied Scores
         - if @assignment.has_levels?
-          %th Level
+          %th.sortable{"data-sort" => "string"} Level
         %th Badges Earned
         - if @assignment.release_necessary?
-          %th Status
+          %th.sortable{"data-sort" => "string"} Status
         - if @assignment.accepts_submissions?
-          %th Submission
+          %th.sortable{"data-sort" => "string"} Submission
         %th
     %tbody
       - @groups.each do |group|

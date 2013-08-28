@@ -1,14 +1,14 @@
 = content_nav_for @student, AssignmentWeight do
-  %li= link_to "Back to My Dashboard", dashboard_path
+  %li= link_to "Back to My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 
 - if current_user.is_staff?
   %h4= "#{@student.name}'s #{current_course.weight_term} Choices"
 - else
   %h3= "My #{current_course.weight_term} Choices"
-%table.table.table-bordered
+%table.table.table-striped.simpleTable
   %tr
-    %th Assignment Type
-    %th Value
+    %th.sortable{"data-sort" => "string"} Assignment Type
+    %th.sortable{"data-sort" => "int"} Value
     %th
     - @assignment_types.each do |at|
       - if at.student_weightable?

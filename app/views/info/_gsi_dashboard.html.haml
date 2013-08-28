@@ -1,114 +1,37 @@
-.row
-  .col.col-lg-12
-    .col.col-lg-12
-      %h4= "Top 10"
-      %table.table.table-bordered
-        %thead
-          %tr
-            %th= current_course.user_term
-            %th Score
-            %th Badges Earned
-            %th Logins
-            %th Pageviews
-            %th Predictor Views
-            %th Email
-            %th #{current_course.section_leader_term}
-        %tbody
-          - @top_ten_students.each do |student|
-            %tr
-              %td= link_to student.name, user_path(student)
-              %td= student.earned_grades(current_course)
-              %td= student.user_badge_count
-              %td= student.visit_count
-              %td= student.page_views
-              %td= student.predictor_views
-              %td= link_to "Email #{student.first_name}", "mailto:#{student.email}", :class => "btn btn-tiny btn-success"
-              %td
-                - student.team_leader.tap do |team_leader|
-                  - if team_leader.present?
-                    %div= link_to "Email GSI (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-primary btn-tiny btn-success"
-  .clear
-    .col.col-lg-12
-      %h4= "Bottom 10"
-      %table.table.table-bordered
-        %thead
-          %tr
-            %th= current_course.user_term
-            %th Score
-            %th Badges Earned
-            %th Logins
-            %th Pageviews
-            %th Predictor Views
-            %th Email
-            %th GSI
-        %tbody
-          - @bottom_ten_students.each do |student|
-            %tr
-              %td= link_to student.name, user_path(student)
-              %td= student.try { |s| s.earned_grades(current_course) }
-              %td= student.user_badge_count
-              %td= student.visit_count
-              %td= student.page_views
-              %td= student.predictor_views
-              %td= link_to "Email #{student.first_name}", "mailto:#{student.email}", :class => "btn btn-tiny btn-success"
-              %td
-                - student.team_leader.tap do |team_leader|
-                  - if team_leader.present?
-                    %div= link_to "Email GSI (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-primary btn-tiny btn-success"
-
-  .clear
-    .col.col-lg-12
-      %h4= current_course.team_term
-      %table.table.table-bordered
-        %thead
-          %tr
-            %th= current_course.team_term
-            %th Score
-            %th Badges Earned
-            %th Average Grade
-            %th GSI
-        %tbody
-          - @teams.each do |team|
-            %tr
-              %td= link_to team.name, team_path(team)
-              //%td= team.try(:score)
-              %td
-                - team.earned_badges.each do |badge|
-                  %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
-              %td
-              %td= team.team_leader.try(:name)
-
-
-  .clear
-    .col.col-lg-12
-      %hr
-      %h3= "Ungraded Assignment Submissions"
-      - @submissions.group_by(&:assignment).each do |assignment, submissions|
-        %span.assignmentTypeTitle= link_to "#{assignment.try(:name)}", assignment_path(assignment)
-        %span.assignmentTypeValue= "(#{assignment.try(:point_total)} total points)"
-        %table.table.table-bordered
-          %thead
-          %tr
-            - if assignment.is_individual?
-              %th= current_course.team_term
-              %th= current_course.user_term
-            - elsif assignment.has_groups?
-              %th= current_course.group_term
-            - elsif assignment.has_teams?
-              %th= current_course.team_term
-            %th Link
-            %th Comment
-            %th
-          %tbody
-            %tr
-              - assignment.submissions_for_assignment(assignment).tap do |submission|
-                - if submission.graded?
-                  - if assignment.is_individual?
-                    %td= submission.student.teams.first.try(:name)
-                  %td= submission.student.try(:name)
-                  %td= link_to submission.link, submission.link
-                  %td= submission.comment
-                  %td= link_to 'Grade', assignment_submission_path(assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
-                  %td= link_to 'Edit', edit_assignment_submission_path(assignment, submission, :student_id => submission.student_id), :class => 'btn btn-tiny btn-success'
-                  %td= link_to 'Delete', assignment_submission_path(assignment, submission), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
-
+.col.col-lg-12.col-sm-12.section
+  #time_line
+  %hr
+  %ul.tabs
+    %li.active
+      %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Top 10
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Bottom 10
+    - if current_course.has_teams?
+      %li
+        %a{ "data-toggle" => "tab", "data-target" => "#tab3"}= current_course.team_term.pluralize
+  .tab-content
+    .tab-pane.active#tab1
+      %h4 Top 10
+      = render 'students_table', :course => current_course, :students => @top_ten_students
+    .tab-pane#tab2
+      %h4 Bottom 10
+      = render 'students_table', :course => current_course, :students => @bottom_ten_students.reverse
+    - if current_course.has_teams?
+      .tab-pane#tab3
+        %h4= current_course.team_term.pluralize
+        #teamChart= render 'teams_table', :course => current_course, :teams => @teams
+.col.col-lg-12.section
+  %ul.tabs
+    %li.active
+      %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Submissions
+    - if current_course.has_badges?
+      %li
+        %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Badges
+  .tab-content
+    .tab-pane#tab4.active
+      %h4 Ungraded Assignment Submissions
+      = render 'submissions_table', :course => current_course, :submissions => @submissions
+    - if current_course.has_badges?
+      .tab-pane#tab5
+        %h4 Badges
+        = render 'badges_table', :course => current_course, :badges => @badges

@@ -19,6 +19,7 @@ GradeCraft::Application.routes.draw do
       get 'scores'
       put 'update_profile'
       get 'students'
+      get 'predictor'
       get 'staff'
       get 'final_grades'
       get 'test'
@@ -26,7 +27,7 @@ GradeCraft::Application.routes.draw do
       post 'upload'
       get 'choices'
       get 'analytics'
-      get 'my_badges'
+      get 'class_badges'
     end
   end
   resources :assignment_weights
@@ -50,10 +51,12 @@ GradeCraft::Application.routes.draw do
     resources :tasks
     resources :earned_badges do
       collection do
-        get :mass_award
-        put :mass_update
         get :chart
       end
+    end
+    member do
+      get 'mass_award' => 'earned_badges#mass_edit', as: :mass_award
+      put 'mass_award' => 'earned_badges#mass_update'
     end
   end
   resources :groups
@@ -106,6 +109,8 @@ GradeCraft::Application.routes.draw do
 
   post '/current_course/change' => 'current_courses#change', :as => :change_current_course
   get 'current_course' => 'current_courses#show'
+  get  'class_badges' => 'users#class_badges'
+  get 'timeline' => 'courses#timeline'
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
@@ -116,6 +121,7 @@ GradeCraft::Application.routes.draw do
   get 'using_gradecraft' => 'pages#using_gradecraft'
   get 'people' => 'pages#people'
   get 'contact' => 'pages#contact'
+  get 'documentation' => 'pages#documentation'
 
   # get 'cosign_test' => 'info#cosign_test'
 end
