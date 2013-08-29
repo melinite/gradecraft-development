@@ -3,6 +3,7 @@
     %tr
       %th.sortable{"data-sort" => "string"}= course.user_term
       %th.sortable{"data-sort" => "int"} Score
+      %th Chart
       %th.sortable{"data-sort" => "string"}= course.team_term
       %th.sortable{"data-sort" => "int"} Badges
       %th.sortable{"data-sort" => "int"} Logins
@@ -16,7 +17,7 @@
         %td= link_to student.name, user_path(student)
         %td= number_with_delimiter(student.score_for_course(course), :delimiter => ',')
         %td{:data => { :id => student.id.to_s}, :class => "bar-chart" }
-        -#%td
+        %td
           - if student.teams.present?
             = link_to student.teams.first.try(:name), student.teams.first
         %td= student.earned_badges.count
