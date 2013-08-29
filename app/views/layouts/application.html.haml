@@ -42,8 +42,6 @@
                   = select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name'), prompt: "My Courses"
                   %span.caret
 
-
-
           - else
             %div{:class => 'btn-group pull-right'}
               %a{:class => 'btn btn-xs username btn-info dropdown-toggle', "data-toggle" => 'dropdown', :href => '#' }

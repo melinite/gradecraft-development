@@ -7,3 +7,4 @@ grade-tracker.sublime-project
 grade-tracker.sublime-workspace
 log/*.log
 tmp/*
+.DS_Store

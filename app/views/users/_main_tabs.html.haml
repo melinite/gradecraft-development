@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  %li
+  %li.active
     %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Assignments
   - if current_course.grading_philosophy.present?
     %li
@@ -19,13 +19,13 @@
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Grade Predictor
 .tab-content
-  .tab-pane#tab4
+  .tab-pane#tab4.active
     = render "users/syllabus"
   - if current_course.grading_philosophy.present?
     .tab-pane#tab6
       = render "users/grading_philosophy"
   - if current_course.use_timeline?
-    .tab-pane#tab1.active
+    .tab-pane#tab1
       = render "users/timeline"
   //.tab-pane#tab2
   //= render "users/calendar"
@@ -37,6 +37,6 @@
       = render "users/predictor"
   - if current_course.shared_badges?
     .tab-pane#tab7
-      //= render "users/student_view_class_badges"
+      //= render "users/public_class_badges"
   .tab-pane#tab5
     = render "users/predictor"

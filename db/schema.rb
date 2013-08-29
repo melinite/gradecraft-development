@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130825015120) do
+ActiveRecord::Schema.define(version: 20130828221014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,8 +257,6 @@ ActiveRecord::Schema.define(version: 20130825015120) do
     t.boolean  "status",                                             default: true
     t.boolean  "group_setting"
     t.integer  "badge_set_id"
-    t.string   "total_assignment_weight"
-    t.string   "max_assignment_weight"
     t.datetime "assignment_weight_close_at"
     t.boolean  "team_roles"
     t.string   "team_leader_term"
@@ -293,6 +291,8 @@ ActiveRecord::Schema.define(version: 20130825015120) do
     t.string   "challenge_term"
     t.boolean  "use_timeline"
     t.text     "grading_philosophy"
+    t.integer  "total_assignment_weight"
+    t.integer  "max_assignment_weight"
   end
 
   create_table "criteria", force: true do |t|
@@ -341,24 +341,6 @@ ActiveRecord::Schema.define(version: 20130825015120) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "shared"
-  end
-
-  create_table "elements", force: true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.integer  "badge_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "faqs", force: true do |t|
-    t.string   "question"
-    t.text     "answer"
-    t.integer  "order"
-    t.string   "category"
-    t.string   "audience"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "elements", force: true do |t|
