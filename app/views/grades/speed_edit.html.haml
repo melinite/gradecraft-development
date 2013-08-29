@@ -29,4 +29,4 @@
           = render 'grades/submission', submission: submission
     - else
       %p No submissions.
-= render 'grades/rubric_modal'
+= render 'grades/rubric_modal', rubric: current_course.rubrics.first

@@ -6,7 +6,13 @@
           &times;
         %h4.modal-title Rubric
       .modal-body
-        Rubric
+        %ul
+          - rubric.criteria.each do |criteria|
+            %li
+              = criteria.name
+              - criteria.levels.each do |level|
+                = label_tag criteria.name, level.name
+                = radio_button_tag criteria.name, level.value
       .modal-footer
         = button_tag class: 'btn btn-default', 'data-dismiss' => 'modal' do
           Close
