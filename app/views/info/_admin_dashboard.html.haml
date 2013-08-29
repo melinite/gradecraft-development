@@ -2,11 +2,12 @@
   #time_line
 
   %hr
+  #grade_distro
   %ul.tabs
     %li.active
-      %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Top 10
+      %a{ "data-toggle" => "tab", "data-target" => "#tab1", "class" => "table-toggle" } Top 10
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Bottom 10
+      %a{ "data-toggle" => "tab", "data-target" => "#tab2", "class" => "table-toggle" } Bottom 10
     - if current_course.has_teams?
       %li
         %a{ "data-toggle" => "tab", "data-target" => "#tab3"}= current_course.team_term.pluralize

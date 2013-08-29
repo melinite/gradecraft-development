@@ -80,6 +80,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.find_by_kerberos_auth_hash(auth_hash)
+    where(kerberos_uid: auth_hash['uid']).first
+  end
+
   #Course
   def find_scoped_courses(course_id)
     if is_admin? || self.course_ids.include?(course_id)

@@ -71,7 +71,6 @@ $(document).ready(function(){
     $('#easyTab a:first').tab('show'); // Select first tab
     $('#easyTab a:last').tab('show'); // Select last tab
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
-
   });
 
   /* Activating Best In Place */
@@ -144,19 +143,37 @@ $(document).ready(function(){
 
 	});
 
-  var $cells = $('.bar-chart')
-  if ($cells.length) {
-    for (var i = 0; i < $cells.length; i++) {
-      (function (cell) {
-        var id = cell.getAttribute('data-id')
-        $.getJSON('/users/scores.json', { one: true, user_id: id }, function (data) {
-          scores = []
-          for (var i=0; i < data.scores.length; i++) {
-            scores.push(data.scores[i][1])
-          }
-          $(cell).sparkline(scores, { type: 'bar', barColor: 'blue' } )
-        })
-      })($cells[i])
-    }
+  if ($('#grade_distro').length) {
+    $.getJSON('/users/scores_for_current_course.json', function (data) {
+      $('#grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '30px', tooltipChartTitle: 'Course Score Distribution' } )
+    })
   }
+
+  if ($('.bar-chart').length) {
+    var assignmentTypeScores
+    function assignmentTypeBars () {
+      if (!assignmentTypeScores) return;
+      $('.bar-chart').each(function () {
+          var id = this.getAttribute('data-id');
+          var scores = assignmentTypeScores[id];
+          $(this).sparkline(scores, { type: 'bar', barColor: 'blue', height: '20px', width: '20px' } )
+      })
+    }
+
+    $.getJSON('/users/scores_by_assignment.json', function (data) {
+      assignmentTypeScores = {};
+      var studentId;
+      data.scores.forEach(function (row) {
+        if (studentId != row[0]) {
+          studentId = row[0];
+          assignmentTypeScores[studentId] = [];
+        }
+        assignmentTypeScores[studentId].push(row[2]);
+      })
+      assignmentTypeBars();
+    })
+  }
+
+  // Ask Cory.
+  $('.table-toggle').on('click', assignmentTypeBars);
 });

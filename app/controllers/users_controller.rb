@@ -174,13 +174,22 @@ class UsersController < ApplicationController
     }
   end
 
-  def scores
-    scores = current_course.grades.released.group(:student_id).order('SUM(score)')
-    scores = scores.limit(10) if params.has_key?(:top_ten)
-    scores = scores.pluck('student_id', 'SUM(score)')
+  def scores_by_assignment
+    scores = current_course.grades.released
+                           .group('grades.student_id, grades.assignment_type_id')
+                           .order('grades.student_id, grades.assignment_type_id')
+    scores = scores.pluck('grades.student_id, grades.assignment_type_id, SUM(grades.score)')
     render :json => {
       :scores => scores
     }
+  end
+
+  def scores_for_current_course
+     scores = current_course.grades.released.group(:student_id).order('SUM(score)')
+     scores = scores.pluck('SUM(score)')
+     render :json => {
+      :scores => scores
+     }
   end
 
   def new
