@@ -189,6 +189,10 @@ class User < ActiveRecord::Base
     assignment_weights.where(course: course).pluck('weight').sum
   end
 
+  def group_for_assignment(assignment)
+    groups.where(assignment_id: assignment)
+  end
+
   #Import Users
   def self.csv_header
     "First Name,Last Name,Email,Username".split(',')
@@ -216,10 +220,6 @@ class User < ActiveRecord::Base
 
   def team_score(course)
     teams.where(:course => course).pluck('score').first
-  end
-
-  def group_for_assignment(assignment)
-    groups.where(:assignment => assignment).first
   end
 
   private
