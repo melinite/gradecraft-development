@@ -149,7 +149,7 @@ $(document).ready(function(){
       $('.bar-chart').each(function () {
           var id = this.getAttribute('data-id');
           var scores = assignmentTypeScores[id];
-          $(this).sparkline(scores, { type: 'bar', barColor: 'blue' } )
+          $(this).sparkline(scores, { type: 'bar', barColor: 'blue', height: '20px', width: '20px' } )
       })
     }
 
