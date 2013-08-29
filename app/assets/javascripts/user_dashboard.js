@@ -177,12 +177,8 @@ $(document).ready(function() {
     };
 
   if ($('#grade_distro').length) {
-    $.getJSON('/users/scores.json', function (data) {
-      var scores = []
-      for (var i=0; i < data.scores.length; i++) {
-        scores.push(data.scores[i][1])
-      }
-      $('#grade_distro').sparkline(scores, { type: 'box', width: '100%', height: '30px', tooltipChartTitle: 'Course Score Distribution' } )
+    $.getJSON('/users/scores_for_current_course.json', function (data) {
+      $('#grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '30px', tooltipChartTitle: 'Course Score Distribution' } )
     })
   }
 
