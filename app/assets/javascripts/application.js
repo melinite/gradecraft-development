@@ -31,6 +31,7 @@
 //= require timeline
 //= require stupidtable
 //= require earned_badges
+//= require predictor
 
 $(document).ready(function(){
 
