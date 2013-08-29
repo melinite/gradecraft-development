@@ -1,0 +1,10 @@
+Hey Cait!
+
+I had a problem authenticating this user/course via Kerberos:
+
+**User Info**
+Uniqname: <%= @user[:uid] %>
+
+I'm so sorry,
+
+The GradeCraft Server

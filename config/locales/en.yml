@@ -23,6 +23,6 @@ en:
         notice: "%{weights_term} were successfully updated."
         alert: "Could not update %{weights_term}."
   sessions:
-    lti:
+    create:
       success: 'You have been succesfully logged in'
       error: 'Sorry, we could not log you in.'

@@ -1,7 +1,7 @@
 class UserSessionsController < ApplicationController
 
   skip_before_filter :require_login, :except => [:destroy, :new, :index]
-  skip_before_filter :verify_authenticity_token, :only => [:lti_create]
+  skip_before_filter :verify_authenticity_token, :only => [:lti_create, :kerberos_create]
 
   def new
     @user = User.new
@@ -25,14 +25,25 @@ class UserSessionsController < ApplicationController
     @course = Course.find_by_lti_uid(auth_hash['extra']['raw_info']['context_id'])
     if !@user || !@course
       lti_error_notification
-      redirect_to lti_error_path
+      flash[:alert] = t('sessions.create.error')
+      redirect_to auth_failure_path
       return
     end
     @user.courses << @course unless @user.courses.include?(@course)
     save_lti_context
     auto_login @user
-    flash[:notice] = t('sessions.lti.success')
-    respond_with @user, :location => dashboard_path
+    respond_with @user, notice: t('sessions.create.success'), location: dashboard_path
+  end
+
+  def kerberos_create
+    @user = User.find_by_kerberos_auth_hash(auth_hash)
+    if !@user
+      kerberos_error_notification
+      flash[:alert] = t('sessions.create.error')
+      redirect_to auth_failure_path and return
+    end
+    auto_login @user
+    respond_with @user, notice: t('sessions.create.success'), location: dashboard_path
   end
 
   def destroy
@@ -51,5 +62,10 @@ class UserSessionsController < ApplicationController
     user = { name: "#{info['first_name']} #{info['last_name']}", email: info['email'], uid: auth_hash['uid'] }
     course = { name: auth_hash['extra']['context_label'], uid: auth_hash['extra']['context_id'] }
     NotificationMailer.lti_error(user, course).deliver
+  end
+
+  def kerberos_error_notification
+    user = { uid: auth_hash['uid'] }
+    NotificationMailer.kerberos_error(user).deliver
   end
 end

@@ -191,9 +191,14 @@ GEM
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
+    omniauth-kerberos (0.2.0)
+      omniauth-multipassword
+      timfel-krb5-auth (~> 0.8)
     omniauth-lti (0.0.2)
       ims-lti
       omniauth
+    omniauth-multipassword (0.4.1)
+      omniauth (~> 1.0)
     pacecar (2.0.0)
       activerecord (>= 4.0.0)
     pg (0.15.1)
@@ -273,6 +278,7 @@ GEM
     tilt (1.4.1)
     timelineJS-rails (1.1.1)
       jquery-rails
+    timfel-krb5-auth (0.8)
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
@@ -330,6 +336,7 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri (= 1.6.0)
   omniauth
+  omniauth-kerberos
   omniauth-lti
   pacecar
   pg

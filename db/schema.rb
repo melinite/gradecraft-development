@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130829003700) do
+ActiveRecord::Schema.define(version: 20130829140308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -604,8 +604,10 @@ ActiveRecord::Schema.define(version: 20130829003700) do
     t.datetime "last_activity_at"
     t.string   "lti_uid"
     t.string   "last_login_from_ip_address"
+    t.string   "kerberos_uid"
   end
 
+  add_index "users", ["kerberos_uid"], name: "index_users_on_kerberos_uid", using: :btree
   add_index "users", ["last_logout_at", "last_activity_at"], name: "index_users_on_last_logout_at_and_last_activity_at", using: :btree
   add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
