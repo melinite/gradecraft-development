@@ -173,6 +173,12 @@ badges = badge_names.map do |badge_name|
 end
 puts "Did someone need motivation? We found these badges in the Room of Requirements..."
 
+def add_score_levels(assignment_type)
+  assignment_type.score_levels.new(name: 'Great', value: '1000')
+  assignment_type.score_levels.new(name: 'Good', value: '700')
+  assignment_type.score_levels.new(name: 'Poor', value: '300')
+end
+
 assignment_types[:attendance] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Attendance"
@@ -200,10 +206,12 @@ assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.predictor_description = "Each week, you must write a concise summary or analysis of the reading for that week of no more than 200 words! (200 words is roughly equivalent to one-half page, double-spaced.) Your 201st word will suffer a terrible fate... "
   at.due_date_present = true
   at.order_placement = 2
-  at.mass_grade = true
-  at.mass_grade_type = "Select"
   at.student_weightable = true
+  at.mass_grade = true
+  at.mass_grade_type = 'Select List'
+  add_score_levels(at)
 end
+
 puts "Do your readings."
 
 assignment_types[:blogging] = AssignmentType.create! do |at|
@@ -221,8 +229,9 @@ http://www.katehart.net/2012/06/citing-sources-quick-and-graphic-guide.html
 You can blog as much as you want, but only one post/week can earn points."
   at.order_placement = 3
   at.mass_grade = true
-  at.mass_grade_type = "Radio"
+  at.mass_grade_type = 'Radio Buttons'
   at.student_weightable = true
+  add_score_levels(at)
 end
 puts "Blogging is great for filling in missed points in other areas"
 

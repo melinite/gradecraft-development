@@ -15,7 +15,11 @@ class AssignmentType < ActiveRecord::Base
   has_many :score_levels
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
+  MASS_GRADE_TYPES = ['Radio Buttons', 'Select List', 'Checkbox', 'Test', 'Set per Assignment']
+
   validates_presence_of :name, :points_predictor_display, :point_setting
+
+  validate :multiple_score_levels, if: :select?
 
   scope :student_weightable, -> { where(:student_weightable => true) }
   scope :ordered, -> { order 'order_placement ASC' }
@@ -68,5 +72,13 @@ class AssignmentType < ActiveRecord::Base
   def weight_for_student(student)
     return 1 unless student_weightable?
     assignment_weights.where(student: student).weight
+  end
+
+  private
+
+  def multiple_score_levels
+    if score_levels.size < 2
+      errors.add :base, "Please add at least two score levels"
+    end
   end
 end

@@ -7,7 +7,7 @@
     = link_to speed_grade_assignment_path(student_id: @next) do
       #{@next.name} &rsaquo;
 
-.well
+-#.well
   .panel.panel-default
     - if @assignment.tasks.present?
       - @assignment.tasks.each do |task|
@@ -29,4 +29,23 @@
           = render 'grades/submission', submission: submission
     - else
       %p No submissions.
+
+= simple_form_for @assignment, method: :put, :html => { :class => 'well form-horizontal' }, url: speed_grade_assignment_path(@assignment) do |f|
+  = hidden_field_tag :student_id, @student.id
+  .panel.panel-default
+    = f.simple_fields_for :grades, @assignment.grades.where(student: @student).first_or_initialize do |gf|
+      = gf.hidden_field :student_id
+      .panel-heading.clearfix
+        = @assignment.assignment_type.name
+      .panel-body
+        - if @assignment.grade_select?
+          = gf.input :raw_score, as: :select, collection: @assignment.score_levels, value_method: :value
+        - elsif @assignment.grade_radio?
+          = gf.input :raw_score, as: :radio_buttons, collection: @assignment.score_levels, value_method: :value
+        - elsif @assignment.grade_text?
+          = gf.input :raw_score, as: :text
+        - else
+          = gf.input :raw_score, as: :boolean, label: @assignment.name
+  = f.submit 'Save & Continue', class: 'btn btn-primary'
+
 = render 'grades/rubric_modal', rubric: current_course.rubrics.first

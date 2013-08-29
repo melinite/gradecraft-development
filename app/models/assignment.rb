@@ -29,7 +29,9 @@ class Assignment < ActiveRecord::Base
   has_many :score_levels, :through => :assignment_type
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
-  delegate :mass_grade?, :student_weightable?, :to => :assignment_type
+  delegate :points_predictor_display, :score_levels, :grade_select?,
+    :grade_radio?, :grade_text?, :grade_checkbox?, :mass_grade?,
+    :student_weightable?, :to => :assignment_type
 
   before_validation :cache_associations, :cache_point_total
   after_save :save_grades, :save_weights

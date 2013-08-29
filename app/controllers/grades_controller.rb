@@ -1,16 +1,14 @@
 class GradesController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except => [:self_log, :show]
+  before_filter :ensure_staff?, :except => [:self_log, :self_log_create]
+  before_filter :set_assignment
 
   def index
-    @assignment = current_course.assignments.find(params[:assignment_id])
     redirect_to assignment_path(@assignment)
   end
 
   def show
-    @assignments = current_course.assignments
-    @assignment = @assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
   end
 
@@ -26,7 +24,6 @@ class GradesController < ApplicationController
   end
 
   def new
-    @assignment = current_course.assignments.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
     @students = current_course.students
     @score_levels = @assignment_type.score_levels
@@ -38,7 +35,6 @@ class GradesController < ApplicationController
 
   def edit
     @badges = current_course.badges
-    @assignment = current_course.assignments.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
     @grade = @assignment.grades.find(params[:id])
@@ -56,6 +52,9 @@ class GradesController < ApplicationController
     @grade.graded_by = current_user
     @grade.save
     @student = find_student
+    @students = current_course.users.students
+    @grade = @student.grades.build(params[:grade])
+    @earnable = find_earnable
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|
@@ -70,7 +69,6 @@ class GradesController < ApplicationController
   end
 
   def update
-    @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
     @student = find_student
     @badges = current_course.badges
@@ -86,7 +84,6 @@ class GradesController < ApplicationController
   end
 
   def destroy
-    @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
     @grade.destroy
 
@@ -97,24 +94,23 @@ class GradesController < ApplicationController
   end
 
   def self_log
-    @assignment = current_course.assignments.find(params[:assignment_id])
-    if @assignment.open?
-      @grade = current_student_data.grade_for_assignment(@assignment)
-      @grade.raw_score = params[:present] == 'true' ? @assignment.point_total : 0
-      respond_to do |format|
-        if @grade.save
-          format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }
-        else
-          format.html { redirect_to dashboard_path, notice: "We're sorry, this grade could not be added." }
-        end
+    @grade = @assignment.grades.create(params[:grade])
+    @grade.student = current_course.grades.where(params[:student_id])
+  end
+
+  def self_log_create
+    @student = find_student
+    @grade = @student.grades.build(params[:grade])
+    respond_to do |format|
+      if @grade.save
+        format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }
+      else
+        format.html { redirect_to dashboard_path, notice: "We're sorry, this grade could not be added." }
       end
-    else
-      format.html { redirect_to dashboard_path, notice: "We're sorry, this assignment is no longer open." }
     end
   end
 
   def mass_edit
-    @assignment = current_course.assignments.find(params[:id])
     @title = "Quick Grade #{@assignment.name}"
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
@@ -129,25 +125,11 @@ class GradesController < ApplicationController
 
   def mass_update
     @student = find_student
-    @assignment = current_course.assignments.find(params[:id])
-    if @assignment.update_attributes(params[:assignment])
-      respond_with @assignment
-    else
-      @title = "Quick Grade #{@assignment.name}"
-      @assignment_type = @assignment.assignment_type
-      @score_levels = @assignment_type.score_levels
-      user_search_options = {}
-      user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-      @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
-      @grades = @students.map do |s|
-        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment)
-      end
-      respond_with @assignment, :template => "grades/mass_edit"
-    end
+    @assignment.update_attributes(params[:assignment])
+    respond_with @assignment
   end
 
   def speed_edit
-    @assignment = current_course.assignments.find(params[:id])
     students = current_course.students.alpha
     @student = students.find_by(id: params[:student_id]) if params[:student_id]
     @student ||= students.first
@@ -157,6 +139,15 @@ class GradesController < ApplicationController
   end
 
   def speed_update
+    students = current_course.students.alpha
+    @student = students.find(params.fetch :student_id)
+    @next = students.next(@student)
+    @previous = students.previous(@student)
+    if @assignment.update_attributes(params[:assignment])
+      respond_with @assignment, location: speed_grade_assignment_path(@assignment, student_id: @next)
+    else
+      render :speed_edit
+    end
   end
 
   def edit_status
@@ -175,13 +166,13 @@ class GradesController < ApplicationController
     redirect_to assignment_path(@assignment)
   end
 
-  def find_student
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
-    end
-    nil
-  end
+  private
 
+  def set_assignment
+    @assignment = if params[:assignment_id]
+      current_course.assignments.find(params[:assignment_id])
+    else
+      current_course.assignments.find(params[:id])
+    end
+  end
 end
