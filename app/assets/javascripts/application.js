@@ -143,19 +143,30 @@ $(document).ready(function(){
 
 	});
 
-  var $cells = $('.bar-chart')
-  if ($cells.length) {
-    for (var i = 0; i < $cells.length; i++) {
-      (function (cell) {
-        var id = cell.getAttribute('data-id')
-        $.getJSON('/users/scores.json', { one: true, user_id: id }, function (data) {
-          scores = []
-          for (var i=0; i < data.scores.length; i++) {
-            scores.push(data.scores[i][1])
-          }
-          $(cell).sparkline(scores, { type: 'bar', barColor: 'blue' } )
-        })
-      })($cells[i])
+  if ($('.bar-chart').length) {
+    var assignmentTypeScores
+    function assignmentTypeBars () {
+      if (!assignmentTypeScores) return;
+      $('.bar-chart').each(function () {
+          var id = this.getAttribute('data-id');
+          var scores = assignmentTypeScores[id];
+          $(this).sparkline(scores, { type: 'bar', barColor: 'blue' } )
+      })
     }
+
+    $.getJSON('/users/scores.json', function (data) {
+      assignmentTypeScores = {};
+      var studentId;
+      data.scores.forEach(function (row) {
+        if (studentId != row[0]) {
+          studentId = row[0];
+          assignmentTypeScores[studentId] = [];
+        }
+        assignmentTypeScores[studentId].push(row[2]);
+      })
+      assignmentTypeBars();
+    })
+
+    $('.table-toggle').on('click', assignmentTypeBars)
   }
 });
