@@ -20,7 +20,8 @@ class User < ActiveRecord::Base
     :shared_badges, :earned_badges, :earned_badges_attributes,
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
-    :student_academic_history_attributes, :team_role, :course_memberships_attributes
+    :student_academic_history_attributes, :team_role, :course_memberships_attributes,
+    :character_profile
 
   #has_secure_password
 
@@ -42,7 +43,7 @@ class User < ActiveRecord::Base
   has_many :submissions, :foreign_key => :student_id, :dependent => :destroy
   has_many :created_submissions, :as => :creator
   has_many :grades, :foreign_key => :student_id, :dependent => :destroy
-  #has_many :grades, :foreign_key => :graded_by
+  has_many :graded_grades, foreign_key: :graded_by, :class_name => 'Grade'
 
   has_many :earned_badges, :foreign_key => :student_id, :dependent => :destroy
   accepts_nested_attributes_for :earned_badges, :reject_if => proc { |attributes| attributes['earned'] != '1' }
@@ -179,6 +180,10 @@ class User < ActiveRecord::Base
 
   def score_for_assignment_type(assignment_type)
     grades.where(assignment_type: assignment_type).score
+  end
+
+  def released_score_for_assignment_type(assignment_type)
+    grades.released.where(assignment_type: assignment_type).score
   end
 
   def weights_for_assignment_type_id(assignment_type)

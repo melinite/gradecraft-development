@@ -112,6 +112,10 @@ class Assignment < ActiveRecord::Base
     grades.where(student: student).pluck('score').first
   end
 
+  def released_grade_for_student(student)
+    grades.released.where(student: student).pluck('score').first
+  end
+
   def past?
     due_at != nil && due_at < Date.today
   end
