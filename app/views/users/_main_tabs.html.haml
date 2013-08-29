@@ -34,7 +34,7 @@
       = render "users/badges"
   - if current_course.predictor_on?
     .tab-pane#tab5
-      //= render "users/predictor"
+      = render "users/predictor"
   - if current_course.shared_badges?
     .tab-pane#tab7
       //= render "users/public_class_badges"
