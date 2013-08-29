@@ -6,7 +6,8 @@ class Grade < ActiveRecord::Base
     :finals, :status, :attempted, :substantial, :student, :student_id,
     :badge_ids, :earned_badges_attributes, :earned, :submission,
     :submission_id, :badge_ids, :earned_badge_id, :earned_badges,
-    :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id
+    :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
+    :graded_by
 
   STATUSES=%w(New Graded Released)
 

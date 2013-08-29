@@ -1,6 +1,10 @@
 - if current_user.is_student?
   = content_nav_for "Editing My #{term_for :weights}" do
     %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+- elsif current_user.is_staff?
+  = content_nav_for "Editing #{term_for :weights} for #{@student.name}" do
+    %li= link_to "See #{@student.name}'s Dashboard", user_path(@student), :class => "btn btn-tiny btn-info"
+    %li= link_to "See All #{term_for :weight} Decisions", choices_users_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3 #{term_for :weights} remaining: #{current_course.total_assignment_weight}

@@ -15,9 +15,9 @@
             = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
           %br
           - if @user.assignment_weights.present?
-            .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path, assignment_type: assignment_type, student: @user.id
+            .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:user_id => @user.id), assignment_type: assignment_type, user_id: @user
           - else
-            .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path, assignment_type: assignment_type, student: @user.id
+            .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:user_id => @user.id), assignment_type: assignment_type
       .clear
       %hr
       .col-lg-12
