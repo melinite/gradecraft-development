@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130829140308) do
+ActiveRecord::Schema.define(version: 20130829205616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,8 +234,9 @@ ActiveRecord::Schema.define(version: 20130829140308) do
   create_table "course_memberships", force: true do |t|
     t.integer "course_id"
     t.integer "user_id"
-    t.integer "score",         default: 0, null: false
+    t.integer "score",             default: 0, null: false
     t.boolean "shared_badges"
+    t.text    "character_profile"
   end
 
   add_index "course_memberships", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree
@@ -293,6 +294,8 @@ ActiveRecord::Schema.define(version: 20130829140308) do
     t.text     "grading_philosophy"
     t.integer  "total_assignment_weight"
     t.integer  "max_assignment_weight"
+    t.boolean  "check_final_grade"
+    t.boolean  "character_profiles"
   end
 
   create_table "criteria", force: true do |t|
@@ -406,7 +409,7 @@ ActiveRecord::Schema.define(version: 20130829140308) do
     t.integer  "assignment_type_id"
     t.integer  "point_total"
     t.text     "admin_notes"
-    t.integer  "graded_by"
+    t.integer  "graded_by_id"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
