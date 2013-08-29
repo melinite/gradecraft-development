@@ -16,6 +16,11 @@ class AssignmentTypeWeightsController < ApplicationController
     if @form.save
       redirect_to dashboard_path
     else
+      if current_user.is_student?
+        @user = current_user
+        @badges = current_course.badges
+        @assignments = current_course.assignments
+      end
       respond_with @form, action: :mass_edit
     end
   end
