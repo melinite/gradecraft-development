@@ -174,7 +174,7 @@ class UsersController < ApplicationController
     }
   end
 
-  def scores
+  def scores_by_assignment
     scores = current_course.grades.released
                            .group(:student_id, 'grades.assignment_type_id')
                            .order('student_id, grades.assignment_type_id')
@@ -182,6 +182,14 @@ class UsersController < ApplicationController
     render :json => {
       :scores => scores
     }
+  end
+
+  def scores_for_current_course
+     scores = current_course.grades.released.group(:student_id).order('SUM(score)')
+     scores = scores.pluck('SUM(score)')
+     render :json => {
+      :scores => scores
+     }
   end
 
   def new

@@ -70,7 +70,6 @@ $(document).ready(function(){
     $('#easyTab a:first').tab('show'); // Select first tab
     $('#easyTab a:last').tab('show'); // Select last tab
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
-
   });
 
   /* Activating Best In Place */
@@ -154,7 +153,7 @@ $(document).ready(function(){
       })
     }
 
-    $.getJSON('/users/scores.json', function (data) {
+    $.getJSON('/users/scores_by_assignment.json', function (data) {
       assignmentTypeScores = {};
       var studentId;
       data.scores.forEach(function (row) {
@@ -166,7 +165,8 @@ $(document).ready(function(){
       })
       assignmentTypeBars();
     })
-
-    $('.table-toggle').on('click', assignmentTypeBars)
   }
+
+  // Ask Cory.
+  $('.table-toggle').on('click', assignmentTypeBars);
 });

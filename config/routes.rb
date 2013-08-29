@@ -16,7 +16,8 @@ GradeCraft::Application.routes.draw do
     collection do
       get 'edit_profile'
       get 'predictor'
-      get 'scores'
+      get 'scores_for_current_course'
+      get 'scores_by_assignment'
       put 'update_profile'
       get 'students'
       get 'predictor'
