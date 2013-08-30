@@ -20,6 +20,7 @@
 //= require preload_store
 //= require selectToUISlider.jQuery
 //= require_self
+//= require analytics
 //= require assignment_types
 //= require assignments
 //= require grade_schemes

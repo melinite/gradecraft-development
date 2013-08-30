@@ -108,6 +108,11 @@ GradeCraft::Application.routes.draw do
     end
   end
 
+  namespace :analytics do
+    get 'index'
+    get 'assignment_events'
+  end
+
   get 'home/index'
   get 'dashboard' => 'info#dashboard'
   root :to => "home#index"
