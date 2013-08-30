@@ -8,6 +8,9 @@ class AnalyticsEvent
   field :user_id, type: Integer
 
   after_create do |event|
-    AnalyticsAggregate.incr(event)
+    case event.event_type
+    when 'predictor'
+      AnalyticsAggregate::AssignmentAggregate.incr(event)
+    end
   end
 end

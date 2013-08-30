@@ -11,15 +11,15 @@ class AnalyticsAggregate
     :minutely => 1.minute.to_i
   }
 
-  field :assignment_id, type: Integer
+  field :_type, type: String
   field :users, type: Hash
   field :events, type: Hash
 
   # t = event.created_at
   # interval = GRANULARITIES[granularity]
   # key = ( t.to_i / interval ) * interval
+  # % = count
   #
-  # assignment_id: id
   # users: {
   #   1: {
   #     events: {
@@ -72,6 +72,18 @@ class AnalyticsAggregate
   # }
 
   def self.incr(event)
+    self.aggregate_scope(event).find_and_modify(self.modify(event), {'upsert' => 'true', :new => true})
+  end
+
+  def self.aggregate_scope(event)
+    self.where(_type: 'AnalyticsAggregate').first
+  end
+
+  def self.modify(event)
+    {'$inc' => upsert_hash(event)}
+  end
+
+  def self.upsert_hash(event)
     upsert_hash = Hash.new.tap do |hash|
       GRANULARITIES.each do |granularity, interval|
         user_key = ["users", event.user_id]
@@ -82,8 +94,6 @@ class AnalyticsAggregate
         hash[ (event_key + granular_key).join('.') ] = 1
       end
     end
-
-    self.where(assignment_id: event.assignment_id).find_and_modify({'$inc' => upsert_hash}, {'upsert' => 'true', :new => true})
   end
 
   # t = Time.now.to_i     #=> 1377704456
