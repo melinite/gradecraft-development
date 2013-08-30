@@ -2,7 +2,6 @@
   #time_line
 
   %hr
-  #grade_distro
   %ul.tabs
     %li.active
       %a{ "data-toggle" => "tab", "data-target" => "#tab1", "class" => "table-toggle" } Top 10
@@ -11,6 +10,8 @@
     - if current_course.has_teams?
       %li
         %a{ "data-toggle" => "tab", "data-target" => "#tab3"}= current_course.team_term.pluralize
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tab4", "class" => "table-toggle" } Course Grade Distribution
   .tab-content
     .tab-pane.active#tab1
       %h4 Top 10
@@ -22,18 +23,22 @@
       .tab-pane#tab3
         %h4= current_course.team_term.pluralize
         #teamChart= render 'teams_table', :course => current_course, :teams => @teams
+    .tab-pane#tab4
+      %h4 Course Grade Distribution
+      #grade_distro
+
 .col.col-lg-12.section
   %ul.tabs
     %li.active
-      %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Submissions
+      %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Submissions
     - if current_course.has_badges?
       %li
-        %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Badges
+        %a{ "data-toggle" => "tab", "data-target" => "#tab6"} Badges
   .tab-content
-    .tab-pane#tab4.active
+    .tab-pane#tab5.active
       %h4 Ungraded Assignment Submissions
       = render 'submissions_table', :course => current_course, :submissions => @submissions
     - if current_course.has_badges?
-      .tab-pane#tab5
+      .tab-pane#tab6
         %h4 Badges
         = render 'badges_table', :course => current_course, :badges => @badges

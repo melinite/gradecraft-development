@@ -10,7 +10,7 @@
       - if assignment_type.student_weightable?
         .col-lg-4
           .badge.badge-info
-            = number_with_delimiter(@user.score_for_assignment_type(assignment_type))
+            = number_with_delimiter(@user.released_score_for_assignment_type(assignment_type))
             = "/"
             = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
           %br
@@ -18,7 +18,15 @@
             .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:user_id => @user.id), assignment_type: assignment_type, user_id: @user
           - else
             .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:user_id => @user.id), assignment_type: assignment_type
-      .clear
+        .clear
+      - else
+        .col-lg-4
+          .badge.badge-info
+            = number_with_delimiter(@user.released_score_for_assignment_type(assignment_type))
+            = "/"
+            = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
+        .clear
+
       %hr
       .col-lg-12
         - assignments.each do |assignment|

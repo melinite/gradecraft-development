@@ -16,15 +16,15 @@
 
   #predictorPage{ 'data-student-name' => @user.name, 'data-course-total' => @user.point_total_for_course(current_course) }
     .col.col-lg-12
-      %ul.slides.col.col-lg-10
+      %ul.slides.col.col-lg-12
         - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
           %li{:id => "slide-#{assignment_type.id}", :data => { :'assignment-type-id' => assignment_type.id, :'assignment-type-name' => assignment_type.name } }
-            .slide-panel.col.col-lg-12
+            .slide-panel
               .assignmentType
                 %h4= assignment_type.name
                 .pull-right
-                  %span.badge.badge-warning
-                    = "#{@user.score_for_assignment_type(assignment_type)} / "
+                  %span.badge.badge-info
+                    = "#{@user.released_score_for_assignment_type(assignment_type)} / "
                     = "#{assignment_type.assignments.point_total_for_student(@user)} possible points"
               - assignments.each do |assignment|
                 .assignment.clear

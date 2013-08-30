@@ -1,7 +1,8 @@
 class Submission < ActiveRecord::Base
-  attr_accessible :task, :task_id, :assignment, :assignment_id, :assignment_type, :comment,
+  attr_accessible :task, :task_id, :assignment, :assignment_id, :assignment_type_id, :comment,
     :feedback, :group, :group_id, :attachment, :link, :student, :student_id,
-    :creator, :creator_id, :text_feedback, :text_comment, :graded, :submission_file, :submission_files_attributes
+    :creator, :creator_id, :text_feedback, :text_comment, :graded, :submission_file, :submission_files_attributes,
+    :course_id
 
   include Canable::Ables
 
@@ -20,7 +21,9 @@ class Submission < ActiveRecord::Base
   has_many :submission_files, :dependent => :destroy
   accepts_nested_attributes_for :submission_files
 
-  scope :ungraded, -> { where(graded: false) }
+  #scope :ungraded, -> { where(!:grades) }
+  #scope :graded, -> (grade) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id)' }
+
 
   before_validation :cache_associations
 
@@ -79,7 +82,6 @@ class Submission < ActiveRecord::Base
 
   def cache_associations
     self.assignment_id ||= task.try(:taskable_id)
-    self.assignment_type ||= task.try(:assignment_type)
-    self.course_id ||= assignment.try(:course_id)
+    self.course_id ||= task.taskable.course_id
   end
 end

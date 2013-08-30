@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130829205616) do
+ActiveRecord::Schema.define(version: 20130830164257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -526,10 +526,9 @@ ActiveRecord::Schema.define(version: 20130829205616) do
     t.datetime "released_at"
     t.integer  "task_id"
     t.integer  "course_id"
-    t.string   "assignment_type"
+    t.integer  "assignment_type_id"
   end
 
-  add_index "submissions", ["assignment_id", "assignment_type"], name: "index_submissions_on_assignment_id_and_assignment_type", using: :btree
   add_index "submissions", ["course_id"], name: "index_submissions_on_course_id", using: :btree
 
   create_table "tasks", force: true do |t|
