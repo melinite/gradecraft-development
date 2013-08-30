@@ -58,6 +58,7 @@ group :development do
   gem 'minitest-capybara'
   gem 'valid_attribute'
   gem 'capybara'
+  gem 'foreman'
 end
 
 group :test do
