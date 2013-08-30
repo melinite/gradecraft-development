@@ -139,7 +139,7 @@ var PredictorView = Backbone.View.extend({
     courseTotal += parseInt(this.$el.data('course-total'));
     return courseTotal;
   },
-  calculateScores: function() {
+  calculateScores: function(e) {
     var assignmentTypes = this.collection;
     $.each(this.$el.find('.slides li').not('.clone'),function(i,slide) {
       var $slide = $(slide);
@@ -149,21 +149,41 @@ var PredictorView = Backbone.View.extend({
       var assignmentTypeId = $slide.data('assignment-type-id');
       var score = 0;
       $.each($slide.find('input, select, .slider'), function(i,item) {
-        var $item = $(item);
-        if($item.is(':checkbox') && $item.is(':checked')) {
-          score += parseInt($item.val());
-        } else if ($item.is('select')) {
-          score += parseInt($item.children('option:selected').val() || 0);
-        } else if ($item.is('input[type="hidden"]')) {
-          score += parseInt($item.val());
-        } else if ($item.is('.ui-slider')) {
-          score += parseInt($item.slider('value'));
-        }
+        var $item = $(item),
+            itemScore = getScore($item);
+        score += itemScore;
       });
       assignmentTypes.get(assignmentTypeId).set('score',score);
     });
+    if (e) {
+      var $item = $(e.target),
+          $assignment = $item.closest('.assignment'),
+          assignmentId = $assignment.data('assignment'),
+          score = getScore($item),
+          possibleScore = $assignment.data('possible-points');
+      $.ajax('/analytics_events/predictor_event', {
+        method: 'post',
+        data: {
+          assignment: assignmentId,
+          score: score,
+          possible: possibleScore
+        }
+      });
+    }
   }
 });
+
+var getScore = function($item) {
+  if($item.is(':checkbox') && $item.is(':checked')) {
+    return parseInt($item.val());
+  } else if ($item.is('select')) {
+    return parseInt($item.children('option:selected').val() || 0);
+  } else if ($item.is('input[type="hidden"]')) {
+    return parseInt($item.val());
+  } else if ($item.is('.ui-slider')) {
+    return parseInt($item.slider('value'));
+  }
+}
 
 $(document).ready(function() {
   var $wrapper = $('#prediction');

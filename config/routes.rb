@@ -131,5 +131,7 @@ GradeCraft::Application.routes.draw do
   get 'leaderboard' => 'info#leaderboard'
   get 'grading_status' => 'info#grading_status'
 
+  post 'analytics_events/predictor_event'
+
   # get 'cosign_test' => 'info#cosign_test'
 end
