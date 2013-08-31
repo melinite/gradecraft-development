@@ -1,10 +1,8 @@
 = simple_form_for([@assignment, @submission], :html => {:class => 'form-horizontal' }) do |f|
   - if @assignment.has_groups?
-    = f.input :student_id, :collection => @groups, :label => "#{current_course.group_term}"
+    = f.association :group, :selected => @group, :label => "#{current_course.group_term}"
   - else
-    = f.association :student, :default => @student, :label => "#{current_course.user_term}", :include_blank => false
-  = f.association :assignment, :default => @assignment, :as => :hidden
-  = f.association :course, :default => current_course.id
+    = f.association :student, :selected => @student, :label => "#{current_course.user_term}"
   = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-8' }
   = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
 

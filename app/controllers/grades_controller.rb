@@ -30,6 +30,7 @@ class GradesController < ApplicationController
     @grade = @assignment.grades.new
     @score_levels = @assignment_type.score_levels
     @groups = current_course.groups
+    @student = current_course.users.find(params[:student_id])
     @students = current_course.users.students
     respond_with(@grade)
   end

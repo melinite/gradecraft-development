@@ -1,12 +1,8 @@
 = simple_form_for([@assignment, @grade], :html => {:class => 'form-horizontal' }) do |f|
-  %h4= @assignment.name
-  //= f.input :graded_by, :input_html => { :value => current_user.id }, :as => :hidden
   - if @assignment.is_individual?
-    = f.input :student_id, :collection => @students, :label => "#{current_course.user_term}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
+    = f.association :student, :default => @student.id, :collection => @students, :label => "#{current_course.user_term}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
   - elsif @assignment.has_groups?
     = f.input :group_id, :collection => @groups, :label => "#{current_course.group_term}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
-  - elsif @assignment.has_teams?
-    = f.input :team_id, :collection => @teams, :label => "#{current_course.team_term}", :input_html => {:class => "input-sm col-lg-3"}
   - if @assignment.has_levels?
     = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select, :input_html => {:class => "col-lg-3"}
   - else
@@ -14,6 +10,7 @@
   = f.input :feedback, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}
   - if @assignment.release_necessary?
     = f.input :status, :as => :radio_buttons, :collection => Grade::STATUSES
+  //= f.input :graded_by, :input_html => { :value => current_user.id }
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"
     = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'

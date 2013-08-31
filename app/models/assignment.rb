@@ -54,7 +54,7 @@ class Assignment < ActiveRecord::Base
   scope :without_due_date, ->  { where('assignments.due_at IS NULL') }
   scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
-  #scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
+  scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
 
   scope :grading_done, -> { where 'grades.present? == 1' }
 

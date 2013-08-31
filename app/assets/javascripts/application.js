@@ -120,8 +120,6 @@ $(document).ready(function(){
     e.stopPropagation();
   });
 
-	$('#userBarTotalSim').show();
-
   $('#course_id').change(function() { $(this).closest('form').submit(); });
 
   $('.nav-tabs').button();

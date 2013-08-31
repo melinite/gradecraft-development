@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
 
   has_many :group_memberships, :foreign_key => :student_id, :dependent => :destroy
   has_many :groups, :through => :group_memberships
+  has_many :assignment_groups, :through => :groups
   has_many :team_memberships, :foreign_key => :student_id, :dependent => :destroy
   has_many :teams, :through => :team_memberships
 
@@ -194,8 +195,12 @@ class User < ActiveRecord::Base
     assignment_weights.where(course: course).pluck('weight').sum
   end
 
+  def groups_by_assignment_id
+    @group_by_assignment ||= groups.group_by(&:assignment_id)
+  end
+
   def group_for_assignment(assignment)
-    groups.where(assignment_id: assignment)
+    groups.where(assignment: assignment).first
   end
 
   #Import Users

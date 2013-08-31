@@ -12,7 +12,7 @@
           %th{"data-sort" => "string"} Level
         %th.sortable{"data-sort" => "int"} Badges Earned
         - if @assignment.release_necessary?
-          %th.sortable{"data-sort" => "int"} Status
+          %th.sortable{"data-sort" => "string"} Status
         - if @assignment.accepts_submissions?
           %th.sortable{"data-sort" => "int"} Submission
         %th
@@ -55,4 +55,5 @@
             - else
               = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
   - if @assignment.release_necessary?
-    = submit_tag "Update Grade Statuses", :class => "btn btn-info"
+    .col-lg-12
+      = submit_tag "Update Grade Statuses", :class => "btn btn-info pull-right"

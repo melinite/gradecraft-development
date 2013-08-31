@@ -31,6 +31,6 @@
             - elsif assignment.accepts_submissions? && assignment.submissions.present?
               = link_to "Grade #{ assignment.submissions.count } Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
             - else
-              = link_to "Grade", :class => "btn btn-tiny btn-success"
+              = link_to "Grade", assignment_path(assignment), :class => "btn btn-tiny btn-success"
           %td= link_to "Edit", edit_assignment_path(assignment), :class => 'btn btn-tiny btn-info'
 

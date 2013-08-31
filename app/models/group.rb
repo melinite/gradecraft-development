@@ -37,7 +37,6 @@ class Group < ActiveRecord::Base
   end
 
 
-
   private
 
   def cache_score
