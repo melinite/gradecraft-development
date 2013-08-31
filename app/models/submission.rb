@@ -25,7 +25,7 @@ class Submission < ActiveRecord::Base
   #scope :graded, -> (grade) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id)' }
 
 
-  before_validation :cache_associations
+  #before_validation :cache_associations
 
   validates_presence_of :student
   validates_uniqueness_of :task, :scope => :student, :allow_nil => true
@@ -82,6 +82,6 @@ class Submission < ActiveRecord::Base
 
   def cache_associations
     self.assignment_id ||= task.try(:taskable_id)
-    self.course_id ||= task.taskable.course_id
+    self.course_id ||= task.taskable.try(:course_id)
   end
 end
