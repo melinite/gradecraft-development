@@ -33,6 +33,10 @@ class TeamsController < ApplicationController
     respond_with @team
   end
 
+  def leaderboard
+    @teams = current_course.teams
+  end
+
   def create
     @team =  current_course.teams.new(params[:team])
     @team.save
