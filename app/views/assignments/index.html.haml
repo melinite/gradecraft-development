@@ -25,7 +25,9 @@
           %td= link_to assignment.name, assignment
           %td= assignment.try(:open_at)
           %td= assignment.try(:due_at)
-          %td= assignment.try(:accepts_submissions_until)
+          %td
+            - if assignment.accepts_submissions?
+              = assignment.try(:accepts_submissions_until)
           %td= number_with_delimiter(assignment.point_total, :delimiter => ',')
           %td= number_with_delimiter(assignment.average, :delimiter => ',')
           %td= "#{number_with_delimiter(assignment.low_score, :delimiter => ',')} - #{number_with_delimiter(assignment.high_score, :delimiter => ',')}"
