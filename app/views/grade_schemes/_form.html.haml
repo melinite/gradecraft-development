@@ -10,15 +10,18 @@
         = f.simple_fields_for :elements, GradeSchemeElement.new, child_index: 'child_index' do |ef|
           = render 'element_fields', f: ef
 
-    .well.elements.col-lg-9
+    %fieldset.elements
       - @grade_scheme.elements.each do |element|
         %fieldset.element
           = f.simple_fields_for :elements, element do |ef|
             = render 'element_fields', f: ef
 
+    = link_to 'Add an Element', '#', class: 'add-element btn btn-info'
 
-      = link_to 'Add an Element', '#', class: 'add-element'
 
-  .form-actions.col-lg-offset-3.clear
-    = f.button :submit, "Create Grade Scheme", :class => "btn-primary btn"
-    = link_to 'Cancel', grade_schemes_path, :class => 'btn btn-info'
+    .form-actions
+      %div.btn-toolbar
+        %div.btn-group
+          = f.button :submit, :class => "btn-primary"
+        %div.btn-group
+          = link_to 'Cancel', grade_schemes_path, :class => 'btn btn-info'

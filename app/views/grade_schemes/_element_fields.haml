@@ -1,6 +1,6 @@
-= f.input :low_range
+= f.input :low_range, :input_html => {:class => 'col-lg-2'}
 = f.input :high_range
 = f.input :level
 = f.input :letter
 = f.input :_destroy, :as => :hidden
-.col-lg-offset-3= link_to 'Remove Element', '#', class: 'remove-element'
+= link_to 'Remove Element', '#', class: 'remove-element btn btn-info'
