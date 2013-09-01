@@ -49,18 +49,21 @@
             %span.points.total= "#{number_with_delimiter(assignment.point_total_for_student(@user, @user.weights_for_assignment_type_id(assignment_type)))} points )"
             - if assignment.future?
               %span.italic= " • Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
-            - if assignment.accepts_submissions?
-              = render "users/submissions", assignment: assignment
             - if assignment.is_required?
               %span.label.label-important Required!
             - if assignment.self_gradeable?
               = simple_form_for([assignment, grade], :html => {:class => 'form-horizontal' }) do |f|
                 = f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary btn-tiny", "data-toggle" => "button" }
-            //- if assignment.has_groups?
-            //- if @user.group_for_assignment(assignment)
-            //= link_to "See Group", group_path(@user.group_for_assignment(assignment)), :class => "btn btn-primary btn-tiny"
-            //- else
-            //= link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-tiny"
+            - if assignment.has_groups?
+              - if @user.group_for_assignment(assignment)
+                = link_to "See Group", group_path(@user.group_for_assignment(assignment)), :class => "btn btn-primary btn-tiny"
+                //- if assignment.accepts_submissions?
+                //= render "users/group_submissions", assignment: assignment, group: @user.group_for_assignment(assignment)
+              - else
+                = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-tiny"
+            - else
+              - if assignment.accepts_submissions?
+                = render "users/submissions", assignment: assignment
 
             %p= raw assignment.description
             = render "users/grade", assignment: assignment

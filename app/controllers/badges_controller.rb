@@ -22,7 +22,7 @@ class BadgesController < ApplicationController
 
   def edit
     @badge = current_course.badges.find(params[:id])
-    @title = "Editing #{@badge.name}"
+    @title = "Edit #{@badge.name}"
     @badge_sets = current_course.badge_sets
   end
 

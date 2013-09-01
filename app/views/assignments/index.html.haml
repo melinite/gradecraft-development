@@ -1,6 +1,8 @@
 = content_nav_for Assignment do
   %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
 
+.col-lg-12
+  %h3= @title
 
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
   .col-lg-12

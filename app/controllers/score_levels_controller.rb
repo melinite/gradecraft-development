@@ -4,20 +4,10 @@ class ScoreLevelsController < ApplicationController
 
   def index
     @score_levels = ScoreLevel.all
-
-    respond_to do |format|
-      format.html 
-      format.json { render json: @score_levels }
-    end
   end
 
   def show
     @score_level = ScoreLevel.find(params[:id])
-
-    respond_to do |format|
-      format.html 
-      format.json { render json: @score_level }
-    end
   end
 
   def new
@@ -25,10 +15,6 @@ class ScoreLevelsController < ApplicationController
     @users = current_course.users.students
     @assignments = current_course.assignments
     @assignment_types = current_course.assignment_types
-    respond_to do |format|
-      format.html 
-      format.json { render json: @score_level }
-    end
   end
 
   def edit

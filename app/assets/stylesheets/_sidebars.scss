@@ -76,7 +76,6 @@ ul.nav.nav-list > li > a {
 /** Student Dashboard Sidebar **/
 
 .sidebar_section  {
-  margin-top: 10px;
   margin-bottom: 15px;
 
   #gradeCurious {
@@ -85,7 +84,7 @@ ul.nav.nav-list > li > a {
 
   #badges, #todo, #historyInfo, .classInfo {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   color: #FFF;
   }
   .clear.center {
@@ -94,12 +93,11 @@ ul.nav.nav-list > li > a {
   }
 
   h4.center {
-    float: none;
     text-align: center;
   }
 
   p {
-    font-family: 'Pontano Sans', sans-serif !important;
+    font-family: 'Pontano Sans', sans-serif;
   }
 
 }
@@ -124,11 +122,10 @@ ul.nav.nav-list > li > a {
   img:hover {
     opacity: 1;
   }
-}
 
-
-#badges img.earned {
-  opacity: 1;
+  img.earned {
+    opacity: 1;
+  }
 }
 
 .submitted {

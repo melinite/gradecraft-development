@@ -6,7 +6,7 @@
     %li= link_to 'Quick Win Grading', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
 .col-lg-12
-  %h3= @assignment.name
+  %h3= @title
 
   - if @assignment.description?
     %p

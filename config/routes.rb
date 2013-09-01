@@ -125,6 +125,8 @@ GradeCraft::Application.routes.draw do
   get 'people' => 'pages#people'
   get 'contact' => 'pages#contact'
   get 'documentation' => 'pages#documentation'
+  get 'leaderboard' => 'info#leaderboard'
+  get 'grading_status' => 'info#grading_status'
 
   # get 'cosign_test' => 'info#cosign_test'
 end

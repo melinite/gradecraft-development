@@ -5,29 +5,16 @@ class CategoriesController < ApplicationController
   def index
     @title = "Categories"
     @categories = current_course.categories
-    respond_to do |format|
-      format.html
-      format.json { render json: @categories }
-    end
   end
 
   def show
     @category = current_course.categories.find(params[:id])
     @title = @category.name
-    respond_to do |format|
-      format.html
-      format.json { render json: @category }
-    end
   end
 
   def new
     @category = current_course.categories.new
     @title = "Create a New Category"
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @category }
-    end
   end
 
   def edit

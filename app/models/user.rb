@@ -200,7 +200,11 @@ class User < ActiveRecord::Base
   end
 
   def group_for_assignment(assignment)
-    groups.where(assignment: assignment).first
+    assignment_groups.where(assignment: assignment).first
+  end
+
+  def group_submission_for_assignment(assignment)
+
   end
 
   #Import Users

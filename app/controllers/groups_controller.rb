@@ -34,6 +34,11 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    if current_user.is_student?
+      @user = current_user
+      @badges = current_course.badges
+      @assignments = current_course.assignments
+    end
     @group = current_course.groups.find(params[:id])
   end
 

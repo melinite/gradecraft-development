@@ -3,7 +3,7 @@ class ChallengesController < ApplicationController
   before_filter :ensure_staff?, :only=>[:new,:edit,:create,:update,:destroy]
 
   def index
-    @title = "View All Challenges"
+    @title = "View All #{term_for :challenges}"
     @challenges = current_course.challenges
   end
 
@@ -11,23 +11,16 @@ class ChallengesController < ApplicationController
     @challenge = current_course.challenges.find(params[:id])
     @title = @challenge.name
     @teams = current_course.teams
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @challenge }
-    end
   end
 
   def new
     @challenge = current_course.challenges.new
-    respond_to do |format|
-      format.html
-      format.json { render json: @challenge }
-    end
+    @title = "Create a New #{term_for :challenge}"
   end
 
   def edit
     @challenge = current_course.challenges.find(params[:id])
+    @title = "Edit #{@challenge.name}"
   end
 
   def create

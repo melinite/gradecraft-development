@@ -4,31 +4,22 @@ class EarnedBadgesController < ApplicationController
 
   def index
     @badge = current_course.badges.find(params[:badge_id])
-    redirect_to @badge
+    @title = "#{term_for :badges}"
   end
 
   def my_badges
-    @title = "Awarded Badges"
+    @title = "Awarded #{term_for :badges}"
     @earned_badges = @earnable.earned_badges
-    respond_to do |format|
-      format.html
-      format.json { render json: @earned_badge }
-    end
   end
 
   def show
-    @title = "Awarded Badge"
+    @title = "Awarded #{term_for :badge}"
     @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @earned_badge }
-    end
   end
 
   def new
-    @title = "Award a New Badge"
+    @title = "Award a New #{term_for :badge}"
     @badges = current_course.badges
     @badge = @badges.find(params[:badge_id])
     @earned_badge = EarnedBadge.new
@@ -36,22 +27,21 @@ class EarnedBadgesController < ApplicationController
   end
 
   def new_via_student
-    @title = "Award a New Badge"
+    @title = "Award a New #{term_for :badge}"
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new
     @students = current_course.users.students
   end
 
   def new_via_assignment
-    @title = "Award a New Badge"
+    @title = "Award a New #{term_for :badge}"
     @assignments = current_course.assignments
     @badges = current_course.badges
     @earned_badge = @earnable.earned_badges.new
-    #@earned_badge.earnable = params[:earnable_type].constantize.find(params[:earnable_id])
   end
 
   def edit
-    @title = "Edit Awarded Badge"
+    @title = "Edit Awarded #{term_for :badge}"
     @badges = current_course.badges
     @badge_sets = current_course.badge_sets
     @earned_badge = EarnedBadge.find(params[:id])

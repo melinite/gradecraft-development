@@ -25,7 +25,7 @@ class SubmissionsController < ApplicationController
       if @assignment.has_groups?
         @group = Group.find(params[:group_id])
       else
-        @student = User.find(params[:user_id])
+        @student = User.find(params[:student_id])
       end
     end
     if current_user.is_student?

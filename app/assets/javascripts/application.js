@@ -143,7 +143,13 @@ $(document).ready(function(){
 
   if ($('#grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
-      $('#grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '30px', tooltipChartTitle: 'Course Score Distribution' } )
+      $('#grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '50px' } )
+    })
+  }
+
+  if ($('#student_grade_distro').length) {
+    $.getJSON('/users/scores_for_current_course.json', function (data) {
+      $('#student_grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '40px' } )
     })
   }
 
