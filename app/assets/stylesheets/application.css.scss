@@ -17,22 +17,22 @@ $orange: #F4A425;
 
 @font-face {
   font-family: 'Pontano Sans';
-  src: asset-url('/assets/pontano-sans-regular.ttf', font);
+  src:url('pontano-sans-regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'IMF';
-  src: asset-url('/assets/IMFeDPrm28P.ttf', font);
+  src:url('IMFeDPrm28P.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'IMF italic';
-  src: asset-url('/assets/IMFeDPit28P.ttf') format('truetype');
+  src:url('IMFeDPit28P.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Overlock';
-  src: asset-url('/assets/Overlock-Regular.ttf') format('truetype');
+  src:url('Overlock-Regular.ttf') format('truetype');
 }
 
 

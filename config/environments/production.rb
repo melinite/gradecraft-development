@@ -18,6 +18,8 @@ GradeCraft::Application.configure do
   config.assets.css_compressor = :sass
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
+  config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+  config.assets.precompile += %w( .svg .eot .woff .ttf )
   config.cache_classes = false
   config.cache_store = :dalli_store
   config.consider_all_requests_local = false
