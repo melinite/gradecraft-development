@@ -6,15 +6,11 @@
     %tr
       %th{"data-sort" => "int"} Rank
       %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "int"} No. of Students
       %th{"data-sort" => "int"} Score
-        %th
-        %th
   %tbody
     - i = 1
-      - @teams.each do |team|
-        %tr
-          %td= team.rank
-          %td= team.name, team
-          %td= team.member_count
-          %td= team.try(:score)
+    - @teams.each do |team|
+      %tr
+        %td= team.rank
+        %td= team.name
+        %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"

@@ -66,6 +66,7 @@ GradeCraft::Application.routes.draw do
   resources :teams do
     collection do
       get :activity
+      get :leaderboard
     end
     resources :earned_badges
   end
