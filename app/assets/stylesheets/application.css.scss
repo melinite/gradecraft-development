@@ -6,7 +6,6 @@
  *= require flexslider
  *= require_self
  *= require icons
- *= require timelineJS/timeline
 */
 
 /* Branding colors */
@@ -48,6 +47,7 @@ $orange: #F4A425;
 @import 'sidebars';
 @import 'student_dashboard';
 @import 'tabs';
+@import 'timeline';
 
 body {
   background: image-url("cloud_bg2.gif");
