@@ -3,33 +3,26 @@ class BadgesController < ApplicationController
   before_filter :ensure_staff?, :only=>[:new,:edit,:create,:update,:destroy]
 
   def index
-    @title = "View All Badges"
+    @title = "View All #{term_for :badges}"
     @badges = current_course.badges
   end
 
   def show
     @badge = current_course.badges.find(params[:id])
-    @earned_badges = @badge.earned_badges
     @title = @badge.name
+    @earned_badges = @badge.earned_badges
     @tasks = @badge.tasks
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @badge }
-    end
   end
 
   def new
+    @title = "Create a New #{term_for :badge}"
     @badge = current_course.badges.new
     @badge_sets = current_course.badge_sets
-    respond_to do |format|
-      format.html
-      format.json { render json: @badge }
-    end
   end
 
   def edit
     @badge = current_course.badges.find(params[:id])
+    @title = "Edit #{@badge.name}"
     @badge_sets = current_course.badge_sets
   end
 

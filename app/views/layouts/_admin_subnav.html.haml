@@ -5,8 +5,8 @@
     %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
 %ul.nav.nav-list#sidebar
   %li.nav-header Course Setup
-  %li.icn_settings= link_to "Options", edit_course_path(current_course)
   %li.icn_film= link_to "Timeline", dashboard_path
+  %li.icn_settings= link_to "Options", edit_course_path(current_course)
   - if current_course.grade_scheme_id?
     %li.icn_calculator= link_to "Grading Scheme", grade_scheme_path(current_course.grade_scheme)
   %li.icn_group= link_to "Staff", staff_users_path
@@ -18,7 +18,7 @@
   - if current_course.shared_badges?
     %li.icn_gamepad= link_to "Class #{current_course.badge_term.pluralize}", class_badges_path
   - if current_course.student_weighted?
-    %li= link_to "#{term_for :weight} Chart", choices_users_path
+    %li.icn_playing_dic= link_to "#{term_for :weight} Chart", choices_users_path
   %li.divider
   %li.nav-header= term_for(:assignments)
   //%li.icn_attendance= link_to "Attendance"
@@ -33,9 +33,10 @@
   %li.divider
   %li.nav-header Analytics
   //%li.icn_flag= link_to "Early Warnings"
-  %li.icn_dashboard= link_to "Class Engagement"
+  //%li.icn_dashboard= link_to "Class Engagement"
   //%li.icn_stats= link_to "Explore Class Trends"
-  //%li.icn_charts= link_to "Compare Teams"
+  %li.icn_charts= link_to "Leaderboard", leaderboard_path
+  %li.icn_flag= link_to "Grading Status", grading_status_path
   %li.divider
   %li.nav-header Tools
   - LTIProvider.all.each do |tool|

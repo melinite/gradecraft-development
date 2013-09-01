@@ -4,6 +4,8 @@
 .navbar {
   min-height: 35px;
   margin-bottom: 0;
+  max-height: auto;
+  overflow: visible;
 
     a.brand {
     font-family: 'Futura', sans-serif;
@@ -173,4 +175,3 @@
 .filters select {
   margin-bottom: 5px;
 }
-

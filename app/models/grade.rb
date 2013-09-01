@@ -18,6 +18,7 @@ class Grade < ActiveRecord::Base
   belongs_to :submission # Optional
   belongs_to :task # Optional
   belongs_to :group, :polymorphic => true # Optional
+  belongs_to :graded_by, class_name: 'User'
 
   has_many :earned_badges, :dependent => :destroy
 

@@ -1,0 +1,13 @@
+.col-lg-12
+  %h4 Course Grade Distribution
+  #grade_distro
+  %hr
+  %h4 Top 10
+  = render 'students_table', :course => current_course, :students => @top_ten_students
+  %hr
+  %h4 Bottom 10
+  = render 'students_table', :course => current_course, :students => @bottom_ten_students.reverse
+  - if current_course.has_teams?
+    %hr
+    %h4= current_course.team_term.pluralize
+    #teamChart= render 'teams_table', :course => current_course, :teams => @teams

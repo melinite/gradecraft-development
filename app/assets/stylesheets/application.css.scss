@@ -103,6 +103,10 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.alert {
+  border: none;
+}
+
 .clear {
   clear: both;
 }
@@ -339,6 +343,10 @@ ul.nav.nav-list > li > a {
   margin-top: 1em;
   padding: 1em;
   clear: both;
+
+  canvas {
+
+  }
 }
 
 /** Modals **/
@@ -351,4 +359,12 @@ ul.nav.nav-list > li > a {
 
 .close {
   font-family: 'Helvetica', sans-serif;
+}
+
+.container .vco-storyjs ol {
+  list-style: decimal;
+}
+
+.container .vco-storyjs ul {
+  list-style: disc;
 }

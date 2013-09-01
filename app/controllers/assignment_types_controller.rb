@@ -1,5 +1,5 @@
 class AssignmentTypesController < ApplicationController
-  
+
   before_filter :ensure_staff?
 
   def index
@@ -13,16 +13,16 @@ class AssignmentTypesController < ApplicationController
 
   def show
     @assignment_type = current_course.assignment_types.find(params[:id])
-    @title = "View #{@assignment_type.name}"
+    @title = "#{@assignment_type.name}"
     @score_levels = @assignment_type.score_levels
     respond_to do |format|
       format.html
       format.json { render json: @assignment_types }
     end
   end
-  
+
   def new
-    @title = "Create a New Assignment Type"
+    @title = "Create a New #{term_for :assignment_type}"
     @assignment_type = current_course.assignment_types.new
     @assignment_type.score_levels.build
     respond_with(@assignment_type)
@@ -31,6 +31,7 @@ class AssignmentTypesController < ApplicationController
   def edit
     @assignment_type = current_course.assignment_types.find(params[:id])
     @title = "Edit #{@assignment_type.name}"
+    respond_with(@assignment_type)
   end
 
   def create

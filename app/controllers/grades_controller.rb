@@ -28,15 +28,9 @@ class GradesController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
     @grade = @assignment.grades.new
-    #@grade.student = current_course.grades.where(params[:student_id])
-    @badges = current_course.badges
     @score_levels = @assignment_type.score_levels
-    @earned_badge = EarnedBadge.new
-    #@earned_badges = current_course.badges.map do |b|
-      #EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
-    #end
-    @teams = current_course.teams
     @groups = current_course.groups
+    @student = current_course.users.find(params[:student_id])
     @students = current_course.users.students
     respond_with(@grade)
   end
@@ -50,10 +44,6 @@ class GradesController < ApplicationController
     @teams = current_course.teams
     @groups = current_course.groups
     @grade = @assignment.grades.find(params[:id])
-    #@earned_badges = current_course.badges.map do |b|
-      #EarnedBadge.where(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade').first || EarnedBadge.new(:badge_id => b.id, :earnable_id => @grade.id, :earnable_type => 'Grade')
-    #end
-    #@grade.student = current_course.grades.where(params[:student_id])
     respond_with @grade
   end
 
@@ -61,8 +51,7 @@ class GradesController < ApplicationController
     @student = find_student
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students
-    @grade = @student.grades.build(params[:grade])
-    @earnable = find_earnable
+    @grade = @assignment.grades.build(params[:grade])
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|
@@ -70,7 +59,7 @@ class GradesController < ApplicationController
         format.html { redirect_to @assignment, notice: 'Grade was successfully created.' }
         format.json { render json: @grade, status: :created, location: @grade }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", notice: 'Oh no! We cannot submit this grade.' }
         format.json { render json: @grade.errors, status: :unprocessable_entity }
       end
     end

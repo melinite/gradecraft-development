@@ -4,5 +4,5 @@ class TeamMembership < ActiveRecord::Base
   belongs_to :team
   belongs_to :student, class_name: 'User'
 
-  validates_presence_of :team, :student
+  validates_presence_of :student
 end

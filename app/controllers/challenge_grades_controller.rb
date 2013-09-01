@@ -3,7 +3,7 @@ class ChallengeGradesController < ApplicationController
   before_filter :ensure_staff?, :only=>[:new,:edit,:create,:update,:destroy]
 
   def index
-    @title = "View All Challenge Grades"
+    @title = "View All #{term_for :challenge} Grades"
     @challenge = current_course.challenges.find(params[:challenge_id])
     @challenge_grades = current_course.challenge_grades
   end
@@ -12,20 +12,17 @@ class ChallengeGradesController < ApplicationController
     @challenge = current_course.challenges.find(params[:challenge_id])
     @challenge_grade = @challenge.challenge_grades.find(params[:id])
     @title = @challenge_grade.name
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @challenge_grades }
-    end
   end
 
   def new
     @challenge = current_course.challenges.find(params[:challenge_id])
     @challenge_grade = @challenge.challenge_grades.new
+    @title = "Create a New #{term_for :challenge} Grade"
   end
 
   def edit
     @challenge = current_course.challenges.find(params[:challenge_id])
+    @title = "Edit #{@challenge.name} Grade"
     @teams = current_course.teams
     @challenge_grade = @challenge.challenge_grades.find(params[:id])
   end

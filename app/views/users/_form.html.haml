@@ -16,7 +16,7 @@
 
     - if @user.persisted? && @user.is_student?
       = f.simple_fields_for(@academic_history) do |ah|
-        = ah.input :student_id, :as => :hidden
+        = ah.input :student_id, :as => :hidden, :input_html => { :value => @user }
         = ah.input :major, :input_html => { :class => "col-lg-4"}
         = ah.input :gpa,  :input_html => { :class => "col-lg-4"}, :label => "GPA"
         = ah.input :current_term_credits,  :input_html => { :class => "col-lg-4"}

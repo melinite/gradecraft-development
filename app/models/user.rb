@@ -20,7 +20,8 @@ class User < ActiveRecord::Base
     :shared_badges, :earned_badges, :earned_badges_attributes,
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
-    :student_academic_history_attributes, :team_role, :course_memberships_attributes
+    :student_academic_history_attributes, :team_role, :course_memberships_attributes,
+    :character_profile
 
   #has_secure_password
 
@@ -42,7 +43,7 @@ class User < ActiveRecord::Base
   has_many :submissions, :foreign_key => :student_id, :dependent => :destroy
   has_many :created_submissions, :as => :creator
   has_many :grades, :foreign_key => :student_id, :dependent => :destroy
-  #has_many :grades, :foreign_key => :graded_by
+  has_many :graded_grades, foreign_key: :graded_by, :class_name => 'Grade'
 
   has_many :earned_badges, :foreign_key => :student_id, :dependent => :destroy
   accepts_nested_attributes_for :earned_badges, :reject_if => proc { |attributes| attributes['earned'] != '1' }
@@ -51,6 +52,7 @@ class User < ActiveRecord::Base
 
   has_many :group_memberships, :foreign_key => :student_id, :dependent => :destroy
   has_many :groups, :through => :group_memberships
+  has_many :assignment_groups, :through => :groups
   has_many :team_memberships, :foreign_key => :student_id, :dependent => :destroy
   has_many :teams, :through => :team_memberships
 
@@ -181,12 +183,28 @@ class User < ActiveRecord::Base
     grades.where(assignment_type: assignment_type).score
   end
 
+  def released_score_for_assignment_type(assignment_type)
+    grades.released.where(assignment_type: assignment_type).score
+  end
+
   def weights_for_assignment_type_id(assignment_type)
     assignment_weights.where(assignment_type: assignment_type).weight
   end
 
   def weight_count(course)
     assignment_weights.where(course: course).pluck('weight').sum
+  end
+
+  def groups_by_assignment_id
+    @group_by_assignment ||= groups.group_by(&:assignment_id)
+  end
+
+  def group_for_assignment(assignment)
+    assignment_groups.where(assignment: assignment).first
+  end
+
+  def group_submission_for_assignment(assignment)
+
   end
 
   #Import Users
@@ -216,10 +234,6 @@ class User < ActiveRecord::Base
 
   def team_score(course)
     teams.where(:course => course).pluck('score').first
-  end
-
-  def group_for_assignment(assignment)
-    groups.where(:assignment => assignment).first
   end
 
   private

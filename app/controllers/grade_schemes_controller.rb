@@ -5,34 +5,23 @@ class GradeSchemesController < ApplicationController
   def index
     @title = "Grading Schemes"
     @grade_schemes = current_course.grade_schemes
-
-    respond_to do |format|
-      format.html 
-      format.json { render json: @grade_schemes }
-    end
   end
 
   def show
     @grade_scheme = current_course.grade_schemes.find(params[:id])
-
-    respond_to do |format|
-      format.html 
-      format.json { render json: @grade_scheme }
-    end
+    @title = "#{@grade_scheme.name}"
   end
 
   def new
     @grade_scheme = current_course.grade_schemes.new
     @assignments = current_course.assignments
-    respond_to do |format|
-      format.html 
-      format.json { render json: @grade_scheme }
-    end
+    @title = "Create a New Grading Scheme"
   end
 
   def edit
     @grade_scheme = current_course.grade_schemes.find(params[:id])
     @assignments = current_course.assignments
+    @title = "Edit #{@grade_scheme.name}"
   end
 
   def create
@@ -49,11 +38,11 @@ class GradeSchemesController < ApplicationController
       end
     end
   end
-    
+
   def destroy_multiple
     @grade_schemes = current_course.grade_schemes.find(params[:grade_scheme_ids])
     @grade_schemes.delete
-    
+
     respond_to do |format|
       format.html { redirect_to grade_schemes_url }
       format.json { head :ok }

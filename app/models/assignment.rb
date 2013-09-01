@@ -12,7 +12,7 @@ class Assignment < ActiveRecord::Base
   has_many :groups, :through => :assignment_groups
 
   has_many :tasks, :as => :taskable, :dependent => :destroy
-  has_many :submissions, :as => :assignment
+  has_many :submissions
   has_many :grades
   accepts_nested_attributes_for :grades
 
@@ -56,7 +56,7 @@ class Assignment < ActiveRecord::Base
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
   scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
 
-  scope :grading_done, -> { where assignment_grades.present? == 1 }
+  scope :grading_done, -> { where 'grades.present? == 1' }
 
   def start_time
     due_at
@@ -110,6 +110,10 @@ class Assignment < ActiveRecord::Base
 
   def grade_for_student(student)
     grades.where(student: student).pluck('score').first
+  end
+
+  def released_grade_for_student(student)
+    grades.released.where(student: student).pluck('score').first
   end
 
   def past?

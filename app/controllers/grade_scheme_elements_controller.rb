@@ -6,14 +6,12 @@ class GradeSchemeElementsController < ApplicationController
     @grade_scheme = GradeScheme.find(params[:grade_scheme_id])
     @title = "#{@grade_scheme.name} Grading"
     @grade_scheme_elements = @grade_scheme.grade_scheme_elements
-    respond_with(@grade_scheme_elements)
   end
 
   def show
     @grade_scheme = GradeScheme.find(params[:grade_scheme_id])
     @title = "#{@grade_scheme.name} Grading"
     @grade_scheme_element = GradeSchemeElement.find(params[:id])
-    respond_with(@grade_scheme_element)
   end
 
   def new

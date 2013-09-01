@@ -2,11 +2,12 @@ class AssignmentsController < ApplicationController
   before_filter :ensure_staff?, :except => :feed
 
   def index
+    @title = "#{term_for :assignment} Index"
     respond_with @assignments = current_course.assignments.order('due_at ASC')
   end
 
    def settings
-    @title = "Assignments"
+    @title = "#{term_for :assignments} Settings"
     @assignments = current_course.assignments
     @assignment_types = current_course.assignment_types
     @grade_schemes = current_course.grade_schemes
@@ -18,6 +19,7 @@ class AssignmentsController < ApplicationController
 
   def show
     @assignment = current_course.assignments.find(params[:id])
+    @title = @assignment.name
     @groups = @assignment.groups
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     @students = @team ? @team.students : current_course.students
@@ -25,7 +27,7 @@ class AssignmentsController < ApplicationController
   end
 
   def new
-    @title = "Create a New Assignment"
+    @title = "Create a New #{term_for :assignment}"
     @assignment = current_course.assignments.new
     @assignment_types = current_course.assignment_types
     @grade_schemes = current_course.grade_schemes
@@ -33,10 +35,10 @@ class AssignmentsController < ApplicationController
 
   def edit
     @assignment = current_course.assignments.find(params[:id])
+    @title = "Edit #{@assignment.name}"
     @assignment_rubrics = current_course.rubric_ids.map do |rubric_id|
       @assignment.assignment_rubrics.where(rubric_id: rubric_id).first_or_initialize
     end
-    respond_with @assignment
   end
 
   def create

@@ -1,81 +1,83 @@
-#predictorWrapper
-  #userID{ 'data-user-id' => @user.id }
-    #predictionWrapper
-      #projectedPoints
-        %h3#pointTally
-        = "Your projected points:"
-        %span#predictor-score-display= number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')
-        = "/"
-        %span#predictor-course-total-display= number_with_delimiter(@user.point_total_for_course(current_course), :delimiter => ',')
-        %p
-          = "Predicted Final Grade:"
-          %span#predictedCourseGrade= @user.grade_level_for_course(current_course)
-      %span#expectedPointsValue
-      #prediction
+.col-lg-12
+  #predictorWrapper
+    #userID{ 'data-user-id' => @user.id }
+      #predictionWrapper
+        #projectedPoints
+          %h3#pointTally
+          = "Your projected points:"
+          %span#predictor-score-display= number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')
+          = "/"
+          %span#predictor-course-total-display= number_with_delimiter(@user.point_total_for_course(current_course), :delimiter => ',')
+          %p
+            = "Predicted Final Grade:"
+            %span#predictedCourseGrade= @user.grade_level_for_course(current_course)
+        %span#expectedPointsValue
+        #prediction
 
-#predictorPage{ 'data-student-name' => @user.name, 'data-course-total' => @user.point_total_for_course(current_course) }
-  .col.col-lg-12
-    %ul.slides.col.col-lg-10
-      - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-        %li{:id => "slide-#{assignment_type.id}", :data => { :'assignment-type-id' => assignment_type.id, :'assignment-type-name' => assignment_type.name } }
-          .slide-panel.col.col-lg-12
-            .assignmentType
-              %h4= assignment_type.name
-              .pull-right
-                %span.badge.badge-warning
-                  = "#{@user.score_for_assignment_type(assignment_type)} / "
-                  = "#{assignment_type.assignments.point_total_for_student(@user)} possible points"
-            - assignments.each do |assignment|
-              .assignment.clear
-                %span.assignmentName= assignment.name
-                - if assignment.is_required?
-                  %span.label.label-important Required!
-                - assignment.grades.where(:student_id => @user).first.tap do |grade|
-                  - if grade
-                    - if assignment.release_necessary? && grade.is_released?
-                      %span.points.earned= grade.score(@user)
-                      = " out of #{assignment.point_total_for_student(@user)} points"
-                      = hidden_field_tag assignment.name, grade.score(@user), :'data-assignment-type-id' => assignment.assignment_type_id
-                    - elsif assignment.release_necessary?
-                      = "#{assignment.point_total_for_student(@user)} points possible"
+  #predictorPage{ 'data-student-name' => @user.name, 'data-course-total' => @user.point_total_for_course(current_course) }
+    .col.col-lg-12
+      %ul.slides.col.col-lg-12
+        - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+          %li{:id => "slide-#{assignment_type.id}", :data => { :'assignment-type-id' => assignment_type.id, :'assignment-type-name' => assignment_type.name } }
+            .slide-panel
+              .assignmentType
+                %h4= assignment_type.name
+                .pull-right
+                  %span.badge.badge-info
+                    = "#{@user.released_score_for_assignment_type(assignment_type)} / "
+                    = "#{assignment_type.assignments.point_total_for_student(@user)} possible points"
+              - assignments.each do |assignment|
+                .assignment.clear
+                  %span.assignmentName= assignment.name
+                  - if assignment.is_required?
+                    %span.label.label-important Required!
+                  - assignment.grades.where(:student_id => @user).first.tap do |grade|
+                    - if grade
+                      - if assignment.release_necessary? && grade.is_released?
+                        %span.points.earned= grade.score(@user)
+                        = " out of #{assignment.point_total_for_student(@user)} points"
+                        = hidden_field_tag assignment.name, grade.score(@user), :'data-assignment-type-id' => assignment.assignment_type_id
+                      - elsif assignment.release_necessary?
+                        = "#{assignment.point_total_for_student(@user)} points possible"
+                      - else
+                        %span.points.earned= grade.score
+                        %span.points="/ #{assignment.point_total_for_student(@user)} points"
+                        = hidden_field_tag assignment.name, grade.score, :'data-assignment-type-id' => assignment.assignment_type_id
                     - else
-                      %span.points.earned= grade.score
-                      %span.points="/ #{assignment.point_total_for_student(@user)} points"
-                      = hidden_field_tag assignment.name, grade.score, :'data-assignment-type-id' => assignment.assignment_type_id
-                  - else
-                    - if assignment_type.fixed?
-                      = "#{assignment.point_total_for_student(@user)} possible points"
-                      %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(@user)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
-                    - elsif assignment_type.slider?
-                      %span.pScore= "0 "
-                      = "/ #{assignment.point_total_for_student(@user)} multiplied possible points"
-                      .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(@user)) , :value => 0 }
+                      - if assignment_type.fixed?
+                        = "#{assignment.point_total_for_student(@user)} possible points"
+                        %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(@user)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
+                      - elsif assignment_type.slider?
+                        %span.pScore= "0 "
+                        = "/ #{assignment.point_total_for_student(@user)} multiplied possible points"
+                        .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(@user)) , :value => 0 }
 
-                    - elsif assignment_type.select?
-                      = "#{assignment.point_total_for_student(@user)} possible points"
-                      = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+                      - elsif assignment_type.select?
+                        = "#{assignment.point_total_for_student(@user)} possible points"
+                        = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
 
-      - if current_course.valuable_badges?
-        %li#slide-badges{ :data => { 'assignment-type-id' => 'badges', 'assignment-type-name' => 'Badges' } }
-          .slide-panel.col.col-lg-12
-            .assignmentType
-              %span.assignmentTypeTitle Badges
-              %span.badge.badge-warning.pull-right= "#{@user.earned_badges_value(current_course)} points"
-            %p.lead
-            %div
-              - current_course.badges.each do |badge|
-                - badge.badges_earned.where(:earnable_id => @user.id).first.tap do |eb|
-                  - if eb
-                    .earnedBadgeField
-                      %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
-                      .clearfix= badge.name
-                      .clearfix
-                        %b= "#{badge.point_value} points"
-                      = hidden_field_tag badge.name, badge.point_value
-                  - else
-                    .badgeField
-                      %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
-                      .clearfix= badge.name
-                      .clearfix
-                        %b= "#{badge.point_value} points"
-                      .clearfix= check_box_tag badge.name, badge.point_value, @user.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
+        - if current_course.valuable_badges?
+          %li#slide-badges{ :data => { 'assignment-type-id' => 'badges', 'assignment-type-name' => 'Badges' } }
+            .slide-panel.col.col-lg-12
+              .assignmentType
+                %span.assignmentTypeTitle Badges
+                %span.badge.badge-warning.pull-right= "#{@user.earned_badges_value(current_course)} points"
+              %p.lead
+              %div
+                - current_course.badges.each do |badge|
+                  - badge.badges_earned.where(:earnable_id => @user.id).first.tap do |eb|
+                    - if eb
+                      .earnedBadgeField
+                        %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
+                        .clearfix= badge.name
+                        .clearfix
+                          %b= "#{badge.point_value} points"
+                        = hidden_field_tag badge.name, badge.point_value
+                    - else
+                      .badgeField
+                        %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
+                        .clearfix= badge.name
+                        .clearfix
+                          %b= "#{badge.point_value} points"
+                        .clearfix= check_box_tag badge.name, badge.point_value, @user.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
+.clear

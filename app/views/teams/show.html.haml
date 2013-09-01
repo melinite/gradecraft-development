@@ -39,7 +39,7 @@
         %td= link_to student.name, user_path(student)
         %td= student.role
         %td
-          = student.score_for_course(current_course) if student.respond_to?(:grades)
+          = number_with_delimiter(student.score_for_course(current_course), :delimiter => ',') if student.respond_to?(:grades)
         %td= student.visit_count
         - if current_course.has_badges?
           %td

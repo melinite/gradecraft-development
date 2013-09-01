@@ -3,31 +3,18 @@ class BadgeSetsController < ApplicationController
   before_filter :ensure_staff?
 
   def index
-    @title = "Badge Sets"
+    @title = "#{term_for :badge} Sets"
     @badge_sets = current_course.badge_sets
-    respond_to do |format|
-      format.html
-      format.json { render json: @badge_sets }
-    end
   end
 
   def show
     @badge_set = current_course.badge_sets.find(params[:id])
     @title = @badge_set.name
-    respond_to do |format|
-      format.html
-      format.json { render json: @badge_set }
-    end
   end
 
   def new
     @badge_set = current_course.badge_sets.new
-    @title = "Create a New Badge Set"
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @badge_set }
-    end
+    @title = "Create a New #{term_for :badge} Set"
   end
 
   def edit

@@ -1,18 +1,17 @@
-%table.table.table-striped.simpleTable
+%table.table.simpleTable
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"} Submitted by
       %th.sortable{"data-sort" => "string"} Assignment
-      %th.sortable{"data-sort" => "string"} Link
-      %th.sortable{"data-sort" => "string"} Comment
-      %th.sortable{"data-sort" => "string"} Date Submitted
-      %td Grade
+      %th.sortable{"data-sort" => "string"} Submissions
+      %th
   %tbody
-    - submissions.each do |submission|
-      %tr
-        %td= link_to submission.student.name, submission.student
-        %td= link_to submission.assignment.name, submission.assignment
-        %td= link_to submission.link
-        %td= raw submission.text_comment
-        %td= submission.created_at
-        %td= link_to 'Grade', new_assignment_grade_path("assignment_id"=>submission.assignment.id, :student_id => submission.student.id), :class => 'btn btn-tiny btn-success'
+    - @assignments.each do |assignment|
+      - if assignment.accepts_submissions?
+        %tr
+          %th= link_to assignment.name, assignment
+          %th= assignment.submissions.count
+          %th
+            - if assignment.assignment_type.mass_grade?
+              = link_to 'Quick Win Grading', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
+            - elsif assignment.rubrics.present?
+              = link_to "Rubric Grading"

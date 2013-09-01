@@ -4,8 +4,8 @@
     = f.association :assignment_type, :collection => current_course.assignment_types, :input_html => {:class => 'input-sm col-lg-3'}
     = f.input :name, :input_html => {:class => 'col-lg-3'}
     = f.input :point_total, :label => "Total Score Possible", :input_html => {:class => 'col-lg-3'}
-    = f.input :open_at, :include_blank => true
-    = f.input :due_at, :include_blank => true
+    = f.input :open_at, :include_blank => true, :start_year => Date.today.year
+    = f.input :due_at, :include_blank => true, :start_year => Date.today.year
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
     = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
@@ -20,7 +20,7 @@
     = f.input :grade_scope, :as => :select, :collection => [["Individual"], ["Group"], ["Team"]], :input_html => {:class => 'input-sm col-lg-3'}
     - if current_course.accepts_submissions?
       = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept submissions for this assignment?", :label => "Assignment Submissions"
-      = f.input :accepts_submissions_until, :hint => "", :label => "When would you like to accept submissions until?"
+      = f.input :accepts_submissions_until, :hint => "When would you like to accept submissions until?", :include_blank => true, :start_year => Date.today.year
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
     = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."

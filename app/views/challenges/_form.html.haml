@@ -4,7 +4,7 @@
     = f.input :name, :input_html => {:class => 'col-lg-3'}
     = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "What do the teams need to do to succed?"
     = f.input :point_total, :input_html => {:class => 'col-lg-3'}
-    = f.input :due_at
+    = f.input :due_at, :start_year => Date.today.year, :include_blank => true
     = f.input :visible, :label => "Visible to students?"
     = f.input :accepts_submissions, :label => "Teams submit materials?"
     = f.input :release_necessary, :label => "Release necessary?"

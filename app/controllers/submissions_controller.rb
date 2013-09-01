@@ -11,30 +11,48 @@ class SubmissionsController < ApplicationController
     @title = "View Submission"
     @submission = Submission.find(params[:id])
     @assignment = Assignment.find(params[:assignment_id])
-#     if current_user.is_student?
-#       enforce_view_permission(@submission)
-#     end
-#     @assignment_type = @assignment.assignment_type
-#
-#     if current_user.is_staff?
-#       @student = params[:student_id]
-#       @score_levels = @assignment_type.score_levels
-#     end
+    if current_user.is_student?
+      @user = current_user
+      @badges = current_course.badges
+      @assignments = current_course.assignments
+    end
   end
 
   def new
     @assignment = current_course.assignments.find(params[:assignment_id])
     @title = "Submit #{@assignment.name}"
-    @student = current_course.users.find(params[:id])
+    if current_user.is_staff?
+      if @assignment.has_groups?
+        @group = Group.find(params[:group_id])
+      else
+        @student = User.find(params[:student_id])
+      end
+    end
+    if current_user.is_student?
+      @user = current_user
+      @badges = current_course.badges
+      @assignments = current_course.assignments
+      if @assignment.has_groups?
+        @group = Group.find(params[:group_id])
+      else
+        @student = current_user
+      end
+    end
     @submission = @assignment.submissions.new
-    @submission.submission_files.build
-    @groups = @assignment.groups
-    @teams = current_course.teams
-    @students = current_course.users.students
   end
 
   def edit
     @assignment = current_course.assignments.find(params[:assignment_id])
+    if @assignment.has_groups?
+      @group = Group.find(params[:group_id])
+    else
+      @student = User.find(params[:student_id])
+    end
+    if current_user.is_student?
+      @user = current_user
+      @badges = current_course.badges
+      @assignments = current_course.assignments
+    end
     @students = current_course.users.students
     @groups = @assignment.groups
     @teams = current_course.teams

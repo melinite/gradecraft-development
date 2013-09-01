@@ -8,6 +8,7 @@ class AssignmentType < ActiveRecord::Base
   belongs_to :course
   belongs_to :grade_scheme
   has_many :assignments
+  has_many :submissions, :through => :assignments
   has_many :assignment_weights
   has_many :grades
   has_many :score_levels

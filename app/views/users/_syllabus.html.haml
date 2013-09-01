@@ -1,6 +1,6 @@
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
   .col.col-lg-12.col.col-xs-12.col-md-12.col-sm-12
-    %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} +#{ number_with_delimiter(@user.score_for_assignment_type(assignment_type))}
+    %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} +#{ number_with_delimiter(@user.released_score_for_assignment_type(assignment_type))}
     .collapse.col-lg-12{:id => "assignment_type-#{assignment_type.id}"}
       .col-lg-8
         - if assignment_type.predictor_description?
@@ -10,7 +10,7 @@
       - if assignment_type.student_weightable?
         .col-lg-4
           .badge.badge-info
-            = number_with_delimiter(@user.score_for_assignment_type(assignment_type))
+            = number_with_delimiter(@user.released_score_for_assignment_type(assignment_type))
             = "/"
             = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
           %br
@@ -18,29 +18,52 @@
             .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:user_id => @user.id), assignment_type: assignment_type, user_id: @user
           - else
             .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:user_id => @user.id), assignment_type: assignment_type
-      .clear
+        .clear
+      - else
+        .col-lg-4
+          .badge.badge-info
+            = number_with_delimiter(@user.released_score_for_assignment_type(assignment_type))
+            = "/"
+            = " #{number_with_delimiter(@user.point_total_for_assignment_type(assignment_type))} possible points"
+        .clear
+
       %hr
       .col-lg-12
         - assignments.each do |assignment|
           .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
             %span.assignmentName= assignment.name
-            %span.points= "("
-            - if assignment.grade_for_student(@user).present? && assignment.grade_for_student(@user) > 0
-              %span.points.earned= "#{number_with_delimiter(assignment.grade_for_student(@user))} "
-              %span.points= "/"
-            - elsif assignment.grade_for_student(@user).present?
-              %span.points.missed= "#{number_with_delimiter(assignment.grade_for_student(@user))}  / "
+            - if assignment.release_necessary?
+              %span.points= "("
+              - if assignment.released_grade_for_student(@user).present? && assignment.grade_for_student(@user) > 0
+                %span.points.earned= "#{number_with_delimiter(assignment.released_grade_for_student(@user))} "
+                %span.points= "/"
+              - elsif assignment.released_grade_for_student(@user).present?
+                %span.points.missed= "#{number_with_delimiter(assignment.grade_for_student(@user))}  / "
+            - else
+              %span.points= "("
+              - if assignment.grade_for_student(@user).present? && assignment.grade_for_student(@user) > 0
+                %span.points.earned= "#{number_with_delimiter(assignment.grade_for_student(@user))} "
+                %span.points= "/"
+              - elsif assignment.grade_for_student(@user).present?
+                %span.points.missed= "#{number_with_delimiter(assignment.grade_for_student(@user))}  / "
             %span.points.total= "#{number_with_delimiter(assignment.point_total_for_student(@user, @user.weights_for_assignment_type_id(assignment_type)))} points )"
             - if assignment.future?
               %span.italic= " • Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
-            - if assignment.accepts_submissions?
-              = render "users/submissions", assignment: assignment
             - if assignment.is_required?
               %span.label.label-important Required!
             - if assignment.self_gradeable?
               = simple_form_for([assignment, grade], :html => {:class => 'form-horizontal' }) do |f|
-                = f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary", "data-toggle" => "button" }
+                = f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary btn-tiny", "data-toggle" => "button" }
             - if assignment.has_groups?
-              = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-sm"
+              - if @user.group_for_assignment(assignment)
+                = link_to "See Group", group_path(@user.group_for_assignment(assignment)), :class => "btn btn-primary btn-tiny"
+                //- if assignment.accepts_submissions?
+                //= render "users/group_submissions", assignment: assignment, group: @user.group_for_assignment(assignment)
+              - else
+                = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-tiny"
+            - else
+              - if assignment.accepts_submissions?
+                = render "users/submissions", assignment: assignment
+
             %p= raw assignment.description
             = render "users/grade", assignment: assignment
