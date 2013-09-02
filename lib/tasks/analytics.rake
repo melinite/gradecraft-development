@@ -32,12 +32,13 @@ namespace :analytics do
           event = events.sample
           course = user.courses.sample
 
-          args = case event
+          data = case event
                  when :pageview
                    pages = %w(/ /dashboard /users/predictor)
-                   [{:page => pages.sample}]
+                   {:page => pages.sample}
                  when :login
-                   []
+                   last_login_at = Random.rand(100).hours_ago
+                   {:last_login_at => last_login_at}
                  when :predictor
                    if course
                      assignment = course.assignments.sample
@@ -50,7 +51,7 @@ namespace :analytics do
                        score = (random_score.rng * (possible/2)/3) + possible/2
                        score = [0,score].max
                        score = [possible,score].min
-                       [assignment.id, {:score => score.to_i, :possible => possible}]
+                       {:assignment_id => assignment.id, :score => score.to_i, :possible => possible}
                      else
                        false
                      end
@@ -59,7 +60,7 @@ namespace :analytics do
                    end
                  end
 
-          EventLogger.perform_async(event, course.id, user.id, *args) if args
+          EventLogger.perform_async(event, course.id, user.id, data) if data
           sleep(rand)
         end
       end

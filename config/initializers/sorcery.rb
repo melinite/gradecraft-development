@@ -60,6 +60,8 @@ Rails.application.config.sorcery.configure do |config|
 
   # --- user config ---
   config.user_config do |user|
+    user.before_authenticate = [:cache_last_login]
+
      user.username_attribute_names = [:username, :email]
     # -- core --
     # user.username_attribute_names = [:username]                                     # specify username
