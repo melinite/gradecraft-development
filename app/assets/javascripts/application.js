@@ -160,7 +160,44 @@ $(document).ready(function(){
       $('.bar-chart').each(function () {
           var id = this.getAttribute('data-id');
           var scores = assignmentTypeScores[id];
-          $(this).sparkline(scores, { type: 'bar', barColor: 'blue', height: '20px', width: '20px' } )
+          var series = []
+          for (var i =0; i < scores.length; i++) {
+            series.push({
+              name: '',
+              data: [ scores[i] ]
+            })
+          }
+          $(this).highcharts({
+            chart: {
+              type: 'bar',
+              height: '50',
+              width: '250'
+            },
+            title: {
+              text: ''
+            },
+            yAxis: {
+              min: 0,
+              title: {
+                text: ''
+              }
+            },
+            credits: {
+              enabled: false
+            },
+            exporting: {
+              enabled: false
+            },
+            legend: {
+              enabled: false
+            },
+            plotOptions: {
+              series: {
+                stacking: 'normal'
+              }
+            },
+            series: series
+          });
       })
     }
 
