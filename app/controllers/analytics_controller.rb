@@ -7,25 +7,7 @@ class AnalyticsController < ApplicationController
 
   def assignment_events
     assignments = Hash[current_course.assignments.select([:id, :name]).collect{ |h| [h.id, h.name] }]
-    interval = 1.minute.to_i
-    start_at = AnalyticsAggregate.time_key(15.minutes.ago, interval)
-    end_at = Time.now.to_i
-    range = (start_at..end_at).step(interval)
 
-    keys = range.map { |i| :"events.predictor.minutely.#{i}"}
-
-    data = AnalyticsAggregate::AssignmentAggregate.
-      in(assignment_id: assignments.keys).
-      where('$or' => keys.map{ |k| {k => { '$exists' => true}} }).
-      only("assignment_id", *(keys.map{ |k| "#{k}.count" })).to_a
-
-    events = data.collect { |d| d.events.keys }.flatten.uniq
-
-    render json: {
-      range: range,
-      events: events,
-      assignments: assignments,
-      data: data
-    }
+    render json: Analytics::AssignmentEvent.data(:minutely, 15.minutes.ago, Time.now, assignments)
   end
 end
