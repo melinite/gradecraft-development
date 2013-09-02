@@ -19,8 +19,6 @@ class AnalyticsController < ApplicationController
       where('$or' => keys.map{ |k| {k => { '$exists' => true}} }).
       only("assignment_id", *(keys.map{ |k| "#{k}.count" })).to_a
 
-    puts data.inspect
-
     events = data.collect { |d| d.events.keys }.flatten.uniq
 
     render json: {
