@@ -15,6 +15,7 @@ class Grade < ActiveRecord::Base
   belongs_to :assignment
   belongs_to :assignment_type
   belongs_to :student, :class_name => 'User'
+  belongs_to :team
   belongs_to :submission # Optional
   belongs_to :task # Optional
   belongs_to :group, :polymorphic => true # Optional
