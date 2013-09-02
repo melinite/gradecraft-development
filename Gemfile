@@ -59,6 +59,7 @@ group :development do
   gem 'valid_attribute'
   gem 'capybara'
   gem 'foreman'
+  gem 'rubystats'
 end
 
 group :test do
