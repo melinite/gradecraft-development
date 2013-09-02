@@ -22,6 +22,7 @@ class Grade < ActiveRecord::Base
   belongs_to :graded_by, class_name: 'User'
 
   has_many :earned_badges, :dependent => :destroy
+  has_many :grade_criteria, :dependent => :destroy
 
   has_many :badges, :through => :earned_badges
   accepts_nested_attributes_for :earned_badges
