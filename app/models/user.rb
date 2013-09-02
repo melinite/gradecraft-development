@@ -207,6 +207,12 @@ class User < ActiveRecord::Base
 
   end
 
+  def team_for_course(course)
+    Team.joins('JOIN team_memberships ON team_memberships.team_id = teams.id')
+        .where('teams.course_id = ' + course.id.to_s)
+        .where('team_memberships.student_id = ' + self.id.to_s)
+  end
+
   #Import Users
   def self.csv_header
     "First Name,Last Name,Email,Username".split(',')
