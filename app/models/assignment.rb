@@ -53,6 +53,7 @@ class Assignment < ActiveRecord::Base
   scope :with_due_date, -> { where('assignments.due_at IS NOT NULL') }
   scope :without_due_date, ->  { where('assignments.due_at IS NULL') }
   scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
+  scope :still_accepted, -> { with_due_date.where('assignments.accept_submissions_until >= ?', Time.now) }
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
   scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
 
@@ -122,6 +123,11 @@ class Assignment < ActiveRecord::Base
 
   def future?
     due_at != nil && due_at >= Date.today
+  end
+
+
+  def still_accepted?
+    accepts_submissions_until != nil && accepts_submissions_until >= Date.today
   end
 
   def soon?

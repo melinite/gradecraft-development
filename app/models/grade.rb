@@ -7,7 +7,7 @@ class Grade < ActiveRecord::Base
     :badge_ids, :earned_badges_attributes, :earned, :submission,
     :submission_id, :badge_ids, :earned_badge_id, :earned_badges,
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
-    :graded_by
+    :graded_by, :team_id
 
   STATUSES=%w(New Graded Released)
 
@@ -110,6 +110,6 @@ class Grade < ActiveRecord::Base
     self.assignment_id ||= submission.try(:assignment_id) || task.try(:taskable_id)
     self.assignment_type_id ||= assignment.try(:assignment_type_id)
     self.course_id ||= assignment.try(:course_id)
-    self.team ||= student.team_for_course(course)
+    self.team_id ||= student.team_for_course(course)
   end
 end

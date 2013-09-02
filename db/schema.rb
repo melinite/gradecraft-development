@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130902174553) do
+ActiveRecord::Schema.define(version: 20130902203034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -411,6 +411,7 @@ ActiveRecord::Schema.define(version: 20130902174553) do
     t.integer  "point_total"
     t.text     "admin_notes"
     t.integer  "graded_by_id"
+    t.integer  "team_id"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
