@@ -15,6 +15,7 @@ class Grade < ActiveRecord::Base
   belongs_to :assignment
   belongs_to :assignment_type
   belongs_to :student, :class_name => 'User'
+  belongs_to :team
   belongs_to :submission # Optional
   belongs_to :task # Optional
   belongs_to :group, :polymorphic => true # Optional
@@ -109,5 +110,6 @@ class Grade < ActiveRecord::Base
     self.assignment_id ||= submission.try(:assignment_id) || task.try(:taskable_id)
     self.assignment_type_id ||= assignment.try(:assignment_type_id)
     self.course_id ||= assignment.try(:course_id)
+    self.team ||= student.team_for_course(course)
   end
 end

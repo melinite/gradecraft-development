@@ -207,6 +207,10 @@ class User < ActiveRecord::Base
 
   end
 
+  def team_for_course(course)
+    teams.where(course: course).first
+  end
+
   #Import Users
   def self.csv_header
     "First Name,Last Name,Email,Username".split(',')

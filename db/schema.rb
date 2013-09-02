@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130830164257) do
+ActiveRecord::Schema.define(version: 20130902174553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -373,6 +373,7 @@ ActiveRecord::Schema.define(version: 20130830164257) do
     t.integer  "grade_scheme_id"
     t.string   "description"
     t.integer  "high_range"
+    t.integer  "team_id"
   end
 
   create_table "grade_schemes", force: true do |t|

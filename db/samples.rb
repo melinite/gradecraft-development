@@ -72,6 +72,7 @@ students = user_names.map do |name|
     u.email = "#{username}@hogwarts.edu"
     u.password = 'uptonogood'
     u.courses << course
+    u.teams << teams.sample
   end
 end
 puts "Generated #{students.count} unruly students"

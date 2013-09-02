@@ -18,6 +18,7 @@ GradeCraft::Application.routes.draw do
       get 'predictor'
       get 'scores_for_current_course'
       get 'scores_by_assignment'
+      get 'scores_by_team'
       put 'update_profile'
       get 'students'
       get 'predictor'
@@ -34,7 +35,7 @@ GradeCraft::Application.routes.draw do
   resources :assignment_weights
   resources :user_sessions
 
-  post 'auth/kerberos/callback', to: 'user_sessions#kerberos_create'
+  post 'auth/kerberos/callback', to: 'user_sessions#kerberos_create', as: :auth_kerberos_callback
   match 'auth/lti/callback', to: 'user_sessions#lti_create', via: [:get, :post]
   get 'auth/failure' => 'pages#auth_failure', as: :auth_failure
 
