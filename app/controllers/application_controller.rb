@@ -55,7 +55,10 @@ class ApplicationController < ActionController::Base
 
   private
   def increment_page_views
-    User.increment_counter(:page_views, current_user.id) if current_user && request.format.html?
+    if current_user && request.format.html?
+      User.increment_counter(:page_views, current_user.id)
+      EventLogger.perform_async('pageview', current_course.id, current_user.id, {:page => request.original_fullpath})
+    end
   end
 
   def enforce_view_permission(resource)
