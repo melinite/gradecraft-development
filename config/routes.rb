@@ -34,7 +34,7 @@ GradeCraft::Application.routes.draw do
   resources :assignment_weights
   resources :user_sessions
 
-  post 'auth/kerberos/callback', to: 'user_sessions#kerberos_create'
+  post 'auth/kerberos/callback', to: 'user_sessions#kerberos_create', as: :auth_kerberos_callback
   match 'auth/lti/callback', to: 'user_sessions#lti_create', via: [:get, :post]
   get 'auth/failure' => 'pages#auth_failure', as: :auth_failure
 
