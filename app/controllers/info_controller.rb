@@ -7,6 +7,7 @@ class InfoController < ApplicationController
     if current_user.is_staff?
       @teams = current_course.teams.includes(:earned_badges)
       @users = current_course.users
+      @students = current_course.users.students
       @top_ten_students = @students.order_by_high_score.limit(10)
       @bottom_ten_students = @students.order_by_low_score.limit(10)
       @submissions = current_course.submissions
