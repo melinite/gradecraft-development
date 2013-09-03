@@ -68,17 +68,19 @@ class User < ActiveRecord::Base
     criteria = { lti_uid: auth_hash['uid'] }
     where(criteria).first || create!(criteria) do |u|
       auth_hash['info'].tap do |info|
-        u.username = info['ext_sakai_eid']
-        u.kerberos_uid = info['ext_sakai_eid']
         u.email = info['email']
         u.first_name = info['first_name']
         u.last_name = info['last_name']
       end
-      case auth_hash['roles']
-      when 'instructor'
-        u.role = 'professor'
-      else
-        u.role = 'student'
+      auth_hash['extra']['raw_info'].tap do |extra|
+        u.username = extra['ext_sakai_eid']
+        u.kerberos_uid = extra['ext_sakai_eid']
+        case extra['roles']
+        when 'instructor'
+          u.role = 'professor'
+        else
+          u.role = 'student'
+        end
       end
     end
   end
