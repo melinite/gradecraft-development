@@ -148,6 +148,7 @@ $(document).ready(function(){
     type: 'box',
     width: '100%'
   };
+
   if ($('#grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
       sparkOpts.height = '50px';
