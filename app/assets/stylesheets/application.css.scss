@@ -6,7 +6,7 @@
  *= require flexslider
  *= require_self
  *= require icons
- *= require timelineJS/themes/font/BreeSerif-OpenSans
+ *= require timelineJS/themes/font/DroidSerif-DroidSans
 */
 
 /* Branding colors */
@@ -51,7 +51,7 @@ $orange: #F4A425;
 @import 'timeline';
 
 body {
-  background: image-url("cloud_bg2.gif");
+  background: image-url("cloud_bg.gif");
   font-family: 'Pontano Sans', sans-serif;
 }
 

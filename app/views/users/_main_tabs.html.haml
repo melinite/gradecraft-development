@@ -2,37 +2,43 @@
   %li.active
     %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Timeline
   %li
-    %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Assignments
+    %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Assignments
   - if current_course.grading_philosophy.present?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab6"} Grading Philosophy
-  %li
-    %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Calendar
+      %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Grading Philosophy
+  //%li
+  //%a{ "data-toggle" => "tab", "data-target" => "#tab4"} Calendar
   - if current_course.has_badges?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab3"} My #{ current_course.badge_term.pluralize}
+      %a{ "data-toggle" => "tab", "data-target" => "#tab5"} My #{ current_course.badge_term.pluralize}
   - if current_course.shared_badges?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab7"} Class #{ current_course.badge_term.pluralize}
+      %a{ "data-toggle" => "tab", "data-target" => "#tab6"} Class #{ current_course.badge_term.pluralize}
   - if current_course.predictor_on?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Grade Predictor
+      %a{ "data-toggle" => "tab", "data-target" => "#tab7"} Grade Predictor
+  - if current_course.has_teams?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tab8"} #{term_for :teams}
 .tab-content
   .tab-pane#tab1.active
     = render "users/timeline"
-  .tab-pane#tab4
+  .tab-pane#tab2
     = render "users/syllabus"
   - if current_course.grading_philosophy.present?
-    .tab-pane#tab6
-      = render "users/grading_philosophy"
-  .tab-pane#tab2
-    = render "users/calendar"
-  - if current_course.has_badges?
     .tab-pane#tab3
-      = render "users/badges"
-  - if current_course.predictor_on?
+      = render "users/grading_philosophy"
+  //.tab-pane#tab4
+  //= render "users/calendar"
+  - if current_course.has_badges?
     .tab-pane#tab5
-      //= render "users/predictor"
+      = render "users/badges"
   - if current_course.shared_badges?
+    .tab-pane#tab6
+      = render "users/public_class_badges"
+  - if current_course.predictor_on?
     .tab-pane#tab7
-      //= render "users/public_class_badges"
+      = render "users/predictor"
+  - if current_course.teams_visible?
+    .tab-pane#tab8
+      = render "teams/leaderboard"

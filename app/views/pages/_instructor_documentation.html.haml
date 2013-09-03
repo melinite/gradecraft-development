@@ -8,24 +8,73 @@
         %a.accordion-title{ "data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#collapseIOne" } Setting Up a Course
       #collapseIOne.panel-collapse.collapse.in
         .panel-body
+          %ol
+            %li From the home admin screen, scroll down to the ‘admin’ section of the left side navigation pane.
+            %li Click ‘Course Index’
+            %li This should take you to a screen listing all of the courses currently managed in GradeCraft.
+            %li At the top of the list of courses is a button labelled ‘New Course.’ Click it.
+            %li Here you are presented with all the options for setting the course up.
+            %li Under ‘Basics’ enter all the general information for the course, including the courses Twitter Handle, hashtag, and email if applicable.  The only piece of information initially required for this step, however, is the Course Title.
+            %li For ‘Badges’ you may select a set of badges to be awarded to your students.  These may include icons you select from a pool or create.  If you’re unsure about badges, you may return to this section later after you’ve created or selected a Badge Set to use.  You can do this by selecting ‘edit’ next to the course after creating the course in the ‘Course Index.’
+            %li Teams & Groups allows you to select whether to use team or group settings in your course and what your students will know those settings as (ie. Groups, Gaggles, Teams, Fellowships, etc.), as well as the names for challenges, team leaders or GSI’s.
+            %li Under students you can decide what the students themselves will be called.
+            %li Under Multipliers, you can decide how much of the course’s grade will be determined by the students (student assigned grades) and what you want those multipliers to be called.
+            %li Under Timeline you can decide whether to employ the GradeCraft Timeline feature as a guideline for your students’ workflow as well as assignment and challenge due dates.
+            %li When you are finished reviewing the form to your satisfaction, click ‘Create Course’ at the bottom of the form.  You will be taken to the current course’s display, which will appear as a review of the options selected and descriptions entered during the course’s creation.  From here you may edit the course or navigate through the Courses section by clicking a link in the navigation tracker at the top of the course listing.
+
     .panel.panel-default
       .panel-heading
         %h4.panel-title
         %a.accordion-title{ "data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#collapseITwo" } Creating an Assignment Type
       #collapseITwo.panel-collapse.collapse.in
         .panel-body
+          %ol
+            %li From the home admin screen, scroll down to the Assignments section of the left side navigation pane.
+            %li Assignments may be called something else depending on what your instance of Gradecraft calls assignments. If this is the case, use this term in reference whenever we mention ‘Assignment Types’
+            %li Click ‘Assignments’
+            %li You will see a list of Assignment Types and their traits and descriptions.  At the top of this list is a button that is labelled ‘New Assignment Type.’ Click it.
+            %li You will be presented with a form to select options for the new assignment type.  Here you will enter the specifics of what you would like the assignment type to accomplish.
+            %li Under ‘Basics’ you will enter the core information for the assignment type.  The necessary information is the assignment type name, and how the points for the assignment type will be set.  All other information in this section is optional, but the more specific it is, the more it will help your students.
+            %li Under ‘Predictor Settings’ you can decide what order in the assignment types index this assignment type will appear.  You can also decide whether the points predictor will display for the assignment type and what the description of that predictor will be for your students.
+            %li Under ‘Grading’ you can decide whether you will be able to grade all students for each assignment on a single screen, and what the method of that grading will be.
+            %li Under ‘Score Levels’ you can assign values to each level of scoring for assignments(how many points are necessary for an A, B, C, etc.)  You can add additional levels or remove them all if you don’t want or need them.
+            %li When you are finished reviewing the assignment type to your satisfaction, click the ‘Create Assignment Type’ button at the bottom of the form.
+
     .panel.panel-default
       .panel-heading
         %h4.panel-title
         %a.accordion-title{ "data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#collapseIThree" } Creating a New Assignment
       #collapseIThree.panel-collapse.collapse.in
         .panel-body
+          %ol
+            %li From the home admin screen, scroll down to the ‘Assignments’ section of the left side navigation pane.
+            %li *Assignments may be called something else depending on what your instance of Gradecraft calls assignments.  If this is the case, use this term in reference whenever we mention ‘Assignments’
+            %li Click ‘Assignments’
+            %li You will see a list of assignments, organized by assignment type.  At the top of the list is a button labelled ‘Create a New Assignment.’  Click it.
+            %li You will be presented with a form which will allow you to select options and make descriptions of the assingment.
+            %li Under ‘Basics’ you will decide the core information for the assignment.  Select the assignment’s type from the drop down menu, and name the assignment.  Fill in the other optional information.
+            %li Under ‘Timeline’ you can select the media and describe the captions for that media which represents the assignment within the timeline.
+            %li Under ‘Grading’ you can select the scope of grading for the assignment and how the assignments are submitted.
+            %li Under ‘Rubrics’ you can select a rubric for the assignment.
+            %li When you’ve reviewed the new assignment to your satisfaction, click the button at the bottom of the form labelled ‘Create Assignment.’
+
     .panel.panel-default
       .panel-heading
         %h4.panel-title
         %a.accordion-title{ "data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#collapseIFour" } Grading
       #collapseIFour.panel-collapse.collapse.in
         .panel-body
+          %ol
+            %li From the home admin screen, scroll down to the ‘Assignments’ section of the left side navigation pane.
+            %li *Assignments may be called something else depending on what your instance of Gradecraft calls assignments.  If this is the case, use this term in reference whenever we mention ‘Assignments’
+            %li Click ‘Assignments’
+            %li You will now see all assignments in a table, organized by assignment type.  To the right of each assignment is a set of buttons, one of which is labelled ‘log grades.’  Locate the assignment you wish to grade and click the corresponding ‘Log Grades’ button for that assignment.
+            %li If ‘Mass Grading’ was selected for that assignment or assignment type during its setup, you will be presented with a single form, which will appear as a class roster.  This will have, as input, the methods selected during the setup process for that assignment type (ie. checkboxes, radial buttons, input for letter grade or points)
+            %li Mark the appropriate grades, review to your satisfaction, and click ‘Update Assignment.’ The grades will now appear marked appropriately when selecting the assignment from the assignments index, or when you click ‘Log Grades’ at a later time.
+            %li If Mass Grading was not selected, or the assignments require individual submissions from the students, you may click the assignment itself within the assignments index (starting at step 3).  You will now see the assignment description, as well as a class roster, and each student’s status for that particular assignment.  When you are viewing the individual assignment there are buttons to the right of each student.  If the student has already submitted the assignment, or you only wish to grade, click ‘Grade’ for the student in question.
+            %li *Note: you may also submit a student’s assignment for them by clicking ‘Submit’ if you have possession of their assignment and wish to log it into GradeCraft for them.
+            %li After clicking ‘Grade,’ you will be presented with the individual student’s grade sheet for the assignment.  You can enter the particulars of the grade here, as well as feedback for the assignment.  When you are finished entering information and feedback and have reviewed it to your satisfaction, click the button labelled ‘Create Grade.’  The new grade should be reflected when you return to the assignment index.
+
     .panel.panel-default
       .panel-heading
         %h4.panel-title
@@ -38,12 +87,27 @@
         %a.accordion-title{ "data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#collapseISix" } Creating a Badge
       #collapseISix.panel-collapse.collapse.in
         .panel-body
+          %ol
+            %li From the home admin screen, scroll down to the ‘Badges’ section of the left side navigation pane. *Note that Badges may be called something else depending on what your instance of Gradecraft calls them.  If this is the case, use this term in reference whenever we mention ‘Badges’
+            %li Click ‘Badges’
+            %li You are now presented with a view of all currently managed badges.  At the top of the badges list is a button labelled ‘Create New Badge.’ Click it.
+            %li Here you are presented with a form for creating a badge.  Use the drop down menu to select what badge set the badge will belong to, and name the badge.  Include optional information about the badge like a description and an image.  Lastly, choose whether the badge is visible to students who haven’t yet earned it, and whether a student can earn the badge more than once.  When you’ve reviewed the badge to your satisfaction click the button labelled ‘Create Badge.’  The new badge will now appear in the chosen badge set.
+
     .panel.panel-default
       .panel-heading
         %h4.panel-title
         %a.accordion-title{ "data-toggle" => "collapse", "data-parent" => "#accordion", "href" => "#collapseISeven" }Awarding Badges
       #collapseISeven.panel-collapse.collapse.in
         .panel-body
+          %ol
+            %li From the home admin screen, scroll down to the ‘Badges’ section of the left side navigation pane. *Note that Badges may be called something else depending on what your instance of Gradecraft calls assignments.  If this is the case, use this term in reference whenever we mention ‘Badges’
+            %li Click ‘Badges’
+            %li You are now presented with a list of currently managed badges for the current course.  Scroll to the badge you wish to award.  Click the badges name within the list of badges.
+            %li You should now see a view of the selected badge, including a description of that badge, and options for the badge appearing as buttons above the description.  On of these buttons is labelled ‘Award this Badge.’ Click it.
+            %li If you wish to award a badge to many students at once, click the badge labelled ‘Mass Award This Badge.’ Then skip to step 6.
+            %li You will be presented with a drop down list of students to award this badge to.  Select the student you wish to award the badge to and click the button at the bottom of the form labelled ‘Award this Badge.’  The badge will be awarded to the student and will now appear in her / his awarded badges section of their dashboard and inventory.
+            %li The mass award badge screen is only slightly different from the individual award.  Here you will see a drop down allowing you to select a particular group of students.  As you select a group, you can filter the students represented beneath allowing for you to focus your search more specifically.  Select the students you wish to award the badges to.  When you have reviewed your selection to your satisfaction, click the button below labelled ‘Award.’ The badges will be awarded to the students and will now appear in their awarded badges section of their dashboard and inventory.
+
     .panel.panel-default
       .panel-heading
         %h4.panel-title

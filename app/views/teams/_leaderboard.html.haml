@@ -12,6 +12,5 @@
     - @sorted_teams.each do |team|
       %tr
         %td= i
-        %td= team.rank
         %td= team.name
         %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
