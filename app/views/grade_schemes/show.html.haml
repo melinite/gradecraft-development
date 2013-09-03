@@ -9,7 +9,7 @@
 
   %h4 Scheme Elements: (#{link_to 'Add element', edit_grade_scheme_path(@grade_scheme)})
 
-%table.display.table-striped.table
+%table.display.table-striped.table.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Name
@@ -19,7 +19,7 @@
       %th
       %th
   %tbody
-    - @grade_scheme.elements.each do |element|
+    - @grade_scheme_elements.each do |element|
       %tr
         %td #{element.level}
         %td #{number_with_delimiter(element.low_range, :delimiter => ',') }

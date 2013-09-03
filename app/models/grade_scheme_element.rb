@@ -9,6 +9,8 @@ class GradeSchemeElement < ActiveRecord::Base
 
   validate :does_not_overlap_another_range
 
+  scope :order_by_low_range, -> { order 'grade_scheme_elements.low_range ASC' }
+
   def element_name
     if level?
       level
