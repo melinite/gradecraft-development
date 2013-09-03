@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   include Canable::Cans
 
-  before_save :set_default_course
+  before_validation :set_default_course
   after_save :cache_scores
 
   ROLES = %w(student professor gsi admin)
@@ -241,6 +241,10 @@ class User < ActiveRecord::Base
 
   def team_score(course)
     teams.where(:course => course).pluck('score').first
+  end
+
+  def default_course
+    super || courses.first
   end
 
   private
