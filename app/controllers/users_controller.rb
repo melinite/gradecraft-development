@@ -127,6 +127,8 @@ class UsersController < ApplicationController
     @grades = @user.grades
     @badges = current_course.badges.includes(:earned_badges, :tasks)
     @earned_badges = @user.earned_badges
+    @teams = current_course.teams
+    @sorted_teams = @teams.order_by_high_score
 
     @form = AssignmentTypeWeightForm.new(@user, current_course)
 
