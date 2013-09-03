@@ -10,6 +10,7 @@ class GradeSchemesController < ApplicationController
   def show
     @grade_scheme = current_course.grade_schemes.find(params[:id])
     @title = "#{@grade_scheme.name}"
+    @grade_scheme_elements = @grade_scheme.elements.order_by_low_range
   end
 
   def new
