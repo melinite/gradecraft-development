@@ -17,6 +17,8 @@ class InfoController < ApplicationController
     @students = current_course.users.students
     @assignments = current_course.assignments.includes(:assignment_type)
     @assignment_types = current_course.assignment_types.includes(:assignments)
+    @teams = current_course.teams
+    @sorted_teams = @teams.order_by_high_score
   end
 
   def grading_status

@@ -17,6 +17,9 @@
   - if current_course.predictor_on?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab7"} Grade Predictor
+  - if current_course.has_teams?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tab8"} #{term_for :teams}
 .tab-content
   .tab-pane#tab1.active
     = render "users/timeline"
@@ -36,3 +39,6 @@
   - if current_course.predictor_on?
     .tab-pane#tab7
       = render "users/predictor"
+  - if current_course.teams_visible?
+    .tab-pane#tab8
+      = render "teams/leaderboard"
