@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
     where(criteria).first || create!(criteria) do |u|
       auth_hash['info'].tap do |info|
         u.username = info['ext_sakai_eid']
+        u.kerberos_uid = info['ext_sakai_eid']
         u.email = info['email']
         u.first_name = info['first_name']
         u.last_name = info['last_name']
