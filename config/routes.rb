@@ -119,6 +119,7 @@ GradeCraft::Application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
+  get 'reset' => 'user_sessions#new'
   get 'submit_a_bug' => 'pages#submit_a_bug'
   get 'features' => 'pages#features'
   get 'research' => 'pages#research'
