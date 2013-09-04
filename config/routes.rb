@@ -114,6 +114,7 @@ GradeCraft::Application.routes.draw do
     get 'login_frequencies'
     get 'login_events'
     get 'pageview_events'
+    get 'prediction_averages'
   end
 
   get 'home/index'

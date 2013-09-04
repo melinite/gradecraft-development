@@ -22,4 +22,8 @@ class AnalyticsController < ApplicationController
   def pageview_events
     render json: Analytics::CoursePageview.data(:minutely, 15.minutes.ago, Time.now, current_course)
   end
+
+  def prediction_averages
+    render json: Analytics::CoursePrediction.data(:minutely, 15.minutes.ago, Time.now, current_course)
+  end
 end
