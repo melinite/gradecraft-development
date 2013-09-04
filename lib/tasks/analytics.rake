@@ -37,7 +37,7 @@ namespace :analytics do
                    pages = %w(/ /dashboard /users/predictor)
                    {:page => pages.sample}
                  when :login
-                   last_login_at = Random.rand(100).hours_ago
+                   last_login_at = Random.rand(100).hours.ago
                    {:last_login_at => last_login_at}
                  when :predictor
                    if course
