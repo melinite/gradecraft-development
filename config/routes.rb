@@ -109,7 +109,7 @@ GradeCraft::Application.routes.draw do
   end
 
   namespace :analytics do
-    get 'index'
+    root :to => :index
     get 'assignment_events'
   end
 

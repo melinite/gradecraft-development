@@ -1,13 +1,12 @@
 = link_to "Refresh", "#", :id => "refresh", :class => "btn btn-tiny btn-success pull-right"
 
-%h1 Events Analytics
+%h1 Course Analytics
 
 #events-chart{:data => {:chart => 'timeseries', :url => '/analytics/assignment_events.json', :title => 'Assignment Events', :subtitle => 'per minute', :y_axis_label => 'Number of events'}}
 
-%h2 Aggregate Metrics
-
 %h3 Logins
 (per day, over time)
+#events-chart{:data => {:chart => 'timeseries', :url => '/analytics/assignment_events.json', :title => 'Assignment Events', :subtitle => 'per minute', :y_axis_label => 'Number of events'}}
 
 %h3 Average Login Frequency
 (per week, over time)
@@ -26,16 +25,19 @@
 %h2 Metrics for Student:
 = select_tag :user, options_from_collection_for_select(@students, "id", "name"), :id => 'user-events'
 
-%h3 Logins
-(per day, over time)
+Coming Soon
 
-%h3 Average Login Frequency
-(per week, over time)
+/
+  %h3 Logins
+  (per day, over time)
 
-%h3 Pageviews
-(per hour, over time)
+  %h3 Average Login Frequency
+  (per week, over time)
 
-%h3 Events in the past 10 minutes
+  %h3 Pageviews
+  (per hour, over time)
 
-%h3 Average Predictor Scores:
-(per week, over time)
+  %h3 Events in the past 10 minutes
+
+  %h3 Average Predictor Scores:
+  (per week, over time)
