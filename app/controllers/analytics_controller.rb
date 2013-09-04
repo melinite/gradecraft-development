@@ -10,4 +10,16 @@ class AnalyticsController < ApplicationController
 
     render json: Analytics::AssignmentEvent.data(:minutely, 15.minutes.ago, Time.now, assignments)
   end
+
+  def login_frequencies
+    render json: Analytics::CourseLogin.data(:minutely, 15.minutes.ago, Time.now, current_course, :frequency)
+  end
+
+  def login_events
+    render json: Analytics::CourseLogin.data(:minutely, 15.minutes.ago, Time.now, current_course, :count)
+  end
+
+  def pageview_events
+    render json: Analytics::CoursePageview.data(:minutely, 15.minutes.ago, Time.now, current_course)
+  end
 end

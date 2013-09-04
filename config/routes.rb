@@ -111,6 +111,9 @@ GradeCraft::Application.routes.draw do
   namespace :analytics do
     root :to => :index
     get 'assignment_events'
+    get 'login_frequencies'
+    get 'login_events'
+    get 'pageview_events'
   end
 
   get 'home/index'
