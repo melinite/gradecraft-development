@@ -152,6 +152,51 @@ $(document).ready(function(){
     width: '100%'
   };
 
+  if ($('#highchart').length) {
+    $.getJSON('/users/scores_by_team', function (data) {
+      data = data.scores
+      var scores = {
+        name: 'Teams',
+        data: [],
+        tooltip: {
+        }
+      }
+
+      for (var i=0, k=1, index = 0; i <data.length; i++) {
+        if (k < data[i][0]) {
+          index++
+          k = data[i][0]
+        }
+        if (scores.data[index] == undefined) {
+          scores.data[index] = []
+        }
+        scores.data[index].push(data[i][1])
+      }
+
+      var categories = Array.apply(null, {length: scores.data.length + 1}).map(Number.call, Number)
+      categories.splice(0,1)
+      categories.map(function(x) {return x + ''})
+
+      $('#highchart').highcharts({
+        chart: {
+          type: 'boxplot'
+        },
+        title: {
+          text: 'Distribution across teams'
+        },
+        legend: {
+          enabled: false
+        },
+        xAxis: {
+          categories: categories
+        },
+        yAxis: {
+        },
+        series: [ scores ]
+      })
+    })
+  }
+
   if ($('#grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
       sparkOpts.height = '50px';
