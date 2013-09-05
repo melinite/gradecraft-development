@@ -13,6 +13,7 @@ class Assignment < ActiveRecord::Base
 
   has_many :tasks, :as => :taskable, :dependent => :destroy
   has_many :submissions
+  has_many :assignment_files
   has_many :grades
   accepts_nested_attributes_for :grades
 
@@ -33,6 +34,9 @@ class Assignment < ActiveRecord::Base
   before_validation :cache_associations, :cache_point_total
   after_save :save_grades, :save_weights
 
+  has_many :assignment_files, :dependent => :destroy
+  accepts_nested_attributes_for :assignment_files
+
   validates_presence_of :assignment_type, :course, :name, :grade_scope
 
   attr_accessible :name, :description, :point_total, :due_at, :created_at,
@@ -42,7 +46,8 @@ class Assignment < ActiveRecord::Base
     :student_logged, :badge_set_id, :release_necessary,
     :score_levels_attributes, :open_at, :close_time, :course,
     :assignment_rubrics_attributes, :rubrics_attributes, :media,
-    :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until
+    :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
+    :assignment_file_ids, :assignment_files_attributes, :assignment_file
 
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }

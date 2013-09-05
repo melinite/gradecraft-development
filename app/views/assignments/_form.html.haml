@@ -8,7 +8,10 @@
     = f.input :due_at, :include_blank => true, :start_year => Date.today.year
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
+    = f.simple_fields_for :assignment_files, @assignment.assignment_files.new do |aff|
+      = aff.input :filename, as: :file
     = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
+
   .well
     %h4 Timeline
     = f.input :media, :input_html => {:class => 'col-lg-3'}
