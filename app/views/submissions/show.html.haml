@@ -33,7 +33,7 @@
     %p
       %b Files:
       - @submission.submission_files.each do |sf|
-        = link_to sf, sf
+        = link_to sf.filename.identifier, sf.filename.url
 
   %p
     %b Statement:
