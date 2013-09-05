@@ -3,7 +3,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @title = "#{term_for :assignment} Index"
-    respond_with @assignments = current_course.assignments.order('due_at ASC')
+    respond_with @assignments = current_course.assignments.order('name ASC').order('due_at ASC')
   end
 
    def settings

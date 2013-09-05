@@ -12,6 +12,6 @@
           %th= assignment.submissions.count
           %th
             - if assignment.assignment_type.mass_grade?
-              = link_to 'Quick Win Grading', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
+              = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
             - elsif assignment.rubrics.present?
               = link_to "Rubric Grading"

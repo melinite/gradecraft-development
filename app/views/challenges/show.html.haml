@@ -22,7 +22,7 @@
   .col-lg-12
     - if @challenge.mass_grade?
       .pull-right
-        = link_to 'Log Grades', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
+        = link_to 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
     %h3 Grades
 
   = simple_form_for @challenge do

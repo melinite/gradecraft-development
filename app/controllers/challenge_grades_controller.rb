@@ -30,7 +30,7 @@ class ChallengeGradesController < ApplicationController
   def mass_edit
     @challenge = current_course.challenges.find(params[:challenge_id])
     @teams = current_course.teams
-    @title = "Mass Grade #{@challenge.name}"
+    @title = "Quick Grade #{@challenge.name}"
     @score_levels = @challenge.score_levels
     @students = current_course.users.students
     @challenge_grades = @teams.map do |t|
