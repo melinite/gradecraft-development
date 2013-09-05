@@ -10,6 +10,7 @@
     - else
       = f.association :student, :label => "#{current_course.user_term}", :as => :hidden, :input_html => { :value => @student.id }
   = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-8' }
+  = f.association :submission_files, :as => :file
   = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
 
   %br

@@ -2,7 +2,7 @@ class Submission < ActiveRecord::Base
   attr_accessible :task, :task_id, :assignment, :assignment_id, :assignment_type_id, :comment,
     :feedback, :group, :group_id, :attachment, :link, :student, :student_id,
     :creator, :creator_id, :text_feedback, :text_comment, :graded, :submission_file, :submission_files_attributes,
-    :course_id
+    :course_id, :submission_file_ids
 
   include Canable::Ables
 

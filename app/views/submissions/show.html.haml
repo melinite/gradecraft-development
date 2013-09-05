@@ -28,6 +28,13 @@
     %p
       %b Link:
       = link_to @submission.link, @submission.link
+
+  - if @submission.submission_files.present?
+    %p
+      %b Files:
+      - @submission.submission_files.each do |sf|
+        = link_to sf, sf
+
   %p
     %b Statement:
     = raw @submission.text_comment
