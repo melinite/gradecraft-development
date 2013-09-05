@@ -5,7 +5,6 @@ class Challenge < ActiveRecord::Base
     :badge_set, :category_id, :value, :multiplier, :point_total, :due_date,
     :accepts_submissions, :release_necessary, :course
 
-  has_many :tasks, :foreign_key => :assignment_id, :dependent => :destroy
   belongs_to :course
   has_many :submissions
   has_many :challenge_grades
