@@ -1,4 +1,4 @@
-= content_nav_for @assignment, "Log Grades"do
+= content_nav_for @assignment, "Quick Grade"do
   %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
 - if current_course.has_teams?
