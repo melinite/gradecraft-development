@@ -19,6 +19,12 @@
     %p
       %b Description:
       = raw @badge.description
+
+  - if @badge.badge_files.present?
+    %p
+      %b Documents:
+      - @badge.badge_files.each do |bf|
+        = link_to bf.filename.identifier, bf.filename.url
   %p
     %b Icon URL:
     = @badge.icon
