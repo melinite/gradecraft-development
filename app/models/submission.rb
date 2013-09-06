@@ -21,11 +21,11 @@ class Submission < ActiveRecord::Base
   has_many :submission_files, :dependent => :destroy
   accepts_nested_attributes_for :submission_files
 
-  #scope :ungraded, -> { where(!:grades) }
-  #scope :graded, -> (grade) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id)' }
+  scope :ungraded, -> { where('NOT EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id)') }
+  scope :graded, -> { where('EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id)') }
 
 
-  #before_validation :cache_associations
+  before_validation :cache_associations
 
   #validates_presence_of :student
   validates_uniqueness_of :task, :scope => :student, :allow_nil => true
@@ -81,7 +81,10 @@ class Submission < ActiveRecord::Base
   end
 
   def cache_associations
-    self.assignment_id ||= task.try(:taskable_id)
-    self.course_id ||= task.taskable.try(:course_id)
+    if task
+      self.assignment_id ||= task.taskable_id
+      self.course_id ||= task.taskable.course_id
+    end
+    self.course_id ||= assignment.course_id
   end
 end

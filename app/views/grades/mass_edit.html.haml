@@ -29,7 +29,7 @@
                     = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name), include_blank: false
                   - elsif @assignment.grade_radio?
                     - @score_levels.each do |score_level|
-                      = gf.label_tag :raw_score, score_level.name, value: score_level.value
+                      = gf.label :raw_score, score_level.name, value: score_level.value
                       = gf.radio_button :raw_score, score_level.value
                   - elsif @assignment.grade_text?
                     = gf.text_field :raw_score
