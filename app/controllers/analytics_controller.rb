@@ -19,8 +19,12 @@ class AnalyticsController < ApplicationController
     render json: Analytics::CourseLogin.data(:minutely, 15.minutes.ago, Time.now, current_course, :count)
   end
 
-  def pageview_events
+  def all_pageview_events
     render json: Analytics::CoursePageview.data(:minutely, 15.minutes.ago, Time.now, current_course)
+  end
+
+  def pageview_events
+    render json: Analytics::CoursePagePageview.data(:minutely, 15.minutes.ago, Time.now, current_course)
   end
 
   def prediction_averages

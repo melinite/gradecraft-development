@@ -113,6 +113,7 @@ GradeCraft::Application.routes.draw do
     get 'assignment_events'
     get 'login_frequencies'
     get 'login_events'
+    get 'all_pageview_events'
     get 'pageview_events'
     get 'prediction_averages'
   end
