@@ -16,7 +16,7 @@ class Badge < ActiveRecord::Base
   accepts_nested_attributes_for :badge_set
   accepts_nested_attributes_for :earned_badges, allow_destroy: true
 
-  has_many :submissions
+  has_many :submissions, as: :assignment
 
   has_many :badge_files, :dependent => :destroy
   accepts_nested_attributes_for :badge_files

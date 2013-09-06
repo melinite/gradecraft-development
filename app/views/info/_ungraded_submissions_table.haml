@@ -1,0 +1,17 @@
+%table.table.simpleTable
+  %thead
+    %tr
+      %th.sortable{"data-sort" => "string"} Assignment
+      %th.sortable{"data-sort" => "string"} Student
+      %th
+  %tbody
+    - @ungraded_submissions.each do |ug|
+      %tr
+        %th= link_to ug.assignment.name, ug.assignment
+        %th= ug.student.name
+        %th
+          - if ug.assignment.assignment_type.mass_grade?
+            = link_to 'Quick Grade', mass_grade_assignment_path(ug.assignment), :class => "btn btn-tiny btn-info"
+          - elsif ug.assignment.rubrics.present?
+            = link_to "Rubric Grading"
+          - else

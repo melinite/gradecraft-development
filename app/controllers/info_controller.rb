@@ -26,7 +26,7 @@ class InfoController < ApplicationController
     @students = current_course.users.students
     @top_ten_students = @students.order_by_high_score.limit(10)
     @bottom_ten_students = @students.order_by_low_score.limit(10)
-    @submissions = current_course.submissions
+    @ungraded_submissions = current_course.submissions.ungraded
     @badges = current_course.badges.includes(:tasks)
     @user = current_user
     @assignments = current_course.assignments.includes(:assignment_type)
