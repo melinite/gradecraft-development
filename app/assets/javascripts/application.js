@@ -160,10 +160,11 @@ $(document).ready(function(){
       $('.bar-chart').each(function () {
           var id = this.getAttribute('data-id');
           var scores = assignmentTypeScores[id];
+          var names = assignmentTypeScores.names[id];
           var series = []
           for (var i =0; i < scores.length; i++) {
             series.push({
-              name: '',
+              name: names[i],
               data: [ scores[i] ]
             })
           }
@@ -203,13 +204,16 @@ $(document).ready(function(){
 
     $.getJSON('/users/scores_by_assignment.json', function (data) {
       assignmentTypeScores = {};
+      assignmentTypeScores.names = {};
       var studentId;
       data.scores.forEach(function (row) {
         if (studentId != row[0]) {
           studentId = row[0];
           assignmentTypeScores[studentId] = [];
+          assignmentTypeScores.names[studentId] = [];
         }
         assignmentTypeScores[studentId].push(row[2]);
+        assignmentTypeScores.names[studentId].push(row[1]);
       })
       assignmentTypeBars();
     })

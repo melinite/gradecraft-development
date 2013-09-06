@@ -177,12 +177,12 @@ class UsersController < ApplicationController
   end
 
   def scores_by_assignment
-    scores = current_course.grades.released
-                           .group('grades.student_id, grades.assignment_type_id')
-                           .order('grades.student_id, grades.assignment_type_id')
-    scores = scores.pluck('grades.student_id, grades.assignment_type_id, SUM(grades.score)')
+    scores = current_course.grades.released.joins(:assignment_type)
+                           .group('grades.student_id, assignment_types.name')
+                           .order('grades.student_id, assignment_types.name')
+    scores = scores.pluck('grades.student_id, assignment_types.name, SUM(grades.score)')
     render :json => {
-      :scores => scores
+      :scores => scores,
     }
   end
 
