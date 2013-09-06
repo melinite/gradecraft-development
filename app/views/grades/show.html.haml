@@ -19,6 +19,12 @@
     %p
       %b Final Score:
       = @grade.final_score
+  - if @grade.grade_files.present?
+    %p
+      %b Documents:
+      - @grade.grade_files.each do |gf|
+        = link_to gf.filename.identifier, gf.filename.url
+
   - if @grade.feedback?
     %p
       %b Feedback:
@@ -37,4 +43,4 @@
 
   %p
     %b Submission:
-    = @grade.submission_id
+    = link_to @grade.submission_id

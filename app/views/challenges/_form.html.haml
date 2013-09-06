@@ -2,6 +2,8 @@
 
   .form-inputs
     = f.input :name, :input_html => {:class => 'col-lg-3'}
+    = f.simple_fields_for :challenge_files, @challenge.challenge_files.new do |cff|
+      = cff.input :filename, as: :file
     = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "What do the teams need to do to succed?"
     = f.input :point_total, :input_html => {:class => 'col-lg-3'}
     = f.input :due_at, :start_year => Date.today.year, :include_blank => true

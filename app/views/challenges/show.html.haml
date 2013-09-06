@@ -18,6 +18,13 @@
     %b Close date:
     = @challenge.due_at
 
+  - if @challenge.challenge_files.present?
+    %p
+      %b Documents:
+      %ul
+      - @challenge.challenge_files.each do |cf|
+        %li= link_to cf.filename.identifier, cf.filename.url
+
 - if current_user.is_staff?
   .col-lg-12
     - if @challenge.mass_grade?
