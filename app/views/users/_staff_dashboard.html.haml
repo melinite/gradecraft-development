@@ -2,7 +2,7 @@
   %h4 Courses
 
   %h4 Recently Graded
-  - @grades.where(:graded_by => @user).each do |grade|
+  - current_course.grades.where(:graded_by => current_user).each do |grade|
     = grade.assignment
     = grade.score
     = grade.student

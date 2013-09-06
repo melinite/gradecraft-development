@@ -1,14 +1,14 @@
-= content_nav_for User, "#{current_course.user_term}s" do
-  %li= link_to "Create a New #{current_course.user_term}", new_user_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Download CSV", students_users_path(format: "csv"), :class => "btn btn-tiny btn-info" |
-  %li= link_to "Download Excel", students_users_path(format: "xls"), :class => "btn btn-tiny btn-info"
+= content_nav_for User, term_for(:students) do
+  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Download CSV", students_path(format: 'csv'), :class => "btn btn-tiny btn-info" |
+  %li= link_to "Download Excel", students_path(format: 'xls'), :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3= @title
 
   - if current_course.has_teams?
     .filters.col.col-lg-5.col-sm-5.col-md-5
-      = form_tag students_users_path, :method => :get do
+      = form_tag students_path, :method => :get do
         = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
         = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
 
@@ -32,7 +32,7 @@
     - @sorted_students.each do |student|
       %tr
         %td= i
-        %td= link_to student.name, user_path(student)
+        %td= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email
         %td
           - if student.teams.present?

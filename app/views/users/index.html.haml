@@ -1,12 +1,12 @@
 = content_nav_for User do
-  %li= link_to "Create a New #{current_course.user_term}", new_user_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3= @title
 
   - if current_course.has_teams?
     .filters.col.col-lg-5.col-sm-5.col-md-5
-      = form_tag students_users_path, :method => :get do
+      = form_tag students_path, :method => :get do
         = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
         = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
 
@@ -26,7 +26,7 @@
   %tbody
     - @users.each do |user|
       %tr
-        %td= link_to user.name, user_path(user)
+        %td= link_to user.name, student_path(user)
         %td= user.email
         %td= user.role
         %td

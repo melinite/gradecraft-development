@@ -14,10 +14,10 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :key_6, "Badge Sets", badge_sets_path
     primary.item :key_7, "#{current_course.badge_term}s", badges_path
     primary.item :key_8, "Tasks", tasks_path
-    primary.item :key_9, "#{current_course.user_term}s", students_users_path
+    primary.item :key_9, "#{current_course.user_term}s", students_path
 
     primary.item :key_10, "Users", users_path do |sub_nav|
-      sub_nav.item :key_10_1, "{current_course.user_term}", students_users_path
+      sub_nav.item :key_10_1, "{current_course.user_term}", students_path
       sub_nav.item :key_10_2, "Staff", staff_users_path
       sub_nav.item :key_10_3, "All Users", all_users_path
     end

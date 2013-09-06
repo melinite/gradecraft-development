@@ -20,7 +20,6 @@ GradeCraft::Application.routes.draw do
       get 'scores_by_assignment'
       get 'scores_by_team'
       put 'update_profile'
-      get 'students'
       get 'predictor'
       get 'staff'
       get 'final_grades'
@@ -32,6 +31,7 @@ GradeCraft::Application.routes.draw do
       get 'class_badges'
     end
   end
+  resources :students, only: [:index, :show]
   resources :assignment_weights
   resources :user_sessions
 

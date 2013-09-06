@@ -11,7 +11,7 @@ class UserTest < ActionDispatch::IntegrationTest
     click_button 'Log in'
 
     create_student
-    visit students_users_path
+    visit students_path
     page.text.must_include "Test User"
   end
 

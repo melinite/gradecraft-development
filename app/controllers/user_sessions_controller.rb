@@ -9,9 +9,9 @@ class UserSessionsController < ApplicationController
 
   def create
     respond_to do |format|
-      if @user = login(params[:user][:email],params[:user][:password],params[:user][:remember_me])
+      if @user = login(params[:user][:email], params[:user][:password], params[:user][:remember_me])
         format.html { redirect_back_or_to dashboard_path }
-        format.xml { render :xml => @users, :status => :created, :location => @user }
+        format.xml { render :xml => @user, :status => :created, :location => @user }
       else
         @user = User.new
         format.html { flash.now[:error] = "Email or Password were invalid, login failed."; render :action => "new" }
