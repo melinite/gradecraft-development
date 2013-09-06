@@ -157,6 +157,15 @@ class UsersController < ApplicationController
      }
   end
 
+  def scores_for_single_assignment
+    scores = current_course.grades.released
+                                  .where(assignment_id: params[:id])
+    scores = scores.pluck('score')
+    render :json => {
+      :scores => scores
+    }
+  end
+
   def new
     @title = "Create a New User"
     @teams = current_course.teams.alpha

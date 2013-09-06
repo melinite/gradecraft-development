@@ -19,6 +19,7 @@ GradeCraft::Application.routes.draw do
       get 'scores_for_current_course'
       get 'scores_by_assignment'
       get 'scores_by_team'
+      get 'scores_for_single_assignment'
       put 'update_profile'
       get 'predictor'
       get 'final_grades'
