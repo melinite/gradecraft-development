@@ -98,9 +98,10 @@ class GradesController < ApplicationController
   end
 
   def self_log_create
-    @student = find_student
+    @student = User.find(params[:user_id])
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @student.grades.build(params[:grade])
+    @grade = @assignment.grades.build(:grade => params[:grade])
+    @grade.student = @student
     respond_to do |format|
       if @grade.save
         format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }

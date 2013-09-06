@@ -210,8 +210,8 @@ class User < ActiveRecord::Base
 
   end
 
-  def team_for_course(course)
-    teams.where(course: course).first
+  def team_for_course(course_id)
+    teams.where(course_id: course_id).first
   end
 
   #Import Users
