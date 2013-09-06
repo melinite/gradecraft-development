@@ -22,7 +22,7 @@
       - if current_user.is_staff?
         %tr
           %td
-            %img{:src => badge.icon, :alt => badge.name}
+            %img{:src => badge.icon, :alt => badge.name, :width => "40"}
             %td
               = link_to badge.name, badge_path(badge)
               = raw badge.description
