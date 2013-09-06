@@ -7,6 +7,10 @@ en:
       user:
         email: 'Email'
         password: 'Password'
+    labels:
+      submission:
+        submission_files:
+          filename: 'File'
   flash:
     actions:
       create:

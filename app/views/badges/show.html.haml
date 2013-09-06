@@ -8,7 +8,7 @@
 .col-lg-12
   %h3= @badge.name
   %p
-    %img{:src => @badge.icon, :alt => @badge.name}
+    %img{:src => @badge.icon, :alt => @badge.name, :width => "60"}
 
   - if @badge.point_total?
     %p
@@ -19,9 +19,12 @@
     %p
       %b Description:
       = raw @badge.description
-  %p
-    %b Icon URL:
-    = @badge.icon
+
+  - if @badge.badge_files.present?
+    %p
+      %b Documents:
+      - @badge.badge_files.each do |bf|
+        = link_to bf.filename.identifier, bf.filename.url
 
 .col-lg-12
   %h4 Tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})

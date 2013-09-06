@@ -7,7 +7,7 @@ class Grade < ActiveRecord::Base
     :badge_ids, :earned_badges_attributes, :earned, :submission,
     :submission_id, :badge_ids, :earned_badge_id, :earned_badges,
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
-    :graded_by, :team_id
+    :graded_by, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file
 
   STATUSES=%w(New Graded Released)
 
@@ -30,6 +30,9 @@ class Grade < ActiveRecord::Base
 
   before_validation :cache_associations
   before_save :cache_score_and_point_total
+
+  has_many :grade_files, :dependent => :destroy
+  accepts_nested_attributes_for :grade_files
 
   validates_presence_of :assignment, :assignment_type, :course, :student
 

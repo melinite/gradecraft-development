@@ -2,14 +2,16 @@ class Challenge < ActiveRecord::Base
 
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
     :visible, :created_at, :updated_at, :image_file_name, :occurrence,
-    :badge_set, :category_id, :value, :multiplier, :point_total, :due_date,
-    :accepts_submissions, :release_necessary, :course
+    :badge_set, :category_id, :value, :multiplier, :point_total, :due_at,
+    :accepts_submissions, :release_necessary, :course,
+    :challenge_file_ids, :challenge_files_attributes, :challenge_file
 
-  has_many :tasks, :foreign_key => :assignment_id, :dependent => :destroy
   belongs_to :course
   has_many :submissions
   has_many :challenge_grades
   has_many :score_levels
+  has_many :challenge_files, :dependent => :destroy
+  accepts_nested_attributes_for :challenge_files
 
   validates_presence_of :course, :name
 
