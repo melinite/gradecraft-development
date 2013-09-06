@@ -52,13 +52,13 @@
             - if assignment.is_required?
               %span.label.label-important Required!
             - if assignment.self_gradeable?
-              //= simple_form_for([assignment, grade], :html => {:class => 'form-horizontal' }) do |f|
-              //= f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary btn-tiny", "data-toggle" => "button" }
+              = simple_form_for([assignment, @grade], :html => {:class => 'form-horizontal' }) do |f|
+                = f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary btn-tiny", "data-toggle" => "button" }
             - if assignment.has_groups?
               - if @user.group_for_assignment(assignment)
                 = link_to "See Group", group_path(@user.group_for_assignment(assignment)), :class => "btn btn-primary btn-tiny"
-                //- if assignment.accepts_submissions?
-                //= render "users/group_submissions", assignment: assignment, group: @user.group_for_assignment(assignment)
+                - if assignment.accepts_submissions?
+                  = render "users/group_submissions", assignment: assignment, group: @user.group_for_assignment(assignment)
               - else
                 = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-tiny"
             - else
