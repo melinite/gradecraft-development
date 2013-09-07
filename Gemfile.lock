@@ -40,9 +40,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    airbrake (3.1.14)
-      builder
-      json
     ansi (1.4.3)
     arel (4.0.0)
     atomic (1.1.13)
@@ -240,6 +237,8 @@ GEM
     rdiscount (2.1.6)
     redcarpet (2.3.0)
     responders (0.6.5)
+    rollbar (0.10.14)
+      multi_json (~> 1.5)
     sampler (0.0.4)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
@@ -301,7 +300,6 @@ DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
   active_model_serializers
-  airbrake
   canable
   capybara
   capybara-screenshot
@@ -345,6 +343,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rdiscount
   responders
+  rollbar
   sampler
   sanitize
   sass-rails (~> 4.0.0.beta1)

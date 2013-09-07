@@ -1,6 +1,6 @@
 require 'rollbar/rails'
 Rollbar.configure do |config|
-  config.access_token = 'd839624714644246a73628b16972cb92'
+  config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
 
   # Without configuration, Rollbar is enabled by in all environments. 
   # To disable in specific environments, set config.enabled=false.
@@ -28,7 +28,7 @@ Rollbar.configure do |config|
   # Valid levels: 'critical', 'error', 'warning', 'info', 'debug', 'ignore'
   # 'ignore' will cause the exception to not be reported at all.
   # config.exception_level_filters.merge!('MyCriticalException' => 'critical')
-  
+
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday
   # is not installed)
   # config.use_async = true
