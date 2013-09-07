@@ -1,23 +1,25 @@
 = content_nav_for ChallengeGrade do
-  %li= link_to 'Edit', edit_challenge_challenge_grade_path(@challenge, @challenge_grade), :class => "btn btn-tiny btn-info"
-  %li= link_to 'Back', challenge_challenge_grades_path(@challenge), :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{@challenge.name} Grades", challenge_path(@challenge), :class => "btn btn-tiny btn-info"
+  %li= link_to 'Edit Grade', edit_challenge_challenge_grade_path(@challenge, @challenge_grade), :class => "btn btn-tiny btn-info"
 
-%p
-  %b Challenge:
-  = @challenge.name
-%p
-  %b Score:
-  = @challenge_grade.score
-%p
-  %b Feedback:
-  = @challenge_grade.feedback
-%p
-  %b Status:
-  = @challenge_grade.status
-%p
-  %b Team:
-  = @challenge_grade.team_id
-%p
-  %b Final score:
-  = @challenge_grade.final_score
+.col-lg-12
+  %h3= @title
+  %p
+    %b Challenge:
+    = @challenge.name
+  %p
+    %b Score:
+    = @challenge_grade.score
+  %p
+    %b Feedback:
+    = @challenge_grade.feedback
+  %p
+    %b Status:
+    = @challenge_grade.status
+  %p
+    %b Team:
+    = @challenge_grade.team_id
+  %p
+    %b Final score:
+    = @challenge_grade.final_score
 
