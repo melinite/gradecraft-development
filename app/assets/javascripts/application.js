@@ -39,7 +39,7 @@ $(document).ready(function(){
 
   $('#gradeCurious').popover();
 
-  $('.collapse').collapse('toggle');
+  $('collapse').collapse('toggle');
 
   $('#toDoList').collapse('hide');
 
