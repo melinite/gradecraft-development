@@ -41,7 +41,7 @@ Rollbar.configure do |config|
   # config.use_sucker_punch = true
 
   # Enable delayed reporting (using Sidekiq)
-  config.use_sidekiq = true
+  # config.use_sidekiq = true
   # You can supply custom Sidekiq options:
   # config.use_sidekiq = { 'queue' => 'my_queue' }
 end
