@@ -40,9 +40,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    airbrake (3.1.14)
-      builder
-      json
     ansi (1.4.3)
     arel (4.0.0)
     atomic (1.1.13)
@@ -303,7 +300,6 @@ DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
   active_model_serializers
-  airbrake
   canable
   capybara
   capybara-screenshot
