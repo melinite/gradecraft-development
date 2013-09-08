@@ -26,5 +26,8 @@ class Analytics::CoursePrediction
   def self.incr(event)
     super
     # TODO: Increment cached average
+    # This is not yet possible in an update command without first performing a separate find() command.
+    # See open MongoDB support request:
+    # https://jira.mongodb.org/browse/SERVER-458
   end
 end
