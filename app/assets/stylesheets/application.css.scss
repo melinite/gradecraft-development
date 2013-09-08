@@ -197,3 +197,9 @@ th.sortable {
 .container .vco-storyjs ul {
   list-style: disc;
 }
+
+.container .vco-storyjs .content .container {
+   overflow:scroll;
+    overflow-x:hidden;
+    overflow-y: scroll;
+}

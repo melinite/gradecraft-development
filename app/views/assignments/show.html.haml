@@ -44,11 +44,11 @@
       = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
       = submit_tag 'Filter', :class => 'btn btn-success btn-small'
 
-  - if @assignment.assignment_type.mass_grade?
-    .pull-right
+  .col-lg-offset-10.col-lg-1.clear
+    - if @assignment.assignment_type.mass_grade?
       = link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "btn btn-warning"
 
-.col-lg-12
+.col-lg-12.clear
   %h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
 
 - if @assignment.tasks.present?

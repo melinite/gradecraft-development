@@ -113,6 +113,7 @@ class GradesController < ApplicationController
 
   def mass_edit
     @assignment = current_course.assignments.find(params[:id])
+    @title = "Quick Grade #{@assignment.name}"
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
     user_search_options = {}
