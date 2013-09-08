@@ -65,4 +65,10 @@ class ApplicationController < ActionController::Base
     raise Canable::Transgression unless can_view?(resource)
   end
 
+  def log_course_login_event
+    membership = current_user.course_memberships.where(course_id: current_course.id).first
+    EventLogger.perform_async('login', course_id: current_course.id, user_id: current_user.id, last_login_at: membership.last_login_at.to_i)
+    membership.update_attribute(:last_login_at, Time.now)
+  end
+
 end
