@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   def increment_page_views
     if current_user && request.format.html?
       User.increment_counter(:page_views, current_user.id)
-      EventLogger.perform_async('pageview', current_course.id, current_user.id, {:page => request.original_fullpath})
+      EventLogger.perform_async('pageview', course_id: current_course.id, user_id: current_user.id, page: request.original_fullpath)
     end
   end
 
