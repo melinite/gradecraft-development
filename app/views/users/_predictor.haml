@@ -1,18 +1,16 @@
 .col-lg-12
-  #predictorWrapper
-    #userID{ 'data-user-id' => @user.id }
-      #predictionWrapper
-        #projectedPoints
-          %h3#pointTally
-          = "Your projected points:"
-          %span#predictor-score-display= number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')
-          = "/"
-          %span#predictor-course-total-display= number_with_delimiter(@user.point_total_for_course(current_course), :delimiter => ',')
-          %p
-            = "Predicted Final Grade:"
-            %span#predictedCourseGrade= @user.grade_level_for_course(current_course)
-        %span#expectedPointsValue
-        #prediction
+  #predictorWrapper#userID{ 'data-user-id' => @user.id }
+    #projectedPoints
+      %h4
+        = "Your projected points:"
+        %span#predictor-score-display= number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')
+        = "/"
+        %span#predictor-course-total-display= number_with_delimiter(@user.point_total_for_course(current_course), :delimiter => ',')
+      %h4
+        = "Predicted Final Grade:"
+        %span#predictedCourseGrade= @user.grade_level_for_course(current_course)
+      %span#expectedPointsValue
+  #prediction
 
   #predictorPage{ 'data-student-name' => @user.name, 'data-course-total' => @user.point_total_for_course(current_course) }
     .col.col-lg-12

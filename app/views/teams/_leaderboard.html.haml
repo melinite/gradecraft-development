@@ -1,16 +1,22 @@
-.col-lg-12
-  %h3= @title
-
-%table.table.table-striped.simpleTable
-  %thead
-    %tr
-      %th{"data-sort" => "int"} Rank
-      %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "int"} Score
-  %tbody
-    - i = 1
-    - @sorted_teams.each do |team|
-      %tr
-        %td= i
-        %td= team.name
-        %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
+%ul.tabs
+  %li.active
+    %a{ "data-toggle" => "tab", "data-target" => "#tabt1"} #{term_for :team} Leaderboard
+  - if current_course.shared_badges?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tabt2"} My #{term_for :team} Rankings
+%br
+%br
+.tab-content
+  .tab-pane#tabt1.active
+    %table.table.table-striped.simpleTable
+      %thead
+        %tr
+          %th{"data-sort" => "string"} Name
+          %th{"data-sort" => "string"} Score
+      %tbody
+        - @sorted_teams.each do |team|
+          %tr
+            %td= team.name
+            %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
+  .tab-pane#tabt2
+    = render "teams/in_team_rankings"

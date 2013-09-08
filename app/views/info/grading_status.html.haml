@@ -1,10 +1,10 @@
 .col.col-lg-12.section
   %ul.tabs
     - if current_course.accepts_submissions?
-      %li
+      %li.active
         %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Submissions
     - if current_course.has_badges?
-      %li.active
+      %li
         %a{ "data-toggle" => "tab", "data-target" => "#tab6"} Badges
   .tab-content
     - if current_course.accepts_submissions?

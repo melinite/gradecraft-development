@@ -1,35 +1,48 @@
-%table.table.table-striped.simpleTable
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"} Icon
-      %th.sortable{"data-sort" => "string"} Description
-      %th.sortable{"data-sort" => "string"} Tasks
-      - if current_course.valuable_badges?
-        %th.sortable{"data-sort" => "string"} Value
-      %th.sortable{"data-sort" => "string"} Earned?
-      - if current_course.shared_badges?
-        %th Share this with the class?
-  %tbody
-    - @badges.each do |badge|
-      %tr
-        %td
-          %img{:src => badge.icon, :alt => badge.name, :width => 40}
-        %td
-          = link_to badge.name, badge_path(badge)
-          = badge.description
-        %td
-          %ul
-            - badge.tasks.each do |task|
-              %li= task.name
-        - if current_course.valuable_badges?
-          %td= number_with_delimiter(badge.value)
-        %td
-          - if badge.earned_badge_for_student(@user)
-            %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
-            = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d")
-            %br
-            = badge.earned_badge_for_student(@user).feedback
-        - if current_course.shared_badges?
-          %td
-            - if badge.earned_badge_for_student(@user)
-              %input{ :type=>"checkbox" }
+%ul.tabs
+  %li.active
+    %a{ "data-toggle" => "tab", "data-target" => "#tabb1"} My #{term_for :badges}
+  - if current_course.shared_badges?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tabb2"} Class #{term_for :badges}
+%br
+%br
+.tab-content
+  .tab-pane#tabb1.active
+    %table.table.table-striped.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Icon
+          %th.sortable{"data-sort" => "string"} Description
+          %th.sortable{"data-sort" => "string"} Tasks
+          - if current_course.valuable_badges?
+            %th.sortable{"data-sort" => "string"} Value
+          %th.sortable{"data-sort" => "string"} Earned?
+          - if current_course.shared_badges?
+            %th Share this with the class?
+      %tbody
+        - @badges.each do |badge|
+          %tr
+            %td
+              %img{:src => badge.icon, :alt => badge.name, :width => 40}
+            %td
+              = link_to badge.name, badge_path(badge)
+              = badge.description
+            %td
+              %ul
+                - badge.tasks.each do |task|
+                  %li= task.name
+            - if current_course.valuable_badges?
+              %td= number_with_delimiter(badge.value)
+            %td
+              - if badge.earned_badge_for_student(@user)
+                %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
+                = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d")
+                %br
+                = badge.earned_badge_for_student(@user).feedback
+            - if current_course.shared_badges?
+              %td
+                - if badge.earned_badge_for_student(@user)
+                  %input{ :type=>"checkbox" }
+
+  .tab-pane#tabb2
+    = render "users/public_class_badges"
