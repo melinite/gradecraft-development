@@ -1,14 +1,14 @@
 .col-lg-12
-  #userID{ :'data-user-id' => @user.id }
+  #userID{ :'data-user-id' => current_student.id }
   %br
   %h4
     - if current_user.is_student?
       Your current score is
     - elsif current_user.is_staff?
       Current Score:
-    %span#userScoreNum #{number_with_delimiter(@user.score_for_course(current_course), :delimiter => ',')}/#{number_with_delimiter(@user.point_total_for_course(current_course), :delimiter => ',')}
+    %span#userScoreNum #{number_with_delimiter(current_student.score_for_course(current_course), :delimiter => ',')}/#{number_with_delimiter(current_student.point_total_for_course(current_course), :delimiter => ',')}
     Current Level:
-    %span#userScoreNum #{@user.grade_level_for_course(current_course)}
+    %span#userScoreNum #{current_student.grade_level_for_course(current_course)}
   .charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")
     .chart-wrapper.user-bar-in-progress-chart
       .chart#userBarInProgress
