@@ -24,7 +24,7 @@
             %td
               - if grade
                 = check_box_tag "grade_ids[]", grade.id
-          %td= link_to student.name, student
+          %td= link_to student.name, student_path
           %td
             - if grade
               = grade.score
@@ -39,7 +39,14 @@
             - student.earned_badges.each do |badge|
               %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
           - if @assignment.release_necessary?
-            %td= grade.try(:status)
+            %td
+              - if grade && grade.released?
+                = "Released"
+              - elsif grade && grade.present?
+                = "Graded"
+              - elsif grade
+                = "New"
+
           - if @assignment.accepts_submissions?
             %td
               - student.submission_for_assignment(@assignment).tap do |submission|
@@ -54,6 +61,6 @@
               = link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
             - else
               = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
-  - if @assignment.release_necessary?
+  - if @assignment.release_necessary? && @assignment.grades.present?
     .col-lg-12
-      = submit_tag "Update Grade Statuses", :class => "btn btn-info pull-right"
+      = submit_tag "Release Selected Grades", :class => "btn btn-info pull-right"

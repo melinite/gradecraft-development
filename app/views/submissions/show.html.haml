@@ -1,6 +1,11 @@
-= content_nav_for @assignment, @submission do
-  %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "btn btn-tiny btn-info"
-  %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+- if current_user.is_staff?
+  = content_nav_for @assignment, @submission do
+    %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+    %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+- else
+  = content_nav_for "New Submission" do
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+    %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3

@@ -1,5 +1,5 @@
 .assignmentName {
-  font-family: "IMF", sans-serif;
+  font-family: Futura, sans-serif;
 }
 
 #userScoreNum {
@@ -27,6 +27,10 @@
     position: absolute;
     width: 100%;
   }
+}
+
+#prediction {
+  //width: 100%;
 }
 
 .dashboard-toggle {

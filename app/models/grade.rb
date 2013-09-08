@@ -5,7 +5,7 @@ class Grade < ActiveRecord::Base
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :student, :student_id,
     :badge_ids, :earned_badges_attributes, :earned, :submission,
-    :submission_id, :badge_ids, :earned_badge_id, :earned_badges,
+    :submission_id, :badge_ids, :earned_badge_id, :earned_badges, :released,
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
     :graded_by, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file
 
@@ -66,7 +66,7 @@ class Grade < ActiveRecord::Base
   end
 
   def is_released?
-    status == "Released"
+    status == 'Released'
   end
 
   #Canable Permissions

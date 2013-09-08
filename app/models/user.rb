@@ -138,6 +138,10 @@ class User < ActiveRecord::Base
     is_prof? || is_gsi? || is_admin?
   end
 
+  def character_profile(course)
+    course_memberships.where(course: course).try('character_profile')
+  end
+
   #Grades
 
   def submissions_by_assignment_id

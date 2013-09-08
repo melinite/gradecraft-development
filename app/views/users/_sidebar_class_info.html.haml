@@ -14,7 +14,7 @@
     - if current_course.class_email.present?
       %p
         %b Class Email:
-        %p= mail_to current_course.class_email, current_course.class_email
+        = mail_to current_course.class_email, current_course.class_email
     - if current_course.twitter_handle.present?
       %p
         %b Twitter Handle:
@@ -26,12 +26,12 @@
     - if current_course.meeting_times.present?
       %p
         %b Classes Meet:
-        %p= current_course.meeting_times
-        %p= current_course.location
+        = current_course.meeting_times
+        = current_course.location
     - if current_course.office.present?
       %p
         %b Professor's Office:
-        %p= current_course.office
+        = current_course.office
     - if current_course.office_hours.present?
       %p
         %b Office Hours:

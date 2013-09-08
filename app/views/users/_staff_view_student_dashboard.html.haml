@@ -5,18 +5,18 @@
     = render "users/main_tabs"
 
 .pull-right.col.col-lg-3.col-md-3.col-sm-3.col-xs-12.sidebar
-  .sidebar_section= gravatar_for @user, :size => "100%", :d => "mm"
+  .sidebar_section= gravatar_for current_student, :size => "100%", :d => "mm"
 
-  .sidebar_section.center.section= link_to @user.email, "mailto:#{@user.email}"
+  .sidebar_section.center.section= link_to current_student.email, "mailto:#{current_student.email}"
 
   - if current_user.is_prof? || current_user.is_staff? && current_course.academic_history_visible?
-    .sidebar_section= render "sidebar_class_info"
+    .sidebar_section= render "users/sidebar_class_info"
 
-  .sidebar_section= render "sidebar_history"
+  .sidebar_section= render "users/sidebar_history"
 
   .sidebar_section= render 'users/sidebar_grade_distribution'
 
   - if current_course.has_badges?
-    .sidebar_section= render "sidebar_badges"
+    .sidebar_section= render "users/sidebar_badges"
 
-  .sidebar_section= render "sidebar_to_do_list"
+  .sidebar_section= render "users/sidebar_to_do_list"

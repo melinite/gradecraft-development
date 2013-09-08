@@ -1,41 +1,42 @@
 = content_nav_for @assignment, "Quick Grade"do
   %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
-- if current_course.has_teams?
-  .filters
-    = form_tag mass_grade_assignment_path, :method => :get do
-      = hidden_field_tag :assignment_id, @assignment.id
-      = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
-      = submit_tag 'Filter', :class => 'btn btn-primary'
-
-.col-lg-12#massGrade
+.col-lg-12
   %h3= @title
-  = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
-    .col-lg-offset-3
-      - if !@assignment.grade_select? && !@assignment.grade_radio? && ! @assignment.grade_text?
-        .btn-group
-          %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
-          %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
+  - if current_course.has_teams?
+    .filters
+      = form_tag mass_grade_assignment_path, :method => :get do
+        = hidden_field_tag :assignment_id, @assignment.id
+        = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+        = submit_tag 'Filter', :class => 'btn btn-primary'
 
-      %table
-        - @grades.each_with_index do |grade, i|
-          %tr
-            %td= link_to grade.student.name, grade.student
-            %td
-              = f.simple_fields_for :grades, grade do |gf|
-                = gf.hidden_field :student_id
-                = label_tag do
-                  - if @assignment.grade_select?
-                    = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name), include_blank: false
-                  - elsif @assignment.grade_radio?
-                    - @score_levels.each do |score_level|
-                      = gf.label :raw_score, score_level.name, value: score_level.value
-                      = gf.radio_button :raw_score, score_level.value
-                  - elsif @assignment.grade_text?
-                    = gf.text_field :raw_score
-                  - else
-                    = gf.check_box :raw_score, {}, @assignment.point_total
+  #massGrade
+    = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
+      .col-lg-offset-3
+        - if !@assignment.grade_select? && !@assignment.grade_radio? && ! @assignment.grade_text?
+          .btn-group
+            %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
+            %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
 
-    .form-actions.col-lg-offset-3
-      = f.button :submit, :class => "btn btn-primary"
-      = link_to 'Cancel', assignments_path, :class => 'btn btn-info'
+        %table
+          - @grades.each_with_index do |grade, i|
+            %tr
+              %td= link_to grade.student.name, grade.student
+              %td
+                = f.simple_fields_for :grades, grade do |gf|
+                  = gf.hidden_field :student_id
+                  = label_tag do
+                    - if @assignment.grade_select?
+                      = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name), include_blank: false
+                    - elsif @assignment.grade_radio?
+                      - @score_levels.each do |score_level|
+                        = gf.label :raw_score, score_level.name, value: score_level.value
+                        = gf.radio_button :raw_score, score_level.value, :class => "radio_inline"
+                    - elsif @assignment.grade_text?
+                      = gf.text_field :raw_score
+                    - else
+                      = gf.check_box :raw_score, {}, @assignment.point_total
+
+      .form-actions.col-lg-offset-3
+        = f.button :submit, "Submit Grades", :class => "btn btn-primary"
+        = link_to 'Cancel', assignments_path, :class => 'btn btn-info'

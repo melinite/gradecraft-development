@@ -62,3 +62,8 @@ html ul.tabs li:last-child, html ul.tabs li:last-child a  {
   padding-top: 15px;
   min-height: 350px;
 }
+
+.nav.nav-tabs li a{
+  padding: 5px 10px;
+  cursor: pointer;
+}

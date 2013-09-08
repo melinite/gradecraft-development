@@ -1,5 +1,9 @@
-= content_nav_for @assignment, Submission, "New Submission" do
-  %li= link_to "Back to #{@assignment.name}", @assignment, :class => "btn btn-tiny btn-info"
+- if current_user.is_staff?
+  = content_nav_for @assignment, Submission, "New Submission" do
+    %li= link_to "Back to #{@assignment.name}", @assignment, :class => "btn btn-tiny btn-info"
+- else
+  = content_nav_for "New Submission" do
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3= @title

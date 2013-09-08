@@ -1,5 +1,7 @@
 .sidebar_section= render "users/sidebar_class_info"
 
+.sidebar_section= render 'users/sidebar_to_do_list'
+
 .sidebar_section= render 'users/sidebar_grade'
 
 .sidebar_section= render 'users/sidebar_grade_distribution'
@@ -7,4 +9,3 @@
 - if current_course.has_badges?
   .sidebar_section= render 'users/sidebar_badges'
 
-.sidebar_section= render 'users/sidebar_to_do_list'

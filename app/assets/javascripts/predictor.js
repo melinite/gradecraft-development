@@ -8,7 +8,7 @@ var chartOptions = {
   chart: {
     renderTo: 'prediction',
     type: 'bar',
-    height:160,
+    height:200,
     backgroundColor:null
   },
   title: {
