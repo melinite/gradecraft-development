@@ -1,5 +1,5 @@
 # TODO: refactor as CourseUserPageview of type Aggregate::Count
-class Analytics::CourseUserPageview
+class CourseUserPageview
   include Analytics::Aggregate
 
   field :course_id, type: Integer

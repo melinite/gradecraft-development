@@ -1,5 +1,5 @@
 # TODO: refactor as CoursePredictionScore of type Aggregate::Average
-class Analytics::CoursePrediction
+class CoursePrediction
   include Analytics::Aggregate
 
   field :course_id, type: Integer

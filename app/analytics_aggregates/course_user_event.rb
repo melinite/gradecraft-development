@@ -1,5 +1,5 @@
 # TODO: refactor as CourseUserEvent of type Aggregate::Count
-class Analytics::CourseUserEvent
+class CourseUserEvent
   include Analytics::Aggregate
 
   field :course_id, type: Integer

@@ -7,7 +7,7 @@ class AnalyticsController < ApplicationController
 
   def assignment_events
     assignments = Hash[current_course.assignments.select([:id, :name]).collect{ |h| [h.id, h.name] }]
-    data = Analytics::AssignmentEvent.data(:minutely, 15.minutes.ago, Time.now, {assignment_id: assignments.keys}, {event_type: "_all"})
+    data = AssignmentEvent.data(:minutely, 15.minutes.ago, Time.now, {assignment_id: assignments.keys}, {event_type: "_all"})
 
     data.decorate! { |result| result[:name] = assignments[result.assignment_id] }
 
@@ -16,7 +16,7 @@ class AnalyticsController < ApplicationController
 
   def login_frequencies
     granularity = :minutely
-    data = Analytics::CourseLogin.data(granularity, 15.minutes.ago, Time.now, {course_id: current_course.id})
+    data = CourseLogin.data(granularity, 15.minutes.ago, Time.now, {course_id: current_course.id})
 
     data[:lookup_keys] = ['{{t}}.average']
     data.decorate! do |result|
@@ -31,7 +31,7 @@ class AnalyticsController < ApplicationController
 
   def login_events
     granularity = :minutely
-    data = Analytics::CourseLogin.data(granularity, 15.minutes.ago, Time.now, {course_id: current_course.id})
+    data = CourseLogin.data(granularity, 15.minutes.ago, Time.now, {course_id: current_course.id})
 
     # Only graph counts
     data[:lookup_keys] = ['{{t}}.count']
@@ -40,13 +40,13 @@ class AnalyticsController < ApplicationController
   end
 
   def all_pageview_events
-    data = Analytics::CoursePageview.data(:minutely, 15.minutes.ago, Time.now, {course_id: current_course.id}, {page: "_all"})
+    data = CoursePageview.data(:minutely, 15.minutes.ago, Time.now, {course_id: current_course.id}, {page: "_all"})
 
     render json: data
   end
 
   def pageview_events
-    data = Analytics::CoursePagePageview.data(:minutely, 15.minutes.ago, Time.now, {course_id: current_course.id})
+    data = CoursePagePageview.data(:minutely, 15.minutes.ago, Time.now, {course_id: current_course.id})
     data.decorate! { |result| result[:name] = result.page }
 
     render json: data
@@ -54,7 +54,7 @@ class AnalyticsController < ApplicationController
 
   def prediction_averages
     granularity = :minutely
-    data = Analytics::CoursePrediction.data(granularity, 15.minutes.ago, Time.now, {course_id: current_course.id})
+    data = CoursePrediction.data(granularity, 15.minutes.ago, Time.now, {course_id: current_course.id})
 
     data[:lookup_keys] = ['{{t}}.average']
     data.decorate! do |result|

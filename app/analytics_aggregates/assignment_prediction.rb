@@ -1,5 +1,5 @@
 # TODO: refactor as AssignmentPredictionScore of type Aggregate::Average
-class Analytics::AssignmentPrediction
+class AssignmentPrediction
   include Analytics::Aggregate
 
   field :assignment_id, type: Integer

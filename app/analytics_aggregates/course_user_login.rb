@@ -1,5 +1,5 @@
 # TODO: refactor as CourseUserLoginFrequency type Aggregate::Average
-class Analytics::CourseUserLogin
+class CourseUserLogin
   include Analytics::Aggregate
 
   field :course_id, type: Integer

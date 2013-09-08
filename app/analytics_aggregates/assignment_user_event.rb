@@ -1,5 +1,5 @@
 # TODO: refactor as AssignmentUserEvent of type Aggregate::Count
-class Analytics::AssignmentUserEvent
+class AssignmentUserEvent
   include Analytics::Aggregate
 
   field :assignment_id, type: Integer
