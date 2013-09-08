@@ -28,24 +28,6 @@ module ApplicationHelper
     "current" if current_page?(path)
   end
 
-  def current_course
-    return unless current_user
-    @__current_course ||= current_user.courses.find_by(id: session[:course_id]) if session[:course_id]
-    @__current_course ||= current_user.default_course
-  end
-
-  def current_student
-    if current_user.is_staff?
-      @__current_student ||= current_course.students.find_by params[:student_id] if params[:student_id]
-    else
-      current_user
-    end
-  end
-
-  def current_student=(student)
-    @__current_student = student
-  end
-
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil

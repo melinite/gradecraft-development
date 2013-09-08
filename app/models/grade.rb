@@ -66,7 +66,7 @@ class Grade < ActiveRecord::Base
   end
 
   def is_released?
-    released == true
+    status == 'Released'
   end
 
   #Canable Permissions

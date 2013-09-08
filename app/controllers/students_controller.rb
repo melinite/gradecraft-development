@@ -19,9 +19,7 @@ class StudentsController < ApplicationController
 
   def show
     @students = current_course.students.includes(:earned_badges)
-    @student = current_course.students.find(params[:id])
-
-    current_student = current_course.students.find(params[:id])
+    self.current_student = @students.find(params[:id])
 
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = current_student.assignment_weights

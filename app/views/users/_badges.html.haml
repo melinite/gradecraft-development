@@ -34,14 +34,14 @@
             - if current_course.valuable_badges?
               %td= number_with_delimiter(badge.value)
             %td
-              - if badge.earned_badge_for_student(@user)
+              - if badge.earned_badge_for_student(current_student)
                 %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
-                = badge.earned_badge_for_student(@user).created_at.strftime("%A, %B %d")
+                = badge.earned_badge_for_student(current_student).created_at.strftime("%A, %B %d")
                 %br
-                = badge.earned_badge_for_student(@user).feedback
+                = badge.earned_badge_for_student(current_student).feedback
             - if current_course.shared_badges?
               %td
-                - if badge.earned_badge_for_student(@user)
+                - if badge.earned_badge_for_student(current_student)
                   %input{ :type=>"checkbox" }
 
   .tab-pane#tabb2
