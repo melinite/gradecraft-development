@@ -6,12 +6,12 @@
   - if current_course.grading_philosophy.present?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Grading Philosophy
-  - if current_course.has_badges?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab5"} #{current_course.badge_term.pluralize}
   - if current_course.predictor_on?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab7"} Grade Predictor
+  - if current_course.has_badges?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tab5"} #{current_course.badge_term.pluralize}
   - if current_course.teams_visible?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab8"} #{term_for :teams}
@@ -23,12 +23,12 @@
   - if current_course.grading_philosophy.present?
     .tab-pane#tab3
       = render "users/grading_philosophy"
-  - if current_course.has_badges?
-    .tab-pane#tab5
-      = render "users/badges"
   - if current_course.predictor_on?
     .tab-pane#tab7
       = render "users/predictor"
+  - if current_course.has_badges?
+    .tab-pane#tab5
+      = render "users/badges"
   - if current_course.teams_visible?
     .tab-pane#tab8
       = render "teams/leaderboard"

@@ -31,6 +31,7 @@
                     %span.label.label-important Required!
                   - assignment.grades.where(:student_id => current_student).first.tap do |grade|
                     - if grade
+                      = "–"
                       - if assignment.release_necessary? && grade.is_released?
                         %span.points.earned= grade.score(current_student)
                         = " out of #{assignment.point_total_for_student(current_student)} points"
@@ -53,7 +54,7 @@
                       - elsif assignment_type.select?
                         = "#{assignment.point_total_for_student(current_student)} possible points"
                         = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
-
+          %hr
         - if current_course.valuable_badges?
           %li#slide-badges{ :data => { 'assignment-type-id' => 'badges', 'assignment-type-name' => 'Badges' } }
             .slide-panel.col.col-lg-12

@@ -1,5 +1,9 @@
-= content_nav_for Badge do
-  %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
+- if current_user.is_staff?
+  = content_nav_for Badge do
+    %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
+- else
+  = content_nav_for Badge do
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3= @title
@@ -40,12 +44,16 @@
             %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-info'
             %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
       - else
-        - if badge.visible == "1"
+        - if badge.visible?
           %tr
             %td
               %img{:src => badge.icon, :alt => badge.name}
               %td
-                = badge.name
+                = link_to badge.name, badge_path(badge)
                 = raw badge.description
               - if current_course.valuable_badges?
                 %td= badge.point_total
+            %td
+              %ul
+                - badge.tasks.each do |task|
+                  %li= task.name
