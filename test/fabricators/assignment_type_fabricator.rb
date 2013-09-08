@@ -1,6 +1,6 @@
 Fabricator(:assignment_type) do
   name 'Test Assignment Type'
-  point_setting 'Individually'
+  point_setting 'By Assignment'
   levels ""
   points_predictor_display 'Slider'
   resubmission ""

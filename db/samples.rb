@@ -172,7 +172,7 @@ puts "Did someone need motivation? We found these badges in the Room of Requirem
 assignment_types[:attendance] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Attendance"
-  at.point_setting = "Individually"
+  at.point_setting = "By Assignment"
   at.points_predictor_display = "Fixed"
   at.resubmission = false
   at.max_value = "120000"
@@ -188,7 +188,7 @@ puts "Come to class."
 assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Reading Reactions"
-  at.point_setting = "Individually"
+  at.point_setting = "By Assignment"
   at.points_predictor_display = "Select List"
   at.resubmission = false
   at.predictor_description = "Each week, you must write a concise summary or analysis of the reading for that week of no more than 200 words! (200 words is roughly equivalent to one-half page, double-spaced.) Your 201st word will suffer a terrible fate... "
@@ -203,7 +203,7 @@ puts "Do your readings."
 assignment_types[:blogging] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Blogging"
-  at.point_setting = "Individually"
+  at.point_setting = "By Assignment"
   at.points_predictor_display = "Slider"
   at.resubmission = false
   at.max_value = "60000"
@@ -218,7 +218,7 @@ puts "Blogging is great for filling in missed points in other areas"
 assignment_types[:lfpg] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Learning from Playing a Game"
-  at.point_setting = "Individually"
+  at.point_setting = "By Assignment"
   at.points_predictor_display = "Slider"
   at.resubmission = false
   at.due_date_present = true
@@ -231,7 +231,7 @@ puts "This is the good stuff :)"
 assignment_types[:boss_battle] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Boss Battles"
-  at.point_setting = "Individually"
+  at.point_setting = "By Assignment"
   at.points_predictor_display = "Slider"
   at.resubmission = false
   at.due_date_present = true
