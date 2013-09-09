@@ -60,7 +60,7 @@ namespace :analytics do
                    end
                  end
 
-          attributes = {course_id: course.id, user_id: user.id}
+          attributes = {course_id: course.id, user_id: user.id, user_role: user.role}
           EventLogger.perform_async(event, attributes.merge(data)) if data
           sleep(rand)
         end
