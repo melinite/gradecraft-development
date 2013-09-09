@@ -109,6 +109,8 @@ class GradesController < ApplicationController
           format.html { redirect_to dashboard_path, notice: "We're sorry, this grade could not be added." }
         end
       end
+    else
+      format.html { redirect_to dashboard_path, notice: "We're sorry, this assignment is no longer open." }
     end
   end
 
