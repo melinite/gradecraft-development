@@ -190,16 +190,10 @@ th.sortable {
   font-family: 'Helvetica', sans-serif;
 }
 
-.container .vco-storyjs ol {
-  list-style: decimal;
+ .vco-storyjs ol{
+  list-style: decimal !important;
 }
 
-.container .vco-storyjs ul {
-  list-style: disc;
-}
-
-.container .vco-storyjs .content .container {
-   overflow:scroll;
-    overflow-x:hidden;
-    overflow-y: scroll;
+ .vco-storyjs ul  {
+  list-style: disc !important;
 }

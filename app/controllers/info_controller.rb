@@ -15,8 +15,8 @@ class InfoController < ApplicationController
     @badges = current_course.badges.includes(:tasks)
     @user = current_user
     @students = current_course.users.students
-    @assignments = current_course.assignments.includes(:assignment_type)
-    @assignment_types = current_course.assignment_types.includes(:assignments)
+    @assignments = current_course.assignments.includes(:assignment_type).chronological.order('name ASC')
+    @assignment_types = current_course.assignment_types.includes(:assignments).order('order_placement  ASC')
     @teams = current_course.teams
     @sorted_teams = @teams.order_by_high_score
   end
