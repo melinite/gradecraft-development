@@ -1,0 +1,71 @@
+= link_to "Refresh", "#", :id => "refresh", :class => "btn btn-tiny btn-success pull-right"
+
+%h1 Course Analytics
+
+.row.analytics-row
+  .col-lg-12.col-sm-12.col-md-12
+    / Event counts
+    = analytics_chart_inputs('all-events-chart', 'past_week')
+    #all-events-chart{:data => {:chart => 'timeseries', :url => '/analytics/all_events.json', :title => 'Interactions', :subtitle => '{{granularity}}', :y_axis_label => 'Number of events'}}
+    -##events-chart{:data => {:chart => 'timeseries', :url => '/analytics/assignment_events.json', :title => 'Assignment Events', :subtitle => '{{granularity}}', :y_axis_label => 'Number of events'}}
+
+%hr.analytics-divider
+
+.row.analytics-row
+  .col-lg-4.col-sm-12.col-md-12
+    / Pageviews Total
+    = analytics_chart_inputs('all-pageviews-chart', 'past_week')
+    #all-pageviews-chart{:data => {:chart => 'timeseries', :url => '/analytics/all_pageview_events.json', :title => 'Pageviews', :subtitle => '{{granularity}}'}}
+
+  .col-lg-8.col-sm-12.col-md-12
+    / Pageviews per page
+    = analytics_chart_inputs('pageviews-chart', 'past_week')
+    #pageviews-chart{:data => {:chart => 'timeseries', :url => '/analytics/pageview_events.json', :title => 'Pageviews per Page', :subtitle => '{{granularity}}'}}
+
+%hr.analytics-divider
+
+.row.analytics-row
+  .col-lg-6.col-sm-12.col-md-6
+    / Login counts
+    = analytics_chart_inputs('logins-chart', 'past_week')
+    #logins-chart{:data => {:chart => 'timeseries', :url => '/analytics/login_events.json', :title => 'Logins', :subtitle => '{{granularity}}', :y_axis_label => 'Logins {{granularity}}'}}
+
+  .col-lg-6.col-sm-12.col-md-6
+    / Average User Login Frequencies
+    = analytics_chart_inputs('logins-frequencies-chart', 'past_week')
+    #logins-frequencies-chart{:data => {:chart => 'timeseries', :url => '/analytics/login_frequencies.json', :title => 'Average User Login Frequencies', :subtitle => '{{granularity}}', :y_axis_label => 'User Login Rate (in logins {{granularity}})'}}
+
+%hr.analytics-divider
+
+.row.analytics-row
+  .col-lg-4.col-sm-12.col-md-12
+    / Average Predictor Scores Set (%)
+    = analytics_chart_inputs('predictions-chart', 'past_week')
+    #predictions-chart{:data => {:chart => 'timeseries', :url => '/analytics/prediction_averages.json', :title => 'Average Predictor Scores', :subtitle => '{{granularity}}', :y_axis_label => '% of score possible', :y_axis_max => 100}}
+
+  .col-lg-8.col-sm-12.col-md-12
+    / Average Predictor Scores per Assignment (per week)
+    = analytics_chart_inputs('assignment-predictions-chart', 'past_week')
+    #assignment-predictions-chart{:data => {:chart => 'timeseries', :url => '/analytics/assignment_prediction_averages.json', :title => 'Average Predictor Scores per Assignment', :subtitle => '{{granularity}}', :y_axis_label => '% of score possible', :y_axis_max => 100}}
+
+%hr.analytics-divider
+
+%h2 Metrics for Student:
+= select_tag :user, options_from_collection_for_select(@students, "id", "name"), :id => 'user-events'
+
+Coming Soon
+
+/
+  %h3 Logins
+  (per day, over time)
+
+  %h3 Average Login Frequency
+  (per week, over time)
+
+  %h3 Pageviews
+  (per hour, over time)
+
+  %h3 Events in the past 10 minutes
+
+  %h3 Average Predictor Scores:
+  (per week, over time)

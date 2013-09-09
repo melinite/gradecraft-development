@@ -108,6 +108,18 @@ GradeCraft::Application.routes.draw do
     end
   end
 
+  namespace :analytics do
+    root :to => :index
+    get 'all_events'
+    get 'assignment_events'
+    get 'login_frequencies'
+    get 'login_events'
+    get 'all_pageview_events'
+    get 'pageview_events'
+    get 'prediction_averages'
+    get 'assignment_prediction_averages'
+  end
+
   get 'home/index'
   get 'dashboard' => 'info#dashboard'
   root :to => "home#index"
@@ -130,6 +142,8 @@ GradeCraft::Application.routes.draw do
   get 'documentation' => 'pages#documentation'
   get 'leaderboard' => 'info#leaderboard'
   get 'grading_status' => 'info#grading_status'
+
+  post 'analytics_events/predictor_event'
 
   # get 'cosign_test' => 'info#cosign_test'
 end

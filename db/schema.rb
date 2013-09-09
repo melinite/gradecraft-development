@@ -36,6 +36,24 @@ ActiveRecord::Schema.define(version: 20130909123552) do
   add_index "assignment_rubrics", ["assignment_id"], name: "index_assignment_rubrics_on_assignment_id", using: :btree
   add_index "assignment_rubrics", ["rubric_id"], name: "index_assignment_rubrics_on_rubric_id", using: :btree
 
+  create_table "assignment_submissions", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.string   "feedback"
+    t.string   "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "link"
+    t.integer  "submittable_id"
+    t.string   "submittable_type"
+    t.text     "text_feedback"
+    t.text     "text_comment"
+  end
+
   create_table "assignment_types", force: true do |t|
     t.string   "name"
     t.string   "point_setting"
@@ -215,11 +233,12 @@ ActiveRecord::Schema.define(version: 20130909123552) do
   end
 
   create_table "course_memberships", force: true do |t|
-    t.integer "course_id"
-    t.integer "user_id"
-    t.integer "score",             default: 0, null: false
-    t.boolean "shared_badges"
-    t.text    "character_profile"
+    t.integer  "course_id"
+    t.integer  "user_id"
+    t.integer  "score",             default: 0, null: false
+    t.boolean  "shared_badges"
+    t.text     "character_profile"
+    t.datetime "last_login_at"
   end
 
   add_index "course_memberships", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree
@@ -364,7 +383,6 @@ ActiveRecord::Schema.define(version: 20130909123552) do
     t.integer  "grade_scheme_id"
     t.string   "description"
     t.integer  "high_range"
-    t.integer  "team_id"
   end
 
   create_table "grade_schemes", force: true do |t|

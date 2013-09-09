@@ -55,11 +55,20 @@ class ApplicationController < ActionController::Base
 
   private
   def increment_page_views
-    User.increment_counter(:page_views, current_user.id) if current_user && request.format.html?
+    if current_user && request.format.html?
+      User.increment_counter(:page_views, current_user.id)
+      EventLogger.perform_async('pageview', course_id: current_course.id, user_id: current_user.id, user_role: current_user.role, page: request.original_fullpath)
+    end
   end
 
   def enforce_view_permission(resource)
     raise Canable::Transgression unless can_view?(resource)
+  end
+
+  def log_course_login_event
+    membership = current_user.course_memberships.where(course_id: current_course.id).first
+    EventLogger.perform_async('login', course_id: current_course.id, user_id: current_user.id, user_role: current_user.role, last_login_at: membership.last_login_at.to_i)
+    membership.update_attribute(:last_login_at, Time.now)
   end
 
 end

@@ -51,9 +51,11 @@
               %span.italic= " • Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
             - if assignment.is_required?
               %span.label.label-important Required!
-            - if assignment.self_gradeable?
-              //= simple_form_for([assignment, grade], :html => {:class => 'form-horizontal' }) do |f|
-              //= f.button :submit, "Submit", :input_html => { :type => "button", :class => "btn btn-primary btn-tiny", "data-toggle" => "button" }
+            - if assignment.self_gradeable? && assignment.open?
+              - grade = assignment.grades.first_or_initialize(student: @user)
+              = simple_form_for([assignment, grade], :url => self_log_create_assignment_grades_path(:assignment_id => assignment.id), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
+                = f.hidden_field :present, :value => grade.raw_score == assignment.point_total
+                = f.submit assignment.student_logged_button_text, :class => "btn btn-primary btn-tiny"
             - if assignment.has_groups?
               - if current_student.group_for_assignment(assignment)
                 = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "btn btn-primary btn-xs"

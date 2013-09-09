@@ -25,7 +25,7 @@
                     = "#{current_student.released_score_for_assignment_type(assignment_type)} / "
                     = "#{assignment_type.assignments.point_total_for_student(current_student)} possible points"
               - assignments.each do |assignment|
-                .assignment.clear
+                .assignment.clear{:data => {:assignment => assignment.id, :'possible-points' => assignment.point_total_for_student(@user)}}
                   %span.assignmentName= assignment.name
                   - if assignment.is_required?
                     %span.label.label-important Required!

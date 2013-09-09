@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     scope role.pluralize, -> { where role: role }
   end
 
-  attr_accessor :remember_me, :password, :password_confirmation
+  attr_accessor :remember_me, :password, :password_confirmation, :cached_last_login_at
   attr_accessible :username, :email, :password, :password_confirmation,
     :avatar_file_name, :role, :first_name, :last_name, :rank, :user_id,
     :display_name, :private_display, :default_course_id, :last_activity_at,
@@ -261,5 +261,9 @@ class User < ActiveRecord::Base
     course_memberships.each do |membership|
       membership.update_attribute :score, grades.where(course_id: membership.course_id).score
     end
+  end
+
+  def cache_last_login
+    self.cached_last_login_at = self.last_login_at
   end
 end
