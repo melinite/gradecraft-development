@@ -50,11 +50,21 @@
                         %span.pScore= "0 "
                         = "/ #{assignment.point_total_for_student(current_student)} multiplied possible points"
                         .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(current_student)) , :value => 0 }
-
                       - elsif assignment_type.select?
                         = "#{assignment.point_total_for_student(current_student)} possible points"
                         = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
-          %hr
+                      - elsif assignment_type.per_assignment?
+                        - if assignment.fixed?
+                          = "#{assignment.point_total_for_student(current_student)} possible points"
+                          %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(current_student)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
+                        - elsif assignment.slider?
+                          %span.pScore= "0 "
+                          = "/ #{assignment.point_total_for_student(current_student)} multiplied possible points"
+                          .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(current_student)) , :value => 0 }
+                        - elsif assignment.select?
+                          = "#{assignment.point_total_for_student(current_student)} possible points"
+                          = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+              %hr
         - if current_course.valuable_badges?
           %li#slide-badges{ :data => { 'assignment-type-id' => 'badges', 'assignment-type-name' => 'Badges' } }
             .slide-panel.col.col-lg-12

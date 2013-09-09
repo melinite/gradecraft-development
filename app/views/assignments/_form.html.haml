@@ -4,6 +4,7 @@
     = f.association :assignment_type, :collection => current_course.assignment_types, :input_html => {:class => 'input-sm col-lg-3'}
     = f.input :name, :input_html => {:class => 'col-lg-3'}
     = f.input :point_total, :label => "Total Score Possible", :input_html => {:class => 'col-lg-3'}
+    = f.input :points_predictor_display, :label => "Predictor Display", :collection => [["Fixed"], ["Slider"], ["Select List"]], :input_html => {:class => "input-sm col-lg-3"}
     = f.input :open_at, :include_blank => true, :start_year => Date.today.year
     = f.input :due_at, :include_blank => true, :start_year => Date.today.year
     = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
