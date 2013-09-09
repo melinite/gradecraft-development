@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 20130911022316) do
   end
 
   add_index "course_memberships", ["course_id", "user_id"], name: "index_course_memberships_on_course_id_and_user_id", unique: true, using: :btree
+  add_index "course_memberships", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree
   add_index "course_memberships", ["user_id", "course_id"], name: "index_courses_users_on_user_id_and_course_id", using: :btree
 
   create_table "courses", force: true do |t|
