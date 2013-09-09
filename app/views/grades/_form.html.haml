@@ -12,7 +12,7 @@
   = f.input :feedback, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}
   - if @assignment.release_necessary?
     = f.input :released, :hint => "Can the student see this grade?"
-  //= f.input :graded_by, :input_html => { :value => current_user.id }
+  = f.association :graded_by, :as => :hidden
   .form-actions.col-lg-offset-3
     = f.button :submit, "Submit Grade", :class => "btn-primary"
     = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'
