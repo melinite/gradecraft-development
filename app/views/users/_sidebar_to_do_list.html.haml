@@ -5,7 +5,7 @@
       - if assignment_type.has_soon_assignments?
         %h5= "#{assignment_type.try(:name)}"
         - assignments.each do |assignment|
-          - if assignment.soon?
+          - if assignment.soon? && assignment.assignment_type.name != "Attendance"
             - if current_student.submission_for_assignment(assignment)
               %div.submitted
                 = "#{assignment.try(:name)}"

@@ -14,19 +14,7 @@
     = f.association :courses, :as => :check_boxes
     = f.input :default_course_id, :collection => @courses, :input_html => { :class => "col-lg-4 input-sm"}
 
-    - if @user.persisted? && @user.is_student?
-      = f.simple_fields_for(@academic_history) do |ah|
-        = ah.input :student_id, :as => :hidden, :input_html => { :value => @user }
-        = ah.input :major, :input_html => { :class => "col-lg-4"}
-        = ah.input :gpa,  :input_html => { :class => "col-lg-4"}, :label => "GPA"
-        = ah.input :current_term_credits,  :input_html => { :class => "col-lg-4"}
-        = ah.input :accumulated_credits,  :input_html => { :class => "col-lg-4"}
-        = ah.input :year_in_school, :input_html => { :class => "col-lg-4"}
-        = ah.input :state_of_residence,  :input_html => { :class => "col-lg-4"}
-        = ah.input :high_school,  :input_html => { :class => "col-lg-4"}
-        = ah.input :athlete, :as => :boolean, :input_html => { :class => "col-lg-4"}
-        = ah.input :act_score,  :input_html => { :class => "col-lg-4"}, :label => "ACT Score"
-        = ah.input :sat_score, :input_html => { :class => "col-lg-4"}, :label => "SAT Score"
+
 
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"
