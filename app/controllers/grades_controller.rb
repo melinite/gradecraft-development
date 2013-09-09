@@ -51,6 +51,7 @@ class GradesController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students
     @grade = @assignment.grades.build(params[:grade])
+    @grade.graded_by = current_user
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|
