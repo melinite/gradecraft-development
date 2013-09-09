@@ -47,7 +47,7 @@ class Assignment < ActiveRecord::Base
     :score_levels_attributes, :open_at, :close_time, :course,
     :assignment_rubrics_attributes, :rubrics_attributes, :media,
     :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
-    :assignment_file_ids, :assignment_files_attributes, :assignment_file
+    :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display
 
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }
@@ -130,7 +130,6 @@ class Assignment < ActiveRecord::Base
     due_at != nil && due_at >= Date.today
   end
 
-
   def still_accepted?
     accepts_submissions_until != nil && accepts_submissions_until >= Date.today
   end
@@ -142,7 +141,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def fixed?
-    points_predictor == "Fixed"
+    points_predictor_display == "Fixed"
   end
 
   def has_ungraded_submissions?
@@ -150,11 +149,11 @@ class Assignment < ActiveRecord::Base
   end
 
   def slider?
-    points_predictor == "Slider"
+    points_predictor_display == "Slider"
   end
 
   def select?
-    points_predictor == "Select List"
+    points_predictor_display == "Select List"
   end
 
   def self_gradeable?

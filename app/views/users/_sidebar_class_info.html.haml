@@ -6,7 +6,7 @@
       = current_course.professor.try(:name)
     - current_student.team_leader.tap do |team_leader|
       - if team_leader.present?
-        = link_to "Email #{current_course.section_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}", :class => "btn btn-tiny btn-success btn-info"
+        = link_to "Email #{current_course.team_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}"
     - if current_course.phone.present?
       %p
         %b Phone Number:

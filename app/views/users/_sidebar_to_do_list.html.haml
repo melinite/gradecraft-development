@@ -2,7 +2,7 @@
   %h4.center Due This Week
   %div{:id => "toDoList", :class => "collapse clear"}
     - current_course.assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-      - if assignment_type.has_soon_assignments?
+      - if assignment_type.has_soon_assignments? && assignment_type.name != "Attendance"
         %h5= "#{assignment_type.try(:name)}"
         - assignments.each do |assignment|
           - if assignment.soon? && assignment.assignment_type.name != "Attendance"

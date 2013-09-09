@@ -30,6 +30,10 @@ class AssignmentType < ActiveRecord::Base
     points_predictor_display == "Select List"
   end
 
+  def per_assignment?
+    points_predictor_display == "Set per Assignment"
+  end
+
   def has_levels?
     levels == true
   end

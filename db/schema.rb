@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130908035733) do
+ActiveRecord::Schema.define(version: 20130909123552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20130908035733) do
     t.string   "thumbnail"
     t.string   "media_credit"
     t.string   "media_caption"
+    t.string   "points_predictor_display"
   end
 
   create_table "badge_files", force: true do |t|
