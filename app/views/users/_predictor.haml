@@ -43,6 +43,7 @@
                         %span.points="/ #{assignment.point_total_for_student(current_student)} points"
                         = hidden_field_tag assignment.name, grade.score, :'data-assignment-type-id' => assignment.assignment_type_id
                     - else
+                      = "–"
                       - if assignment_type.fixed?
                         = "#{assignment.point_total_for_student(current_student)} possible points"
                         %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(current_student)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }

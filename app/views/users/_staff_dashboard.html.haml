@@ -1,8 +1,0 @@
-.col-lg-12
-  %h4 Courses
-
-  %h4 Recently Graded
-  - current_course.grades.where(:graded_by => current_user).each do |grade|
-    = grade.assignment
-    = grade.score
-    = grade.student
