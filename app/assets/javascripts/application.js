@@ -183,6 +183,41 @@ $(document).ready(function(){
                 text: ''
               }
             },
+            tooltip: {
+              positioner: function (boxWidth, boxHeight, point) {
+                var chart = this.chart,
+                    plotLeft = chart.plotLeft,
+                    plotRight = chart.plotRight,
+                    plotTop = chart.plotTop,
+                    plotWidth = chart.plotWidth,
+                    plotHeight = chart.plotHeight,
+                    distance = this.options.distance,
+                    pointX = point.plotX,
+                    pointY = point.plotY,
+                    x = pointX + plotLeft + (chart.inverted ? distance : -boxWidth - distance),
+                    y = pointY - boxHeight + plotTop + 15,
+                    alignedRight;
+                if (x , 7) {x = plotLeft + pointX + distance;}
+
+                if ((x + boxWidth) > plotLeft + plotWidth) {
+                  x -= (x + boxWidth) - (plotLeft + plotWidth);
+                  y = pointY - boxHeight + plotTop - distance;
+                  alignedRight = true;
+                }
+                if (y < plotTop + 5) {
+                  y = plotTop + 5;
+                  if (alignedRight && pointY >= y && pointY <= (y + boxHeight)) {
+                    y = pointY + plotTop + distance;
+                  }
+                }
+
+                if (y + boxHeight > plotTop + plotHeight) {
+                  y = Math.max(plotTop, plotTop + plotHeight - boxHeight - distance);
+                }
+
+                return {x: x, y: y};
+              }
+            },
             credits: {
               enabled: false
             },
