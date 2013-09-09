@@ -31,6 +31,7 @@ gem 'pg'
 gem 'protected_attributes'
 gem 'puma'
 gem 'quiet_assets', :group => :development
+gem 'rails_autolink'
 gem 'rdiscount'
 gem 'responders'
 gem 'rollbar'
