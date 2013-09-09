@@ -24,7 +24,7 @@
             %td
               - if grade
                 = check_box_tag "grade_ids[]", grade.id
-          %td= link_to student.name, student_path
+          %td= link_to student.name, student_path(student)
           %td
             - if grade
               = grade.score

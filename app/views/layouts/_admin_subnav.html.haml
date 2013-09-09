@@ -9,7 +9,7 @@
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
   - if current_course.grade_scheme_id?
     %li.icn_calculator= link_to "Grading Scheme", grade_scheme_path(current_course.grade_scheme)
-  %li.icn_group= link_to "Staff", staff_users_path
+  %li.icn_group= link_to "Staff", staff_index_path
   %li.nav-header= term_for(:students)
   %li.icn_view_users= link_to term_for(:students), students_path
   - if current_course.has_teams?
