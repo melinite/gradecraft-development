@@ -98,16 +98,19 @@ class GradesController < ApplicationController
   end
 
   def self_log_create
-    @student = find_student
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @student.grades.build(params[:grade])
-    respond_to do |format|
-      if @grade.save
-        format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }
-      else
-        format.html { redirect_to dashboard_path, notice: "We're sorry, this grade could not be added." }
-
+    if @assignment.open?
+      @grade = current_user.grades.find_or_initialize_by(assignment: @assignment)
+      @grade.raw_score = params[:present] == '1'
+      respond_to do |format|
+        if @grade.save
+          format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }
+        else
+          format.html { redirect_to dashboard_path, notice: "We're sorry, this grade could not be added." }
+        end
       end
+    else
+      format.html { redirect_to dashboard_path, notice: "We're sorry, this assignment is no longer open." }
     end
   end
 
