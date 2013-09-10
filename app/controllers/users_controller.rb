@@ -41,8 +41,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @title = "View all Users"
-    @users =  current_course.users.order(:last_name)
+    @title = "View All Users"
+    @users =  current_course.users.order('last_name ASC')
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options)
@@ -164,8 +164,10 @@ class UsersController < ApplicationController
   def create
     @teams = current_course.teams
     @user = current_course.users.new(params[:user])
-    if @user.save
-      redirect_to students_path, :notice => "User was successfully created!"
+    if @user.save && @user.is_student?
+      redirect_to students_path, :notice => "#{term_for :student} was successfully created!"
+    elsif @user.save && @user.is_staff?
+      redirect_to staff_index_path, :notice => "Staff Member was successfully created!"
     else
       render :new
     end

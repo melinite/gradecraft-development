@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
 
   def index
     @groups = current_course.groups
+    @title = "#{term_for :group} Index"
   end
 
   def show

@@ -120,12 +120,11 @@ class Course < ActiveRecord::Base
     shared_badges == true
   end
 
-  def dynamic_office_hours?
-    uri = URI.parse(office_hours)
-    if %w( http https ).include?(uri.scheme)
-      return true
+  def formatted_tagline
+    if tagline.present?
+      tagline
     else
-      false
+      " "
     end
   end
 
