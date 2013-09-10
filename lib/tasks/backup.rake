@@ -6,6 +6,10 @@ namespace :backup do
     system "s3cmd put db/backups/#{filename} s3://gradecraft.#{Rails.env}/backups/db/#{filename}"
     puts "\nUploaded database dump to S3.\n\n"
   end
+  task :files => :environment do
+    system "duplicity /var/www s3+http://gradecraft/backups/#{ENV['HOSTNAME']}"
+    puts "\nBacked up files to S3.\n\n"
+  end
 end
 
 task :backup => 'backup:db'
