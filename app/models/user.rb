@@ -98,6 +98,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def default_course
+    courses.where(id: default_course_id) || courses.first
+  end
+
   def name
     @name = [first_name,last_name].reject(&:blank?).join(' ').presence || "User #{id}"
   end
