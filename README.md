@@ -23,6 +23,12 @@
 * Interactive rubrics
 * Learning analytics suite
 
+## Pre-reqs
+* Ruby 2.0
+* PostgreSQL
+* MongoDB
+* Redis
+ 
 ## Installation instructions for development:
 1. Clone repository
 1. Run `cp config/database.yml.sample config/database.yml` (replace username with your current username)
@@ -31,4 +37,4 @@
 1. Run `bundle exec rake db:create`
 1. Run `bundle exec rake db:schema:load`
 1. Optional: run `bundle exec rake db:sample`
-1. Run `bundle exec rails server`
+1. Run `foreman start`
