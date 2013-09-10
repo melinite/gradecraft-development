@@ -142,16 +142,23 @@ $(document).ready(function(){
 
 	});
 
+  var sparkOpts = {
+    type: 'box',
+    width: '100%'
+  };
   if ($('#grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
-      $('#grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '50px' } )
+      sparkOpts.height = '50px';
+      $('#grade_distro').sparkline(data.scores, sparkOpts);
     })
   }
 
   if ($('#student_grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
-      console.log(data)
-      $('#student_grade_distro').sparkline(data.scores, { type: 'box', target: data.user.score, width: '100%', height: '40px' } )
+      sparkOpts.height = '50px';
+      sparkOpts.target = data.user.score;
+      sparkOpts.tooltipOffsetY = -130;
+      $('#student_grade_distro').sparkline(data.scores, sparkOpts);
     })
   }
 
