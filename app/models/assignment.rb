@@ -4,7 +4,7 @@ class Assignment < ActiveRecord::Base
   belongs_to :grade_scheme
   has_many :grade_scheme_elements, :through => :grade_scheme
 
-  belongs_to :assignment_type
+  belongs_to :assignment_type, touch: true
   accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'
@@ -54,6 +54,7 @@ class Assignment < ActiveRecord::Base
   scope :team_assignments, -> { where grade_scope: "Team" }
 
   scope :chronological, -> { order('due_at ASC') }
+  scope :alphabetical, -> { order('name ASC') }
 
   scope :with_due_date, -> { where('assignments.due_at IS NOT NULL') }
   scope :without_due_date, ->  { where('assignments.due_at IS NULL') }
@@ -110,7 +111,7 @@ class Assignment < ActiveRecord::Base
 
   def weight_for_student(student, weight = nil)
     return 1 unless student_weightable?
-    weight ||= (weights.where(student_id: student).pluck('weight').first || 0)
+    weight ||= (weights.where(student: student).pluck('weight').first || 0)
     weight > 0 ? weight : course.default_assignment_weight
   end
 

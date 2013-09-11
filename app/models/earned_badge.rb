@@ -4,7 +4,7 @@ class EarnedBadge < ActiveRecord::Base
 
   belongs_to :course
   belongs_to :badge
-  belongs_to :student, :class_name => 'User'
+  belongs_to :student, :class_name => 'User', touch: true
   belongs_to :submission # Optional
   belongs_to :task # Optional
   belongs_to :grade # Optional

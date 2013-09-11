@@ -6,8 +6,9 @@
       %th.sortable{"data-sort" => "string"} Role
   %tbody
     - @students.each do |student|
-      - if student.display_name?
-        %tr
-          %td= student.display_name
-          %td= student.character_profile(current_course)
-          %td= student.score_for_course(current_course) if student.respond_to?(:grades)
+      - cache ['v1', student, current_course, 'in_team_rankings'] do
+        - if student.display_name?
+          %tr
+            %td= student.display_name
+            %td= student.character_profile(current_course)
+            %td= student.score_for_course(current_course) if student.respond_to?(:grades)

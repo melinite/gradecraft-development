@@ -18,6 +18,7 @@ class AssignmentType < ActiveRecord::Base
   validates_presence_of :name, :points_predictor_display, :point_setting
 
   scope :student_weightable, -> { where(:student_weightable => true) }
+  scope :ordered, -> { order('order_placement ASC') }
 
   def slider?
     points_predictor_display == "Slider"

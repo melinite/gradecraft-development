@@ -1,16 +1,18 @@
 %table.table.table-striped.simpleTable
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"} #{current_course.user_term}
-      %th.sortable{"data-sort" => "string"} #{current_course.badge_term.pluralize}
+      %th.sortable{"data-sort" => "string"} #{term_for :student}
+      %th.sortable{"data-sort" => "string"} #{term_for :badges}
       - if current_course.valuable_badges?
         %th.sortable{"data-sort" => "int"} Total Badge Score
   %tbody
-    - @students.each do |s|
-      - if s.badges_shared(current_course)
-        %tr
-          %td= s.name
-          %td
-            - s.earned_badges.each do |eb|
-              - if eb.shared?
-                %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "25"}
+    - current_course.students.each do |student|
+      - cache ['v1', student, current_course, 'public_badges'] do
+        - if student.badges_shared(current_course)
+          %tr
+            %td= student.name
+            %td
+              - student.earned_badges.each do |earned_badge|
+                - cache ['v1', earned_badge.badge, 'shared'] do
+                  - if eb.shared? && earned_badge.icon?
+                    = image_tag earned_badge.icon, :alt => earned_badge.name, :width => '25'

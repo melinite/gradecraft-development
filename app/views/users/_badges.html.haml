@@ -22,8 +22,7 @@
       %tbody
         - @badges.each do |badge|
           %tr
-            %td
-              %img{:src => badge.icon, :alt => badge.name, :width => 40}
+            %td= image_tag badge.icon, :alt => badge.name, :width => 40
             %td
               = link_to badge.name, badge_path(badge)
               = badge.description

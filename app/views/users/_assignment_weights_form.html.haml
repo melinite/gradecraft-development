@@ -15,7 +15,7 @@
         - if at.student_weightable?
           %tr
             %td= at.try(:name)
-            %td= "#{@user.weights_for_assignment_type_id(at).try(:value)} #{current_course.multiplier_term}"
+            %td= "#{at.weight_for_student(current_student)} #{term_for :weight}"
             %td= link_to "Edit"
             %td
               %button{"type" => "button", "class" => "close"} x
@@ -24,8 +24,8 @@
     = render 'users/weight_fields', f: user_assignment_type_weight
 
     .form-actions
-      = user_assignment_type_weight.button :submit, "Spend #{current_course.multiplier_term}"
-  = "You may set #{current_course.max_student_weight} #{current_course.multiplier_term}s before #{current_course.student_weight_close_date.strftime("%A, %B %d")}"
+      = user_assignment_type_weight.button :submit, "Spend #{term_for :weight}"
+  = "You may set #{current_course.max_student_weight} #{term_for :weights} before #{current_course.student_weight_close_date.strftime("%A, %B %d")}"
 
 .modal-footer
   %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}Close

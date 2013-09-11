@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20130911022316) do
   add_index "assignment_weights", ["assignment_id"], name: "index_assignment_weights_on_assignment_id", using: :btree
   add_index "assignment_weights", ["course_id"], name: "index_assignment_weights_on_course_id", using: :btree
   add_index "assignment_weights", ["student_id", "assignment_id"], name: "index_weights_on_student_id_and_assignment_id", unique: true, using: :btree
+  add_index "assignment_weights", ["student_id", "assignment_type_id"], name: "index_assignment_weights_on_student_id_and_assignment_type_id", using: :btree
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -112,6 +113,8 @@ ActiveRecord::Schema.define(version: 20130911022316) do
     t.string   "media_caption"
     t.string   "points_predictor_display"
   end
+
+  add_index "assignments", ["course_id"], name: "index_assignments_on_course_id", using: :btree
 
   create_table "badge_files", force: true do |t|
     t.string  "filename"

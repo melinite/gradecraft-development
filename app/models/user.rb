@@ -167,7 +167,9 @@ class User < ActiveRecord::Base
   end
 
   def score_for_course(course)
-    grades.released.where(course: course).score + earned_badge_score_for_course(course)
+    Rails.cache.fetch ['v1', self, course, 'score'] do
+      grades.released.where(course: course).score + earned_badge_score_for_course(course)
+    end
   end
 
   def badges_shared(course)
