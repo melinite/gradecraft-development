@@ -51,11 +51,12 @@
               %span.italic= " • Due: #{assignment.try(:due_at).strftime("%A, %B %d")}"
             - if assignment.is_required?
               %span.label.label-important Required!
-            - if assignment.self_gradeable? && assignment.open?
+            - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance'
               - grade = assignment.grades.first_or_initialize(student: @user)
-              = simple_form_for([assignment, grade], :url => self_log_create_assignment_grades_path(:assignment_id => assignment.id), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
-                = f.hidden_field :present, :value => grade.raw_score == assignment.point_total
-                = f.submit assignment.student_logged_button_text, :class => "btn btn-primary btn-tiny"
+              = simple_form_for([assignment, grade], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
+                - present = grade.raw_score == assignment.point_total
+                = hidden_field_tag :present, !present
+                = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn btn-primary btn-tiny"
             - if assignment.has_groups?
               - if current_student.group_for_assignment(assignment)
                 = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "btn btn-primary btn-xs"

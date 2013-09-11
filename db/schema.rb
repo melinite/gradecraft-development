@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130909155053) do
+ActiveRecord::Schema.define(version: 20130911022316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,18 +45,20 @@ ActiveRecord::Schema.define(version: 20130909155053) do
     t.integer  "max_value"
     t.integer  "percentage_course"
     t.text     "predictor_description"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.integer  "course_id"
     t.integer  "universal_point_value"
     t.integer  "minimum_score"
-    t.integer  "step_value",               default: 1
+    t.integer  "step_value",                        default: 1
     t.integer  "grade_scheme_id"
     t.boolean  "due_date_present"
     t.integer  "order_placement"
     t.boolean  "mass_grade"
     t.string   "mass_grade_type"
     t.boolean  "student_weightable"
+    t.string   "student_logged_button_text"
+    t.string   "student_logged_revert_button_text"
   end
 
   create_table "assignment_weights", force: true do |t|
@@ -92,7 +94,6 @@ ActiveRecord::Schema.define(version: 20130909155053) do
     t.boolean  "required"
     t.boolean  "accepts_submissions"
     t.boolean  "student_logged"
-    t.string   "student_logged_button_text"
     t.boolean  "release_necessary"
     t.datetime "open_at"
     t.string   "icon"
@@ -224,7 +225,6 @@ ActiveRecord::Schema.define(version: 20130909155053) do
   end
 
   add_index "course_memberships", ["course_id", "user_id"], name: "index_course_memberships_on_course_id_and_user_id", unique: true, using: :btree
-  add_index "course_memberships", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree
   add_index "course_memberships", ["user_id", "course_id"], name: "index_courses_users_on_user_id_and_course_id", using: :btree
 
   create_table "courses", force: true do |t|
@@ -366,6 +366,7 @@ ActiveRecord::Schema.define(version: 20130909155053) do
     t.integer  "grade_scheme_id"
     t.string   "description"
     t.integer  "high_range"
+    t.integer  "team_id"
   end
 
   create_table "grade_schemes", force: true do |t|
@@ -378,7 +379,7 @@ ActiveRecord::Schema.define(version: 20130909155053) do
   end
 
   create_table "grades", force: true do |t|
-    t.integer  "raw_score"
+    t.integer  "raw_score",          default: 0
     t.integer  "assignment_id"
     t.text     "feedback"
     t.datetime "created_at"
@@ -404,7 +405,6 @@ ActiveRecord::Schema.define(version: 20130909155053) do
     t.text     "admin_notes"
     t.integer  "graded_by_id"
     t.integer  "team_id"
-    t.boolean  "released"
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree
