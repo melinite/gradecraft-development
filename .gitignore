@@ -1,11 +1,12 @@
+.DS_Store
 .bundle
 .env
 .sass-cache/
 config/database.yml
+config/mongoid.yml
 db/backups/*
-public/uploads/*
 grade-tracker.sublime-project
 grade-tracker.sublime-workspace
 log/*.log
+public/uploads/*
 tmp/*
-.DS_Store
