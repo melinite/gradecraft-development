@@ -27,4 +27,5 @@ GradeCraft::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
   config.log_level = :info
   config.serve_static_assets = false
+  config.session_store ActionDispatch::Session::CacheStore, :expire_after => 60.minutes
 end
