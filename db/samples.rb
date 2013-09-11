@@ -85,7 +85,7 @@ User.create! do |u|
   u.role = 'admin'
   u.email = 'dumbledore@hogwarts.edu'
   u.password = 'fawkes'
-  u.courses << course
+ u.courses << course
 end
 puts "Albus Dumbledore just apparated into Hogwarts"
 
@@ -182,6 +182,8 @@ assignment_types[:attendance] = AssignmentType.create! do |at|
   at.order_placement = 1
   at.mass_grade = true
   at.mass_grade_type = "Checkbox"
+  at.student_logged_button_text = "I'm in class!"
+  at.student_logged_revert_button_text = "I couldn't make it"
 end
 puts "Come to class."
 
@@ -250,6 +252,11 @@ grinding_assignments = []
     a.accepts_submissions = false
     a.release_necessary = false
     a.grade_scope = "Individual"
+    a.student_logged = true
+    if n == 2
+      a.open_at = 1.day.ago
+      a.due_at = 1.day.from_now
+    end
   end
 
   grinding_assignments << assignment_types[:reading_reaction].assignments.create! do |a|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130910160824) do
+ActiveRecord::Schema.define(version: 20130911022316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,18 +45,20 @@ ActiveRecord::Schema.define(version: 20130910160824) do
     t.integer  "max_value"
     t.integer  "percentage_course"
     t.text     "predictor_description"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.integer  "course_id"
     t.integer  "universal_point_value"
     t.integer  "minimum_score"
-    t.integer  "step_value",               default: 1
+    t.integer  "step_value",                        default: 1
     t.integer  "grade_scheme_id"
     t.boolean  "due_date_present"
     t.integer  "order_placement"
     t.boolean  "mass_grade"
     t.string   "mass_grade_type"
     t.boolean  "student_weightable"
+    t.string   "student_logged_button_text"
+    t.string   "student_logged_revert_button_text"
   end
 
   create_table "assignment_weights", force: true do |t|
@@ -92,7 +94,6 @@ ActiveRecord::Schema.define(version: 20130910160824) do
     t.boolean  "required"
     t.boolean  "accepts_submissions"
     t.boolean  "student_logged"
-    t.string   "student_logged_button_text"
     t.boolean  "release_necessary"
     t.datetime "open_at"
     t.string   "icon"

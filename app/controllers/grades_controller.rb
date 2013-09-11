@@ -1,7 +1,7 @@
 class GradesController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except=>[:self_log, :self_log_create]
+  before_filter :ensure_staff?, :except => :self_log
 
   def index
     @assignment = Assignment.find(params[:assignment_id])
@@ -93,15 +93,9 @@ class GradesController < ApplicationController
 
   def self_log
     @assignment = Assignment.find(params[:assignment_id])
-    @grade = @assignment.grades.create(params[:grade])
-    @grade.student = current_course.grades.where(params[:student_id])
-  end
-
-  def self_log_create
-    @assignment = Assignment.find(params[:assignment_id])
     if @assignment.open?
       @grade = current_user.grades.find_or_initialize_by(assignment: @assignment)
-      @grade.raw_score = params[:present] == '1'
+      @grade.raw_score = params[:present] == 'true' ? @assignment.point_total : 0
       respond_to do |format|
         if @grade.save
           format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }

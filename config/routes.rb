@@ -92,8 +92,7 @@ GradeCraft::Application.routes.draw do
       collection do
         post :edit_status
         put :update_status
-        get :self_log
-        post :self_log_create
+        post :self_log
       end
       resources :earned_badges
     end
