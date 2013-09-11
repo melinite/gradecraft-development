@@ -4,6 +4,7 @@ class AssignmentType < ActiveRecord::Base
     :predictor_description, :resubmission, :universal_point_value, :course,
     :course_id, :order_placement, :student_weightable, :mass_grade,
     :score_levels_attributes, :score_level, :mass_grade_type, :course
+    :student_logged_revert_button_text, :student_logged_button_text
 
   belongs_to :course
   belongs_to :grade_scheme
