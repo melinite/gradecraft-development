@@ -155,8 +155,9 @@ $(document).ready(function(){
 
   if ($('#student_grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
+      console.log(data)
       sparkOpts.height = '50px';
-      sparkOpts.target = data.user.score;
+      sparkOpts.target = data.user_score[0];
       sparkOpts.tooltipOffsetY = -130;
       $('#student_grade_distro').sparkline(data.scores, sparkOpts);
     })

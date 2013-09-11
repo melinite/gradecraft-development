@@ -137,12 +137,12 @@ class UsersController < ApplicationController
 
   def scores_for_current_course
      scores = current_course.grades.released.group(:student_id).order('SUM(score)')
-     current_user_score = current_course.grades.released.group(:student_id, 'grades.id')
-                                                        .where(student_id: current_user.id).first
+     user_score = current_course.grades.released.group(:student_id)
+                                                .where(student_id: current_user.id).pluck('SUM(score)')
      scores = scores.pluck('SUM(score)')
      render :json => {
       :scores => scores,
-      :user => current_user_score
+      :user_score => user_score
      }
   end
 
