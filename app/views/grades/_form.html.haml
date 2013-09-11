@@ -1,8 +1,8 @@
 = simple_form_for([@assignment, @grade], :html => {:class => 'form-horizontal' }) do |f|
   - if @assignment.is_individual?
-    = f.association :student, :collection => @students, :label => "#{current_course.user_term}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
+    = f.association :student, :collection => @students, :label => "#{term_for :student}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
   - elsif @assignment.has_groups?
-    = f.input :group_id, :collection => @groups, :label => "#{current_course.group_term}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
+    = f.input :group_id, :collection => @groups, :label => "#{term_for :group}", :include_blank => false, :input_html => {:class => "input-sm col-lg-3"}
   - if @assignment.has_levels?
     = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select, :input_html => {:class => "col-lg-3"}
   - else
@@ -12,7 +12,6 @@
   = f.input :feedback, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}
   - if @assignment.release_necessary?
     = f.input :released, :hint => "Can the student see this grade?"
-  //= f.input :graded_by, :input_html => { :value => current_user.id }
   .form-actions.col-lg-offset-3
     = f.button :submit, "Submit Grade", :class => "btn-primary"
     = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'

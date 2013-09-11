@@ -55,7 +55,7 @@
     = @course.location
   %p
     %b Office Hours:
-    = @course.office_hours
+    = auto_link(@course.office_hours, :html => { :target => '_blank' })
   %p
     %b Meeting Time:
     = @course.meeting_times

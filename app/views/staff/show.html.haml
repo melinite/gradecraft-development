@@ -1,0 +1,16 @@
+= content_nav_for @user do
+  %li= link_to "Staff Index", staff_index_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New Staff Member", new_user_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Edit #{@user.name}", edit_user_path(@user), :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+  %h4 Courses
+  %ul
+    - @user.courses.each do |course|
+      %li= link_to course.name, course
+
+  %h4 Recently Graded
+  - current_course.grades.where(:graded_by => current_user).each do |grade|
+    = grade.assignment
+    = grade.score
+    = grade.student

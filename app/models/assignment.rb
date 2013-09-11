@@ -29,7 +29,7 @@ class Assignment < ActiveRecord::Base
   has_many :score_levels, :through => :assignment_type
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
-  delegate :points_predictor_display, :mass_grade?, :student_weightable?, :to => :assignment_type
+  delegate :mass_grade?, :student_weightable?, :to => :assignment_type
 
   before_validation :cache_associations, :cache_point_total
   after_save :save_grades, :save_weights
@@ -85,7 +85,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def average
-    grades.average('score')
+    grades.average('score').round(2) if grades.present?
   end
 
   def release_necessary?

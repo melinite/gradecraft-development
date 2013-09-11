@@ -21,11 +21,11 @@
       - if user.is_staff?
         %tr
           %td= user.username
-          %td= link_to user.name, user_path(user)
+          %td= link_to user.name, staff_path(user)
           %td= user.role
           %td
             - user.teams.each do |team|
-              = team.try(:name)
+              = link_to team.try(:name), team
               %br
           %td
             //= user.team.try(:score)
@@ -33,5 +33,5 @@
           %td
             //- user.team_badges.each do |badge|
             //%img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
-          %td= link_to 'Edit', edit_user_path(user), {:class => 'btn btn-tiny btn-success'}
-          %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?'}, :method => :delete
+          %td= link_to 'Edit', edit_user_path(user), {:class => 'btn btn-tiny btn-info'}
+          %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?'}, :method => :delete

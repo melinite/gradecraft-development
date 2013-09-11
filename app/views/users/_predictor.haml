@@ -43,12 +43,13 @@
                         %span.points="/ #{assignment.point_total_for_student(current_student)} points"
                         = hidden_field_tag assignment.name, grade.score, :'data-assignment-type-id' => assignment.assignment_type_id
                     - else
+                      = "–"
                       - if assignment_type.fixed?
                         = "#{assignment.point_total_for_student(current_student)} possible points"
                         %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(current_student)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
                       - elsif assignment_type.slider?
                         %span.pScore= "0 "
-                        = "/ #{assignment.point_total_for_student(current_student)} multiplied possible points"
+                        = "/ #{assignment.point_total_for_student(current_student)} possible points"
                         .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(current_student)) , :value => 0 }
                       - elsif assignment_type.select?
                         = "#{assignment.point_total_for_student(current_student)} possible points"
@@ -59,7 +60,7 @@
                           %input{:type => "checkbox", :name => assignment.name, :value => (assignment.point_total_for_student(current_student)), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
                         - elsif assignment.slider?
                           %span.pScore= "0 "
-                          = "/ #{assignment.point_total_for_student(current_student)} multiplied possible points"
+                          = "/ #{assignment.point_total_for_student(current_student)} possible points"
                           .slider{:id => "slider-"+assignment.id.to_s(), :max => (assignment.point_total_for_student(current_student)) , :value => 0 }
                         - elsif assignment.select?
                           = "#{assignment.point_total_for_student(current_student)} possible points"

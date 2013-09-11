@@ -25,14 +25,13 @@ class GradesController < ApplicationController
   end
 
   def new
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
-    @grade = @assignment.grades.new
+    @students = current_course.students
+    @student = @students.find(params[:student_id])
+    @grade = @student.grades.new(assignment: @assignment)
     @score_levels = @assignment_type.score_levels
     @groups = current_course.groups
-    @student = current_course.users.find(params[:student_id])
-    @students = current_course.users.students
-    respond_with(@grade)
   end
 
   def edit
@@ -52,6 +51,7 @@ class GradesController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     @students = current_course.users.students
     @grade = @assignment.grades.build(params[:grade])
+    @grade.graded_by = current_user
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|

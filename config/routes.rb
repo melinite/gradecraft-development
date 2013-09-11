@@ -21,7 +21,6 @@ GradeCraft::Application.routes.draw do
       get 'scores_by_team'
       put 'update_profile'
       get 'predictor'
-      get 'staff'
       get 'final_grades'
       get 'test'
       get 'import'
@@ -32,6 +31,7 @@ GradeCraft::Application.routes.draw do
     end
   end
   resources :students, only: [:index, :show]
+  resources :staff, only: [:index, :show]
   resources :assignment_weights
   resources :user_sessions
 

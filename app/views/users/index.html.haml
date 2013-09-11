@@ -18,25 +18,21 @@
       %th.sortable{"data-sort" => "string"} Role
       %th.sortable{"data-sort" => "string"} Team
       %th.sortable{"data-sort" => "int"} Score
-      %th.sortable{"data-sort" => "int"} Logins
-      - if current_course.has_badges?
-        %th.sortable{"data-sort" => "string"} Badges Earned
       %th
       %th
   %tbody
     - @users.each do |user|
       %tr
-        %td= link_to user.name, student_path(user)
+        %td
+          = link_to user.name, student_path(user) if user.is_student?
+          = link_to user.name, staff_path(user) if user.is_staff?
         %td= user.email
-        %td= user.role
+        %td= user.role.capitalize
         %td
           - user.teams.each do |team|
-            = team.name
-        %td= user.score_for_course(current_course) if user.is_student?
-        %td= user.visit_count
-        - if current_course.has_badges?
-          %td
-            - user.earned_badges.each do |badge|
-              %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
+            = link_to team.name, team
+        %td
+          - if user.is_student?
+            = number_with_delimiter(user.score_for_course(current_course), :delimiter => ',') if user.respond_to?(:grades)
         %td= link_to 'Edit', edit_user_path(user), :class => 'btn btn-tiny btn-info'
         %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete

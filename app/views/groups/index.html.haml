@@ -20,7 +20,7 @@
         %td= link_to group.name, group_path(group)
         %td
           - group.group_memberships.each do |gm|
-            %li= link_to gm.student.name, gm.student
+            %li= link_to gm.student.name, student_path(gm.student)
         %td= group.approved
         %td
           - group.assignment_groups.each do |ag|
