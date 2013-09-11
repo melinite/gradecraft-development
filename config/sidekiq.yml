@@ -1,0 +1,2 @@
+:pidfile: tmp/sidekiq.pid
+:logfile: log/sidekiq.log
