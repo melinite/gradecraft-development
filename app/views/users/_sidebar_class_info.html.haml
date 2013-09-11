@@ -35,4 +35,4 @@
     - if current_course.office_hours.present?
       %p
         %b Office Hours:
-        = auto_link(current_course.office_hours, :html => { :target => '_blank' })
+        = current_course.office_hours
