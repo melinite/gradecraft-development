@@ -71,7 +71,7 @@
             .slide-panel.col.col-lg-12
               .assignmentType
                 %span.assignmentTypeTitle Badges
-                %span.badge.badge-warning.pull-right= "#{current_student.earned_badges_value(current_course)} points"
+                %span.badge.badge-warning.pull-right= "#{current_student.earned_badge_score_for_course(current_course)} points"
               %p.lead
               %div
                 - current_course.badges.each do |badge|
