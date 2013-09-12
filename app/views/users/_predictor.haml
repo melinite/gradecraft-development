@@ -81,13 +81,13 @@
                         %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
                         .clearfix= badge.name
                         .clearfix
-                          %b= "#{badge.point_value} points"
-                        = hidden_field_tag badge.name, badge.point_value
+                          %b= "#{badge.point_total} points"
+                        = hidden_field_tag badge.name, badge.point_total
                     - else
                       .badgeField
                         %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
                         .clearfix= badge.name
                         .clearfix
-                          %b= "#{badge.point_value} points"
-                        .clearfix= check_box_tag badge.name, badge.point_value, current_student.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
+                          %b= "#{badge.point_total} points"
+                        .clearfix= check_box_tag badge.name, badge.point_total, current_student.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
 .clear
