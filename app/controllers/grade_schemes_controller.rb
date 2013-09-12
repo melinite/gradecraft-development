@@ -31,16 +31,8 @@ class GradeSchemesController < ApplicationController
   def create
     @grade_scheme = current_course.grade_schemes.new(params[:grade_scheme])
     @assignments = current_course.assignments
-
-    respond_to do |format|
-      if @grade_scheme.save
-        format.html { redirect_to @grade_scheme, notice: 'Grade scheme was successfully created.' }
-        format.json { render json: @grade_scheme, status: :created, location: @grade_scheme }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @grade_scheme.errors, status: :unprocessable_entity }
-      end
-    end
+    @grade_scheme.save
+    respond_with @grade_scheme
   end
 
   def destroy_multiple

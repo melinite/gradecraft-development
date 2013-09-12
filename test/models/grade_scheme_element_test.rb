@@ -29,4 +29,18 @@ class GradeSchemeElementTest < ActiveSupport::TestCase
     assert_wont have_valid(:high_range).when(90), @element
     assert_must have_valid(:high_range).when(89), @element
   end
+
+  test "overlapping ranges" do
+    low = build_grade_scheme_element(:low_range => 80, :high_range => 95)
+    high = build_grade_scheme_element(:low_range => 90, :high_range => 100)
+    assert low.overlap?(high)
+    assert high.overlap?(low)
+  end
+
+  test "non-overlapping ranges" do
+    low = build_grade_scheme_element(:low_range => 80, :high_range => 85)
+    high = build_grade_scheme_element(:low_range => 90, :high_range => 100)
+    refute low.overlap?(high)
+    refute high.overlap?(low)
+  end
 end
