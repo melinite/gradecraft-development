@@ -20,7 +20,7 @@ class SubmissionsController < ApplicationController
 
   def new
     @assignment = current_course.assignments.find(params[:assignment_id])
-    @title = "Submit #{@assignment.name}"
+    @title = @assignment.name
     if current_user.is_staff?
       if @assignment.has_groups?
         @group = Group.find(params[:group_id])

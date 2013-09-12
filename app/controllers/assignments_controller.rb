@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  before_filter :ensure_staff?, :except => :feed
+  before_filter :ensure_staff?, :except => [:feed, :show, :index]
 
   def index
     @title = "#{term_for :assignment} Index"
