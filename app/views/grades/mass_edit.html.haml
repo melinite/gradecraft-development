@@ -27,7 +27,7 @@
                   = gf.hidden_field :student_id
                   = label_tag do
                     - if @assignment.grade_select?
-                      = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name), include_blank: false
+                      = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name, grade.raw_score), include_blank: false
                     - elsif @assignment.grade_radio?
                       - @score_levels.each do |score_level|
                         = gf.label :raw_score, score_level.name, value: score_level.value
