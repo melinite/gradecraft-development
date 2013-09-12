@@ -182,6 +182,8 @@ var getScore = function($item) {
     return parseInt($item.val());
   } else if ($item.is('.ui-slider')) {
     return parseInt($item.slider('value'));
+  } else {
+    return 0;
   }
 }
 
