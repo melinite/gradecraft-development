@@ -177,15 +177,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @teams = Team.all
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        @user.save
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save && @user.is_student?
+      redirect_to students_path, :notice => "#{term_for :student} was successfully created!"
+    elsif @user.save && @user.is_staff?
+      redirect_to staff_index_path, :notice => "Staff Member was successfully created!"
+    else
+      render :new
     end
   end
 
