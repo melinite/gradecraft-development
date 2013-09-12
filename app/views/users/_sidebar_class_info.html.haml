@@ -36,4 +36,4 @@
       - if current_course.office_hours.present?
         %p
           %b Office Hours:
-          = current_course.office_hours
+          = auto_link(current_course.office_hours)
