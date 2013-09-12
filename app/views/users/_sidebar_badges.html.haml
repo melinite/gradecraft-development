@@ -1,5 +1,5 @@
 .col-sm-12.col-md-12.col-lg-12.col-xs-12.center#badges.badge-success{"data-target" => "#badgesInfo", "data-toggle" => "collapse"}
-  %h4.center Badges
+  %h4.center= term_for :badges
   #badgesInfo.collapse.clear
     - current_course.badges.each do |badge|
       - current_student.earned_badges.find_by(badge: badge).tap do |earned_badge|
@@ -20,4 +20,4 @@
               - else
                 %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
                   %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
-    .col-lg-12.clear Badges you've earned will shine brightly!
+    .col-lg-12.clear= "#{term_for :badges} you've earned will shine brightly!"
