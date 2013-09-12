@@ -75,7 +75,7 @@
               %p.lead
               %div
                 - current_course.badges.each do |badge|
-                  - badge.badges_earned.where(:earnable_id => current_student.id).first.tap do |eb|
+                  - badge.earned_badges.find_by(student: current_student).tap do |eb|
                     - if eb
                       .earnedBadgeField
                         %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
