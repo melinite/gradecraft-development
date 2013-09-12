@@ -18,7 +18,8 @@
       %th.sortable{"data-sort" => "int"} Rank
       %th.sortable{"data-sort" => "string"} Name
       %th.sortable{"data-sort" => "string"} Email
-      %th.sortable{"data-sort" => "string"} #{current_course.team_term}
+      - if current_course.has_teams?
+        %th.sortable{"data-sort" => "string"} #{current_course.team_term}
       - if current_course.team_roles?
         %th.sortable{"data-sort" => "string"} Role
       - if current_user.is_staff?
@@ -27,6 +28,7 @@
       - if current_course.has_badges?
         %th.sortable{"data-sort" => "string"} Badges Earned
       %th
+      %th
   %tbody
     - i = 1
     - @sorted_students.each do |student|
@@ -34,9 +36,10 @@
         %td= i
         %td= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email
-        %td
-          - if student.teams.present?
-            = link_to student.teams.first.try(:name), student.teams.first
+        - if current_course.has_teams?
+          %td
+            - if student.teams.present?
+              = link_to student.teams.first.try(:name), student.teams.first
         - if current_course.team_roles?
           %td= student.try(:team_role)
         - if student.respond_to?(:grades)
@@ -46,5 +49,6 @@
           %td
             - student.earned_badges.each do |badge|
               %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
-        %td= link_to 'Remove from Course', course_membership_path(current_course.membership_for_student(student)), :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure you want to remove this student from your course?' }, :method => :delete
+        %td= link_to "Edit", edit_user_path(student), :class => 'btn btn-tiny btn-info'
+        %td= link_to 'Remove from Course', course_membership_path(current_course.membership_for_student(student)), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure you want to remove this student from your course?' }, :method => :delete
       - i += 1

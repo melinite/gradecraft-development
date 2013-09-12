@@ -182,7 +182,7 @@ class UsersController < ApplicationController
     elsif @user.save && @user.is_staff?
       redirect_to staff_index_path, :notice => "Staff Member was successfully created!"
     else
-      render :new
+      render :edit
     end
   end
 
