@@ -43,7 +43,7 @@
         - if current_course.has_badges?
           %td
             - student.earned_badges.each do |badge|
-              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "25"}
+              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
         %td= student.visit_count
         %td= student.page_views
         %td= student.predictor_views

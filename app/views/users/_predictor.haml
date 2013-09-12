@@ -78,14 +78,14 @@
                   - badge.earned_badges.find_by(student: current_student).tap do |eb|
                     - if eb
                       .earnedBadgeField
-                        %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
+                        %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
                         .clearfix= badge.name
                         .clearfix
                           %b= "#{badge.point_total} points"
                         = hidden_field_tag badge.name, badge.point_total
                     - else
                       .badgeField
-                        %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "50"}
+                        %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
                         .clearfix= badge.name
                         .clearfix
                           %b= "#{badge.point_total} points"

@@ -15,7 +15,7 @@
     %p
       %b Badges:
       - @team.earned_badges.each do |badge|
-        %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
+        %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "40"}
         = @team.earned_badges.count
 
 .col-lg-12
