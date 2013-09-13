@@ -1,4 +1,5 @@
 class CourseMembershipsController < ApplicationController
+  before_filter :ensure_staff?
   
   def index
   end
@@ -21,7 +22,7 @@ class CourseMembershipsController < ApplicationController
   end
   
   def destroy
-    @course_membership = CourseMembership.find(params[:id])
+    @course_membership = current_course.course_membership.find(params[:id])
     @course_membership.destroy
     
     respond_to do |format|
