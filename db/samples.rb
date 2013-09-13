@@ -458,7 +458,7 @@ assignments << Assignment.create! do |a|
 end
 puts "Group Game Design has been posted!"
 
-grade_scheme = GradeScheme.new(:name => 'N.E.W.T. Grades')
+grade_scheme = GradeScheme.new(:name => 'N.E.W.T. Grades', :course_id => course)
 grade_scheme_hash.each do |range,letter|
   grade_scheme.elements.new do |e|
     e.letter = letter

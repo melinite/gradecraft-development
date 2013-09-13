@@ -25,5 +25,5 @@
         %td #{number_with_delimiter(element.low_range, :delimiter => ',') }
         %td #{number_with_delimiter(element.high_range, :delimiter => ',') }
         %td #{element.letter}
-        %td= link_to "Edit", edit_grade_scheme_path(@grade_scheme.id)
-        %td= link_to "Delete", grade_scheme_grade_scheme_element_path(@grade_scheme.id, element.id), :data => { :confirm => 'Are you sure?' }, :method => :delete
+        %td= link_to "Edit", edit_grade_scheme_path(@grade_scheme.id), :class => 'btn btn-tiny btn-info'
+        %td= link_to "Delete", grade_scheme_grade_scheme_element_path(@grade_scheme.id, element.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, :class => 'btn btn-tiny btn-warning'

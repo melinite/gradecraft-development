@@ -177,6 +177,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @teams = Team.all
+    @user.update_attributes(params[:user])
     if @user.save && @user.is_student?
       redirect_to students_path, :notice => "#{term_for :student} was successfully created!"
     elsif @user.save && @user.is_staff?

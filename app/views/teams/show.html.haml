@@ -8,7 +8,7 @@
   %h3= @team.name
   %p.clear
     %b Points:
-    = @team.score
+    = @team.average_grade
   %p
     %b Rank:
   - if @team.earned_badges.present?
@@ -24,29 +24,28 @@
 %table.table.table-striped.simpleTable
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"} Email
       %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Email
       %th.sortable{"data-sort" => "string"} Role
       %th.sortable{"data-sort" => "int"} Score
-      %th.sortable{"data-sort" => "int"} Logins
+      %th Level
       - if current_course.has_badges?
         %th.sortable{"data-sort" => "int"} Badges Earned
       %th
   %tbody
     - @students.each do |student|
       %tr
+        %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email
-        %td= link_to student.name, student_path(student)
         %td= student.team_role
         %td
           = number_with_delimiter(student.score_for_course(current_course), :delimiter => ',') if student.respond_to?(:grades)
-        %td= student.visit_count
+        %td= student.grade_level_for_course(current_course)
         - if current_course.has_badges?
           %td
             - student.earned_badges.each do |badge|
               %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
         - else
-          %td
           %td
         %td= link_to 'Edit', edit_user_path(student), :class => 'btn btn-tiny btn-info'
 
@@ -59,7 +58,7 @@
   %thead
     %tr
       %th{"data-sort" => "string"} Name
-      %th Grade
+      %th Score
       %th
 
   %tbody

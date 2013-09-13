@@ -8,30 +8,20 @@
 %table.table.display.table-striped.simpleTable
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"} Username
       %th.sortable{"data-sort" => "string"} Name
       %th.sortable{"data-sort" => "string"} Role
       %th.sortable{"data-sort" => "string"} Team
-      %th.sortable{"data-sort" => "string"} Score
-      %th.sortable{"data-sort" => "string"} Badges Earned
       %th
       %th
   %tbody
     - current_course.users.each do |user|
       - if user.is_staff?
         %tr
-          %td= user.username
           %td= link_to user.name, staff_path(user)
-          %td= user.role
+          %td= user.role.capitalize
           %td
-            - user.teams.each do |team|
-              = link_to team.try(:name), team
-              %br
-          %td
-            //= user.team.try(:score)
-
-          %td
-            //- user.team_badges.each do |badge|
-            //%img{:src => asset_path(badge.icon), :alt => badge.name, :width => "40"}
+            %ul
+              - user.teams.each do |team|
+                %li= link_to team.try(:name), team
           %td= link_to 'Edit', edit_user_path(user), {:class => 'btn btn-tiny btn-info'}
           %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?'}, :method => :delete

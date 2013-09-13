@@ -42,7 +42,8 @@
           %th.sortable{"data-sort" => "int"} Score
           - if @challenge.has_levels?
             %th.sortable{"data-sort" => "string"} Level
-          %th.sortable{"data-sort" => "string"} Badges Earned
+          - if current_course.has_badges?
+            %th.sortable{"data-sort" => "string"} Badges Earned
           - if @challenge.release_necessary?
             %th.sortable{"data-sort" => "string"} Status
           - if @challenge.accepts_submissions?
@@ -64,9 +65,11 @@
               %td
                 - if challenge_grade
                   = @challenge.grade_level(grade)
-            %td
-              - team.earned_badges.each do |badge|
-                %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
+
+            - if current_course.has_badges?
+              %td
+                - team.earned_badges.each do |badge|
+                  %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
             - if @challenge.release_necessary?
               %td= challenge_grade.try(:status) ? 'Released' : ''
             - if @challenge.accepts_submissions?
