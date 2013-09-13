@@ -33,7 +33,10 @@
         - assignment_type.assignments.alphabetical.each do |assignment|
           - cache ['v1', current_student, assignment] do
             .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
-              %span.assignmentName= link_to assignment.name, new_assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
+              - if assignment.accepts_submissions? && current_student.submission_for_assignment(assignment)
+                %span.assignmentName= link_to assignment.name, assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
+              - else
+                %span.assignmentName= link_to assignment.name, new_assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
               - if assignment.release_necessary?
                 %span.points= "("
                 - if assignment.released_grade_for_student(current_student).present? && assignment.grade_for_student(current_student) > 0
@@ -60,7 +63,7 @@
                 = simple_form_for([assignment, grade], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post) do |f|
                   - present = grade.raw_score == assignment.point_total
                   = hidden_field_tag :present, !present
-                  = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn btn-success btn-tiny"
+                  = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn #{present ? 'btn-warning' : 'btn-success'} btn-tiny"
               - if assignment.has_groups?
                 - if current_student.group_for_assignment(assignment)
                   = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "btn btn-primary btn-xs"

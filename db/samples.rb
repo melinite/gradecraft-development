@@ -6,6 +6,9 @@ badge_names = ['Dream Interpreter', 'Inner Eye', 'Patronus Producer','Cheerful C
 
 badge_icons = ['/badges/above_and_beyond.png','/badges/always_learning.png','/badges/awesome_aggregator.png','/badges/concentrator.png','/badges/courageous_failure.png','/badges/early_bird_special.png','/badges/examination_expert.png','/badges/gaining_experience.png','/badges/gamer.png','/badges/great_critic.png','/badges/learning_from_mistakes.png','/badges/level_one.png','/badges/participatory_democrat.png','/badges/personal.png','/badges/practice_makes_perfect.png','/badges/presentation_of_self.png','/badges/public_speaker.png']
 
+# Use stock badge icons
+badge_icon_paths = Dir.glob(Rails.root.join('test/support/assets/*'))
+
 grade_scheme_hash = { [0,600000] => 'F', [600000,649000] => 'D+', [650000,699999] => 'C-', [700000,749999] => 'C', [750000,799999] => 'C+', [800000,849999] => 'B-', [850000,899999] => 'B', [900000,949999] => 'B+', [950000,999999] => 'A-', [100000,1244999] => 'A', [1245000,1600000] => 'A+'}
 
 majors = ['Obliviator','Knight Bus Driver','Magizoologist','Wandmaker','Mediwizard','Dragonologist','Floo Network Regulator','Curse-Breaker','Broom-maker','Arithmancer','Hit Wizard','Auror']
@@ -163,7 +166,7 @@ badges = badge_names.map do |badge_name|
   badge_set.badges.create! do |b|
     b.name = badge_name
     b.point_total = 100 * rand(10)
-    b.icon = badge_icons.sample
+    b.icon = File.open(badge_icon_paths.sample)
     b.visible = 1
   end
 end
