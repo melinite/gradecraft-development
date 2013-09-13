@@ -63,7 +63,7 @@
                 = simple_form_for([assignment, grade], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post) do |f|
                   - present = grade.raw_score == assignment.point_total
                   = hidden_field_tag :present, !present
-                  = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn btn-success btn-tiny"
+                  = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn #{present ? 'btn-warning' : 'btn-success'} btn-tiny"
               - if assignment.has_groups?
                 - if current_student.group_for_assignment(assignment)
                   = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "btn btn-primary btn-xs"
