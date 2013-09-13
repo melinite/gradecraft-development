@@ -57,10 +57,14 @@ class UsersController < ApplicationController
 
   def all
     @title = "View all Users"
+<<<<<<< HEAD
     @users = User.all.order('last_name ASC')
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options)
+=======
+    @users = current_course.users
+>>>>>>> First audits for scope.
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -180,7 +184,7 @@ class UsersController < ApplicationController
 
   def search
     q = params[:user][:name]
-    @users = User.find(:all, :conditions => ["name LIKE %?%",q])
+    @users = current_course.users.where("name LIKE ?","%#{q}%")
   end
 
   private

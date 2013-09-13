@@ -1,5 +1,5 @@
 class AnalyticsController < ApplicationController
-  before_filter :ensure_staff?
+  before_filter :ensure_staff?, :only => [:index]
   before_filter :set_granularity_and_range
 
   def index
