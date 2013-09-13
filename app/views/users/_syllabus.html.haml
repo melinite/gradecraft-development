@@ -33,7 +33,10 @@
         - assignment_type.assignments.alphabetical.each do |assignment|
           - cache ['v1', current_student, assignment] do
             .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
-              %span.assignmentName= link_to assignment.name, new_assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
+              - if assignment.accepts_submissions? && current_student.submission_for_assignment(assignment)
+                %span.assignmentName= link_to assignment.name, assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
+              - else
+                %span.assignmentName= link_to assignment.name, new_assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
               - if assignment.release_necessary?
                 %span.points= "("
                 - if assignment.released_grade_for_student(current_student).present? && assignment.grade_for_student(current_student) > 0
