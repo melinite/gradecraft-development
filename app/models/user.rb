@@ -25,8 +25,8 @@ class User < ActiveRecord::Base
 
   #has_secure_password
 
-  scope :alpha, -> { where order: 'last_name ASC' }
-  scope :order_by_high_score, -> { order 'score DESC' }
+  scope :alpha, -> { order 'last_name ASC' }
+  scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
 
   has_many :course_memberships
