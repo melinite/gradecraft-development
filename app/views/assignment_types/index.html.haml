@@ -19,21 +19,19 @@
       %th.sortable{"data-sort" => "string"} Predictor Description
       %th.header
       %th.header
-      %th.header
     %tbody
-      - current_course.assignment_types.each do |assignment_type|
+      - current_course.assignment_types.ordered.each do |assignment_type|
         %tr
           %td= assignment_type.order_placement
           %td= link_to assignment_type.name, assignment_type
           %td= assignment_type.point_setting
           %td= assignment_type.levels? ? "Yes" : "No"
           %td= assignment_type.points_predictor_display
-          %td= assignment_type.due_date_present
-          %td= assignment_type.resubmission
+          %td= assignment_type.due_date_present? ? "Yes" : "No"
+          %td= assignment_type.resubmission? ? "Yes" : "No"
           %td= assignment_type.max_value
           %td= assignment_type.percentage_course
           %td= raw assignment_type.predictor_description
-          %td= link_to 'View', assignment_type, :class => 'btn btn-tiny btn-success'
           %td= link_to 'Edit', edit_assignment_type_path(assignment_type), :class => 'btn btn-tiny btn-info'
           %td= link_to 'Delete', assignment_type, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
 
