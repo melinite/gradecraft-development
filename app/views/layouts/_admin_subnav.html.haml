@@ -22,14 +22,15 @@
   %li.divider
   %li.nav-header= term_for(:assignments)
   //%li.icn_attendance= link_to "Attendance"
+  %li.icn_flash= link_to term_for(:assignments), assignments_path
+  %li.icn_categories= link_to term_for(:assignment_types), assignment_types_path
   - if current_course.has_badges?
     %li.icn_certificate= link_to term_for(:badges), badges_path
   - if current_course.has_teams?
     %li.icn_cup= link_to term_for(:challenges), challenges_path
-  %li.icn_flash= link_to term_for(:assignments), assignments_path
-  %li.icn_categories= link_to term_for(:assignment_types), assignment_types_path
+
   //%li.icn_screenshot= link_to "Learning Objectives"
-  %li.icn_star= link_to 'Rubrics', rubrics_path
+  //%li.icn_star= link_to 'Rubrics', rubrics_path
   %li.divider
   %li.nav-header Analytics
   //%li.icn_flag= link_to "Early Warnings"

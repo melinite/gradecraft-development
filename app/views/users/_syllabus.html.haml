@@ -58,7 +58,7 @@
                 %span.italic= " • Due: #{assignment.due_at.strftime("%A, %B %d")}"
               - if assignment.is_required?
                 %span.label.label-important Required!
-              - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance'
+              - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
                 - grade = assignment.grades.first_or_initialize(student: @user)
                 = simple_form_for([assignment, grade], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post) do |f|
                   - present = grade.raw_score == assignment.point_total

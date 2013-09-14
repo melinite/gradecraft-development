@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
   #has_secure_password
 
   scope :alpha, -> { order 'last_name ASC' }
-  scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
-  scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
+  scope :order_by_high_score, -> { order 'score DESC' }
+  scope :order_by_low_score, -> { order 'score ASC' }
 
   has_many :course_memberships
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
