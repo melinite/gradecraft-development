@@ -8,7 +8,6 @@ class Submission < ActiveRecord::Base
 
   belongs_to :task
   belongs_to :assignment, :polymorphic => true
-  belongs_to :submission
   belongs_to :student, :class_name => 'User'
   belongs_to :creator, :class_name => 'User'
   belongs_to :group
@@ -82,9 +81,12 @@ class Submission < ActiveRecord::Base
 
   def cache_associations
     if task
-      self.assignment_id ||= task.taskable_id
-      self.course_id ||= task.taskable.course_id
+      self.assignment_id ||= task.assignment_id
+      self.assignment_type ||= task.assignment_type
+      self.course_id ||= task.assignment.course_id
     end
+    self.assignment_id ||= assignment.id
+    self.assignment_type ||= assignment.assignment_type
     self.course_id ||= assignment.course_id
   end
 end

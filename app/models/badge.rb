@@ -8,7 +8,7 @@ class Badge < ActiveRecord::Base
 
   has_many :earned_badges, :dependent => :destroy
 
-  has_many :tasks, :as => :taskable, :dependent => :destroy
+  has_many :tasks, :as => :assignment, :dependent => :destroy
   belongs_to :course
   #belongs_to :assignment
 

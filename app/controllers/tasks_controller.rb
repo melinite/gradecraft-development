@@ -2,10 +2,10 @@ class TasksController < ApplicationController
 
   before_filter :ensure_staff?
 
-  before_filter :load_taskable
+  before_filter :load_assignment
 
   def index
-    redirect_to @taskable
+    redirect_to @assignment
   end
 
   def show
@@ -13,19 +13,19 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = @taskable.tasks.new
+    @task = @assignment.tasks.new
   end
 
   def edit
     @task = Task.find(params[:id])
-    @title = "Edit #{@taskable.name} Task"
+    @title = "Edit #{@assignment.name} Task"
     @button_title = "Update"
   end
 
   def create
-    @task = @taskable.tasks.new(params[:task])
+    @task = @assignment.tasks.new(params[:task])
     if @task.save
-      redirect_to @taskable, notice: "Your task has been created."
+      redirect_to @assignment, notice: "Your task has been created."
     else
       render :new
     end
@@ -51,9 +51,9 @@ class TasksController < ApplicationController
 
   private
 
-  def load_taskable
+  def load_assignment
     klass = [Assignment, Badge].detect { |c| params["#{c.name.underscore}_id"]}
-    @taskable = klass.find(params["#{klass.name.underscore}_id"])
+    @assignment = klass.find(params["#{klass.name.underscore}_id"])
   end
 
 end
