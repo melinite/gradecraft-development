@@ -62,7 +62,7 @@ class SubmissionsController < ApplicationController
 
   def create
     @assignment = current_course.assignments.find(params[:assignment_id])
-    @submission = @assignment.submissions.find(params[:id])
+    @submission = @assignment.submissions.build(params[:id])
     @submission.update_attributes(params[:submissions])
     respond_to do |format|
       if @submission.save

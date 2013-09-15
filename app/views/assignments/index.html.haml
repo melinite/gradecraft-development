@@ -15,9 +15,12 @@
         %th.sortable{"data-sort" => "date"} Due Date
         %th.sortable{"data-sort" => "date"} Accept Until
         %th.sortable{"data-sort" => "int"} Total Points
-        %th.sortable{"data-sort" => "int"} Average
-        %th.sortable{"data-sort" => "int"} Range
-        %th(colspan="3")
+        - if current_user.is_staff?
+          %th.sortable{"data-sort" => "int"} Average
+          %th.sortable{"data-sort" => "int"} Range
+          %th(colspan="3")
+        - else
+          %th
     %tbody
       - assignments.each do |assignment|
         %tr
@@ -28,15 +31,24 @@
             - if assignment.accepts_submissions?
               = assignment.try(:accepts_submissions_until)
           %td= number_with_delimiter(assignment.point_total, :delimiter => ',')
-          %td= number_with_delimiter(assignment.average, :delimiter => ',')
-          %td= "#{number_with_delimiter(assignment.low_score, :delimiter => ',')} - #{number_with_delimiter(assignment.high_score, :delimiter => ',')}"
-          %td
-            - if assignment_type.mass_grade?
-              = link_to 'Quick Grade',  mass_grade_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-            - elsif assignment.accepts_submissions? && assignment.submissions.present?
-              = link_to "Grade #{ assignment.submissions.count } Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
+          - if current_user.is_staff?
+            %td= number_with_delimiter(assignment.average, :delimiter => ',')
+            %td= "#{number_with_delimiter(assignment.low_score, :delimiter => ',')} - #{number_with_delimiter(assignment.high_score, :delimiter => ',')}"
+            %td
+              - if assignment_type.mass_grade?
+                = link_to 'Quick Grade',  mass_grade_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
+              - elsif assignment.accepts_submissions? && assignment.submissions.present?
+                = link_to "Grade #{ assignment.submissions.count } Submissions", assignment_submissions_path(assignment), :class => "btn btn-tiny btn-success"
+              - else
+                = link_to "Grade", assignment_path(assignment), :class => "btn btn-tiny btn-success"
+            %td= link_to "Edit", edit_assignment_path(assignment), :class => 'btn btn-tiny btn-info'
+            %td= link_to "Delete", assignment_path(assignment), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
+          - else
+            - if assignment.accepts_submissions?
+              - current_student.submission_for_assignment(assignment).tap do |submission|
+                - if submission
+                  %td= link_to "See Submission", assignment_submission_path(assignment.id, submission, :student_id => current_student.id), :class => 'btn btn-tiny btn-success'
+                - else
+                  %td= link_to "Submit", new_assignment_submission_path(assignment, @submission, :user_id => current_student.id, :student_type => "User"), :class => 'btn btn-tiny btn-success'
             - else
-              = link_to "Grade", assignment_path(assignment), :class => "btn btn-tiny btn-success"
-          %td= link_to "Edit", edit_assignment_path(assignment), :class => 'btn btn-tiny btn-info'
-          %td= link_to "Delete", assignment_path(assignment), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
-
+              %td
