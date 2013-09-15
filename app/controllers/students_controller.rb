@@ -17,6 +17,22 @@ class StudentsController < ApplicationController
     end
   end
 
+  def leaderboard
+    @title = "#{current_course.user_term} Roster"
+    @users = current_course.users
+    @students = current_course.students.includes(:earned_badges)
+    @teams = current_course.teams
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    @sorted_students = @students.includes(:teams).where(user_search_options).order_by_high_score
+    respond_to do |format|
+      format.html
+      format.json { render json: @users }
+      format.csv { send_data User.csv_for_course(current_course) }
+      format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
+    end
+  end
+
   def show
     @students = current_course.students.includes(:earned_badges)
     self.current_student = @students.find(params[:id])

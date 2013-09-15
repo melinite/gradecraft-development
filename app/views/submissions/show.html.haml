@@ -2,7 +2,11 @@
   = content_nav_for @assignment, @submission do
     %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "btn btn-tiny btn-info"
     %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
-    %li= link_to 'Grade Submission', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => @submission.student.id), :class => 'btn btn-tiny btn-info'
+    - if @assignment.grade_for_student(@submission.student)
+      %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+    - else
+      %li= link_to 'Grade Submission', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => @submission.student.id), :class => 'btn btn-tiny btn-info'
+    %li= link_to "Delete Submission", assignment_submission_path(@assignment, @submission), :class => "btn btn-tiny btn-info", :data => { confirm: 'Are you sure?' }, :method => :delete
 - else
   = content_nav_for "New Submission" do
     %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
@@ -15,63 +19,79 @@
 
 
   - if @assignment.description?
-    %p
-      %b Description:
-      = raw @assignment.description
+    %b.heading.col-lg-2 Description:
+    .col-lg-offset-2= raw @assignment.description
 
   - if @assignment.point_total?
-    %p
-      %b Point Total:
-      = number_with_delimiter(@assignment.point_total, :delimiter => ',')
+    %b.heading.col-lg-2 Point Total:
+    .col-lg-offset-2= number_with_delimiter(@assignment.point_total, :delimiter => ',')
 
   - if @assignment.open_at?
-    %p
-      %b Open date:
-      = @assignment.open_at
+    %b.heading.col-lg-2 Open date:
+    .col-lg-offset-2= @assignment.open_at
 
   - if @assignment.due_at?
-    %p
-      %b Close date:
-      = @assignment.due_at
+    %b.heading.col-lg-2 Due date:
+    .col-lg-offset-2= @assignment.due_at
 
   - if @assignment.accepts_submissions_until?
-    %p
-      %b Accept submissions until:
-      = @assignment.accepts_submissions_until
+    %b.heading.col-lg-2 Accept submissions until:
+    .col-lg-offset-2= @assignment.accepts_submissions_until
   - if @assignment.assignment_files.present?
-    %p
-      %b Documents:
-      - @assignment.assignment_files.each do |af|
-        = link_to af.filename.identifier, af.filename.url
+    %b.heading.col-lg-2 Documents:
+    - @assignment.assignment_files.each do |af|
+      .col-lg-offset-2= link_to af.filename.identifier, af.filename.url
+
+  %hr
 
   - if @assignment.is_individual?
-    %p
-      %b= "#{term_for :student}:"
-      - if current_user.is_staff?
-        = link_to @submission.student.try(:name), @submission.student
-      - else
-        = @submission.student.try(:name)
+    %h4
+      = "#{term_for :student}:"
+      = link_to @submission.student.try(:name), @submission.student
   - elsif @assignment.has_groups?
-    %p
-      %b Group:
+    %h4
+      = "#{term_for :group}:"
       = link_to @submission.student.try(:name), assignment_group_path(@submission, @submission.student)
-  %p
-    %b Submitted:
-    = @submission.created_at
-  %p
-    %b Last Updated:
-    = @submission.updated_at
+  .heading.col-lg-2 Submitted:
+  .col-lg-offset-2= @submission.created_at
+  - if @submission.updated_at != @submission.created_at
+    .heading.col-lg-2 Last Updated:
+    .col-lg-offset-2= @submission.updated_at
   - if @submission.link?
-    %p
-      %b Link:
-      = link_to @submission.link, @submission.link
+    .heading.col-lg-2 Link:
+    .col-lg-offset-2= link_to @submission.link, @submission.link
 
   - if @submission.submission_files.present?
-    %p
-      %b Files:
-      - @submission.submission_files.each do |sf|
-        = link_to sf.filename.identifier, sf.filename.url
+    .heading.col-lg-2 Files:
+    - @submission.submission_files.each do |sf|
+      .col-lg-offset-2= link_to sf.filename.identifier, sf.filename.url
 
-  %p
-    %b Statement:
-    %p= raw @submission.text_comment
+  .heading.col-lg-2 Statement:
+  .col-lg-offset-2= raw @submission.text_comment
+
+  - @assignment.grade_for_student(@submission.student).tap do |grade|
+    %hr
+    %h4 Grade
+    .heading.col-lg-2 Raw Score:
+    .col-lg-offset-2= grade.raw_score
+    .heading.col-lg-2 Final Score:
+    .col-lg-offset-2= grade.try(:final_score)
+    - if grade.grade_files.present?
+      .heading.col-lg-2 Documents:
+      .col-lg-offset-2
+        - grade.grade_files.each do |gf|
+          = link_to File.basename(gf.filename.path), gf.filename.url
+
+    - if grade.feedback?
+      .heading.col-lg-2 Feedback:
+      .col-lg-offset-2= raw grade.feedback
+
+    - if grade.earned_badges.present?
+      .heading.col-lg-2= "#{term_for :badges}:"
+      .col-lg-offset-2
+        - grade.earned_badges.each do |badge|
+          %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
+
+    - if grade.assignment.release_necessary?
+      .heading.col-lg-2.clear Status:
+      .col.col-lg-offset-2= grade.status

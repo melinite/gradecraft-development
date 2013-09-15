@@ -4,13 +4,13 @@ class GradesController < ApplicationController
   before_filter :ensure_staff?, :except => :self_log
 
   def index
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     redirect_to assignment_path(@assignment)
   end
 
   def show
-    @grade = Grade.find(params[:id])
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
+    @grade = @assignment.grades.find(params[:id])
   end
 
   def gradebook
@@ -66,7 +66,7 @@ class GradesController < ApplicationController
   end
 
   def update
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment])
     @grade = @assignment.grades.find(params[:id])
     @badges = current_course.badges
     respond_to do |format|
@@ -81,7 +81,7 @@ class GradesController < ApplicationController
   end
 
   def destroy
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
     @grade.destroy
 
@@ -123,9 +123,21 @@ class GradesController < ApplicationController
 
   def mass_update
     @student = find_student
-    @assignment = Assignment.find(params[:id])
-    @assignment.update_attributes(params[:assignment])
-    respond_with @assignment
+    @assignment = current_course.assignments.find(params[:id])
+    if @assignment.update_attributes(params[:assignment])
+      respond_with @assignment
+    else
+      @title = "Quick Grade #{@assignment.name}"
+      @assignment_type = @assignment.assignment_type
+      @score_levels = @assignment_type.score_levels
+      user_search_options = {}
+      user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+      @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
+      @grades = @students.map do |s|
+        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment)
+      end
+      respond_with @assignment, :template => "grades/mass_edit"
+    end
   end
 
   def edit_status

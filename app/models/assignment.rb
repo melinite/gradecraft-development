@@ -15,7 +15,7 @@ class Assignment < ActiveRecord::Base
   has_many :submissions, as: :assignment
   has_many :assignment_files
   has_many :grades
-  accepts_nested_attributes_for :grades
+  accepts_nested_attributes_for :grades, :reject_if => Proc.new { |attrs| attrs[:raw_score].blank? }
 
   has_many :users, :through => :grades
 
@@ -116,6 +116,10 @@ class Assignment < ActiveRecord::Base
   end
 
   def grade_for_student(student)
+    grades.where(student: student).first
+  end
+
+  def score_for_student(student)
     grades.where(student: student).pluck('score').first
   end
 
