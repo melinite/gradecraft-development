@@ -154,7 +154,8 @@ $(document).ready(function(){
   }
 
   if ($('#student_grade_distro').length) {
-    $.getJSON('/users/scores_for_current_course.json', function (data) {
+    var id = $('#student_grade_distro')[0].getAttribute('data-id')
+    $.getJSON('/users/scores_for_current_course.json', {user_id: id} function (data) {
       console.log(data)
       sparkOpts.height = '50px';
       sparkOpts.target = data.user_score[0];
