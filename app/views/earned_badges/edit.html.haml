@@ -1,3 +1,5 @@
-= content_nav_for @earned_badge, "Edit #{breadcrumb_link_for(@earned_badge)}".html_safe
+= content_nav_for @badge, @earned_badge do
+  %li
 
-= render 'form'
+.col-lg-12
+  = render 'form'

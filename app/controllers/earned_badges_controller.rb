@@ -42,6 +42,8 @@ class EarnedBadgesController < ApplicationController
 
   def edit
     @title = "Edit Awarded #{term_for :badge}"
+    @badge = current_course.badges.find(params[:badge_id])
+    @students = current_course.students
     @badges = current_course.badges
     @badge_sets = current_course.badge_sets
     @earned_badge = EarnedBadge.find(params[:id])
