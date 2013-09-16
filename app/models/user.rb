@@ -180,6 +180,10 @@ class User < ActiveRecord::Base
     course.grade_level_for_score(score_for_course(course))
   end
 
+  def grade_letter_for_course(course)
+    course.grade_letter_for_score(score_for_course(course))
+  end
+
   def point_total_for_course(course)
     course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
   end
