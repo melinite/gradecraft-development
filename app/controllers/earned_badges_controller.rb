@@ -23,7 +23,7 @@ class EarnedBadgesController < ApplicationController
     @badges = current_course.badges
     @badge = @badges.find(params[:badge_id])
     @earned_badge = EarnedBadge.new
-    @students = current_course.users.students
+    @students = current_course.users.students.alpha
   end
 
   def new_via_student

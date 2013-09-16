@@ -27,7 +27,7 @@ class GradesController < ApplicationController
   def new
     @assignment = current_course.assignments.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
-    @students = current_course.students
+    @students = current_course.students.alpha
     @student = @students.find(params[:student_id])
     @grade = @student.grades.new(assignment: @assignment)
     @score_levels = @assignment_type.score_levels

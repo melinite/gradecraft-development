@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130915202020) do
+ActiveRecord::Schema.define(version: 20130915235018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 20130915202020) do
     t.boolean  "check_final_grade"
     t.boolean  "character_profiles"
     t.string   "lti_uid"
+    t.boolean  "team_score_average"
   end
 
   add_index "courses", ["lti_uid"], name: "index_courses_on_lti_uid", using: :btree

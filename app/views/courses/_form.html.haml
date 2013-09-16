@@ -36,6 +36,7 @@
     %h4 TEAMS & GROUPS
     = f.input :team_setting, :hint => "Will you have semester-long teams in your course?", :label => "Teams"
     = f.input :team_term, :label => "Team Term", :hint => "What will you call these? Team, Group, Section...", :input_html => {:class => "col-lg-4"}
+    = f.input :team_score_average, :label => "Team Score = Average User Score", :hint => "Will teams' scores be the average of their students' scores?"
     = f.input :challenge_term, :label => "Challenge Term", :hint => "What will you call the challenges they face? Quests, Boss Battles...", :input_html => {:class => "col-lg-4"}
     = f.input :teams_visible, :label => "Can students see the teams, their points, and their badges?"
     = f.input :team_roles, :hint => "Do students self-declare their role within groups?"

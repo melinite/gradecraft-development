@@ -1,4 +1,5 @@
-= content_nav_for @user, "Edit My Profile"
+= content_nav_for "Edit My Profile" do
+  %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-info btn-tiny"
 
 %p
 .col-lg-offset-3

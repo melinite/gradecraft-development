@@ -145,7 +145,7 @@ class UsersController < ApplicationController
 
   def new
     @title = "Create a New User"
-    @teams = current_course.teams
+    @teams = current_course.teams.alpha
     @courses = Course.all
     @user = current_course.users.new
     respond_with @user
