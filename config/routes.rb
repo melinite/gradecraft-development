@@ -49,6 +49,11 @@ GradeCraft::Application.routes.draw do
   resources :password_resets
   resources :info
   resources :home
+  resources :charts do
+    collection do
+      get 'per_assign'
+    end
+  end
   resources :group_memberships
   resources :categories
   resources :courses do

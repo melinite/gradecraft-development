@@ -1,0 +1,14 @@
+- @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+  .col-lg-12
+    %h3= link_to assignment_type.name, assignment_type
+  %table.table.simpleTable.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Grade Distribution
+    %tbody
+      - assignments.each do |assignment|
+        %tr
+          %td= assignment.name
+          %td
+            %div{:class => "grades_per_assign", :data => { :id => assignment.id.to_s }}
