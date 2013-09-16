@@ -32,10 +32,7 @@ class AssignmentTypeWeightsController < ApplicationController
   end
 
   def set_student
-    if current_user.is_staff?
-      @student = User.find(params.fetch(:user_id))
-    else
-      @student = current_user
+      @student = current_student
     end
   end
 
