@@ -2,7 +2,7 @@
   - if current_user.is_staff?
     %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
   - else
-    %li= link_to "My Dashboard", dashboard_path
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3= @title

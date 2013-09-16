@@ -30,7 +30,7 @@
 
       %hr
       .col-lg-12
-        - assignment_type.assignments.alphabetical.each do |assignment|
+        - assignment_type.assignments.alphabetical.chronological.each do |assignment|
           - cache ['v1', current_student, assignment] do
             .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
               - if assignment.accepts_submissions? && current_student.submission_for_assignment(assignment)

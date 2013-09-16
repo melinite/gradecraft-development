@@ -32,31 +32,31 @@ class Submission < ActiveRecord::Base
   #Canable permissions
   def updatable_by?(user)
     if assignment.is_individual?
-      student_id == user.id
+      student_id == user.id || user.is_staff?
     elsif assignment.has_teams?
-      student_id == user.teams.first.id
+      student_id == user.teams.first.id || user.is_staff?
     elsif assignment.has_groups?
-      student_id == user.groups.first.id
+      student_id == user.groups.first.id || user.is_staff?
     end
   end
 
   def destroyable_by?(user)
     if assignment.is_individual?
-      student_id == user.id
+      student_id == user.id || user.is_staff?
     elsif assignment.has_teams?
-      submittable_id == user.teams.first.id
+      submittable_id == user.teams.first.id || user.is_staff?
     elsif assignment.has_groups?
-      submittable_id == user.groups.first.id
+      submittable_id == user.groups.first.id || user.is_staff?
     end
   end
 
   def viewable_by?(user)
     if assignment.is_individual?
-      student_id == user.id
+      student_id == user.id || user.is_staff?
     elsif assignment.has_teams?
-      submittable_id == user.teams.first.id
+      submittable_id == user.teams.first.id || user.is_staff?
     elsif assignment.has_groups?
-      submittable_id == user.groups.first.id
+      submittable_id == user.groups.first.id || user.is_staff?
     end
   end
 

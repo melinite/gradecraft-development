@@ -1,6 +1,7 @@
 class SubmissionsController < ApplicationController
 
   before_filter :ensure_staff?, :only=>[:index]
+  include Canable::Enforcers
 
   def index
     @assignment = Assignment.find(params[:assignment_id])
@@ -16,6 +17,7 @@ class SubmissionsController < ApplicationController
       @badges = current_course.badges
       @assignments = current_course.assignments
     end
+    enforce_view_permission(@submission)
   end
 
   def new
