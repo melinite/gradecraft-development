@@ -20,7 +20,7 @@
           - if current_course.shared_badges?
             %th Share this with the class?
       %tbody
-        - @badges.each do |badge|
+        - current_course.badges.includes(:tasks).with_earned_badge_info_for_student(current_student).each do |badge|
           %tr
             %td= image_tag badge.icon, :alt => badge.name, :width => 40
             %td
@@ -33,14 +33,14 @@
             - if current_course.valuable_badges?
               %td= number_with_delimiter(badge.point_total)
             %td
-              - if badge.earned_badge_for_student(current_student)
+              - if badge.earned_at.present?
                 %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
-                = badge.earned_badge_for_student(current_student).created_at.strftime("%A, %B %d")
+                = badge.earned_at.strftime("%A, %B %d")
                 %br
-                = badge.earned_badge_for_student(current_student).feedback
+                = badge.feedback
             - if current_course.shared_badges?
               %td
-                - if badge.earned_badge_for_student(current_student)
+                - if badge.earned_at.present?
                   %input{ :type=>"checkbox" }
 
   .tab-pane#tabb2

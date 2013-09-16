@@ -7,6 +7,7 @@ gem 'rails', '4.0.0'
 gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
 gem 'active_model_serializers'
+gem 'bullet', :group => :development
 gem 'canable'
 gem 'carrierwave'
 gem 'coffee-rails'

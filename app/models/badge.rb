@@ -27,6 +27,10 @@ class Badge < ActiveRecord::Base
 
   scope :ordered, -> { 'assignments.id ASC' }
 
+  def self.with_earned_badge_info_for_student(student)
+    joins("LEFT JOIN earned_badges on badges.id = earned_badges.id AND earned_badges.student_id = #{Badge.sanitize(student.id)}").select('badges.*, earned_badges.created_at AS earned_at, earned_badges.feedback')
+  end
+
   def can_earn_multiple_times
     super || false
   end

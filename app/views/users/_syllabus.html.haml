@@ -29,7 +29,7 @@
 
       %hr
       .col-lg-12
-        - assignment_type.assignments.alphabetical.chronological.each do |assignment|
+        - assignment_type.assignments.includes(:course, :assignment_type => [:course]).alphabetical.chronological.each do |assignment|
           .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
             - if assignment.accepts_submissions? && current_student.submission_for_assignment(assignment)
               %span.assignmentName= link_to assignment.name, assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
