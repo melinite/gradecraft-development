@@ -29,3 +29,11 @@ GradeCraft::Application.configure do
   config.serve_static_assets = false
   config.session_store ActionDispatch::Session::CacheStore, :expire_after => 60.minutes
 end
+
+Sidekiq.configure_server do |config|
+  config.redis = { :url => ENV['REDIS_URL'], :namespace => 'gradecraft_staging' }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { :url => ENV['REDIS_URL'], :namespace => 'gradecraft_staging' }
+end
