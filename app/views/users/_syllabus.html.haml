@@ -59,7 +59,7 @@
               - if assignment.is_required?
                 %span.label.label-important Required!
               - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
-                - grade = assignment.grades.first_or_initialize(student: @user)
+                - grade = assignment.grades.where(student: current_student).first_or_initialize
                 = simple_form_for([assignment, grade], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post) do |f|
                   - present = grade.raw_score == assignment.point_total
                   = hidden_field_tag :present, !present
