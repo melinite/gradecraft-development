@@ -64,10 +64,10 @@ $(document).ready(function() {
 
     var $wrapper = $('#userBarInProgress');
     if($wrapper.length) {
-      var userID = $('#userID').data('user-id');
+      var studentID = $('#studentID').data('student-id');
 
       // Get Assignment Type Info
-      $.getJSON('/users/predictor.json?in_progress=true', { user_id: userID }, function(data) {
+      $.getJSON('/users/predictor.json?in_progress=true', { student_id: studentID}, function(data) {
         options.chart.renderTo = 'userBarInProgress';
         options.title = { text: 'My Points' };
         options.xAxis.categories = { text: ' ' };
@@ -76,7 +76,7 @@ $(document).ready(function() {
         chart = new Highcharts.Chart(options);
       });
 
-      $.getJSON('/users/predictor.json', { user_id: userID }, function(data) {
+      $.getJSON('/users/predictor.json', { student_id: studentID}, function(data) {
         options.chart.renderTo = 'userBarTotal';
         options.title = { text: 'Total Possible Points' };
         options.xAxis.categories = { text: ' ' };
@@ -151,7 +151,7 @@ $(document).ready(function() {
 
     var $wrapper = $('#userBarInProgressSim');
     if($wrapper.length) {
-      var userID = $('#userID').data('user-id');
+      var studentID = $('#studentID').data('user-id');
       /*
 
       // Get Assignment Type Info
@@ -165,7 +165,7 @@ $(document).ready(function() {
       });
 */
 
-      $.getJSON('/users/predictor.json', { user_id: userID }, function(data) {
+      $.getJSON('/users/predictor.json', { student_id: studentID }, function(data) {
         options.chart.renderTo = 'userBarTotalSim';
         options.title = { text: 'Total Points' };
         options.xAxis.categories = { text: ' ' };
