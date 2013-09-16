@@ -108,14 +108,14 @@ class UsersController < ApplicationController
     end
 
     scores = []
-    current_course.assignment_types.each do |assignment_type|
-      scores << { data: [student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
+    current_course.assignment_types.pluck(:id, :name).each do |assignment_type_id, assignment_type_name|
+      scores << { data: [student.grades.released.where(assignment_type_id: assignment_type_id).score], name: assignment_type_name }
     end
 
     earned_badge_score = student.earned_badges.where(course: current_course).score
     scores << { :data => [earned_badge_score], :name => 'Badges' }
 
-    assignments = student.assignments.where(course: current_course)
+    assignments = current_course.assignments
     assignments = assignments.graded_for_student(student) if params[:in_progress]
 
     render :json => {
