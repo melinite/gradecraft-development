@@ -92,6 +92,9 @@
     %b Students can see the teams, the team's points, and the team's badges:
     = @course.teams_visible? ? 'Yes' : 'No'
   %p
+    %b Team Score = Average User Score:
+    = @course.team_score_average? ? 'Yes' : 'No'
+  %p
     %b Students will work in groups:
     = @course.group_setting? ? 'Yes' : 'No'
   %p

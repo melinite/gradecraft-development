@@ -62,7 +62,9 @@ class SubmissionsController < ApplicationController
 
   def create
     @assignment = current_course.assignments.find(params[:assignment_id])
-    @submission = @assignment.submissions.build(params[:submission])
+    @submission = @assignment.submissions.new(params[:submission])
+    @submission.student = current_student if current_user.is_student?
+    @submission.save
     respond_to do |format|
       if @submission.save
         if current_user.is_student?
@@ -79,7 +81,7 @@ class SubmissionsController < ApplicationController
   end
 
   def update
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.find(params[:id])
     respond_to do |format|
       if @submission.update_attributes(params[:submission])

@@ -13,7 +13,7 @@
   #massGrade
     = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
       .col-lg-offset-3
-        - if !@assignment.grade_select? && !@assignment.grade_radio? && ! @assignment.grade_text?
+        - if @assignment.grade_checkboxes?
           .btn-group
             %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
             %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
@@ -34,8 +34,10 @@
                         = gf.radio_button :raw_score, score_level.value, :class => "radio_inline"
                     - elsif @assignment.grade_text?
                       = gf.text_field :raw_score
-                    - else
+                    - elsif @assignment.grade_checkboxes?
                       = gf.check_box :raw_score, {}, @assignment.point_total
+                    - else
+                      = gf.text_field :raw_score
 
       .form-actions.col-lg-offset-3
         = f.button :submit, "Submit Grades", :class => "btn btn-primary"

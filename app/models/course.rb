@@ -11,7 +11,7 @@ class Course < ActiveRecord::Base
     :tagline, :academic_history_visible, :office, :phone, :class_email,
     :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times,
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
-    :challenge_term, :badge_term, :grading_philosophy
+    :challenge_term, :badge_term, :grading_philosophy, :team_score_average
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships

@@ -11,7 +11,10 @@
       %th{"data-sort" => "int"} Rank
       %th{"data-sort" => "string"} Name
       %th{"data-sort" => "int"} No. of Students
-      %th{"data-sort" => "int"} Score
+      - if current_course.team_score_average?
+        %th{"data-sort" => "int"} Score
+      - else
+        %th{"data-sort" => "int"} Ave. Score
       - if current_user.is_staff?
         %th{"data-sort" => "string"} Badges Earned
         %th{"data-sort" => "int"} Total Badges
@@ -24,7 +27,7 @@
         %td= team.rank
         %td= link_to team.name, team
         %td= team.member_count
-        %td= team.average_grade
+        %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
         - if current_user.is_staff?
           %td
             - team.earned_badges.each do |badge|

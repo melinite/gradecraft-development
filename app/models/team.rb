@@ -17,6 +17,7 @@ class Team < ActiveRecord::Base
 
   accepts_nested_attributes_for :team_memberships
 
+  scope :alpha, -> { order 'name ASC' }
   scope :order_by_high_score, -> { order 'teams.score DESC' }
   scope :order_by_low_score, -> { order 'teams.score ASC' }
 

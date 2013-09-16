@@ -12,11 +12,13 @@
       %thead
         %tr
           %th{"data-sort" => "string"} Name
-          %th{"data-sort" => "string"} Score
+          - if current_course.team_score_average?
+            %th{"data-sort" => "string"} Score
       %tbody
         - @sorted_teams.each do |team|
           %tr
             %td= team.name
-            %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
+            - if current_course.team_score_average?
+              %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
   .tab-pane#tabt2
     = render "teams/in_team_rankings"

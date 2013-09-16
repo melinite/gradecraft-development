@@ -50,7 +50,7 @@
             %th.sortable{"data-sort" => "string"} Submission
           %th
       %tbody
-        - @teams.each do |team|
+        - @teams.alpha.each do |team|
           - challenge_grade = @challenge.challenge_grades.find_by team: team
           %tr
             - if @challenge.release_necessary?

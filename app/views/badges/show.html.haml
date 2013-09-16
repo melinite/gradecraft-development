@@ -10,7 +10,7 @@
     %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 
 
-.col-lg-12.info
+.col-lg-12
   %h3= @badge.name
   %p
     %img{:src => @badge.icon, :alt => @badge.name, :width => "40"}
@@ -73,8 +73,8 @@
     %tbody
       - @earned_badges.each do |earned_badge|
         %tr
-          %td= earned_badge.score
           %td= link_to earned_badge.student.try(:name), earned_badge.student
+          %td= earned_badge.score
           %td= earned_badge.feedback
           %td= earned_badge.created_at
           %td= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-success'

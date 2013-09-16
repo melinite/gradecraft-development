@@ -275,7 +275,7 @@ end
 
 grinding_assignments.each do |a|
   a.tasks.create! do |t|
-    t.taskable = a
+    t.assignment = a
     t.name = "Task 1"
     t.due_at = rand.weeks.from_now
     t.accepts_submissions = true

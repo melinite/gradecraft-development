@@ -1,9 +1,6 @@
-- if current_user.is_staff?
-  = content_nav_for @assignment, Submission, "New Submission" do
-    %li= link_to "Back to #{@assignment.name}", @assignment, :class => "btn btn-tiny btn-info"
-- else
-  = content_nav_for "#{@assignment.name}" do
-    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+= content_nav_for @assignment do
+  %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+  //%li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
 
 .col-lg-12.info
   %h3= @title
@@ -38,6 +35,17 @@
       - @assignment.assignment_files.each do |af|
         = link_to af.filename.identifier, af.filename.url
 
-  - if @assignment.accepts_submissions? && current_user.is_student?
-    = render 'form'
+  - if @assignment.tasks.present?
 
+    %h4.clear Tasks
+
+    %table.table.display.table-striped.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "string"} Description
+      %tbody
+        - @assignment.tasks.each do |task|
+          %tr
+            %td= task.name
+            %td= task.description

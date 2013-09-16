@@ -36,7 +36,7 @@
               - if assignment.accepts_submissions? && current_student.submission_for_assignment(assignment)
                 %span.assignmentName= link_to assignment.name, assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
               - else
-                %span.assignmentName= link_to assignment.name, new_assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
+                %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
               - if assignment.release_necessary?
                 %span.points= "("
                 - if assignment.released_grade_for_student(current_student).present? && assignment.grade_for_student(current_student) > 0
@@ -48,11 +48,11 @@
                 - grade = assignment.grade_for_student(current_student)
                 %span.points= "("
                 - if grade.present?
-                  - if grade > 0
-                    %span.points.earned= "#{number_with_delimiter grade} "
+                  - if grade.score > 0
+                    %span.points.earned= "#{number_with_delimiter grade.score} "
                     %span.points= "/"
                   - else
-                    %span.points.missed= "#{number_with_delimiter grade}  / "
+                    %span.points.missed= "#{number_with_delimiter grade.score}  / "
               %span.points.total= "#{number_with_delimiter(assignment.point_total_for_student(current_student))} points )"
               - if assignment.future?
                 %span.italic= " • Due: #{assignment.due_at.strftime("%A, %B %d")}"

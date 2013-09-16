@@ -30,7 +30,11 @@ GradeCraft::Application.routes.draw do
       get 'class_badges'
     end
   end
-  resources :students, only: [:index, :show]
+  resources :students do
+    collection do
+      get 'leaderboard'
+    end
+  end
   resources :staff, only: [:index, :show]
   resources :assignment_weights
   resources :user_sessions
