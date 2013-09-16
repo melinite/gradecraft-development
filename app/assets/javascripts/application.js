@@ -50,6 +50,8 @@ $(document).ready(function(){
 
   $('#academicInfo').collapse('hide');
 
+  $('#gradeDistro').collapse('hide');
+
   $('#myModal').modal('hide');
 
   var table = $(".simpleTable").stupidtable({
@@ -142,15 +144,25 @@ $(document).ready(function(){
 
 	});
 
+  var sparkOpts = {
+    type: 'box',
+    width: '100%'
+  };
   if ($('#grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
-      $('#grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '50px' } )
+      sparkOpts.height = '50px';
+      $('#grade_distro').sparkline(data.scores, sparkOpts);
     })
   }
 
   if ($('#student_grade_distro').length) {
-    $.getJSON('/users/scores_for_current_course.json', function (data) {
-      $('#student_grade_distro').sparkline(data.scores, { type: 'box', width: '100%', height: '40px' } )
+    var id = $('#student_grade_distro')[0].getAttribute('data-id')
+    $.getJSON('/users/scores_for_current_course.json', {user_id: id}, function (data) {
+      console.log(data)
+      sparkOpts.height = '50px';
+      sparkOpts.target = data.user_score[0];
+      sparkOpts.tooltipOffsetY = -130;
+      $('#student_grade_distro').sparkline(data.scores, sparkOpts);
     })
   }
 
