@@ -30,8 +30,6 @@
         .pull-right.col-lg-4.col-sm-3.col-md-3.col-xs-3
           - if current_user
             = render 'layouts/authenticated_nav'
-          - else
-            = render 'layouts/nav'
     .container
       - if current_user
         - if current_user.is_staff?
