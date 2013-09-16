@@ -100,7 +100,7 @@ var PredictorView = Backbone.View.extend({
     });
     $('#predictor-score-display').html(addCommas(scoreTotal));
     $('#predictor-course-total-display').html(addCommas(this.calculateCourseTotal()));
-    $('#predictedCourseGrade').html();
+    $('#predictor-course-grade').html();
   },
   createAssignmentTypes: function() {
     var assignmentTypes = this.collection;

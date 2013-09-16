@@ -8,8 +8,8 @@
         %span#predictor-course-total-display= number_with_delimiter(current_student.point_total_for_course(current_course), :delimiter => ',')
       %h4
         = "Predicted Final Grade:"
-        %span#predictedCourseGrade= current_student.grade_level_for_course(current_course)
-      %span#expectedPointsValue
+        %span#predictor-course-grade= current_student.grade_level_for_course(current_course)
+    %span#expectedPointsValue
   #prediction
 
   #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student.point_total_for_course(current_course) }

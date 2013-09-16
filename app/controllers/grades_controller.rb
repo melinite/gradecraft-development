@@ -66,7 +66,7 @@ class GradesController < ApplicationController
   end
 
   def update
-    @assignment = current_course.assignments.find(params[:assignment])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
     @badges = current_course.badges
     respond_to do |format|
