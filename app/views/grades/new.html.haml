@@ -4,31 +4,34 @@
 .col-lg-12
   %h3= @title
   - if @assignment.accepts_submissions? && @student.submission_for_assignment(@assignment)
-    - @student.submission_for_assignment(@assignment).tap do |submission|
-      - if @assignment.is_individual?
-        %h4
-          = "#{term_for :student}:"
-          = link_to @student.try(:name), @student
-      - elsif @assignment.has_groups?
-        %h4
-          = "#{term_for :group}:"
-          = link_to submission.student.try(:name), assignment_group_path(@assignment, @student)
+    - if @student.submission_for_assignment(@assignment).present?
+      - @student.submission_for_assignment(@assignment).tap do |submission|
+        - if @assignment.is_individual?
+          %h4
+            = "#{term_for :student}:"
+            = link_to @student.try(:name), @student
+        - elsif @assignment.has_groups?
+          %h4
+            = "#{term_for :group}:"
+            = link_to submission.student.try(:name), assignment_group_path(@assignment, @student)
 
-      %b.heading.col-lg-2 Submitted:
-      .col-lg-offset-2= submission.created_at
-      - if submission.updated_at != submission.created_at
-        %b.heading.col-lg-2 Last Updated:
-        .col-lg-offset-2= submission.updated_at
-      - if submission.link?
-        %b.heading.col-lg-2 Link:
-        .col-lg-offset-2= link_to submission.link, submission.link
+        %b.heading.col-lg-2 Submitted:
+        .col-lg-offset-2= submission.created_at
+        - if submission.updated_at != submission.created_at
+          %b.heading.col-lg-2 Last Updated:
+          .col-lg-offset-2= submission.updated_at
+        - if submission.link?
+          %b.heading.col-lg-2 Link:
+          .col-lg-offset-2= link_to submission.link, submission.link
 
-      - if s.submission_files.present?
-        %b.heading.col-lg-2 Files:
-        - submission.submission_files.each do |sf|
-          .col-lg-offset-2= link_to sf.filename.identifier, sf.filename.url
+        - if submission.submission_files.present?
+          %b.heading.col-lg-2 Files:
+          - submission.submission_files.each do |sf|
+            .col-lg-offset-2= link_to File.basename(sf.filename.path), sf.filename.url
 
-      %b.heading.col-lg-2 Statement:
-      .col-lg-offset-2= raw submission.text_comment
+        %b.heading.col-lg-2 Statement:
+        .col-lg-offset-2= raw submission.text_comment
+
+  .clear
 
   = render 'form'

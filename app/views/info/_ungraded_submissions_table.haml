@@ -1,16 +1,15 @@
 - @ungraded_submissions.group_by(&:assignment).each do |assignment, submissions|
-  .col-lg-8%h4= assignment.name
-  - if assignment.assignment_type.mass_grade?
-    .col-lg-offset-8.col-lg-4= link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
+  %h5
+    = assignment.name
+    - if assignment.assignment_type.mass_grade?
+      = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
   %table.table.simpleTable
     %thead
       %tr
-        %th.sortable{"data-sort" => "string"} Assignment
         %th.sortable{"data-sort" => "string"} Student
         %th
     %tbody
       - submissions.each do |ug|
         %tr
-          %th= link_to ug.assignment.name, assignment_submission_path(ug.assignment, ug)
-          %th= ug.student.try(:name)
-          %th= link_to "Grade"
+          %th= link_to ug.student.try(:name), assignment_submission_path(ug.assignment, ug)
+          %th= link_to 'Grade', new_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-tiny btn-success'
