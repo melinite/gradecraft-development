@@ -1,0 +1,11 @@
+%h1 Benchmark
+
+%ol
+  - @assignments.includes(:course, :assignment_type).group_by(&:assignment_type).each do |assignment_type, assignments|
+    %li
+      = assignment_type.name
+      %ol
+        - assignments.each do |assignment|
+          %li
+            = assignment.name
+            = points assignment.point_total_for_student(current_student)

@@ -1,23 +1,23 @@
 .col-sm-12.col-md-12.col-lg-12.col-xs-12.center#badges.badge-success{"data-target" => "#badgesInfo", "data-toggle" => "collapse"}
   %h4.center= term_for :badges
   #badgesInfo.collapse.clear
-    - current_course.badges.each do |badge|
-      - current_student.earned_badges.find_by(badge: badge).tap do |earned_badge|
-        - if earned_badge
+    - @badges.each do |badge|
+      - earned_badge = @earned_badges.detect { |eb| eb.badge_id == badge.id }
+      - if earned_badge
+        .badgeIcon
+          - if current_course.valuable_badges?
+            %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
+              %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
+          - else
+            %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
+              %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
+      - else
+        - if badge.visible?
           .badgeIcon
             - if current_course.valuable_badges?
               %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
-                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
+                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
             - else
               %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
-                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
-        - else
-          - if badge.visible?
-            .badgeIcon
-              - if current_course.valuable_badges?
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
-              - else
-                %a{:href => "#", :rel => "tooltip", :title => "#{badge.try(:name)}"}
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
+                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
     .col-lg-12.clear= "#{term_for :badges} you've earned will shine brightly!"

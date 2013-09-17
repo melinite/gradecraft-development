@@ -1,0 +1,24 @@
+- if current_course.valuable_badges?
+  %li#slide-badges(data-assignment-type-id="badges" data-assignment-type-name="Badges")
+    .slide-panel.col.col-lg-12
+      .assignmentType
+        %span.assignmentTypeTitle Badges
+        %span.badge.badge-warning.pull-right #{current_student_data.earned_badge_score} points
+      %p.lead
+      %div
+        - @badges.each do |badge|
+          - earned_badge = @earned_badges.detect { |eb| eb.badge_id == badge.id }
+          - if earned_badge
+            .earnedBadgeField
+              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
+              .clearfix= badge.name
+              .clearfix
+                %b= "#{badge.point_total} points"
+              = hidden_field_tag badge.name, badge.point_total
+          - else
+            .badgeField
+              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
+              .clearfix= badge.name
+              .clearfix
+                %b= "#{badge.point_total} points"
+              .clearfix= check_box_tag badge.name, badge.point_total, current_student.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'

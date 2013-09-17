@@ -167,9 +167,7 @@ class User < ActiveRecord::Base
   end
 
   def score_for_course(course)
-    Rails.cache.fetch ['v1', self, course, 'score'] do
-      grades.released.where(course: course).score + earned_badge_score_for_course(course)
-    end
+    @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course)
   end
 
   def badges_shared(course)
@@ -181,11 +179,11 @@ class User < ActiveRecord::Base
   end
 
   def grade_letter_for_course(course)
-    course.grade_letter_for_score(score_for_course(course))
+    @grade_letter_for_course ||= course.grade_letter_for_score(score_for_course(course))
   end
 
   def point_total_for_course(course)
-    course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
+    @point_total_for_course ||= course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
   end
 
   def point_total_for_assignment_type(assignment_type)

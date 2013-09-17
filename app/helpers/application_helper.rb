@@ -60,4 +60,8 @@ module ApplicationHelper
     html_options[:class] = [html_options[:class], 'btn btn-tiny btn-success'].compact.join(' ')
     link_to name, options, html_options, &block
   end
+
+  def points(value)
+    number_with_delimiter(value)
+  end
 end

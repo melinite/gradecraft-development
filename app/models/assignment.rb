@@ -62,6 +62,7 @@ class Assignment < ActiveRecord::Base
   scope :still_accepted, -> { with_due_date.where('assignments.accept_submissions_until >= ?', Time.now) }
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
   scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
+  scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
 
   scope :grading_done, -> { where 'grades.present? == 1' }
 
@@ -73,8 +74,20 @@ class Assignment < ActiveRecord::Base
     pluck('SUM(assignments.point_total)').first || 0
   end
 
+  def self.assignment_type_point_totals_for_student(student)
+    group('assignments.assignment_type_id').weighted_for_student(student).pluck('assignments.assignment_type_id, COALESCE(SUM(COALESCE(assignment_weights.point_total, assignments.point_total)), 0)')
+  end
+
+  def self.point_totals_for_student(student)
+    weighted_for_student(student).pluck('assignments.id, COALESCE(assignment_weights.point_total, assignments.point_total)')
+  end
+
   def self.point_total_for_student(student)
-    joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{student.id}'").pluck('SUM(COALESCE(assignment_weights.point_total, assignments.point_total))').first || 0
+    weighted_for_student(student).pluck('SUM(COALESCE(assignment_weights.point_total, assignments.point_total))').first || 0
+  end
+
+  def self.with_assignment_weights_for_student(student)
+    joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'").select('assignments.*, COALESCE(assignment_weights.point_total, assignments.point_total) AS student_point_total')
   end
 
   def high_score
@@ -116,7 +129,11 @@ class Assignment < ActiveRecord::Base
   def weight_for_student(student, weight = nil)
     return 1 unless student_weightable?
     weight ||= (weights.where(student: student).pluck('weight').first || 0)
-    weight > 0 ? weight : course.default_assignment_weight
+    weight > 0 ? weight : default_weight
+  end
+
+  def default_weight
+    course.default_assignment_weight
   end
 
   def grade_for_student(student)

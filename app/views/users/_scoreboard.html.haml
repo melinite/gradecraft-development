@@ -6,9 +6,9 @@
       Your current score is
     - elsif current_user.is_staff?
       Current Score:
-    %span#userScoreNum #{number_with_delimiter(current_student.score_for_course(current_course), :delimiter => ',')}/#{number_with_delimiter(current_student.point_total_for_course(current_course), :delimiter => ',')}
+    %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
     Current Level:
-    %span#userScoreNum #{current_student.grade_level_for_course(current_course)}
+    %span#userScoreNum= current_student_data.grade_level
   .charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")
     .chart-wrapper.user-bar-in-progress-chart
       .chart#userBarInProgress

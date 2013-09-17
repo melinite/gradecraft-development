@@ -17,7 +17,11 @@ class EarnedBadge < ActiveRecord::Base
   delegate :name, :description, :icon, :to => :badge
 
   def self.score
-    all.sum('score') || 0
+    pluck('SUM(score)').first || 0
+  end
+
+  def self.scores_for_students
+    group(:student_id).pluck('earned_badges.student_id, COALESCE(SUM(score), 0)')
   end
 
   private

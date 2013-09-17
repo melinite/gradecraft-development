@@ -48,7 +48,15 @@ class Grade < ActiveRecord::Base
   validates_numericality_of :raw_score, integer_only: true
 
   def self.score
-    all.pluck('SUM(grades.score)').first || 0
+    pluck('COALESCE(SUM(grades.score), 0)').first
+  end
+
+  def self.assignment_scores
+    pluck('grades.assignment_id, COALESCE(grades.score, 0)').first
+  end
+
+  def self.assignment_type_scores
+    group('grades.assignment_type_id').pluck('grades.assignment_type_id, COALESCE(SUM(grades.score), 0)')
   end
 
   def score

@@ -1,4 +1,4 @@
-- current_course.assignment_types.ordered.each do |assignment_type|
+- @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
   .col-lg-12.col-xs-12.col-md-12.col-sm-12
     %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} +#{ number_with_delimiter(current_student.released_score_for_assignment_type(assignment_type))}
     .collapse{:id => "assignment_type-#{assignment_type.id}"}
