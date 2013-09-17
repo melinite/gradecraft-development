@@ -87,12 +87,29 @@ $(document).ready(function(){
 	$('#navbar').affix();
 
   $('.slider').each(function(i,slider) {
-    $slider = $(slider)
+    $slider = $(slider);
+    var scoreValues = $slider.data("scorelevelvals");
+    var scoreNames = $slider.data("scorelevelnames");
     $slider.slider({
-      max: $slider.attr('max')
+      min: 0,
+      max: $slider.attr('max'),
+      step: Math.pow(10,Math.floor(Math.log($slider.attr('max')*.1)/Math.LN10)),
+      stop: function(event, ui) {
+        console.log(ui.value);
+      },
+      slide: function(event, ui) {
+        if(scoreValues.length > 0){
+          return $.inArray(ui.value, scoreValues) != -1;          
+        }
+      } 
     });
-    $slider.on('slide', function(event, ui){
-      $(slider).prev("div.assignment > span").html(ui.value)
+    $slider.on('slide', function(event, ui) {
+      if($.inArray(ui.value, scoreValues) != -1 && scoreValues.length) {
+        $(slider).siblings("div.assignment > span.pScore").html(ui.value);
+        $(slider).siblings("div.assignment > span.score-level-name").html("(Score Level: " + scoreNames[scoreValues.indexOf(ui.value)] + ")");
+      }else{
+        $(slider).siblings("div.assignment > span.pScore").html(ui.value);
+      }
     });
   });
 
@@ -268,8 +285,8 @@ $(document).ready(function(){
       })
       assignmentTypeBars();
     })
-  }
 
-  // Ask Cory.
-  $('.table-toggle').on('click', assignmentTypeBars);
+    // Ask Cory.
+    $('.table-toggle').on('click', assignmentTypeBars);
+  }
 });
