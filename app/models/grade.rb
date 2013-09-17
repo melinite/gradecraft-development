@@ -1,7 +1,7 @@
 class Grade < ActiveRecord::Base
   include Canable::Ables
 
-  attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
+  attr_accessible :type, :raw_score, :predicted_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :student, :student_id,
     :badge_ids, :earned_badges_attributes, :earned, :submission,
@@ -9,7 +9,7 @@ class Grade < ActiveRecord::Base
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
     :graded_by_id, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file
 
-  STATUSES=%w(Graded Released)
+  STATUSES=%w(Graded Released Predicted)
 
   belongs_to :course
   belongs_to :assignment, touch: true

@@ -143,8 +143,6 @@ $('.slider').each(function(i,slider) {
     });
   });
 
-
-
   $('#userBarInProgress').show();
 	// $('#userBarTotal').hide();
 	$('#userBarInProgressSim').show();

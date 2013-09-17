@@ -103,6 +103,7 @@ GradeCraft::Application.routes.draw do
         post :edit_status
         put :update_status
         post :self_log
+        post :predict_score
       end
       resources :earned_badges
     end
