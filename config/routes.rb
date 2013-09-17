@@ -19,6 +19,7 @@ GradeCraft::Application.routes.draw do
       get 'scores_for_current_course'
       get 'scores_by_assignment'
       get 'scores_by_team'
+      get 'scores_for_single_assignment'
       put 'update_profile'
       get 'predictor'
       get 'final_grades'
@@ -48,6 +49,11 @@ GradeCraft::Application.routes.draw do
   resources :password_resets
   resources :info
   resources :home
+  resources :charts do
+    collection do
+      get 'per_assign'
+    end
+  end
   resources :group_memberships
   resources :categories
   resources :courses do

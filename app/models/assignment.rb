@@ -89,6 +89,10 @@ class Assignment < ActiveRecord::Base
     grades.average('score').round(2) if grades.present?
   end
 
+  def submitted_average
+    grades.where("score > 0").average('score').round(2) if grades.present?
+  end
+
   def release_necessary?
     release_necessary == true
   end
