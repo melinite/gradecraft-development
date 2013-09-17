@@ -19,7 +19,7 @@
         %ul
           - if %w(development production).include? Rails.env
             .kerberos-auth
-              = simple_form_for User.new, :url => auth_kerberos_callback_path do |f|
+              = form_for User.new, :url => auth_kerberos_callback_path do |f|
                 %li= text_field_tag :username, nil, placeholder: 'Uniqname'
                 %li= password_field_tag :password, nil, placeholder: 'Password'
                 %li= f.submit 'Log in', class: 'btn btn-primary', alt: 'Log in'
@@ -27,7 +27,7 @@
         %ul
           - if %w(test development staging).include? Rails.env
             .gradegraft-auth
-              = simple_form_for User.new, :url => user_sessions_path do |f|
-                %li= text_field_tag :email, nil, placeholder: "Email"
-                %li= password_field_tag :password, nil, placeholder: 'Password'
+              = form_for User.new, :url => user_sessions_path do |f|
+                %li= f.text_field :email, placeholder: "Email"
+                %li= f.password_field :password, placeholder: 'Password'
                 %li= f.submit "Log in", class: 'btn btn-primary', alt: "Log in"
