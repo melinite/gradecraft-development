@@ -43,6 +43,7 @@ class UsersController < ApplicationController
   def index
     @title = "View All Users"
     @users =  current_course.users.order('last_name ASC')
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options)
@@ -80,21 +81,6 @@ class UsersController < ApplicationController
       format.json { render json: @users }
       format.csv { send_data User.csv_for_course(current_course) }
       format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
-    end
-  end
-
-  def analytics
-    @users = current_course.users
-    @students = current_course.students
-    @teams = current_course.teams
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = @students.includes(:teams).where(user_search_options).order_by_high_score
-    respond_to do |format|
-      format.html
-      format.json { render json: @users }
-      format.csv { send_data @users.to_csv }
-      format.xls { send_data @users.to_csv(col_sep: "\t") }
     end
   end
 
@@ -244,6 +230,7 @@ class UsersController < ApplicationController
     @students = current_course.students
     @assignment_types = current_course.assignment_types
     @teams = current_course.teams
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = @students.includes(:teams).where(user_search_options).order_by_high_score
