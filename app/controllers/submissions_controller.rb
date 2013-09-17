@@ -25,9 +25,9 @@ class SubmissionsController < ApplicationController
     @title = @assignment.name
     if current_user.is_staff?
       if @assignment.has_groups?
-        @group = Group.find(params[:group_id])
+        @group = current_course.groups.find(params[:group_id])
       else
-        @student = User.find(params[:student_id])
+        @student = current_course.students.find(params[:student_id])
       end
     end
     if current_user.is_student?
@@ -45,20 +45,22 @@ class SubmissionsController < ApplicationController
 
   def edit
     @assignment = current_course.assignments.find(params[:assignment_id])
-    if @assignment.has_groups?
-      @group = Group.find(params[:group_id])
-    else
-      @student = User.find(params[:student_id])
+    if current_user.is_staff?
+      if @assignment.has_groups?
+        @group = current_course.groups.find(params[:group_id])
+      else
+        @students = current_course.students
+        @student = @students.find(params[:student_id])
+      end
     end
     if current_user.is_student?
       @user = current_user
       @badges = current_course.badges
       @assignments = current_course.assignments
     end
-    @students = current_course.users.students
     @groups = @assignment.groups
     @teams = current_course.teams
-    @title = "Edit Submission for #{@assignment.name}"
+    @title = "Editing #{@student.name}'s Submission for #{@assignment.name}"
     @submission = Submission.find(params[:id])
   end
 
@@ -91,7 +93,7 @@ class SubmissionsController < ApplicationController
           format.html { redirect_to dashboard_path, notice: "#{@assignment.name} was successfully update." }
           format.json { render json: @assignment, status: :created, location: @assignment }
         else
-          format.html { redirect_to assignments_path(@assignment), notice: "#{@assignment.name} was successfully update." }
+          format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully update." }
         end
       else
         format.html { render action: "edit" }

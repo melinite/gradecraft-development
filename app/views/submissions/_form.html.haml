@@ -1,14 +1,4 @@
 = simple_form_for([@assignment, @submission], :html => {:class => 'form-horizontal' }) do |f|
-  - if current_user.is_staff?
-    - if @assignment.has_groups?
-      = f.association :group, :selected => @group, :label => "#{current_course.group_term}", :input_html => { :value => @group.id }
-    - else
-      = f.association :student, :selected => @student, :label => "#{current_course.user_term}", :input_html => { :value => @student.id }
-  - else
-    - if @assignment.has_groups?
-      = f.association :group, :label => "#{current_course.group_term}", :as => :hidden, :input_html => { :value => @group.id }
-    - else
-      = f.association :student, :label => "#{current_course.user_term}", :as => :hidden, :input_html => { :value => current_student }
   = f.simple_fields_for :submission_files, @submission.submission_files.new do |sff|
     = sff.input :filename, as: :file
   = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-8' }
