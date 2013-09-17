@@ -4,9 +4,10 @@ class StudentsController < ApplicationController
   def index
     @title = "#{current_course.user_term} Roster"
     @teams = current_course.teams
+    @team_id = params[:team_id]
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = current_course.students.includes(:teams).where(user_search_options).alpha
+    @sorted_students = current_course.students.includes(:teams).where(user_search_options)
     respond_to do |format|
       format.html
       format.json { render json: @sorted_students }
