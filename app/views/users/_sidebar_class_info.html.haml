@@ -23,7 +23,7 @@
       - if current_course.twitter_hashtag.present?
         %p
           %b Hashtag:
-          = link_to "##{current_course.twitter_hashtag}", "http://www.twitter.com/##{current_course.twitter_hashtag}"
+          = link_to "#{current_course.twitter_hashtag}", "http://www.twitter.com/##{current_course.twitter_hashtag}"
       - if current_course.meeting_times.present?
         %p
           %b Classes Meet:
