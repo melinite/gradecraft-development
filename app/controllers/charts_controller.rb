@@ -4,7 +4,7 @@ class ChartsController < ApplicationController
   end
 
   def per_assign
-    respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.length > 2}
+    respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.released.length > 1}
   end
 
 end
