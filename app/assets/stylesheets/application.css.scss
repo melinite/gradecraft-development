@@ -82,6 +82,29 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+
+
+.tab-content.login {
+  background-color: #FFF;
+  padding: 5px 15px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  height: 150px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  ul li {
+    list-style-type: none;
+  }
+
+  input {
+    width: 100%;
+    margin: 0 0 10px;
+  }
+}
+
 .logged-in {
   .container {
     margin-top: 35px;
