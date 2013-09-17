@@ -82,4 +82,16 @@ class StudentData < Struct.new(:student, :course)
   def released_grades
     @released_grades ||= student.grades.released
   end
+
+  def earned_badge?(badge)
+    earned_badges[badge.id].present?
+  end
+
+  def earned_badges
+    @earned_badges ||= {}.tap do |earned_badges|
+      student.earned_badges.each do |earned_badge|
+        earned_badges[earned_badge.badge_id] = earned_badge
+      end
+    end
+  end
 end

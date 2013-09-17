@@ -1,6 +1,6 @@
 module CurrentScopes
   def self.included(base)
-    base.helper_method :current_user, :current_course, :current_student, :current_student_data
+    base.helper_method :current_user, :current_course, :current_student, :current_student_data, :current_course_data
   end
 
   def current_course
@@ -19,6 +19,10 @@ module CurrentScopes
 
   def current_student_data
     @__current_student_data ||= StudentData.new(current_student, current_course)
+  end
+
+  def current_course_data
+    @__current_course_date ||= CourseData.new(current_course)
   end
 
   def current_student=(student)

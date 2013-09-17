@@ -6,19 +6,18 @@
         %span.badge.badge-warning.pull-right #{current_student_data.earned_badge_score} points
       %p.lead
       %div
-        - @badges.each do |badge|
-          - earned_badge = @earned_badges.detect { |eb| eb.badge_id == badge.id }
-          - if earned_badge
+        - current_course_data.badges.each do |badge|
+          - if current_student_data.earned_badge?(badge)
             .earnedBadgeField
-              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
+              %img{:src => badge.icon, :alt => badge.name, :width => "40"}
               .clearfix= badge.name
               .clearfix
                 %b= "#{badge.point_total} points"
               = hidden_field_tag badge.name, badge.point_total
           - else
             .badgeField
-              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
+              %img{:src => badge.icon, :alt => badge.name, :width => "40"}
               .clearfix= badge.name
               .clearfix
-                %b= "#{badge.point_total} points"
-              .clearfix= check_box_tag badge.name, badge.point_total, current_student.badges.include?(badge), :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
+                %b #{badge.point_total} points
+              .clearfix= check_box_tag badge.name, badge.point_total, false, :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
