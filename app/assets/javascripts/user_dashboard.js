@@ -1,18 +1,20 @@
 $(document).ready(function() {
   $('.share_badge').on('click', function () {
-    var id = this.getAttribute('data-id')
+    var badge_id = this.getAttribute('data-badge-id'),
+        earned_id = this.getAttribute('data-earned-badge-id')
+    console.log(badge_id + ' ' + earned_id)
     $.ajax({
-      url: '/badges/' + id + '/toggle_shared',
+      url: '/badges/' + badge_id + '/earned_badges/' + earned_id + '/toggle_shared',
       method: 'post',
       data: {
-        id: id
+        earned_badge_id: earned_id
       },
       success: function (data) {
         console.log(data)
         if (data.shared) {
-          $('#shared_' + id).text("Stop Sharing")
+          $('#shared_' + badge_id).text("Stop Sharing")
         } else {
-          $('#shared_' + id).text("Share")
+          $('#shared_' + badge_id).text("Share")
         }
       }
     })

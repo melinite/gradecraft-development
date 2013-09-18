@@ -62,9 +62,9 @@ GradeCraft::Application.routes.draw do
   resources :course_memberships
   resources :badge_sets
   resources :badges do
-    post 'toggle_shared'
     resources :tasks
     resources :earned_badges do
+      post 'toggle_shared'
       collection do
         get :chart
       end

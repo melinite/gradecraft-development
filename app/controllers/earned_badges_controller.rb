@@ -1,6 +1,6 @@
 class EarnedBadgesController < ApplicationController
 
-  before_filter :ensure_staff?
+  before_filter :ensure_staff?, :except => :toggle_shared
 
   def index
     @badge = current_course.badges.find(params[:badge_id])
@@ -38,6 +38,15 @@ class EarnedBadgesController < ApplicationController
     @assignments = current_course.assignments
     @badges = current_course.badges
     @earned_badge = @earnable.earned_badges.new
+  end
+
+  def toggle_shared
+    @earned_badge = EarnedBadge.find params[:earned_badge_id]
+    @earned_badge.shared = !@earned_badge.shared
+    @earned_badge.save
+    render :json => {
+      :shared => @earned_badge.shared
+    }
   end
 
   def edit

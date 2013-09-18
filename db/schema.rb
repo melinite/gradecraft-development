@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917194236) do
+ActiveRecord::Schema.define(version: 20130915235018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(version: 20130917194236) do
     t.datetime "updated_at"
     t.boolean  "visible"
     t.boolean  "can_earn_multiple_times"
-    t.boolean  "shared",                  default: true
   end
 
   create_table "categories", force: true do |t|

@@ -7,10 +7,12 @@
         %th.sortable{"data-sort" => "int"} Total Badge Score
   %tbody
     - current_course.students.each do |student|
-      -if current_course_data.badges_shared_for_student?(student)
-        %tr
-          %td= student.name
-          %td
-            - student.earned_badges.each do |earned_badge|
-              - if eb.shared? && earned_badge.icon?
-                = image_tag earned_badge.icon, :alt => earned_badge.name, :width => '40'
+      - cache ['v1', student, current_course, 'public_badges'] do
+        - if student.badges_shared(current_course)
+          %tr
+            %td= student.name
+            %td
+              - student.earned_badges.each do |earned_badge|
+                - cache ['v1', earned_badge.badge, 'shared'] do
+                  - if earned_badge.shared? && earned_badge.icon?
+                    = image_tag earned_badge.icon, :alt => earned_badge.name, :width => '40'
