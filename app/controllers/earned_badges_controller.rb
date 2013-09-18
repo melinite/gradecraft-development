@@ -41,7 +41,7 @@ class EarnedBadgesController < ApplicationController
   end
 
   def toggle_shared
-    @earned_badge = EarnedBadge.find params[:earned_badge_id]
+    @earned_badge = EarnedBadge.where(:badge_id => params[:earned_badge_id], :student_id => current_student.id).first
     @earned_badge.shared = !@earned_badge.shared
     @earned_badge.save
     render :json => {
