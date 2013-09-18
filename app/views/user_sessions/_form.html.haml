@@ -1,5 +1,22 @@
-= simple_form_for @user, :html => { :class => "forgot form-inline"}, :url => user_sessions_path do |f|
-  = f.input :email, :label => false
-  = f.input :password, :label => false
-  //= f.input :remember_me, :as => :boolean, :input_html => { :class => "col-lg-12"}
-  = f.submit 'Log in', :class => 'btn btn-primary btn-sm'
+%ul.nav.nav-tabs
+  %li.active
+    %a{ "data-toggle" => "tab", "data-target" => "#tabkerb" } UM Login
+  %li
+    %a{ "data-toggle" => "tab", "data-target" => "#tabgc"} GradeCraft Login
+.tab-content.login
+  .tab-pane#tabkerb.active
+    %ul
+      - if %w(development production).include? Rails.env
+        .kerberos-auth
+          = form_for User.new, :url => auth_kerberos_callback_path do |f|
+            %li= text_field_tag :username, nil, placeholder: 'Uniqname'
+            %li= password_field_tag :password, nil, placeholder: 'Password'
+            %li= f.submit 'Log in', class: 'btn btn-primary', alt: 'Log in'
+  .tab-pane#tabgc
+    %ul
+      - if %w(test development staging).include? Rails.env
+        .gradegraft-auth
+          = form_for User.new, :url => user_sessions_path do |f|
+            %li= f.text_field :email, placeholder: "Email"
+            %li= f.password_field :password, placeholder: 'Password'
+            %li= f.submit "Log in", class: 'btn btn-primary', alt: "Log in"
