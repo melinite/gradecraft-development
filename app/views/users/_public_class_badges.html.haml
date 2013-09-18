@@ -14,5 +14,5 @@
             %td
               - student.earned_badges.each do |earned_badge|
                 - cache ['v1', earned_badge.badge, 'shared'] do
-                  - if earned_badge.shared? && earned_badge.icon?
+                  - if earned_badge.shared? && earned_badge.icon.present?
                     = image_tag earned_badge.icon, :alt => earned_badge.name, :width => '40'
