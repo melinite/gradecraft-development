@@ -25,7 +25,7 @@
                 %li= f.submit 'Log in', class: 'btn btn-primary', alt: 'Log in'
       .tab-pane#tabgc
         %ul
-          - if %w(test development staging).include? Rails.env
+          - if %w(test development staging production).include? Rails.env
             .gradegraft-auth
               = form_for User.new, :url => user_sessions_path do |f|
                 %li= f.text_field :email, placeholder: "Email"
