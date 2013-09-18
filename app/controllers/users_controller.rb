@@ -87,25 +87,19 @@ class UsersController < ApplicationController
   def predictor
     increment_predictor_views
 
-    if current_user.is_staff?
-      student = User.find(params[:user_id])
-    else
-      student = current_user
-    end
-
     scores = []
-    current_course.assignment_types.pluck(:id, :name).each do |assignment_type_id, assignment_type_name|
-      scores << { data: [student.grades.released.where(assignment_type_id: assignment_type_id).score], name: assignment_type_name }
+    current_course.assignment_types.each do |assignment_type|
+      scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
     end
 
-    earned_badge_score = student.earned_badges.where(course: current_course).score
+    earned_badge_score = current_student.earned_badges.where(course: current_course).score
     scores << { :data => [earned_badge_score], :name => 'Badges' }
 
-    assignments = current_course.assignments
-    assignments = assignments.graded_for_student(student) if params[:in_progress]
+    assignments = current_student.assignments.where(course: current_course)
+    assignments = assignments.graded_for_student(current_student) if params[:in_progress]
 
     render :json => {
-      :student_name => student.name,
+      :student_name => current_student.name,
       :scores => scores,
       :course_total => assignments.point_total + earned_badge_score
     }
