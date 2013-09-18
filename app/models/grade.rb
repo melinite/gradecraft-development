@@ -52,7 +52,7 @@ class Grade < ActiveRecord::Base
   end
 
   def self.assignment_scores
-    pluck('grades.assignment_id, COALESCE(grades.score, 0)').first
+    pluck('grades.assignment_id, grades.score')
   end
 
   def self.assignment_type_scores
