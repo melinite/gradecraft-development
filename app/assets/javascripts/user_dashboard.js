@@ -1,4 +1,24 @@
 $(document).ready(function() {
+  $('.share_badge').on('click', function () {
+    var badge_id = this.getAttribute('data-badge-id'),
+        earned_id = this.getAttribute('data-earned-badge-id')
+    $.ajax({
+      url: '/badges/' + badge_id + '/earned_badges/' + earned_id + '/toggle_shared',
+      method: 'post',
+      data: {
+        earned_badge_id: earned_id
+      },
+      success: function (data) {
+        if (data.shared) {
+          $('#shared_' + badge_id).text("Stop Sharing")
+        } else {
+          $('#shared_' + badge_id).text("Share")
+        }
+        $('#shared_' + badge_id).toggleClass('btn-success', !data.shared)
+        $('#shared_' + badge_id).toggleClass('btn-warning', data.shared)
+      }
+    })
+  })
 
 	var options = {
     chart: {

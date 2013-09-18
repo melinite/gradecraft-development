@@ -63,5 +63,4 @@ class BadgesController < ApplicationController
       format.json { head :ok }
     end
   end
-
 end
