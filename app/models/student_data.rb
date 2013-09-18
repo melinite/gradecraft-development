@@ -40,11 +40,11 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def score_for_assignment(assignment)
-    assignment_scores[assignment.id]
+    assignment_scores[assignment.id] || 0
   end
 
   def assignment_scores
-    @assignment_scores||= Hash.new { |h, k| h[k] = 0 }.tap do |assignment_scores|
+    @assignment_scores ||= Hash.new { |h, k| h[k] = 0 }.tap do |assignment_scores|
       released_grades.assignment_scores.each do |assignment_id, score|
         assignment_scores[assignment_id] = score
       end
@@ -91,6 +91,44 @@ class StudentData < Struct.new(:student, :course)
     @earned_badges ||= {}.tap do |earned_badges|
       student.earned_badges.each do |earned_badge|
         earned_badges[earned_badge.badge_id] = earned_badge
+      end
+    end
+  end
+
+  def weight_for_assignment_type(assignment_type)
+    assignment_type_weights[assignment_type.id]
+  end
+
+  def weighted_assignments?
+    @weighted_assignments_present ||= student.assignment_weights.present?
+  end
+
+  def submission_for_assignment?(assignment)
+    assignment_submissions[assignment.id].present?
+  end
+
+  def submission_for_assignment(assignment)
+    assignment_submissions[assignment.id]
+  end
+
+  def present_for_class?(assignment)
+    grade_for_assignment(assignment).point_total == assignment.point_total
+  end
+
+  private
+
+  def assignment_type_weights
+    @assignment_type_weights ||= {}.tap do |assignment_type_weights|
+      course.assignment_types.weights_for_student(student).each do |assignment_type_id, weight|
+        assignment_type_weights[assignment_type_id] = weight
+      end
+    end
+  end
+
+  def assignment_submissions
+    @assignment_submissions ||= {}.tap do |assignment_submissions|
+      student.submissions.each do |submission|
+        assignment_submissions[submission.assignment_id] = submission
       end
     end
   end

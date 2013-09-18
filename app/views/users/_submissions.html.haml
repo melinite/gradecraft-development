@@ -1,6 +1,5 @@
-- submission = @submissions.detect { |s| s.assignment_id == assignment.id }
-- if submission
-  = link_to "See Submission", assignment_submission_path(assignment, submission, :student_id => current_student), :class => 'btn btn-xs btn-info'
+- if current_student_data.submission_for_assignment?(assignment)
+  = link_to "See Submission", assignment_submission_path(assignment, current_student_data.submission_for_assignment(assignment), :student_id => current_student), :class => 'btn btn-xs btn-info'
 - elsif assignment.future? || assignment.still_accepted?
   = link_to "Submit", new_assignment_submission_path(assignment, :student_id => current_student), :class => 'btn btn-xs btn-success'
   - if assignment.past?

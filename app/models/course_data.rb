@@ -14,4 +14,18 @@ class CourseData < Struct.new(:course)
   def badges
     @badges ||= course.badges
   end
+
+  def badges_shared_for_student?(student)
+    badges_shared[student.id]
+  end
+
+  private
+
+  def badges_shared
+    @badges_shared ||= {}.tap do |badges_shared|
+      course.course_memberships.pluck('user_id, shared_badges').each do |student_id, shared_badges|
+        badges_shared[student_id] = shared_badges
+      end
+    end
+  end
 end

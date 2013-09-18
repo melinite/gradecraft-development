@@ -6,15 +6,15 @@
         - if assignment_type.predictor_description?
           = raw assignment_type.predictor_description
         - if assignment_type.student_weightable?
-          .italic= "You've set #{assignment_type.weight_for_student(current_student)} #{term_for :weights} on this #{term_for :assignment_type}"
+          .italic= "You've set #{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights} on this #{term_for :assignment_type}"
       - if assignment_type.student_weightable?
         .col-lg-4
           .badge.badge-info
-            = number_with_delimiter(current_student.released_score_for_assignment_type(assignment_type))
+            = points current_student_data.score_for_assignment_type(assignment_type)
             = "/"
-            = " #{number_with_delimiter(current_student.point_total_for_assignment_type(assignment_type))} possible points"
+            = " #{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
           %br
-          - if current_student.assignment_weights.present?
+          - if current_student_data.weighted_assignments?
             .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:user_id => current_student.id), assignment_type: assignment_type, user_id: current_student
           - else
             .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:user_id => current_student.id), assignment_type: assignment_type
@@ -22,44 +22,42 @@
       - else
         .col-lg-4
           .badge.badge-info
-            = number_with_delimiter(current_student.released_score_for_assignment_type(assignment_type))
+            = points current_student_data.score_for_assignment_type(assignment_type)
             = "/"
-            = " #{number_with_delimiter(current_student.point_total_for_assignment_type(assignment_type))} possible points"
+            = " #{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
         .clear
-
       %hr
       .col-lg-12
-        - assignment_type.assignments.includes(:course, :assignment_type => [:course]).alphabetical.chronological.each do |assignment|
+        - assignments.each do |assignment|
           .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
-            - if assignment.accepts_submissions? && current_student.submission_for_assignment(assignment)
-              %span.assignmentName= link_to assignment.name, assignment_submission_path(assignment, current_student.submission_for_assignment(assignment), :student_id => current_student)
+            - if current_student_data.submission_for_assignment?(assignment)
+              %span.assignmentName= link_to assignment.name, assignment_submission_path(assignment, current_student_data.submission_for_assignment(assignment), :student_id => current_student)
             - else
               %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
             - if assignment.release_necessary?
               %span.points= "("
-              - if assignment.released_grade_for_student(current_student).present? && assignment.grade_for_student(current_student) > 0
-                %span.points.earned= "#{number_with_delimiter(assignment.released_grade_for_student(current_student))} "
+              - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.score_for_assignment(assignment) > 0
+                %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)} "
                 %span.points= "/"
-              - elsif assignment.released_grade_for_student(current_student).present?
-                %span.points.missed= "#{number_with_delimiter(assignment.grade_for_student(current_student))}  / "
+              - elsif current_student_data.grade_released_for_assignment?(assignment)
+                %span.points.missed= "0 / "
             - else
               - grade = assignment.grade_for_student(current_student)
               %span.points= "("
-              - if grade.present?
-                - if grade.score > 0
+              - if current_student_data.grade_released_for_assignment?(assignment)
+                - if current_student_data.score_for_assignment(assignment) > 0
                   %span.points.earned= "#{number_with_delimiter grade.score} "
                   %span.points= "/"
                 - else
-                  %span.points.missed= "#{number_with_delimiter grade.score}  / "
-            %span.points.total= "#{number_with_delimiter(assignment.point_total_for_student(current_student))} points )"
+                  %span.points.missed= "#{points current_student_data.score_for_assignment(assignment)}  / "
+            %span.points.total #{points current_student_data.point_total_for_assignment(assignment)} points )
             - if assignment.future?
               %span.italic= " • Due: #{assignment.due_at.strftime("%A, %B %d")}"
             - if assignment.is_required?
               %span.label.label-important Required!
             - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
-              - grade = assignment.grades.where(student: current_student).first_or_initialize
-              = simple_form_for([assignment, grade], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post) do |f|
-                - present = grade.raw_score == assignment.point_total
+              = simple_form_for([assignment, current_student_data.grade_for_assignment(assignment)], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post) do |f|
+                - present = current_student_data.present_for_class?(assignment)
                 = hidden_field_tag :present, !present
                 = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn #{present ? 'btn-warning' : 'btn-success'} btn-tiny"
             - if assignment.has_groups?
