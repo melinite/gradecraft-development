@@ -40,6 +40,7 @@ class SubmissionsController < ApplicationController
         @student = current_user
       end
     end
+    @title = "New Submission for #{@assignment.name}"
     @submission = @assignment.submissions.new
   end
 

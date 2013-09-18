@@ -27,22 +27,23 @@ class GradesController < ApplicationController
   def new
     @assignment = current_course.assignments.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
-    @students = current_course.students.alpha
-    @student = @students.find(params[:student_id])
-    @grade = @student.grades.new(assignment: @assignment)
     @score_levels = @assignment_type.score_levels
+    @student = current_course.students.find(params[:student_id])
     @groups = current_course.groups
+    @title = "Grading #{@student.name}'s #{@assignment.name}"
+    @grade = @student.grades.new(assignment: @assignment)
   end
 
   def edit
     @badges = current_course.badges
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
-    @students = current_course.users.students
+    @student = current_course.students.find(params[:student_id])
     @teams = current_course.teams
     @groups = current_course.groups
     @grade = @assignment.grades.find(params[:id])
+    @title = "Editing #{@student.name}'s Grade for #{@assignment.name}"
     respond_with @grade
   end
 
