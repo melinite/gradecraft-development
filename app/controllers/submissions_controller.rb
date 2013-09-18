@@ -40,7 +40,7 @@ class SubmissionsController < ApplicationController
         @student = current_user
       end
     end
-    @title = "New Submission for #{@assignment.name}"
+    @title = "Submit #{@assignment.name}"
     @submission = @assignment.submissions.new
   end
 
@@ -49,19 +49,20 @@ class SubmissionsController < ApplicationController
     if current_user.is_staff?
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
+        @title = "Editing #{@group.name}'s Submission for #{@assignment.name}"
       else
-        @students = current_course.students
-        @student = @students.find(params[:student_id])
+        @student = current_course.students.find(params[:student_id])
+        @title = "Editing #{@student.name}'s Submission for #{@assignment.name}"
       end
     end
     if current_user.is_student?
+      @title = "Editing My Submission for #{@assignment.name}"
       @user = current_user
       @badges = current_course.badges
       @assignments = current_course.assignments
     end
     @groups = @assignment.groups
     @teams = current_course.teams
-    @title = "Editing #{@student.name}'s Submission for #{@assignment.name}"
     @submission = Submission.find(params[:id])
   end
 
@@ -73,7 +74,7 @@ class SubmissionsController < ApplicationController
     respond_to do |format|
       if @submission.save
         if current_user.is_student?
-          format.html { redirect_to dashboard_path, notice: "#{@assignment.name} was successfully submitted." }
+          format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was successfully submitted." }
           format.json { render json: @assignment, status: :created, location: @assignment }
         else
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully submitted." }
@@ -91,10 +92,10 @@ class SubmissionsController < ApplicationController
     respond_to do |format|
       if @submission.update_attributes(params[:submission])
         if current_user.is_student?
-          format.html { redirect_to dashboard_path, notice: "#{@assignment.name} was successfully update." }
+          format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "Your submission for #{@assignment.name} was successfully updated." }
           format.json { render json: @assignment, status: :created, location: @assignment }
         else
-          format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully update." }
+          format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully updated." }
         end
       else
         format.html { render action: "edit" }
