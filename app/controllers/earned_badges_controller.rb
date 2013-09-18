@@ -89,7 +89,7 @@ class EarnedBadgesController < ApplicationController
   end
 
   def mass_update
-    @student = find_student
+    @student = current_student
     @badge = Badge.find(params[:id])
     @badge.update_attributes(params[:badge])
     respond_with @badge
@@ -108,15 +108,6 @@ class EarnedBadgesController < ApplicationController
       format.html { redirect_to @earnable }
       format.json { head :ok }
     end
-  end
-
-  def find_student
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
-    end
-    nil
   end
 
 end

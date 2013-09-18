@@ -40,8 +40,12 @@
                 = badge.feedback
             - if current_course.shared_badges?
               %td
-                - if badge.earned_at.present?
-                  %input{ :type=>"checkbox" }
+                - if badge.earned_badge_for_student(current_student)
+                  %button{:type=>"button", :class=>"share_badge", :data => { id: badge.id.to_s }}
+                    - if badge.shared
+                      %a.btn{:id => 'shared_' + badge.id.to_s} Stop Sharing
+                    - else
+                      %a.btn{:id => 'shared_' + badge.id.to_s} Share
 
   .tab-pane#tabb2
     = render "users/public_class_badges"

@@ -64,4 +64,12 @@ class BadgesController < ApplicationController
     end
   end
 
+  def toggle_shared
+    @badge = current_course.badges.find(params[:id])
+    @badge.shared = !@badge.shared
+    @badge.save
+    render :json => {
+      :shared => @badge.shared
+    }
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130915235018) do
+ActiveRecord::Schema.define(version: 20130917194236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,24 @@ ActiveRecord::Schema.define(version: 20130915235018) do
 
   add_index "assignment_rubrics", ["assignment_id"], name: "index_assignment_rubrics_on_assignment_id", using: :btree
   add_index "assignment_rubrics", ["rubric_id"], name: "index_assignment_rubrics_on_rubric_id", using: :btree
+
+  create_table "assignment_submissions", force: true do |t|
+    t.integer  "assignment_id"
+    t.integer  "user_id"
+    t.string   "feedback"
+    t.string   "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "link"
+    t.integer  "submittable_id"
+    t.string   "submittable_type"
+    t.text     "text_feedback"
+    t.text     "text_comment"
+  end
 
   create_table "assignment_types", force: true do |t|
     t.string   "name"
@@ -146,6 +164,7 @@ ActiveRecord::Schema.define(version: 20130915235018) do
     t.datetime "updated_at"
     t.boolean  "visible"
     t.boolean  "can_earn_multiple_times"
+    t.boolean  "shared",                  default: true
   end
 
   create_table "categories", force: true do |t|

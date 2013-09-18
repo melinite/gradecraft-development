@@ -1,4 +1,22 @@
 $(document).ready(function() {
+  $('.share_badge').on('click', function () {
+    var id = this.getAttribute('data-id')
+    $.ajax({
+      url: '/badges/' + id + '/toggle_shared',
+      method: 'post',
+      data: {
+        id: id
+      },
+      success: function (data) {
+        console.log(data)
+        if (data.shared) {
+          $('#shared_' + id).text("Stop Sharing")
+        } else {
+          $('#shared_' + id).text("Share")
+        }
+      }
+    })
+  })
 
 	var options = {
     chart: {
