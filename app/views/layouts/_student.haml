@@ -1,11 +1,17 @@
 .row
   .col-lg-9.col-sm-9.col-md-9
     - if flash[:notice]
-      .alert.alert-success= flash[:notice]
+      .alert.alert-success
+        = flash[:notice]
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
     - if flash[:error]
-      .alert.alert-error= flash[:error]
+      .alert.alert-error
+        = flash[:error]
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
     - if flash[:alert]
-      .alert.alert-info= flash[:alert]
+      .alert.alert-info
+        = flash[:alert]
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
     .primaryContent= render 'layouts/content'
   .col-lg-3.col-sm-3.col-md-3
     = render 'layouts/student_sidebar'

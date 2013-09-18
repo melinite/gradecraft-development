@@ -54,6 +54,8 @@ $(document).ready(function(){
 
   $('#myModal').modal('hide');
 
+  $(".alert").alert();
+
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
   });
