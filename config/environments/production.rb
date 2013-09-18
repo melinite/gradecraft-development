@@ -21,7 +21,7 @@ GradeCraft::Application.configure do
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
   config.assets.precompile += %w( .svg .eot .woff .ttf )
   config.cache_classes = false
-  config.cache_store = :dalli_store
+  config.cache_store = :dalli_store, ENV['MEMCACHED_URL'], { :namespace => 'gradecraft_production', :expires_in => 1.day, :compress => true }
   config.consider_all_requests_local = false
   config.eager_load = true
   config.force_ssl = true

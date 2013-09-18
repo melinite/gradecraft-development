@@ -19,7 +19,7 @@ GradeCraft::Application.configure do
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
   config.cache_classes = true
-  config.cache_store = :dalli_store
+  config.cache_store = :dalli_store, ENV['MEMCACHED_URL'], { :namespace => 'gradecraft_staging', :expires_in => 1.day, :compress => true }
   config.consider_all_requests_local = false
   config.eager_load = true
   config.force_ssl = true
