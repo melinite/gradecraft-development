@@ -1,5 +1,5 @@
 - assignment_type, assignments = assignment_type_and_assignments
-%li(id="slide-#{assignment_type.id}" data-assignment-type-id="#{assignment_type.id}" data-assignment-type-name="#{assignment_type.name}")
+%li{:id => "slide-#{assignment_type.id}", :'data-assignment-type-id' => assignment_type.id, :'data-assignment-type-name' => assignment_type.name}
   .slide-panel
     .assignmentType
       %h4= assignment_type.name
@@ -24,7 +24,8 @@
           - elsif assignment_type.slider?
             %span.pScore= "0 "
             = "/ #{current_student_data.point_total_for_assignment(assignment)} possible points"
-            .slider{:id => "slider-"+assignment.id.to_s(), :max => current_student_data.point_total_for_assignment(assignment) , :value => 0 }
+            %span.score-level-name
+            .slider{:id => "slider-"+assignment.id.to_s(), :max => current_student_data.point_total_for_assignment(assignment), :value => 0, :'data-scorelevelvals' => "#{assignment_type.score_levels.pluck(:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.pluck(:name)}"}
           - elsif assignment_type.select?
             = "#{current_student_data.point_total_for_assignment(assignment)} possible points"
             = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
