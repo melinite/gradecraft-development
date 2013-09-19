@@ -110,11 +110,12 @@ class EarnedBadgesController < ApplicationController
   end
 
   def destroy
+    @badge = current_course.badges.find(params[:id])
     @earned_badge = EarnedBadge.find(params[:id])
     @earned_badge.destroy
 
     respond_to do |format|
-      format.html { redirect_to @earnable }
+      format.html { redirect_to @badge }
       format.json { head :ok }
     end
   end
