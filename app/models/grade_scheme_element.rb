@@ -9,6 +9,7 @@ class GradeSchemeElement < ActiveRecord::Base
   validates_numericality_of :high_range, greater_than: Proc.new { |e| e.low_range.to_i }
 
   scope :order_by_low_range, -> { order 'grade_scheme_elements.low_range ASC' }
+  scope :order_by_high_range, -> { order 'grade_scheme_elements.high_range DESC' }
 
   def element_name
     if level?

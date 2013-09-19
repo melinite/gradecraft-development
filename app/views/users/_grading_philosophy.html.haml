@@ -1,17 +1,18 @@
 .col-lg-12
   = raw current_course.grading_philosophy
 
-  %table.display.table-striped.table.simpleTable
-    %thead
-      %tr
-        %th.sortable{"data-sort" => "string"} Name
-        %th.sortable{"data-sort" => "int"} Low Range
-        %th.sortable{"data-sort" => "int"} High Range
-        %th.sortable{"data-sort" => "string"} Letter Grade
-    %tbody
-      - @grade_scheme.elements.each do |element|
+  - if current_course.grade_scheme_id?
+    %table.display.table-striped.table.simpleTable
+      %thead
         %tr
-          %td #{element.level}
-          %td #{number_with_delimiter(element.low_range, :delimiter => ',') }
-          %td #{number_with_delimiter(element.high_range, :delimiter => ',') }
-          %td #{element.letter}
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "int"} Low Range
+          %th.sortable{"data-sort" => "int"} High Range
+          %th.sortable{"data-sort" => "string"} Letter Grade
+      %tbody
+        - @grade_scheme.elements.order_by_high_range.each do |element|
+          %tr
+            %td #{element.level}
+            %td #{number_with_delimiter(element.low_range, :delimiter => ',') }
+            %td #{number_with_delimiter(element.high_range, :delimiter => ',') }
+            %td #{element.letter}

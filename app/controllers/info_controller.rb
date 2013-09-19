@@ -18,6 +18,7 @@ class InfoController < ApplicationController
       @assignments = current_course.assignments.includes(:course, :assignment_type)
       @teams = current_course.teams
       @sorted_teams = @teams.order_by_high_score
+      @grade_scheme = current_course.grade_scheme
     end
   end
 
