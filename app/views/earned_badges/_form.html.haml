@@ -2,7 +2,8 @@
   %h3= "You are awarding the #{@badge.name} #{term_for :badge} to..."
   = f.input :badge_id, :as => :hidden, :collection => @badges
   = f.input :student_id, :collection => @students, :label => "#{term_for :student}"
-  //= f.text_area :text_feedback, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
+  %h5 Feedback
+  = f.text_area :feedback, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
   = hidden_field_tag "earned_badge[badge_ids][]", nil
 
   .form-actions.col-lg-offset-3

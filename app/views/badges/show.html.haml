@@ -75,7 +75,7 @@
         %tr
           %td= link_to earned_badge.student.try(:name), student_path(earned_badge.student)
           %td= earned_badge.score
-          %td= earned_badge.feedback
+          %td= raw earned_badge.feedback
           %td= earned_badge.created_at
           %td= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-success'
           %td= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-info'
