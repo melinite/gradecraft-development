@@ -45,6 +45,7 @@ class StudentsController < ApplicationController
     @badges = current_course.badges.includes(:earned_badges, :tasks)
     @earned_badges = current_student.earned_badges
     @teams = current_course.teams
+    @grade_scheme = current_course.grade_scheme
     @sorted_teams = @teams.order_by_high_score
 
     @form = AssignmentTypeWeightForm.new(current_student, current_course)

@@ -8,91 +8,66 @@
       %li= link_to 'Grade Submission', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => @submission.student.id), :class => 'btn btn-tiny btn-info'
     %li= link_to "Delete Submission", assignment_submission_path(@assignment, @submission), :class => "btn btn-tiny btn-info", :data => { confirm: 'Are you sure?' }, :method => :delete
 - else
-  = content_nav_for "New Submission" do
+  = content_nav_for "My #{@assignment.name} Submission" do
     %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
     %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
 
 .col-lg-12.info
   %h3
-    = "#{term_for :assignment }:"
     = link_to "#{@assignment.try(:name)}", @submission.assignment
+    Submission
 
-
-  - if @assignment.description?
-    %b.heading.col-lg-2 Description:
-    .col-lg-offset-2= raw @assignment.description
-
-  - if @assignment.point_total?
-    %b.heading.col-lg-2 Point Total:
-    .col-lg-offset-2= number_with_delimiter(@assignment.point_total, :delimiter => ',')
-
-  - if @assignment.open_at?
-    %b.heading.col-lg-2 Open date:
-    .col-lg-offset-2= @assignment.open_at
-
-  - if @assignment.due_at?
-    %b.heading.col-lg-2 Due date:
-    .col-lg-offset-2= @assignment.due_at
-
-  - if @assignment.accepts_submissions_until?
-    %b.heading.col-lg-2 Accept submissions until:
-    .col-lg-offset-2= @assignment.accepts_submissions_until
-  - if @assignment.assignment_files.present?
-    %b.heading.col-lg-2 Documents:
-    - @assignment.assignment_files.each do |af|
-      .col-lg-offset-2= link_to File.basename(af.filename.path), af.filename.url
-
-  %hr
-
-  - if @assignment.is_individual?
+  - if current_user.is_staff?
     %h4
-      = "#{term_for :student}:"
-      = link_to @submission.student.try(:name), student_path(@submission.student)
-  - elsif @assignment.has_groups?
-    %h4
-      = "#{term_for :group}:"
-      = link_to @submission.student.try(:name), assignment_group_path(@submission, @submission.student)
-  .heading.col-lg-2 Submitted:
-  .col-lg-offset-2= @submission.created_at
-  - if @submission.updated_at != @submission.created_at
-    .heading.col-lg-2 Last Updated:
-    .col-lg-offset-2= @submission.updated_at
-  - if @submission.link?
-    .heading.col-lg-2 Link:
-    .col-lg-offset-2= link_to @submission.link, @submission.link
+      - if @assignment.is_individual?
+        = "#{term_for :student}:"
+        = link_to @submission.student.try(:name), student_path(@submission.student)
+      - elsif @assignment.has_groups?
+        = "#{term_for :group}:"
+        = link_to @submission.student.try(:name), assignment_group_path(@submission, @submission.student)
+  .col-lg-12
+    .heading.col-lg-2 Submitted:
+    .col-lg-offset-2= @submission.created_at
+    - if @submission.updated_at != @submission.created_at
+      .heading.col-lg-2 Updated:
+      .col-lg-offset-2= @submission.updated_at
+    - if @submission.link?
+      .heading.col-lg-2 Link:
+      .col-lg-offset-2= link_to @submission.link, @submission.link
 
-  - if @submission.submission_files.present?
-    .heading.col-lg-2 Files:
-    - @submission.submission_files.each do |sf|
-      .col-lg-offset-2= link_to File.basename(sf.filename.path), sf.filename.url
+    - if @submission.submission_files.present?
+      .heading.col-lg-2 Files:
+      - @submission.submission_files.each do |sf|
+        .col-lg-offset-2= link_to File.basename(sf.filename.path), sf.filename.url
 
-  .heading.col-lg-2 Statement:
-  .col-lg-offset-2= raw @submission.text_comment
+    .heading.col-lg-2 Statement:
+    .col-lg-offset-2= raw @submission.text_comment
 
   - @assignment.grade_for_student(@submission.student).tap do |grade|
-    - if grade
+    - if grade && grade.is_released? || grade && current_user.is_staff?
       %hr
       %h4 Grade
-      .heading.col-lg-2 Raw Score:
-      .col-lg-offset-2= grade.raw_score
-      .heading.col-lg-2 Final Score:
-      .col-lg-offset-2= grade.try(:final_score)
-      - if grade.grade_files.present?
-        .heading.col-lg-2 Documents:
+      .col-lg-12
+        .heading.col-lg-2 Score:
         .col-lg-offset-2
-          - grade.grade_files.each do |gf|
-            = link_to File.basename(gf.filename.path), gf.filename.url
+          = number_with_delimiter(grade.score, :delimiter => ",")
+        - if grade.grade_files.present?
+          .heading.col-lg-2 Documents:
+          .col-lg-offset-2
+            - grade.grade_files.each do |gf|
+              = link_to File.basename(gf.filename.path), gf.filename.url
 
-      - if grade.feedback?
-        .heading.col-lg-2 Feedback:
-        .col-lg-offset-2= raw grade.feedback
+        - if grade.feedback?
+          .heading.col-lg-2 Feedback:
+          .col-lg-offset-2= raw grade.feedback
 
-      - if grade.earned_badges.present?
-        .heading.col-lg-2= "#{term_for :badges}:"
-        .col-lg-offset-2
-          - grade.earned_badges.each do |badge|
-            %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
+        - if grade.earned_badges.present?
+          .heading.col-lg-2= "#{term_for :badges}:"
+          .col-lg-offset-2
+            - grade.earned_badges.each do |badge|
+              %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
 
-      - if grade.assignment.release_necessary?
-        .heading.col-lg-2.clear Status:
-        .col.col-lg-offset-2= grade.status
+        - if grade.assignment.release_necessary?
+          .heading.col-lg-2.clear Status:
+          .col.col-lg-offset-2= grade.status
+  %br

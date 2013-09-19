@@ -16,17 +16,17 @@
           .badgeIcon
             - if current_course.valuable_badges?
               %a{:rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
-                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
+                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
             - else
               %a{:rel => "tooltip", :title => "#{badge.try(:name)}"}
-                %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "earned"}
+                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
         - else
           - if badge.visible?
             .badgeIcon
               - if current_course.valuable_badges?
                 %a{:rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
+                  %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
               - else
                 %a{:rel => "tooltip", :title => "#{badge.try(:name)}"}
-                  %img{:src => badge.try(:icon), :alt => "You've earned the #{badge.try(:name)} badge", :class => "unearned"}
+                  %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
     .col-lg-12.clear= "#{term_for :badges} you've earned will shine brightly!"
