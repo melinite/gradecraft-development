@@ -73,7 +73,7 @@
     %tbody
       - @earned_badges.each do |earned_badge|
         %tr
-          %td= link_to earned_badge.student.try(:name), earned_badge.student
+          %td= link_to earned_badge.student.try(:name), student_path(earned_badge.student)
           %td= earned_badge.score
           %td= earned_badge.feedback
           %td= earned_badge.created_at
