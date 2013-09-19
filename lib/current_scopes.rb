@@ -11,7 +11,7 @@ module CurrentScopes
 
   def current_student
     if current_user.is_staff?
-      @__current_student ||= (current_course.students.find_by params[:student_id] if params[:student_id])
+      @__current_student ||= (current_course.students.find_by(id: params[:student_id]) if params[:student_id])
     else
       current_user
     end
