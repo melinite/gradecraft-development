@@ -163,14 +163,14 @@ $(document).ready(function(){
       }
 
       for (var i=0, k=1, index = 0; i <data.length; i++) {
-        if (k < data[i][0]) {
-          index++
-          k = data[i][0]
-        }
         if (scores.data[index] == undefined) {
           scores.data[index] = []
         }
         scores.data[index].push(data[i][1])
+        if (k < data[i][0]) {
+          index++
+          k = data[i][0]
+        }
       }
 
       var categories = Array.apply(null, {length: scores.data.length + 1}).map(Number.call, Number)
@@ -188,7 +188,10 @@ $(document).ready(function(){
           enabled: false
         },
         xAxis: {
-          categories: categories
+          categories: categories,
+          title: {
+            text: 'Team No.'
+          }
         },
         yAxis: {
         },
