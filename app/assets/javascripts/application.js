@@ -153,6 +153,43 @@ $(document).ready(function(){
   };
 
   if ($('#highchart').length) {
+
+    //get required data for Highchart.
+    function formatData (data) {
+      var series = []
+      for (var i=0; i<data.length; i++) {
+        series[i] = []
+        data[i] = data[i].sort(function (a, b) {return a - b})
+        var q_length = data[i].length + 1
+        //get lowest value
+        series[i].push(Math.min.apply(Math, data[i]))
+
+        //get lower quartile
+        series[i].push(data[i][(Math.floor(q_length / 4))])
+
+        //get median
+        if (q_length == 2) {
+          //if there's only one value...
+          series[i].push(data[i][0])
+        } else if (q_length % 2 == 0) {
+          //if there's an even number of members in the set
+          var index = Math.floor(data.length / 2)
+          series[i].push((data[i][index] + data[i][index-1]) / 2)
+        } else {
+          //otherwise standard
+          series[i].push(data[i][Math.floor(data.length / 2)])
+        }
+
+        //get upper quartile
+        series[i].push(data[i][(Math.floor(q_length * 0.75 - 1))])
+
+        //get max value
+        series[i].push(Math.max.apply(Math, data[i]))
+      }
+
+      return series;
+    }
+
     $.getJSON('/users/scores_by_team', function (data) {
       data = data.scores
       var scores = {
@@ -172,6 +209,8 @@ $(document).ready(function(){
           k = data[i][0]
         }
       }
+
+      scores.data = formatData(scores.data)
 
       var categories = Array.apply(null, {length: scores.data.length + 1}).map(Number.call, Number)
       categories.splice(0,1)
