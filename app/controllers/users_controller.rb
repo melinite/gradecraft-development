@@ -118,7 +118,7 @@ class UsersController < ApplicationController
   def scores_by_team
     records = current_course.grades.released
                             .group('grades.student_id, grades.team_id')
-                            .order('grades.student_id, grades.team_id')
+                            .order('grades.team_id')
     scores = records.pluck('grades.team_id, SUM(grades.score)')
     render :json => {
       :scores => scores

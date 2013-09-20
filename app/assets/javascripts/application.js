@@ -200,14 +200,14 @@ $(document).ready(function(){
       }
 
       for (var i=0, k=1, index = 0; i <data.length; i++) {
-        if (scores.data[index] == undefined) {
-          scores.data[index] = []
-        }
-        scores.data[index].push(data[i][1])
         if (k < data[i][0]) {
           index++
           k = data[i][0]
         }
+        if (scores.data[index] == undefined) {
+          scores.data[index] = []
+        }
+        scores.data[index].push(data[i][1])
       }
 
       scores.data = formatData(scores.data)
