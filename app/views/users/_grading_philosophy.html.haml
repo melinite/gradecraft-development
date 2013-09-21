@@ -13,6 +13,6 @@
         - @grade_scheme.elements.order_by_high_range.each do |element|
           %tr
             %td #{element.level}
-            %td #{number_with_delimiter(element.low_range, :delimiter => ',') }
-            %td #{number_with_delimiter(element.high_range, :delimiter => ',') }
+            %td #{points element.low_range }
+            %td #{points element.high_range }
             %td #{element.letter}

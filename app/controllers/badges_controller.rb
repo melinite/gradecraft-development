@@ -5,11 +5,13 @@ class BadgesController < ApplicationController
   def index
     @title = "View All #{term_for :badges}"
     @badges = current_course.badges
+    @assignments = current_course.assignments
   end
 
   def show
     @badge = current_course.badges.find(params[:id])
     @title = @badge.name
+    @assignments = current_course.assignments
     @earned_badges = @badge.earned_badges
     @tasks = @badge.tasks
   end

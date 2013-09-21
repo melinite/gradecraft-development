@@ -11,4 +11,4 @@
           %tr
             %td= student.display_name
             %td= student.character_profile(current_course)
-            %td= "#{number_with_delimiter(student.score_for_course(current_course), :delimiter => ',')}"  if student.respond_to?(:grades)
+            %td= points student.score_for_course(current_course) if student.respond_to?(:grades)
