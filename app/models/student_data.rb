@@ -112,7 +112,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def present_for_class?(assignment)
-    grade_for_assignment(assignment).point_total == assignment.point_total
+    grade_for_assignment(assignment).raw_score == assignment.point_total
   end
 
   private

@@ -96,9 +96,9 @@ class GradesController < ApplicationController
   end
 
   def self_log
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     if @assignment.open?
-      @grade = current_user.grades.find_or_initialize_by(assignment: @assignment)
+      @grade = current_student.grades.find_or_initialize_by(assignment: @assignment)
       @grade.raw_score = params[:present] == 'true' ? @assignment.point_total : 0
       respond_to do |format|
         if @grade.save

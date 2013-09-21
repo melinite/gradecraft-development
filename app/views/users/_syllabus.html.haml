@@ -34,7 +34,7 @@
               %span.points= "("
               - if current_student_data.grade_released_for_assignment?(assignment)
                 - if current_student_data.score_for_assignment(assignment) > 0
-                  %span.points.earned= "#{number_with_delimiter grade.score} "
+                  %span.points.earned= points grade.score
                   %span.points= "/"
                 - else
                   %span.points.missed= "#{points current_student_data.score_for_assignment(assignment)}  / "
@@ -58,4 +58,9 @@
             - else
               - if assignment.accepts_submissions?
                 = render "users/submissions", assignment: assignment
+            - if assignment.release_necessary?
+              - if current_student_data.grade_released_for_assignment?(assignment)
+                = link_to "See Grade", assignment_grade_path(assignment, grade), :class => "btn btn-primary btn-xs"
+            - elsif grade && grade.feedback?
+              = link_to "See Feedback", assignment_grade_path(assignment, grade), :class => "btn btn-primary btn-xs"
       %hr

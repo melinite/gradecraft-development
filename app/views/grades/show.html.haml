@@ -32,7 +32,7 @@
       - @grade.earned_badges.each do |badge|
         %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
 
-  - if @grade.assignment.release_necessary?
+  - if @grade.assignment.release_necessary? && current_user.is_staff?
     .heading.col-lg-2 Status:
     .col.col-lg-offset-2= @grade.status
 
