@@ -17,7 +17,7 @@
   - if @assignment.point_total?
     %p
       %b Point Total:
-      = number_with_delimiter(@assignment.point_total, :delimiter => ',')
+      = points @assignment.point_total
 
   - if @assignment.open_at?
     %p

@@ -35,7 +35,7 @@
           %td
             - if assignment.self_gradeable?
               %button.btn.btn-info.btn-tiny.btn-success #{assignment.assignment_type.student_logged_button_text}
-          %td= number_with_delimiter(assignment.point_total, :delimiter => ',')
+          %td= points assignment.point_total
           %td= assignment.visible? ? 'Yes' : 'No'
           %td= assignment.required? ? 'Yes' : 'No'
           %td= assignment.grade_scope

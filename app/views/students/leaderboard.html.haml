@@ -12,10 +12,6 @@
         = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
         = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
 
-
-- current_course.grade_scheme.elements.each do |gse|
-  %h3= gse.level
-
 %table.table.simpleTable.table-striped
   %thead
     %tr
@@ -47,7 +43,7 @@
         - if current_course.team_roles?
           %td= student.try(:team_role)
         - if student.respond_to?(:grades)
-          %td= number_with_delimiter(student.score_for_course(current_course), :delimiter => ',')
+          %td= points student.score_for_course(current_course)
           %td= student.grade_level_for_course(current_course)
         - if current_course.has_badges?
           %td

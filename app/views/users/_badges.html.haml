@@ -31,7 +31,7 @@
                 - badge.tasks.each do |task|
                   %li= task.name
             - if current_course.valuable_badges?
-              %td= number_with_delimiter(badge.point_total)
+              %td= points badge.point_total
             %td
               - if badge.earned_at.present?
                 %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
