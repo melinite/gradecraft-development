@@ -44,7 +44,7 @@
     .col-lg-offset-2= raw @submission.text_comment
 
   - @assignment.grade_for_student(@submission.student).tap do |grade|
-    - if grade.assignment.release_necessary && grade.is_released? || ! grade.assignment.release_necessary && grade || grade && current_user.is_staff?
+    - if grade && grade.assignment.release_necessary && grade.is_released? || grade && ! grade.assignment.release_necessary || grade && current_user.is_staff?
       %hr
       %h4 Grade
       .col-lg-12
