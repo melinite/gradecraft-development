@@ -152,6 +152,91 @@ $(document).ready(function(){
     width: '100%'
   };
 
+  if ($('#highchart').length) {
+
+    //get required data for Highchart.
+    function formatData (data) {
+      var series = []
+      for (var i=0; i<data.length; i++) {
+        series[i] = []
+        data[i] = data[i].sort(function (a, b) {return a - b})
+        var q_length = data[i].length + 1
+        //get lowest value
+        series[i].push(Math.min.apply(Math, data[i]))
+
+        //get lower quartile
+        series[i].push(data[i][(Math.floor(q_length / 4))])
+
+        //get median
+        if (q_length == 2) {
+          //if there's only one value...
+          series[i].push(data[i][0])
+        } else if (q_length % 2 == 0) {
+          //if there's an even number of members in the set
+          var index = Math.floor(data.length / 2)
+          series[i].push((data[i][index] + data[i][index-1]) / 2)
+        } else {
+          //otherwise standard
+          series[i].push(data[i][Math.floor(data.length / 2)])
+        }
+
+        //get upper quartile
+        series[i].push(data[i][(Math.floor(q_length * 0.75 - 1))])
+
+        //get max value
+        series[i].push(Math.max.apply(Math, data[i]))
+      }
+
+      return series;
+    }
+
+    $.getJSON('/users/scores_by_team', function (data) {
+      console.log(data)
+      data = data.scores
+      var categories = [], scores = {
+        name: 'Stats:',
+        data: [],
+        tooltip: {
+        }
+      }
+
+      for (var i=0, k=1, index = 0; i <data.length; i++) {
+        if (k < data[i][0]) {
+          index++
+          k = data[i][0]
+        }
+        if (scores.data[index] == undefined) {
+          scores.data[index] = []
+          categories.push(data[i][2])
+        }
+        scores.data[index].push(data[i][1])
+      }
+
+      scores.data = formatData(scores.data)
+
+      $('#highchart').highcharts({
+        chart: {
+          type: 'boxplot'
+        },
+        title: {
+          text: 'Distribution across teams'
+        },
+        legend: {
+          enabled: false
+        },
+        xAxis: {
+          categories: categories,
+          title: {
+            text: 'Team No.'
+          }
+        },
+        yAxis: {
+        },
+        series: [ scores ]
+      })
+    })
+  }
+
   if ($('#grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
       sparkOpts.height = '50px';
