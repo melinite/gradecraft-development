@@ -9,7 +9,8 @@ class GradesController < ApplicationController
   end
 
   def show
-    @assignment = current_course.assignments.find(params[:assignment_id])
+    @assignments = current_course.assignments
+    @assignment = @assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
   end
 
