@@ -191,9 +191,10 @@ $(document).ready(function(){
     }
 
     $.getJSON('/users/scores_by_team', function (data) {
+      console.log(data)
       data = data.scores
-      var scores = {
-        name: 'Teams',
+      var categories = [], scores = {
+        name: 'Stats:',
         data: [],
         tooltip: {
         }
@@ -206,15 +207,12 @@ $(document).ready(function(){
         }
         if (scores.data[index] == undefined) {
           scores.data[index] = []
+          categories.push(data[i][2])
         }
         scores.data[index].push(data[i][1])
       }
 
       scores.data = formatData(scores.data)
-
-      var categories = Array.apply(null, {length: scores.data.length + 1}).map(Number.call, Number)
-      categories.splice(0,1)
-      categories.map(function(x) {return x + ''})
 
       $('#highchart').highcharts({
         chart: {
