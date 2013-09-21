@@ -52,6 +52,7 @@ GradeCraft::Application.routes.draw do
   resources :charts do
     collection do
       get 'per_assign'
+      get 'team_grade'
     end
   end
   resources :group_memberships
