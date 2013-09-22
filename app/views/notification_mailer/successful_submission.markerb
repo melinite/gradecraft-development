@@ -3,7 +3,4 @@ Hi <%= @user[:name] %>,
 You successfully submitted your work for <%= @submission[:name] %> at <%= @submission[:time] %>.
 
 Play on!
-
-xoxo,
-
 GradeCraft
