@@ -1,8 +1,9 @@
-'ello <%= @user[:name] %>!
+Hi <%= @user[:name] %>,
 
-You have successfully submitted your work for <%= @submission[:name] %>
+You successfully submitted your work for <%= @submission[:name] %> at <%= @submission[:time] %>.
 
 Play on!
 
-xoxo
+xoxo,
+
 GradeCraft

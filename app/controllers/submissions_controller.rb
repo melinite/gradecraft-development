@@ -79,7 +79,7 @@ class SubmissionsController < ApplicationController
         else
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully submitted." }
         end
-        user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}"}
+        user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}", time: "#{@submission.created_at}" }
         submission = { name: "#{@submission.assignment.name}" }
         NotificationMailer.successful_submission(user, submission).deliver
       else
