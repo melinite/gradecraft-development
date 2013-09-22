@@ -21,7 +21,7 @@ class NotificationMailer < ActionMailer::Base
   def successful_submission(user_info, submission_info)
     @user = user_info
     @submission = submission_info
-    mail(to: @user.email, subject: "#{@submission.name} Submitted") do |format|
+    mail(:to => "#{@user[:email]}", :subject => "#{@submission[:name]} Submitted") do |format|
       format.text
       format.html
     end
