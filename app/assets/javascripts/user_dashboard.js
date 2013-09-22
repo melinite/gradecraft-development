@@ -166,33 +166,4 @@ $(document).ready(function() {
       }
     },
   };
-
-    var chart, categories, assignment_type_name, scores;
-
-    var $wrapper = $('#userBarInProgressSim');
-    if($wrapper.length) {
-      var studentID = $('#studentID').data('user-id');
-      /*
-
-      // Get Assignment Type Info
-      $.getJSON('/users/predictor.json?in_progress=true', { user_id: userID }, function(data) {
-        options.chart.renderTo = 'userBarInProgressSim';
-        options.title = { text: 'Points so far' };
-        options.xAxis.categories = { text: ' ' };
-        options.yAxis.max = data.course_total
-        options.series = data.scores
-        chart = new Highcharts.Chart(options);
-      });
-*/
-
-      $.getJSON('/users/predictor.json', { student_id: studentID }, function(data) {
-        options.chart.renderTo = 'userBarTotalSim';
-        options.title = { text: 'Total Points' };
-        options.xAxis.categories = { text: ' ' };
-        options.yAxis.max = data.course_total
-        options.series = data.scores
-        chart = new Highcharts.Chart(options);
-      });
-
-    };
 });

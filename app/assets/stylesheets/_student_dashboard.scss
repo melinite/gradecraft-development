@@ -35,7 +35,11 @@
 }
 
 #prediction {
-  //width: 100%;
+  .chart-wrapper {
+    position: absolute;
+  width: 100%;
+
+  }
 }
 
 .dashboard-toggle {
