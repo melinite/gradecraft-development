@@ -20,66 +20,6 @@ $(document).ready(function() {
     })
   })
 
-	var options = {
-    chart: {
-      type: 'bar',
-      backgroundColor:null,
-    },
-    title: {
-      style: {
-        color: "#FFFFFF"
-      }
-    },
-    credits: {
-      enabled: false
-    },
-    xAxis: {
-      title: {
-        text: ' '
-      },
-      labels: {
-        style: {
-          color: "#222"
-        }
-      }
-    },
-    yAxis: {
-      min: 0,
-      title: {
-        text: 'Available Points'
-      }
-    },
-    labels: {
-      plotLines: [{
-        color: '#808080'
-      }]
-    },
-    tooltip: {
-      formatter: function() {
-        return '<b>'+ this.series.name +'</b><br/>'+
-        this.y +' points';
-      }
-    },
-    plotOptions: {
-      series: {
-        stacking: 'normal',
-        events: {
-          legendItemClick: function(event){
-            return false;
-          }
-        }
-      }
-    },
-    legend: {
-      backgroundColor: null,
-      borderColor:null,
-      reversed: true,
-      itemStyle: {
-        color: '#CCCCCC'
-      }
-    },
-  };
-
     var chart, categories, assignment_type_name, scores;
 
     var $wrapper = $('#userBarInProgress');
@@ -144,17 +84,12 @@ $(document).ready(function() {
     tooltip: {
       formatter: function() {
         return '<b>'+ this.series.name +'</b><br/>'+
-        this.y +' points';
+        this.y + ' points';
       }
     },
     plotOptions: {
       series: {
-        stacking: 'normal',
-        events: {
-          legendItemClick: function(event){
-            return false;
-          }
-        }
+        stacking: 'normal'
       }
     },
     legend: {

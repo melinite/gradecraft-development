@@ -8,7 +8,6 @@ var chartOptions = {
   chart: {
     renderTo: 'prediction',
     type: 'bar',
-    height:200,
     backgroundColor:null
   },
   title: {
@@ -54,12 +53,7 @@ var chartOptions = {
   },
   plotOptions: {
     series: {
-      stacking: 'normal',
-      events: {
-        legendItemClick: function(event){
-          return false;
-        }
-      }
+      stacking: 'normal'
     }
   },
   legend: {

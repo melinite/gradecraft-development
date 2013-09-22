@@ -149,7 +149,7 @@ $(document).ready(function(){
 
   var sparkOpts = {
     type: 'box',
-    width: '100%'
+    width: '100%',
   };
 
   if ($('#highchart').length) {
@@ -249,7 +249,8 @@ $(document).ready(function(){
     $.getJSON('/users/scores_for_current_course.json', {user_id: id}, function (data) {
       sparkOpts.height = '50px';
       sparkOpts.target = data.user_score[0];
-      sparkOpts.tooltipOffsetY = -130;
+      sparkOpts.tooltipOffsetY = -80;
+      sparkOpts.targetColor = "#FF0000";
       $('#student_grade_distro').sparkline(data.scores, sparkOpts);
     })
   }

@@ -79,6 +79,9 @@ class SubmissionsController < ApplicationController
         else
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully submitted." }
         end
+        user = { name: "#{info['first_name']} #{info['last_name']}", email: info['email'], uid: auth_hash['uid'] }
+        submission = { name: "#{info['assignment.name']}" }
+        NotificationMailer.successful_submission(user, submission).deliver
       else
         format.html { render action: "new" }
         format.json { render json: @assignment.errors, status: :unprocessable_entity }
