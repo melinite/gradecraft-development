@@ -221,6 +221,14 @@ class Assignment < ActiveRecord::Base
     nil
   end
 
+  def positive_grades
+    grades.where("score > 0").count
+  end
+
+  def attendance_rate(course)
+   ((positive_grades / course.student_count.to_f) * 100).round(2)
+  end
+
   private
 
   def cache_point_total

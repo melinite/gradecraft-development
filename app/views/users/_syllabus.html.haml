@@ -2,13 +2,13 @@
   .col-lg-12.col-xs-12.col-md-12.col-sm-12
     %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
     .collapse{:id => "assignment_type-#{assignment_type.id}"}
-      .col-lg-8
+      .col-lg-10
         - if assignment_type.predictor_description?
           = raw assignment_type.predictor_description
         - if assignment_type.student_weightable?
           .italic= "You've set #{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights} on this #{term_for :assignment_type}"
       - if assignment_type.student_weightable?
-        .col-lg-4
+        .col-lg-2
           - if current_student_data.weighted_assignments?
             .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:user_id => current_student.id), assignment_type: assignment_type, user_id: current_student
           - else

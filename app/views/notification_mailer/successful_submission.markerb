@@ -1,0 +1,8 @@
+'ello <%= @user[:name] %>!
+
+You have successfully submitted your work for <%= @submission[:name] %>
+
+Play on!
+
+xoxo
+GradeCraft
