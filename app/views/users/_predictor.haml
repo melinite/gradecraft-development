@@ -10,7 +10,9 @@
         Predicted Final Grade:
         %span#predictor-course-grade= current_student_data.grade_level
     %span#expectedPointsValue
-  #prediction
+  .charts.dashboard-charts
+    .chart-wrapper
+      .chart#prediction
 
   #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
     .col.col-lg-12

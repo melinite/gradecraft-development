@@ -11,7 +11,8 @@ class Course < ActiveRecord::Base
     :tagline, :academic_history_visible, :office, :phone, :class_email,
     :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times,
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
-    :challenge_term, :badge_term, :grading_philosophy, :team_score_average
+    :challenge_term, :badge_term, :grading_philosophy, :team_score_average,
+    :team_challenges
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -178,6 +179,10 @@ class Course < ActiveRecord::Base
 
   def median_course_score
     #len % 2 == 1 ? sorted[len/2] : (sorted[len/2 - 1] + sorted[len/2]).to_f / 2
+  end
+
+  def student_count
+    students.count
   end
 
   def professor

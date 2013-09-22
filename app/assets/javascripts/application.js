@@ -71,6 +71,7 @@ $(document).ready(function(){
     th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
   });
 
+/*
   $('#easyTab a').click(function (e) {
     e.preventDefault();
     $('#easyTab a[href="#basic"]').tab('show'); // Select tab by name
@@ -78,6 +79,7 @@ $(document).ready(function(){
     $('#easyTab a:last').tab('show'); // Select last tab
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
   });
+*/
 
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
@@ -128,7 +130,7 @@ $(document).ready(function(){
 
   $('#course_id').change(function() { $(this).closest('form').submit(); });
 
-  $('.nav-tabs').button();
+  //$('.nav-tabs').button();
 
 	// handle 'select all' button
 	$(".select-all").click(function(e){
@@ -149,7 +151,7 @@ $(document).ready(function(){
 
   var sparkOpts = {
     type: 'box',
-    width: '100%'
+    width: '100%',
   };
 
   if ($('#highchart').length) {
@@ -249,7 +251,8 @@ $(document).ready(function(){
     $.getJSON('/users/scores_for_current_course.json', {user_id: id}, function (data) {
       sparkOpts.height = '50px';
       sparkOpts.target = data.user_score[0];
-      sparkOpts.tooltipOffsetY = -130;
+      sparkOpts.tooltipOffsetY = -80;
+      sparkOpts.targetColor = "#FF0000";
       $('#student_grade_distro').sparkline(data.scores, sparkOpts);
     })
   }

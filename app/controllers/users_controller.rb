@@ -93,9 +93,12 @@ class UsersController < ApplicationController
     end
 
     earned_badge_score = current_student.earned_badges.where(course: current_course).score
-    scores << { :data => [earned_badge_score], :name => 'Badges' }
 
-    assignments = current_student.assignments.where(course: current_course)
+    if current_course.valuable_badges?
+      scores << { :data => [earned_badge_score], :name => "#{term_for :badges }" }
+    end
+
+    assignments = current_course.assignments
     assignments = assignments.graded_for_student(current_student) if params[:in_progress]
 
     render :json => {

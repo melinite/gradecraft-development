@@ -12,7 +12,7 @@
         %span.assignmentName= assignment.name
         - if assignment.is_required?
           %span.label.label-important Required!
-        - if current_student_data.grade_released_for_assignment?(assignment) 
+        - if current_student_data.grade_released_for_assignment?(assignment)
           %span.points.earned= current_student_data.score_for_assignment(assignment)
           = " out of #{current_student_data.point_total_for_assignment(assignment)} points"
           = hidden_field_tag assignment.name, current_student_data.score_for_assignment(assignment), :'data-assignment-type-id' => assignment.assignment_type_id
