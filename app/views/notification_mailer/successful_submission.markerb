@@ -1,6 +1,6 @@
-Hi <%= @user[:name] %>,
+Dear <%= @user[:name] %>,
 
-You successfully submitted your work for <%= @submission[:name] %> at <%= @submission[:time] %>.
+You successfully submitted your work for <%= @submission[:name] %> on <%= @submission[:time] %>.
 
 Play on!
 
