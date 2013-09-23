@@ -1,5 +1,4 @@
 class AssignmentTypeWeightsController < ApplicationController
-  before_filter :set_student
 
   def mass_edit
     if current_user.is_student?

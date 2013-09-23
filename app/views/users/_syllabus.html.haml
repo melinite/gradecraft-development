@@ -10,9 +10,9 @@
       - if assignment_type.student_weightable?
         .col-lg-2
           - if current_student_data.weighted_assignments?
-            .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:user_id => current_student.id), assignment_type: assignment_type, user_id: current_student
+            .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, user_id: current_student
           - else
-            .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:user_id => current_student.id), assignment_type: assignment_type
+            .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type
       .clear
       %p
       .col-lg-12
