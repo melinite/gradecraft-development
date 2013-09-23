@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
     @assignments = current_course.assignments
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = current_course_data.students.includes(:teams).where(user_search_options)
+    @sorted_students = current_course_data.students_by_high_score
     respond_to do |format|
       format.html
       format.json { render json: @sorted_students }
@@ -20,11 +20,10 @@ class StudentsController < ApplicationController
   def leaderboard
     @title = "#{current_course.user_term} Roster"
     @users = current_course.users
-    @students = current_course.students.includes(:earned_badges)
     @teams = current_course.teams
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = @students.includes(:teams).where(user_search_options).order_by_high_score
+    @sorted_students = current_course.students.includes(:teams).where(user_search_options).order_by_high_score
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -34,7 +33,7 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @students = current_course_data.students.includes(:earned_badges)
+    @students = current_course.students.includes(:earned_badges)
     self.current_student = @students.find(params[:id])
 
     @assignment_types = current_course.assignment_types.includes(:assignments)

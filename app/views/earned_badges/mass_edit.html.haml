@@ -16,7 +16,7 @@
       %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
       %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
     %table
-      - current_course_data.students.alpha.each do |student|
+      - current_course_data.students.each do |student|
         %tr
           %td= link_to student.name, student
           %td
