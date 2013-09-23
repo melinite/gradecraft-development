@@ -7,11 +7,15 @@
     %thead
       %tr
         %th.sortable{"data-sort" => "string"} Student
+        - if current_course.has_teams?
+          %th
         %th
         %th
     %tbody
       - submissions.each do |ug|
         %tr
-          %th= link_to ug.student.try(:name), assignment_submission_path(ug.assignment, ug)
-          %th= link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
-          %th= link_to 'Grade', new_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-tiny btn-success'
+          %th= link_to ug.student.try(:name)
+          - if current_course.has_teams?
+            %th= link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
+          %th= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
+          %th= link_to 'Grade', new_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
