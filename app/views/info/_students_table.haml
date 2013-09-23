@@ -24,11 +24,13 @@
           %td
             - if student.teams.present?
               = link_to student.team_for_course(current_course).name
-        %td= student.earned_badges.count
+        - if current_course.has_badges?
+          %td= student.earned_badges.count
         %td= student.visit_count
         %td= student.page_views
         %td= student.predictor_views
         %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
-        %td
-          - if student.team_leader.present?
-            = mail_to team_leader.email, "Email GSI (#{team_leader.first_name})", :class => "btn btn-primary btn-tiny btn-success"
+        - if current_course.has_teams?
+          %td
+            - if student.team_leader.present?
+              = mail_to team_leader.email, "Email GSI (#{team_leader.first_name})", :class => "btn btn-primary btn-tiny btn-success"
