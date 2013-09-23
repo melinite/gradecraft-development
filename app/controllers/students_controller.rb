@@ -5,6 +5,7 @@ class StudentsController < ApplicationController
     @title = "#{current_course.user_term} Roster"
     @teams = current_course.teams
     @team_id = params[:team_id]
+    @assignments = current_course.assignments
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @sorted_students = current_course.students.includes(:teams).where(user_search_options)
@@ -39,26 +40,26 @@ class StudentsController < ApplicationController
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = current_student.assignment_weights
     rassignment_weight = current_student.assignment_weights.new
-    @assignments = current_course_data.assignments.includes(:submissions, :assignment_type)
+    @assignments = current_course.assignments.includes(:submissions, :assignment_type)
     @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = current_student.grades
     @badges = current_course_data.badges.includes(:earned_badges, :tasks)
     @earned_badges = current_student.earned_badges
-    @teams = current_course_data.teams
-    @grade_scheme = current_course_data.grade_scheme
+    @teams = current_course.teams
+    @grade_scheme = current_course.grade_scheme
     @sorted_teams = @teams.order_by_high_score
 
-    @form = AssignmentTypeWeightForm.new(current_student, current_course_data)
+    @form = AssignmentTypeWeightForm.new(current_student, current_course)
 
     scores = []
-    current_course_data.assignment_types.each do |assignment_type|
+    current_course.assignment_types.each do |assignment_type|
       scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
     end
 
-    earned_badge_score = current_student.earned_badges.where(course: current_course_data).score
+    earned_badge_score = current_student.earned_badges.where(course: current_course).score
     scores << { :data => [earned_badge_score], :name => 'Badges' }
 
-    assignments = current_student.assignments.where(course: current_course_data)
+    assignments = current_student.assignments.where(course: current_course)
     assignments = assignments.graded_for_student(current_student) if params[:in_progress]
 
     respond_to do |format|

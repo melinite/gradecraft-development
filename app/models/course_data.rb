@@ -15,6 +15,10 @@ class CourseData < Struct.new(:course)
     @badges ||= course.badges
   end
 
+  def students
+    @students ||= course.students
+  end
+
   def badges_shared_for_student?(student)
     badges_shared[student.id]
   end
