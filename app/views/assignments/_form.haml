@@ -1,0 +1,49 @@
+= simple_form_for(@assignment, :html => { :class => 'form-horizontal' } ) do |f|
+  .well
+    %h4 The Basics
+    = f.association :assignment_type, :collection => current_course.assignment_types, :input_html => {:class => 'input-sm col-lg-3'}
+    = f.input :name, :input_html => {:class => 'col-lg-3'}
+    = f.input :point_total, :label => "Total Score Possible", :input_html => {:class => 'col-lg-3'}
+    = f.input :points_predictor_display, :label => "Predictor Display", :collection => [["Fixed"], ["Slider"], ["Select List"]], :input_html => {:class => "input-sm col-lg-3"}
+    = f.input :open_at, :include_blank => true, :start_year => Date.today.year
+    = f.input :due_at, :include_blank => true, :start_year => Date.today.year
+    = f.input :visible, :as => :boolean, :hint => "Can students see this assignment in their dashboard?"
+    = f.input :required, :as => :boolean, :hint => "Are ALL students expected to complete this assignment to pass the course?"
+    = f.simple_fields_for :assignment_files, @assignment.assignment_files.new do |aff|
+      = aff.input :filename, as: :file
+    = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
+
+  .well
+    %h4 Timeline
+    = f.input :media, :input_html => {:class => 'col-lg-3'}
+    = f.input :thumbnail, :input_html => {:class => 'col-lg-3'}
+    = f.input :media_credit, :input_html => {:class => 'col-lg-3'}
+    = f.input :media_caption, :input_html => {:class => 'col-lg-3'}
+  .well
+    %h4 Grading
+    = f.input :grade_scope, :as => :select, :collection => [["Individual"], ["Group"], ["Team"]], :input_html => {:class => 'input-sm col-lg-3'}
+    - if current_course.accepts_submissions?
+      = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept submissions for this assignment?", :label => "Assignment Submissions"
+      = f.input :accepts_submissions_until, :hint => "When would you like to accept submissions until?", :include_blank => true, :start_year => Date.today.year
+    = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
+    = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
+  .well= render 'assignments/rubrics_form', f: f, assignment: @assignment, assignment_rubrics: @assignment_rubrics
+
+  .well
+    %h5 Score Levels
+    .assignment-score-levels
+      %p.hint Example: You could create three score levels to produce a quick grading scheme for just this assignment - Complete (5000 points), Finalist (7000 points), and Winner (10,000 points). These levels will then be available to use for quick grading, and when students are setting goals in the grade predictor.
+      %script(id="assignment-score-level-template" type="text/x-template")
+        %fieldset.assignment-score-level
+          = f.simple_fields_for :assignment_score_levels, AssignmentScoreLevel.new, class: 'form-inline', child_index: 'child_index' do |slf|
+            = render 'assignment_score_level_fields', f: slf
+      - @assignment.assignment_score_levels.each do |assignment_score_level|
+        %fieldset.assignment-score-level
+          = f.simple_fields_for :assignment_score_levels, assignment_score_level, class: 'form-inline' do |slf|
+            = render 'assignment_score_level_fields', f: slf
+    %hr
+    = link_to 'Add a Level', '#', class: 'add-assignment-score-level'
+
+  .form-actions.col-lg-offset-3
+    = f.button :submit, :class => "btn-primary"
+    = link_to 'Cancel', assignments_path, :class => 'btn btn-info'
