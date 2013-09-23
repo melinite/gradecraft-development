@@ -90,12 +90,42 @@ $(document).ready(function(){
 	$('#navbar').affix();
 
   $('.slider').each(function(i,slider) {
-    $slider = $(slider)
+    $slider = $(slider);
+    var min = 0;
+    var max = $slider.attr('max');
+    var scoreValues = $slider.data("scorelevelvals");
+    var scoreNames = $slider.data("scorelevelnames");
+    if(scoreValues.length && !!$.inArray(min, scoreValues)){
+      scoreValues.unshift(+min);
+      scoreNames.unshift("Minimum");
+    }
+    if(scoreValues.length && !!$.inArray(max, scoreValues)){
+      scoreValues.push(+max);
+      scoreNames.push("Maximum");
+    }
     $slider.slider({
-      max: $slider.attr('max')
-    });
-    $slider.on('slide', function(event, ui){
-      $(slider).prev("div.assignment > span").html(ui.value)
+      min: min,
+      max: max,
+      stop: function(event, ui) {
+        console.log(ui.value);
+      },
+      slide: function(event, ui) {
+        if(scoreValues.length) {
+          var closest = null;
+          $.each(scoreValues, function(){
+            if (closest == null || Math.abs(this - ui.value) < Math.abs(closest - ui.value)) {
+              closest = this;
+            }
+          });
+          $(this).slider("value", closest);
+          $(slider).siblings("div.assignment > span.pScore").html(closest);
+          $(slider).siblings("div.assignment > span.score-level-name").html("(Score Level: " + scoreNames[scoreValues.indexOf(+closest)] + ")");
+          return false;
+        }
+        else {
+          $(slider).siblings("div.assignment > span.pScore").html(ui.value);
+        }
+      } 
     });
   });
 
@@ -356,8 +386,8 @@ $(document).ready(function(){
       })
       assignmentTypeBars();
     })
-  }
 
-  // Ask Cory.
-  $('.table-toggle').on('click', assignmentTypeBars);
+    // Ask Cory.
+    $('.table-toggle').on('click', assignmentTypeBars);
+  }
 });
