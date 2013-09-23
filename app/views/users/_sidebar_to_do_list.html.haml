@@ -1,7 +1,7 @@
 .col.col-lg-12.col-md-12.col-sm-12.col-xs-12.center.badge-info#todo{"data-target" => "#toDoList", "data-toggle" => "collapse"}
   %h4.center Due This Week
   %div{:id => "toDoList", :class => "collapse clear"}
-    - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+    - current_course.assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
       - if assignment_type.has_soon_assignments? && assignment_type.name != "Attendance"
         %h5= "#{assignment_type.try(:name)}"
         - assignments.each do |assignment|
