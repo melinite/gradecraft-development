@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20130923164329) do
     t.boolean  "required"
     t.boolean  "accepts_submissions"
     t.boolean  "student_logged"
-    t.boolean  "release_necessary"
+    t.boolean  "release_necessary",           default: false,        null: false
     t.datetime "open_at"
     t.string   "icon"
     t.boolean  "can_earn_multiple_times"

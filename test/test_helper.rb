@@ -15,6 +15,7 @@ require 'minitest/reporters'
 MiniTest::Reporters.use!
 
 require 'support/custom_fabricator_definitions'
+require 'support/authentication'
 
 Capybara.current_driver = :webkit
 
@@ -26,6 +27,7 @@ class ActionDispatch::IntegrationTest
   include CustomFabricatorDefinitions
   include Capybara::DSL
   include Capybara::Assertions
+  include Authentication
 
   self.use_transactional_fixtures = false
 

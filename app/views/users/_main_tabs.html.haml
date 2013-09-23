@@ -2,7 +2,7 @@
   %li.active
     %a{ "data-toggle" => "tab", "data-target" => "#tab1" } Timeline
   %li
-    %a{ "data-toggle" => "tab", "data-target" => "#tab2"} Assignments
+    = link_to 'Assignments', '#', data: { toggle: 'tab', target: '#tab2' }
   - if current_course.grading_philosophy.present?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Grading Philosophy
