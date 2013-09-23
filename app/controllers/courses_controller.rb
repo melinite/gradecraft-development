@@ -94,6 +94,10 @@ class CoursesController < ApplicationController
 
   def timeline
     @course = current_course
-    @assignments = @course.assignments
+    if current_course.team_challenges?
+      @events = @course.assignments + @course.challenges
+    else
+      @events = @course.assignments
+    end
   end
 end
