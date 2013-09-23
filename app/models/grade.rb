@@ -35,6 +35,7 @@ class Grade < ActiveRecord::Base
   accepts_nested_attributes_for :grade_files
 
   validates_presence_of :assignment, :assignment_type, :course, :student
+  validates_uniqueness_of :assignment_id, :scope => [:task_id, :submission_id]
 
   delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
