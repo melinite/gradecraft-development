@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
     @assignments = current_course.assignments
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = current_course.students.includes(:teams).where(user_search_options)
+    @sorted_students = current_course_data.students.includes(:teams).where(user_search_options)
     respond_to do |format|
       format.html
       format.json { render json: @sorted_students }

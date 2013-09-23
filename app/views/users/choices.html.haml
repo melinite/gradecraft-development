@@ -20,7 +20,7 @@
       %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Sum
       %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Awarded?
   %tbody
-    - @students.alpha.each do |student|
+    - current_course_data.students.alpha.each do |student|
       %tr
         %td= link_to student.name, student_path(student)
         - @assignment_types.each do |assignment_type|

@@ -56,7 +56,7 @@
   %hr.analytics-divider
 
   %h2 Metrics for Student:
-  = select_tag :user, options_from_collection_for_select(@students, "id", "name"), :id => 'user-events'
+  = select_tag :user, options_from_collection_for_select(current_course_data.students, "id", "name"), :id => 'user-events'
 
   Coming Soon
 

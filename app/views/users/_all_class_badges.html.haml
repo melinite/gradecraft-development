@@ -6,7 +6,7 @@
       - if current_course.valuable_badges?
         %th.sortable{"data-sort" => "int"} Total Badge Score
   %tbody
-    - @students.each do |student|
+    - current_course_data.students.each do |student|
       %tr
         %td= student.name
         %td
