@@ -4,22 +4,26 @@
       %th.sortable{"data-sort" => "string"}= course.user_term
       %th.sortable{"data-sort" => "int"} Score
       %th Chart
-      %th.sortable{"data-sort" => "string"}= course.team_term
-      %th.sortable{"data-sort" => "int"} Badges
+      - if current_course.has_teams?
+        %th.sortable{"data-sort" => "string"}= course.team_term
+      - if current_course.has_badges?
+        %th.sortable{"data-sort" => "int"} Badges
       %th.sortable{"data-sort" => "int"} Logins
       %th.sortable{"data-sort" => "int"} Pageviews
       %th.sortable{"data-sort" => "int"} Predictor Views
       %th.sortable{"data-sort" => "string"} Email
-      %th.sortable{"data-sort" => "string"}= course.team_leader_term
+      - if current_course.has_teams?
+        %th.sortable{"data-sort" => "string"}= course.team_leader_term
   %tbody
     - students.each do |student|
       %tr
         %td= link_to student.name, student_path(student)
         %td= points student.score_for_course(course)
         %td{:data => { :id => student.id.to_s}, :class => "bar-chart" }
-        %td
-          - if student.teams.present?
-            = link_to student.teams.first.try(:name), student.teams.first
+        - if current_course.has_teams?
+          %td
+            - if student.teams.present?
+              = link_to student.team_for_course(current_course).name
         %td= student.earned_badges.count
         %td= student.visit_count
         %td= student.page_views

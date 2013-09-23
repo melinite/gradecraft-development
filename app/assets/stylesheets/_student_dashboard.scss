@@ -36,16 +36,12 @@
   }
 }
 
-  .chart-wrapper {
-    position: absolute;
-    width: 100%;
-  }
 
-  #prediction {
-    height: 200px;
-    margin-left: 10px;
-    width: 55% !important;
-  }
+#prediction {
+  height: 200px;
+  margin-left: 10px;
+  width: 55% !important;
+}
 
 .dashboard-toggle {
   display: none;
