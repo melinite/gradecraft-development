@@ -24,6 +24,17 @@
     height: 200px;
   }
 }
+.toggle-charts {
+  .dashboard-charts {
+    height: 200px;
+    overflow: hidden;
+    display: relative;
+  }
+  .chart-wrapper {
+    position: absolute;
+    width: 100%;
+  }
+}
 
   .chart-wrapper {
     position: absolute;

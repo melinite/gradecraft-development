@@ -13,5 +13,5 @@
       - submissions.each do |ug|
         %tr
           %th= link_to ug.student.try(:name), assignment_submission_path(ug.assignment, ug)
-          %th= link_to ug.student.team_for_course(current_course).name, ug.student.team_for_course(current_course)
+          %th= link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
           %th= link_to 'Grade', new_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-tiny btn-success'
