@@ -11,16 +11,16 @@ json.set! :timeline do
   end
 
   json.set! :date do
-    json.array! @assignments do |assignment|
-      json.startDate assignment.due_at.strftime("%Y,%m,%d") if assignment.due_at
-      json.endDate assignment.due_at.strftime("%Y,%m,%d") if assignment.due_at
-      json.headline assignment.name
-      json.text assignment.description
+    json.array! @events do |event|
+      json.startDate event.due_at.strftime("%Y,%m,%d") if event.due_at
+      json.endDate event.due_at.strftime("%Y,%m,%d") if event.due_at
+      json.headline event.name
+      json.text event.description
       json.set! :asset do
-        json.media assignment.media
-        json.thumbnail assignment.thumbnail
-        json.credit assignment.media_credit
-        json.caption assignment.media_caption
+        json.media event.media
+        json.thumbnail event.thumbnail
+        json.credit event.media_credit
+        json.caption event.media_caption
       end
     end
   end
