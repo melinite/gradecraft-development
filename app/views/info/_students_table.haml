@@ -32,5 +32,5 @@
         %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
         - if current_course.has_teams?
           %td
-            - if student.team_for_course(current_course).team_leader.present?
+            - if student.team_for_course(current_course) && student.team_for_course(current_course).team_leader.present?
               = mail_to student.team_for_course(current_course).team_leader.email, "Email #{student.team_for_course(current_course).team_leader.first_name}", :class => "btn btn-primary btn-tiny btn-success"
