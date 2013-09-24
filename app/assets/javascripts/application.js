@@ -89,6 +89,9 @@ $(document).ready(function(){
 
 	$('#navbar').affix();
 
+  // Temporarily commented out to revive dashboard charts & predictor
+/*
+
   $('.slider').each(function(i,slider) {
     $slider = $(slider);
     var min = 0;
@@ -128,6 +131,18 @@ $(document).ready(function(){
       }
     });
   });
+
+*/
+    $('.slider').each(function(i,slider) {
+    $slider = $(slider)
+    $slider.slider({
+      max: $slider.attr('max')
+    });
+    $slider.on('slide', function(event, ui){
+      $(slider).prev("div.assignment > span").html(ui.value)
+    });
+  });
+
 
 
   $('#userBarInProgress').show();
