@@ -14,7 +14,8 @@
     %tbody
       - submissions.each do |ug|
         %tr
-          %th= link_to ug.student.try(:name), student_path(ug.student)
+          - if ug.student.present?
+            %th= link_to ug.student.try(:name), student_path(ug.student)
           - if current_course.has_teams? && ug.student.team_for_course(current_course).present?
             %th= link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
           %th= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
