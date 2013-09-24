@@ -54,6 +54,7 @@ course = Course.create! do |c|
   c.team_term = "Horde"
   c.challenge_term = "Battle"
   c.grading_philosophy ="I believe a grading system should put the learner in control of their own destiny, promote autonomy, and reward effort and risk-taking. Whereas most grading systems start you off with 100% and then chips away at that “perfect grade” by averaging in each successive assignment, the grading system in this course starts everyone off at zero, and then gives you multiple ways to progress towards your goals. Different types of assignments are worth differing amounts of points. Some assignments are required of everyone, others are optional. Some assignments can only be done once, others can be repeated for more points. In most cases, the points you earn for an assignment are based on the quality of your work on that assignment. Do poor work, earn fewer points. Do high-quality work, earn more points. You decide what you want your grade to be. Learning in this class should be an active and engaged endeavor."
+  c.media_file = "http://upload.wikimedia.org/wikipedia/commons/3/36/Michigan_Wolverines_Block_M.png"
 end
 puts "Videogames and Learning has been installed"
 
@@ -212,7 +213,12 @@ assignment_types[:blogging] = AssignmentType.create! do |at|
   at.points_predictor_display = "Slider"
   at.resubmission = false
   at.max_value = "60000"
-  at.predictor_description = "The course blog allows you to reflect on your learning, or to report on and/or critique ideas and reports about games and learning that you encounter in your daily travels online and offline."
+  at.predictor_description = "There will be many issues and topics that we address in this course that spark an interest, an idea, a disagreement, or a connection for you. You will also encounter ideas in your daily life (blogs you read, news reports, etc.) or in your other classes that spark a connection to something you are thinking about in this course. I encourage you to blog these thoughts on Piazza (we will pretend that Piazza is a blogging site for the purposes of this course). These may be analyses, critiques, or reviews of ideas both from and related to the course. Use the blog as a way to expand the range of technology we might consider. Use the blog to challenge ideas. Use the blog to communicate about things you come across in your travels that you think are relevant to the area of teaching and learning with technology.
+
+Note that blog posts must be substantial to earn points. What “substantial” means is at the discretion of the professor (he knows it when he sees it). “Hello World” posts or posts that are simply duplications from other sites are not going to earn you any points. Also, see this insightful resource for information about plagiarism and blogging:
+http://www.katehart.net/2012/06/citing-sources-quick-and-graphic-guide.html
+
+You can blog as much as you want, but only one post/week can earn points."
   at.order_placement = 3
   at.mass_grade = true
   at.mass_grade_type = "Radio"
@@ -222,9 +228,16 @@ puts "Blogging is great for filling in missed points in other areas"
 
 assignment_types[:lfpg] = AssignmentType.create! do |at|
   at.course = course
-  at.name = "Learning from Playing a Game"
+  at.name = "20% Time"
   at.point_setting = "By Assignment"
   at.points_predictor_display = "Slider"
+  at.predictor_description = "At Google, all employs were (historically) given 20% of their work time to devote to any project they choose. Often, these projects fold the personal interest or ambitions of the employee into the larger opportunities represented by the context of Google (e.g., high-tech resources and lots of smart folks). In this course, I am requiring that you devote 20% of your time to pursuing a project of interest to you, that benefits you, and that will help you maximize the value of this course for you. You will determine the scope of the project, the requirements of the project, and the final grade for the project. You may work alone or with others. Whether or not there is a “product” is up to you, as is the form of that product. There is only one requirement for this project: You must share or present the project (in some way of your choosing) with your classmates and with me at the final class meeting.
+
+We will make time during class for sharing, design jams, help sessions, etc. as we go along. The point of these sessions will be to inspire each other and yourself by seeing what others are up to. My office hours are also available to you for as much advice and guidance as you want to seek to support your work (sign up at http://bit.ly/16Ws5fm).
+
+At the end of the term, you will tell me how many points out of the 20,000 you have earned.
+
+I look forward to being surprised, elated, and informed by your interests and self-expression."
   at.resubmission = false
   at.due_date_present = true
   at.order_placement = 4
@@ -247,11 +260,11 @@ puts "Challenges!"
 
 grinding_assignments = []
 
-1.upto(10).each do |n|
+1.upto(30).each do |n|
   grinding_assignments << assignment_types[:attendance].assignments.create! do |a|
     a.name = "Class #{n}"
     a.point_total = 5000
-    a.due_at = rand(n - 6).weeks.ago
+    a.due_at = rand(n - 6).weeks.from_now
     a.accepts_submissions = false
     a.release_necessary = false
     a.grade_scope = "Individual"
