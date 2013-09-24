@@ -96,8 +96,8 @@ $(document).ready(function(){
     var scoreValues = $slider.data("scorelevelvals");
     var scoreNames = $slider.data("scorelevelnames");
     if(scoreValues.length && !!$.inArray(min, scoreValues)){
-      scoreValues.unshift(+min);
-      scoreNames.unshift("Minimum");
+      //scoreValues.unshift(+min);
+      //scoreNames.unshift("Minimum");
     }
     if(scoreValues.length && !!$.inArray(max, scoreValues)){
       scoreValues.push(+max);
@@ -125,7 +125,7 @@ $(document).ready(function(){
         else {
           $(slider).siblings("div.assignment > span.pScore").html(ui.value);
         }
-      } 
+      }
     });
   });
 
