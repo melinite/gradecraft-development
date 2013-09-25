@@ -27,6 +27,7 @@
       = f.input :accepts_submissions_until, :hint => "When would you like to accept submissions until?", :include_blank => true, :start_year => Date.today.year
     = f.input :student_logged, :hint => "Do students self-report their grade for this assignment?"
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
+    = f.input :notify_released, :hint => "Do you want to notify students by email when a grade is released?"
   .well= render 'assignments/rubrics_form', f: f, assignment: @assignment, assignment_rubrics: @assignment_rubrics
 
   .well
