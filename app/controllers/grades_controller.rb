@@ -55,11 +55,14 @@ class GradesController < ApplicationController
     @grade = @assignment.grades.build(params[:grade])
     @grade.graded_by = current_user
     @grade.save
-    @student = find_student
+    @student = User.find(params[:student_id])
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|
       if @grade.save
+        if @grade.notify_released?
+          NotificationMailer.grade_released(@student, @assignment).deliver
+        end
         format.html { redirect_to @assignment, notice: 'Grade was successfully created.' }
         format.json { render json: @grade, status: :created, location: @grade }
       else
@@ -72,10 +75,13 @@ class GradesController < ApplicationController
   def update
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
-    @student = find_student
+    @student = User.find(params[:student_id])
     @badges = current_course.badges
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
+        if @grade.notify_released?
+          NotificationMailer.grade_released(@student, @assignment).deliver
+        end
         format.html { redirect_to @assignment, notice: 'Grade was successfully updated.' }
         format.json { head :ok }
       else
@@ -128,7 +134,7 @@ class GradesController < ApplicationController
   end
 
   def mass_update
-    @student = find_student
+    @student = User.find(params[:student_id])
     @assignment = current_course.assignments.find(params[:id])
     if @assignment.update_attributes(params[:assignment])
       respond_with @assignment
@@ -160,15 +166,6 @@ class GradesController < ApplicationController
     end
     flash[:notice] = "Updated grades!"
     redirect_to assignment_path(@assignment)
-  end
-
-  def find_student
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
-    end
-    nil
   end
 
 end
