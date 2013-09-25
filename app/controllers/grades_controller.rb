@@ -60,7 +60,7 @@ class GradesController < ApplicationController
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|
       if @grade.save
-        if @assignment.notify_released?
+        if @assignment.notify_released? && @grade.released?
           NotificationMailer.grade_released(@student, @assignment).deliver
         end
         format.html { redirect_to @assignment, notice: 'Grade was successfully created.' }
@@ -79,7 +79,7 @@ class GradesController < ApplicationController
     @badges = current_course.badges
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
-        if @assignment.notify_released?
+        if @assignment.notify_released? && @grade.released?
           NotificationMailer.grade_released(@student, @assignment).deliver
         end
         format.html { redirect_to @assignment, notice: 'Grade was successfully updated.' }
