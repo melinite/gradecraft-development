@@ -23,7 +23,7 @@ class StudentsController < ApplicationController
     @teams = current_course.teams
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = current_course_data.students.order_by_high_score(user_search_options)
+    @sorted_students = current_course_data.students_by_high_score(user_search_options)
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -37,7 +37,7 @@ class StudentsController < ApplicationController
 
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = current_student.assignment_weights
-    rassignment_weight = current_student.assignment_weights.new
+    @assignment_weight = current_student.assignment_weights.new
     @assignments = current_course.assignments.includes(:submissions, :assignment_type)
     @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = current_student.grades
