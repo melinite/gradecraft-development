@@ -19,8 +19,8 @@ class CourseData < Struct.new(:course)
     @students ||= course.students.alpha.to_a
   end
 
-  def students_by_high_score
-    @students_by_high_score ||= course.students.includes(:teams).where(user_search_options).order_by_high_score.to_a
+  def students_by_high_score(options)
+    @students_by_high_score ||= course.students.includes(:teams).where(options).order_by_high_score.to_a
   end
 
   def badges_shared_for_student?(student)
