@@ -91,9 +91,4 @@ class CoursesController < ApplicationController
       end
     end
   end
-
-  def timeline
-    @course = current_course
-    @assignments = @course.assignments
-  end
 end

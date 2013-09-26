@@ -45,5 +45,4 @@ class InfoController < ApplicationController
     @assignments = current_course.assignments.includes(:assignment_type)
     @assignment_types = current_course.assignment_types.includes(:assignments)
   end
-
 end
