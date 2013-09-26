@@ -84,6 +84,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # TODO: Outgoing? ~ AG
   def predictor
     increment_predictor_views
 

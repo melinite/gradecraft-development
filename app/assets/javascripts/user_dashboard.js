@@ -81,30 +81,23 @@ $(document).ready(function() {
   };
 
     var chart, categories, assignment_type_name, scores;
-
-    var $wrapper = $('#userBarInProgress');
-    if($wrapper.length) {
-      var studentID = $('#studentID').data('student-id');
+    if ($('#userBarInProgress').length) {
+      var data = JSON.parse($('#data-predictor').attr('data-predictor'));
 
       // Get Assignment Type Info
-      $.getJSON('/users/predictor.json?in_progress=true', { student_id: studentID}, function(data) {
-        options.chart.renderTo = 'userBarInProgress';
-        options.title = { text: 'My Points' };
-        options.xAxis.categories = { text: ' ' };
-        options.yAxis.max = data.course_total
-        options.series = data.scores
-        chart = new Highcharts.Chart(options);
-      });
+      options.chart.renderTo = 'userBarInProgress';
+      options.title = { text: 'My Points' };
+      options.xAxis.categories = { text: ' ' };
+      options.yAxis.max = data.course_total;
+      options.series = data.scores;
+      chart = new Highcharts.Chart(options);
 
-      $.getJSON('/users/predictor.json', { student_id: studentID}, function(data) {
-        options.chart.renderTo = 'userBarTotal';
-        options.title = { text: 'Total Possible Points' };
-        options.xAxis.categories = { text: ' ' };
-        options.yAxis.max = data.course_total
-        options.series = data.scores
-        chart = new Highcharts.Chart(options);
-      });
-
+      options.chart.renderTo = 'userBarTotal';
+      options.title = { text: 'Total Possible Points' };
+      options.xAxis.categories = { text: ' ' };
+      options.yAxis.max = data.in_progress;
+      options.series = data.scores;
+      chart = new Highcharts.Chart(options);
     };
 
     var options = {
