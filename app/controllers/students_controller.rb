@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @sorted_students }
-      format.csv { send_data User.csv_for_course(current_course) }
+      format.csv { send_data @sorted_students.csv_for_course(current_course) }
       format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
     end
   end
