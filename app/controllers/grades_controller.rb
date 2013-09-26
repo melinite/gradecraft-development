@@ -79,7 +79,7 @@ class GradesController < ApplicationController
     @badges = current_course.badges
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
-        if @assignment.notify_released? && @grade.released?
+        if @assignment.notify_released? && @grade.status == "Released"
           NotificationMailer.grade_released(@student, @assignment).deliver
         end
         format.html { redirect_to @assignment, notice: 'Grade was successfully updated.' }

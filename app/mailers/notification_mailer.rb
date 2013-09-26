@@ -27,12 +27,9 @@ class NotificationMailer < ActionMailer::Base
     end
   end
 
-  def grade_released(user_info, assignment_info)
-    @user = user_info
-    @assignment = assignment_info
-    mail(:to => "#{@user[:email]}", :subject => "#{@assignment[:name]} Graded") do |format|
-      format.text
-      format.html
-    end
+  def grade_released(user, assignment)
+    @assignment = assignment
+    mail(:to => user.email, :subject => "#{@assignment[:name]} Graded")
   end
+
 end
