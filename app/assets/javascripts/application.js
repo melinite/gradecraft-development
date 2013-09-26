@@ -131,8 +131,8 @@ $(document).ready(function(){
       }
     });
   });
-
 */
+
     $('.slider').each(function(i,slider) {
     $slider = $(slider)
     $slider.slider({

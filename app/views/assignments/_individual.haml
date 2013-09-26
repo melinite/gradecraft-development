@@ -27,7 +27,7 @@
           %td= link_to student.name, student_path(student)
           %td
             - if grade
-              = grade.score
+              = points grade.score
           - if @assignment.assignment_type.student_weightable?
             %td
               = grade.try(:unmultiplied_score)
