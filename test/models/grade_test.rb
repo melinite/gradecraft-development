@@ -21,7 +21,7 @@ class GradeTest < ActiveSupport::TestCase
   test "requires unique assignment ID if no task/submssion ID" do
     @grade = create_grade(:assignment => assignment, :student=> student)
     @grade.save
-    @another_grade = create_grade(:assignment => assignment, :student => student)
+    @another_grade = Grade.new(:assignment => assignment, :student => student)
     assert !@another_grade.save
   end
 
