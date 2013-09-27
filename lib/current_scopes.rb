@@ -22,7 +22,7 @@ module CurrentScopes
   end
 
   def current_course_data
-    @__current_course_date ||= CourseData.new(current_course)
+    @__current_course_data ||= CourseData.new(current_course)
   end
 
   def current_student=(student)

@@ -4,10 +4,8 @@ class StudentsController < ApplicationController
   def index
     @title = "#{current_course.user_term} Roster"
     @teams = current_course.teams
-    @team_id = params[:team_id]
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = current_course.students.includes(:teams).where(user_search_options)
+    @assignments = current_course.assignments
+    @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
     respond_to do |format|
       format.html
       format.json { render json: @sorted_students }
@@ -19,11 +17,8 @@ class StudentsController < ApplicationController
   def leaderboard
     @title = "#{current_course.user_term} Roster"
     @users = current_course.users
-    @students = current_course.students.includes(:earned_badges)
     @teams = current_course.teams
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @sorted_students = @students.includes(:teams).where(user_search_options).order_by_high_score
+    @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -33,8 +28,7 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @students = current_course.students.includes(:earned_badges)
-    self.current_student = @students.find(params[:id])
+    self.current_student = current_course.students.where(id: params[:id]).first
 
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = current_student.assignment_weights
@@ -42,7 +36,7 @@ class StudentsController < ApplicationController
     @assignments = current_course.assignments.includes(:submissions, :assignment_type)
     @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = current_student.grades
-    @badges = current_course.badges.includes(:earned_badges, :tasks)
+    @badges = current_course_data.badges.includes(:earned_badges, :tasks)
     @earned_badges = current_student.earned_badges
     @teams = current_course.teams
     @grade_scheme = current_course.grade_scheme
