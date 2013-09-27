@@ -19,23 +19,23 @@ class GradeTest < ActiveSupport::TestCase
   end
 
   test "requires unique assignment ID if no task/submssion ID" do
-    @grade = create_grade(:assignment_id => 1, :student_id => 1)
+    @grade = create_grade(:assignment => assignment, :student=> student)
     @grade.save
-    @another_grade = create_grade(:assignment_id => 1, :student_id => 1)
+    @another_grade = create_grade(:assignment => assignment, :student => student)
     assert !@another_grade.save
   end
 
   test "has different task ID if assignment IDs are the same" do
-    @grade = create_grade(:assignment_id => 1, :student_id => 1, :task_id => 2)
+    @grade = create_grade(:assignment => assignment, :student => student, :task_id => 2)
     @grade.save
-    @another_grade = create_grade(:assignment_id => 1, :student_id => 1, :task_id => 3)
+    @another_grade = create_grade(:assignment => assignment, :student => student, :task_id => 3)
     assert @another_grade.save
   end
 
   test "has different submission ID if assignment/task IDs are the same" do
-    @grade = create_grade(:assignment_id => 1, :student_id => 1, :task_id => 2, :submission_id => 1)
+    @grade = create_grade(:assignment => assignment, :student => student, :task_id => 2, :submission_id => 1)
     @grade.save
-    @another_grade = create_grade(:assignment_id => 1, :student_id => 1, :task_id => 2, :submission_id => 2)
+    @another_grade = create_grade(:assignment => assignment, :student => student, :task_id => 2, :submission_id => 2)
     assert @another_grade.save
   end
 
