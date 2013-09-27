@@ -126,6 +126,7 @@ class UsersController < ApplicationController
     }
   end
 
+  # TODO: Outgoing? AG
   def scores_for_current_course
      scores = current_course.grades.released.group(:student_id).order('SUM(score)')
      id = params[:user_id] || current_user.id
