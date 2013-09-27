@@ -20,7 +20,7 @@ class CourseData < Struct.new(:course)
   end
 
   def students_for_team(team)
-    @students_for_team = course.students.select { |student| team.student_ids.include? student.id }
+  course.students.select { |student| team.student_ids.include? student.id }
   end
 
   def badges_shared_for_student?(student)

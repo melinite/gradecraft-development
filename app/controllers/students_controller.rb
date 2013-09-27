@@ -28,7 +28,7 @@ class StudentsController < ApplicationController
   end
 
   def show
-    self.current_student = User.find(params[:id])
+    self.current_student = current_course.students.where(id: params[:id]).first
 
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = current_student.assignment_weights
