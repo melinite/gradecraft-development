@@ -75,12 +75,11 @@ class GradesController < ApplicationController
   def update
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
-    @student = User.find(@grade.student_id)
     @badges = current_course.badges
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
         if @assignment.notify_released? && @grade.status == "Released"
-          NotificationMailer.grade_released(@student, @assignment).deliver
+          NotificationMailer.grade_released(@grade.id).deliver
         end
         format.html { redirect_to @assignment, notice: 'Grade was successfully updated.' }
         format.json { head :ok }

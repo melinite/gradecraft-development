@@ -1,6 +1,6 @@
-Dear <%= @user[:name] %>,
+Dear <%= @user.name %>,
 
-You can now check your grade for <%= @assignment[:name] %>.
+You can now check your grade for <%= @assignment.name %>.
 
 Play on!
 
