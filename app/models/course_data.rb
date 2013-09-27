@@ -19,6 +19,18 @@ class CourseData < Struct.new(:course)
     badges_shared[student.id]
   end
 
+  def students
+    @students ||= course.students.alpha.to_a
+  end
+
+  def previous_student(student)
+    students[students.index(student) - 1]
+  end
+
+  def next_student(student)
+    students[students.index(student) + 1]
+  end
+
   private
 
   def badges_shared

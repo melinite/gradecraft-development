@@ -1,11 +1,11 @@
-= content_nav_for @assignment, @student.name do
+= content_nav_for @assignment, current_student.name do
   %li
-    = link_to speed_grade_assignment_path(student_id: @previous)  do
-      &lsaquo; #{@previous.name}
-  %li= link_to @student.name, '#'
+    = link_to speed_grade_assignment_path(student_id: current_course_data.previous_student(current_student)), class: 'btn btn-tiny btn-info'  do
+      &lsaquo; #{current_course_data.previous_student(current_student).name}
+  %li= link_to current_student.name, '#', class: 'btn btn-tiny btn-info'
   %li
-    = link_to speed_grade_assignment_path(student_id: @next) do
-      #{@next.name} &rsaquo;
+    = link_to speed_grade_assignment_path(student_id: current_course_data.next_student(current_student)), class: 'btn btn-tiny btn-info' do
+      #{current_course_data.next_student(current_student).name} &rsaquo;
 
 -#.well
   .panel.panel-default
@@ -31,12 +31,12 @@
       %p No submissions.
 
 = simple_form_for @assignment, method: :put, :html => { :class => 'well form-horizontal' }, url: speed_grade_assignment_path(@assignment) do |f|
-  = hidden_field_tag :student_id, @student.id
+  = hidden_field_tag :student_id, current_student.id
   .panel.panel-default
-    = f.simple_fields_for :grades, @assignment.grades.where(student: @student).first_or_initialize do |gf|
+    = f.simple_fields_for :grades, @assignment.grades.where(student: current_student).first_or_initialize do |gf|
       = gf.hidden_field :student_id
       .panel-heading.clearfix
-        = @assignment.assignment_type.name
+        = current_student.name
       .panel-body
         - if @assignment.grade_select?
           = gf.input :raw_score, as: :select, collection: @assignment.score_levels, value_method: :value
@@ -44,8 +44,16 @@
           = gf.input :raw_score, as: :radio_buttons, collection: @assignment.score_levels, value_method: :value
         - elsif @assignment.grade_text?
           = gf.input :raw_score, as: :text
-        - else
+        - elsif @assignment.grade_checkboxes?
           = gf.input :raw_score, as: :boolean, label: @assignment.name
+        - else
+          = gf.input :raw_score, label: @assignment.name
+        %h2 Rubric
+        - current_course.rubrics.first.criteria.each do |criterium|
+          = gf.simple_fields_for :criteria, current_student_data.grade_criterium_for_criterium(criterium) do |gcf|
+            = gcf.hidden_field :criterium_id
+            = gcf.input :score, as: :select, collection: criterium_levels_for_select(criterium), label: criterium.name
   = f.submit 'Save & Continue', class: 'btn btn-primary'
+
 
 = render 'grades/rubric_modal', rubric: current_course.rubrics.first

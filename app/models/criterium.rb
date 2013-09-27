@@ -4,6 +4,7 @@ class Criterium < ActiveRecord::Base
 
   belongs_to :rubric
   has_many :levels, class_name: 'CriteriumLevel'
+  has_many :grade_criteria, class_name: 'GradeCriterium'
   accepts_nested_attributes_for :levels, allow_destroy: true
 
   validates_presence_of :name, :rubric, :category

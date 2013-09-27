@@ -115,6 +115,10 @@ class StudentData < Struct.new(:student, :course)
     grade_for_assignment(assignment).raw_score == assignment.point_total
   end
 
+  def grade_criterium_for_criterium(criterium)
+    grade_criteria[criterium.id] || student.grade_criteria.where(criterium: criterium).new
+  end
+
   private
 
   def assignment_type_weights
@@ -129,6 +133,14 @@ class StudentData < Struct.new(:student, :course)
     @assignment_submissions ||= {}.tap do |assignment_submissions|
       student.submissions.each do |submission|
         assignment_submissions[submission.assignment_id] = submission
+      end
+    end
+  end
+
+  def grade_criteria
+    @grade_criteria ||= {}.tap do |grade_criteria|
+      student.grade_criteria.each do |grade_criterium|
+        grade_criteria[grade_criterium.criterium_id] = grade_criterium
       end
     end
   end

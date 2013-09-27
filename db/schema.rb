@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130923164329) do
+ActiveRecord::Schema.define(version: 20130927215842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -388,6 +388,25 @@ ActiveRecord::Schema.define(version: 20130923164329) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "grade_criteria", force: true do |t|
+    t.integer  "criterium_id"
+    t.integer  "rubric_id"
+    t.integer  "course_id"
+    t.integer  "assignment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "grade_id"
+    t.integer  "score",         default: 0, null: false
+    t.integer  "student_id"
+  end
+
+  add_index "grade_criteria", ["assignment_id"], name: "index_grade_criteria_on_assignment_id", using: :btree
+  add_index "grade_criteria", ["course_id"], name: "index_grade_criteria_on_course_id", using: :btree
+  add_index "grade_criteria", ["criterium_id"], name: "index_grade_criteria_on_criterium_id", using: :btree
+  add_index "grade_criteria", ["grade_id"], name: "index_grade_criteria_on_grade_id", using: :btree
+  add_index "grade_criteria", ["rubric_id"], name: "index_grade_criteria_on_rubric_id", using: :btree
+  add_index "grade_criteria", ["student_id"], name: "index_grade_criteria_on_student_id", using: :btree
 
   create_table "grade_files", force: true do |t|
     t.integer "grade_id"

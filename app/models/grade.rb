@@ -7,7 +7,8 @@ class Grade < ActiveRecord::Base
     :badge_ids, :earned_badges_attributes, :earned, :submission,
     :submission_id, :badge_ids, :earned_badge_id, :earned_badges, :released,
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
-    :graded_by_id, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file
+    :graded_by_id, :team_id, :grade_file_ids, :grade_files_attributes,
+    :grade_file, :criteria_attributes
 
   STATUSES=%w(Graded Released)
 
@@ -22,7 +23,8 @@ class Grade < ActiveRecord::Base
   belongs_to :graded_by, class_name: 'User'
 
   has_many :earned_badges, :dependent => :destroy
-  has_many :grade_criteria, :dependent => :destroy
+  has_many :criteria, class_name: 'GradeCriterium', :dependent => :destroy
+  accepts_nested_attributes_for :criteria
 
   has_many :badges, :through => :earned_badges
   accepts_nested_attributes_for :earned_badges

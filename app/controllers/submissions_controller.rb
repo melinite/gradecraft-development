@@ -1,20 +1,16 @@
 class SubmissionsController < ApplicationController
 
   before_filter :ensure_staff?, :only=>[:index]
-<<<<<<< HEAD
   include Canable::Enforcers
-=======
-  before_filter :set_assignment
->>>>>>> Make speed grading nav work
 
   def index
-    @submissions = @assignment.submissions.where(params[:assignment_id])
+    @assignment = Assignment.find(params[:assignment_id])
+    redirect_to @assignment
   end
 
   def show
     @title = "View Submission"
     @submission = Submission.find(params[:id])
-<<<<<<< HEAD
     @assignment = Assignment.find(params[:assignment_id])
     if current_user.is_student?
       @user = current_user
@@ -45,37 +41,10 @@ class SubmissionsController < ApplicationController
       end
     end
     @title = "Submit #{@assignment.name}"
-=======
-#     if current_user.is_student?
-#       enforce_view_permission(@submission)
-#     end
-#     @assignment_type = @assignment.assignment_type
-#
-#     if current_user.is_staff?
-#       @student = params[:student_id]
-#       @score_levels = @assignment_type.score_levels
-#     end
-  end
-
-  def new
-    @title = "Submit #{@assignment.name}"
-    @student = find_student
-    @student = current_course.users.find(params[:id])
->>>>>>> Make speed grading nav work
     @submission = @assignment.submissions.new
   end
 
-  def create
-    @submission = @assignment.submissions.new(params[:submission])
-    @submission.student = current_student
-    @submission.save
-    location = current_user.is_student? ? dashboard_path : @assignment
-    notice = "#{@assignment.name} was successfully submitted."
-    respond_with @submission, location: location, notice: notice
-  end
-
   def edit
-<<<<<<< HEAD
     @assignment = current_course.assignments.find(params[:assignment_id])
     if current_user.is_staff?
       if @assignment.has_groups?
@@ -92,15 +61,11 @@ class SubmissionsController < ApplicationController
       @badges = current_course.badges
       @assignments = current_course.assignments
     end
-=======
-    @students = current_course.users.students
->>>>>>> Make speed grading nav work
     @groups = @assignment.groups
     @teams = current_course.teams
     @submission = Submission.find(params[:id])
   end
 
-<<<<<<< HEAD
   def create
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.new(params[:submission])
@@ -126,9 +91,6 @@ class SubmissionsController < ApplicationController
 
   def update
     @assignment = current_course.assignments.find(params[:assignment_id])
-=======
-  def update
->>>>>>> Make speed grading nav work
     @submission = @assignment.submissions.find(params[:id])
     respond_to do |format|
       if @submission.update_attributes(params[:submission])
@@ -146,6 +108,7 @@ class SubmissionsController < ApplicationController
   end
 
   def destroy
+    @assignment = Assignment.find(params[:assignment_id])
     @submission = Submission.find(params[:id])
     @submission.destroy
     respond_to do |format|
@@ -154,9 +117,22 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  private
-
-  def set_assignment
-    @assignment = current_course.assignments.find(params[:assignment_id])
+  def find_student
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
+    end
+    nil
   end
+
+  def find_student
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
+    end
+    nil
+  end
+
 end
