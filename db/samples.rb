@@ -31,6 +31,7 @@ course = Course.create! do |c|
   c.badge_use_scope = "Both"
   c.shared_badges = true
   c.badges_value = true
+  c.grade_scheme_id = 1
   c.accepts_submissions = true
   c.predictor_setting = true
   c.graph_display = false
@@ -57,6 +58,18 @@ course = Course.create! do |c|
   c.media_file = "http://upload.wikimedia.org/wikipedia/commons/3/36/Michigan_Wolverines_Block_M.png"
 end
 puts "Videogames and Learning has been installed"
+
+grade_scheme = GradeScheme.create(:name => 'N.E.W.T. Grades', :course => course)
+
+grade_scheme_hash.each do |range,letter|
+  grade_scheme.elements.create do |e|
+    e.letter = letter
+    e.low_range = range.first
+    e.high_range = range.last
+  end
+end
+puts "Installed the N.E.W.T. grade scheme"
+
 
 teams = team_names.map do |team_name|
   course.teams.create! do |t|
@@ -155,8 +168,6 @@ criteria.each do |criterium|
   end
 end
 
-assignment_types = {}
-
 #Generate badge set
 badge_set = course.badge_sets.create! do |bs|
   bs.name = "Hogwarts Most Officially Official Badge Set"
@@ -172,6 +183,19 @@ badges = badge_names.map do |badge_name|
   end
 end
 puts "Did someone need motivation? We found these badges in the Room of Requirements..."
+
+badges.each do |badge|
+  students.each do |student|
+    student.earned_badges.create! do |eb|
+      eb.badge = badge
+      eb.course = course
+    end
+  end
+end
+puts "Earned badges have been awarded"
+
+
+assignment_types = {}
 
 assignment_types[:attendance] = AssignmentType.create! do |at|
   at.course = course
@@ -470,16 +494,6 @@ assignments << Assignment.create! do |a|
   a.grade_scope = "Group"
 end
 puts "Group Game Design has been posted!"
-
-grade_scheme = GradeScheme.new(:name => 'N.E.W.T. Grades', :course_id => course)
-grade_scheme_hash.each do |range,letter|
-  grade_scheme.elements.new do |e|
-    e.letter = letter
-    e.low_range = range.first
-    e.high_range = range.last
-  end
-end
-puts "Installed N.E.W.T. grade scheme for each course"
 
 challenges = []
 
