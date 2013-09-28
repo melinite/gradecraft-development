@@ -5,7 +5,7 @@
     = f.input :name, :input_html => {:class => "col-lg-3"}
     = f.input :point_setting, :label => "How will points be set?", :hint => "Do all assignments of this type have the same point value? For instance, if your type groups all class attendance assignments, they could each be worth 100 points and you can set that universally here.", :collection => [["By Assignment"], ["For All Assignments"]], :input_html => {:class => "col-lg-3 input-sm"}
     = f.input :universal_point_value, :hint => "If assignments in this category all have the same point value, what is that?", :input_html => {:class => "col-lg-3"}
-    = f.input :due_date_present, :label => "Due Dates", :as => :radio_buttons, :hint => "Will assignments in this category have due dates?"
+    .col-md-6= f.input :due_date_present, :label => "Due Dates", :as => :radio_buttons, :hint => "Will assignments in this category have due dates?"
     = f.input :resubmission, :collection => [["Yes", "1"], ["No", "0"], ["Set per Assignment", "2"]], :as => :radio_buttons, :hint => "Will students be allowed to resubmit work after it's been graded?"
     = f.input :student_weightable, :label => "Student Weighted", :hint => "Do students decide how much this assignment type is worth?", :as => :radio_buttons, :item_wrapper_class => 'inline'
   .well
