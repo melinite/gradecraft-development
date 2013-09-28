@@ -171,7 +171,7 @@ class User < ActiveRecord::Base
   end
 
   def badges_shared(course)
-    course_memberships.where(course: course).pluck('shared_badges') == [true]
+    course_memberships.any? { |m| m.course_id = course.id and m.shared_badges }
   end
 
   def grade_level_for_course(course)
