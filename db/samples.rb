@@ -218,7 +218,8 @@ puts "Come to class."
 assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Reading Reactions"
-  at.point_setting = "By Assignment"
+  at.universal_point_value = 5000
+  at.point_setting = "For All Assignments"
   at.points_predictor_display = "Select List"
   at.resubmission = false
   at.predictor_description = "Each week, you must write a concise summary or analysis of the reading for that week of no more than 200 words! (200 words is roughly equivalent to one-half page, double-spaced.) Your 201st word will suffer a terrible fate... "
@@ -229,6 +230,18 @@ assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.student_weightable = true
 end
 puts "Do your readings."
+
+ScoreLevel.create do |sl|
+  sl.assignment_type_id = 2
+  sl.name = "You Reacted"
+  sl.value = 2500
+end
+ScoreLevel.create do |sl|
+  sl.assignment_type_id = 2
+  sl.name = "Someone Reacted to You"
+  sl.value = 5000
+end
+puts "Added select list grading levels"
 
 assignment_types[:blogging] = AssignmentType.create! do |at|
   at.course = course
@@ -301,7 +314,6 @@ grinding_assignments = []
 
   grinding_assignments << assignment_types[:reading_reaction].assignments.create! do |a|
     a.name = "Reading Reaction #{n}"
-    a.point_total = 5000
     a.due_at = rand(n - 6).weeks.ago
     a.accepts_submissions = false
     a.release_necessary = true
