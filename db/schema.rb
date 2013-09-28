@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130915235018) do
+ActiveRecord::Schema.define(version: 20130923164329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20130915235018) do
 
   add_index "assignment_rubrics", ["assignment_id"], name: "index_assignment_rubrics_on_assignment_id", using: :btree
   add_index "assignment_rubrics", ["rubric_id"], name: "index_assignment_rubrics_on_rubric_id", using: :btree
+
+  create_table "assignment_score_levels", force: true do |t|
+    t.integer  "assignment_id", null: false
+    t.string   "name",          null: false
+    t.integer  "value",         null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "assignment_submissions", force: true do |t|
     t.integer  "assignment_id"
@@ -113,7 +121,7 @@ ActiveRecord::Schema.define(version: 20130915235018) do
     t.boolean  "required"
     t.boolean  "accepts_submissions"
     t.boolean  "student_logged"
-    t.boolean  "release_necessary"
+    t.boolean  "release_necessary",           default: false,        null: false
     t.datetime "open_at"
     t.string   "icon"
     t.boolean  "can_earn_multiple_times"
@@ -208,6 +216,10 @@ ActiveRecord::Schema.define(version: 20130915235018) do
     t.boolean  "mass_grade"
     t.string   "mass_grade_type"
     t.boolean  "levels"
+    t.string   "media"
+    t.string   "thumbnail"
+    t.string   "media_credit"
+    t.string   "media_caption"
   end
 
   create_table "course_badge_sets", force: true do |t|
@@ -306,6 +318,7 @@ ActiveRecord::Schema.define(version: 20130915235018) do
     t.boolean  "character_profiles"
     t.string   "lti_uid"
     t.boolean  "team_score_average"
+    t.boolean  "team_challenges"
   end
 
   add_index "courses", ["lti_uid"], name: "index_courses_on_lti_uid", using: :btree

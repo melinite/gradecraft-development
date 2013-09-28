@@ -15,6 +15,14 @@ class CourseData < Struct.new(:course)
     @badges ||= course.badges
   end
 
+  def students
+    @students ||= course.students.alpha.to_a
+  end
+
+  def students_for_team(team)
+  course.students.select { |student| team.student_ids.include? student.id }
+  end
+
   def badges_shared_for_student?(student)
     badges_shared[student.id]
   end

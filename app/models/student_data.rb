@@ -52,7 +52,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def grade_released_for_assignment?(assignment)
-    !assignment.release_necessary? || grade_for_assignment(assignment).is_released?
+    grade_for_assignment(assignment).persisted? && (!assignment.release_necessary? || grade_for_assignment(assignment).is_released?)
   end
 
   def grade_for_assignment(assignment)
@@ -112,7 +112,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def present_for_class?(assignment)
-    grade_for_assignment(assignment).point_total == assignment.point_total
+    grade_for_assignment(assignment).raw_score == assignment.point_total
   end
 
   private

@@ -35,6 +35,7 @@
 //= require stupidtable
 //= require earned_badges
 //= require predictor
+//= require per-assign
 
 $(document).ready(function(){
 
@@ -70,6 +71,7 @@ $(document).ready(function(){
     th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
   });
 
+/*
   $('#easyTab a').click(function (e) {
     e.preventDefault();
     $('#easyTab a[href="#basic"]').tab('show'); // Select tab by name
@@ -77,6 +79,7 @@ $(document).ready(function(){
     $('#easyTab a:last').tab('show'); // Select last tab
     $('#easyTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
   });
+*/
 
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
@@ -86,7 +89,51 @@ $(document).ready(function(){
 
 	$('#navbar').affix();
 
+  // Temporarily commented out to revive dashboard charts & predictor
+/*
+
   $('.slider').each(function(i,slider) {
+    $slider = $(slider);
+    var min = 0;
+    var max = $slider.attr('max');
+    var scoreValues = $slider.data("scorelevelvals");
+    var scoreNames = $slider.data("scorelevelnames");
+    if(scoreValues.length && !!$.inArray(min, scoreValues)){
+      scoreValues.unshift(+min);
+      scoreNames.unshift("Minimum");
+    }
+    if(scoreValues.length && !!$.inArray(max, scoreValues)){
+      scoreValues.push(+max);
+      scoreNames.push("Maximum");
+    }
+    $slider.slider({
+      min: min,
+      max: max,
+      stop: function(event, ui) {
+        console.log(ui.value);
+      },
+      slide: function(event, ui) {
+        if(scoreValues.length) {
+          var closest = null;
+          $.each(scoreValues, function(){
+            if (closest == null || Math.abs(this - ui.value) < Math.abs(closest - ui.value)) {
+              closest = this;
+            }
+          });
+          $(this).slider("value", closest);
+          $(slider).siblings("div.assignment > span.pScore").html(closest);
+          $(slider).siblings("div.assignment > span.score-level-name").html("(Score Level: " + scoreNames[scoreValues.indexOf(+closest)] + ")");
+          return false;
+        }
+        else {
+          $(slider).siblings("div.assignment > span.pScore").html(ui.value);
+        }
+      }
+    });
+  });
+*/
+
+    $('.slider').each(function(i,slider) {
     $slider = $(slider)
     $slider.slider({
       max: $slider.attr('max')
@@ -95,6 +142,7 @@ $(document).ready(function(){
       $(slider).prev("div.assignment > span").html(ui.value)
     });
   });
+
 
 
   $('#userBarInProgress').show();
@@ -127,7 +175,7 @@ $(document).ready(function(){
 
   $('#course_id').change(function() { $(this).closest('form').submit(); });
 
-  $('.nav-tabs').button();
+  //$('.nav-tabs').button();
 
 	// handle 'select all' button
 	$(".select-all").click(function(e){
@@ -148,8 +196,93 @@ $(document).ready(function(){
 
   var sparkOpts = {
     type: 'box',
-    width: '100%'
+    width: '100%',
   };
+
+  if ($('#highchart').length) {
+
+    //get required data for Highchart.
+    function formatData (data) {
+      var series = []
+      for (var i=0; i<data.length; i++) {
+        series[i] = []
+        data[i] = data[i].sort(function (a, b) {return a - b})
+        var q_length = data[i].length + 1
+        //get lowest value
+        series[i].push(Math.min.apply(Math, data[i]))
+
+        //get lower quartile
+        series[i].push(data[i][(Math.floor(q_length / 4))])
+
+        //get median
+        if (q_length == 2) {
+          //if there's only one value...
+          series[i].push(data[i][0])
+        } else if (q_length % 2 == 0) {
+          //if there's an even number of members in the set
+          var index = Math.floor(data.length / 2)
+          series[i].push((data[i][index] + data[i][index-1]) / 2)
+        } else {
+          //otherwise standard
+          series[i].push(data[i][Math.floor(data.length / 2)])
+        }
+
+        //get upper quartile
+        series[i].push(data[i][(Math.floor(q_length * 0.75 - 1))])
+
+        //get max value
+        series[i].push(Math.max.apply(Math, data[i]))
+      }
+
+      return series;
+    }
+
+    $.getJSON('/users/scores_by_team', function (data) {
+      console.log(data)
+      data = data.scores
+      var categories = [], scores = {
+        name: 'Stats:',
+        data: [],
+        tooltip: {
+        }
+      }
+
+      for (var i=0, k=1, index = 0; i <data.length; i++) {
+        if (k < data[i][0]) {
+          index++
+          k = data[i][0]
+        }
+        if (scores.data[index] == undefined) {
+          scores.data[index] = []
+          categories.push(data[i][2])
+        }
+        scores.data[index].push(data[i][1])
+      }
+
+      scores.data = formatData(scores.data)
+
+      $('#highchart').highcharts({
+        chart: {
+          type: 'boxplot'
+        },
+        title: {
+          text: 'Distribution across teams'
+        },
+        legend: {
+          enabled: false
+        },
+        xAxis: {
+          categories: categories,
+          title: {
+            text: 'Team No.'
+          }
+        },
+        yAxis: {
+        },
+        series: [ scores ]
+      })
+    })
+  }
 
   if ($('#grade_distro').length) {
     $.getJSON('/users/scores_for_current_course.json', function (data) {
@@ -164,6 +297,8 @@ $(document).ready(function(){
     sparkOpts.height = '50px';
     sparkOpts.target = data.user_score[0];
     sparkOpts.tooltipOffsetY = -130;
+    sparkOpts.tooltipOffsetY = -80;
+    sparkOpts.targetColor = "#FF0000";
     $('#student_grade_distro').sparkline(data.scores, sparkOpts);
   }
 
@@ -266,8 +401,8 @@ $(document).ready(function(){
       })
       assignmentTypeBars();
     })
-  }
 
-  // Ask Cory.
-  $('.table-toggle').on('click', assignmentTypeBars);
+    // Ask Cory.
+    $('.table-toggle').on('click', assignmentTypeBars);
+  }
 });

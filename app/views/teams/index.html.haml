@@ -27,7 +27,7 @@
         %td= team.rank
         %td= link_to team.name, team
         %td= team.member_count
-        %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
+        %td= points team.try(:average_grade)
         - if current_user.is_staff?
           %td
             - team.earned_badges.each do |badge|

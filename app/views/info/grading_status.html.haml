@@ -9,6 +9,7 @@
   .tab-content
     - if current_course.accepts_submissions?
       .tab-pane#tab5.active
+        .col-lg-12
         %h4 Ungraded Assignment Submissions
         = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
     - if current_course.has_badges?

@@ -33,6 +33,6 @@
             = link_to team.name, team
         %td
           - if user.is_student?
-            = number_with_delimiter(user.score_for_course(current_course), :delimiter => ',') if user.respond_to?(:grades)
+            = points user.score_for_course(current_course) if user.respond_to?(:grades)
         %td= link_to 'Edit', edit_user_path(user), :class => 'btn btn-tiny btn-info'
         %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete

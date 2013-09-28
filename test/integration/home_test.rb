@@ -9,11 +9,7 @@ class HomeTest < ActionDispatch::IntegrationTest
   test "log in as professor" do
     create_professor(email: 'dumbledore@hogwarts.edu', password: 'password')
 
-    visit '/'
-    click_link 'Log In'
-    fill_in 'Email', :with => 'dumbledore@hogwarts.edu'
-    fill_in 'Password', :with => 'password'
-    click_button 'Log in'
+    log_in 'dumbledore@hogwarts.edu', 'password'
 
     page.must_have_content 'Top 10'
 
@@ -22,6 +18,8 @@ class HomeTest < ActionDispatch::IntegrationTest
 
   test "log in as student" do
     create_student(email: 'llovegood@hogwarts.edu', password: 'password')
+
+    log_in 'ilovegood@hogwarts.edu', 'password'
 
     visit '/'
     click_link 'Log In'

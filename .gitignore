@@ -10,3 +10,4 @@ grade-tracker.sublime-workspace
 log/*.log
 public/uploads/*
 tmp/*
+.ruby-gemset

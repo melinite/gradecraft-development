@@ -31,7 +31,7 @@
       %th
   %tbody
     - i = 1
-    - @sorted_students.order_by_high_score.each do |student|
+    - @sorted_students.each do |student|
       %tr
         %td= i
         %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
@@ -43,7 +43,7 @@
         - if current_course.team_roles?
           %td= student.try(:team_role)
         - if student.respond_to?(:grades)
-          %td= number_with_delimiter(student.score_for_course(current_course), :delimiter => ',')
+          %td= points student.score_for_course(current_course)
           %td= student.grade_level_for_course(current_course)
         - if current_course.has_badges?
           %td

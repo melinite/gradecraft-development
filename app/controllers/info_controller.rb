@@ -21,6 +21,11 @@ class InfoController < ApplicationController
       @grade_scheme = current_course.grade_scheme
       @predictions = predictions
       @scores_for_current_course = scores_for_current_course
+      if current_course.team_challenges?
+        @events = current_course.assignments + @course.challenges
+      else
+        @events = current_course.assignments
+      end
     end
   end
 
@@ -57,7 +62,7 @@ class InfoController < ApplicationController
   end
 
   def grading_status
-    @teams = current_course.teams.includes(:earned_badges)
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     @students = current_course.users.students
     @top_ten_students = @students.order_by_high_score.limit(10)
     @bottom_ten_students = @students.order_by_low_score.limit(10)

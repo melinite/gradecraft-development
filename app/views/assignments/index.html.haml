@@ -16,9 +16,11 @@
         %th.sortable{"data-sort" => "string"} Name
         %th.sortable{"data-sort" => "date"} Open Date
         %th.sortable{"data-sort" => "date"} Due Date
-        %th.sortable{"data-sort" => "date"} Accept Until
+        %th.sortable{"data-sort" => "date"} Accepted Until
         %th.sortable{"data-sort" => "int"} Total Points
         - if current_user.is_staff?
+          - if assignment_type.name == "Attendance"
+            %th.sortable{"data-sort" => "int"} Attendance Rate
           %th.sortable{"data-sort" => "int"} Average
           %th.sortable{"data-sort" => "int"} Range
           %th(colspan="3")
@@ -33,7 +35,9 @@
           %td
             - if assignment.accepts_submissions?
               = assignment.try(:accepts_submissions_until)
-          %td= number_with_delimiter(assignment.point_total, :delimiter => ',')
+          %td= points assignment.point_total
+          - if current_user.is_staff? && assignment_type.name == "Attendance"
+            %td= "#{assignment.attendance_rate(current_course)} %"
           - if current_user.is_staff?
             %td= number_with_delimiter(assignment.average, :delimiter => ',')
             %td= "#{number_with_delimiter(assignment.low_score, :delimiter => ',')} - #{number_with_delimiter(assignment.high_score, :delimiter => ',')}"

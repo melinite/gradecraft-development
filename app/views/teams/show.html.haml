@@ -33,13 +33,12 @@
         %th.sortable{"data-sort" => "int"} Badges Earned
       %th
   %tbody
-    - @students.each do |student|
+    - current_course_data.students.each do |student|
       %tr
         %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email
         %td= student.team_role
-        %td
-          = number_with_delimiter(student.score_for_course(current_course), :delimiter => ',') if student.respond_to?(:grades)
+        %td= points student.score_for_course(current_course) if student.respond_to?(:grades)
         %td= student.grade_level_for_course(current_course)
         - if current_course.has_badges?
           %td

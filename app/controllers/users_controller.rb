@@ -94,9 +94,12 @@ class UsersController < ApplicationController
     end
 
     earned_badge_score = current_student.earned_badges.where(course: current_course).score
-    scores << { :data => [earned_badge_score], :name => 'Badges' }
 
-    assignments = current_student.assignments.where(course: current_course)
+    if current_course.valuable_badges?
+      scores << { :data => [earned_badge_score], :name => "#{term_for :badges }" }
+    end
+
+    assignments = current_course.assignments
     assignments = assignments.graded_for_student(current_student) if params[:in_progress]
 
     render :json => {
@@ -117,10 +120,11 @@ class UsersController < ApplicationController
   end
 
   def scores_by_team
-    scores = current_course.grades.released
-                           .group('grades.student_id, grades.team_id')
-                           .order('grades.student_id, grades.team_id')
-    scores = scores.pluck('grades.team_id, SUM(grades.score)')
+    records = current_course.grades.released
+                            .joins(:team)
+                            .group('grades.student_id, grades.team_id, teams.name')
+                            .order('grades.team_id')
+    scores = records.pluck('grades.team_id, SUM(grades.score), teams.name')
     render :json => {
       :scores => scores
     }

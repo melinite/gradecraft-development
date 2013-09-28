@@ -1,6 +1,6 @@
 = simple_form_for(@team, :html => {:class => 'form-horizontal' }) do |f|
   = f.input :name, :label => "#{current_course.team_term} Name"
-  = f.association :students, :collection => @students, :as => :check_boxes
+  = f.association :students, :collection => current_course_data.students, :as => :check_boxes
   = f.input :course_id, :collection => @courses, :as => :hidden, :input_html => { :value => current_course.id }
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => 'btn-primary'

@@ -19,6 +19,6 @@
           %tr
             %td= team.name
             - if current_course.team_score_average?
-              %td= "#{number_with_delimiter(team.try(:average_grade), :delimiter => ',')}"
+              %td= points team.try(:average_grade)
   .tab-pane#tabt2
     = render "teams/in_team_rankings"

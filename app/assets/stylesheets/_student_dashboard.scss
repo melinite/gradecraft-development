@@ -21,10 +21,8 @@
     height: 200px;
   }
 }
-
 .toggle-charts {
   .dashboard-charts {
-    height: 200px;
     overflow: hidden;
     display: relative;
   }
@@ -34,8 +32,11 @@
   }
 }
 
+
 #prediction {
-  //width: 100%;
+  height: 200px;
+  margin-left: 10px;
+  width: 55% !important;
 }
 
 .dashboard-toggle {
@@ -44,10 +45,6 @@
 
 .hidden-chart {
   visibility: hidden;
-}
-
-.highcharts-legend .highcharts-legend-item {
-  color: #333 !important;
 }
 
 .tab-pane button {

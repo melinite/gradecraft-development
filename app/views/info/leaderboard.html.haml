@@ -1,8 +1,4 @@
 .col-lg-12
-  %h4 Course Grade Distribution
-  #grade_distro
-  #grades_per_assign{"data-id" => "7"}
-  %hr
   %h4 Top 10
   = render 'students_table', :course => current_course, :students => @top_ten_students
   %hr
@@ -12,3 +8,15 @@
     %hr
     %h4= current_course.team_term.pluralize
     #teamChart= render 'teams_table', :course => current_course, :teams => @teams
+
+  %hr
+
+  .well
+    %h4 Course Grade Distribution
+    #grade_distro
+
+  %hr
+
+  - if current_course.has_teams?
+    #highchart
+    #grades_per_assign{"data-id" => "7"}

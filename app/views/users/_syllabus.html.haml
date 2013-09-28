@@ -1,32 +1,20 @@
-- @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+- @assignments.alphabetical.chronological.group_by(&:assignment_type).each do |assignment_type, assignments|
   .col-lg-12.col-xs-12.col-md-12.col-sm-12
-    %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} +#{ number_with_delimiter(current_student.released_score_for_assignment_type(assignment_type))}
+    %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
     .collapse{:id => "assignment_type-#{assignment_type.id}"}
-      .col-lg-8
+      .col-lg-10
         - if assignment_type.predictor_description?
           = raw assignment_type.predictor_description
         - if assignment_type.student_weightable?
           .italic= "You've set #{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights} on this #{term_for :assignment_type}"
       - if assignment_type.student_weightable?
-        .col-lg-4
-          .badge.badge-info
-            = points current_student_data.score_for_assignment_type(assignment_type)
-            = "/"
-            = " #{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
-          %br
+        .col-lg-2
           - if current_student_data.weighted_assignments?
-            .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:user_id => current_student.id), assignment_type: assignment_type, user_id: current_student
+            .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, user_id: current_student
           - else
-            .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:user_id => current_student.id), assignment_type: assignment_type
-        .clear
-      - else
-        .col-lg-4
-          .badge.badge-info
-            = points current_student_data.score_for_assignment_type(assignment_type)
-            = "/"
-            = " #{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
-        .clear
-      %hr
+            .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type
+      .clear
+      %p
       .col-lg-12
         - assignments.each do |assignment|
           .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
@@ -46,7 +34,7 @@
               %span.points= "("
               - if current_student_data.grade_released_for_assignment?(assignment)
                 - if current_student_data.score_for_assignment(assignment) > 0
-                  %span.points.earned= "#{number_with_delimiter grade.score} "
+                  %span.points.earned= points grade.score
                   %span.points= "/"
                 - else
                   %span.points.missed= "#{points current_student_data.score_for_assignment(assignment)}  / "
@@ -70,4 +58,6 @@
             - else
               - if assignment.accepts_submissions?
                 = render "users/submissions", assignment: assignment
+            - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
+              = link_to "See Feedback", assignment_grade_path(assignment, current_student_data.grade_for_assignment(assignment), :student_id => current_student), :class => "btn btn-info btn-xs"
       %hr

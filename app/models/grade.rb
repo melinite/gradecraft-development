@@ -9,7 +9,7 @@ class Grade < ActiveRecord::Base
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
     :graded_by_id, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file
 
-  STATUSES=%w(New Graded Released)
+  STATUSES=%w(Graded Released)
 
   belongs_to :course
   belongs_to :assignment, touch: true
@@ -123,5 +123,6 @@ class Grade < ActiveRecord::Base
     self.assignment_id ||= submission.try(:assignment_id) || task.try(:assignment_id)
     self.assignment_type_id ||= assignment.try(:assignment_type_id)
     self.course_id ||= assignment.try(:course_id)
+    self.team_id ||= student.team_for_course(course).try(:id)
   end
 end

@@ -1,42 +1,4 @@
-= content_nav_for @assignment, @grade do
-  %li= link_to "All #{@grade.assignment.name } Grades", assignment_path(@grade.assignment_id), :class => "btn btn-tiny btn-info"
-  %li= link_to 'Edit Grade', edit_assignment_grade_path("assignment_id" => @assignment.id, "id" => @grade.id, :student_id => @grade.student_id), :class => "btn btn-tiny btn-info"
-  %li= link_to "Delete Grade", assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info", :data => { confirm: 'Are you sure?' }, :method => :delete
-  //%li= link_to "Grade Another " +@grade.assignment.name, new_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
-
-.col-lg-12.info
-  %h3= @grade.assignment.name
-  .heading.col-lg-2= "#{term_for :student}:"
-  .col-lg-offset-2= link_to @grade.student.try(:name), @grade.student
-  .heading.col-lg-2= "#{term_for :assignment}:"
-  .col-lg-offset-2= link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
-  - if @grade.raw_score?
-    .heading.col-lg-2 Raw Score:
-    .col-lg-offset-2= @grade.raw_score
-  - if @grade.final_score?
-    .heading.col-lg-2 Final Score:
-    .col-lg-offset-2= @grade.final_score
-  - if @grade.grade_files.present?
-    .heading.col-lg-2 Documents:
-    .col-lg-offset-2
-      - @grade.grade_files.each do |gf|
-        = link_to File.basename(gf.filename.path), gf.filename.url
-
-  - if @grade.feedback?
-    .heading.col-lg-2 Feedback:
-    .col-lg-offset-2= raw @grade.feedback
-
-  - if @grade.earned_badges.present?
-    .heading.col-lg-2= "#{term_for :badges}:"
-    .col-lg-offset-2
-      - @grade.earned_badges.each do |badge|
-        %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
-
-  - if @grade.assignment.release_necessary?
-    .heading.col-lg-2 Status:
-    .col.col-lg-offset-2= @grade.status
-
-  - if @grade.student.submission_for_assignment(@assignment)
-    .clear
-    .heading.col-lg-2 Submission:
-    .col.col-lg-offset-2= link_to "View Submission", assignment_submission_path(@assignment, @grade.student.submission_for_assignment(@assignment))
+- if current_user.is_staff?
+  = render "staff_view"
+- else
+  = render "student_view"

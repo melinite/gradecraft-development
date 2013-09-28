@@ -1,7 +1,7 @@
 class GradesController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except => :self_log
+  before_filter :ensure_staff?, :except => [:self_log, :show]
 
   def index
     @assignment = current_course.assignments.find(params[:assignment_id])
@@ -9,7 +9,8 @@ class GradesController < ApplicationController
   end
 
   def show
-    @assignment = current_course.assignments.find(params[:assignment_id])
+    @assignments = current_course.assignments
+    @assignment = @assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
   end
 
@@ -53,6 +54,7 @@ class GradesController < ApplicationController
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.build(params[:grade])
     @grade.graded_by = current_user
+    @grade.save
     @student = find_student
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
@@ -95,9 +97,9 @@ class GradesController < ApplicationController
   end
 
   def self_log
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     if @assignment.open?
-      @grade = current_user.grades.find_or_initialize_by(assignment: @assignment)
+      @grade = current_student_data.grade_for_assignment(@assignment)
       @grade.raw_score = params[:present] == 'true' ? @assignment.point_total : 0
       respond_to do |format|
         if @grade.save

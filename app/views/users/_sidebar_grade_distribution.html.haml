@@ -1,4 +1,4 @@
 .col.col-lg-12.col-md-12.col-sm-12.col-xs-12#historyInfo.badge-primary{"data-target" => "#gradeDistro", "data-toggle" => "collapse"}
   %h4.center Course Grade Distribution
+  #student_grade_distro{'data-scores' => @scores_for_current_course.to_json}
   #gradeDistro.collapse
-    #student_grade_distro{'data-scores' => @scores_for_current_course.to_json}

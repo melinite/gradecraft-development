@@ -1,0 +1,7 @@
+Dear <%= @user[:name] %>,
+
+You successfully submitted your work for <%= @submission[:name] %> on <%= @submission[:time] %>.
+
+Play on!
+
+GradeCraft

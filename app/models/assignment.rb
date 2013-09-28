@@ -4,7 +4,7 @@ class Assignment < ActiveRecord::Base
   belongs_to :grade_scheme
   has_many :grade_scheme_elements, :through => :grade_scheme
 
-  belongs_to :assignment_type, touch: true
+  belongs_to :assignment_type, -> { order('order_placement ASC') }, touch: true
   accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'
@@ -219,6 +219,14 @@ class Assignment < ActiveRecord::Base
       return score_level.name if grade.raw_score == score_level.value
     end
     nil
+  end
+
+  def positive_grades
+    grades.where("score > 0").count
+  end
+
+  def attendance_rate(course)
+   ((positive_grades / course.student_count.to_f) * 100).round(2)
   end
 
   private

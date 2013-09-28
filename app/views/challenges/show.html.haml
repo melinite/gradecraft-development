@@ -10,7 +10,7 @@
     = raw @challenge.description
   %p
     %b Point Total:
-    = number_with_delimiter(@challenge.point_total, :delimiter => ',')
+    = points @challenge.point_total
   %p
     %b Open date:
     = @challenge.open_at

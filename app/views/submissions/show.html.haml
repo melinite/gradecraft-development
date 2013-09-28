@@ -44,13 +44,13 @@
     .col-lg-offset-2= raw @submission.text_comment
 
   - @assignment.grade_for_student(@submission.student).tap do |grade|
-    - if grade && grade.is_released? || grade && current_user.is_staff?
+    - if grade && grade.assignment.release_necessary && grade.is_released? || grade && ! grade.assignment.release_necessary || grade && current_user.is_staff?
       %hr
       %h4 Grade
       .col-lg-12
         .heading.col-lg-2 Score:
         .col-lg-offset-2
-          = number_with_delimiter(grade.score, :delimiter => ",")
+          = points grade.score
         - if grade.grade_files.present?
           .heading.col-lg-2 Documents:
           .col-lg-offset-2

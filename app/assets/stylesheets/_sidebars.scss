@@ -103,6 +103,10 @@ ul.nav.nav-list > li > a {
 
 }
 
+#courseInfo a {
+  color: $green;
+}
+
 .sidebar_section #badges #badgeIcons {
   text-align: center;
   width: 95%;
@@ -132,7 +136,8 @@ ul.nav.nav-list > li > a {
 .submitted {
   text-decoration: line-through;
 }
-
-.sparklineTooltip {
-  background-color: #FFF;
+.jqstooltip {
+    box-sizing: content-box;
+    height: auto !important;
+    width: auto !important;
 }

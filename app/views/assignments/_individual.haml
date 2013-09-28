@@ -17,7 +17,7 @@
           %th.sortable{"data-sort" => "int"} Submission
         %th
     %tbody
-      - @students.alpha.each do |student|
+      - current_course_data.students.each do |student|
         - grade = @assignment.grades.find_by student: student
         %tr
           - if @assignment.release_necessary?
@@ -27,7 +27,7 @@
           %td= link_to student.name, student_path(student)
           %td
             - if grade
-              = grade.score
+              = points grade.score
           - if @assignment.assignment_type.student_weightable?
             %td
               = grade.try(:unmultiplied_score)
