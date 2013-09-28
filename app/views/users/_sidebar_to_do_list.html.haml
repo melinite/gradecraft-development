@@ -1,12 +1,12 @@
 .col.col-lg-12.col-md-12.col-sm-12.col-xs-12.center.badge-info#todo{"data-target" => "#toDoList", "data-toggle" => "collapse"}
   %h4.center Due This Week
   %div{:id => "toDoList", :class => "collapse clear"}
-    - current_course.assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+    - current_course.assignments.includes(:assignment_type).group_by(&:assignment_type).each do |assignment_type, assignments|
       -# Do not use `assignment_type.has_soon_assignments?' It will trigger a query.
       - if assignments.any?(&:soon?) && assignment_type.name != "Attendance"
         %h5= "#{assignment_type.try(:name)}"
         - assignments.each do |assignment|
-          - if assignment.soon? && assignment.assignment_type.name != "Attendance"
+          - if assignment.soon?
             - if current_student_data.submission_for_assignment?(assignment)
               %div.submitted
                 = "#{assignment.try(:name)}"
