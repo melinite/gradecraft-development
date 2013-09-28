@@ -18,10 +18,7 @@
       .col-lg-12
         - assignments.each do |assignment|
           .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
-            - if current_student_data.submission_for_assignment?(assignment)
-              %span.assignmentName= link_to assignment.name, assignment_submission_path(assignment, current_student_data.submission_for_assignment(assignment), :student_id => current_student)
-            - else
-              %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
+            %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
             - if assignment.release_necessary?
               %span.points= "("
               - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.score_for_assignment(assignment) > 0
