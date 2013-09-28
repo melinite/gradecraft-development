@@ -90,7 +90,6 @@ $(document).ready(function(){
 	$('#navbar').affix();
 
   // Temporarily commented out to revive dashboard charts & predictor
-/*
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider);
@@ -131,9 +130,9 @@ $(document).ready(function(){
       }
     });
   });
-*/
 
-    $('.slider').each(function(i,slider) {
+  /*
+  $('.slider').each(function(i,slider) {
     $slider = $(slider)
     $slider.slider({
       max: $slider.attr('max')
@@ -142,6 +141,7 @@ $(document).ready(function(){
       $(slider).prev("div.assignment > span").html(ui.value)
     });
   });
+*/
 
 
 

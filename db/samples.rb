@@ -200,8 +200,8 @@ assignment_types = {}
 assignment_types[:attendance] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Attendance"
-  at.point_setting = "By Assignment"
-  at.points_predictor_display = "Fixed"
+  at.point_setting = "For All Assignments"
+  at.points_predictor_display = "Slider"
   at.resubmission = false
   at.max_value = "120000"
   at.predictor_description = "We will work to build a learning community in EDUC 222, and I want this to be a great learning experience for all. To do this requires that you commit to the class and participate."
@@ -214,6 +214,14 @@ assignment_types[:attendance] = AssignmentType.create! do |at|
   at.student_logged_revert_button_text = "I couldn't make it"
 end
 puts "Come to class."
+
+1.upto(5).each do |n|
+  assignment_types[:attendance].score_levels.create do |sl|
+    sl.name = "#{n}0% of class"
+    sl.value = 5000/n
+  end
+end
+puts "Added slider grading levels for attendance"
 
 assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.course = course
@@ -231,13 +239,12 @@ assignment_types[:reading_reaction] = AssignmentType.create! do |at|
 end
 puts "Do your readings."
 
-ScoreLevel.create do |sl|
-  sl.assignment_type_id = 2
+assignment_types[:reading_reaction].score_levels.create do |sl|
   sl.name = "You Reacted"
   sl.value = 2500
 end
-ScoreLevel.create do |sl|
-  sl.assignment_type_id = 2
+
+assignment_types[:reading_reaction].score_levels.create do |sl|
   sl.name = "Someone Reacted to You"
   sl.value = 5000
 end
@@ -287,7 +294,7 @@ assignment_types[:boss_battle] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Boss Battles"
   at.point_setting = "By Assignment"
-  at.points_predictor_display = "Slider"
+  at.points_predictor_display = "Set per Assignment"
   at.resubmission = false
   at.due_date_present = true
   at.order_placement = 5
@@ -471,7 +478,7 @@ assignments << Assignment.create! do |a|
 end
 puts "Game Play Reflection Paper has been posted!"
 
-assignments << Assignment.create! do |a|
+ip1_assignment = Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 1"
   a.point_total = 200000
@@ -483,7 +490,14 @@ assignments << Assignment.create! do |a|
 end
 puts "Individual Project 1 has been posted!"
 
-assignments << Assignment.create! do |a|
+1.upto(5).each do |n|
+  ip1_assignment.assignment_score_levels.create! do |asl|
+    asl.name = "Assignment Score Level ##{n}"
+    asl.value = 200000/n
+  end
+end
+
+ip2_assignment = Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
@@ -495,7 +509,14 @@ assignments << Assignment.create! do |a|
 end
 puts "Individual Project 2 has been posted!"
 
-assignments << Assignment.create! do |a|
+1.upto(8).each do |n|
+  ip2_assignment.assignment_score_levels.create! do |asl|
+    asl.name = "Assignment Score Level ##{n}"
+    asl.value = 300000/n
+  end
+end
+
+ggd_assignment = Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Group Game Design Project"
   a.point_total = 400000
@@ -506,6 +527,13 @@ assignments << Assignment.create! do |a|
   a.grade_scope = "Group"
 end
 puts "Group Game Design has been posted!"
+
+1.upto(4).each do |n|
+  ggd_assignment.assignment_score_levels.create! do |asl|
+    asl.name = "Assignment Score Level ##{n}"
+    asl.value = 400000/n
+  end
+end
 
 challenges = []
 
