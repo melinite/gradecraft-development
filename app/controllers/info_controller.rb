@@ -19,46 +19,14 @@ class InfoController < ApplicationController
       @teams = current_course.teams
       @sorted_teams = @teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
-      @predictions = predictions
-      @scores_for_current_course = scores_for_current_course
+      @predictions = current_student.predictions(current_course)
+      @scores_for_current_course = current_student.scores_for_course(current_course)
       if current_course.team_challenges?
         @events = current_course.assignments + @course.challenges
       else
         @events = current_course.assignments
       end
     end
-  end
-
-  def predictions
-    scores = []
-    current_course.assignment_types.each do |assignment_type|
-      scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
-    end
-
-    earned_badge_score = current_student.earned_badges.where(course: current_course).score
-    scores << { :data => [earned_badge_score], :name => 'Badges' }
-
-    assignments = current_student.assignments.where(course: current_course)
-    in_progress = assignments.graded_for_student(current_student)
-
-    return {
-      :student_name => current_student.name,
-      :scores => scores,
-      :course_total => assignments.point_total + earned_badge_score,
-      :in_progress => in_progress.point_total + earned_badge_score
-    }
-  end
-
-  def scores_for_current_course
-     scores = current_course.grades.released.group(:student_id).order('SUM(score)')
-     id = current_user.id
-     user_score = current_course.grades.released.group(:student_id)
-                                                .where(student_id: id).pluck('SUM(score)')
-     scores = scores.pluck('SUM(score)')
-     return {
-      :scores => scores,
-      :user_score => user_score
-     }
   end
 
   def grading_status
