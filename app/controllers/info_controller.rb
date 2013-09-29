@@ -15,7 +15,7 @@ class InfoController < ApplicationController
       @submissions = current_student.submissions
       @badges = current_course.badges.includes(:tasks)
       @earned_badges = current_student.earned_badges.includes(:badge)
-      @assignments = current_course.assignments.includes(:course, :assignment_type)
+      @assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
       @teams = current_course.teams
       @sorted_teams = @teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
