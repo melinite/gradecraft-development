@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
   def index
     @title = "#{current_course.user_term} Roster"
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-    @students = current_course.students
+    @auditing = current_course.students.auditing
     respond_to do |format|
       format.html
       format.json { render json: @students }

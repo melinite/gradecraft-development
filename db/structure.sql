@@ -224,7 +224,7 @@ CREATE TABLE assignment_types (
     student_weightable boolean,
     student_logged_button_text character varying(255),
     student_logged_revert_button_text character varying(255),
-    notify_released boolean
+    notify_released boolean DEFAULT true
 );
 
 
@@ -323,7 +323,7 @@ CREATE TABLE assignments (
     media_credit character varying(255),
     media_caption character varying(255),
     points_predictor_display character varying(255),
-    notify_released boolean
+    notify_released boolean DEFAULT true
 );
 
 
@@ -891,7 +891,8 @@ CREATE TABLE course_memberships (
     score integer DEFAULT 0 NOT NULL,
     shared_badges boolean,
     character_profile text,
-    last_login_at timestamp without time zone
+    last_login_at timestamp without time zone,
+    auditing boolean DEFAULT false NOT NULL
 );
 
 
@@ -1627,14 +1628,6 @@ CREATE TABLE submissions (
 
 CREATE VIEW student_cache_keys AS
     SELECT cm.id, cm.id AS course_membership_id, cm.course_id, cm.user_id, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE ((earned_badges.course_id = cm.course_id) AND (earned_badges.student_id = cm.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum FROM submissions WHERE ((submissions.course_id = cm.course_id) AND (submissions.student_id = cm.user_id))))) AS submissions_key FROM course_memberships cm;
-
-
---
--- Name: student_summaries; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW student_summaries AS
-    SELECT users.id AS student_id, users.first_name, users.last_name, grades_score.grades_score_sum, earned_badges_score.earned_badges_sum FROM ((users JOIN (SELECT grades.student_id AS id, COALESCE(sum(grades.score), (0)::bigint) AS grades_score_sum FROM (grades JOIN assignments ON ((grades.assignment_id = assignments.id))) WHERE (((grades.status)::text = 'Released'::text) OR (assignments.release_necessary = false)) GROUP BY grades.student_id) grades_score USING (id)) JOIN (SELECT earned_badges.student_id AS id, COALESCE(sum(earned_badges.score), (0)::bigint) AS earned_badges_sum FROM earned_badges GROUP BY earned_badges.student_id) earned_badges_score USING (id));
 
 
 --
@@ -2841,6 +2834,8 @@ INSERT INTO schema_migrations (version) VALUES ('20130910230120');
 
 INSERT INTO schema_migrations (version) VALUES ('20130911022316');
 
+INSERT INTO schema_migrations (version) VALUES ('20130912175935');
+
 INSERT INTO schema_migrations (version) VALUES ('20130912221847');
 
 INSERT INTO schema_migrations (version) VALUES ('20130913215115');
@@ -2859,9 +2854,15 @@ INSERT INTO schema_migrations (version) VALUES ('20130923152319');
 
 INSERT INTO schema_migrations (version) VALUES ('20130923164329');
 
+INSERT INTO schema_migrations (version) VALUES ('20130923194506');
+
 INSERT INTO schema_migrations (version) VALUES ('20130925173717');
 
 INSERT INTO schema_migrations (version) VALUES ('20130925174641');
+
+INSERT INTO schema_migrations (version) VALUES ('20130925181035');
+
+INSERT INTO schema_migrations (version) VALUES ('20130929185115');
 
 INSERT INTO schema_migrations (version) VALUES ('20130929200510');
 

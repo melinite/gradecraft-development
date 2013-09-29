@@ -21,13 +21,15 @@ class User < ActiveRecord::Base
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
     :student_academic_history_attributes, :team_role, :course_memberships_attributes,
-    :character_profile, :team_id, :lti_uid
+    :character_profile, :team_id, :lti_uid, :auditing
 
   #has_secure_password
 
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
+  scope :being_graded, -> { where('course_memberships.auditing = FALSE' || 'course_memberships.auditing == nil')}
+  scope :auditing, -> { where('course_memberships.auditing = TRUE')}
 
   has_many :course_memberships
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
