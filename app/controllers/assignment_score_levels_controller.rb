@@ -3,7 +3,7 @@ class AssignmentScoreLevelsController < ApplicationController
     before_filter :ensure_staff?
 
   def index
-    @assignment_score_levels = current_course.assignment_score_levels.all
+    @assignment_score_levels = current_course.assignment_score_levels
   end
 
   def show
@@ -16,7 +16,6 @@ class AssignmentScoreLevelsController < ApplicationController
 
   def edit
     @assignment_score_level = current_course.assignment_score_levels.find(params[:id])
-    @users = current_course.users.students
   end
 
   def create
