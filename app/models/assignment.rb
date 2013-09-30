@@ -26,8 +26,12 @@ class Assignment < ActiveRecord::Base
   belongs_to :category
   belongs_to :course
 
+  #For instances where the assignment inherits the score levels through the assignment type
   has_many :score_levels, :through => :assignment_type
-  accepts_nested_attributes_for :score_levels, allow_destroy: true
+
+  #for instances where the assignment needs it's own unique score levels
+  has_many :assignment_score_levels
+  accepts_nested_attributes_for :assignment_score_levels, allow_destroy: true
 
   delegate :mass_grade?, :student_weightable?, :to => :assignment_type
 
@@ -47,7 +51,8 @@ class Assignment < ActiveRecord::Base
     :score_levels_attributes, :open_at, :close_time, :course,
     :assignment_rubrics_attributes, :rubrics_attributes, :media,
     :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
-    :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display
+    :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display,
+    :assignment_score_levels_attributes, :assignment_score_level
 
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }

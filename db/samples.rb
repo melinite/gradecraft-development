@@ -31,6 +31,7 @@ course = Course.create! do |c|
   c.badge_use_scope = "Both"
   c.shared_badges = true
   c.badges_value = true
+  c.grade_scheme_id = 1
   c.accepts_submissions = true
   c.predictor_setting = true
   c.graph_display = false
@@ -57,6 +58,18 @@ course = Course.create! do |c|
   c.media_file = "http://upload.wikimedia.org/wikipedia/commons/3/36/Michigan_Wolverines_Block_M.png"
 end
 puts "Videogames and Learning has been installed"
+
+grade_scheme = GradeScheme.create(:name => 'N.E.W.T. Grades', :course => course)
+
+grade_scheme_hash.each do |range,letter|
+  grade_scheme.elements.create do |e|
+    e.letter = letter
+    e.low_range = range.first
+    e.high_range = range.last
+  end
+end
+puts "Installed the N.E.W.T. grade scheme"
+
 
 teams = team_names.map do |team_name|
   course.teams.create! do |t|
@@ -155,8 +168,6 @@ criteria.each do |criterium|
   end
 end
 
-assignment_types = {}
-
 #Generate badge set
 badge_set = course.badge_sets.create! do |bs|
   bs.name = "Hogwarts Most Officially Official Badge Set"
@@ -173,11 +184,24 @@ badges = badge_names.map do |badge_name|
 end
 puts "Did someone need motivation? We found these badges in the Room of Requirements..."
 
+badges.each do |badge|
+  students.each do |student|
+    student.earned_badges.create! do |eb|
+      eb.badge = badge
+      eb.course = course
+    end
+  end
+end
+puts "Earned badges have been awarded"
+
+
+assignment_types = {}
+
 assignment_types[:attendance] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Attendance"
-  at.point_setting = "By Assignment"
-  at.points_predictor_display = "Fixed"
+  at.point_setting = "For All Assignments"
+  at.points_predictor_display = "Slider"
   at.resubmission = false
   at.max_value = "120000"
   at.predictor_description = "We will work to build a learning community in EDUC 222, and I want this to be a great learning experience for all. To do this requires that you commit to the class and participate."
@@ -191,10 +215,19 @@ assignment_types[:attendance] = AssignmentType.create! do |at|
 end
 puts "Come to class."
 
+1.upto(5).each do |n|
+  assignment_types[:attendance].score_levels.create do |sl|
+    sl.name = "#{n}0% of class"
+    sl.value = 5000/n
+  end
+end
+puts "Added slider grading levels for attendance"
+
 assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Reading Reactions"
-  at.point_setting = "By Assignment"
+  at.universal_point_value = 5000
+  at.point_setting = "For All Assignments"
   at.points_predictor_display = "Select List"
   at.resubmission = false
   at.predictor_description = "Each week, you must write a concise summary or analysis of the reading for that week of no more than 200 words! (200 words is roughly equivalent to one-half page, double-spaced.) Your 201st word will suffer a terrible fate... "
@@ -205,6 +238,17 @@ assignment_types[:reading_reaction] = AssignmentType.create! do |at|
   at.student_weightable = true
 end
 puts "Do your readings."
+
+assignment_types[:reading_reaction].score_levels.create do |sl|
+  sl.name = "You Reacted"
+  sl.value = 2500
+end
+
+assignment_types[:reading_reaction].score_levels.create do |sl|
+  sl.name = "Someone Reacted to You"
+  sl.value = 5000
+end
+puts "Added select list grading levels"
 
 assignment_types[:blogging] = AssignmentType.create! do |at|
   at.course = course
@@ -250,7 +294,7 @@ assignment_types[:boss_battle] = AssignmentType.create! do |at|
   at.course = course
   at.name = "Boss Battles"
   at.point_setting = "By Assignment"
-  at.points_predictor_display = "Slider"
+  at.points_predictor_display = "Set per Assignment"
   at.resubmission = false
   at.due_date_present = true
   at.order_placement = 5
@@ -277,7 +321,6 @@ grinding_assignments = []
 
   grinding_assignments << assignment_types[:reading_reaction].assignments.create! do |a|
     a.name = "Reading Reaction #{n}"
-    a.point_total = 5000
     a.due_at = rand(n - 6).weeks.ago
     a.accepts_submissions = false
     a.release_necessary = true
@@ -435,7 +478,7 @@ assignments << Assignment.create! do |a|
 end
 puts "Game Play Reflection Paper has been posted!"
 
-assignments << Assignment.create! do |a|
+ip1_assignment = Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 1"
   a.point_total = 200000
@@ -447,7 +490,14 @@ assignments << Assignment.create! do |a|
 end
 puts "Individual Project 1 has been posted!"
 
-assignments << Assignment.create! do |a|
+1.upto(5).each do |n|
+  ip1_assignment.assignment_score_levels.create! do |asl|
+    asl.name = "Assignment Score Level ##{n}"
+    asl.value = 200000/n
+  end
+end
+
+ip2_assignment = Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Individual Paper/Project 2"
   a.point_total = 300000
@@ -459,7 +509,14 @@ assignments << Assignment.create! do |a|
 end
 puts "Individual Project 2 has been posted!"
 
-assignments << Assignment.create! do |a|
+1.upto(8).each do |n|
+  ip2_assignment.assignment_score_levels.create! do |asl|
+    asl.name = "Assignment Score Level ##{n}"
+    asl.value = 300000/n
+  end
+end
+
+ggd_assignment = Assignment.create! do |a|
   a.assignment_type = assignment_types[:boss_battle]
   a.name = "Group Game Design Project"
   a.point_total = 400000
@@ -471,15 +528,12 @@ assignments << Assignment.create! do |a|
 end
 puts "Group Game Design has been posted!"
 
-grade_scheme = GradeScheme.new(:name => 'N.E.W.T. Grades', :course_id => course)
-grade_scheme_hash.each do |range,letter|
-  grade_scheme.elements.new do |e|
-    e.letter = letter
-    e.low_range = range.first
-    e.high_range = range.last
+1.upto(4).each do |n|
+  ggd_assignment.assignment_score_levels.create! do |asl|
+    asl.name = "Assignment Score Level ##{n}"
+    asl.value = 400000/n
   end
 end
-puts "Installed N.E.W.T. grade scheme for each course"
 
 challenges = []
 
