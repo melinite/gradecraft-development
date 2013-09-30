@@ -5,8 +5,8 @@
       %h4= assignment_type.name
       .pull-right
         %span.badge.badge-info
-          = "#{current_student_data.score_for_assignment_type(assignment_type)} / "
-          = "#{current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
+          = "#{points current_student_data.score_for_assignment_type(assignment_type)} / "
+          = "#{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
     - assignments.each do |assignment|
       - if assignment.point_total > 0
         .assignment.clear{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
@@ -14,31 +14,31 @@
           - if assignment.is_required?
             %span.label.label-important Required!
           - if current_student_data.grade_released_for_assignment?(assignment)
-            %span.points.earned= current_student_data.score_for_assignment(assignment)
-            = " out of #{current_student_data.point_total_for_assignment(assignment)} points"
+            %span.earned= points current_student_data.score_for_assignment(assignment)
+            = " / #{points current_student_data.point_total_for_assignment(assignment)} points"
             = hidden_field_tag assignment.name, current_student_data.score_for_assignment(assignment), :'data-assignment-type-id' => assignment.assignment_type_id
           - else
             = "–"
             - if assignment_type.fixed?
-              = "#{current_student_data.point_total_for_assignment(assignment)} possible points"
+              = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
               %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
             - elsif assignment_type.slider?
               %span.pScore= "0 "
-              = "/ #{current_student_data.point_total_for_assignment(assignment)} possible points"
+              = "/ #{points current_student_data.point_total_for_assignment(assignment)} possible points"
               %span.score-level-name
               .slider{:id => "slider-"+assignment.id.to_s(), :max => current_student_data.point_total_for_assignment(assignment), :value => 0, :'data-scorelevelvals' => "#{assignment_type.score_levels.map { |sl| sl.value }}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map { |sl| sl.name }}"}
             - elsif assignment_type.select?
-              = "#{current_student_data.point_total_for_assignment(assignment)} possible points"
+              = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
               = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
             - elsif assignment_type.per_assignment?
               - if assignment.fixed?
-                = "#{current_student_data.point_total_for_assignment(assignment)} possible points"
+                = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
                 %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
               - elsif assignment.slider?
                 %span.pScore= "0 "
-                = "/ #{current_student_data.point_total_for_assignment(assignment)} possible points"
+                = "/ #{points current_student_data.point_total_for_assignment(assignment)} possible points"
                 .slider{:id => "slider-#{assignment.id}", :max => current_student_data.point_total_for_assignment(assignment) , :value => 0, :'data-scorelevelvals' => "#{assignment_type.score_levels.map { |sl| sl.value }}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map { |sl| sl.name }}"}
               - elsif assignment.select?
-                = "#{current_student_data.point_total_for_assignment(assignment)} possible points"
+                = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
                 = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
     %hr
