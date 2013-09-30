@@ -129,6 +129,10 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def total_points
+    assignments.point_total
+  end
+
   def student_weighted?
     total_assignment_weight.to_i > 0
   end

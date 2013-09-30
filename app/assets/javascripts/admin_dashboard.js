@@ -54,12 +54,12 @@ $(document).ready(function() {
                 enabled: false
             }
     };
-    
+
     var chart, categories, assignment_type_name, scores;
-    
+
     var $wrapper = $('#teamChart');
     if($wrapper.length) {
-      
+
       // Get Assignment Type Info
       $.getJSON('/teams/analytics.json', function(data) {
         options.chart.renderTo = 'teamChart';
@@ -69,7 +69,7 @@ $(document).ready(function() {
         options.series = data.scores
         chart = new Highcharts.Chart(options);
       });
-      
+
     };
-    
+
 });

@@ -44,8 +44,6 @@
           %td
             - student.earned_badges.each do |badge|
               %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
-        - else
-          %td
         %td= link_to 'Edit', edit_user_path(student), :class => 'btn btn-tiny btn-info'
 
 %hr
