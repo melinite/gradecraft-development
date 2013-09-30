@@ -59,7 +59,7 @@ class GradesController < ApplicationController
     @earned_badge = EarnedBadge.new(params[:earned_badge])
     respond_to do |format|
       if @grade.save
-        if @assignment.notify_released? && @grade.released?
+        if @assignment.notify_released? && @grade.is_released?
           NotificationMailer.grade_released(@grade.id).deliver
         end
         format.html { redirect_to @assignment, notice: 'Grade was successfully created.' }
