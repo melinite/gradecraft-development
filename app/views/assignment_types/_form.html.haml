@@ -23,6 +23,7 @@
     = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
     = f.input :student_logged_revert_button_text, :hint => "If a student unchecks this button, what should it say?", :label => "Revert Button Text", :input_html => {:class => 'col-lg-3'}
     = f.input :levels, :label => "Leveled Grading", :hint => "This includes normal A - F grading schemes.", :as => :radio_buttons
+    = f.input :notify_released, :hint => "Do you want to notify students by email when a grade is released?"
     .well
       %h5 Score Levels
       .score-levels

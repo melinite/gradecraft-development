@@ -52,7 +52,7 @@ class Assignment < ActiveRecord::Base
     :assignment_rubrics_attributes, :rubrics_attributes, :media,
     :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
     :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display,
-    :assignment_score_levels_attributes, :assignment_score_level
+    :assignment_score_levels_attributes, :assignment_score_level, :notify_released
 
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }
