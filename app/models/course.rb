@@ -153,6 +153,10 @@ class Course < ActiveRecord::Base
     grade_scheme.try(:letter, score)
   end
 
+  def element_for_score(score)
+    grade_scheme.try(:element_earned ,score)
+  end
+
   def membership_for_student(student)
     course_memberships.detect { |m| m.user_id == student.id }
   end

@@ -75,8 +75,12 @@ class StudentData < Struct.new(:student, :course)
     @grade_level ||= course.grade_level_for_score(score)
   end
 
+  def element_level
+    @element_level ||= course.element_for_score(score)
+  end
+
   def grade_letter
-    @grade_level ||= course.grade_letter_for_score(score)
+    @grade_letter ||= course.grade_letter_for_score(score)
   end
 
   def earned_badge_score

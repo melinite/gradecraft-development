@@ -18,6 +18,10 @@ class GradeScheme < ActiveRecord::Base
     elements.where('low_range <= ? AND high_range >= ?', score, score).pluck('letter').first
   end
 
+  def element_earned(score)
+    elements.where('low_range <= ? AND high_range >= ?', score, score).first
+  end
+
   private
 
   def elements_do_not_overlap
