@@ -8,7 +8,7 @@
   %h3= @team.name
   %p.clear
     %b Points:
-    = @team.average_grade
+    = points @team.score
   %p
     %b Rank:
   - if @team.earned_badges.present?
@@ -30,7 +30,7 @@
       %th.sortable{"data-sort" => "int"} Score
       %th Level
       - if current_course.has_badges?
-        %th.sortable{"data-sort" => "int"} Badges Earned
+        %th{"data-sort" => "string"} #{term_for :badges} Earned
       %th
   %tbody
     - current_course_data.students.each do |student|

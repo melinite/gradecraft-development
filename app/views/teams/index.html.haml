@@ -16,8 +16,8 @@
       - else
         %th{"data-sort" => "int"} Ave. Score
       - if current_user.is_staff?
-        %th{"data-sort" => "string"} Badges Earned
-        %th{"data-sort" => "int"} Total Badges
+        %th{"data-sort" => "string"} #{term_for :badges} Earned
+        %th{"data-sort" => "int"} Total #{term_for :badges}
         %th
         %th
   %tbody
