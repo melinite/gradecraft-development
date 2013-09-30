@@ -12,7 +12,7 @@
           %th
       %tbody
         - @grade_scheme.elements.order_by_high_range.each do |element|
-          - if current_student_data.grade_letter == element.letter
+          - if current_student_data.grade_letter == element.letter || current_student_data.grade_level == element.level
             %tr.achieved
               %td #{element.level}
               %td #{points element.low_range }
