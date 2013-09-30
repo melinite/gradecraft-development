@@ -41,7 +41,7 @@
             - if current_course.shared_badges? && current_student.badges_shared(current_course)
               %td
                 - if badge.earned_badge_for_student(current_student)
-                - @earned_badge = EarnedBadge.find_by badge_id: badge.id
+                  - @earned_badge = EarnedBadge.find_by badge_id: badge.id
                   %div{:class=>"share_badge", :data => { badge_id: badge.id.to_s, earned_badge_id: @earned_badge.id.to_s}}
                     - if @earned_badge.shared
                       %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-warning btn-primary btn-small"} Stop Sharing

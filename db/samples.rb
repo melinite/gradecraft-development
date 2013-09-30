@@ -34,7 +34,7 @@ course = Course.create! do |c|
   c.grade_scheme_id = 1
   c.accepts_submissions = true
   c.predictor_setting = true
-  c.graph_display = false
+  c.graph_display = true
   c.tagline = "You Game the Grade"
   c.academic_history_visible = true
   c.media_file = "http://www.youtube.com/watch?v=LOiQUo9nUFM&feature=youtu.be"
