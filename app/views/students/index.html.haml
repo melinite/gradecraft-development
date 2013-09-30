@@ -30,10 +30,8 @@
       %th
       %th
   %tbody
-    - i = 1
-    - @sorted_students.each do |student|
+    - @students.alpha.each do |student|
       %tr
-        %td= i
         %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email
         - if current_course.has_teams?
@@ -51,4 +49,3 @@
               %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
         %td= link_to "Edit", edit_user_path(student), :class => 'btn btn-tiny btn-info'
         %td= link_to 'Remove from Course', course_membership_path(current_course.membership_for_student(student)), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure you want to remove this student from your course?' }, :method => :delete
-      - i += 1
