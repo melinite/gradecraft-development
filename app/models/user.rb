@@ -166,12 +166,43 @@ class User < ActiveRecord::Base
     earned_badges.where(:course => course).score
   end
 
+  def scores_for_course(course)
+     scores = course.grades.released.group(:student_id).order('SUM(score)')
+     user_score = course.grades.released.group(:student_id)
+                                        .where(student_id: id).pluck('SUM(score)')
+     scores = scores.pluck('SUM(score)')
+     return {
+      :scores => scores,
+      :user_score => user_score
+     }
+  end
+
+  def predictions(course)
+    scores = []
+    course.assignment_types.each do |assignment_type|
+      scores << { data: [grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
+    end
+
+    earned_badge_score = earned_badges.where(course: course).score
+    scores << { :data => [earned_badge_score], :name => 'Badges' }
+
+    _assignments = assignments.where(course: course)
+    in_progress = _assignments.graded_for_student(self)
+
+    return {
+      :student_name => name,
+      :scores => scores,
+      :course_total => _assignments.point_total + earned_badge_score,
+      :in_progress => in_progress.point_total + earned_badge_score
+    }
+  end
+
   def score_for_course(course)
     @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course)
   end
 
   def badges_shared(course)
-    course_memberships.where(course: course).pluck('shared_badges') == [true]
+    course_memberships.any? { |m| m.course_id = course.id and m.shared_badges }
   end
 
   def grade_level_for_course(course)

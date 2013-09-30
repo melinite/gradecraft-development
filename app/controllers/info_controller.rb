@@ -15,10 +15,17 @@ class InfoController < ApplicationController
       @submissions = current_student.submissions
       @badges = current_course.badges.includes(:tasks)
       @earned_badges = current_student.earned_badges.includes(:badge)
-      @assignments = current_course.assignments.includes(:course, :assignment_type)
+      @assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
       @teams = current_course.teams
       @sorted_teams = @teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
+      @predictions = current_student.predictions(current_course)
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+      if current_course.team_challenges?
+        @events = current_course.assignments + @course.challenges
+      else
+        @events = current_course.assignments
+      end
     end
   end
 
@@ -45,5 +52,4 @@ class InfoController < ApplicationController
     @assignments = current_course.assignments.includes(:assignment_type)
     @assignment_types = current_course.assignment_types.includes(:assignments)
   end
-
 end

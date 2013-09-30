@@ -41,6 +41,13 @@ class StudentsController < ApplicationController
     @teams = current_course.teams
     @grade_scheme = current_course.grade_scheme
     @sorted_teams = @teams.order_by_high_score
+    @predictions = current_student.predictions(current_course)
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_course.team_challenges?
+      @events = current_course.assignments + @course.challenges
+    else
+      @events = current_course.assignments
+    end
 
     @form = AssignmentTypeWeightForm.new(current_student, current_course)
 

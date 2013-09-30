@@ -12,7 +12,7 @@ class AssignmentType < ActiveRecord::Base
   has_many :submissions, :through => :assignments
   has_many :assignment_weights
   has_many :grades
-  has_many :score_levels
+  has_many :score_levels, -> { order "value" }
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
   validates_presence_of :name, :points_predictor_display, :point_setting

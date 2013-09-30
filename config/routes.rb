@@ -15,7 +15,6 @@ GradeCraft::Application.routes.draw do
   resources :users do
     collection do
       get 'edit_profile'
-      get 'predictor'
       get 'scores_for_current_course'
       get 'scores_by_assignment'
       get 'scores_by_team'
@@ -57,9 +56,7 @@ GradeCraft::Application.routes.draw do
   end
   resources :group_memberships
   resources :categories
-  resources :courses do
-    get 'timeline'
-  end
+  resources :courses
   resources :course_memberships
   resources :badge_sets
   resources :badges do
@@ -138,7 +135,6 @@ GradeCraft::Application.routes.draw do
   post '/current_course/change' => 'current_courses#change', :as => :change_current_course
   get 'current_course' => 'current_courses#show'
   get  'class_badges' => 'users#class_badges'
-  get 'timeline' => 'courses#timeline'
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout

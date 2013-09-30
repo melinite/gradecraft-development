@@ -1,5 +1,6 @@
 .col-lg-12
-  #studentID{ :'data-student-id' => current_student.id }
+  #data-predictor{'data-predictor' =>  @predictions.to_json}
+  -##data-predictor{ 'data-predictor' => render(:partial => 'timeline', :handlers => [:jbuilder], :formats => [:js])}
   %br
   %h4
     - if current_user.is_student?
