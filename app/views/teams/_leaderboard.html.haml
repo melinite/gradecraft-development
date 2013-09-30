@@ -11,14 +11,19 @@
     %table.table.table-striped.simpleTable
       %thead
         %tr
-          %th{"data-sort" => "string"} Name
+          %th
+          %th Name
           - if current_course.team_score_average?
-            %th{"data-sort" => "string"} Score
+            %th Score
       %tbody
-        - @sorted_teams.each do |team|
+        - i = 1
+        - @teams.order_by_high_score.each do |team|
           %tr
+            %td= i
             %td= team.name
             - if current_course.team_score_average?
               %td= points team.try(:average_grade)
+          - i += 1
+
   .tab-pane#tabt2
     = render "teams/in_team_rankings"
