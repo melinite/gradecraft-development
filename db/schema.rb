@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.boolean  "student_weightable"
     t.string   "student_logged_button_text"
     t.string   "student_logged_revert_button_text"
+    t.boolean "notify_released"
   end
 
   create_table "assignment_weights", force: true do |t|
@@ -138,6 +139,7 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.string   "media_credit"
     t.string   "media_caption"
     t.string   "points_predictor_display"
+    t.boolean  "notify_released"
   end
 
   add_index "assignments", ["course_id"], name: "index_assignments_on_course_id", using: :btree
