@@ -1,0 +1,39 @@
+= content_nav_for User do
+  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+  %h3= @title
+
+  - if current_course.has_teams?
+    .filters.col.col-lg-5.col-sm-5.col-md-5
+      = form_tag students_path, :method => :get do
+        = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
+        = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
+
+%table.table.table-striped.simpleTable
+  %thead
+    %tr
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Email
+      %th.sortable{"data-sort" => "string"} Role
+      %th.sortable{"data-sort" => "string"} Courses
+      %th.sortable{"data-sort" => "int"} Score
+      %th
+      %th
+  %tbody
+    - @users.alpha.each do |user|
+      %tr
+        %td
+          = link_to user.name, student_path(user) if user.is_student?
+          = link_to user.name, staff_path(user) if user.is_staff?
+        %td= user.email
+        %td= user.role.capitalize
+        %td
+          %ul
+            - user.course_memberships.each do |cm|
+              %li= cm.course.name
+        %td
+          - if user.is_student?
+            = points user.score_for_course(current_course) if user.respond_to?(:grades)
+        %td= link_to 'Edit', edit_user_path(user), :class => 'btn btn-tiny btn-info'
+        %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete
