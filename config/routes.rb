@@ -15,6 +15,7 @@ GradeCraft::Application.routes.draw do
   resources :users do
     collection do
       get 'edit_profile'
+      get 'all'
       get 'scores_for_current_course'
       get 'scores_by_assignment'
       get 'scores_by_team'

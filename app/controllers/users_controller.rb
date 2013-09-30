@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   skip_before_filter :require_login, :only => [:create, :new]
   before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new]
-  before_filter :ensure_admin?, :only => :all_users
+  before_filter :ensure_admin?, :only => [:all]
 
   def import
     if request.post? && params[:file].present?
@@ -57,10 +57,15 @@ class UsersController < ApplicationController
 
   def all
     @title = "View all Users"
-    @users = User.all
+    @users = User.all.order('last_name ASC')
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options)
     respond_to do |format|
       format.html
-      format.json { render json: @all_users }
+      format.json { render json: @users }
+      format.csv { send_data @users.to_csv }
+      format.xls { send_data @users.to_csv(col_sep: "\t") }
     end
   end
 
