@@ -20,7 +20,8 @@ $(document).ready(function() {
     })
   })
 
-    var options = {
+    function createOptions () {
+    return {
     chart: {
       type: 'bar',
       backgroundColor:null,
@@ -74,12 +75,14 @@ $(document).ready(function() {
       }
     },
   };
+  }
 
     var chart, categories, assignment_type_name, scores;
     if ($('#userBarInProgress').length) {
       var data = JSON.parse($('#data-predictor').attr('data-predictor'));
 
       // Get Assignment Type Info
+      var options = createOptions()
       options.chart.renderTo = 'userBarInProgress';
       options.title = { text: 'My Points' };
       options.xAxis.categories = { text: ' ' };
@@ -87,6 +90,7 @@ $(document).ready(function() {
       options.series = data.scores;
       chart = new Highcharts.Chart(options);
 
+      var options = createOptions()
       options.chart.renderTo = 'userBarTotal';
       options.title = { text: 'Total Possible Points' };
       options.xAxis.categories = { text: ' ' };
