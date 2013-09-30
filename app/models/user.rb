@@ -184,17 +184,26 @@ class User < ActiveRecord::Base
     end
 
     earned_badge_score = earned_badges.where(course: course).score
-    scores << { :data => [earned_badge_score], :name => 'Badges' }
+    scores << { :data => [earned_badge_score], :name => "#{course.badge_term}s" }
 
     _assignments = assignments.where(course: course)
     in_progress = _assignments.graded_for_student(self)
 
-    return {
-      :student_name => name,
-      :scores => scores,
-      :course_total => _assignments.point_total + earned_badge_score,
-      :in_progress => in_progress.point_total + earned_badge_score
-    }
+    if course.valuable_badges?
+      return {
+        :student_name => name,
+        :scores => scores,
+        :course_total => _assignments.point_total + earned_badge_score,
+        :in_progress => in_progress.point_total + earned_badge_score
+        }
+    else
+      return {
+        :student_name => name,
+        :scores => scores,
+        :course_total => _assignments.point_total,
+        :in_progress => in_progress.point_total
+        }
+    end
   end
 
   def score_for_course(course)

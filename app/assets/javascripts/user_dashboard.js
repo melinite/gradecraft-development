@@ -83,14 +83,14 @@ $(document).ready(function() {
       options.chart.renderTo = 'userBarInProgress';
       options.title = { text: 'My Points' };
       options.xAxis.categories = { text: ' ' };
-      options.yAxis.max = data.course_total;
+      options.yAxis.max = data.in_progress;
       options.series = data.scores;
       chart = new Highcharts.Chart(options);
 
       options.chart.renderTo = 'userBarTotal';
       options.title = { text: 'Total Possible Points' };
       options.xAxis.categories = { text: ' ' };
-      options.yAxis.max = data.in_progress;
+      options.yAxis.max = data.course_total;
       options.series = data.scores;
       chart = new Highcharts.Chart(options);
     };
