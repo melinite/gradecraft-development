@@ -44,7 +44,7 @@ class StudentsController < ApplicationController
     @predictions = current_student.predictions(current_course)
     @scores_for_current_course = current_student.scores_for_course(current_course)
     if current_course.team_challenges?
-      @events = current_course.assignments + @course.challenges
+      @events = current_course.assignments + current_course.challenges
     else
       @events = current_course.assignments
     end
