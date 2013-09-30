@@ -22,9 +22,9 @@
         %th
   %tbody
     - i = 1
-    - @teams.each do |team|
+    - @teams.order_by_high_score.each do |team|
       %tr
-        %td= team.rank
+        %td= i
         %td= link_to team.name, team
         %td= team.member_count
         %td= points team.try(:average_grade)
@@ -35,3 +35,4 @@
           %td= team.try(:student_badge_count)
           %td= link_to 'Edit', edit_team_path(team), :class => 'btn btn-tiny btn-info'
           %td= link_to 'Delete', team, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
+      - i += 1

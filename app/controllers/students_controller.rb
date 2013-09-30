@@ -5,11 +5,11 @@ class StudentsController < ApplicationController
     @title = "#{current_course.user_term} Roster"
     @teams = current_course.teams
     @assignments = current_course.assignments
-    @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
+    @students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
     respond_to do |format|
       format.html
-      format.json { render json: @sorted_students }
-      format.csv { send_data @sorted_students.csv_for_course(current_course) }
+      format.json { render json: @students }
+      format.csv { send_data @students.csv_for_course(current_course) }
       format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
     end
   end

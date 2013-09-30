@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 
   def index
     @title = "View All Users"
-    @users =  current_course.users.order('last_name ASC')
+    @users =  current_course.users
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
@@ -87,31 +87,6 @@ class UsersController < ApplicationController
       format.csv { send_data User.csv_for_course(current_course) }
       format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
     end
-  end
-
-  # TODO: Outgoing? ~ AG
-  def predictor
-    increment_predictor_views
-
-    scores = []
-    current_course.assignment_types.each do |assignment_type|
-      scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
-    end
-
-    earned_badge_score = current_student.earned_badges.where(course: current_course).score
-
-    if current_course.valuable_badges?
-      scores << { :data => [earned_badge_score], :name => "#{term_for :badges }" }
-    end
-
-    assignments = current_course.assignments
-    assignments = assignments.graded_for_student(current_student) if params[:in_progress]
-
-    render :json => {
-      :student_name => current_student.name,
-      :scores => scores,
-      :course_total => assignments.point_total + earned_badge_score
-    }
   end
 
   def scores_by_assignment

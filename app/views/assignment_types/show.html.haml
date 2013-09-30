@@ -57,5 +57,5 @@
   .well
     %h5 Score Levels
     %ul.clear
-    - @score_levels.each do |sl|
+    - @score_levels.order('value DESC').each do |sl|
       %li= "#{sl.name} - #{sl.value}"
