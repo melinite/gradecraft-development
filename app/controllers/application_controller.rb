@@ -53,6 +53,10 @@ class ApplicationController < ActionController::Base
     return not_authenticated unless current_user.is_staff?
   end
 
+  def ensure_admin?
+    return not_authenticated unless current_user.is_admin?
+  end
+
   private
   def increment_page_views
     if current_user && request.format.html?
