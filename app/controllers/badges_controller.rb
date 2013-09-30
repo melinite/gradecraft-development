@@ -1,6 +1,6 @@
 class BadgesController < ApplicationController
 
-  before_filter :ensure_staff?, :except =>[:show]
+  before_filter :ensure_staff?, :except =>[:index, :show]
 
   def index
     @title = "View All #{term_for :badges}"

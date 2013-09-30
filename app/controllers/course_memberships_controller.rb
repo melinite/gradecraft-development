@@ -22,7 +22,7 @@ class CourseMembershipsController < ApplicationController
   end
   
   def destroy
-    @course_membership = current_course.course_membership.find(params[:id])
+    @course_membership = current_course.course_memberships.find(params[:id])
     @course_membership.destroy
     
     respond_to do |format|
