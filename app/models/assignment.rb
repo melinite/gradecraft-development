@@ -79,6 +79,10 @@ scope :grading_done, -> { where 'grades.present? == 1' }
     due_at
   end
 
+  def to_json(options = {})
+    super(options.merge(:only => [ :id, :content, :order, :done ] ))
+  end
+
   def self.point_total
     pluck('COALESCE(SUM(assignments.point_total), 0)').first || 0
   end

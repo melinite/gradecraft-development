@@ -460,7 +460,23 @@ $(document).ready(function(){
       assignmentTypeBars();
     })
 
-    // Ask Cory.
-    $('.table-toggle').on('click', assignmentTypeBars);
-  }
+  // Ask Cory.
+  $('.table-toggle').on('click', assignmentTypeBars);
+  window.AssignmentsController = Backbone.Controller.extend({
+    routes: {
+      '/assignments/:id/edit': 'edit',
+      '': 'index',
+      '/assignments/new': '_new',
+      '/assignments/:id/:' 'show'
+    },
+    url: function () {
+      return this.id ?  '/asignments/' + this.id : '/assignments'
+    }
+
+    index: function () {
+    },
+
+    _new: function () {
+    }
+  })
 });
