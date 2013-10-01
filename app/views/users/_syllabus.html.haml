@@ -27,7 +27,7 @@
               - elsif current_student_data.grade_released_for_assignment?(assignment)
                 %span.points.missed= "0 / "
             - else
-              - grade = assignment.grade_for_student(current_student)
+              - grade = current_student_data.grade_for_assignment(assignment)
               %span.points= "("
               - if current_student_data.grade_released_for_assignment?(assignment)
                 - if current_student_data.score_for_assignment(assignment) > 0
