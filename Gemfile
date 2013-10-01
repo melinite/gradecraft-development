@@ -10,6 +10,8 @@ gem 'active_model_serializers'
 gem 'bullet', :group => :development
 gem 'canable'
 gem 'carrierwave'
+gem 'fog'
+gem 'mini_magick'
 gem 'coffee-rails'
 gem 'compass-rails', :git => 'https://github.com/milgner/compass-rails', :branch => 'rails4'
 gem 'dalli'
