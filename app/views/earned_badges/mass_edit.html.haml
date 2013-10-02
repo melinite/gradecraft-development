@@ -18,7 +18,7 @@
     %table
       - current_course_data.students.each do |student|
         %tr
-          %td= link_to student.name, student
+          %td= link_to student.name, student_path(student)
           %td
             = f.simple_fields_for :earned_badges, student.earned_badges.first_or_initialize(badge: @badge) do |ebf|
               = ebf.hidden_field :student_id
