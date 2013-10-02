@@ -108,6 +108,33 @@ namespace :analytics do
     end
   end
 
+  desc "Delete and rebuild aggregate data from stored events"
+  task :rebuild_aggregate, [:aggregate] => [:environment] do |t, args|
+    aggregate = args[:aggregate].constantize
+    STDOUT.print "Are you sure you want to delete all #{aggregate} aggregate data and rebuild from stored events? (y/n) "
+
+    input = STDIN.gets.strip
+    if input == 'y'
+      STDOUT.puts "Deleting #{aggregate} data."
+      aggregate.destroy_all
+
+      events = Analytics::Event
+      count = events.count
+      STDOUT.puts "Rebuilding from #{count} events."
+      aggregates_hash = Analytics.configuration.event_aggregates.stringify_keys
+      events.each_with_index do |e, i|
+        STDOUT.print "\r#{i} out of #{count} - #{(i*100/count.to_f).to_i}% done"
+        aggregates = aggregates_hash[e.event_type]
+        if aggregates.include? aggregate
+          aggregate.incr(e)
+        end
+      end
+      STDOUT.puts "\nDone!"
+    else
+      STDOUT.puts "Aborted, aggregate data left intact."
+    end
+  end
+
   def convert(value)
     begin
       (float = Float(value)) && (float % 1.0 == 0) ? float.to_i : float
