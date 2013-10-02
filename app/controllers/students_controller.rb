@@ -42,24 +42,6 @@ class StudentsController < ApplicationController
     end
     @teams = current_course_data.teams
     @grade_scheme = current_course.grade_scheme
-    @sorted_teams = @teams.order_by_high_score
-    @form = AssignmentTypeWeightForm.new(current_student, current_course_data)
-
-    scores = []
-    current_course.assignment_types.each do |assignment_type|
-      scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
-    end
-
-    earned_badge_score = current_student.earned_badges.where(course: current_course).score
-    scores << { :data => [earned_badge_score], :name => 'Badges' }
-
-    assignments = current_student.assignments.where(course: current_course_data)
-    assignments = assignments.graded_for_student(current_student) if params[:in_progress]
-
-    respond_to do |format|
-      format.html
-      format.json { render json: { :student_name => current_student.name, :scores => scores, :course_total => assignments.point_total + earned_badge_score } }
-    end
   end
 
   def predictions

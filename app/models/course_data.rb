@@ -44,11 +44,11 @@ class CourseData < Struct.new(:course)
   end
 
   def teams
-    course.teams
+    @teams ||= course.teams
   end
 
   def assignments
-    course.assignments
+    @assignments ||= course.assignments
   end
 
   private
