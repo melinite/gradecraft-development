@@ -64,7 +64,6 @@
     %thead
       %tr
         %th= term_for(:student)
-        %th Score
         %th Feedback
         %th Date Awarded
         %th
@@ -74,7 +73,6 @@
       - @earned_badges.each do |earned_badge|
         %tr
           %td= link_to earned_badge.student.try(:name), student_path(earned_badge.student)
-          %td= earned_badge.score
           %td= raw earned_badge.feedback
           %td= earned_badge.created_at
           %td= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-success'

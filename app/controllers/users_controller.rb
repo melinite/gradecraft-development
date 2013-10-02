@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options)
+    @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options).alpha
     respond_to do |format|
       format.html
       format.json { render json: @users }
