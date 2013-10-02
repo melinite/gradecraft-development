@@ -29,7 +29,7 @@
       %th
       %th
   %tbody
-    - @students.alpha.each do |student|
+    - @students.each do |student|
       %tr
         %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email

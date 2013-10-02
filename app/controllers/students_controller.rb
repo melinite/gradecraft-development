@@ -5,7 +5,7 @@ class StudentsController < ApplicationController
     @title = "#{current_course.user_term} Roster"
     @teams = current_course.teams
     @assignments = current_course.assignments
-    @students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
+    @students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students.alpha
     respond_to do |format|
       format.html
       format.json { render json: @students }
