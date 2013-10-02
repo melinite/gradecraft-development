@@ -70,4 +70,49 @@ namespace :analytics do
       puts "Stopping."
     end
   end
+
+  desc "Delete event and adjust aggregates accordingly"
+  # Pass criteria unix-variable-style (due to limitations in allowed rake task argument formatting
+  # which don't allow passing objects, json, special characters, or anything comma-separated).
+  #
+  # Running:
+  # rake 'analytics:delete_events[event_type=some_type some_attribute=0]'
+  #
+  # Results in criteria:
+  # #=> {:event_type => "some_type", :some_attribute => 0}
+  #
+  task :delete_events, [:criteria] => [:environment] do |t, args|
+    criteria_array = args[:criteria].split(/\s+/).map{ |a| a.split('=') }
+    criteria_hash = Hash[ criteria_array.map{ |k,v| [k.strip,convert(v.strip)] } ]
+
+    mongoid_criteria = Analytics::Event.where(criteria_hash)
+    STDOUT.puts "Events matching #{mongoid_criteria} selector #{mongoid_criteria.selector}"
+    events = mongoid_criteria.to_a
+
+    STDOUT.puts "Found #{events.size} events."
+    STDOUT.print "Are you sure you want to delete these events? (y/n) "
+
+    input = STDIN.gets.strip
+    if input == 'y'
+      STDOUT.puts "Deleting events and adjusting aggregate data..."
+      events.each do |e|
+        #e = events.first
+        if aggregates = Analytics.configuration.event_aggregates.stringify_keys[e.event_type]
+          aggregates.each { |a| a.decr(e) }
+        end
+        e.destroy
+      end
+      STDOUT.puts "Done!"
+    else
+      STDOUT.puts "Aborted, events left intact."
+    end
+  end
+
+  def convert(value)
+    begin
+      (float = Float(value)) && (float % 1.0 == 0) ? float.to_i : float
+    rescue
+      value
+    end
+  end
 end
