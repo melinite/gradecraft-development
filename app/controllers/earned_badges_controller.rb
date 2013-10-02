@@ -93,8 +93,8 @@ class EarnedBadgesController < ApplicationController
 
   def mass_edit
     @badge = current_course.badges.find(params[:id])
-    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-    @students = @team ? @team.students : current_course.students
+    @teams = current_course.teams
+    @students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students.alpha
   end
 
   def mass_update

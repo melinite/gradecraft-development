@@ -21,7 +21,7 @@
       %th
       %th
   %tbody
-    - @users.alpha.each do |user|
+    - @users.each do |user|
       %tr
         %td
           = link_to user.name, student_path(user) if user.is_student?
