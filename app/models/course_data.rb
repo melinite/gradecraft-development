@@ -43,6 +43,14 @@ class CourseData < Struct.new(:course)
     badges_shared[student.id]
   end
 
+  def teams
+    course.teams
+  end
+
+  def assignments
+    course.assignments
+  end
+
   private
 
   def badges_shared
