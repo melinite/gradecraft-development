@@ -7,3 +7,14 @@
 .analytics-inputs select {
   margin: 0 15px 0 2px;
 }
+.analytics-refresh-now {
+  border: solid #0c9e81 1px;
+  background: #42c31b;
+}
+.analytics-loading {
+  background: #ccc;
+  cursor: default;
+  &:hover {
+    background: #ccc;
+  }
+}
