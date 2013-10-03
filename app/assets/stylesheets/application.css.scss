@@ -59,6 +59,15 @@ h1, h2, h3, h4, h5, h6 {
   h1, h2, h3, h4, h5, h6 {
     padding: 5px 15px 5px 0px;
   }
+  .section-heading {
+    margin: 15px -15px 35px;
+    border-radius: 0;
+    h2 {
+      padding: 5px 10px;
+      margin: 0;
+      color: #FFF;
+    }
+  }
 }
 
 .logged-out {
