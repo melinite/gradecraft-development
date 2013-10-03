@@ -9,7 +9,7 @@ class Grade < ActiveRecord::Base
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
     :graded_by_id, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file
 
-  STATUSES=%w(Graded Released Predicted)
+  STATUSES=%w(Graded Released)
 
   belongs_to :course
   belongs_to :assignment, touch: true
@@ -61,6 +61,10 @@ class Grade < ActiveRecord::Base
 
   def score
     final_score || (raw_score * assignment_weight).round
+  end
+
+  def predicted_score
+    self[:predicted_score] || 0
   end
 
   def point_total

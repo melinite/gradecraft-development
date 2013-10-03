@@ -118,20 +118,17 @@ class GradesController < ApplicationController
   end
 
   def predict_score
-    @assignment = Assignment.find(params[:assignment_id])
-    @grade = current_user.grades.find_or_initialize_by(assignment: @assignment)
-    if @grade.status != "Completed" && @grade.status != "Released"
-      @grade.predicted_score = params[:predicted_score]
-      @grade.status = "Predicted"
-      respond_to do |format|
+    @assignment = current_course.assignments.find(params[:assignment_id])
+    @grade = current_user.grades.where(status: nil).find_or_initialize_by(assignment: @assignment)
+    @grade.predicted_score = params[:predicted_score]
+    respond_to do |format|
+      format.json do
         if @grade.save
-          format.json { render :json => @grade }
+          render :json => @grade
         else
-          format.json { render :json => @grade.errors.full_messages }
+          render :json => { errors:  @grade.errors.full_messages }, :status => 400
         end
       end
-    else
-      format.json { render :json => "You cannot predict an assignment that has already been graded or completed"}
     end
   end
 
