@@ -74,12 +74,9 @@ class AnalyticsController < ApplicationController
     assignments = Hash[current_course.assignments.select([:id, :name]).collect{ |h| [h.id, h.name] }]
     data = AssignmentPrediction.data(@granularity, @range, {assignment_id: assignments.keys})
 
-    data[:lookup_keys] = ['{{t}}.average']
+    data[:lookup_keys] = ['{{t}}.count','{{t}}.total']
     data.decorate! do |result|
       result[:name] = assignments[result.assignment_id]
-      result[data[:granularity]].each do |key, values|
-        result[data[:granularity]][key][:average] = (values['total'] / values['count'] * 100).to_i
-      end
     end
 
     render json: data
