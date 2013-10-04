@@ -165,14 +165,14 @@ class GradesController < ApplicationController
   end
 
   def edit_status
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @title = "#{@assignment.name} Grade Statuses"
-    @grades = Grade.find(params[:grade_ids])
+    @grades = @assignment.grades.find(params[:grade_ids])
   end
 
   def update_status
-    @assignment = Assignment.find(params[:assignment_id])
-    @grades = Grade.find(params[:grade_ids])
+    @assignment = current_course.assignments.find(params[:assignment_id])
+    @grades = @assignment.grades.find(params[:grade_ids])
     @grades.each do |grade|
       grade.update_attributes!(params[:grade].reject { |k,v| v.blank? })
     end

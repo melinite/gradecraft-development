@@ -1,4 +1,4 @@
-= simple_form_for @assignment do
+= form_tag edit_status_assignment_grades_path(@assignment) do
   %table.display.table-striped.table.simpleTable
     %thead
       %tr
@@ -63,4 +63,4 @@
               = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
   - if @assignment.release_necessary? && @assignment.grades.present?
     .col-lg-12
-      = submit_tag "Release Selected Grades", :class => "btn btn-info pull-right"
+      = submit_tag "Update Selected Grade Statuses", :class => "btn btn-info pull-right"
