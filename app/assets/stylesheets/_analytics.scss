@@ -4,6 +4,31 @@
 .analytics-divider {
   border-top-color: #ccc;
 }
+.analytics-chart {
+  height: 200px;
+}
+.col-lg-12.analytics-chart {
+  height: 300px;
+}
+.analytics-table {
+  width: 100%;
+  td {
+    padding: 0 10px;
+  }
+  th {
+    padding: 5px 10px;
+  }
+}
+.dynatable-active-page {
+  background: $lightblue;
+}
 .analytics-inputs select {
   margin: 0 15px 0 2px;
+}
+.analytics-loading {
+  background: #ccc;
+  cursor: default;
+  &:hover {
+    background: #ccc;
+  }
 }
