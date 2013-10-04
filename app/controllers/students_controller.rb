@@ -1,6 +1,8 @@
 class StudentsController < ApplicationController
   respond_to :html, :json
 
+  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new]
+
   def index
     @title = "#{current_course.user_term} Roster"
     @teams = current_course.teams
