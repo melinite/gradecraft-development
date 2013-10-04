@@ -42,6 +42,6 @@ class CriteriaController < ApplicationController
   end
 
   def set_rubric
-    @rubric = @rubrics.find params[:rubric_id]
+    @rubric = current_course.rubrics.find params[:rubric_id]
   end
 end
