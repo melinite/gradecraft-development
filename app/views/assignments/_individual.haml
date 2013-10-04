@@ -5,7 +5,7 @@
         - if @assignment.release_necessary?
           %th
         %th.sortable{"data-sort" => "string"}= term_for :student
-        %th.sortable{"data-sort" => "int"} Score
+        %th.sortable{"data-sort" => "int"} Raw Score
         - if @assignment.assignment_type.student_weightable?
           %th.sortable{"data-sort" => "int"} Multiplied Score
         - if @assignment.has_levels?
@@ -27,10 +27,10 @@
           %td= link_to student.name, student_path(student)
           %td
             - if grade
-              = points grade.score
+              = points grade.try(:raw_score)
           - if @assignment.assignment_type.student_weightable?
             %td
-              = grade.try(:unmultiplied_score)
+              = grade.try(:score)
           - if @assignment.has_levels?
             %td
               - if grade
