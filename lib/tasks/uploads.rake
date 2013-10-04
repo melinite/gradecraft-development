@@ -9,14 +9,12 @@ namespace :transfer_to do
     Dir.glob('public/uploads/**/*').each do |f|
       if File.file?(f)
         remote_file = f.gsub('public/', '')
-        begin
-          obj = service.buckets["#{Rails.env}"].objects[remote_file]
-        rescue
-          obj = nil
-        end
+        obj = service.buckets["gradecraft.#{Rails.env}"].objects[remote_file] || nil
 
-        if !obj || (obj.etag != Digest::MD5.hexdigest(File.read(f)))
-          service.buckets["#{Rails.env}"].objects[remote_file].write(Pathname.new(f))
+        if !obj
+          service.buckets["gradecraft.#{Rails.env}"].objects.create(remote_file, f)
+        elsif (obj.etag != Digest::MD5.hexdigest(File.read(f)))
+          service.buckets["gradecraft.#{Rails.env}"].objects[remote_file].write(Pathname.new(f))
         end
       end
     end
