@@ -91,8 +91,7 @@ $(document).ready(function(){
 
   // Temporarily commented out to revive dashboard charts & predictor
 
-  /*
-$('.slider').each(function(i,slider) {
+  $('.slider').each(function(i,slider) {
     $slider = $(slider);
     var min = 0;
     var max = $slider.attr('max');
@@ -131,7 +130,6 @@ $('.slider').each(function(i,slider) {
       }
     });
   });
-*/
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider)
