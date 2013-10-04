@@ -445,6 +445,7 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.integer  "graded_by_id"
     t.integer  "team_id"
     t.boolean  "released"
+    t.integer  "predicted_score",    default: 0, null: false
   end
 
   add_index "grades", ["assignment_id"], name: "index_grades_on_assignment_id", using: :btree

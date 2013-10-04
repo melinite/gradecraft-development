@@ -1,7 +1,7 @@
 class Grade < ActiveRecord::Base
   include Canable::Ables
 
-  attr_accessible :type, :raw_score, :final_score, :feedback, :assignment,
+  attr_accessible :type, :raw_score, :predicted_score, :final_score, :feedback, :assignment,
     :assignment_id, :badge_id, :created_at, :updated_at, :complete, :semis,
     :finals, :status, :attempted, :substantial, :student, :student_id,
     :badge_ids, :earned_badges_attributes, :earned, :submission,
@@ -61,6 +61,10 @@ class Grade < ActiveRecord::Base
 
   def score
     final_score || (raw_score * assignment_weight).round
+  end
+
+  def predicted_score
+    self[:predicted_score] || 0
   end
 
   def point_total

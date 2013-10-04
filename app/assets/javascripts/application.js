@@ -133,17 +133,26 @@ $('.slider').each(function(i,slider) {
   });
 */
 
-    $('.slider').each(function(i,slider) {
+  $('.slider').each(function(i,slider) {
     $slider = $(slider)
+    $(slider).siblings("div.assignment > span.pScore").html($slider.attr('value'));
     $slider.slider({
-      max: $slider.attr('max')
+      max: parseInt($slider.attr('max')),
+      value: parseInt($slider.attr('value')),
+      stop: function(event, ui) {
+        assignment_id = $(slider).parent().data("assignment");
+        $.ajax({
+            url: '/assignments/' + assignment_id + '/grades/predict_score',
+            type: "POST",
+            data: { predicted_score: ui.value },
+            dataType: 'json'
+        });
+      }
     });
     $slider.on('slide', function(event, ui){
-      $(slider).prev("div.assignment > span").html(ui.value)
+      $(slider).siblings("div.assignment > span.pScore").html(ui.value)
     });
   });
-
-
 
   $('#userBarInProgress').show();
 	// $('#userBarTotal').hide();

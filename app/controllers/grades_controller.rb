@@ -1,7 +1,7 @@
 class GradesController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except => [:self_log, :show]
+  before_filter :ensure_staff?, :except => [:self_log, :show, :predict_score]
 
   def index
     @assignment = current_course.assignments.find(params[:assignment_id])
@@ -114,6 +114,21 @@ class GradesController < ApplicationController
       end
     else
       format.html { redirect_to dashboard_path, notice: "We're sorry, this assignment is no longer open." }
+    end
+  end
+
+  def predict_score
+    @assignment = current_course.assignments.find(params[:assignment_id])
+    @grade = current_user.grades.where(status: nil).find_or_initialize_by(assignment: @assignment)
+    @grade.predicted_score = params[:predicted_score]
+    respond_to do |format|
+      format.json do
+        if @grade.save
+          render :json => @grade
+        else
+          render :json => { errors:  @grade.errors.full_messages }, :status => 400
+        end
+      end
     end
   end
 
