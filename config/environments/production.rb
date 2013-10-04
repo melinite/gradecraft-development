@@ -39,3 +39,7 @@ end
 Sidekiq.configure_client do |config|
   config.redis = { :url => ENV['REDIS_URL'], :namespace => 'gradecraft_production' }
 end
+
+CarrierWave.configure do |config|
+  config.storage = :fog
+end

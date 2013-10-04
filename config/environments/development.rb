@@ -18,3 +18,7 @@ GradeCraft::Application.configure do
     Bullet.bullet_logger = true
   end
 end
+
+CarrierWave.configure do |config|
+  config.storage = :file
+end
