@@ -175,6 +175,9 @@ class GradesController < ApplicationController
     @grades = @assignment.grades.find(params[:grade_ids])
     @grades.each do |grade|
       grade.update_attributes!(params[:grade].reject { |k,v| v.blank? })
+      if @assignment.notify_released? && grade.status == "Released"
+        NotificationMailer.grade_released(grade.id).deliver
+      end
     end
     flash[:notice] = "Updated grades!"
     redirect_to assignment_path(@assignment)

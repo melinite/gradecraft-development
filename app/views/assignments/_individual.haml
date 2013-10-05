@@ -4,6 +4,9 @@
       %tr
         - if @assignment.release_necessary?
           %th
+            .btn-group
+              %button.select-all.btn.btn-xs.btn-info= "Check"
+              %button.select-none.btn.btn-xs.btn-info= "Uncheck"
         %th.sortable{"data-sort" => "string"}= term_for :student
         %th.sortable{"data-sort" => "int"} Raw Score
         - if @assignment.assignment_type.student_weightable?
@@ -61,6 +64,7 @@
               = link_to "Edit Grade", edit_assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-info'
             - else
               = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
+
   - if @assignment.release_necessary? && @assignment.grades.present?
     .col-lg-12
       = submit_tag "Update Selected Grade Statuses", :class => "btn btn-info pull-right"
