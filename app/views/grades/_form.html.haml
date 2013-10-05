@@ -6,7 +6,7 @@
   - if @assignment.has_levels?
     = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select, :input_html => {:class => "col-lg-3"}
   - else
-    = f.input :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{@assignment.point_total}", :input_html => {:class => "col-lg-3"}
+    = f.input :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{ points @assignment.point_total }", :input_html => {:class => "col-lg-3"}
   = f.simple_fields_for :grade_files, @grade.grade_files.new do |gff|
     = gff.input :filename, as: :file
   = f.input :feedback, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}

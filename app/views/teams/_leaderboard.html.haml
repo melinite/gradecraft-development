@@ -4,6 +4,10 @@
   - if current_course.shared_badges?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tabt2"} My #{term_for :team} Rankings
+  - if current_course.team_challenges?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tabt3"} #{term_for :challenges}
+
 %br
 %br
 .tab-content
@@ -27,3 +31,6 @@
 
   .tab-pane#tabt2
     = render "teams/in_team_rankings"
+
+  .tab-pane#tabt3
+    = render "challenges/student_index"

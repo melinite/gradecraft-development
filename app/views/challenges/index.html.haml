@@ -1,33 +1,39 @@
-= content_nav_for Challenge do
-  - if current_user.is_staff?
-    %li= link_to "New #{term_for :challenge}", new_challenge_path, :class => "btn btn-tiny btn-info"
+- if current_user.is_student?
+  = content_nav_for Challenge do
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 
-.col-lg-12
-  %h3= @title
+  = render "student_index"
 
-%table.table-striped.table.simpleTable
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"} Name
-      %th.sortable{"data-sort" => "string"} Description
-      %th.sortable{"data-sort" => "int"} Point total
-      %th.sortable{"data-sort" => "string"} Due date
-      %th.sortable{"data-sort" => "string"} Visible
-      %th.sortable{"data-sort" => "int"} Submissions?
-      %th.sortable{"data-sort" => "string"} Release necessary
-      %th
-      %th
+- else
+  = content_nav_for Challenge do
+    - if current_user.is_staff?
+      %li= link_to "New #{term_for :challenge}", new_challenge_path, :class => "btn btn-tiny btn-info"
 
-  %tbody
-    - @challenges.each do |challenge|
+  .col-lg-12
+    %h3= @title
+
+  %table.table-striped.table.simpleTable
+    %thead
       %tr
-        %td= link_to challenge.name, challenge
-        %td= challenge.description
-        %td= challenge.point_total
-        %td= challenge.due_at
-        %td= challenge.visible? ? 'Visible' : 'Hidden'
-        %td= challenge.accepts_submissions? ? 'Yes' : 'No'
-        %td= challenge.release_necessary? ? 'Yes' : 'No'
-        %td= link_to 'Edit', edit_challenge_path(challenge), :class => 'btn btn-tiny btn-info'
-        %td= link_to 'Delete', challenge, :class => 'btn btn-tiny btn-warning', :method => :delete, data: { confirm: 'Are you sure?' }
+        %th.sortable{"data-sort" => "string"} Name
+        %th.sortable{"data-sort" => "string"} Description
+        %th.sortable{"data-sort" => "int"} Point total
+        %th.sortable{"data-sort" => "string"} Due date
+        %th.sortable{"data-sort" => "string"} Visible
+        %th.sortable{"data-sort" => "int"} Submissions?
+        %th.sortable{"data-sort" => "string"} Release necessary
+        %th
+        %th
 
+    %tbody
+      - @challenges.each do |challenge|
+        %tr
+          %td= link_to challenge.name, challenge
+          %td= challenge.description
+          %td= points challenge.point_total
+          %td= challenge.due_at
+          %td= challenge.visible? ? 'Visible' : 'Hidden'
+          %td= challenge.accepts_submissions? ? 'Yes' : 'No'
+          %td= challenge.release_necessary? ? 'Yes' : 'No'
+          %td= link_to 'Edit', edit_challenge_path(challenge), :class => 'btn btn-tiny btn-info'
+          %td= link_to 'Delete', challenge, :class => 'btn btn-tiny btn-warning', :method => :delete, data: { confirm: 'Are you sure?' }

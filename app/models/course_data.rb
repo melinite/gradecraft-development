@@ -16,6 +16,10 @@ class CourseData < Struct.new(:course)
     @badges ||= course.badges
   end
 
+  def challenges
+    @challenges ||= course.challenges
+  end
+
   def students
     @students ||= course.students.alpha
   end

@@ -13,19 +13,16 @@
     = @assignment_type.point_setting
   %p
     %b= "Each #{current_course.assignment_term} is worth:"
-    = @assignment_type.universal_point_value
+    = points @assignment_type.universal_point_value
   %p
     %b Are there due dates?
     = @assignment_type.due_date_present? ? "Yes" : "No"
   %p
     %b Resubmission:
-    = @assignment_type.resubmission
+    = @assignment_type.resubmission? ? "Yes" : "No"
   %p
     %b Max value:
-    = @assignment_type.max_value
-  %p
-    %b Percentage course:
-    = @assignment_type.percentage_course
+    = points @assignment_type.max_value
   %p
     %b Students set course weight?
     = @assignment_type.student_weightable? ? "Yes" : "No"
