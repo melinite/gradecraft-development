@@ -5,20 +5,22 @@
   %h3 Selected Grades
 
 %table.table.table-striped.simpleTable
-  %tr
-    %th.sortable{"data-sort" => "string"} User
-    %th.sortable{"data-sort" => "int"} Score
-    %th.sortable{"data-sort" => "string"} Current Status
-  - for grade in @grades
+  %thead
     %tr
-      %td= grade.student.name
-      %td= grade.raw_score
-      %td= grade.status
+      %th.sortable{"data-sort" => "string"} #{current_course.user_term}
+      %th.sortable{"data-sort" => "int"} Score
+      %th.sortable{"data-sort" => "string"} Current Status
+  %tbody
+    - for grade in @grades
+      %tr
+        %td= grade.student.name
+        %td= grade.raw_score
+        %td= grade.status
 
 .col-lg-12
   = simple_form_for :grade, :url => update_status_assignment_grades_path, :html => { :method => :put, :class => "form-horizontal" } do |f|
     - for grade in @grades
       = hidden_field_tag "grade_ids[]", grade.id
-    = f.input :status, :as => :select, :collection => [["New"], ["Graded"],["Released"]]
+    = f.input :status, :label => "Update Status to:", :as => :select, :collection => Grade::STATUSES
     .col-lg-offset-3.form-actions
       = f.button :submit, "Update Statuses", :class => "btn btn-info"
