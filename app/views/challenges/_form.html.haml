@@ -4,12 +4,12 @@
     = f.input :name, :input_html => {:class => 'col-lg-3'}
     = f.simple_fields_for :challenge_files, @challenge.challenge_files.new do |cff|
       = cff.input :filename, as: :file
-    = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "What do the teams need to do to succed?"
+    = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "What do the teams need to do to succeed?"
     = f.input :point_total, :input_html => {:class => 'col-lg-3'}
     = f.input :due_at, :start_year => Date.today.year, :include_blank => true
     = f.input :visible, :label => "Visible to students?"
     = f.input :accepts_submissions, :label => "Teams submit materials?"
-    = f.input :release_necessary, :label => "Release necessary?"
+    = f.input :release_necessary, :label => "Release necessary?", :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
 
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"

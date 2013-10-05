@@ -14,6 +14,9 @@ class BadgesController < ApplicationController
     @assignments = current_course.assignments
     @earned_badges = @badge.earned_badges
     @tasks = @badge.tasks
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    end
   end
 
   def new

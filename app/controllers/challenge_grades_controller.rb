@@ -16,7 +16,9 @@ class ChallengeGradesController < ApplicationController
 
   def new
     @challenge = current_course.challenges.find(params[:challenge_id])
-    @challenge_grade = @challenge.challenge_grades.new
+    @team = current_course.teams.find(params[:team_id])
+    @teams = current_course.teams
+    @challenge_grade = @team.challenge_grades.new
     @title = "Create a New #{term_for :challenge} Grade"
   end
 
