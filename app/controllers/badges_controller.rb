@@ -14,6 +14,7 @@ class BadgesController < ApplicationController
     @assignments = current_course.assignments
     @earned_badges = @badge.earned_badges
     @tasks = @badge.tasks
+    @scores_for_current_course = current_student.scores_for_course(current_course)
   end
 
   def new
