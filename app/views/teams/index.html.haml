@@ -1,6 +1,7 @@
 = content_nav_for Team do
   %li= link_to "Add a #{term_for :team}", new_team_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Grade a #{term_for :challenge}", challenges_path, :class => "btn btn-tiny btn-info"
+  - if current_course.team_challenges?
+    %li= link_to "Grade a #{term_for :challenge}", challenges_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3= @title
