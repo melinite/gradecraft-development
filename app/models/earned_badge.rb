@@ -31,5 +31,6 @@ class EarnedBadge < ActiveRecord::Base
     self.task_id ||= submission.try(:task_id)
     self.badge_id ||= submission.try(:assignment_id) || task.try(:assignment_id)
     self.course_id ||= badge.try(:course_id)
+    self.score ||= badge.try(:point_total)
   end
 end

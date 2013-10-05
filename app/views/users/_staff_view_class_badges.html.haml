@@ -6,14 +6,14 @@
 
   %h4 #{current_course.badge_term.pluralize} Leaderboard
 
-%ul.nav.nav-tabs
-  %li.active
-    %a{ "data-toggle" => "tab", "data-target" => "#tab1"} Shared #{current_course.badge_term.pluralize}
-  %li
-    %a{ "data-toggle" => "tab", "data-target" => "#tab2"} All #{current_course.badge_term.pluralize}
+  %ul.nav.nav-tabs
+    %li.active
+      %a{ "data-toggle" => "tab", "data-target" => "#tab1"} Shared #{current_course.badge_term.pluralize}
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#tab2"} All #{current_course.badge_term.pluralize}
 
-.tab-content
-  .tab-pane#tab1.active
-    = render "users/public_class_badges"
-  .tab-pane#tab2
-    = render "users/all_class_badges"
+  .tab-content
+    .tab-pane#tab1.active
+      = render "users/public_class_badges"
+    .tab-pane#tab2
+      = render "users/all_class_badges"

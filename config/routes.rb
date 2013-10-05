@@ -136,7 +136,7 @@ GradeCraft::Application.routes.draw do
 
   post '/current_course/change' => 'current_courses#change', :as => :change_current_course
   get 'current_course' => 'current_courses#show'
-  get  'class_badges' => 'users#class_badges'
+  get  'class_badges' => 'students#class_badges'
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
