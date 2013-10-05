@@ -115,9 +115,7 @@ class EarnedBadgesController < ApplicationController
       @earned_badges = @students.map do |s|
         @badge.earned_badges.where(:student_id => s).first || @badge.earned_badges.new(:student => s)
       end
-      respond_with @assignment, :template => "grades/mass_edit"
     end
-    respond_with @badge
   end
 
   def chart

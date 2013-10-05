@@ -17,14 +17,14 @@
         %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
         %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
       %table
-        - @students.each do |student|
+        - @earned_badges.each_with_index do |eb, i|
           %tr
-            %td= link_to student.name, student_path(student)
+            %td= link_to eb.student.name, student_path(eb.student)
             %td
-              = f.simple_fields_for :earned_badges, student.earned_badges.first_or_initialize(badge: @badge) do |ebf|
+              = f.simple_fields_for :earned_badges, eb do |ebf|
                 = ebf.hidden_field :student_id
                 = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
-                = ebf.check_box :score, {}, 1, 0
+                = ebf.check_box :score, {}, @badge.point_total
       .form-actions.col-lg-offset-3
         = f.button :submit, "Award", :class => "btn btn-primary"
         = link_to 'Cancel', badges_path, :class => 'btn btn-info'
