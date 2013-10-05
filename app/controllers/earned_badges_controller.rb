@@ -93,14 +93,30 @@ class EarnedBadgesController < ApplicationController
 
   def mass_edit
     @badge = current_course.badges.find(params[:id])
-    @teams = current_course.teams
-    @students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students.alpha
+    @title = "Mass Award #{@badge.name}"
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    @students = current_course.students.includes(:teams).where(user_search_options).alpha
+    @earned_badges = @students.map do |s|
+      @badge.earned_badges.where(:student_id => s).first || @badge.earned_badges.new(:student => s, :badge => @badge)
+    end
   end
 
   def mass_update
-    @student = current_student
-    @badge = Badge.find(params[:id])
-    @badge.update_attributes(params[:badge])
+    @badge = current_course.badges.find(params[:id])
+    if @badge.update_attributes(params[:badge])
+      respond_with @badge
+    else
+      @title = "Quick Award #{@badge.name}"
+      user_search_options = {}
+      user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+      @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
+      @earned_badges = @students.map do |s|
+        @badge.earned_badges.where(:student_id => s).first || @badge.earned_badges.new(:student => s)
+      end
+      respond_with @assignment, :template => "grades/mass_edit"
+    end
     respond_with @badge
   end
 

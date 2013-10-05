@@ -1,4 +1,5 @@
 class CourseData < Struct.new(:course)
+
   def earned_badge_score_for_student(student)
     earned_badge_scores[student.id]
   end
@@ -16,11 +17,11 @@ class CourseData < Struct.new(:course)
   end
 
   def students
-    @students ||= course.students.alpha.to_a
+    @students ||= course.students.alpha
   end
 
   def students_for_team(team)
-  course.students.select { |student| team.student_ids.include? student.id }
+    course.students.select { |student| team.student_ids.include? student.id }
   end
 
   def badges_shared_for_student?(student)
@@ -36,4 +37,5 @@ class CourseData < Struct.new(:course)
       end
     end
   end
+
 end

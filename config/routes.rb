@@ -16,24 +16,24 @@ GradeCraft::Application.routes.draw do
     collection do
       get 'edit_profile'
       get 'all'
-      get 'scores_for_current_course'
-      get 'scores_by_assignment'
-      get 'scores_by_team'
-      get 'scores_for_single_assignment'
       put 'update_profile'
       get 'predictor'
-      get 'final_grades'
       get 'test'
       get 'import'
       post 'upload'
-      get 'choices'
       get 'analytics'
-      get 'class_badges'
     end
   end
   resources :students do
     collection do
       get 'leaderboard'
+      get 'choices'
+      get 'scores_for_current_course'
+      get 'scores_by_assignment'
+      get 'scores_by_team'
+      get 'scores_for_single_assignment'
+      get 'final_grades'
+      get 'class_badges'
     end
   end
   resources :staff, only: [:index, :show]

@@ -1,0 +1,31 @@
+= content_nav_for :students, "#{term_for :weight} Choices" do
+  %li= link_to "See All #{term_for :students}", students_path, :class => "btn btn-tiny btn-info"
+
+.col-lg-12
+  %h3= @title
+  - if current_course.has_teams?
+    .filters.col.col-lg-5.col-sm-5.col-md-5
+      = form_tag choices_students_path, :method => :get do
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
+        = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
+
+
+%table.table.table-striped.simpleTable
+  %thead
+    %tr
+      %th.sortable{"data-sort" => "string"} #{current_course.user_term}
+      - @assignment_types.each do |assignment_type|
+        - if assignment_type.student_weightable?
+          %th.sortable{"data-sort" => "string"}= assignment_type.name
+      %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Sum
+      %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Awarded?
+  %tbody
+    - @students.each do |student|
+      %tr
+        %td= link_to student.name, student_path(student)
+        - @assignment_types.each do |assignment_type|
+          - if assignment_type.student_weightable?
+            %td= assignment_type.weight_for_student(student)
+        %td= student.weight_count(current_course)
+        %td
+          = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"
