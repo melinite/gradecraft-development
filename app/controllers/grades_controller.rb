@@ -54,7 +54,7 @@ class GradesController < ApplicationController
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.build(params[:grade])
     @grade.graded_by = current_user
-    if ! assignment.release_necessary?
+    if !@assignment.release_necessary?
       @grade.status = "Graded"
     end
     @grade.save
@@ -78,6 +78,9 @@ class GradesController < ApplicationController
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
     @badges = current_course.badges
+    if !@assignment.release_necessary?
+      @grade.status = "Graded"
+    end
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
         if @assignment.notify_released? && @grade.status == "Released"
