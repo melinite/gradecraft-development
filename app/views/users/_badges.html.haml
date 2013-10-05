@@ -37,7 +37,7 @@
                 %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
                 = badge.try(:earned_at)
                 %br
-                = badge.earned_badge_for_student(current_student).try(:feedback)
+                = raw badge.earned_badge_for_student(current_student).try(:feedback)
             - if current_course.shared_badges? && current_student.badges_shared(current_course)
               %td
                 - if badge.earned_badge_for_student(current_student)

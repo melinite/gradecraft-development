@@ -8,7 +8,7 @@
   = f.input :visible, :as => :boolean
   - if current_course.valuable_badges?
     = f.input :point_total, :input_html => {:class => 'col-lg-3'}
-  = f.input :can_earn_multiple_times, :collection => [["Onetime", "onetime"], ["Multiple", "multiple"]], :hint => "Can this badge be given to one person multiple times through the semester, or only only once?", :prompt => "-- Select Occurrence --", :input_html => {:class => 'input-sm col-lg-3'}
+  = f.input :can_earn_multiple_times, :hint => "Can this badge be given to one person multiple times through the semester?", :label => "Multi-award", :input_html => {:class => 'input-sm col-lg-3'}
 
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"
