@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130929200510) do
+ActiveRecord::Schema.define(version: 20131005031533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.boolean  "student_weightable"
     t.string   "student_logged_button_text"
     t.string   "student_logged_revert_button_text"
-    t.boolean "notify_released"
+    t.boolean  "notify_released"
   end
 
   create_table "assignment_weights", force: true do |t|
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.integer  "challenge_id"
     t.integer  "score"
     t.string   "feedback"
-    t.boolean  "status"
+    t.string   "status"
     t.integer  "team_id"
     t.integer  "final_score"
     t.datetime "created_at",   null: false
@@ -270,14 +270,14 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.string   "year"
     t.string   "semester"
     t.integer  "grade_scheme_id"
-    t.datetime "created_at",                                                         null: false
-    t.datetime "updated_at",                                                         null: false
-    t.boolean  "badge_setting",                                      default: true
-    t.boolean  "team_setting",                                       default: false
+    t.datetime "created_at",                                                            null: false
+    t.datetime "updated_at",                                                            null: false
+    t.boolean  "badge_setting",                                         default: true
+    t.boolean  "team_setting",                                          default: false
     t.string   "user_term"
     t.string   "team_term"
     t.string   "homepage_message"
-    t.boolean  "status",                                             default: true
+    t.boolean  "status",                                                default: true
     t.boolean  "group_setting"
     t.integer  "badge_set_id"
     t.datetime "assignment_weight_close_at"
@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.integer  "min_group_size"
     t.boolean  "shared_badges"
     t.boolean  "graph_display"
-    t.decimal  "default_assignment_weight",  precision: 4, scale: 1, default: 1.0
+    t.decimal  "default_assignment_weight",     precision: 4, scale: 1, default: 1.0
     t.string   "tagline"
     t.boolean  "academic_history_visible"
     t.string   "office"
@@ -321,6 +321,7 @@ ActiveRecord::Schema.define(version: 20130929200510) do
     t.string   "lti_uid"
     t.boolean  "team_score_average"
     t.boolean  "team_challenges"
+    t.integer  "max_assignment_types_weighted"
   end
 
   add_index "courses", ["lti_uid"], name: "index_courses_on_lti_uid", using: :btree
