@@ -4,7 +4,7 @@ class EarnedBadgesController < ApplicationController
 
   def index
     @badge = current_course.badges.find(params[:badge_id])
-    @title = "#{term_for :badges}"
+    redirect_to badge_path(@badge)
   end
 
   def my_badges

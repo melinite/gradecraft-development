@@ -9,7 +9,7 @@
     = f.input :due_at, :start_year => Date.today.year, :include_blank => true
     = f.input :visible, :label => "Visible to students?"
     = f.input :accepts_submissions, :label => "Teams submit materials?"
-    = f.input :release_necessary, :label => "Release necessary?"
+    = f.input :release_necessary, :label => "Release necessary?", :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
 
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"

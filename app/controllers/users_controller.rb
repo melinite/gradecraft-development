@@ -141,10 +141,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @title = "Edit #{current_course.user_term}"
     @teams = current_course.teams
     @courses = Course.all
     @user = current_course.users.find(params[:id])
+    @title = "Edit #{@user.name}"
     @academic_history = @user.student_academic_history
 
     respond_with @user
