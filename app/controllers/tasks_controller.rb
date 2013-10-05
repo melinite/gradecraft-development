@@ -13,6 +13,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    @title = "Create a New #{@assignment.name} Task"
     @task = @assignment.tasks.new
   end
 
