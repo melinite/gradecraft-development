@@ -8,9 +8,9 @@
   %tbody
     - current_course_data.students.each do |student|
       %tr
-        %td= student.name
+        %td= link_to student.name, student_path(student)
         %td
           - student.earned_badges.each do |eb|
             %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "40"}
         - if current_course.valuable_badges?
-          %td= student.earned_badge_score_for_course(current_course)
+          %td= points student.earned_badge_score_for_course(current_course)

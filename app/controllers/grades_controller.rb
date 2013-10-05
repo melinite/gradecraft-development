@@ -54,6 +54,9 @@ class GradesController < ApplicationController
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.build(params[:grade])
     @grade.graded_by = current_user
+    if !@assignment.release_necessary?
+      @grade.status = "Graded"
+    end
     @grade.save
     @badges = current_course.badges
     @earned_badge = EarnedBadge.new(params[:earned_badge])
@@ -75,6 +78,9 @@ class GradesController < ApplicationController
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
     @badges = current_course.badges
+    if !@assignment.release_necessary?
+      @grade.status = "Graded"
+    end
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
         if @assignment.notify_released? && @grade.status == "Released"
@@ -105,6 +111,7 @@ class GradesController < ApplicationController
     if @assignment.open?
       @grade = current_student_data.grade_for_assignment(@assignment)
       @grade.raw_score = params[:present] == 'true' ? @assignment.point_total : 0
+      @grade.status = "Graded"
       respond_to do |format|
         if @grade.save
           format.html { redirect_to dashboard_path, notice: 'Thank you for logging your grade!' }
@@ -142,7 +149,7 @@ class GradesController < ApplicationController
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = current_course.students.includes(:teams).where(user_search_options).alpha
     @grades = @students.map do |s|
-      @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user)
+      @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user, :status => "Graded")
     end
   end
 
@@ -158,7 +165,7 @@ class GradesController < ApplicationController
       user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
       @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
       @grades = @students.map do |s|
-        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user)
+        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user, :status => "Graded")
       end
       respond_with @assignment, :template => "grades/mass_edit"
     end

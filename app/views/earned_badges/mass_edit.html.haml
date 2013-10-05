@@ -7,23 +7,24 @@
   - if current_course.has_teams?
     .filters
       = form_tag mass_award_badge_path, :method => :get do
+        = hidden_field_tag :badge_id, @badge.id
         = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
         = submit_tag 'Filter', :class => 'btn btn-primary'
 
-.col-lg-12#massGrade
-  = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|
-    .btn-group
-      %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
-      %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
-    %table
-      - current_course_data.students.each do |student|
-        %tr
-          %td= link_to student.name, student_path(student)
-          %td
-            = f.simple_fields_for :earned_badges, student.earned_badges.first_or_initialize(badge: @badge) do |ebf|
-              = ebf.hidden_field :student_id
-              = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
-              = ebf.check_box :score, {}, 1, 0
-    .form-actions.col-lg-offset-3
-      = f.button :submit, "Award", :class => "btn btn-primary"
-      = link_to 'Cancel', badges_path, :class => 'btn btn-info'
+  #massGrade
+    = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|
+      .btn-group
+        %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
+        %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
+      %table
+        - @earned_badges.each_with_index do |eb, i|
+          %tr
+            %td= link_to eb.student.name, student_path(eb.student)
+            %td
+              = f.simple_fields_for :earned_badges, eb do |ebf|
+                = ebf.hidden_field :student_id
+                = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
+                = ebf.check_box :score, {}, @badge.point_total
+      .form-actions.col-lg-offset-3
+        = f.button :submit, "Award", :class => "btn btn-primary"
+        = link_to 'Cancel', badges_path, :class => 'btn btn-info'

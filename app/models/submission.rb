@@ -21,8 +21,7 @@ class Submission < ActiveRecord::Base
   accepts_nested_attributes_for :submission_files
 
   scope :ungraded, -> { where('NOT EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id)') }
-  scope :graded, -> { where('EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id)') }
-
+  scope :graded, -> { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = submission.id)') }
 
   before_validation :cache_associations
 

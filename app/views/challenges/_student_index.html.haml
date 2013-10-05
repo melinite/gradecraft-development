@@ -1,0 +1,19 @@
+%table.table-striped.table.simpleTable
+  %thead
+    %tr
+      %th.sortable{"data-sort" => "string"} Name
+      %th.sortable{"data-sort" => "string"} Description
+      %th.sortable{"data-sort" => "int"} Point total
+      %th.sortable{"data-sort" => "string"} Due date
+      %th
+
+  %tbody
+    - current_course_data.challenges.each do |challenge|
+      - if challenge.visible?
+        %tr
+          %td= link_to challenge.name, challenge
+          %td= challenge.description
+          %td= points challenge.point_total
+          %td= challenge.due_at
+          - if challenge.accepts_submissions?
+            %td

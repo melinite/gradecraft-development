@@ -1,4 +1,5 @@
 class StudentData < Struct.new(:student, :course)
+
   def score
     @score ||= released_grades.where(course: course).score + earned_badge_score
   end

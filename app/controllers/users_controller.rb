@@ -74,63 +74,6 @@ class UsersController < ApplicationController
     @users = current_course.users
   end
 
-  def class_badges
-    @students = current_course.students.includes(:earned_badges)
-    @user = current_user
-    @assignments = @user.assignments
-    @badges = current_course.badges
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    respond_to do |format|
-      format.html
-      format.json { render json: @users }
-      format.csv { send_data User.csv_for_course(current_course) }
-      format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
-    end
-  end
-
-  def scores_by_assignment
-    scores = current_course.grades.released.joins(:assignment_type)
-                           .group('grades.student_id, assignment_types.name')
-                           .order('grades.student_id, assignment_types.name')
-    scores = scores.pluck('grades.student_id, assignment_types.name, SUM(grades.score)')
-    render :json => {
-      :scores => scores,
-    }
-  end
-
-  def scores_by_team
-    records = current_course.grades.released
-                            .joins(:team)
-                            .group('grades.student_id, grades.team_id, teams.name')
-                            .order('grades.team_id')
-    scores = records.pluck('grades.team_id, SUM(grades.score), teams.name')
-    render :json => {
-      :scores => scores
-    }
-  end
-
-  # TODO: Outgoing? AG
-  def scores_for_current_course
-     scores = current_course.grades.released.group(:student_id).order('SUM(score)')
-     id = params[:user_id] || current_user.id
-     user_score = current_course.grades.released.group(:student_id)
-                                                .where(student_id: id).pluck('SUM(score)')
-     scores = scores.pluck('SUM(score)')
-     render :json => {
-      :scores => scores,
-      :user_score => user_score
-     }
-  end
-
-  def scores_for_single_assignment
-    scores = current_course.grades.released
-                                  .where(assignment_id: params[:id])
-    scores = scores.pluck('score')
-    render :json => {
-      :scores => scores
-    }
-  end
 
   def new
     @title = "Create a New User"
@@ -224,16 +167,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def choices
-    @title = "View all #{current_course.weight_term} Choices"
-    @students = current_course.students
-    @assignment_types = current_course.assignment_types
-    @teams = current_course.teams
-    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @students = @students.includes(:teams).where(user_search_options).order_by_high_score
-  end
+
 
   def final_grades
     @course = current_course
