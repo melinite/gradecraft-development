@@ -4,21 +4,17 @@ class InfoController < ApplicationController
   before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
   def dashboard
-    @students = current_course.users.students
     if current_user.is_staff?
+      @students = current_course.users.students
       @teams = current_course.teams.includes(:earned_badges)
       @users = current_course.users
       @top_ten_students = @students.order_by_high_score.limit(10)
       @bottom_ten_students = @students.order_by_low_score.limit(10)
       @submissions = current_course.submissions
     else
-      @submissions = current_student.submissions
-      @badges = current_course.badges.includes(:tasks)
-      @earned_badges = current_student.earned_badges.includes(:badge)
       @assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
       @by_assignment_type = @assignments.group_by(&:assignment_type)
-      @teams = current_course.teams
-      @sorted_teams = @teams.order_by_high_score
+      @sorted_teams = current_course.teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
       @predictions = current_student.predictions(current_course)
       @scores_for_current_course = current_student.scores_for_course(current_course)
