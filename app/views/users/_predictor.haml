@@ -17,6 +17,6 @@
   #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
     .col.col-lg-12
       %ul.slides.col.col-lg-12
-        = render partial: 'students/predictor/assignments', collection: @assignments.alphabetical.chronological.group_by(&:assignment_type).to_a, as: :assignment_type_and_assignments
+        = render partial: 'students/predictor/assignments', collection: @by_assignment_type.to_a, as: :assignment_type_and_assignments
         = render 'students/predictor/badges'
 .clear
