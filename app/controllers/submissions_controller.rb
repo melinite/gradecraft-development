@@ -14,11 +14,6 @@ class SubmissionsController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     if current_user.is_student?
       @user = current_user
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @badges = current_course.badges
-      @assignments = current_course.assignments
-      @by_assignment_type = @assignments.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
     end
     enforce_view_permission(@submission)
   end
