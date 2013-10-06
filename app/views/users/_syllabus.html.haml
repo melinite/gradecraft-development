@@ -5,14 +5,15 @@
       .col-lg-10
         - if assignment_type.predictor_description?
           = raw assignment_type.predictor_description
-        - if assignment_type.student_weightable?
-          %p.bold.clear= "You've set #{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights} on this #{term_for :assignment_type}"
-      - if assignment_type.student_weightable?
+      - if assignment_type.student_weightable? && current_course.assignment_weight_open?
         .col-lg-2
           - if current_student_data.weighted_assignments?
-            .badge.badge-primary= link_to "Change #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, user_id: current_student
+            .badge.badge-primary= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
+            .badge.badge-info= link_to "Change #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, user_id: current_student
           - else
-            .badge.badge-primary= link_to "Set #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type
+            .badge.badge-info= link_to "Set #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type
+      - elsif assignment_type.student_weightable?
+        .badge.badge-primary= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
       .clear
       %p
       .col-lg-12

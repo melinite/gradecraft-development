@@ -2,7 +2,7 @@ class Course < ActiveRecord::Base
   attr_accessible :badge_set_ids, :courseno, :name,
     :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
     :user_id, :course_id, :homepage_message, :group_setting,
-    :total_assignment_weight, :assignment_weight_close_date, :team_roles,
+    :total_assignment_weight, :assignment_weight_close_at, :team_roles,
     :section_leader_term, :group_term, :assignment_weight_type,
     :has_submissions, :teams_visible, :badge_use_scope,
     :weight_term, :badges_value, :predictor_setting, :max_group_size,
@@ -138,7 +138,7 @@ class Course < ActiveRecord::Base
   end
 
   def assignment_weight_open?
-    assignment_weight_close_at.nil? || assignment_weight_close_at < Time.now
+    assignment_weight_close_at.nil? || assignment_weight_close_at > Time.now
   end
 
   def team_roles?

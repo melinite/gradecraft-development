@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
 
-  skip_before_filter :require_login, :except => [:destroy, :index]
+  skip_before_filter :require_login, :except => [:index]
   skip_before_filter :verify_authenticity_token, :only => [:lti_create, :kerberos_create]
 
   def new

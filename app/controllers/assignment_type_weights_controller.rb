@@ -5,6 +5,7 @@ class AssignmentTypeWeightsController < ApplicationController
       @user = current_user
       @badges = current_course.badges
       @assignments = current_course.assignments
+      @assignment_types = current_course.assignment_types
     end
     respond_with @form = AssignmentTypeWeightForm.new(current_student, current_course)
   end
