@@ -14,8 +14,11 @@ class SubmissionsController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     if current_user.is_student?
       @user = current_user
+      @scores_for_current_course = current_student.scores_for_course(current_course)
       @badges = current_course.badges
       @assignments = current_course.assignments
+      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @sorted_teams = current_course.teams.order_by_high_score
     end
     enforce_view_permission(@submission)
   end
@@ -34,6 +37,8 @@ class SubmissionsController < ApplicationController
       @user = current_user
       @badges = current_course.badges
       @assignments = current_course.assignments
+      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @sorted_teams = current_course.teams.order_by_high_score
       if @assignment.has_groups?
         @group = Group.find(params[:group_id])
       else
@@ -60,6 +65,9 @@ class SubmissionsController < ApplicationController
       @user = current_user
       @badges = current_course.badges
       @assignments = current_course.assignments
+      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+      @sorted_teams = current_course.teams.order_by_high_score
     end
     @groups = @assignment.groups
     @teams = current_course.teams

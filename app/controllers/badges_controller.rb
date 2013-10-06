@@ -8,6 +8,8 @@ class BadgesController < ApplicationController
     @assignments = current_course.assignments
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
+      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @sorted_teams = current_course.teams.order_by_high_score
     end
   end
 
@@ -19,6 +21,8 @@ class BadgesController < ApplicationController
     @tasks = @badge.tasks
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
+      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @sorted_teams = current_course.teams.order_by_high_score
     end
   end
 
