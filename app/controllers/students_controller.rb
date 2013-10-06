@@ -36,7 +36,7 @@ class StudentsController < ApplicationController
     @assignment_weights = current_student.assignment_weights
     @assignment_weight = current_student.assignment_weights.new
     @assignments = current_course.assignments.includes(:assignment_type)
-    @by_assignment_type = @assignments.group_by(&:assignment_type)
+    @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
     @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
     @grades = current_student.grades
     @badges = current_course_data.badges.includes(:earned_badges, :tasks)
