@@ -109,7 +109,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def weighted_assignments?
-    @weighted_assignments_present ||= student.assignment_weights.present?
+    @weighted_assignments_present ||= student.assignment_weights.count > 0
   end
 
   def submission_for_assignment?(assignment)
