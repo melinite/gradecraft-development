@@ -32,6 +32,7 @@ class GradesController < ApplicationController
     @score_levels = @assignment_type.score_levels
     @student = current_course.students.find(params[:student_id])
     @groups = current_course.groups
+    @submit_message = "Submit Grade"
     @title = "Grading #{@student.name}'s #{@assignment.name}"
     @grade = @student.grades.new(assignment: @assignment)
   end
@@ -46,6 +47,7 @@ class GradesController < ApplicationController
     @student = @students.find(params[:student_id])
     @teams = current_course.teams
     @groups = current_course.groups
+    @submit_message = "Update Grade"
     @title = "Editing #{@student.name}'s Grade for #{@assignment.name}"
     respond_with @grade
   end

@@ -13,5 +13,5 @@
   - if @assignment.release_necessary?
     = f.input :status, :as => :select, :collection => Grade::STATUSES, :hint => "Can the student see this grade?", :include_blank => false
   .form-actions.col-lg-offset-3
-    = f.button :submit, "Submit Grade", :class => "btn-primary"
+    = f.button :submit, @submit_message, :class => "btn-primary"
     = link_to 'Cancel', assignment_path(@assignment), :class => 'btn btn-info'
