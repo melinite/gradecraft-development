@@ -6,6 +6,9 @@ class BadgesController < ApplicationController
     @title = "View All #{term_for :badges}"
     @badges = current_course.badges
     @assignments = current_course.assignments
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    end
   end
 
   def show

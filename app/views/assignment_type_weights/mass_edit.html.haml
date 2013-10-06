@@ -1,27 +1,38 @@
 - if current_user.is_student?
-  = content_nav_for "Editing My #{term_for :weights}" do
+  = content_nav_for "Editing My #{term_for :weight}" do
     %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 - elsif current_user.is_staff?
   = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
     %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "btn btn-tiny btn-info"
     %li= link_to "See All #{term_for :weight} Decisions", choices_users_path, :class => "btn btn-tiny btn-info"
 
-.col-lg-12
-  %h3 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
-  .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
+.col-lg-12.info
+  - if current_course.assignment_weight_open?
+    %h3 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
+    .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
 
-  %hr
+    %hr
 
-  = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
-    - if @form.errors.has_key?(:base)
-      .alert.alert-error= f.error :base
-    = f.simple_fields_for :assignment_type_weights do |atwf|
-      = atwf.hidden_field :assignment_type_id
-      .panel
-        .panel-heading
-          %h3.panel-title= atwf.object.assignment_type.name
-        .panel-body
-          = atwf.input :weight, :label => "#{term_for :weight}"
-    .form-actions.col-lg-offset-3
-      = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
-      = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
+    = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+      - if @form.errors.has_key?(:base)
+        .alert.alert-error= f.error :base
+      = f.simple_fields_for :assignment_type_weights do |atwf|
+        = atwf.hidden_field :assignment_type_id
+        .panel
+          .panel-heading
+            %h3.panel-title= atwf.object.assignment_type.name
+          .panel-body
+            = atwf.input :weight, :label => "#{term_for :weight}"
+      .form-actions.col-lg-offset-3
+        = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
+        = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
+
+  - else
+    %h3 Your #{term_for :weight} choices:
+    %hr
+    - @assignment_types.each do |at|
+      - if at.student_weightable?
+        %h5
+          = at.name
+          = "- #{current_student_data.weight_for_assignment_type(at)} #{term_for :weight}"
+

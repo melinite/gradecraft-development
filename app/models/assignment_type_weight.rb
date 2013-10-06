@@ -40,7 +40,8 @@ class AssignmentTypeWeight < Struct.new(:student, :assignment_type)
 
   def course_max_assignment_weight_not_exceeded
     if weight > assignment_type.course.max_assignment_weight
-      errors.add :weight, "exceeded maximum allowed for course"
+      errors.add :weight, " Oops, you've set more Kapital than are allowed for a single category. Try it again?"
     end
   end
+
 end
