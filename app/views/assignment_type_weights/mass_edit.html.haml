@@ -1,5 +1,5 @@
 - if current_user.is_student?
-  = content_nav_for "Editing My #{term_for :weights}" do
+  = content_nav_for "Editing My #{term_for :weight}" do
     %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
 - elsif current_user.is_staff?
   = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
