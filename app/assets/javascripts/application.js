@@ -247,7 +247,7 @@ $(document).ready(function(){
       return series;
     }
 
-    $.getJSON('/users/scores_by_team', function (data) {
+    $.getJSON('/students/scores_by_team', function (data) {
       console.log(data)
       data = data.scores
       var categories = [], scores = {
@@ -295,7 +295,7 @@ $(document).ready(function(){
   }
 
   if ($('#grade_distro').length) {
-    $.getJSON('/users/scores_for_current_course.json', function (data) {
+    $.getJSON('/students/scores_for_current_course.json', function (data) {
       sparkOpts.height = '50px';
       $('#grade_distro').sparkline(data.scores, sparkOpts);
     })
@@ -396,7 +396,7 @@ $(document).ready(function(){
       })
     }
 
-    $.getJSON('/users/scores_by_assignment.json', function (data) {
+    $.getJSON('/students/scores_by_assignment.json', function (data) {
       assignmentTypeScores = {};
       assignmentTypeScores.names = {};
       var studentId;
