@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  class SharedEarnedBadge < ActiveRecord::Base
+    belongs_to :user
+    belongs_to :course
+  end
+
   authenticates_with_sorcery!
 
   include Canable::Cans
@@ -30,6 +35,7 @@ class User < ActiveRecord::Base
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
 
   has_many :course_memberships
+  has_many :shared_earned_badges, :class_name => 'SharedEarnedBadge'
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
   accepts_nested_attributes_for :student_academic_history
   has_many :courses, :through => :course_memberships

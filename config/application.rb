@@ -15,6 +15,7 @@ module GradeCraft
     config.autoload_paths += %W(#{Rails.root}/lib)
     config.assets.precompile += %w(.svg .eot .otf .woff .ttf)
     config.filter_parameters += [:password]
+    config.active_record.schema_format = :sql
     config.generators do |g|
       g.integration_tool :mini_test
       g.orm :active_record
