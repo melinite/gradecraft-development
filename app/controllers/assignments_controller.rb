@@ -4,9 +4,11 @@ class AssignmentsController < ApplicationController
   def index
     @title = "#{term_for :assignment} Index"
     @assignments = current_course.assignments
-    @by_assignment_type = @assignments.group_by(&:assignment_type)
-    @sorted_teams = current_course.teams.order_by_high_score
-    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_user.is_student?
+      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @sorted_teams = current_course.teams.order_by_high_score
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    end
     respond_with @assignments = current_course.assignments.order('name ASC').order('due_at ASC')
   end
 
@@ -27,9 +29,11 @@ class AssignmentsController < ApplicationController
     @title = @assignment.name
     @groups = @assignment.groups
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+      @by_assignment_type = @assignments.group_by(&:assignment_type)
+    end
     @students = @team ? @team.students : current_course.students
-    @by_assignment_type = @assignments.group_by(&:assignment_type)
     @sorted_teams = current_course.teams.order_by_high_score
     respond_with @assignment
   end

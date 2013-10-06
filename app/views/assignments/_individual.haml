@@ -63,7 +63,11 @@
             - if grade
               = link_to "Edit Grade", edit_assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-info'
             - else
-              = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
+              - student.submissions.where(:assignment_id => @assignment).each do |submission|
+                - if submission
+                  = link_to 'Grade Submission', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
+                - else
+                  = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
 
   - if @assignment.release_necessary? && @assignment.grades.present?
     .col-lg-12
