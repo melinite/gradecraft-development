@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
     @title = "#{term_for :assignment} Index"
     @assignments = current_course.assignments
     if current_user.is_student?
-      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
@@ -31,7 +31,7 @@ class AssignmentsController < ApplicationController
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
-      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
     end
     @students = @team ? @team.students : current_course.students
     @sorted_teams = current_course.teams.order_by_high_score

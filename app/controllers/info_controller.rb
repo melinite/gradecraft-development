@@ -13,7 +13,7 @@ class InfoController < ApplicationController
       @bottom_ten_students = @students.order_by_low_score.limit(10)
       @submissions = current_course.submissions
     else
-      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
       @predictions = current_student.predictions(current_course)

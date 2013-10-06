@@ -6,7 +6,7 @@ class AssignmentTypeWeightsController < ApplicationController
       @badges = current_course.badges
       @assignments = current_course.assignments
       @assignment_types = current_course.assignment_types
-      @by_assignment_type = @assignments.group_by(&:assignment_type)
+      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
