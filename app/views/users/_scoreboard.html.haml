@@ -1,5 +1,5 @@
 .col-lg-12
-  #data-predictor{'data-predictor' =>  @predictions.to_json}
+  #data-predictor{'data-predictor' =>  predictions.to_json}
   -##data-predictor{ 'data-predictor' => render(:partial => 'timeline', :handlers => [:jbuilder], :formats => [:js])}
   %br
   %h4
