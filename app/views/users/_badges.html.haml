@@ -1,50 +1,51 @@
-%ul.tabs
-  %li.active
-    %a{ "data-toggle" => "tab", "data-target" => "#tabb1"} My #{term_for :badges}
-  - if current_course.shared_badges?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tabb2"} Class #{term_for :badges}
-%br
-%br
-.tab-content
-  .tab-pane#tabb1.active
-    %table.table.table-striped.simpleTable
-      %thead
-        %tr
-          %th.sortable{"data-sort" => "string"} Icon
-          %th.sortable{"data-sort" => "string"} Description
-          %th.sortable{"data-sort" => "string"} Tasks
-          - if current_course.valuable_badges?
-            %th.sortable{"data-sort" => "string"} Value
-          %th.sortable{"data-sort" => "string"} Earned?
-          - if current_course.shared_badges? && current_student.badges_shared(current_course)
-            %th Share this with the class?
-      %tbody
-        - current_course.badges.includes(:tasks).includes(:earned_badges).where('earned_badges.student_id' => current_student).each do |badge|
+- cache [ 'v1', @cache_keys['badges_key'] ] do
+  %ul.tabs
+    %li.active
+      %a{ "data-toggle" => "tab", "data-target" => "#tabb1"} My #{term_for :badges}
+    - if current_course.shared_badges?
+      %li
+        %a{ "data-toggle" => "tab", "data-target" => "#tabb2"} Class #{term_for :badges}
+  %br
+  %br
+  .tab-content
+    .tab-pane#tabb1.active
+      %table.table.table-striped.simpleTable
+        %thead
           %tr
-            %td= image_tag badge.icon, :alt => badge.name, :width => 40
-            %td
-              = link_to badge.name, badge_path(badge)
-              = badge.description
-            %td
-              %ul
-                - badge.tasks.each do |task|
-                  %li= task.name
+            %th.sortable{"data-sort" => "string"} Icon
+            %th.sortable{"data-sort" => "string"} Description
+            %th.sortable{"data-sort" => "string"} Tasks
             - if current_course.valuable_badges?
-              %td= points badge.point_total
-            %td
-              - if badge.earned_badges.first
-                %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
-                = badge.earned_badges.first.created_at
-                %br
-                = raw badge.earned_badges.first.try(:feedback)
+              %th.sortable{"data-sort" => "string"} Value
+            %th.sortable{"data-sort" => "string"} Earned?
             - if current_course.shared_badges? && current_student.badges_shared(current_course)
+              %th Share this with the class?
+        %tbody
+          - current_course.badges.includes(:tasks).includes(:earned_badges).where('earned_badges.student_id' => current_student).each do |badge|
+            %tr
+              %td= image_tag badge.icon, :alt => badge.name, :width => 40
               %td
-                - badge.earned_badges.each do |earned_badge|
-                  %div{:class=>"share_badge", :data => { badge_id: badge.id.to_s, earned_badge_id: earned_badge.id.to_s}}
-                    - if earned_badge.shared
-                      %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-warning btn-primary btn-small"} Stop Sharing
-                    - else
-                      %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-success btn-primary btn-small"} Share
-  .tab-pane#tabb2
-    = render "users/public_class_badges"
+                = link_to badge.name, badge_path(badge)
+                = badge.description
+              %td
+                %ul
+                  - badge.tasks.each do |task|
+                    %li= task.name
+              - if current_course.valuable_badges?
+                %td= points badge.point_total
+              %td
+                - if badge.earned_badges.first
+                  %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
+                  = badge.earned_badges.first.created_at
+                  %br
+                  = raw badge.earned_badges.first.try(:feedback)
+              - if current_course.shared_badges? && current_student.badges_shared(current_course)
+                %td
+                  - badge.earned_badges.each do |earned_badge|
+                    %div{:class=>"share_badge", :data => { badge_id: badge.id.to_s, earned_badge_id: earned_badge.id.to_s}}
+                      - if earned_badge.shared
+                        %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-warning btn-primary btn-small"} Stop Sharing
+                      - else
+                        %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-success btn-primary btn-small"} Share
+    .tab-pane#tabb2
+      = render "users/public_class_badges"

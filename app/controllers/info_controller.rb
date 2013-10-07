@@ -15,11 +15,12 @@ class InfoController < ApplicationController
                 (SELECT sum(extract(epoch from updated_at)) FROM grades WHERE grades.course_id = courses.id)
              )) AS grades_key,
              md5(concat(
+                (SELECT sum(extract(epoch from updated_at)) FROM tasks WHERE course_id = courses.id),
                 (SELECT sum(extract(epoch from updated_at)) FROM badges WHERE badges.course_id = courses.id),
                 (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE earned_badges.course_id = courses.id)
              )) AS badges_key,
              md5(concat(
-                (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE course_id = courses.id and student_id = #{current_student.id})
+                (SELECT concat(sum(extract(epoch from updated_at)), #{current_student.id}) FROM earned_badges WHERE course_id = courses.id and student_id = #{current_student.id})
              )) AS student_badges_key
        FROM courses
       WHERE courses.id = #{current_course.id}

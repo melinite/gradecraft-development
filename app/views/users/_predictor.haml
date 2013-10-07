@@ -1,22 +1,23 @@
-.col-lg-12
-  #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
-    #projectedPoints
-      %h4
-        = "Your projected points:"
-        %span#predictor-score-display= points current_student_data.score
-        = "/"
-        %span#predictor-course-total-display= points current_student_data.point_total
-      %h4
-        Predicted Final Grade:
-        %span#predictor-course-grade= current_student_data.grade_level
-    %span#expectedPointsValue
-  .charts.dashboard-charts
-    .chart-wrapper
-      .chart#prediction
+- cache [ 'v1', @cache_keys['assignments_key'], @cache_keys['grades_key'], @cache_keys['badges_key'] ] do
+  .col-lg-12
+    #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
+      #projectedPoints
+        %h4
+          = "Your projected points:"
+          %span#predictor-score-display= points current_student_data.score
+          = "/"
+          %span#predictor-course-total-display= points current_student_data.point_total
+        %h4
+          Predicted Final Grade:
+          %span#predictor-course-grade= current_student_data.grade_level
+      %span#expectedPointsValue
+    .charts.dashboard-charts
+      .chart-wrapper
+        .chart#prediction
 
-  #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
-    .col.col-lg-12
-      %ul.slides.col.col-lg-12
-        = render partial: 'students/predictor/assignments', collection: @by_assignment_type.to_a, as: :assignment_type_and_assignments
-        = render 'students/predictor/badges'
-.clear
+    #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
+      .col.col-lg-12
+        %ul.slides.col.col-lg-12
+          = render partial: 'students/predictor/assignments', collection: @by_assignment_type.to_a, as: :assignment_type_and_assignments
+          = render 'students/predictor/badges'
+  .clear
