@@ -4,7 +4,16 @@ class InfoController < ApplicationController
   before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
   def dashboard
-    @cache_keys = Course.connection.select_all(<<-SQL).first
+    @assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
+    if current_user.is_staff?
+      @students = current_course.users.students
+      @teams = current_course.teams.includes(:earned_badges)
+      @users = current_course.users
+      @top_ten_students = @students.order_by_high_score.limit(10)
+      @bottom_ten_students = @students.order_by_low_score.limit(10)
+      @submissions = current_course.submissions
+    else
+      @cache_keys = Course.connection.select_all(<<-SQL).first
       SELECT md5(extract(epoch from updated_at)::varchar) AS course_key,
              md5(concat(
                 (SELECT sum(extract(epoch from updated_at)) FROM assignments WHERE assignments.course_id = courses.id),
@@ -25,15 +34,6 @@ class InfoController < ApplicationController
        FROM courses
       WHERE courses.id = #{current_course.id}
     SQL
-    @assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
-    if current_user.is_staff?
-      @students = current_course.users.students
-      @teams = current_course.teams.includes(:earned_badges)
-      @users = current_course.users
-      @top_ten_students = @students.order_by_high_score.limit(10)
-      @bottom_ten_students = @students.order_by_low_score.limit(10)
-      @submissions = current_course.submissions
-    else
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
