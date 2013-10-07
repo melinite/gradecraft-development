@@ -22,13 +22,12 @@ class GroupsController < ApplicationController
     if current_user.is_student?
       @student = current_student
       @badges = current_course.badges
-      @students = current_course.students.alpha
       @assignments = current_course.assignments
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
     end
-    @group = @student.groups.new
+    respond_with @group = Group.new
   end
 
   def create
@@ -40,16 +39,8 @@ class GroupsController < ApplicationController
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @group.course = current_course
-      respond_to do |format|
-        if @group.save
-          format.html { redirect_to @group, notice: 'Group was successfully created.' }
-          format.json { render json: @group, status: :created, location: @group}
-        else
-          @students = current_course.students.alpha
-          format.html { render action: "new", notice: 'Unfortunately we could not create the group. Check below for errors' }
-          format.json { render json: @group.errors, status: :unprocessable_entity }
-        end
-      end
+      @group.save
+      respond_with @group
     elsif current_user.is_staff?
       respond_with @group
     end
@@ -59,7 +50,6 @@ class GroupsController < ApplicationController
     if current_user.is_student?
       @student = current_student
       @badges = current_course.badges
-      @students = current_course.students.alpha
       @assignments = current_course.assignments
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @scores_for_current_course = current_student.scores_for_course(current_course)

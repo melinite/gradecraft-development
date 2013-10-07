@@ -24,8 +24,7 @@ class Group < ActiveRecord::Base
 
   validates_presence_of :course, :name
 
-  before_save :max_group_number_not_exceeded
-  before_save :min_group_number_met
+  validate :max_group_number_not_exceeded, :min_group_number_met
 
   #Grades
 
@@ -47,11 +46,15 @@ class Group < ActiveRecord::Base
   private
 
   def min_group_number_met
-    self.group_memberships.count >= course.min_group_size
+    if self.students.to_a.count <= course.min_group_size
+      errors.add :group, "Nope, not enough group members!"
+    end
   end
 
   def max_group_number_not_exceeded
-    self.group_memberships.count <= course.max_group_size
+    if self.students.to_a.count >= course.max_group_size
+      errors.add :group, "Woah, too many group members, try again."
+    end
   end
 
   def cache_associations
