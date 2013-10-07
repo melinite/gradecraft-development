@@ -25,39 +25,40 @@ class Submission < ActiveRecord::Base
 
   before_validation :cache_associations
 
-  validates_presence_of :student
+  validates_presence_of :student, if: 'assignment.is_individual?'
+  validates_presence_of :group, if: 'assignmen.has_groups?'
   validates_uniqueness_of :task, :scope => :student, :allow_nil => true
 
   #Canable permissions
-  def updatable_by?(user)
-    if assignment.is_individual?
-      student_id == user.id || user.is_staff?
-    elsif assignment.has_teams?
-      student_id == user.teams.first.id || user.is_staff?
-    elsif assignment.has_groups?
-      student_id == user.groups.first.id || user.is_staff?
-    end
-  end
-
-  def destroyable_by?(user)
-    if assignment.is_individual?
-      student_id == user.id || user.is_staff?
-    elsif assignment.has_teams?
-      submittable_id == user.teams.first.id || user.is_staff?
-    elsif assignment.has_groups?
-      submittable_id == user.groups.first.id || user.is_staff?
-    end
-  end
-
-  def viewable_by?(user)
-    if assignment.is_individual?
-      student_id == user.id || user.is_staff?
-    elsif assignment.has_teams?
-      submittable_id == user.teams.first.id || user.is_staff?
-    elsif assignment.has_groups?
-      submittable_id == user.groups.first.id || user.is_staff?
-    end
-  end
+#   def updatable_by?(user)
+#     if assignment.is_individual?
+#       student_id == user.id || user.is_staff?
+#     elsif assignment.has_teams?
+#       group_id == user.teams.first.id || user.is_staff?
+#     elsif assignment.has_groups?
+#       group_id == user.groups.first.id || user.is_staff?
+#     end
+#   end
+#
+#   def destroyable_by?(user)
+#     if assignment.is_individual?
+#       student_id == user.id || user.is_staff?
+#     elsif assignment.has_teams?
+#       group_id == user.teams.first.id || user.is_staff?
+#     elsif assignment.has_groups?
+#       group_id == user.groups.first.id || user.is_staff?
+#     end
+#   end
+#
+#   def viewable_by?(user)
+#     if assignment.is_individual?
+#       student_id == user.id || user.is_staff?
+#     elsif assignment.has_teams?
+#       group_id == user.teams.first.id || user.is_staff?
+#     elsif assignment.has_groups?
+#       group_id == user.groups.first.id || user.is_staff?
+#     end
+#   end
 
   #Grading status
   def status
