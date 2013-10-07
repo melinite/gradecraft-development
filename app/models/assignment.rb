@@ -123,6 +123,10 @@ class Assignment < ActiveRecord::Base
     grade_scope=="Group"
   end
 
+  def has_teams?
+    grade_scope=="Group"
+  end
+
   def point_total
     super || assignment_type.universal_point_value
   end

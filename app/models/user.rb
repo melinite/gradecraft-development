@@ -250,12 +250,12 @@ class User < ActiveRecord::Base
     assignment_weights.where(course: course).pluck('weight').sum
   end
 
-  def groups_by_assignment_id
+def groups_by_assignment_id
     @group_by_assignment ||= groups.group_by(&:assignment_id)
   end
 
   def group_for_assignment(assignment)
-    assignment_groups.where(assignment: assignment).first
+    assignment_groups.where(assignment: assignment).first.try(:group)
   end
 
   def group_submission_for_assignment(assignment)

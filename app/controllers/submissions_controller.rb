@@ -4,7 +4,7 @@ class SubmissionsController < ApplicationController
   include Canable::Enforcers
 
   def index
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     redirect_to @assignment
   end
 
@@ -14,11 +14,10 @@ class SubmissionsController < ApplicationController
     @assignments = current_course.assignments
     @assignment = @assignments.find(params[:assignment_id])
     if current_user.is_student?
-      @user = current_user
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
+      enforce_view_permission(@submission)
     end
-    enforce_view_permission(@submission)
   end
 
   def new
@@ -49,6 +48,7 @@ class SubmissionsController < ApplicationController
 
   def edit
     @assignment = current_course.assignments.find(params[:assignment_id])
+    @submission = Submission.find(params[:id])
     if current_user.is_staff?
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
@@ -66,10 +66,10 @@ class SubmissionsController < ApplicationController
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @sorted_teams = current_course.teams.order_by_high_score
+      enforce_view_permission(@submission)
     end
     @groups = @assignment.groups
     @teams = current_course.teams
-    @submission = Submission.find(params[:id])
   end
 
   def create
@@ -114,7 +114,7 @@ class SubmissionsController < ApplicationController
   end
 
   def destroy
-    @assignment = Assignment.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = Submission.find(params[:id])
     @submission.destroy
     respond_to do |format|

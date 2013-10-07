@@ -25,37 +25,32 @@ class Submission < ActiveRecord::Base
 
   before_validation :cache_associations
 
-  validates_presence_of :student
+  #validates_presence_of :student, if: 'assignment.is_individual?'
+  #validates_presence_of :group, if: 'assignment.has_groups?'
   validates_uniqueness_of :task, :scope => :student, :allow_nil => true
 
-  #Canable permissions
+  #Canable permissions#
   def updatable_by?(user)
     if assignment.is_individual?
-      student_id == user.id || user.is_staff?
-    elsif assignment.has_teams?
-      student_id == user.teams.first.id || user.is_staff?
+      student_id == user.id
     elsif assignment.has_groups?
-      student_id == user.groups.first.id || user.is_staff?
+      group_id == user.group_for_assignment(assignment).id
     end
   end
 
   def destroyable_by?(user)
     if assignment.is_individual?
       student_id == user.id || user.is_staff?
-    elsif assignment.has_teams?
-      submittable_id == user.teams.first.id || user.is_staff?
     elsif assignment.has_groups?
-      submittable_id == user.groups.first.id || user.is_staff?
+      group_id == user.group_for_assignment(assignment).id
     end
   end
 
   def viewable_by?(user)
     if assignment.is_individual?
-      student_id == user.id || user.is_staff?
-    elsif assignment.has_teams?
-      submittable_id == user.teams.first.id || user.is_staff?
+      student_id == user.id
     elsif assignment.has_groups?
-      submittable_id == user.groups.first.id || user.is_staff?
+      group_id == user.group_for_assignment(assignment).id
     end
   end
 

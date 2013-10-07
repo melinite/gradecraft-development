@@ -39,4 +39,10 @@
       - @assignment.assignment_files.each do |af|
         = link_to af.filename.identifier, af.filename.url
 
+  - if @assignment.has_groups?
+    - if current_user.is_student?
+      %h4= "You are editing the assignment submission for Group #{current_student.group_for_assignment(@assignment).name }"
+    - else
+      %h4= "You are editing the assignment submission for Group #{@submission.group.name }"
+
   = render 'form'

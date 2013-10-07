@@ -1,7 +1,7 @@
 = simple_form_for @group, :html => {:class => 'form-horizontal' } do |f|
+  = f.association :assignments, :collection => current_course.assignments.group_assignments, :include_blank => false, :as => :check_boxes
   = f.input :name, :label => "Group Name", :input_html => { :class => "col-lg-3" }
-  = f.association :students, :collection => current_course.students, :as => :check_boxes
-  = f.association :assignments, :collection => current_course.assignments.group_assignments, :as => :check_boxes
+  = f.association :students, :collection => @students, :as => :check_boxes
   - if current_user.is_staff?
     = f.input :approved, :as => :select, :collection => [["Approved"], ["Rejected"]], :input_html => { :class => "input-sm col-lg-3" }
 

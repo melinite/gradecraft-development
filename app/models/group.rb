@@ -3,20 +3,24 @@ class Group < ActiveRecord::Base
 
   APPROVED_STATUSES = ['Pending', 'Approved', 'Rejected']
 
-  attr_accessible :name, :created_at, :updated_at, :proposal, :approved,
-    :assignment_id, :user_ids, :text_proposal, :student_ids, :assignment_ids
+  attr_accessible :name, :proposal, :approved, :assignment_id, :assignment_ids,
+    :text_proposal, :student_ids, :students, :assignment_groups_attributes, :group_membership_attributes
 
   belongs_to :course
 
-  has_many :assignment_groups
+  has_many :assignment_groups, :dependent => :destroy
   has_many :assignments, :through => :assignment_groups
+  accepts_nested_attributes_for :assignment_groups
 
-  has_many :group_memberships
+  has_many :group_memberships, :dependent => :destroy
   has_many :students, :through => :group_memberships
+  accepts_nested_attributes_for :group_memberships
 
   has_many :submissions
 
   has_many :earned_badges, :as => :group
+
+  before_validation :cache_associations
 
   validates_presence_of :course, :name
 
@@ -39,7 +43,7 @@ class Group < ActiveRecord::Base
 
   private
 
-  def cache_score
-    #self.course_id = challenge_grades.pluck('score').sum
+  def cache_associations
+    self.course_id ||= assignment.try(:course_id)
   end
 end

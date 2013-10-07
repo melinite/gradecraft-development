@@ -34,7 +34,7 @@
         %th{"data-sort" => "string"} #{term_for :badges} Earned
       %th
   %tbody
-    - current_course_data.students.each do |student|
+    - @team.students.each do |student|
       %tr
         %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email
