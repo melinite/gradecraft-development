@@ -4,6 +4,27 @@ class InfoController < ApplicationController
   before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
   def dashboard
+    @cache_keys = Course.connection.select_all(<<-SQL).first
+      SELECT md5(extract(epoch from updated_at)::varchar) AS course_key,
+             md5(concat(
+                (SELECT sum(extract(epoch from updated_at)) FROM assignments WHERE assignments.course_id = courses.id),
+                (SELECT sum(extract(epoch from updated_at)) FROM assignment_types WHERE assignment_types.course_id = courses.id),
+                (SELECT sum(extract(epoch from score_levels.updated_at)) FROM assignment_types JOIN score_levels on score_levels.assignment_type_id = assignment_types.id WHERE assignment_types.course_id = courses.id)
+             )) AS assignments_key,
+             md5(concat(
+                (SELECT sum(extract(epoch from updated_at)) FROM grades WHERE grades.course_id = courses.id)
+             )) AS grades_key,
+             md5(concat(
+                (SELECT sum(extract(epoch from updated_at)) FROM tasks WHERE course_id = courses.id),
+                (SELECT sum(extract(epoch from updated_at)) FROM badges WHERE badges.course_id = courses.id),
+                (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE earned_badges.course_id = courses.id)
+             )) AS badges_key,
+             md5(concat(
+                (SELECT concat(sum(extract(epoch from updated_at)), #{current_student.id}) FROM earned_badges WHERE course_id = courses.id and student_id = #{current_student.id})
+             )) AS student_badges_key
+       FROM courses
+      WHERE courses.id = #{current_course.id}
+    SQL
     @assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
     if current_user.is_staff?
       @students = current_course.users.students
