@@ -1,5 +1,5 @@
 class InfoController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :predictions
 
   before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
@@ -16,7 +16,6 @@ class InfoController < ApplicationController
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
-      @predictions = current_student.predictions(current_course)
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
     if current_course.team_challenges?
@@ -24,6 +23,10 @@ class InfoController < ApplicationController
     else
       @events = @assignments.to_a
     end
+  end
+
+  def predictions
+    current_student.predictions(current_course)
   end
 
   def grading_status

@@ -1,4 +1,6 @@
 class StudentsController < ApplicationController
+  helper_method :predictions
+
   respond_to :html, :json
 
   before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new, :choices]
@@ -43,7 +45,6 @@ class StudentsController < ApplicationController
     @earned_badges = current_student.earned_badges
     @sorted_teams = current_course.teams.order_by_high_score
     @grade_scheme = current_course.grade_scheme
-    @predictions = current_student.predictions(current_course)
     @scores_for_current_course = current_student.scores_for_course(current_course)
     if current_course.team_challenges?
       @events = @assignments.to_a + current_course.challenges
@@ -58,6 +59,10 @@ class StudentsController < ApplicationController
       scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
     end
 
+  end
+
+  def predictions
+    current_student.predictions(current_course)
   end
 
   def choices
