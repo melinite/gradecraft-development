@@ -1,5 +1,6 @@
 .col-lg-12
-  #data-predictor{'data-predictor' =>  predictions.to_json}
+  - cache [ 'v1', @cache_keys['assignments_key'], @cache_keys['grades_key'], @cache_keys['student_badges_key'] ] do
+    #data-predictor{'data-predictor' =>  predictions.to_json}
   -##data-predictor{ 'data-predictor' => render(:partial => 'timeline', :handlers => [:jbuilder], :formats => [:js])}
   %br
   %h4
