@@ -24,6 +24,9 @@ class Group < ActiveRecord::Base
 
   validates_presence_of :course, :name
 
+  before_save :max_group_number_not_exceeded
+  before_save :min_group_number_met
+
   #Grades
 
   def submissions_by_assignment_id
@@ -42,6 +45,14 @@ class Group < ActiveRecord::Base
 
 
   private
+
+  def min_group_number_met
+    self.group_memberships.count >= course.min_group_size
+  end
+
+  def max_group_number_not_exceeded
+    self.group_memberships.count <= course.max_group_size
+  end
 
   def cache_associations
     self.course_id ||= assignment.try(:course_id)

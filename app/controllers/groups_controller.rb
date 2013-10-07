@@ -45,7 +45,8 @@ class GroupsController < ApplicationController
           format.html { redirect_to @group, notice: 'Group was successfully created.' }
           format.json { render json: @group, status: :created, location: @group}
         else
-          format.html { render action: "new" }
+          @students = current_course.students.alpha
+          format.html { render action: "new", notice: 'Unfortunately we could not create the group. Check below for errors' }
           format.json { render json: @group.errors, status: :unprocessable_entity }
         end
       end
