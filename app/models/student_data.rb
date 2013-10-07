@@ -98,7 +98,7 @@ class StudentData < Struct.new(:student, :course)
 
   def earned_badges
     @earned_badges ||= {}.tap do |earned_badges|
-      student.earned_badges.each do |earned_badge|
+      student.earned_badges.where(course: course).each do |earned_badge|
         earned_badges[earned_badge.badge_id] = earned_badge
       end
     end

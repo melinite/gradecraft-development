@@ -13,14 +13,15 @@
           %th.sortable{"data-sort" => "int"} Multiplied Score
         - if @assignment.has_levels?
           %th{"data-sort" => "string"} Level
-        %th.sortable{"data-sort" => "int"} Badges Earned
+        - if current_course.has_badges?
+          %th.sortable{"data-sort" => "int"} Badges Earned
         - if @assignment.release_necessary?
           %th.sortable{"data-sort" => "string"} Status
         - if @assignment.accepts_submissions?
           %th.sortable{"data-sort" => "int"} Submission
         %th
     %tbody
-      - current_course_data.students.each do |student|
+      - @students.each do |student|
         - grade = @assignment.grades.find_by student: student
         %tr
           - if @assignment.release_necessary?
@@ -38,9 +39,10 @@
             %td
               - if grade
                 = @assignment.grade_level(grade)
-          %td
-            - student.earned_badges.each do |badge|
-              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
+          - if current_course.has_badges?
+            %td
+              - student.earned_badges(current_course).each do |badge|
+                %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
           - if @assignment.release_necessary?
             %td
               - if grade && grade.is_released?

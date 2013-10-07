@@ -33,7 +33,8 @@
       .col-lg-offset-2= @submission.updated_at
     - if @submission.link?
       .heading.col-lg-2 Link:
-      .col-lg-offset-2= link_to @submission.link, @submission.link
+      .col-lg-offset-2
+        = link_to @submission.link, @submission.link
 
     - if @submission.submission_files.present?
       .heading.col-lg-2 Files:
