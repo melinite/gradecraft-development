@@ -39,6 +39,7 @@
                   %span.points= "/"
                 %span.points= points assignment.point_total
                 %span.points points (Raw)
+              %span
               - if assignment.future?
                 %span.italic= " • Due: #{assignment.due_at.strftime("%A, %B %d")}"
               - if assignment.is_required?
@@ -50,10 +51,9 @@
                   = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn #{present ? 'btn-warning' : 'btn-success'} btn-tiny"
               - if assignment.has_groups?
                 - if current_student.group_for_assignment(assignment)
-                  - group = current_student.group_for_assignment(assignment)
                   = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "btn btn-primary btn-xs"
-                  - if assignment.accepts_submissions?
-                    = render "users/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+                  //- if assignment.accepts_submissions?
+                  //= render "users/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
                 - else
                   = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-xs"
               - else
@@ -61,4 +61,4 @@
                   = render "users/submissions", assignment: assignment
               - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
                 = link_to "See Feedback", assignment_grade_path(assignment, current_student_data.grade_for_assignment(assignment), :student_id => current_student), :class => "btn btn-info btn-xs"
-          %hr
+        %hr
