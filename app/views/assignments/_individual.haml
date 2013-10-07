@@ -13,8 +13,6 @@
           %th.sortable{"data-sort" => "int"} Multiplied Score
         - if @assignment.has_levels?
           %th{"data-sort" => "string"} Level
-        - if current_course.has_badges?
-          %th.sortable{"data-sort" => "int"} Badges Earned
         - if @assignment.release_necessary?
           %th.sortable{"data-sort" => "string"} Status
         - if @assignment.accepts_submissions?
@@ -29,20 +27,13 @@
               - if grade
                 = check_box_tag "grade_ids[]", grade.id
           %td= link_to student.name, student_path(student)
-          %td
-            - if grade
-              = points grade.try(:raw_score)
+          %td= points grade.try(:raw_score)
           - if @assignment.assignment_type.student_weightable?
-            %td
-              = grade.try(:score)
+            %td= grade.try(:score)
           - if @assignment.has_levels?
             %td
               - if grade
                 = @assignment.grade_level(grade)
-          - if current_course.has_badges?
-            %td
-              - student.earned_badges(current_course).each do |badge|
-                %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
           - if @assignment.release_necessary?
             %td
               - if grade && grade.is_released?
@@ -65,9 +56,6 @@
             - if grade
               = link_to "Edit Grade", edit_assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-info'
             - else
-              - student.submissions.where(:assignment_id => @assignment).each do |submission|
-                - if submission
-                  = link_to 'Grade Submission', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
               = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
 
   - if @assignment.release_necessary? && @assignment.grades.present?

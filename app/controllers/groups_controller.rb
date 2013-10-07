@@ -12,6 +12,7 @@ class GroupsController < ApplicationController
       @badges = current_course.badges
       @assignments = current_course.assignments
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
+      @scores_for_current_course = current_student.scores_for_course(current_course)
       @sorted_teams = current_course.teams.order_by_high_score
     end
     @group = current_course.groups.find(params[:id])
@@ -60,6 +61,7 @@ class GroupsController < ApplicationController
       @students = current_course.students.alpha
       @assignments = current_course.assignments
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
+      @scores_for_current_course = current_student.scores_for_course(current_course)
       @sorted_teams = current_course.teams.order_by_high_score
     end
     @group = current_course.groups.find(params[:id])

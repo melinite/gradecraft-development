@@ -1,7 +1,12 @@
 = content_nav_for @group do
-  %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
-  %li= link_to "New #{term_for :group}", new_group_path, :class => "btn btn-tiny btn-info"
+  - if current_user.is_staff?
+    %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
+    %li= link_to "New #{term_for :group}", new_group_path, :class => "btn btn-tiny btn-info"
+  - else
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-info btn-tiny"
+    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
+
 
 .col-lg-12
   %h3= @title
@@ -22,4 +27,7 @@
     %b Members:
   %ul
     - @group.group_memberships.each do |gm|
-      %li= link_to gm.student.name, gm.student
+      - if current_user.is_staff?
+        %li= link_to gm.student.name, gm.student
+      - else
+        %li= gm.student.name

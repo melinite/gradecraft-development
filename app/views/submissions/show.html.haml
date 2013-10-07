@@ -1,7 +1,10 @@
 - if current_user.is_staff?
   = content_nav_for @assignment, @submission do
     %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "btn btn-tiny btn-info"
-    %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+    - if @assignment.is_individual?
+      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+    - elsif @assignment.has_groups?
+      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :group_id => @submission.group_id), :class => "btn btn-tiny btn-info"
     - if @assignment.grade_for_student(@submission.student)
       %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
     - else
@@ -10,13 +13,15 @@
 - else
   = content_nav_for "My #{@assignment.name} Submission" do
     %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
-    %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+    - if @assignment.is_individual?
+      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+    - elsif @assignment.has_groups?
+      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :group_id => @submission.group_id), :class => "btn btn-tiny btn-info"
+
 
 .col-lg-12.info
   %h3
     = link_to "#{@assignment.try(:name)}", @submission.assignment
-    Submission
-
   - if current_user.is_staff?
     %h4
       - if @assignment.is_individual?
@@ -24,7 +29,7 @@
         = link_to @submission.student.try(:name), student_path(@submission.student)
       - elsif @assignment.has_groups?
         = "#{term_for :group}:"
-        = link_to @submission.student.try(:name), assignment_group_path(@submission, @submission.student)
+        = link_to @submission.group.try(:name), group_path(@submission.group)
   .col-lg-12
     .heading.col-lg-2 Submitted:
     .col-lg-offset-2= @submission.created_at

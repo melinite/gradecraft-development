@@ -38,6 +38,9 @@
       - @assignment.assignment_files.each do |af|
         = link_to af.filename.identifier, af.filename.url
 
+  - if @assignment.has_groups?
+    %h4= "You are submitting this assignment for Group #{current_student.group_for_assignment(@assignment).name }"
+
   - if @assignment.accepts_submissions? && current_user.is_student?
     = render 'form'
 
