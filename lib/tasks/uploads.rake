@@ -10,10 +10,9 @@ namespace :transfer_to do
       if File.file?(f)
         remote_file = f.gsub('public/', '')
         obj = service.buckets["gradecraft.#{Rails.env}"].objects[remote_file] || nil
-
-        if !obj
+        if !obj.exists? #If it's not there, upload.
           service.buckets["gradecraft.#{Rails.env}"].objects.create(remote_file, f)
-        elsif (obj.etag != Digest::MD5.hexdigest(File.read(f)))
+        elsif (obj.etag != Digest::MD5.hexdigest(File.read(f))) #Else, see if we need to update it.
           service.buckets["gradecraft.#{Rails.env}"].objects[remote_file].write(Pathname.new(f))
         end
       end
