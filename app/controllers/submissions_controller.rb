@@ -10,8 +10,8 @@ class SubmissionsController < ApplicationController
 
   def show
     @title = "View Submission"
-    @submission = current_course.submission.find(params[:id])
-    @assignment = current_course.assignment.find(params[:assignment_id])
+    @submission = @assignment.submissions.find(params[:id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
@@ -47,7 +47,7 @@ class SubmissionsController < ApplicationController
 
   def edit
     @assignment = current_course.assignments.find(params[:assignment_id])
-    @submission = current_course.submission.find(params[:id])
+    @submission = current_course.submissions.find(params[:id])
     if current_user.is_staff?
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
@@ -69,7 +69,7 @@ class SubmissionsController < ApplicationController
     end
     @groups = @assignment.groups
     @teams = current_course.teams
-    @submission = current_course.submission.find(params[:id])
+    @submission = current_course.submissions.find(params[:id])
   end
 
   def create
@@ -115,7 +115,7 @@ class SubmissionsController < ApplicationController
 
   def destroy
     @assignment = current_course.assignments.find(params[:assignment_id])
-    @submission = current_couse.submission.find(params[:id])
+    @submission = current_couse.submissions.find(params[:id])
     @submission.destroy
     respond_to do |format|
       format.html { redirect_to assignment_submissions_path(@assignment), notice: 'Submission was successfully deleted.' }
