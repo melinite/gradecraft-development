@@ -22,18 +22,20 @@ class GroupsController < ApplicationController
     if current_user.is_student?
       @student = current_student
       @badges = current_course.badges
+      @other_students = current_course.students.where.not(id: @student.id)
       @assignments = current_course.assignments
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
+      @group = @student.groups.new
     end
-    respond_with @group = Group.new
   end
 
   def create
     if current_user.is_student?
       @student = current_student
       @group = @student.groups.new(params[:group])
+      @group.students << current_student
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @assignments = current_course.assignments
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
@@ -41,14 +43,13 @@ class GroupsController < ApplicationController
       @group.course = current_course
       @group.save
       respond_with @group
-    elsif current_user.is_staff?
-      respond_with @group
     end
   end
 
   def edit
     if current_user.is_student?
       @student = current_student
+      @other_students = current_course.students.where(:id != current_student.id).alpha
       @badges = current_course.badges
       @assignments = current_course.assignments
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)

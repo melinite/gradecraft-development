@@ -1,0 +1,13 @@
+%table.table.table-striped.simpleTable
+  %thead
+    %tr
+      %th.sortable{"data-sort" => "string"} #{term_for :student}
+      %th.sortable{"data-sort" => "string"} #{term_for :badges}
+  %tbody
+    - CourseMembership.joins(user: [{earned_badges: [:badge]}]).where(course_memberships: { course_id: current_course.id, shared_badges: true }).includes(user: [{earned_badges: [:badge]}]).group_by(&:user).each do |student, other|
+      %tr
+        %td= link_to student.name, student_path(student)
+        %td
+          - student.earned_badges.each do |earned_badge|
+            - if earned_badge.shared? && earned_badge.icon.present?
+              = image_tag earned_badge.icon, :alt => earned_badge.name, :width => '40'

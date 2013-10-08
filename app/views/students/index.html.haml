@@ -7,10 +7,10 @@
   %h3= @title
 
   - if current_course.has_teams?
-    .filters.col.col-lg-5.col-sm-5.col-md-5
-      = form_tag students_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team_id), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
-        = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
+    = form_tag students_path, :method => :get do
+      = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+      = submit_tag 'Filter', :class => 'btn btn-success btn-small'
+
 
 %table.table.simpleTable.table-striped
   %thead
@@ -29,7 +29,11 @@
       %th
       %th
   %tbody
-    - @students.each do |student|
+    - if @team
+      - students = current_course_data.students_for_team(@team)
+    - else
+      - students = current_course_data.students
+    - students.each do |student|
       %tr
         %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email

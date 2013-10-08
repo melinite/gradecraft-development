@@ -4,12 +4,10 @@ class AssignmentsController < ApplicationController
   def index
     @title = "#{term_for :assignment} Index"
     @assignments = current_course.assignments
+    @by_assignment_type = @assignments.group_by(&:assignment_type)
     if current_user.is_student?
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
-    respond_with @assignments = current_course.assignments.order('name ASC').order('due_at ASC')
   end
 
    def settings
@@ -33,9 +31,6 @@ class AssignmentsController < ApplicationController
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
     end
-    @students = @team ? @team.students : current_course.students
-    @sorted_teams = current_course.teams.order_by_high_score
-    respond_with @assignment
   end
 
   def new
@@ -71,11 +66,7 @@ class AssignmentsController < ApplicationController
   def destroy
     @assignment = current_course.assignments.find(params[:id])
     @assignment.destroy
-
-    respond_to do |format|
-      format.html { redirect_to assignments_url }
-      format.json { head :ok }
-    end
+    redirect_to assignments_url
   end
 
   def feed

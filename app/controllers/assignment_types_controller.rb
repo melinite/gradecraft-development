@@ -15,23 +15,17 @@ class AssignmentTypesController < ApplicationController
     @assignment_type = current_course.assignment_types.find(params[:id])
     @title = "#{@assignment_type.name}"
     @score_levels = @assignment_type.score_levels
-    respond_to do |format|
-      format.html
-      format.json { render json: @assignment_types }
-    end
   end
 
   def new
     @title = "Create a New #{term_for :assignment_type}"
     @assignment_type = current_course.assignment_types.new
     @assignment_type.score_levels.build
-    respond_with(@assignment_type)
   end
 
   def edit
     @assignment_type = current_course.assignment_types.find(params[:id])
     @title = "Edit #{@assignment_type.name}"
-    respond_with(@assignment_type)
   end
 
   def create
@@ -49,10 +43,6 @@ class AssignmentTypesController < ApplicationController
   def destroy
     @assignment_type = current_course.assignment_types.find(params[:id])
     @assignment_type.destroy
-
-    respond_to do |format|
-      format.html { redirect_to assignment_types_url }
-      format.json { head :ok }
-    end
+    redirect_to assignment_types_path
   end
 end

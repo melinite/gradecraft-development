@@ -7,7 +7,7 @@
 .col-lg-12
   %h3= @title
 
-- @assignments.alphabetical.chronological.group_by(&:assignment_type).each do |assignment_type, assignments|
+- @by_assignment_type.each do |assignment_type, assignments|
   .col-lg-12
     %h3= link_to assignment_type.name, assignment_type
   %table.table.simpleTable.table-striped

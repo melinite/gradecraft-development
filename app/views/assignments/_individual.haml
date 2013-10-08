@@ -19,7 +19,11 @@
           %th.sortable{"data-sort" => "int"} Submission
         %th
     %tbody
-      - @students.each do |student|
+      - if @team
+        - students = current_course_data.students_for_team(@team)
+      - else
+        - students = current_course_data.students
+      - students.each do |student|
         - grade = @assignment.grades.find_by student: student
         %tr
           - if @assignment.release_necessary?
