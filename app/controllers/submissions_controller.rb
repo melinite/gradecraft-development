@@ -10,8 +10,8 @@ class SubmissionsController < ApplicationController
 
   def show
     @title = "View Submission"
-    @submission = @assignment.submissions.find(params[:id])
     @assignment = current_course.assignments.find(params[:assignment_id])
+    @submission = @assignment.submissions.find(params[:id])
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
@@ -121,24 +121,6 @@ class SubmissionsController < ApplicationController
       format.html { redirect_to assignment_submissions_path(@assignment), notice: 'Submission was successfully deleted.' }
       format.json { head :ok }
     end
-  end
-
-  def find_student
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
-    end
-    nil
-  end
-
-  def find_student
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
-    end
-    nil
   end
 
 end

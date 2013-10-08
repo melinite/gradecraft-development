@@ -11,7 +11,7 @@ class GradeSchemeElementsController < ApplicationController
   def show
     @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
     @title = "#{@grade_scheme.name} Grading"
-    @grade_scheme_element = @grade_scheme.grade_scheme_elements.find(params[:id])
+    @grade_scheme_element = @grade_scheme.elements.find(params[:id])
   end
 
   def new
@@ -32,7 +32,7 @@ class GradeSchemeElementsController < ApplicationController
   end
 
   def create
-    @grade_scheme_element = @grade_scheme.grade_scheme_elements.new(params[:grade_scheme_element])
+    @grade_scheme_element = @grade_scheme.elements.new(params[:grade_scheme_element])
     @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
     respond_to do |format|
       if @grade_scheme_element.save
