@@ -7,9 +7,7 @@ class StudentsController < ApplicationController
 
   def index
     @title = "#{current_course.user_term} Roster"
-    @teams = current_course.teams
-    @assignments = current_course.assignments
-    @students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students.alpha
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     respond_to do |format|
       format.html
       format.json { render json: @students }
@@ -23,12 +21,6 @@ class StudentsController < ApplicationController
     @users = current_course.users
     @teams = current_course.teams
     @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
-    respond_to do |format|
-      format.html
-      format.json { render json: @users }
-      format.csv { send_data User.csv_for_course(current_course) }
-      format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
-    end
   end
 
   def show
@@ -89,28 +81,12 @@ class StudentsController < ApplicationController
   def choices
     @title = "View all #{current_course.weight_term} Choices"
     @assignment_types = current_course.assignment_types
-    @teams = current_course.teams
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @students = current_course.students.includes(:teams).where(user_search_options)
-    respond_with @students
   end
 
 
   def class_badges
-    @students = current_course.students.includes(:earned_badges)
-    @user = current_user
-    @assignments = @user.assignments
     @badges = current_course.badges
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    respond_to do |format|
-      format.html
-      format.json { render json: @users }
-      format.csv { send_data User.csv_for_course(current_course) }
-      format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
-    end
   end
 
   def scores_by_assignment

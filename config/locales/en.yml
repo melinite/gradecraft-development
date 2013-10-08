@@ -26,6 +26,10 @@ en:
       mass_update:
         notice: "%{weights_term} were successfully updated."
         alert: "Could not update %{weights_term}."
+    groups:
+      create:
+        notice: "Your group was successfully created."
+        alert: "We're sorry, your group could not be created. Check below to see possible errors."
   sessions:
     create:
       success: 'You have been succesfully logged in'

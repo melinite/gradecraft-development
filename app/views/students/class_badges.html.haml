@@ -1,4 +1,4 @@
 - if current_user.is_staff?
-  = render "users/staff_view_class_badges"
+  = render "students/staff_view_class_badges"
 - elsif current_user.is_student?
-  = render "users/public_class_badges"
+  = render "students/public_class_badges"

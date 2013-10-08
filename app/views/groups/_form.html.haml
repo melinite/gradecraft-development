@@ -1,7 +1,10 @@
+%h4= "Your group needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
 = simple_form_for @group, :html => {:class => 'form-horizontal' } do |f|
+  - if @group.errors.has_key?(:base)
+    .alert.alert-error= f.error :base
   = f.association :assignments, :collection => current_course.assignments.group_assignments, :include_blank => false, :as => :check_boxes
   = f.input :name, :label => "Group Name", :input_html => { :class => "col-lg-3" }
-  = f.association :students, :collection => @students, :as => :check_boxes
+  = f.association :students, :collection => @other_students.alpha, :as => :check_boxes, :label => "Select Your Group Members"
   - if current_user.is_staff?
     = f.input :approved, :as => :select, :collection => [["Approved"], ["Rejected"]], :input_html => { :class => "input-sm col-lg-3" }
 
