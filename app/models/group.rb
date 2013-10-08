@@ -46,14 +46,14 @@ class Group < ActiveRecord::Base
   private
 
   def min_group_number_met
-    if self.students.to_a.count <= course.min_group_size
-      errors.add :group, "Nope, not enough group members!"
+    if self.students.to_a.count < course.min_group_size
+      errors.add(:group, "Nope, not enough group members!")
     end
   end
 
   def max_group_number_not_exceeded
-    if self.students.to_a.count >= course.max_group_size
-      errors.add :group, "Woah, too many group members, try again."
+    if self.students.to_a.count > course.max_group_size
+      errors.add(:group, "Woah, too many group members, try again.")
     end
   end
 

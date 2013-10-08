@@ -1,3 +1,4 @@
+%h4= "Your group needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
 = simple_form_for @group, :html => {:class => 'form-horizontal' } do |f|
   - if @group.errors.has_key?(:base)
     .alert.alert-error= f.error :base
