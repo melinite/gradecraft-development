@@ -4,7 +4,7 @@ class AssignmentsController < ApplicationController
   def index
     @title = "#{term_for :assignment} Index"
     @assignments = current_course.assignments
-    @by_assignment_type = @assignments.group_by(&:assignment_type)
+    @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
