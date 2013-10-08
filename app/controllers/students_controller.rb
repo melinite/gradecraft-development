@@ -36,7 +36,7 @@ class StudentsController < ApplicationController
     @badges = current_course_data.badges.includes(:earned_badges, :tasks)
     @earned_badges = current_student.earned_badges
     @sorted_teams = current_course.teams.order_by_high_score
-    @grade_scheme = current_course.grade_schemes
+    @grade_scheme = current_course.grade_scheme
     @scores_for_current_course = current_student.scores_for_course(current_course)
     @cache_keys = Course.connection.select_all(<<-SQL).first
       SELECT md5(extract(epoch from updated_at)::varchar) AS course_key,

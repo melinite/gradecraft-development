@@ -22,7 +22,7 @@ class UserSessionsController < ApplicationController
   end
 
   def lti_create
-    @user = current_course.users.find_or_create_by_lti_auth_hash(auth_hash)
+    @user = User.find_or_create_by_lti_auth_hash(auth_hash)
     @course = Course.find_by_lti_uid(auth_hash['extra']['raw_info']['context_id'])
     if !@user || !@course
       lti_error_notification
@@ -37,7 +37,7 @@ class UserSessionsController < ApplicationController
   end
 
   def kerberos_create
-    @user = current_course.users.find_by_kerberos_auth_hash(auth_hash)
+    @user = User.find_by_kerberos_auth_hash(auth_hash)
     if !@user
       kerberos_error_notification
       flash[:alert] = t('sessions.create.error')
