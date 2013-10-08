@@ -29,7 +29,7 @@
       %th
   %tbody
     - if @team
-      - students = current_course_data.students_for_team(@team)
+      - students = current_course_data.students_for_team(@team).being_graded
     - else
       - students = current_course_data.students.being_graded
     - students.each do |student|
