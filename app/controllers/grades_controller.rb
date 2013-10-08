@@ -15,7 +15,7 @@ class GradesController < ApplicationController
     if current_user.is_student?
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
-      @grade_scheme = current_course.grade_scheme
+      @grade_scheme = current_course.grade_schemes
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
   end
@@ -67,7 +67,7 @@ class GradesController < ApplicationController
     end
     @grade.save
     @badges = current_course.badges
-    @earned_badge = current_course.earned_badge.new(params[:earned_badge])
+    @earned_badge = current_course.earned_badges.new(params[:earned_badge])
     respond_to do |format|
       if @grade.save
         if @assignment.notify_released? && @grade.is_released?

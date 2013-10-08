@@ -15,7 +15,7 @@ before_filter :ensure_staff?, :except => [:show]
   end
 
   def create
-    @rubric = current_course.rubric.new(params[:rubric])
+    @rubric = current_course.rubrics.new(params[:rubric])
     @rubric.save
     respond_with @rubric
   end

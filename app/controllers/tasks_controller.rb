@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = current_course.task.find(params[:id])
+    @task = @assignment.tasks.find(params[:id])
   end
 
   def new
@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = current_course.task.find(params[:id])
+    @task = @assignment.tasks.find(params[:id])
     @title = "Edit #{@assignment.name} Task"
     @button_title = "Update"
   end
