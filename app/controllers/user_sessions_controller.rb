@@ -37,7 +37,7 @@ class UserSessionsController < ApplicationController
   end
 
   def kerberos_create
-    @user = current_course.user.find_by_kerberos_auth_hash(auth_hash)
+    @user = current_course.users.find_by_kerberos_auth_hash(auth_hash)
     if !@user
       kerberos_error_notification
       flash[:alert] = t('sessions.create.error')
