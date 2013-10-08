@@ -3,37 +3,31 @@ class GradeSchemeElementsController < ApplicationController
   before_filter :ensure_staff?
 
   def index
-    @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
     @title = "#{@grade_scheme.name} Grading"
-    @grade_scheme_elements = @grade_scheme.grade_scheme_elements
+    @grade_scheme_elements = current_course.grade_scheme.elements
   end
 
   def show
-    @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
     @title = "#{@grade_scheme.name} Grading"
-    @grade_scheme_element = @grade_scheme.elements.find(params[:id])
+    @grade_scheme_element = current_course.grade_scheme.elements.find(params[:id])
   end
 
   def new
-    @grade_schemes = current_course.grade_schemes
-    @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
     @title = "Create a New #{@grade_scheme.name} Grading Element"
     @button_title = "Create"
-    @grade_scheme_element = @grade_scheme.grade_scheme_elements.create(params[:grade_scheme_element])
+    @grade_scheme_element = current_course.grade_scheme.elements.create(params[:grade_scheme_element])
 
   end
 
   def edit
-    @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
     @title = "Edit #{@grade_scheme.name} Grading Element"
     @button_title = "Update"
-    @grade_scheme_element = @grade_scheme.elements.find(params[:id])
+    @grade_scheme_element = current_course.grade_scheme.elements.find(params[:id])
     respond_with(@grade_scheme)
   end
 
   def create
-    @grade_scheme_element = @grade_scheme.elements.new(params[:grade_scheme_element])
-    @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
+    @grade_scheme_element = current_course.grade_scheme.elements.new(params[:grade_scheme_element])
     respond_to do |format|
       if @grade_scheme_element.save
         format.html { redirect_to @grade_scheme, notice: 'Grade Scheme Element was successfully created.' }
@@ -46,15 +40,13 @@ class GradeSchemeElementsController < ApplicationController
   end
 
   def update
-    @grade_scheme = @grade_scheme.elements.find(params[:grade_scheme_id])
-    @grade_scheme_element = @grade_scheme.grade_scheme_elements.find(params[:id])
+    @grade_scheme_element = current_course.grade_scheme.elements.find(params[:id])
     @grade_scheme_element.update_attributes(params[:grade_scheme_element])
     respond_with @grade_scheme
   end
 
   def destroy
-    @grade_scheme = current_course.grade_schemes.find(params[:grade_scheme_id])
-    @grade_scheme_element = @grade_scheme.elements.find(params[:id])
+    @grade_scheme_element = current_course.grade_scheme.elements.find(params[:id])
     @grade_scheme_element.destroy
 
     respond_to do |format|
