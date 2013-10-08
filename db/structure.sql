@@ -1441,6 +1441,56 @@ ALTER SEQUENCE score_levels_id_seq OWNED BY score_levels.id;
 
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    email character varying(255),
+    crypted_password character varying(255),
+    salt character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    reset_password_token character varying(255),
+    reset_password_token_expires_at timestamp without time zone,
+    reset_password_email_sent_at timestamp without time zone,
+    remember_me_token character varying(255),
+    remember_me_token_expires_at timestamp without time zone,
+    avatar_file_name character varying(255),
+    avatar_content_type character varying(255),
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone,
+    role character varying(255) DEFAULT 'student'::character varying NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
+    rank integer,
+    display_name character varying(255),
+    private_display boolean DEFAULT false,
+    default_course_id integer,
+    final_grade character varying(255),
+    visit_count integer,
+    predictor_views integer,
+    page_views integer,
+    team_role character varying(255),
+    last_login_at timestamp without time zone,
+    last_logout_at timestamp without time zone,
+    last_activity_at timestamp without time zone,
+    lti_uid character varying(255),
+    last_login_from_ip_address character varying(255),
+    kerberos_uid character varying(255)
+);
+
+
+--
+-- Name: shared_earned_badges; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW shared_earned_badges AS
+    SELECT course_memberships.course_id, (((users.first_name)::text || ' '::text) || (users.last_name)::text) AS student_name, users.id AS user_id, earned_badges.id, badges.icon, badges.name FROM (((course_memberships JOIN users ON ((users.id = course_memberships.user_id))) JOIN earned_badges ON ((earned_badges.student_id = users.id))) JOIN badges ON ((badges.id = earned_badges.badge_id))) WHERE (((course_memberships.shared_badges = true) AND (badges.icon IS NOT NULL)) AND (earned_badges.shared = true));
+
+
+--
 -- Name: student_academic_histories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1510,6 +1560,14 @@ CREATE SEQUENCE student_assignment_type_weights_id_seq
 --
 
 ALTER SEQUENCE student_assignment_type_weights_id_seq OWNED BY student_assignment_type_weights.id;
+
+
+--
+-- Name: student_summaries; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW student_summaries AS
+    SELECT users.id AS student_id, users.first_name, users.last_name, grades_score.grades_score_sum, earned_badges_score.earned_badges_sum FROM ((users JOIN (SELECT grades.student_id AS id, COALESCE(sum(grades.score), (0)::bigint) AS grades_score_sum FROM (grades JOIN assignments ON ((grades.assignment_id = assignments.id))) WHERE (((grades.status)::text = 'Released'::text) OR (assignments.release_necessary = false)) GROUP BY grades.student_id) grades_score USING (id)) JOIN (SELECT earned_badges.student_id AS id, COALESCE(sum(earned_badges.score), (0)::bigint) AS earned_badges_sum FROM earned_badges GROUP BY earned_badges.student_id) earned_badges_score USING (id));
 
 
 --
@@ -1727,56 +1785,6 @@ CREATE SEQUENCE themes_id_seq
 --
 
 ALTER SEQUENCE themes_id_seq OWNED BY themes.id;
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE users (
-    id integer NOT NULL,
-    username character varying(255) NOT NULL,
-    email character varying(255),
-    crypted_password character varying(255),
-    salt character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    reset_password_token character varying(255),
-    reset_password_token_expires_at timestamp without time zone,
-    reset_password_email_sent_at timestamp without time zone,
-    remember_me_token character varying(255),
-    remember_me_token_expires_at timestamp without time zone,
-    avatar_file_name character varying(255),
-    avatar_content_type character varying(255),
-    avatar_file_size integer,
-    avatar_updated_at timestamp without time zone,
-    role character varying(255) DEFAULT 'student'::character varying NOT NULL,
-    first_name character varying(255),
-    last_name character varying(255),
-    rank integer,
-    display_name character varying(255),
-    private_display boolean DEFAULT false,
-    default_course_id integer,
-    final_grade character varying(255),
-    visit_count integer,
-    predictor_views integer,
-    page_views integer,
-    team_role character varying(255),
-    last_login_at timestamp without time zone,
-    last_logout_at timestamp without time zone,
-    last_activity_at timestamp without time zone,
-    lti_uid character varying(255),
-    last_login_from_ip_address character varying(255),
-    kerberos_uid character varying(255)
-);
-
-
---
--- Name: user_shared_earned_badges; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW user_shared_earned_badges AS
-    SELECT course_memberships.course_id, (((users.first_name)::text || ' '::text) || (users.last_name)::text) AS student_name, users.id AS user_id, earned_badges.id, badges.icon, badges.name FROM (((course_memberships JOIN users ON ((users.id = course_memberships.user_id))) JOIN earned_badges ON ((earned_badges.student_id = users.id))) JOIN badges ON ((badges.id = earned_badges.badge_id))) WHERE (((course_memberships.shared_badges = true) AND (badges.icon IS NOT NULL)) AND (earned_badges.shared = true));
 
 
 --

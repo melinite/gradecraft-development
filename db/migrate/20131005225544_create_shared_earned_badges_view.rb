@@ -1,7 +1,7 @@
 class CreateSharedEarnedBadgesView < ActiveRecord::Migration
   def self.up
     execute <<-SQL
-      CREATE VIEW user_shared_earned_badges AS
+      CREATE VIEW shared_earned_badges AS
            SELECT course_memberships.course_id,
                   (users.first_name || ' ' || users.last_name) as student_name,
                   users.id as user_id,
@@ -18,7 +18,7 @@ class CreateSharedEarnedBadgesView < ActiveRecord::Migration
   end
   def self.down
     execute <<-SQL
-      DROP VIEW user_shared_earned_badges
+      DROP VIEW shared_earned_badges
     SQL
   end
 end

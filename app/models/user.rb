@@ -1,9 +1,4 @@
 class User < ActiveRecord::Base
-  class SharedEarnedBadge < ActiveRecord::Base
-    belongs_to :user
-    belongs_to :course
-  end
-
   authenticates_with_sorcery!
 
   include Canable::Cans
