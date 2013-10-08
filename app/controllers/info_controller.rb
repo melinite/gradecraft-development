@@ -4,7 +4,7 @@ class InfoController < ApplicationController
   before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
   def dashboard
-    @assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
+    #@assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
     if current_user.is_staff?
       @students = current_course.users.students
       @teams = current_course.teams.includes(:earned_badges)
@@ -34,15 +34,15 @@ class InfoController < ApplicationController
        FROM courses
       WHERE courses.id = #{current_course.id}
     SQL
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
+      #@by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
     if current_course.team_challenges?
-      @events = @assignments.to_a + current_course.challenges
+      @events = current_course_data.assignments.to_a + current_course.challenges
     else
-      @events = @assignments.to_a
+      @events = current_course_data.assignments.to_a
     end
   end
 

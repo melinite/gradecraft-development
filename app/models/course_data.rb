@@ -12,6 +12,14 @@ class CourseData < Struct.new(:course)
     end
   end
 
+  def assignments
+    @assignments ||= course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
+  end
+
+  def by_assignment_type
+    @by_assignment_type ||= assignments.group_by(&:assignment_type)
+  end
+
   def badges
     @badges ||= course.badges
   end

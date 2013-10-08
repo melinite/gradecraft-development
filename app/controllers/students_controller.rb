@@ -29,9 +29,7 @@ class StudentsController < ApplicationController
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = current_student.assignment_weights
     @assignment_weight = current_student.assignment_weights.new
-    @assignments = current_course.assignments.includes(:assignment_type)
-    @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-    @assignments_with_due_dates = @assignments.select { |assignment| assignment.due_at.present? }
+    @assignments_with_due_dates = current_course_data.assignments.select { |assignment| assignment.due_at.present? }
     @grades = current_student.grades
     @badges = current_course_data.badges.includes(:earned_badges, :tasks)
     @earned_badges = current_student.earned_badges
@@ -60,9 +58,9 @@ class StudentsController < ApplicationController
       WHERE courses.id = #{current_course.id}
     SQL
     if current_course.team_challenges?
-      @events = @assignments.to_a + current_course.challenges
+      @events = current_course_data.assignments.to_a + current_course.challenges
     else
-      @events = @assignments.to_a
+      @events = current_course_data.assignments.to_a
     end
 
     @form = AssignmentTypeWeightForm.new(current_student, current_course)
