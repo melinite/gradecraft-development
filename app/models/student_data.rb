@@ -92,6 +92,10 @@ class StudentData < Struct.new(:student, :course)
     @released_grades ||= student.grades.released
   end
 
+  def earned_badge(badge)
+    earned_badges[badge.id]
+  end
+
   def earned_badge?(badge)
     earned_badges[badge.id].present?
   end
