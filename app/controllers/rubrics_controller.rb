@@ -1,4 +1,7 @@
 class RubricsController < ApplicationController
+
+before_filter :ensure_staff?, :except => [:show]
+
   def index
     respond_with @rubrics = current_course.rubrics
   end

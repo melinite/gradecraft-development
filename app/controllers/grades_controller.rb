@@ -67,7 +67,7 @@ class GradesController < ApplicationController
     end
     @grade.save
     @badges = current_course.badges
-    @earned_badge = EarnedBadge.new(params[:earned_badge])
+    @earned_badge = current_course.earned_badge.new(params[:earned_badge])
     respond_to do |format|
       if @grade.save
         if @assignment.notify_released? && @grade.is_released?
@@ -180,6 +180,7 @@ class GradesController < ApplicationController
   end
 
   def edit_status
+<<<<<<< HEAD
     @assignment = current_course.assignments.find(params[:assignment_id])
     @title = "#{@assignment.name} Grade Statuses"
     @grades = @assignment.grades.find(params[:grade_ids])

@@ -65,7 +65,7 @@ class StudentsController < ApplicationController
       @events = @assignments.to_a
     end
 
-    @form = AssignmentTypeWeightForm.new(current_student, current_course)
+    @form = current_course.assignment_type_weight_form.new(current_student, current_course)
 
     scores = []
     current_course.assignment_types.each do |assignment_type|
