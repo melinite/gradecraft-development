@@ -21,7 +21,7 @@
             - if current_course.shared_badges? && current_student.badges_shared(current_course)
               %th Share this with the class?
         %tbody
-          - current_course.badges.includes(:tasks).includes(:earned_badges).where('earned_badges.student_id' => current_student).each do |badge|
+          - current_course.badges.includes(:tasks).each do |badge|
             %tr
               %td= image_tag badge.icon, :alt => badge.name, :width => 40
               %td
@@ -34,18 +34,18 @@
               - if current_course.valuable_badges?
                 %td= points badge.point_total
               %td
-                - if badge.earned_badges.first
+                - if current_student_data.earned_badge?(badge)
                   %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
-                  = badge.earned_badges.first.created_at
+                  = current_student_data.earned_badge(badge).created_at
                   %br
-                  = raw badge.earned_badges.first.try(:feedback)
+                  = raw current_student_data.earned_badge(badge).try(:feedback)
               - if current_course.shared_badges? && current_student.badges_shared(current_course)
                 %td
-                  - badge.earned_badges.each do |earned_badge|
-                    %div{:class=>"share_badge", :data => { badge_id: badge.id.to_s, earned_badge_id: earned_badge.id.to_s}}
-                      - if earned_badge.shared
-                        %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-warning btn-primary btn-small"} Stop Sharing
-                      - else
-                        %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-success btn-primary btn-small"} Share
+                  - earned_badge = current_student_data.earned_badge(badge)
+                  %div{:class=>"share_badge", :data => { badge_id: badge.id.to_s, earned_badge_id: earned_badge.id.to_s}}
+                    - if earned_badge.shared
+                      %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-warning btn-primary btn-small"} Stop Sharing
+                    - else
+                      %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"btn-success btn-primary btn-small"} Share
     .tab-pane#tabb2
       = render "students/public_class_badges"
