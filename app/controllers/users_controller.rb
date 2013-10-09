@@ -180,7 +180,7 @@ class UsersController < ApplicationController
 
   def search
     q = params[:user][:name]
-    @users = User.find(:all, :conditions => ["name LIKE %?%",q])
+    @users = current_course.users.where("name LIKE ?","%#{q}%")
   end
 
   private

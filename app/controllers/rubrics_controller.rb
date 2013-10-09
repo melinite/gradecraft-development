@@ -1,4 +1,7 @@
 class RubricsController < ApplicationController
+
+before_filter :ensure_staff?, :except => [:show]
+
   def index
     respond_with @rubrics = current_course.rubrics
   end
@@ -12,7 +15,7 @@ class RubricsController < ApplicationController
   end
 
   def create
-    @rubric = current_course.rubric.new(params[:rubric])
+    @rubric = current_course.rubrics.new(params[:rubric])
     @rubric.save
     respond_with @rubric
   end

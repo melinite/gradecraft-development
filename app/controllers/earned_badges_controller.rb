@@ -22,14 +22,14 @@ class EarnedBadgesController < ApplicationController
     @title = "Award a New #{term_for :badge}"
     @badges = current_course.badges
     @badge = @badges.find(params[:badge_id])
-    @earned_badge = EarnedBadge.new
-    @students = current_course.users.students
+    @earned_badge = @badge.earned_badges.new
+    @students = current_course.users.students.alpha
   end
 
   def new_via_student
     @title = "Award a New #{term_for :badge}"
     @badges = current_course.badges
-    @earned_badge = EarnedBadge.new
+    @earned_badge = @badge.earned_badges.new
     @students = current_course.users.students
   end
 
@@ -41,7 +41,7 @@ class EarnedBadgesController < ApplicationController
   end
 
   def toggle_shared
-    @earned_badge = EarnedBadge.where(:badge_id => params[:badge_id], :student_id => current_student.id).first
+    @earned_badge = current_course.earned_badges.where(:badge_id => params[:earned_badge_id], :student_id => current_student.id).first
     @earned_badge.shared = !@earned_badge.shared
     @earned_badge.save
     render :json => {
@@ -55,7 +55,7 @@ class EarnedBadgesController < ApplicationController
     @students = current_course.students
     @badges = current_course.badges
     @badge_sets = current_course.badge_sets
-    @earned_badge = EarnedBadge.find(params[:id])
+    @earned_badge = @badge.earned_badges.find(params[:id])
     respond_with @earned_badge
   end
 
@@ -78,7 +78,7 @@ class EarnedBadgesController < ApplicationController
   def update
     @badge_sets = current_course.badge_sets
     @badges = current_course.badges
-    @earned_badge = EarnedBadge.find(params[:id])
+    @earned_badge = @badge.earned_badges.find(params[:id])
 
     respond_to do |format|
       if @earned_badge.update_attributes(params[:earned_badge])
@@ -124,8 +124,7 @@ class EarnedBadgesController < ApplicationController
   end
 
   def destroy
-    @badge = current_course.badges.find(params[:id])
-    @earned_badge = EarnedBadge.find(params[:id])
+    @earned_badge = @badge.earned_badges.find(params[:id])
     @earned_badge.destroy
 
     respond_to do |format|

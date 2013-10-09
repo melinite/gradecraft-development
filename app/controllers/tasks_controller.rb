@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = @assignment.tasks.find(params[:id])
   end
 
   def new
@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = @assignment.tasks.find(params[:id])
     @title = "Edit #{@assignment.name} Task"
     @button_title = "Update"
   end
@@ -33,14 +33,12 @@ class TasksController < ApplicationController
   end
 
   def update
-    @assignment = Assignment.find(params[:assignment_id])
     @task = @assignment.tasks.find(params[:id])
     @task.update_attributes(params[:task])
     respond_with @assignment
   end
 
   def destroy
-    @assignment = Assignment.find(params[:assignment_id])
     @task = @assignment.tasks.find(params[:id])
     @task.destroy
 
@@ -53,8 +51,7 @@ class TasksController < ApplicationController
   private
 
   def load_assignment
-    klass = [Assignment, Badge].detect { |c| params["#{c.name.underscore}_id"]}
-    @assignment = klass.find(params["#{klass.name.underscore}_id"])
+    @assignment = current_course.assignments.find(params[:assignment_id])
   end
 
 end
