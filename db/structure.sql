@@ -635,6 +635,175 @@ ALTER SEQUENCE course_badge_sets_id_seq OWNED BY course_badge_sets.id;
 
 
 --
+-- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE courses (
+    id integer NOT NULL,
+    name character varying(255),
+    courseno character varying(255),
+    year character varying(255),
+    semester character varying(255),
+    grade_scheme_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    badge_setting boolean DEFAULT true,
+    team_setting boolean DEFAULT false,
+    user_term character varying(255),
+    team_term character varying(255),
+    homepage_message character varying(255),
+    status boolean DEFAULT true,
+    group_setting boolean,
+    badge_set_id integer,
+    assignment_weight_close_at timestamp without time zone,
+    team_roles boolean,
+    team_leader_term character varying(255),
+    group_term character varying(255),
+    assignment_weight_type character varying(255),
+    accepts_submissions boolean,
+    teams_visible boolean,
+    badge_use_scope character varying(255),
+    weight_term character varying(255),
+    predictor_setting boolean,
+    badges_value boolean,
+    max_group_size integer,
+    min_group_size integer,
+    shared_badges boolean,
+    graph_display boolean,
+    default_assignment_weight numeric(4,1) DEFAULT 1.0,
+    tagline character varying(255),
+    academic_history_visible boolean,
+    office character varying(255),
+    phone character varying(255),
+    class_email character varying(255),
+    twitter_handle character varying(255),
+    twitter_hashtag character varying(255),
+    location character varying(255),
+    office_hours character varying(255),
+    meeting_times text,
+    media_file character varying(255),
+    media_credit character varying(255),
+    media_caption character varying(255),
+    badge_term character varying(255),
+    assignment_term character varying(255),
+    challenge_term character varying(255),
+    use_timeline boolean,
+    grading_philosophy text,
+    total_assignment_weight integer,
+    max_assignment_weight integer,
+    check_final_grade boolean,
+    character_profiles boolean,
+    lti_uid character varying(255),
+    team_score_average boolean,
+    team_challenges boolean,
+    max_assignment_types_weighted integer
+);
+
+
+--
+-- Name: earned_badges; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE earned_badges (
+    id integer NOT NULL,
+    badge_id integer,
+    submission_id integer,
+    course_id integer,
+    student_id integer,
+    task_id integer,
+    grade_id integer,
+    group_id integer,
+    group_type character varying(255),
+    score integer,
+    feedback text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    shared boolean
+);
+
+
+--
+-- Name: grades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE grades (
+    id integer NOT NULL,
+    raw_score integer DEFAULT 0,
+    assignment_id integer,
+    feedback text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    complete boolean,
+    semis boolean,
+    finals boolean,
+    type character varying(255),
+    status character varying(255),
+    attempted boolean,
+    substantial boolean,
+    final_score integer,
+    submission_id integer,
+    course_id integer,
+    shared boolean,
+    student_id integer,
+    task_id integer,
+    group_id integer,
+    group_type character varying(255),
+    score integer,
+    assignment_type_id integer,
+    point_total integer,
+    admin_notes text,
+    graded_by_id integer,
+    team_id integer,
+    released boolean,
+    predicted_score integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: score_levels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE score_levels (
+    id integer NOT NULL,
+    name character varying(255),
+    value integer,
+    assignment_type_id integer,
+    assignment_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: tasks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE tasks (
+    id integer NOT NULL,
+    assignment_id integer,
+    name character varying(255),
+    description text,
+    due_at timestamp without time zone,
+    accepts_submissions boolean,
+    "group" boolean,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    course_id integer,
+    assignment_type character varying(255),
+    type character varying(255),
+    taskable_type character varying(255)
+);
+
+
+--
+-- Name: course_cache_keys; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW course_cache_keys AS
+    SELECT courses.id, courses.id AS course_id, md5(pg_catalog.concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, md5(pg_catalog.concat(courses.id, (SELECT sum(date_part('epoch'::text, assignments.updated_at)) AS sum FROM assignments WHERE (assignments.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, assignment_types.updated_at)) AS sum FROM assignment_types WHERE (assignment_types.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, score_levels.updated_at)) AS sum FROM (assignment_types JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id))) WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, md5(concat((SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum FROM grades WHERE (grades.course_id = courses.id)))) AS grades_key, md5(pg_catalog.concat((SELECT sum(date_part('epoch'::text, tasks.updated_at)) AS sum FROM tasks WHERE (tasks.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, badges.updated_at)) AS sum FROM badges WHERE (badges.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE (earned_badges.course_id = courses.id)))) AS badges_key FROM courses;
+
+
+--
 -- Name: course_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -743,72 +912,6 @@ CREATE SEQUENCE course_memberships_id_seq
 --
 
 ALTER SEQUENCE course_memberships_id_seq OWNED BY course_memberships.id;
-
-
---
--- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE courses (
-    id integer NOT NULL,
-    name character varying(255),
-    courseno character varying(255),
-    year character varying(255),
-    semester character varying(255),
-    grade_scheme_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    badge_setting boolean DEFAULT true,
-    team_setting boolean DEFAULT false,
-    user_term character varying(255),
-    team_term character varying(255),
-    homepage_message character varying(255),
-    status boolean DEFAULT true,
-    group_setting boolean,
-    badge_set_id integer,
-    assignment_weight_close_at timestamp without time zone,
-    team_roles boolean,
-    team_leader_term character varying(255),
-    group_term character varying(255),
-    assignment_weight_type character varying(255),
-    accepts_submissions boolean,
-    teams_visible boolean,
-    badge_use_scope character varying(255),
-    weight_term character varying(255),
-    predictor_setting boolean,
-    badges_value boolean,
-    max_group_size integer,
-    min_group_size integer,
-    shared_badges boolean,
-    graph_display boolean,
-    default_assignment_weight numeric(4,1) DEFAULT 1.0,
-    tagline character varying(255),
-    academic_history_visible boolean,
-    office character varying(255),
-    phone character varying(255),
-    class_email character varying(255),
-    twitter_handle character varying(255),
-    twitter_hashtag character varying(255),
-    location character varying(255),
-    office_hours character varying(255),
-    meeting_times text,
-    media_file character varying(255),
-    media_credit character varying(255),
-    media_caption character varying(255),
-    badge_term character varying(255),
-    assignment_term character varying(255),
-    challenge_term character varying(255),
-    use_timeline boolean,
-    grading_philosophy text,
-    total_assignment_weight integer,
-    max_assignment_weight integer,
-    check_final_grade boolean,
-    character_profiles boolean,
-    lti_uid character varying(255),
-    team_score_average boolean,
-    team_challenges boolean,
-    max_assignment_types_weighted integer
-);
 
 
 --
@@ -960,28 +1063,6 @@ CREATE SEQUENCE dashboards_id_seq
 --
 
 ALTER SEQUENCE dashboards_id_seq OWNED BY dashboards.id;
-
-
---
--- Name: earned_badges; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE earned_badges (
-    id integer NOT NULL,
-    badge_id integer,
-    submission_id integer,
-    course_id integer,
-    student_id integer,
-    task_id integer,
-    grade_id integer,
-    group_id integer,
-    group_type character varying(255),
-    score integer,
-    feedback text,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    shared boolean
-);
 
 
 --
@@ -1170,43 +1251,6 @@ CREATE SEQUENCE grade_schemes_id_seq
 --
 
 ALTER SEQUENCE grade_schemes_id_seq OWNED BY grade_schemes.id;
-
-
---
--- Name: grades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE grades (
-    id integer NOT NULL,
-    raw_score integer DEFAULT 0,
-    assignment_id integer,
-    feedback text,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    complete boolean,
-    semis boolean,
-    finals boolean,
-    type character varying(255),
-    status character varying(255),
-    attempted boolean,
-    substantial boolean,
-    final_score integer,
-    submission_id integer,
-    course_id integer,
-    shared boolean,
-    student_id integer,
-    task_id integer,
-    group_id integer,
-    group_type character varying(255),
-    score integer,
-    assignment_type_id integer,
-    point_total integer,
-    admin_notes text,
-    graded_by_id integer,
-    team_id integer,
-    released boolean,
-    predicted_score integer DEFAULT 0 NOT NULL
-);
 
 
 --
@@ -1407,21 +1451,6 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: score_levels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE score_levels (
-    id integer NOT NULL,
-    name character varying(255),
-    value integer,
-    assignment_type_id integer,
-    assignment_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
 -- Name: score_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1563,6 +1592,44 @@ ALTER SEQUENCE student_assignment_type_weights_id_seq OWNED BY student_assignmen
 
 
 --
+-- Name: submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE submissions (
+    id integer NOT NULL,
+    assignment_id integer,
+    student_id integer,
+    feedback character varying(255),
+    comment character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    attachment_file_name character varying(255),
+    attachment_content_type character varying(255),
+    attachment_file_size integer,
+    attachment_updated_at timestamp without time zone,
+    link character varying(255),
+    text_feedback text,
+    text_comment text,
+    creator_id integer,
+    group_id integer,
+    graded boolean,
+    released_at timestamp without time zone,
+    task_id integer,
+    course_id integer,
+    assignment_type_id integer,
+    assignment_type character varying(255)
+);
+
+
+--
+-- Name: student_cache_keys; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW student_cache_keys AS
+    SELECT cm.id, cm.id AS course_membership_id, cm.course_id, cm.user_id, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE ((earned_badges.course_id = cm.course_id) AND (earned_badges.student_id = cm.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum FROM submissions WHERE ((submissions.course_id = cm.course_id) AND (submissions.student_id = cm.user_id))))) AS submissions_key FROM course_memberships cm;
+
+
+--
 -- Name: student_summaries; Type: VIEW; Schema: public; Owner: -
 --
 
@@ -1601,36 +1668,6 @@ ALTER SEQUENCE submission_files_id_seq OWNED BY submission_files.id;
 
 
 --
--- Name: submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE submissions (
-    id integer NOT NULL,
-    assignment_id integer,
-    student_id integer,
-    feedback character varying(255),
-    comment character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    attachment_file_name character varying(255),
-    attachment_content_type character varying(255),
-    attachment_file_size integer,
-    attachment_updated_at timestamp without time zone,
-    link character varying(255),
-    text_feedback text,
-    text_comment text,
-    creator_id integer,
-    group_id integer,
-    graded boolean,
-    released_at timestamp without time zone,
-    task_id integer,
-    course_id integer,
-    assignment_type_id integer,
-    assignment_type character varying(255)
-);
-
-
---
 -- Name: submissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1647,27 +1684,6 @@ CREATE SEQUENCE submissions_id_seq
 --
 
 ALTER SEQUENCE submissions_id_seq OWNED BY submissions.id;
-
-
---
--- Name: tasks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE tasks (
-    id integer NOT NULL,
-    assignment_id integer,
-    name character varying(255),
-    description text,
-    due_at timestamp without time zone,
-    accepts_submissions boolean,
-    "group" boolean,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    course_id integer,
-    assignment_type character varying(255),
-    type character varying(255),
-    taskable_type character varying(255)
-);
 
 
 --
@@ -2854,3 +2870,7 @@ INSERT INTO schema_migrations (version) VALUES ('20131005014350');
 INSERT INTO schema_migrations (version) VALUES ('20131005031533');
 
 INSERT INTO schema_migrations (version) VALUES ('20131005225544');
+
+INSERT INTO schema_migrations (version) VALUES ('20131009035508');
+
+INSERT INTO schema_migrations (version) VALUES ('20131009035532');

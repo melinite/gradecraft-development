@@ -1,2 +1,2 @@
-- cache [ 'v1', @cache_keys['assignments_key'] ] do
+- cache [ 'v1', current_course_data.cache_keys.assignments_key ] do
   #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
