@@ -151,4 +151,20 @@ class StudentData < Struct.new(:student, :course)
       end
     end
   end
+
+  def assignment_weights
+    @assignment_weights ||= {}.tap do |assignment_weights|
+      student.assignment_weights.each do |weights|
+        assignment_weights[weights.assignment_id] = weights
+      end
+    end
+  end
+
+  def point_total_for_assignment_redux(assignment)
+    assignment.point_total + weight_for_assignment(assignment)
+  end
+
+  def weight_for_assignment(assignment)
+    assignment_weights[assignment.id]
+  end
 end

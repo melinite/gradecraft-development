@@ -29,7 +29,7 @@
                 - grade = current_student_data.grade_for_assignment(assignment)
                 - if current_student_data.grade_released_for_assignment?(assignment)
                   %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)}  / "
-              %span.points.total #{points assignment.point_total_for_student(current_student)} points
+              %span.points.total #{points current_student_data.point_total_for_assignment(assignment)} points
               - if assignment.assignment_type.student_weightable?
                 = "(Multiplied) "
                 %b= "–"
