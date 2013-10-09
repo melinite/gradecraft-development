@@ -10,6 +10,7 @@ class SubmissionsController < ApplicationController
 
   def show
     @title = "View Submission"
+    @assignments = current_course.assignments
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.find(params[:id])
     if current_user.is_student?
