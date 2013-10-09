@@ -45,6 +45,7 @@ class Grade < ActiveRecord::Base
 
   scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }
   scope :released, -> { joins(:assignment).where('status = ? OR NOT assignments.release_necessary', 'Released') }
+  scope :graded, -> { where('status = ?', 'Graded')}
 
   validates_numericality_of :raw_score, integer_only: true
 
