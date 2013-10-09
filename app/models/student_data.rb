@@ -1,4 +1,7 @@
 class StudentData < Struct.new(:student, :course)
+  def cache_keys
+    @cache_keys ||= StudentCacheKey.find_by(course_id: course.id, user_id: student.id)
+  end
 
   def score
     @score ||= released_grades.where(course: course).score + earned_badge_score

@@ -1,4 +1,4 @@
-- cache [ 'v1', @cache_keys['assignments_key'], @cache_keys['grades_key'], @cache_keys['badges_key'], current_student.id ] do
+- cache [ 'v1', current_course_data.cache_keys.assignments_key, current_course_data.cache_keys.grades_key, current_course_data.cache_keys.badges_key, current_student.id ] do
   .col-lg-12
     #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
       #projectedPoints
