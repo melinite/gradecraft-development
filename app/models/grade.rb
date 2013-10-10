@@ -43,8 +43,8 @@ class Grade < ActiveRecord::Base
   after_save :save_student
   after_destroy :save_student
 
-  scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment)
-  scope :graded, -> { where('status = ?', 'Graded')}
+  scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }
+  scope :graded, -> { where('status = ?', 'Graded') }
   scope :released, -> { joins(:assignment).where("status = 'Released' OR (status = 'Graded' AND NOT assignments.release_necessary)") }
 
   validates_numericality_of :raw_score, integer_only: true

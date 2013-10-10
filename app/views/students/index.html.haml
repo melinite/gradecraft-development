@@ -40,16 +40,18 @@
         - if current_course.has_teams?
           %td
             - if student.teams.present?
-              = link_to student.teams.first.try(:name), student.teams.first
+              = link_to student.team_for_course(current_course).try(:name)
         - if current_course.team_roles?
           %td= student.try(:team_role)
         - if student.respond_to?(:grades)
           %td= points student.score_for_course(current_course)
-          %td= student.grade_level_for_course(current_course)
+          %td
+            = student.grade_letter_for_course(current_course)
+            = student.grade_level_for_course(current_course)
         - if current_course.has_badges?
           %td
             - student.earned_badges.each do |badge|
-              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "40"}
+              %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "20"}
         %td= link_to "Edit", edit_user_path(student), :class => 'btn btn-tiny btn-info'
         %td= link_to 'Remove from Course', course_membership_path(current_course.membership_for_student(student)), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure you want to remove this student from your course?' }, :method => :delete
       - i += 1
@@ -76,7 +78,7 @@
         %th
         %th
     %tbody
-      - @auditing.each do |student|
+      - current_course_data.students.auditing.each do |student|
         - if student
           %tr
             %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)

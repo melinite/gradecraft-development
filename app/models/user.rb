@@ -262,10 +262,6 @@ def groups_by_assignment_id
     assignment_groups.where(assignment: assignment).first.try(:group)
   end
 
-  def group_submission_for_assignment(assignment)
-
-  end
-
   def team_for_course(course)
     teams.where(course: course).first
   end
