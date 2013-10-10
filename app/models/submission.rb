@@ -28,6 +28,7 @@ class Submission < ActiveRecord::Base
   #validates_presence_of :student, if: 'assignment.is_individual?'
   #validates_presence_of :group, if: 'assignment.has_groups?'
   validates_uniqueness_of :task, :scope => :student, :allow_nil => true
+  validates :link, :url => true
 
   #Canable permissions#
   def updatable_by?(user)

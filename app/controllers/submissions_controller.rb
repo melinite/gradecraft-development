@@ -34,6 +34,7 @@ class SubmissionsController < ApplicationController
       @user = current_user
       @badges = current_course.badges
       @assignments = current_course.assignments
+      puts @assignments.inspect
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       if @assignment.has_groups?
@@ -77,7 +78,6 @@ class SubmissionsController < ApplicationController
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.new(params[:submission])
     @submission.student = current_student if current_user.is_student?
-    @submission.save
     respond_to do |format|
       if @submission.save
         if current_user.is_student?
@@ -90,7 +90,7 @@ class SubmissionsController < ApplicationController
         submission = { name: "#{@submission.assignment.name}", time: "#{@submission.created_at}" }
         NotificationMailer.successful_submission(user, submission).deliver
       else
-        format.html { render action: "new" }
+        format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was not successfully submitted! Please try again." }
         format.json { render json: @assignment.errors, status: :unprocessable_entity }
       end
     end
@@ -108,7 +108,7 @@ class SubmissionsController < ApplicationController
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully updated." }
         end
       else
-        format.html { render action: "edit" }
+        format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was not successfully submitted! Please try again." }
         format.json { render json: @submission.errors, status: :unprocessable_entity }
       end
     end
@@ -123,5 +123,4 @@ class SubmissionsController < ApplicationController
       format.json { head :ok }
     end
   end
-
 end
