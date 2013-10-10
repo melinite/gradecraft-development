@@ -346,6 +346,7 @@ DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
   active_model_serializers
+  addressable
   bullet
   canable
   capybara

@@ -77,7 +77,6 @@ class SubmissionsController < ApplicationController
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.new(params[:submission])
     @submission.student = current_student if current_user.is_student?
-    @submission.save
     respond_to do |format|
       if @submission.save
         if current_user.is_student?
@@ -89,8 +88,10 @@ class SubmissionsController < ApplicationController
         user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}" }
         submission = { name: "#{@submission.assignment.name}", time: "#{@submission.created_at}" }
         NotificationMailer.successful_submission(user, submission).deliver
+      elsif @submission.errors[:link].any?
+        format.html { redirect_to new_assignment_submission_path(@assignment, @submission), notice: "Please provide a valid link for #{@assignment.name} submissions." }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to new_assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was not successfully submitted! Please try again." }
         format.json { render json: @assignment.errors, status: :unprocessable_entity }
       end
     end
@@ -107,8 +108,10 @@ class SubmissionsController < ApplicationController
         else
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully updated." }
         end
+      elsif @submission.errors[:link].any?
+        format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "Please provide a valid link for #{@assignment.name} submissions." }
       else
-        format.html { render action: "edit" }
+        format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was not successfully submitted! Please try again." }
         format.json { render json: @submission.errors, status: :unprocessable_entity }
       end
     end
@@ -123,5 +126,4 @@ class SubmissionsController < ApplicationController
       format.json { head :ok }
     end
   end
-
 end
