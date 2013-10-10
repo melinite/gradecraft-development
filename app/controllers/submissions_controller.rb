@@ -34,7 +34,6 @@ class SubmissionsController < ApplicationController
       @user = current_user
       @badges = current_course.badges
       @assignments = current_course.assignments
-      puts @assignments.inspect
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       if @assignment.has_groups?
@@ -89,8 +88,10 @@ class SubmissionsController < ApplicationController
         user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}" }
         submission = { name: "#{@submission.assignment.name}", time: "#{@submission.created_at}" }
         NotificationMailer.successful_submission(user, submission).deliver
+      elsif @submission.errors[:link].any?
+        format.html { redirect_to new_assignment_submission_path(@assignment, @submission), notice: "Please provide a valid link for #{@assignment.name} submissions." }
       else
-        format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was not successfully submitted! Please try again." }
+        format.html { redirect_to new_assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was not successfully submitted! Please try again." }
         format.json { render json: @assignment.errors, status: :unprocessable_entity }
       end
     end
@@ -107,6 +108,8 @@ class SubmissionsController < ApplicationController
         else
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully updated." }
         end
+      elsif @submission.errors[:link].any?
+        format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "Please provide a valid link for #{@assignment.name} submissions." }
       else
         format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was not successfully submitted! Please try again." }
         format.json { render json: @submission.errors, status: :unprocessable_entity }
