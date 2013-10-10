@@ -25,7 +25,6 @@ class StudentsController < ApplicationController
 
   def show
     self.current_student = current_course.students.where(id: params[:id]).first
-
     @assignment_types = current_course.assignment_types.includes(:assignments)
     @assignment_weights = current_student.assignment_weights
     @assignment_weight = current_student.assignment_weights.new
@@ -41,14 +40,8 @@ class StudentsController < ApplicationController
     else
       @events = current_course_data.assignments.to_a
     end
-
-    @form = AssignmentTypeWeightForm.new(current_student, current_course)
-
-    scores = []
-    current_course.assignment_types.each do |assignment_type|
-      scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
-    end
-
+    @teams = current_course_data.teams
+    @grade_scheme = current_course.grade_scheme
   end
 
   def predictions
