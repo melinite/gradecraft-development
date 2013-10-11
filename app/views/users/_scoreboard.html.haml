@@ -9,8 +9,9 @@
     - elsif current_user.is_staff?
       Current Score:
     %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
-    Current Level:
-    %span#userScoreNum= current_student_data.grade_level
+    - if current_student_data.grade_level
+      Current Level:
+      %span#userScoreNum= current_student_data.grade_level
   .charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")
     .chart-wrapper.user-bar-in-progress-chart
       .chart#userBarInProgress
