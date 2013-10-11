@@ -4,7 +4,7 @@
 - elsif current_user.is_staff?
   = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
     %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "btn btn-tiny btn-info"
-    %li= link_to "See All #{term_for :weight} Decisions", choices_users_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12.info
   - if current_course.assignment_weight_open?

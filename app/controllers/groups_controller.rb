@@ -28,6 +28,8 @@ class GroupsController < ApplicationController
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       @group = @student.groups.new
+    else
+      @group = current_course.groups.new
     end
   end
 
