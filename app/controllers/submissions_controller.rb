@@ -37,7 +37,7 @@ class SubmissionsController < ApplicationController
       @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       @sorted_teams = current_course.teams.order_by_high_score
       if @assignment.has_groups?
-        @group = Group.find(params[:group_id])
+        @group = current_course.groups.find(params[:group_id])
       else
         @student = current_user
       end
@@ -85,9 +85,11 @@ class SubmissionsController < ApplicationController
         else
           format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully submitted." }
         end
-        user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}" }
-        submission = { name: "#{@submission.assignment.name}", time: "#{@submission.created_at}" }
-        NotificationMailer.successful_submission(user, submission).deliver
+        if @assignment.is_individual?
+          user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}" }
+          submission = { name: "#{@submission.assignment.name}", time: "#{@submission.created_at}" }
+          NotificationMailer.successful_submission(user, submission).deliver
+        end
       elsif @submission.errors[:link].any?
         format.html { redirect_to new_assignment_submission_path(@assignment, @submission), notice: "Please provide a valid link for #{@assignment.name} submissions." }
       else
