@@ -277,7 +277,7 @@ GEM
     rollbar (0.10.14)
       multi_json (~> 1.5)
     rubystats (0.2.3)
-    sampler (0.0.4)
+    sampler (0.0.5)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
     sass (3.2.9)
