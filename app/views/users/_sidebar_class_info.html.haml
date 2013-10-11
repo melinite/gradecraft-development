@@ -11,7 +11,7 @@
       - if current_course.phone.present?
         %p
           %b Phone Number:
-          = current_course.phone
+          = link_to current_course.phone, "tel:#{current_course.phone}"
       - if current_course.class_email.present?
         %p
           %b Class Email:
