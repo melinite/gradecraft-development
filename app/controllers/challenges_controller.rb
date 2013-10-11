@@ -5,10 +5,10 @@ class ChallengesController < ApplicationController
   def index
     @title = "View All #{term_for :challenges}"
     @challenges = current_course.challenges
-    @assignments = current_course.assignments
-    @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-    @sorted_teams = current_course.teams.order_by_high_score
-    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_user.is_student?
+      @by_assignment_type = current_course.assignments.alphabetical.chronological.group_by(&:assignment_type)
+      @sorted_teams = current_course.teams.order_by_high_score
+    end
   end
 
   def show
@@ -16,9 +16,10 @@ class ChallengesController < ApplicationController
     @title = @challenge.name
     @teams = current_course.teams
     @assignments = current_course.assignments
-    @scores_for_current_course = current_student.scores_for_course(current_course)
-    @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-    @sorted_teams = current_course.teams.order_by_high_score
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
+    end
   end
 
   def new
