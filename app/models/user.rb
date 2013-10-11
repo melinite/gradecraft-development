@@ -267,7 +267,7 @@ def groups_by_assignment_id
   #Auditing Course
 
   def auditing_course?(course)
-    course.auditing == true
+    course.membership_for_student(self).auditing?
   end
 
   #Import Users
