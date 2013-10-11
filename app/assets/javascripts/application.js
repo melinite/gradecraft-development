@@ -460,23 +460,34 @@ $(document).ready(function(){
       assignmentTypeBars();
     })
 
-  // Ask Cory.
-  $('.table-toggle').on('click', assignmentTypeBars);
-  window.AssignmentsController = Backbone.Controller.extend({
-    routes: {
-      '/assignments/:id/edit': 'edit',
-      '': 'index',
-      '/assignments/new': '_new',
-      '/assignments/:id/:' 'show'
-    },
-    url: function () {
-      return this.id ?  '/asignments/' + this.id : '/assignments'
-    }
+    // Ask Cory.
+    $('.table-toggle').on('click', assignmentTypeBars);
+  }
 
-    index: function () {
-    },
+  if ($('#badge_stuff').length) {
+    var BadgeList = Backbone.View.extend({
+      el: $('#badge_stuff'),
 
-    _new: function () {
-    }
-  })
+      events: {
+        'click button#add_badge': 'add_badge'
+      },
+
+      initialize: function () {
+        this.render()
+      },
+
+      render: function () {
+        $(this.el).append("<input id='badge_name' />")
+        $(this.el).append("<button id='add_badge'>Add Badge to list</button>")
+        $(this.el).append("<ul></ul>")
+      },
+
+      add_badge: function () {
+        $('ul', this.el).append("<li>" + $('#badge_name').val() + "</li>")
+        $('#badge_name').val('')
+      }
+    })
+
+    var badge_list = new BadgeList()
+  }
 });
