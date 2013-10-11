@@ -48,12 +48,12 @@
           %tr
             %td
               %img{:src => badge.icon, :alt => badge.name}
-              %td
-                = link_to badge.name, badge_path(badge)
-                = raw badge.description
-              - if current_course.valuable_badges?
-                %td= badge.point_total
+            %td
+              = link_to badge.name, badge_path(badge)
+              = raw badge.description
             %td
               %ul
                 - badge.tasks.each do |task|
                   %li= task.name
+            - if current_course.valuable_badges?
+              %td= badge.point_total
