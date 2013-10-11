@@ -347,7 +347,7 @@ grinding_assignments.each do |assignment|
       submission = student.submissions.create! do |s|
         s.task = task
         s.text_comment = "Wingardium Leviosa"
-        s.link = " "
+        s.link = "http://www.twitter.com"
       end
       student.grades.create! do |g|
         g.submission = submission
@@ -398,7 +398,7 @@ blog_assignments.each_with_index do |assignment, i|
       submission = student.submissions.create! do |s|
         s.task = task
         s.text_comment = "Wingardium Leviosa"
-        s.link = " "
+        s.link = "http://www.twitter.com"
       end
       student.grades.create! do |g|
         g.submission = submission
@@ -431,7 +431,7 @@ assignments << Assignment.create! do |a|
       submission = student.submissions.create! do |s|
         s.task = task
         s.text_comment = "Wingardium Leviosa"
-        s.link = " "
+        s.link = "http://www.twitter.com"
       end
       student.grades.create! do |g|
         g.submission = submission

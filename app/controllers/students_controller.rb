@@ -9,6 +9,12 @@ class StudentsController < ApplicationController
     @title = "#{current_course.user_term} Roster"
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     @auditing = current_course.students.auditing
+    @students = current_course.students.being_graded
+    respond_to do |format|
+      format.html
+      format.json { render json: @students }
+      format.csv { send_data @students.csv_for_course(current_course) }
+    end
   end
 
   def leaderboard

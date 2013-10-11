@@ -111,9 +111,9 @@ class UsersController < ApplicationController
     @teams = Team.all
     @user.update_attributes(params[:user])
     if @user.save && @user.is_student?
-      redirect_to students_path, :notice => "#{term_for :student} was successfully created!"
+      redirect_to students_path, :notice => "#{term_for :student} was successfully updated!"
     elsif @user.save && @user.is_staff?
-      redirect_to staff_index_path, :notice => "Staff Member was successfully created!"
+      redirect_to staff_index_path, :notice => "Staff Member was successfully updated!"
     else
       render :edit
     end

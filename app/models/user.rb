@@ -28,8 +28,8 @@ class User < ActiveRecord::Base
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
-  scope :being_graded, -> { where('course_memberships.auditing = ? OR course_memberships.auditing IS NULL', false) }
-  scope :auditing, -> { where('course_memberships.auditing = TRUE') }
+  scope :being_graded, -> { where('course_memberships.auditing IS FALSE') }
+  scope :auditing, -> { where('course_memberships.auditing IS TRUE') }
 
   has_many :course_memberships
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
@@ -262,6 +262,12 @@ def groups_by_assignment_id
 
   def team_for_course(course)
     teams.where(course: course).first
+  end
+
+  #Auditing Course
+
+  def auditing_course?(course)
+    course.auditing == true
   end
 
   #Import Users
