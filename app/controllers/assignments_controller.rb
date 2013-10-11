@@ -3,8 +3,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @title = "#{term_for :assignment} Index"
-    @assignments = current_course.assignments
-    @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
+    @by_assignment_type = current_course_data.assignments.alphabetical.chronological.group_by(&:assignment_type)
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
@@ -13,23 +12,16 @@ class AssignmentsController < ApplicationController
    def settings
     @title = "#{term_for :assignments} Settings"
     @assignments = current_course.assignments
-    @assignment_types = current_course.assignment_types
-    @grade_schemes = current_course.grade_schemes
-    respond_to do |format|
-      format.html
-      format.json { render json: @assignments.as_json(only:[:id, :name, :description, :point_total, :due_at, :assignment_type_id, :grade_scheme_id, :grade_scope, :visible, :required ]) }
-    end
+    respond_with @assignments
   end
 
   def show
-    @assignments = current_course.assignments
-    @assignment = @assignments.find(params[:id])
+    @assignment = current_course.assignments.find(params[:id])
     @title = @assignment.name
     @groups = @assignment.groups
-    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
+      @by_assignment_type = current_course_data.assignments.alphabetical.chronological.group_by(&:assignment_type)
     end
   end
 
@@ -37,7 +29,6 @@ class AssignmentsController < ApplicationController
     @title = "Create a New #{term_for :assignment}"
     @assignment = current_course.assignments.new
     @assignment_types = current_course.assignment_types
-    @grade_schemes = current_course.grade_schemes
   end
 
   def edit

@@ -9,13 +9,10 @@ class GradesController < ApplicationController
   end
 
   def show
-    @assignments = current_course.assignments
-    @assignment = @assignments.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
     if current_user.is_student?
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
-      @grade_scheme = current_course.grade_schemes
+      @by_assignment_type = current_course_data.assignments.alphabetical.chronological.group_by(&:assignment_type)
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
   end

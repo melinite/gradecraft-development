@@ -1,6 +1,6 @@
 class GradeSchemesController < ApplicationController
 
-  before_filter :ensure_staff?
+  before_filter :ensure_prof?
 
   def index
     @title = "Grading Schemes"
