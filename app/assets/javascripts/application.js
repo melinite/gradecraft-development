@@ -465,7 +465,14 @@ $(document).ready(function(){
   }
 
   if ($('#badge_stuff').length) {
-    var BadgeList = Backbone.View.extend({
+    var Badge = Backbone.Model.extend({
+    })
+
+    var BadgeList = Backbone.Collection.extend({
+      model: Badge
+    })
+
+    var BadgeView = Backbone.View.extend({
       el: $('#badge_stuff'),
 
       events: {
@@ -473,6 +480,8 @@ $(document).ready(function(){
       },
 
       initialize: function () {
+        this.collection = new BadgeList()
+        this.collection.bind('add', this.append_badge)
         this.render()
       },
 
@@ -483,11 +492,19 @@ $(document).ready(function(){
       },
 
       add_badge: function () {
-        $('ul', this.el).append("<li>" + $('#badge_name').val() + "</li>")
+        var badge = new Badge();
+        badge.set({
+          name: $('#badge_name').val()
+        })
+        this.collection.add(badge)
+      },
+
+      append_badge: function (badge) {
+        $('ul', this.el).append("<li>" + badge.get('name') + "</li>")
         $('#badge_name').val('')
       }
     })
 
-    var badge_list = new BadgeList()
+    var badge_list = new BadgeView()
   }
 });
