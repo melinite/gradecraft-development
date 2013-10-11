@@ -39,8 +39,6 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :course_memberships
   belongs_to :default_course, :class_name => 'Course'
 
-  delegate :auditing, :to => :course_membership
-
   has_many :assignment_weights, :foreign_key => :student_id
   has_many :assignments, :through => :grades
 

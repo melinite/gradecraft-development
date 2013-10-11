@@ -141,6 +141,12 @@ class StudentData < Struct.new(:student, :course)
     assignment_groups.where(assignment: assignment).first
   end
 
+  #Auditing Course
+
+  def auditing_course?(course)
+    course.auditing == true
+  end
+
   private
 
   def assignment_type_weights
