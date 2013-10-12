@@ -235,7 +235,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def attendance_rate(course)
-   ((positive_grades / course.student_count.to_f) * 100).round(2)
+   ((positive_grades / course.graded_student_count.to_f) * 100).round(2)
   end
 
   private

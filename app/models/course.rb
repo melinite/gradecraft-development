@@ -193,6 +193,10 @@ class Course < ActiveRecord::Base
     students.count
   end
 
+  def graded_student_count
+    students.being_graded.count
+  end
+
   def professor
     users.where(:role => "professor").first
   end
