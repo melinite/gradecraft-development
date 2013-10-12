@@ -66,7 +66,7 @@ class Assignment < ActiveRecord::Base
   scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
   scope :still_accepted, -> { with_due_date.where('assignments.accept_submissions_until >= ?', Time.now) }
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
-  scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
+  scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ?) OR (status = ? AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', 'Graded', student.id) }
   scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
 
   scope :grading_done, -> { where 'grades.present? == 1' }
@@ -96,19 +96,19 @@ class Assignment < ActiveRecord::Base
   end
 
   def high_score
-    grades.maximum('score')
+    grades.graded.maximum('score')
   end
 
   def low_score
-    grades.minimum('score')
+    grades.graded.minimum('score')
   end
 
   def average
-    grades.average('score').round(2) if grades.present?
+    grades.graded.average('score').round(2) if grades.graded.present?
   end
 
   def submitted_average
-    grades.where("score > 0").average('score').round(2) if grades.present?
+    grades.graded.where("score > 0").average('score').round(2) if grades.graded.present?
   end
 
   def release_necessary?
@@ -146,11 +146,11 @@ class Assignment < ActiveRecord::Base
   end
 
   def grade_for_student(student)
-    grades.where(student: student).first
+    grades.graded.where(student: student).first
   end
 
   def score_for_student(student)
-    grades.where(student: student).pluck('score').first
+    grades.graded.where(student: student).pluck('score').first
   end
 
   def released_grade_for_student(student)

@@ -24,7 +24,7 @@
       - else
         - students = current_course_data.students
       - students.each do |student|
-        - grade = @assignment.grades.find_by student: student
+        - grade = @assignment.grades.graded.find_by student: student
         %tr
           - if @assignment.release_necessary?
             %td
@@ -33,7 +33,7 @@
           %td= link_to student.name, student_path(student)
           %td= points grade.try(:raw_score)
           - if @assignment.assignment_type.student_weightable?
-            %td= grade.try(:score)
+            %td= points grade.try(:score)
           - if @assignment.has_levels?
             %td
               - if grade
