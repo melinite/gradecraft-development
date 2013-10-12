@@ -2,16 +2,6 @@
   - cache [ 'v1', current_course_data.cache_keys.assignments_key, current_course_data.cache_keys.grades_key, current_student_data.cache_keys.earned_badges_key ] do
     #data-predictor{'data-predictor' =>  predictions.to_json}
   -##data-predictor{ 'data-predictor' => render(:partial => 'timeline', :handlers => [:jbuilder], :formats => [:js])}
-  %br
-  %h4
-    - if current_user.is_student?
-      Your current score is
-    - elsif current_user.is_staff?
-      Current Score:
-    %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
-    - if current_student_data.grade_level
-      Current Level:
-      %span#userScoreNum= current_student_data.grade_level
   .charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")
     .chart-wrapper.user-bar-in-progress-chart
       .chart#userBarInProgress

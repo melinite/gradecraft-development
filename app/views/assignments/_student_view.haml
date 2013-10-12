@@ -49,3 +49,7 @@
           %tr
             %td= task.name
             %td= task.description
+
+  - if @assignment.accepts_submissions?
+    %h3 Submit #{@assignment.name}
+    = render "/submissions/form"

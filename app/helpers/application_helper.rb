@@ -46,7 +46,7 @@ module ApplicationHelper
 
   def autocomplete_items
     return [] unless current_user.is_admin?
-    User.all.map do |u|
+    User.students.map do |u|
       { :name => [u.first_name, u.last_name].join(' '), :id => u.id }
     end
   end

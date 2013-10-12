@@ -62,3 +62,13 @@
 tr.achieved {
   background-color: $green !important;
 }
+
+div.vco-storyjs {
+  height: 580px;
+  width: 1000px;
+}
+
+.earnedBadgeField, .badgeField {
+  width: 20%;
+  float: left;
+}

@@ -22,6 +22,14 @@ class AssignmentsController < ApplicationController
     if current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
       @by_assignment_type = current_course_data.assignments.alphabetical.chronological.group_by(&:assignment_type)
+      if @assignment.accepts_submissions?
+        @submission = @assignment.submissions.new
+      end
+      if @assignment.has_groups?
+        @group = current_course.groups.find(params[:group_id])
+      else
+        @student = current_user
+      end
     end
   end
 
