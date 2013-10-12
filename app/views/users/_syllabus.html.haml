@@ -31,14 +31,8 @@
           - assignments.each do |assignment|
             .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
               %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
-              - if assignment.release_necessary?
-                - if current_student_data.grade_released_for_assignment?(assignment)
-                  %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)} "
-                  %span.points= "/"
-              - else
-                - grade = current_student_data.grade_for_assignment(assignment)
-                - if current_student_data.grade_released_for_assignment?(assignment)
-                  %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)}  / "
+              - if current_student_data.grade_released_for_assignment?(assignment)
+                %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)}  / "
               %span.points.total #{points current_student_data.point_total_for_assignment(assignment)} points
               - if assignment.assignment_type.student_weightable?
                 = "(Multiplied) "

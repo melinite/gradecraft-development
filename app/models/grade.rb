@@ -61,6 +61,10 @@ class Grade < ActiveRecord::Base
     group('grades.assignment_type_id').pluck('grades.assignment_type_id, COALESCE(SUM(grades.score), 0)')
   end
 
+  def is_graded?
+    self.status == 'Graded'
+  end
+
   def score
     final_score || (raw_score * assignment_weight).round
   end
