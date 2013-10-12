@@ -16,7 +16,11 @@ class CourseData < Struct.new(:course)
   end
 
   def assignments
-    @assignments ||= course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
+    @assignments ||= course.assignments.includes(:course, :assignment_type).chronological
+  end
+
+  def group_assignments
+    @group_assignments ||= assignments.select { |a| a.grade_scope == 'Group' }
   end
 
   def by_assignment_type

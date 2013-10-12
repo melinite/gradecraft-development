@@ -19,33 +19,12 @@ class GroupsController < ApplicationController
   end
 
   def new
-    if current_user.is_student?
-      @student = current_student
-      @badges = current_course.badges
-      @other_students = current_course.students.where.not(id: @student.id)
-      @assignments = current_course.assignments
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
-      @group = @student.groups.new
-    else
-      @group = current_course.groups.new
-    end
+    @group = current_course.groups.new
   end
 
   def create
-    if current_user.is_student?
-      @student = current_student
-      @group = @student.groups.new(params[:group])
-      @group.students << current_student
-      @other_students = current_course.students.where.not(id: @student.id)
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @assignments = current_course.assignments
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-    else
-      @group = current_course.groups.new(params[:group])
-    end
-    @group.course = current_course
+    @group = current_course.groups.new(params[:group])
+    @group.students << current_user if current_user.is_student?
     @group.save
     respond_with @group
   end
