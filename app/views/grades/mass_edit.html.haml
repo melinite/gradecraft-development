@@ -21,7 +21,7 @@
         %table
           - @grades.each_with_index do |grade, i|
             %tr
-              %td= link_to grade.student.name, grade.student
+              %td= link_to grade.student.name, student_path(grade.student)
               %td
                 = f.simple_fields_for :grades, grade do |gf|
                   = gf.hidden_field :graded_by_id
