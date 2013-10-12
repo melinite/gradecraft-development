@@ -24,7 +24,7 @@ class CourseData < Struct.new(:course)
   end
 
   def by_assignment_type
-    @by_assignment_type ||= assignments.group_by(&:assignment_type)
+    @by_assignment_type ||= assignments.alphabetical.chronological.group_by(&:assignment_type)
   end
 
   def badges
@@ -53,6 +53,10 @@ class CourseData < Struct.new(:course)
 
   def assignments
     @assignments ||= course.assignments
+  end
+
+  def point_total_for_challenges
+    challenges.pluck('point_total').sum
   end
 
   private

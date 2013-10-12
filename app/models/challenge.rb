@@ -39,4 +39,8 @@ class Challenge < ActiveRecord::Base
     challenge_submissions_by_team_id[team.id].try(:first)
   end
 
+  def future?
+    due_at != nil && due_at >= Date.today
+  end
+
 end

@@ -8,11 +8,11 @@ class StudentsController < ApplicationController
   def index
     @title = "#{current_course.user_term} Roster"
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    @students = current_course.students
     respond_to do |format|
       format.html
       format.json { render json: @students }
       format.csv { send_data @students.csv_for_course(current_course) }
-      format.xls { send_data @users.csv_for_course(current_course, col_sep: "\t") }
     end
   end
 
