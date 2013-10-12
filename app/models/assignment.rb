@@ -96,19 +96,19 @@ class Assignment < ActiveRecord::Base
   end
 
   def high_score
-    grades.maximum('score')
+    grades.graded.maximum('score')
   end
 
   def low_score
-    grades.minimum('score')
+    grades.graded.minimum('score')
   end
 
   def average
-    grades.average('score').round(2) if grades.present?
+    grades.graded.average('score').round(2) if grades.graded.present?
   end
 
   def submitted_average
-    grades.where("score > 0").average('score').round(2) if grades.present?
+    grades.graded.where("score > 0").average('score').round(2) if grades.graded.present?
   end
 
   def release_necessary?
@@ -146,11 +146,11 @@ class Assignment < ActiveRecord::Base
   end
 
   def grade_for_student(student)
-    grades.where(student: student).first
+    grades.graded.where(student: student).first
   end
 
   def score_for_student(student)
-    grades.where(student: student).pluck('score').first
+    grades.graded.where(student: student).pluck('score').first
   end
 
   def released_grade_for_student(student)

@@ -37,7 +37,9 @@
               = assignment.try(:accepts_submissions_until)
           %td= points assignment.point_total
           - if current_user.is_staff? && assignment_type.name == "Attendance"
-            %td= "#{assignment.attendance_rate(current_course)} %"
+            %td
+              - if !assignment.future?
+                = "#{assignment.attendance_rate(current_course)} %"
           - if current_user.is_staff?
             %td= number_with_delimiter(assignment.average, :delimiter => ',')
             %td= "#{number_with_delimiter(assignment.low_score, :delimiter => ',')} - #{number_with_delimiter(assignment.high_score, :delimiter => ',')}"
