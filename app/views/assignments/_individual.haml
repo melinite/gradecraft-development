@@ -33,7 +33,7 @@
           %td= link_to student.name, student_path(student)
           %td= points grade.try(:raw_score)
           - if @assignment.assignment_type.student_weightable?
-            %td= grade.try(:score)
+            %td= points grade.try(:score)
           - if @assignment.has_levels?
             %td
               - if grade

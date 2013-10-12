@@ -66,7 +66,7 @@ class Assignment < ActiveRecord::Base
   scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
   scope :still_accepted, -> { with_due_date.where('assignments.accept_submissions_until >= ?', Time.now) }
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
-  scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ? OR NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', student.id) }
+  scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ?) OR (status = ? AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', 'Graded', student.id) }
   scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
 
   scope :grading_done, -> { where 'grades.present? == 1' }
