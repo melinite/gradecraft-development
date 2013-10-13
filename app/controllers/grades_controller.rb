@@ -159,7 +159,7 @@ class GradesController < ApplicationController
   end
 
   def group_edit
-    @assignment = current_course.assignments.find(params[:assignment_id])
+    @assignment = current_course.assignments.find(params[:id])
     @group = @assignment.groups.find(params[:group_id])
     @title = "Grading #{@group.name}'s #{@assignment.name}"
     @assignment_type = @assignment.assignment_type

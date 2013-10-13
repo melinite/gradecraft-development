@@ -3,6 +3,7 @@
 
 .col-lg-12
   %h3= @title
+  .heading= "Grading out of: #{points @assignment.point_total} points"
   = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => group_grade_assignment_path(@assignment) do |f|
 
     #massGrade
@@ -13,7 +14,8 @@
             %td
               = f.simple_fields_for :grades, grade do |gf|
                 = gf.hidden_field :graded_by_id
-                = gf.hidden_field :status, :value => "Graded"
+                - if ! grade.persisted?
+                  = gf.hidden_field :status, :value => "Graded"
                 = gf.hidden_field :student_id
                 = gf.hidden_field :group_id, :value => "#{@group.id}"
                 = label_tag do
