@@ -13,6 +13,7 @@ class AssignmentsController < ApplicationController
     @assignment = current_course.assignments.find(params[:id])
     @title = @assignment.name
     @groups = @assignment.groups
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     if current_user.is_student?
       if @assignment.accepts_submissions?
         @submission = @assignment.submissions.new
