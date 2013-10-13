@@ -37,9 +37,9 @@ class GroupsController < ApplicationController
     if current_user.is_student?
       @student = current_student
       @group.students << current_student
-      @group.update_attributes(params[:group])
-      respond_with @group
     end
+    @group.update_attributes(params[:group])
+    respond_with @group
   end
 
   def destroy

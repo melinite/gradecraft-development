@@ -66,9 +66,9 @@
                 - elsif assignment.has_groups?
                   - if current_student_data.grade_released_for_assignment?(assignment)
                     - grade = current_student_data.grade_for_assignment(assignment)
-                    = link_to "Edit Grade", group_grade_assignment_path(assignment.id, grade.id, :group_id => current_student.id), :class => 'btn btn-xs btn-info'
+                    = link_to "Edit Grade", group_grade_assignment_path(assignment, :group_id => current_student.group_for_assignment(assignment)), :class => 'btn btn-xs btn-info'
                   - else
-                    = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.id), :class => 'btn btn-xs btn-success'
+                    = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'btn btn-xs btn-success'
 
         %hr
   - if current_course.team_challenges?
