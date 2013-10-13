@@ -1,4 +1,13 @@
-%br
+%h4
+  - if current_user.is_student?
+    Your current score is
+  - elsif current_user.is_staff?
+    Current Score:
+  %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
+  - if current_student_data.grade_level
+    Current Level:
+    %span#userScoreNum= current_student_data.grade_level
+    %br
 %ul.nav.nav-tabs
   %li.active
     = link_to 'Assignments', '#', data: { toggle: 'tab', target: '#tab1' }

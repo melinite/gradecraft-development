@@ -1,0 +1,28 @@
+- @assignment.grade_for_student(current_student).tap do |grade|
+  - if grade && grade.assignment.release_necessary && grade.is_released? || grade && ! grade.assignment.release_necessary || grade && current_user.is_staff?
+    %hr
+    %h4 Grade
+    .col-lg-12
+      .heading.col-lg-2 Score:
+      .col-lg-offset-2
+        = points grade.score
+      - if grade.grade_files.present?
+        .heading.col-lg-2 Documents:
+        .col-lg-offset-2
+          - grade.grade_files.each do |gf|
+            = link_to File.basename(gf.filename.path), gf.filename.url
+
+      - if grade.feedback?
+        .heading.col-lg-2 Feedback:
+        .col-lg-offset-2= raw grade.feedback
+
+      - if grade.earned_badges.present?
+        .heading.col-lg-2= "#{term_for :badges}:"
+        .col-lg-offset-2
+          - grade.earned_badges.each do |badge|
+            %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
+
+      - if grade.assignment.release_necessary?
+        .heading.col-lg-2.clear Status:
+        .col.col-lg-offset-2= grade.status
+%br

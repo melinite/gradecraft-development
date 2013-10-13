@@ -11,6 +11,11 @@ class GradesController < ApplicationController
   def show
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
+    if @assignment.has_groups? && current_user.is_staff?
+      @group = @assignment.groups.find(params[:group_id])
+    elsif @assignment.has_groups? && current_user.is_student?
+
+    end
   end
 
   def gradebook
