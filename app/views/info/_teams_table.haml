@@ -8,7 +8,7 @@
       %th.sortable{"data-sort" => "int"} Average #{course.user_term} Grade
       %th.sortable{"data-sort" => "string"}= course.team_leader_term
   %tbody
-    - teams.each do |team|
+    - teams.order_by_high_score.each do |team|
       %tr
         %td= link_to team.name, team_path(team)
         - if !current_course.team_score_average
