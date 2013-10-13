@@ -1,6 +1,6 @@
 class AssignmentScoreLevelsController < ApplicationController
 
-    before_filter :ensure_staff?
+  before_filter :ensure_staff?
 
   def index
     @assignment_score_levels = current_course.assignment_score_levels

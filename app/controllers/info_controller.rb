@@ -4,7 +4,6 @@ class InfoController < ApplicationController
   before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
   def dashboard
-    #@assignments = current_course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
     if current_user.is_staff?
       @students = current_course.users.students
       @teams = current_course.teams.includes(:earned_badges)

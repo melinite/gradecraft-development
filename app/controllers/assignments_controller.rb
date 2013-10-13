@@ -3,16 +3,10 @@ class AssignmentsController < ApplicationController
 
   def index
     @title = "#{term_for :assignment} Index"
-    @by_assignment_type = current_course_data.assignments.alphabetical.chronological.group_by(&:assignment_type)
-    if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-    end
   end
 
    def settings
     @title = "#{term_for :assignments} Settings"
-    @assignments = current_course.assignments
-    respond_with @assignments
   end
 
   def show
@@ -20,8 +14,6 @@ class AssignmentsController < ApplicationController
     @title = @assignment.name
     @groups = @assignment.groups
     if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @by_assignment_type = current_course_data.assignments.alphabetical.chronological.group_by(&:assignment_type)
       if @assignment.accepts_submissions?
         @submission = @assignment.submissions.new
       end
@@ -36,7 +28,6 @@ class AssignmentsController < ApplicationController
   def new
     @title = "Create a New #{term_for :assignment}"
     @assignment = current_course.assignments.new
-    @assignment_types = current_course.assignment_types
   end
 
   def edit

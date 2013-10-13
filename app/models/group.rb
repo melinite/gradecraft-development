@@ -16,6 +16,8 @@ class Group < ActiveRecord::Base
   has_many :students, :through => :group_memberships
   accepts_nested_attributes_for :group_memberships
 
+  has_many :grades
+
   has_many :submissions
 
   has_many :earned_badges, :as => :group

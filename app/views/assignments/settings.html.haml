@@ -4,7 +4,7 @@
 .col-lg-12
   .pull-right
     = link_to "Assignments Info", settings_assignments_path, :class => "badge"
-- @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+- current_course_data.by_assignment_type.each do |assignment_type, assignments|
   .col-lg-12
     %h3= "#{assignment_type.try(:name)}"
   %table.table.table-striped.simpleTable

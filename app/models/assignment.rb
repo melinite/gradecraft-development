@@ -146,11 +146,11 @@ class Assignment < ActiveRecord::Base
   end
 
   def grade_for_student(student)
-    grades.graded.where(student: student).first
+    grades.graded.where(student_id: student).first
   end
 
   def score_for_student(student)
-    grades.graded.where(student: student).pluck('score').first
+    grades.graded.where(student_id: student).pluck('score').first
   end
 
   def released_grade_for_student(student)

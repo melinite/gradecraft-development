@@ -15,11 +15,6 @@ class CoursesController < ApplicationController
   def show
     @title = "Course Settings"
     @course = current_course
-    @users = current_course.users
-    respond_to do |format|
-      format.html
-      format.json { render json: @course }
-    end
   end
 
   def new
@@ -27,11 +22,6 @@ class CoursesController < ApplicationController
     @course = Course.new
     @badge_sets = BadgeSet.all
     @grade_schemes = GradeScheme.all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @course }
-    end
   end
 
   def edit
@@ -40,7 +30,6 @@ class CoursesController < ApplicationController
     @grade_schemes = GradeScheme.all
     @badge_sets = BadgeSet.all
     @grade_schemes = GradeScheme.all
-
   end
 
   def create

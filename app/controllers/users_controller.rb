@@ -89,8 +89,6 @@ class UsersController < ApplicationController
     @user = current_course.users.find(params[:id])
     @title = "Edit #{@user.name}"
     @academic_history = @user.student_academic_history
-
-    respond_with @user
   end
 
   def create
@@ -132,14 +130,7 @@ class UsersController < ApplicationController
 
   def edit_profile
     @title = "Edit My Account"
-    @badges = current_course.badges
     @user = current_user
-    @assignments = @user.assignments
-    if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
-    end
   end
 
   def update_profile

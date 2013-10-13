@@ -10,7 +10,6 @@
         %th.sortable{"data-sort" => "int"} Badges
       %th.sortable{"data-sort" => "int"} Logins
       %th.sortable{"data-sort" => "int"} Pageviews
-      %th.sortable{"data-sort" => "int"} Predictor Views
       %th.sortable{"data-sort" => "string"} Email
       - if current_course.has_teams?
         %th.sortable{"data-sort" => "string"}= course.team_leader_term
@@ -28,7 +27,6 @@
           %td= student.earned_badges.count
         %td= student.visit_count
         %td= student.page_views
-        %td= student.predictor_views
         %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
         - if current_course.has_teams?
           %td
