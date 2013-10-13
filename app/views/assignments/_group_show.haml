@@ -37,7 +37,7 @@
             %td= link_to student.name, student_path(student)
             %td= grade.raw_score if grade
             - if @assignment.assignment_type.student_weightable?
-              %td= "Multiplied Score"
+              %td= grade.score if grade
             - if @assignment.has_levels?
               %td
                 - if grade
