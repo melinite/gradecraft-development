@@ -52,6 +52,6 @@
             - if grade
               = link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
             - else
-              = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+              = link_to 'Grade', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
   - if @assignment.release_necessary? && @assignment.grades.present?
     = submit_tag "Update Grade Statuses", :class => "btn btn-info"

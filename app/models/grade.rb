@@ -35,7 +35,7 @@ class Grade < ActiveRecord::Base
   accepts_nested_attributes_for :grade_files
 
   validates_presence_of :assignment, :assignment_type, :course, :student
-  validates_uniqueness_of :assignment_id, :scope => [:task_id, :submission_id]
+  #validates_uniqueness_of :assignment_id, :scope => [:task_id, :submission_id]
 
   delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
@@ -44,8 +44,8 @@ class Grade < ActiveRecord::Base
   after_destroy :save_student
 
   scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }
-  scope :released, -> { joins(:assignment).where('status = ? OR NOT assignments.release_necessary', 'Released') }
-  scope :graded, -> { where('status = ?', 'Graded')}
+  scope :graded, -> { where('status = ?', 'Graded') }
+  scope :released, -> { joins(:assignment).where("status = 'Released' OR (status = 'Graded' AND NOT assignments.release_necessary)") }
 
   validates_numericality_of :raw_score, integer_only: true
 
@@ -63,6 +63,10 @@ class Grade < ActiveRecord::Base
 
   def is_graded?
     self.status == 'Graded'
+  end
+
+  def self.excluding_auditing_students
+    joins('INNER JOIN course_memberships ON (grades.student_id = course_memberships.user_id AND grades.course_id = course_memberships.course_id AND course_memberships.auditing = ?)', false)
   end
 
   def score

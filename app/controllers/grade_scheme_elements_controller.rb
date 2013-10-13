@@ -23,7 +23,6 @@ class GradeSchemeElementsController < ApplicationController
     @title = "Edit #{@grade_scheme.name} Grading Element"
     @button_title = "Update"
     @grade_scheme_element = current_course.grade_scheme.elements.find(params[:id])
-    respond_with(@grade_scheme)
   end
 
   def create

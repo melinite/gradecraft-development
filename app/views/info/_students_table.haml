@@ -4,15 +4,14 @@
       %th.sortable{"data-sort" => "string"}= course.user_term
       %th.sortable{"data-sort" => "int"} Score
       %th Chart
-      - if current_course.has_teams?
+      - if course.has_teams?
         %th.sortable{"data-sort" => "string"}= course.team_term
-      - if current_course.has_badges?
+      - if course.has_badges?
         %th.sortable{"data-sort" => "int"} Badges
       %th.sortable{"data-sort" => "int"} Logins
       %th.sortable{"data-sort" => "int"} Pageviews
-      %th.sortable{"data-sort" => "int"} Predictor Views
       %th.sortable{"data-sort" => "string"} Email
-      - if current_course.has_teams?
+      - if course.has_teams?
         %th.sortable{"data-sort" => "string"}= course.team_leader_term
   %tbody
     - students.each do |student|
@@ -20,17 +19,16 @@
         %td= link_to student.name, student_path(student)
         %td= points student.score_for_course(course)
         %td{:data => { :id => student.id.to_s}, :class => "bar-chart" }
-        - if current_course.has_teams?
+        - if course.has_teams?
           %td
             - if student.teams.present?
-              = link_to student.team_for_course(current_course).name
-        - if current_course.has_badges?
+              = link_to student.team_for_course(course).name
+        - if course.has_badges?
           %td= student.earned_badges.count
         %td= student.visit_count
         %td= student.page_views
-        %td= student.predictor_views
         %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
-        - if current_course.has_teams?
+        - if course.has_teams?
           %td
-            - if student.team_for_course(current_course) && student.team_for_course(current_course).team_leader.present?
-              = mail_to student.team_for_course(current_course).team_leader.email, "Email #{student.team_for_course(current_course).team_leader.first_name}", :class => "btn btn-primary btn-tiny btn-success"
+            - if student.team_for_course(course) && student.team_for_course(course).team_leader.present?
+              = mail_to student.team_for_course(course).team_leader.email, "Email #{student.team_for_course(course).team_leader.first_name}", :class => "btn btn-primary btn-tiny btn-success"

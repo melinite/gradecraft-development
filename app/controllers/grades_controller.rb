@@ -11,48 +11,36 @@ class GradesController < ApplicationController
   def show
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
-    if current_user.is_student?
-      @by_assignment_type = current_course_data.assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @scores_for_current_course = current_student.scores_for_course(current_course)
+    if @assignment.has_groups? && current_user.is_staff?
+      @group = @assignment.groups.find(params[:group_id])
+    elsif @assignment.has_groups? && current_user.is_student?
+
     end
   end
 
   def gradebook
     @assignments = current_course.assignments.sort_by &:id
     @students = current_course.users.students.includes(:grades)
-    respond_to do |format|
-      format.html
-      format.json { render json: @assignments }
-      format.csv { send_data @assignments.to_csv }
-      format.xls { send_data @assignments.to_csv(col_sep: "\t") }
-    end
   end
 
   def new
     @assignment = current_course.assignments.find(params[:assignment_id])
     @assignment_type = @assignment.assignment_type
-    @students = current_course.students
     @score_levels = @assignment_type.score_levels
     @student = current_course.students.find(params[:student_id])
-    @groups = current_course.groups
-    @submit_message = "Submit Grade"
     @title = "Grading #{@student.name}'s #{@assignment.name}"
     @grade = @student.grades.new(assignment: @assignment)
+    @submit_message = "Submit Grade"
   end
 
   def edit
-    @badges = current_course.badges
     @assignment = current_course.assignments.find(params[:assignment_id])
+    @grade = @assignment.grades.find(params[:id])
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
-    @grade = @assignment.grades.find(params[:id])
-    @students = current_course.students
-    @student = @students.find(params[:student_id])
-    @teams = current_course.teams
-    @groups = current_course.groups
+    @student = current_course.students.find(params[:student_id])
     @submit_message = "Update Grade"
     @title = "Editing #{@student.name}'s Grade for #{@assignment.name}"
-    respond_with @grade
   end
 
   def create
@@ -63,8 +51,6 @@ class GradesController < ApplicationController
       @grade.status = "Graded"
     end
     @grade.save
-    @badges = current_course.badges
-    @earned_badge = current_course.earned_badges.new(params[:earned_badge])
     respond_to do |format|
       if @grade.save
         if @assignment.notify_released? && @grade.is_released?
@@ -82,7 +68,6 @@ class GradesController < ApplicationController
   def update
     @assignment = current_course.assignments.find(params[:assignment_id])
     @grade = @assignment.grades.find(params[:id])
-    @badges = current_course.badges
     if !@assignment.release_necessary?
       @grade.status = "Graded"
     end
@@ -105,10 +90,7 @@ class GradesController < ApplicationController
     @grade = @assignment.grades.find(params[:id])
     @grade.destroy
 
-    respond_to do |format|
-      format.html { redirect_to assignment_path(@assignment), notice: "#{ @grade.student.name}'s #{@assignment.name} grade was successfully deleted." }
-      format.json { head :ok }
-    end
+    redirect_to assignment_path(@assignment), notice: "#{ @grade.student.name}'s #{@assignment.name} grade was successfully deleted."
   end
 
   def self_log
@@ -169,6 +151,35 @@ class GradesController < ApplicationController
       user_search_options = {}
       user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
       @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
+      @grades = @students.map do |s|
+        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user, :status => 'Graded')
+      end
+      respond_with @assignment, :template => "grades/mass_edit"
+    end
+  end
+
+  def group_edit
+    @assignment = current_course.assignments.find(params[:id])
+    @group = @assignment.groups.find(params[:group_id])
+    @title = "Grading #{@group.name}'s #{@assignment.name}"
+    @assignment_type = @assignment.assignment_type
+    @score_levels = @assignment_type.score_levels
+    @grades = @group.students.map do |student|
+      @assignment.grades.where(:student_id => student).first || @assignment.grades.new(:student => student, :assignment => @assignment, :graded_by_id => current_user, :status => "Graded")
+    end
+    @submit_message = "Submit Grades"
+  end
+
+  def group_update
+    @assignment = current_course.assignments.find(params[:id])
+    if @assignment.update_attributes(params[:assignment])
+      respond_with @assignment
+    else
+      @title = "Quick Grade #{@assignment.name}"
+      @assignment_type = @assignment.assignment_type
+      @score_levels = @assignment_type.score_levels
+      @group = @assignment.groups.find(params[:group_id])
+      @students = @group.students
       @grades = @students.map do |s|
         @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user, :status => 'Graded')
       end

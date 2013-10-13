@@ -21,9 +21,9 @@
   %tbody
     - @grade_scheme_elements.each do |element|
       %tr
-        %td #{element.level}
-        %td points element.low_range
-        %td points element.high_range
-        %td #{element.letter}
+        %td #{ element.level }
+        %td #{ points element.low_range }
+        %td #{ points element.high_range }
+        %td #{ element.letter }
         %td= link_to "Edit", edit_grade_scheme_path(@grade_scheme.id), :class => 'btn btn-tiny btn-info'
         %td= link_to "Delete", grade_scheme_grade_scheme_element_path(@grade_scheme.id, element.id), :data => { :confirm => 'Are you sure?' }, :method => :delete, :class => 'btn btn-tiny btn-warning'

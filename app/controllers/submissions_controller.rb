@@ -1,6 +1,7 @@
 class SubmissionsController < ApplicationController
 
   before_filter :ensure_staff?, :only=>[:index]
+
   include Canable::Enforcers
 
   def index
@@ -10,12 +11,9 @@ class SubmissionsController < ApplicationController
 
   def show
     @title = "View Submission"
-    @assignments = current_course.assignments
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.find(params[:id])
     if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
       enforce_view_permission(@submission)
     end
   end
@@ -32,10 +30,6 @@ class SubmissionsController < ApplicationController
     end
     if current_user.is_student?
       @user = current_user
-      @badges = current_course.badges
-      @assignments = current_course.assignments
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
       else
@@ -61,16 +55,10 @@ class SubmissionsController < ApplicationController
     if current_user.is_student?
       @title = "Editing My Submission for #{@assignment.name}"
       @user = current_user
-      @badges = current_course.badges
-      @assignments = current_course.assignments
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @sorted_teams = current_course.teams.order_by_high_score
       enforce_view_permission(@submission)
     end
     @groups = @assignment.groups
     @teams = current_course.teams
-    @submission = current_course.submissions.find(params[:id])
   end
 
   def create

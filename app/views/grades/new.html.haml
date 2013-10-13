@@ -3,7 +3,7 @@
 
 .col-lg-12
   %h3= @title
-  - if @assignment.accepts_submissions? && @student.submission_for_assignment(@assignment)
+  - if @assignment.is_individual? && @assignment.accepts_submissions? && @student.submission_for_assignment(@assignment)
     - if @student.submission_for_assignment(@assignment).present?
       - @student.submission_for_assignment(@assignment).tap do |submission|
         - if @assignment.is_individual?
@@ -34,4 +34,7 @@
 
   .clear
 
-  = render 'form'
+  - if @assignment.is_individual?
+    = render 'form'
+  - elsif @assignment.has_groups?
+    = render 'group_form'

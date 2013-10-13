@@ -4,27 +4,13 @@ class BadgesController < ApplicationController
 
   def index
     @title = "View All #{term_for :badges}"
-    @badges = current_course.badges
-    @assignments = current_course.assignments
-    if current_user.is_student?
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
-      @grade_scheme = current_course.grade_scheme
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-    end
   end
 
   def show
     @badge = current_course.badges.find(params[:id])
     @title = @badge.name
-    @assignments = current_course.assignments
     @earned_badges = @badge.earned_badges
     @tasks = @badge.tasks
-    if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-      @by_assignment_type = @assignments.alphabetical.chronological.group_by(&:assignment_type)
-      @sorted_teams = current_course.teams.order_by_high_score
-    end
   end
 
   def new

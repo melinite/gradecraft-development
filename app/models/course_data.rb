@@ -15,6 +15,10 @@ class CourseData < Struct.new(:course)
     end
   end
 
+  def assignment_types
+    @assignment_types ||= course.assignment_types
+  end
+
   def assignments
     @assignments ||= course.assignments.includes(:course, :assignment_type).chronological
   end

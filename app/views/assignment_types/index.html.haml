@@ -20,7 +20,7 @@
       %th.header
       %th.header
     %tbody
-      - current_course.assignment_types.ordered.each do |assignment_type|
+      - current_course_data.assignment_types.each do |assignment_type|
         %tr
           %td= assignment_type.order_placement
           %td= link_to assignment_type.name, assignment_type

@@ -22,7 +22,7 @@
         %th
         %th
   %tbody
-    - @badges.each do |badge|
+    - current_course_data.badges.each do |badge|
       - if current_user.is_staff?
         %tr
           %td

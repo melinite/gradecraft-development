@@ -21,13 +21,15 @@ class User < ActiveRecord::Base
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
     :student_academic_history_attributes, :team_role, :course_memberships_attributes,
-    :character_profile, :team_id, :lti_uid
+    :character_profile, :team_id, :lti_uid, :auditing
 
   #has_secure_password
 
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
+  scope :being_graded, -> { where('course_memberships.auditing IS FALSE') }
+  scope :auditing, -> { where('course_memberships.auditing IS TRUE') }
 
   has_many :course_memberships
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
@@ -258,12 +260,14 @@ def groups_by_assignment_id
     assignment_groups.where(assignment: assignment).first.try(:group)
   end
 
-  def group_submission_for_assignment(assignment)
-
-  end
-
   def team_for_course(course)
     teams.where(course: course).first
+  end
+
+  #Auditing Course
+
+  def auditing_course?(course)
+    course.membership_for_student(self).auditing?
   end
 
   #Import Users

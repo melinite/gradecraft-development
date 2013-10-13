@@ -10,6 +10,8 @@
     = f.input :role, :collection => [["Student", "student"],["GSI", "gsi"],["Professor", "professor"],["Admin", "admin"]], :prompt => "Select Role", :input_html => { :class => "col-lg-4 input-sm"}
   - if current_user.is_staff? && current_course.has_teams?
     = f.association :teams, :collection => @teams, :prompt => "Select a #{current_course.team_term}", :label => "#{current_course.team_term}", :as => :check_boxes
+    = f.simple_fields_for :course_memberships do |p|
+      = p.input :auditing, :as => :boolean, :hint => "These students grades be excluded from the course analysis"
 
     = f.association :courses, :as => :check_boxes
     = f.input :default_course_id, :collection => @courses, :input_html => { :class => "col-lg-4 input-sm"}

@@ -8,7 +8,8 @@ class StudentsController < ApplicationController
   def index
     @title = "#{current_course.user_term} Roster"
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-    @students = current_course.students
+    @auditing = current_course.students.auditing
+    @students = current_course.students.being_graded
     respond_to do |format|
       format.html
       format.json { render json: @students }
@@ -18,20 +19,12 @@ class StudentsController < ApplicationController
 
   def leaderboard
     @title = "#{current_course.user_term} Roster"
-    @users = current_course.users
-    @teams = current_course.teams
     @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
   end
 
   def show
     self.current_student = current_course.students.where(id: params[:id]).first
-    @assignment_types = current_course.assignment_types.includes(:assignments)
-    @assignment_weights = current_student.assignment_weights
-    @assignment_weight = current_student.assignment_weights.new
     @assignments_with_due_dates = current_course_data.assignments.select { |assignment| assignment.due_at.present? }
-    @grades = current_student.grades
-    @badges = current_course_data.badges.includes(:earned_badges, :tasks)
-    @earned_badges = current_student.earned_badges
     @sorted_teams = current_course.teams.order_by_high_score
     @grade_scheme = current_course.grade_scheme
     @scores_for_current_course = current_student.scores_for_course(current_course)
@@ -40,8 +33,12 @@ class StudentsController < ApplicationController
     else
       @events = current_course_data.assignments.to_a
     end
-    @teams = current_course_data.teams
-    @grade_scheme = current_course.grade_scheme
+
+    scores = []
+    current_course.assignment_types.each do |assignment_type|
+      scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
+    end
+
   end
 
   def predictions
