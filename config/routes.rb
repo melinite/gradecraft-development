@@ -95,6 +95,8 @@ GradeCraft::Application.routes.draw do
     member do
       get 'mass_grade' => 'grades#mass_edit', as: :mass_grade
       put 'mass_grade' => 'grades#mass_update'
+      get 'group_grade' => 'grades#group_edit', as: :group_grade
+      put 'group_grade' => 'grades#group_update'
     end
     resources :submissions
     resources :tasks

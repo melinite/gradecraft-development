@@ -21,9 +21,6 @@
     %b Resubmission:
     = @assignment_type.resubmission? ? "Yes" : "No"
   %p
-    %b Max value:
-    = points @assignment_type.max_value
-  %p
     %b Students set course weight?
     = @assignment_type.student_weightable? ? "Yes" : "No"
 

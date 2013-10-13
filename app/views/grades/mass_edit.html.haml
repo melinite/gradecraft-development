@@ -7,7 +7,7 @@
     .filters
       = form_tag mass_grade_assignment_path, :method => :get do
         = hidden_field_tag :assignment_id, @assignment.id
-        = select_tag :team_id, options_for_select(current_course.teams.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
         = submit_tag 'Filter', :class => 'btn btn-primary'
 
   #massGrade
