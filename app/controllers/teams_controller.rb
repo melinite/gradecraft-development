@@ -14,13 +14,6 @@ class TeamsController < ApplicationController
     @students = @team.students
   end
 
-  def activity
-    @team = current_course.teams.find(params[:id])
-    @title = @team.name
-    @users = @team.users
-    respond_wth @team
-  end
-
   def new
     @team =  current_course.teams.new
     @team_memberships = @team.team_memberships.new

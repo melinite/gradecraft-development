@@ -2,6 +2,7 @@ class GradesController < ApplicationController
   respond_to :html, :json
 
   before_filter :ensure_staff?, :except => [:self_log, :show, :predict_score]
+  before_filter :ensure_admin?, :only => [:all_grades]
 
   def index
     @assignment = current_course.assignments.find(params[:assignment_id])
