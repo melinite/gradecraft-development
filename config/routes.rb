@@ -16,7 +16,6 @@ GradeCraft::Application.routes.draw do
   get 'grading_status' => 'info#grading_status'
   get 'all_grades' => 'course#all_grades'
 
-
   #Users
 
   %w{students gsis professors admins}.each do |role|
@@ -63,8 +62,6 @@ GradeCraft::Application.routes.draw do
 
   get 'lti/:provider/launch', to: 'lti#launch', :as => :launch_lti_provider
 
-
-
   #Informational Pages
   resources :info
   resources :home
@@ -101,7 +98,6 @@ GradeCraft::Application.routes.draw do
     end
   end
 
-
   #Groups
   resources :groups
   resources :group_memberships
@@ -125,7 +121,7 @@ GradeCraft::Application.routes.draw do
     end
   end
 
-  #Teams & Challenges
+  #Teams
 
   resources :teams do
     collection do
@@ -134,6 +130,7 @@ GradeCraft::Application.routes.draw do
     resources :earned_badges
   end
 
+  #Challenges
   resources :challenges do
     resources :challenge_grades do
       collection do
@@ -147,13 +144,13 @@ GradeCraft::Application.routes.draw do
   resources :assignment_types
 
 
-  #Assignment Weights
+  #Assignment Types Weights
   get 'assignment_type_weights' => 'assignment_type_weights#mass_edit', as: :assignment_type_weights
   put 'assignment_type_weights' => 'assignment_type_weights#mass_update'
 
   resources :assignment_weights
 
-  #Assignments
+  #Assignments, Submissions, Tasks, Grades
   resources :assignments do
     collection do
       get :feed
@@ -195,9 +192,6 @@ GradeCraft::Application.routes.draw do
   get 'home/index'
   get 'dashboard' => 'info#dashboard'
   root :to => "home#index"
-
-
-
 
   # get 'cosign_test' => 'info#cosign_test'
 end
