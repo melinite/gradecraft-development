@@ -486,9 +486,6 @@ $(document).ready(function(){
       },
 
       render: function () {
-        $(this.el).append("<input id='badge_name' />")
-        $(this.el).append("<button id='add_badge'>Add Badge to list</button>")
-        $(this.el).append("<ul></ul>")
       },
 
       add_badge: function () {

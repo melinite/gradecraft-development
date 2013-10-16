@@ -44,6 +44,7 @@ GradeCraft::Application.routes.draw do
     collection do
       get :per_assign
       get :team_grade
+      get :backbonetest
     end
   end
 
