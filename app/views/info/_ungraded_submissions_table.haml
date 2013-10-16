@@ -23,8 +23,8 @@
             - if current_course.has_teams? && ug.student.team_for_course(current_course).present?
               %td= link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
             %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-            %td= link_to 'Grade', new_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
+            %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
           - elsif ug.assignment.has_groups?
             %td= link_to ug.group.try(:name), group_path(ug.group)
             %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-            %td= link_to 'Grade', new_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'btn btn-xs btn-success'
+            %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'btn btn-xs btn-success'

@@ -1,4 +1,4 @@
-= form_tag edit_status_assignment_grades_path(@assignment) do
+= form_tag edit_status_grades_assignment_path @assignment do
   %table.display.table-striped.table.simpleTable
     %thead
       %tr
@@ -24,28 +24,27 @@
       - else
         - students = current_course_data.students
       - students.each do |student|
-        - grade = @assignment.grades.graded.find_by student: student
+        - grade = current_course_data.grade_for_student_and_assignment(student, @assignment)
         %tr
           - if @assignment.release_necessary?
             %td
-              - if grade
+              - if grade.is_graded?
                 = check_box_tag "grade_ids[]", grade.id
           %td= link_to student.name, student_path(student)
-          %td= points grade.try(:raw_score)
+          %td
+            = points grade.raw_score if grade.status?
           - if @assignment.assignment_type.student_weightable?
-            %td= points grade.try(:score)
+            %td
+              = points grade.score if grade.status?
           - if @assignment.has_levels?
             %td
-              - if grade
-                = @assignment.grade_level(grade)
+              = @assignment.grade_level(grade) if grade.status?
           - if @assignment.release_necessary?
             %td
-              - if grade && grade.is_released?
+              - if grade.is_released?
                 = "Released"
-              - elsif grade && grade.present?
+              - elsif grade.is_graded?
                 = "Graded"
-              - elsif grade
-                = "New"
 
           - if @assignment.accepts_submissions?
             %td
@@ -57,10 +56,10 @@
                 - else
                   = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :user_id => student.id, :student_type => "User"), :class => 'btn btn-tiny btn-success'
           %td
-            - if grade
-              = link_to "Edit Grade", edit_assignment_grade_path(@assignment.id, grade.id, :student_id => student.id), :class => 'btn btn-tiny btn-info'
+            - if grade.is_graded? || grade.is_released?
+              = link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'btn btn-tiny btn-info'
             - else
-              = link_to 'Grade', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => student.id), :class => 'btn btn-tiny btn-success'
+              = link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'btn btn-tiny btn-success'
 
   - if @assignment.release_necessary? && @assignment.grades.present?
     .col-lg-12

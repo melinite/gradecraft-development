@@ -49,16 +49,16 @@ GradeCraft::Application.routes.draw do
       put 'mass_grade' => 'grades#mass_update'
       get 'group_grade' => 'grades#group_edit', as: :group_grade
       put 'group_grade' => 'grades#group_update'
-    end
-    resources :submissions
-    resources :tasks
-    resources :grades do
-      collection do
+      scope 'grades', as: :grades, controller: :grades do
         post :edit_status
         put :update_status
         post :self_log
         post :predict_score
       end
+    end
+    resources :submissions
+    resources :tasks
+    resource :grade, only: [:show, :edit, :update, :destroy] do
       resources :earned_badges
     end
   end
