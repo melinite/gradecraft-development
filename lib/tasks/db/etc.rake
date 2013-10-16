@@ -7,8 +7,9 @@ namespace :db do
 
     task :drop => :environment do
       puts "Dropping views, functions, and triggers..."
-      File.read(Rails.root.join 'db', 'etc.sql').scan(/CREATE\s+(OR REPLACE\s+)?VIEW\s+(?<name>[^\s]+)\s+AS/) do |match|
-        execute "DROP VIEW IF EXISTS #{match[0]}"
+      views = File.read(Rails.root.join 'db', 'etc.sql').scan(/CREATE\s+(OR REPLACE\s+)?VIEW\s+(?<name>[^\s]+)\s+AS/).flatten
+      views.reverse.each do |view|
+        execute "DROP VIEW IF EXISTS #{view}"
       end
     end
 
