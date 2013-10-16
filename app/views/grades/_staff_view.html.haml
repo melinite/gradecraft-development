@@ -3,10 +3,10 @@
   - if @assignment.is_individual?
     %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "btn btn-tiny btn-info"
     %li= link_to "Delete Grade", assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "btn btn-tiny btn-info", :data => { confirm: 'Are you sure?' }, :method => :delete
-    //%li= link_to "Grade Another " +@grade.assignment.name, new_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
+    //%li= link_to "Grade Another " +@grade.assignment.name, edit_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
   - else
     %li= link_to 'Edit Grades', group_grade_assignment_path("assignment_id" => @assignment.id, "id" => @grade.id, :group_id => @grade.group_id), :class => "btn btn-tiny btn-info"
-    //%li= link_to "Grade Another " +@grade.assignment.name, new_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
+    //%li= link_to "Grade Another " +@grade.assignment.name, edit_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
 
 
 .col-lg-12.info
