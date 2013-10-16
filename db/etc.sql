@@ -19,4 +19,35 @@ CREATE VIEW course_cache_keys AS
       (SELECT sum(extract(epoch from updated_at)) FROM badges WHERE badges.course_id = courses.id),
       (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE earned_badges.course_id = courses.id)
   )) AS badges_key
-  FROM courses
+  FROM courses;
+
+CREATE VIEW student_cache_keys AS
+  SELECT cm.id,
+    cm.id AS course_membership_id,
+    cm.course_id,
+    cm.user_id,
+    md5(concat(
+      cm.course_id,
+      cm.user_id,
+      (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE course_id = cm.course_id and student_id = cm.user_id)
+    )) AS earned_badges_key,
+    md5(concat(
+      cm.course_id,
+      cm.user_id,
+      (SELECT sum(extract(epoch from updated_at)) FROM submissions WHERE course_id = cm.course_id and student_id = cm.user_id)
+    )) AS submissions_key
+  FROM course_memberships AS cm;
+
+CREATE VIEW shared_earned_badges AS
+  SELECT course_memberships.course_id,
+    (users.first_name || ' ' || users.last_name) as student_name,
+    users.id as user_id,
+    earned_badges.id as id,
+    badges.icon, badges.name
+  FROM course_memberships
+  JOIN users ON users.id = course_memberships.user_id
+  JOIN earned_badges ON earned_badges.student_id = users.id
+  JOIN badges ON badges.id = earned_badges.badge_id
+  WHERE course_memberships.shared_badges = 't'
+    AND badges.icon IS NOT NULL
+    AND earned_badges.shared = 't';
