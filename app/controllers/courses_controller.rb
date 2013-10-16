@@ -84,7 +84,7 @@ class CoursesController < ApplicationController
 
 
   def all_grades
-    @grades = current_course.grades.paginate(:page => params[:page], :per_page => 100)
+    @grades = current_course.grades.paginate(:page => params[:page], :per_page => 500)
   end
 
   def timeline
