@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
 
   before_filter :ensure_staff?, :except => :timeline
+  before_filter :ensure_admin?, :only => [:all_grades]
 
   def index
     @title = "Course Index"
@@ -79,6 +80,11 @@ class CoursesController < ApplicationController
         render :text => CalendarBuilder.new(:assignments => @assignments).to_ics, :content_type => 'text/calendar'
       end
     end
+  end
+
+
+  def all_grades
+    @grades = current_course.grades.paginate(:page => params[:page], :per_page => 100)
   end
 
   def timeline
