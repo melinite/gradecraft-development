@@ -2,7 +2,7 @@
   %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
 .col-lg-12
-  %h3= @title
+  %h3 Grading #{current_student.name}'s #{@assignment.name}
   - if @assignment.is_individual? && @assignment.accepts_submissions? && @student.submission_for_assignment(@assignment)
     - if @student.submission_for_assignment(@assignment).present?
       - @student.submission_for_assignment(@assignment).tap do |submission|

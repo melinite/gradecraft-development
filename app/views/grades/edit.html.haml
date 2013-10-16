@@ -1,6 +1,6 @@
 = content_nav_for @assignment, "Editing Grade" do
-  %li= link_to "All #{@assignment.try(:name) } Grades", assignment_path(@grade.assignment_id), :class => "btn btn-tiny btn-info"
+  %li= link_to "All #{@assignment.name} Grades", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
 .col-lg-12
-  %h3= @title
+  %h3 Editing #{current_student.name}'s Grade for #{@assignment.name}
   = render 'form'

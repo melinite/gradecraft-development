@@ -60,11 +60,11 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def grade_for_assignment(assignment)
-    assignment_grades[assignment.id]
+    assignment_grades[assignment.id] || student.grades.new(assignment: assignment)
   end
 
   def assignment_grades
-    @assignment_grades ||= Hash.new { |h, k| h[k] = student.grades.new(assignment_id: k) }.tap do |assignment_grades|
+    @assignment_grades ||= {}.tap do |assignment_grades|
       student.grades.each do |grade|
         assignment_grades[grade.assignment_id] = grade
       end
