@@ -8,7 +8,7 @@
     - if @assignment.grade_for_student(@submission.student) && @assignment.is_individual?
       %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
     - elsif @assignment.is_individual?
-      %li= link_to 'Grade Submission', new_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => @submission.student.id), :class => 'btn btn-tiny btn-info'
+      %li= link_to 'Grade Submission', edit_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => @submission.student.id), :class => 'btn btn-tiny btn-info'
     - if @assignment.has_groups?
       //%li= link_to 'Edit Grades', group_grade_assignment_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
       %li= link_to 'Grade Submission', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => @submission.group.id), :class => 'btn btn-tiny btn-info'
