@@ -10,8 +10,7 @@
   %thead
     %tr
       %th.sortable{"data-sort" => "int"} ID
-      %th.sortable{"data-sort" => "string"} Student
-      %th.sortable{"data-sort" => "string"} Assignment | ID
+      %th.sortable{"data-sort" => "string"} ID | Assignment
       %th.sortable{"data-sort" => "string"} Task
       %th.sortable{"data-sort" => "string"} Submission
       %th.sortable{"data-sort" => "int"} Raw Score
@@ -26,7 +25,7 @@
     - @grades.each do |g|
       %tr
         %td= g.id
-        %td= "#{g.assignment.name} • #{g.assignment_id}"
+        %td= #{g.assignment_id}" • "#{g.assignment.name}
         %td= g.task.name if g.task.present?
         %td= g.submission.id if g.submission.present?
         %td= g.raw_score
