@@ -1,4 +1,14 @@
 $(document).ready(function() {
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $.ajax('/analytics_events/tab_select_event', {
+      method: 'post',
+      data: {
+        url: window.location.pathname,
+        tab: e.target.getAttribute('data-target')
+      }
+    });
+  });
+
   $('.share_badge').on('click', function () {
     var badge_id = this.getAttribute('data-badge-id'),
         earned_id = this.getAttribute('data-earned-badge-id')

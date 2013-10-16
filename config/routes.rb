@@ -29,6 +29,7 @@ GradeCraft::Application.routes.draw do
   end
 
   post 'analytics_events/predictor_event'
+  post 'analytics_events/tab_select_event'
 
   resources :charts do
     collection do
