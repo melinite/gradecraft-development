@@ -1,7 +1,7 @@
 class GradesController < ApplicationController
   respond_to :html, :json
 
-  before_filter :set_assignment, except: [:mass_edit, :mass_update, :group_edit, :group_update, :edit_status, :update_status]
+  before_filter :set_assignment, except: [:mass_edit, :mass_update, :group_edit, :group_update, :edit_status, :update_status, :self_log]
   before_filter :ensure_staff?, :except => [:self_log, :show, :predict_score]
 
   def show
@@ -37,6 +37,7 @@ class GradesController < ApplicationController
   end
 
   def self_log
+    @assignment = current_course.assignments.find(params[:id])
     if @assignment.open?
       @grade = current_student_data.grade_for_assignment(@assignment)
       @grade.raw_score = params[:present] == 'true' ? @assignment.point_total : 0

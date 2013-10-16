@@ -40,7 +40,7 @@
               - if assignment.is_required?
                 %span.label.label-important Required!
               - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
-                = simple_form_for([assignment, current_student_data.grade_for_assignment(assignment)], :url => self_log_assignment_grades_path(:assignment_id => assignment.id), :method => :post) do |f|
+                = simple_form_for current_student_data.grade_for_assignment(assignment), :url => self_log_grades_assignment_path(assignment), :method => :post do |f|
                   - present = current_student_data.present_for_class?(assignment)
                   = hidden_field_tag :present, !present
                   = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn #{present ? 'btn-warning' : 'btn-success'} btn-tiny"
