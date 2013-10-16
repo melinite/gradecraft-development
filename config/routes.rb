@@ -177,6 +177,7 @@ GradeCraft::Application.routes.draw do
     end
   end
   resources :students do
+    get :grade_index
     collection do
       get :leaderboard
       get :choices

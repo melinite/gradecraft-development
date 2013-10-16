@@ -98,4 +98,10 @@ class StudentsController < ApplicationController
       :scores => scores
     }
   end
+
+  #All Admins to see all of one student's grades at once, proof for duplicates
+  def grade_index
+    self.current_student = current_course.students.where(id: params[:id]).first
+    @grades = current_student.grades.where(:course_id => current_course)
+  end
 end
