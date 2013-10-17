@@ -21,9 +21,11 @@ GradeCraft::Application.routes.draw do
     get :staff
     get :students
     get :all_events
+    get :role_events
     get :assignment_events
     get :login_frequencies
     get :login_events
+    get :login_role_events
     get :all_pageview_events
     get :all_role_pageview_events
     get :all_user_pageview_events

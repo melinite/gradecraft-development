@@ -5,6 +5,7 @@ Analytics.configure do |config|
       AssignmentPrediction,
       AssignmentUserEvent,
       CourseEvent,
+      CourseRoleEvent,
       CoursePrediction,
       CourseUserEvent
     ],
@@ -19,6 +20,7 @@ Analytics.configure do |config|
     ],
     login: [
       CourseLogin,
+      CourseRoleLogin,
       CourseUserLogin
     ]
   }

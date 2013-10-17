@@ -12,6 +12,12 @@ class AnalyticsController < ApplicationController
     render json: data
   end
 
+  def role_events
+    data = CourseRoleEvent.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]}, {event_type: "_all"})
+
+    render json: data
+  end
+
   def assignment_events
     assignments = Hash[current_course.assignments.select([:id, :name]).collect{ |h| [h.id, h.name] }]
     data = AssignmentEvent.data(@granularity, @range, {assignment_id: assignments.keys}, {event_type: "_all"})
@@ -37,6 +43,15 @@ class AnalyticsController < ApplicationController
 
   def login_events
     data = CourseLogin.data(@granularity, @range, {course_id: current_course.id})
+
+    # Only graph counts
+    data[:lookup_keys] = ['{{t}}.count']
+
+    render json: data
+  end
+
+  def login_role_events
+    data = CourseRoleLogin.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]})
 
     # Only graph counts
     data[:lookup_keys] = ['{{t}}.count']
