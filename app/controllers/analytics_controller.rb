@@ -12,6 +12,12 @@ class AnalyticsController < ApplicationController
     render json: data
   end
 
+  def role_events
+    data = CourseRoleEvent.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]}, {event_type: "_all"})
+
+    render json: data
+  end
+
   def assignment_events
     assignments = Hash[current_course.assignments.select([:id, :name]).collect{ |h| [h.id, h.name] }]
     data = AssignmentEvent.data(@granularity, @range, {assignment_id: assignments.keys}, {event_type: "_all"})
