@@ -18,12 +18,18 @@ GradeCraft::Application.routes.draw do
   #1. Analytics & Charts
   namespace :analytics do
     root :to => :index
+    get :staff
+    get :students
     get :all_events
     get :assignment_events
     get :login_frequencies
     get :login_events
     get :all_pageview_events
+    get :all_role_pageview_events
+    get :all_user_pageview_events
     get :pageview_events
+    get :role_pageview_events
+    get :user_pageview_events
     get :prediction_averages
     get :assignment_prediction_averages
   end

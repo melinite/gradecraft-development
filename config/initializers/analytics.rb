@@ -11,8 +11,11 @@ Analytics.configure do |config|
     pageview: [
       CoursePageview,
       CourseUserPageview,
+      CourseUserPagePageview,
       CoursePageviewByTime,
-      CoursePagePageview
+      CoursePagePageview,
+      CourseRolePageview,
+      CourseRolePagePageview
     ],
     login: [
       CourseLogin,

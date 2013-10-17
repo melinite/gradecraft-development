@@ -1,0 +1,76 @@
+= content_nav_for "Analytics"
+
+.col-lg-12.col-md-12.col-sm-12.col-xs-12
+
+  %h1 Course Analytics - Students
+  = render "tabs"
+
+  .navbar.navbar-inverse.section-heading
+    %h2 Pageviews
+  .row.analytics-row
+    .col-lg-6.col-sm-12.col-md-12
+      / Pageviews Total
+      = analytics_chart_inputs('all-pageviews-chart', 'past_week')
+      #all-pageviews-chart.analytics-chart{:data => {:chart => 'timeseries', :url => '/analytics/all_role_pageview_events.json?role_group=student', :title => 'Pageviews', :subtitle => '{{granularity}}'}}
+
+    .col-lg-6.col-sm-12.col-md-12
+      / Pageviews per page
+      = analytics_chart_inputs('pageviews-chart', 'past_week')
+      %table#pageviews-chart.analytics-table{:data => {:chart => 'timeseries-table', :url => '/analytics/role_pageview_events.json?role_group=student', :title => 'Pageviews per Page', :subtitle => '{{granularity}}'}}
+        %thead
+          %th{:'data-dynatable-column' => 'name'} Page
+          %th{:'data-dynatable-column' => 'total'} Pageviews
+        %tbody
+
+  .navbar.navbar-inverse.section-heading
+    %h2 Predictor
+  .row.analytics-row
+    .col-lg-6.col-sm-12.col-md-12
+      / Average Predictor Scores Set (%)
+      = analytics_chart_inputs('predictions-chart', 'past_week')
+      #predictions-chart.analytics-chart{:data => {:chart => 'timeseries', :url => '/analytics/prediction_averages.json', :title => 'Average Predictor Scores', :subtitle => '{{granularity}}', :y_axis_label => '% of score possible', :y_axis_max => 100}}
+
+    .col-lg-6.col-sm-12.col-md-12
+      / Average Predictor Scores per Assignment (per week)
+      = analytics_chart_inputs('assignment-predictions-chart', 'past_week')
+      %table#assignment-predictions-chart.analytics-table{:data => {:chart => 'timeseries-table', :url => '/analytics/assignment_prediction_averages.json', :title => 'Average Predictor Scores per Assignment', :subtitle => '{{granularity}}', :y_axis_label => '% of score possible', :y_axis_max => 100}}
+        %thead
+          %th{:'data-dynatable-column' => 'name'} Assignment
+          %th{:'data-dynatable-column' => 'average'} Average Predicted Score
+        %tbody
+
+#per-student-analytics.col-lg-12.col-md-12.col-sm-12.col-xs-12
+
+  .navbar.navbar-inverse.section-heading
+    %h2 Student Analytics
+  = select_tag :user, options_from_collection_for_select(current_course_data.students, "id", "name"), :id => 'per-student-select', :prompt => "Select Student"
+
+  /
+    %h3 Logins
+    (per day, over time)
+
+    %h3 Average Login Frequency
+    (per week, over time)
+
+  .navbar.navbar-inverse.section-heading
+    %h2 User Pageviews
+  .row.analytics-row
+    .col-lg-6.col-sm-12.col-md-12
+      / Pageviews Total
+      = analytics_chart_inputs('all-user-pageviews-chart', 'past_week')
+      #all-user-pageviews-chart.analytics-chart{:data => {:delay_load => true, :chart => 'timeseries', :url => '/analytics/all_user_pageview_events.json', :url_data => 'role_group=student', :title => 'Pageviews', :subtitle => '{{granularity}}'}}
+
+    .col-lg-6.col-sm-12.col-md-12
+      / Pageviews per page
+      = analytics_chart_inputs('user-pageviews-chart', 'past_week')
+      %table#user-pageviews-chart.analytics-table{:data => {:delay_load => true, :chart => 'timeseries-table', :url => '/analytics/user_pageview_events.json?role_group=student', :title => 'Pageviews per Page', :subtitle => '{{granularity}}'}}
+        %thead
+          %th{:'data-dynatable-column' => 'name'} Page
+          %th{:'data-dynatable-column' => 'total'} Pageviews
+        %tbody
+
+  /
+    %h3 Events in the past 10 minutes
+
+    %h3 Average Predictor Scores:
+    (per week, over time)

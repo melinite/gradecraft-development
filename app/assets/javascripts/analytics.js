@@ -300,18 +300,18 @@ var timeSummarySeries = function(response) {
     }
     series.push(s);
   }
-  console.log(series);
   return series;
 };
 
 // Request analytics data for this chart element via ajax and bind callbacks
-var refreshAnalytics = function() {
+window.refreshAnalytics = function() {
   var $this = $(this),
       chartType = $this.data('chart'),
       $thisSelects = $selects.filter('[data-for-chart="' + this.id + '"]'),
       $granularity = $thisSelects.filter('[data-select="granularity"]'),
       $range = $thisSelects.filter('[data-select="range"]'),
       requestOptions = {},
+      urlData = $this.data('url-data'),
       $refresh = $('[data-refresh-chart="' + this.id + '"]');
 
   if ($granularity.length) {
@@ -319,6 +319,13 @@ var refreshAnalytics = function() {
   }
   if ($range.length) {
     requestOptions.range = $range.val();
+  }
+
+  if (urlData) {
+    if (typeof urlData !== 'string') {
+      urlData = $.param(urlData);
+    }
+    requestOptions = [$.param(requestOptions), urlData].join('&');
   }
 
   $.ajax({
@@ -335,9 +342,12 @@ var refreshAnalytics = function() {
       if (chartType === 'timeseries') {
         $this.highcharts( new TimeLineOptions($this, response) );
       } else if (chartType === 'timeseries-table') {
-        $this.removeData('dynatable');
+        if ($this.data('dynatable')) {
+          $this.siblings('.dynatable-pagination-links,.dynatable-record-count').remove();
+          $this.data('dynatable').sortsHeaders.removeAll();
+          $this.removeData('dynatable');
+        }
         $this.find('tbody').html('');
-        $this.siblings('.dynatable-pagination-links,.dynatable-record-count').remove();
         $this.dynatable( new TimeSummaryOptions($this, response) );
       }
       $refresh.html('Refresh').removeClass('analytics-loading');
@@ -348,7 +358,10 @@ var refreshAnalytics = function() {
 // Loop through [data-chart] elements and call refreshAnalytics function for each
 var loadAnalytics = function() {
   $('[data-chart]').each( function() {
-    refreshAnalytics.call(this);
+    var delayLoad = this.getAttribute('data-delay-load');
+    if (!delayLoad && delayLoad !== "") {
+      refreshAnalytics.call(this);
+    }
   });
 };
 

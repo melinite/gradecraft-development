@@ -50,8 +50,36 @@ class AnalyticsController < ApplicationController
     render json: data
   end
 
+  def all_role_pageview_events
+    data = CourseRolePageview.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]}, {page: "_all"})
+
+    render json: data
+  end
+
+  def all_user_pageview_events
+    user = current_course_data.students.find(params[:user_id])
+    data = CourseUserPageview.data(@granularity, @range, {course_id: current_course.id, user_id: user.id}, {page: "_all"})
+
+    render json: data
+  end
+
   def pageview_events
     data = CoursePagePageview.data(@granularity, @range, {course_id: current_course.id})
+    data.decorate! { |result| result[:name] = result.page }
+
+    render json: data
+  end
+
+  def role_pageview_events
+    data = CourseRolePagePageview.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]})
+    data.decorate! { |result| result[:name] = result.page }
+
+    render json: data
+  end
+
+  def user_pageview_events
+    user = current_course_data.students.find(params[:user_id])
+    data = CourseUserPagePageview.data(@granularity, @range, {course_id: current_course.id, user_id: user.id})
     data.decorate! { |result| result[:name] = result.page }
 
     render json: data
