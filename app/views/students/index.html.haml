@@ -87,7 +87,7 @@
           - if current_course.has_teams?
             %td
               - if student.teams.present?
-                = link_to student.teams.first.try(:name), student.teams.first
+                = link_to student.team_for_course(current_course).name, student.team_for_course(current_course).name
           - if current_course.team_roles?
             %td= student.try(:team_role)
           - if student.respond_to?(:grades)

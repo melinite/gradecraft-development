@@ -9,6 +9,6 @@
   .form-actions.col-lg-offset-3
     .btn-toolbar
       .btn-group
-        = f.button :submit, "Award Badge", :class => "btn-primary btn-sm"
+        = f.button :submit, "#{@earned_badge.persisted? ? 'Update' : 'Award '} #{term_for :badge}",  :class => "btn-primary btn-sm"
       .btn-group
         = link_to 'Cancel', badge_path(@badge), :class => 'btn btn-info btn-sm'
