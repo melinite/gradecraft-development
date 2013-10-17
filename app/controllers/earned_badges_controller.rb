@@ -51,10 +51,8 @@ class EarnedBadgesController < ApplicationController
 
   def edit
     @title = "Edit Awarded #{term_for :badge}"
-    @badge = current_course.badges.find(params[:badge_id])
     @students = current_course.students
-    @badges = current_course.badges
-    @badge_sets = current_course.badge_sets
+    @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.find(params[:id])
     respond_with @earned_badge
   end
@@ -78,11 +76,12 @@ class EarnedBadgesController < ApplicationController
   def update
     @badge_sets = current_course.badge_sets
     @badges = current_course.badges
+    @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.find(params[:id])
 
     respond_to do |format|
       if @earned_badge.update_attributes(params[:earned_badge])
-        format.html { redirect_to @earnable, notice: 'Awarded badge was successfully updated.' }
+        format.html { redirect_to student_path(@earned_badge.student), notice: 'Awarded badge was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -124,13 +123,10 @@ class EarnedBadgesController < ApplicationController
   end
 
   def destroy
+    @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.find(params[:id])
     @earned_badge.destroy
-
-    respond_to do |format|
-      format.html { redirect_to @badge }
-      format.json { head :ok }
-    end
+    redirect_to @badge
   end
 
 end
