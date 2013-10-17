@@ -2,9 +2,22 @@
   %li= link_to "See All Awarded #{term_for :badges}", @badge, :class => "btn btn-tiny btn-info"
   %li= link_to 'Edit', [:edit, :badge, :earned_badge], :class => "btn btn-tiny btn-info"
 
-%p= @earned_badge.feedback
+.col-lg-12.info
 
-%img{:src => @earned_badge.badge.try(:icon), :alt => @earned_badge.badge.try(:name), :width => "25", :height => "25"}
-%p
-  %b= @earned_badge.name
-  = "(#{@earned_badge.score} points)"
+  %br
+
+  %img{:src => @earned_badge.badge.try(:icon), :alt => @earned_badge.badge.try(:name), :width => "25", :height => "25"}
+  %p
+    %b= link_to @earned_badge.name, badge_path(@earned_badge.badge)
+    - if @earned_badge.score?
+      = "(#{@earned_badge.score} points)"
+
+  %p
+    %b= "Earned by:"
+    = link_to @earned_badge.student.name, student_path(@earned_badge.student)
+
+  %p
+    %b= "Earned on:"
+    = @earned_badge.created_at
+
+  %p= raw @earned_badge.feedback
