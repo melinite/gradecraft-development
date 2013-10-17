@@ -30,7 +30,7 @@
       %th
   %tbody
     - if @team
-      - students = current_course_data.students_for_team(@team).being_graded
+      - students = current_course_data.students_for_team(@team)
     - else
       - students = current_course_data.students.being_graded
     - i = 1

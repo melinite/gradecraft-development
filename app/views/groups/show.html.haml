@@ -16,8 +16,9 @@
 
   %p
     %b Assignment:
-    - @group.assignment_groups.each do |ag|
-      = link_to ag.assignment.name, ag.assignment
+    %ul
+      - @group.assignment_groups.each do |ag|
+        %li= link_to ag.assignment.name, ag.assignment
 
   - if @group.text_proposal?
     %p
@@ -28,6 +29,6 @@
   %ul
     - @group.group_memberships.each do |gm|
       - if current_user.is_staff?
-        %li= link_to gm.student.name, gm.student
+        %li= link_to gm.student.name, student_path(gm.student)
       - else
         %li= gm.student.name
