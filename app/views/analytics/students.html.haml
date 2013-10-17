@@ -1,0 +1,23 @@
+= content_nav_for "Analytics"
+
+.col-lg-12.col-md-12.col-sm-12.col-xs-12
+
+  %h1 Course Analytics - Students
+  = render "tabs"
+
+  .navbar.navbar-inverse.section-heading
+    %h2 Pageviews
+  .row.analytics-row
+    .col-lg-6.col-sm-12.col-md-12
+      / Pageviews Total
+      = analytics_chart_inputs('all-pageviews-chart', 'past_week')
+      #all-pageviews-chart.analytics-chart{:data => {:chart => 'timeseries', :url => '/analytics/all_pageview_events.json?role_group=student', :title => 'Pageviews', :subtitle => '{{granularity}}'}}
+
+    .col-lg-6.col-sm-12.col-md-12
+      / Pageviews per page
+      = analytics_chart_inputs('pageviews-chart', 'past_week')
+      %table#pageviews-chart.analytics-table{:data => {:chart => 'timeseries-table', :url => '/analytics/pageview_events.json?role_group=student', :title => 'Pageviews per Page', :subtitle => '{{granularity}}'}}
+        %thead
+          %th{:'data-dynatable-column' => 'name'} Page
+          %th{:'data-dynatable-column' => 'total'} Pageviews
+        %tbody
