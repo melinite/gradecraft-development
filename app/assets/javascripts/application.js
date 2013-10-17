@@ -22,6 +22,7 @@
 //= require selectToUISlider.jQuery
 //= require_self
 //= require analytics
+//= require analytics_dashboard
 //= require assignment_types
 //= require assignments
 //= require grade_schemes
