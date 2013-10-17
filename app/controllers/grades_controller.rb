@@ -1,7 +1,7 @@
 class GradesController < ApplicationController
   respond_to :html, :json
 
-  before_filter :set_assignment, except: [:mass_edit, :mass_update, :group_edit, :group_update, :edit_status, :update_status, :self_log]
+  before_filter :set_assignment, only: [:show, :edit, :update, :destroy]
   before_filter :ensure_staff?, :except => [:self_log, :show, :predict_score]
 
   def show
@@ -55,8 +55,9 @@ class GradesController < ApplicationController
   end
 
   def predict_score
-    @assignment = current_course.assignments.find(params[:assignment_id])
-    @grade = current_user.grades.where(status: nil).find_or_initialize_by(assignment: @assignment)
+    @assignment = current_course.assignments.find(params[:id])
+    raise "Cannot set predicted score if grade status is 'Graded' or 'Released'" if current_student_data.grade_released_for_assignment?(@assignment)
+    @grade = current_student_data.grade_for_assignment(@assignment)
     @grade.predicted_score = params[:predicted_score]
     respond_to do |format|
       format.json do
@@ -152,6 +153,6 @@ class GradesController < ApplicationController
   private
 
   def set_assignment
-    @assignment = current_course.assignments.find params[:assignment_id]
+    @assignment = current_course.assignments.find(params[:assignment_id]) if params[:assignment_id]
   end
 end
