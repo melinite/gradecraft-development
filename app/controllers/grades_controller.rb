@@ -56,7 +56,8 @@ class GradesController < ApplicationController
 
   def predict_score
     @assignment = current_course.assignments.find(params[:id])
-    @grade = current_user.grades.where(status: nil).find_or_initialize_by(assignment: @assignment)
+    @grade = current_student_data.grade_for_assignment(@assignment)
+    raise "Cannot set predicted score if grade status is 'Graded' or 'Released'" if @grade.is_graded_or_released?
     @grade.predicted_score = params[:predicted_score]
     respond_to do |format|
       format.json do
