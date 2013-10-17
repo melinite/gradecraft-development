@@ -44,6 +44,15 @@ class AnalyticsController < ApplicationController
     render json: data
   end
 
+  def login_role_events
+    data = CourseRoleLogin.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]})
+
+    # Only graph counts
+    data[:lookup_keys] = ['{{t}}.count']
+
+    render json: data
+  end
+
   def all_pageview_events
     data = CoursePageview.data(@granularity, @range, {course_id: current_course.id}, {page: "_all"})
 

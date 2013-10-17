@@ -23,6 +23,19 @@
         %tbody
 
   .navbar.navbar-inverse.section-heading
+    %h2 Logins
+  .row.analytics-row
+    .col-lg-12.col-sm-12.col-md-6
+      / Login counts
+      = analytics_chart_inputs('role-logins-chart', 'past_week')
+      #role-logins-chart.analytics-chart{:data => {:chart => 'timeseries', :url => '/analytics/login_role_events.json', :url_data => 'role_group=student', :title => 'Logins', :subtitle => '{{granularity}}', :y_axis_label => 'Logins {{granularity}}'}}
+
+    -#.col-lg-6.col-sm-12.col-md-6
+      -#/ Average User Login Frequencies
+      -#= analytics_chart_inputs('logins-frequencies-chart', 'past_week')
+      -##logins-frequencies-chart.analytics-chart{:data => {:chart => 'timeseries', :url => '/analytics/login_frequencies.json', :title => 'Average User Login Frequencies', :subtitle => '{{granularity}}', :y_axis_label => 'User Login Rate (in logins {{granularity}})'}}
+
+  .navbar.navbar-inverse.section-heading
     %h2 Predictor
   .row.analytics-row
     .col-lg-6.col-sm-12.col-md-12

@@ -19,6 +19,7 @@ Analytics.configure do |config|
     ],
     login: [
       CourseLogin,
+      CourseRoleLogin,
       CourseUserLogin
     ]
   }
