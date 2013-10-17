@@ -122,13 +122,18 @@ namespace :analytics do
       count = events.count
       STDOUT.puts "Rebuilding from #{count} events."
       aggregates_hash = Analytics.configuration.event_aggregates.stringify_keys
-      events.each_with_index do |e, i|
-        STDOUT.print "\r#{i} out of #{count} - #{(i*100/count.to_f).to_i}% done"
-        aggregates = aggregates_hash[e.event_type]
-        if aggregates.include? aggregate
-          aggregate.incr(e)
+
+      per_batch = 1000
+      0.step(count, per_batch) do |offset|
+        events.limit(per_batch).skip(offset).each_with_index do |e, i|
+          STDOUT.print "\rBatch #{(offset+per_batch)/per_batch}, Event #{i+offset} out of #{count} - #{((i+offset)*100/count.to_f).to_i}% done"
+          aggregates = aggregates_hash[e.event_type]
+          if aggregates.include? aggregate
+            aggregate.incr(e)
+          end
         end
       end
+
       STDOUT.puts "\nDone!"
     else
       STDOUT.puts "Aborted, aggregate data left intact."
