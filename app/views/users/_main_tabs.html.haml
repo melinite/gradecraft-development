@@ -9,35 +9,35 @@
     %span#userScoreNum= current_student_data.grade_level
 %ul.nav.nav-tabs
   %li.active
-    = link_to 'Assignments', '#', data: { toggle: 'tab', target: '#tab1' }
+    = link_to 'Assignments', '#', data: { toggle: 'tab', target: '#syllabus' }
   %li
-    %a{ "data-toggle" => "tab", "data-target" => "#tab2" } Timeline
+    %a{ "data-toggle" => "tab", "data-target" => "#timeline" } Timeline
   - if current_course.grading_philosophy.present?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab3"} Grading Philosophy
+      %a{ "data-toggle" => "tab", "data-target" => "#grading-philosophy"} Grading Philosophy
   - if current_course.predictor_on?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab7"} Grade Predictor
+      %a{ "data-toggle" => "tab", "data-target" => "#predictor"} Grade Predictor
   - if current_course.has_badges?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab5"} #{current_course.badge_term.pluralize}
+      %a{ "data-toggle" => "tab", "data-target" => "#badges"} #{current_course.badge_term.pluralize}
   - if current_course.teams_visible?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tab8"} #{term_for :teams}
+      %a{ "data-toggle" => "tab", "data-target" => "#leaderboard"} #{term_for :teams}
 .tab-content
-  .tab-pane#tab1.active
+  .tab-pane#syllabus.active
     = render "users/syllabus"
-  .tab-pane#tab2
+  .tab-pane#timeline
     = render "users/timeline"
   - if current_course.grading_philosophy.present?
-    .tab-pane#tab3
+    .tab-pane#grading-philosophy
       = render "users/grading_philosophy"
   - if current_course.predictor_on?
-    .tab-pane#tab7
+    .tab-pane#predictor
       = render "users/predictor"
   - if current_course.has_badges?
-    .tab-pane#tab5
+    .tab-pane#badges
       = render "users/badges"
   - if current_course.teams_visible?
-    .tab-pane#tab8
+    .tab-pane#leaderboard
       = render "teams/leaderboard"
