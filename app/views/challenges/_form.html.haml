@@ -6,7 +6,7 @@
       = cff.input :filename, as: :file
     = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "What do the teams need to do to succeed?"
     = f.input :point_total, :input_html => {:class => 'col-lg-3'}
-    = f.input :due_at, :start_year => Date.today.year, :include_blank => true
+    = f.input :due_at, as: :string, :start_year => Date.today.year, :include_blank => true, :input_html => { :class => 'datetimepicker' }
     = f.input :visible, :label => "Visible to students?"
     = f.input :accepts_submissions, :label => "Will the #{term_for :team} submit materials?", :hint => "All #{term_for :team} members will be able to submit work for their #{term_for :team} as a whole, and see their resulting grades."
     = f.input :release_necessary, :label => "Release necessary?", :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
