@@ -32,6 +32,22 @@ class AnalyticsController < ApplicationController
 
     data[:lookup_keys] = ['{{t}}.average']
     data.decorate! do |result|
+      result[:name] = "Average #{data[:granularity]} login frequency"
+      # Get frequency
+      result[data[:granularity]].each do |key, values|
+        result[data[:granularity]][key][:average] = (values['total'] / values['count']).round(2)
+      end
+    end
+
+    render json: data
+  end
+
+  def role_login_frequencies
+    data = CourseRoleLogin.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]})
+
+    data[:lookup_keys] = ['{{t}}.average']
+    data.decorate! do |result|
+      result[:name] = "Average #{data[:granularity]} login frequency"
       # Get frequency
       result[data[:granularity]].each do |key, values|
         result[data[:granularity]][key][:average] = (values['total'] / values['count']).round(2)

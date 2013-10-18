@@ -65,6 +65,6 @@ class CourseUserLogin
   end
 
   def self.frequency(interval, last_time, this_time)
-    ( interval.to_f / (this_time.to_i - last_time.to_i) ).round(2)
+    interval.to_f / (this_time.to_i - last_time.to_i)
   end
 end
