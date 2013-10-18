@@ -16,6 +16,7 @@
 //= require best_in_place
 //= require best_in_place.purr
 //= require bootstrap
+//= require bootstrap-datetimepicker
 //= require jquery.dynatable
 //= require gradecraft
 //= require preload_store
@@ -58,6 +59,8 @@ $(document).ready(function(){
   $('#myModal').modal('hide');
 
   $(".alert").alert();
+
+  $('.datetimepicker').datetimepicker()
 
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
