@@ -15,6 +15,7 @@ class GradesController < ApplicationController
   def edit
     redirect_to @assignment and return unless current_student.present?
     @grade = current_student_data.grade_for_assignment(@assignment)
+    @score_levels = @assignment.score_levels
   end
 
   def update
