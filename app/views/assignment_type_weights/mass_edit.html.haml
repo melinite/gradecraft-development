@@ -13,19 +13,35 @@
 
     %hr
 
-    = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
-      - if @form.errors.has_key?(:base)
-        .alert.alert-error= f.error :base
-      = f.simple_fields_for :assignment_type_weights do |atwf|
-        = atwf.hidden_field :assignment_type_id
-        .panel
-          .panel-heading
-            %h3.panel-title= atwf.object.assignment_type.name
-          .panel-body
-            = atwf.input :weight, :label => "#{term_for :weight}"
-      .form-actions.col-lg-offset-3
-        = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
-        = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
+    - if current_user.is_student?
+      = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+        - if @form.errors.has_key?(:base)
+          .alert.alert-error= f.error :base
+        = f.simple_fields_for :assignment_type_weights do |atwf|
+          = atwf.hidden_field :assignment_type_id
+          .panel
+            .panel-heading
+              %h3.panel-title= atwf.object.assignment_type.name
+            .panel-body
+              = atwf.input :weight, :label => "#{term_for :weight}"
+        .form-actions.col-lg-offset-3
+          = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
+          = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
+    - else
+      = simple_form_for @form, :student => @student, url: assignment_type_weights_path, method: :put do |f|
+        - if @form.errors.has_key?(:base)
+          .alert.alert-error= f.error :base
+        = f.simple_fields_for :assignment_type_weights do |atwf|
+          = atwf.hidden_field :assignment_type_id
+          .panel
+            .panel-heading
+              %h3.panel-title= atwf.object.assignment_type.name
+            .panel-body
+              = atwf.input :weight, :label => "#{term_for :weight}"
+        .form-actions.col-lg-offset-3
+          = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
+          = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
+
 
   - else
     %h3 Your #{term_for :weight} choices:

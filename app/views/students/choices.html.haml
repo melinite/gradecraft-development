@@ -18,7 +18,8 @@
         - if assignment_type.student_weightable?
           %th.sortable{"data-sort" => "string"}= assignment_type.name
       %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Sum
-      %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Awarded?
+      %th.sortable{"data-sort" => "string"} #{current_course.weight_term} Awarded?
+      %th
   %tbody
     - if @team
       - students = current_course_data.students_for_team(@team)
@@ -33,3 +34,5 @@
         %td= student.weight_count(current_course)
         %td
           = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"
+        %td
+          = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "btn btn-primary btn-tiny"
