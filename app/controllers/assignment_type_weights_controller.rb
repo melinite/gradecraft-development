@@ -1,11 +1,13 @@
 class AssignmentTypeWeightsController < ApplicationController
 
   def mass_edit
+    current_student = current_course.students.find(params[:student_id])
     @assignment_types = current_course.assignment_types
     respond_with @form = AssignmentTypeWeightForm.new(current_student, current_course)
   end
 
   def mass_update
+    current_student = current_course.students.find(params[:student_id])
     @form = AssignmentTypeWeightForm.new(current_student, current_course)
 
     @form.update_attributes(student_params)
