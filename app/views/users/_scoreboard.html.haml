@@ -1,5 +1,5 @@
 .col-lg-12
-  - cache [ 'v1', current_course_data.cache_keys.assignments_key, current_course_data.cache_keys.grades_key, current_student_data.cache_keys.earned_badges_key ] do
+  - cache current_student_data.cache_key('v1', :assignments_key, :grades_key, :earned_badges_key) do
     #data-predictor{'data-predictor' =>  predictions.to_json}
   -##data-predictor{ 'data-predictor' => render(:partial => 'timeline', :handlers => [:jbuilder], :formats => [:js])}
   .charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")

@@ -1,8 +1,4 @@
 class CourseData < Struct.new(:course)
-  def cache_keys
-    @cache_keys ||= CourseCacheKey.find_by(course_id: course.id)
-  end
-
   def earned_badge_score_for_student(student)
     earned_badge_scores[student.id]
   end
