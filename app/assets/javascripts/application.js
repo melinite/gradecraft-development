@@ -146,6 +146,33 @@ $(document).ready(function(){
     });
   });
 
+
+  $('#predictor').on('click', ':checkbox', function() {
+    var assignment_id = $(this).parent().data("assignment");
+    if(this.checked){
+      var value = $(this).val();
+    }else{
+      var value = 0;
+    }
+    $.ajax({
+      url: '/assignments/' + assignment_id + '/grades/predict_score',
+      type: "POST",
+      data: { predicted_score: value },
+      dataType: 'json'
+    });
+  })
+
+  $("select.point-value").change(function(){
+    var assignment_id = $(this).parent().data("assignment");
+    var value = $(this).val().length ? $(this).val() : 0;
+    $.ajax({
+      url: '/assignments/' + assignment_id + '/grades/predict_score',
+      type: "POST",
+      data: { predicted_score: value },
+      dataType: 'json'
+    });
+  })
+
   $('#userBarInProgress').show();
 	// $('#userBarTotal').hide();
 	$('#userBarInProgressSim').show();
