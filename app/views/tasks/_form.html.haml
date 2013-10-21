@@ -1,7 +1,7 @@
 = simple_form_for([@assignment, @task], :html => {:class => 'form-horizontal' }) do |f|
   = f.input :name
   = f.input :description, :as => :text, :input_html => { :style => "width: 90%; height: 200px;"}
-  = f.input :due_at, :as => :datetime, :include_blank => true, :start_year => Date.today.year
+  = f.input :due_at, :as => :string, :include_blank => true, :start_year => Date.today.year, :input_html => { :class => 'datetimepicker' }
 
   .form-actions.col-lg-offset-3
     = f.button :submit, @button_title, :class => "btn-primary"

@@ -56,7 +56,7 @@
     %h4 MULTIPLIERS
     = f.input :total_assignment_weight, :label => "Student Weight Portion", :hint => "Do students decide how some or all of their grade will be decided? If so, what is that amount/percent?", :input_html => {:class => "col-lg-2"}
     = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"],["Percent"]], :input_html => {:class => "col-lg-2 input-sm"}
-    = f.input :assignment_weight_close_at, :label => "What date must they make this decision by?", :as => :date, :input_html => {:class => "input-sm"}
+    = f.input :assignment_weight_close_at, :label => "What date must they make this decision by?", :as => :string, :input_html => {:class => "input-sm datetimepicker"}
     = f.input :max_assignment_weight, :label => "Maximum amount that students may set", :input_html => {:class => "col-lg-2"}
     = f.input :max_assignment_types_weighted, :label => "Maximum Weighted Assignment Types", :hint => "Is there a maximum number of assignment types that students can select to weight?", :input_html => {:class => "col-lg-2"}
     = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}

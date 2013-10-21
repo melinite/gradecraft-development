@@ -41,7 +41,9 @@ class AssignmentsController < ApplicationController
 
   def create
     @assignment = current_course.assignments.new(params[:assignment])
-    if @assignment.save
+    if @assignment.due_at < @assignment.open_at
+      redirect_to new_assignment_path, :notice => 'Due date must be after open date.'
+    elsif @assignment.save
       respond_with @assignment, :location => assignment_path(@assignment), :notice => 'Assignment was successfully created.'
     else
       respond_with @assignment
@@ -50,8 +52,11 @@ class AssignmentsController < ApplicationController
 
   def update
     @assignment = current_course.assignments.find(params[:id])
-    @assignment.update_attributes(params[:assignment])
-    respond_with @assignment
+    if @assignment.due_at < @assignment.open_at
+      redirect_to edit_assignment_path(@assignment), :notice => 'Due date must be after open date.'
+    elsif @assignment.update_attributes(params[:assignment])
+      respond_with @assignment
+    end
   end
 
   def destroy
