@@ -1,12 +1,12 @@
 namespace :db do
   namespace :etc do
     task :load => :environment do
-      puts "Loading views, etc..."
+      puts "Loading views, functions, and triggers..."
       execute File.read(Rails.root.join 'db', 'etc.sql')
     end
 
     task :drop => :environment do
-      puts "Dropping views, etc..."
+      puts "Dropping views, functions, and triggers..."
       views = File.read(Rails.root.join 'db', 'etc.sql').scan(/CREATE\s+(OR REPLACE\s+)?VIEW\s+(?<name>[^\s]+)\s+AS/).flatten
       views.reverse.each do |view|
         execute "DROP VIEW IF EXISTS #{view}"
