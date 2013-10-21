@@ -38,6 +38,27 @@ CREATE VIEW student_cache_keys AS
     )) AS submissions_key
   FROM course_memberships AS cm;
 
+CREATE OR REPLACE
+     VIEW membership_calculations AS
+   SELECT m.id,
+          m.id AS course_membership_id,
+          m.course_id,
+          m.user_id,
+          md5(concat(
+            m.course_id,
+            m.user_id,
+            (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE course_id = m.course_id and student_id = m.user_id)
+          )) AS earned_badges_key,
+          md5(concat(
+            m.course_id,
+            m.user_id,
+            (SELECT sum(extract(epoch from updated_at)) FROM submissions WHERE course_id = m.course_id and student_id = m.user_id)
+          )) AS submissions_key,
+          (SELECT sum(score) FROM grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score_sum,
+          cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key
+     FROM course_memberships AS m
+     JOIN course_cache_keys AS cck ON m.course_id = cck.id;
+
 CREATE VIEW shared_earned_badges AS
   SELECT course_memberships.course_id,
     (users.first_name || ' ' || users.last_name) as student_name,

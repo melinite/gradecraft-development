@@ -1,4 +1,4 @@
-- cache [ 'v1', current_course_data.cache_keys.badges_key, current_student.id ] do
+- cache current_student_data.cache_key('v1', :badges_key, current_student.id) do
   %ul.tabs
     %li.active
       %a{ "data-toggle" => "tab", "data-target" => "#tabb1"} My #{term_for :badges}

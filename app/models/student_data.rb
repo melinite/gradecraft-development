@@ -1,6 +1,9 @@
 class StudentData < Struct.new(:student, :course)
-  def cache_keys
-    @cache_keys ||= StudentCacheKey.find_by(course_id: course.id, user_id: student.id)
+  def cache_key(*args)
+    @cache_keys ||= MembershipCalculation.find_by(course_id: course.id, user_id: student.id)
+    args.map do |arg|
+      arg.is_a?(Symbol) && @cache_keys[arg.to_s] || arg.to_s
+    end
   end
 
   def score
