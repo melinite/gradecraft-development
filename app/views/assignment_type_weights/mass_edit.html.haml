@@ -7,40 +7,25 @@
     %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "btn btn-tiny btn-info"
 
 .col-lg-12.info
-  - if current_course.assignment_weight_open?
+  - if current_course.assignment_weight_open? || current_user.is_staff?
     %h3 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
     .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
 
     %hr
 
-    - if current_user.is_student?
-      = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
-        - if @form.errors.has_key?(:base)
-          .alert.alert-error= f.error :base
-        = f.simple_fields_for :assignment_type_weights do |atwf|
-          = atwf.hidden_field :assignment_type_id
-          .panel
-            .panel-heading
-              %h3.panel-title= atwf.object.assignment_type.name
-            .panel-body
-              = atwf.input :weight, :label => "#{term_for :weight}"
-        .form-actions.col-lg-offset-3
-          = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
-          = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
-    - else
-      = simple_form_for @form, :student => @student, url: assignment_type_weights_path, method: :put do |f|
-        - if @form.errors.has_key?(:base)
-          .alert.alert-error= f.error :base
-        = f.simple_fields_for :assignment_type_weights do |atwf|
-          = atwf.hidden_field :assignment_type_id
-          .panel
-            .panel-heading
-              %h3.panel-title= atwf.object.assignment_type.name
-            .panel-body
-              = atwf.input :weight, :label => "#{term_for :weight}"
-        .form-actions.col-lg-offset-3
-          = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
-          = link_to 'Cancel', dashboard_path, class: 'btn btn-info'
+    = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+      - if @form.errors.has_key?(:base)
+        .alert.alert-error= f.error :base
+      = f.simple_fields_for :assignment_type_weights do |atwf|
+        = atwf.hidden_field :assignment_type_id
+        .panel
+          .panel-heading
+            %h3.panel-title= atwf.object.assignment_type.name
+          .panel-body
+            = atwf.input :weight, :label => "#{term_for :weight}"
+      .form-actions.col-lg-offset-3
+        = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
+        = link_to 'Cancel', current_user.is_student? ? dashboard_path : choices_students_path, class: 'btn btn-info'
 
 
   - else
