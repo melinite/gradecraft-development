@@ -14,6 +14,7 @@
     %hr
 
     = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
+      = hidden_field_tag :student_id, current_student.id
       - if @form.errors.has_key?(:base)
         .alert.alert-error= f.error :base
       = f.simple_fields_for :assignment_type_weights do |atwf|
