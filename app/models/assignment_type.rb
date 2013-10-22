@@ -26,6 +26,12 @@ class AssignmentType < ActiveRecord::Base
     group('assignment_types.id').weighted_for_student(student).pluck('assignment_types.id, COALESCE(MAX(assignment_weights.weight), 0)')
   end
 
+  def weight_for_student(student)
+    return 1 unless student_weightable?
+    assignment_weights.where(student: student).weight
+  end
+
+  #These determine how assignment types appears in the predictor
   def slider?
     points_predictor_display == "Slider"
   end
@@ -42,14 +48,17 @@ class AssignmentType < ActiveRecord::Base
     points_predictor_display == "Set per Assignment"
   end
 
+  #Checks if the assignment type has associated score levels
   def has_levels?
-    levels == true
+    score_levels.present?
   end
 
+  #Powers the To Do list, checks if there are assignments within the next week (soon is a scope in the Assignment model)
   def has_soon_assignments?
     assignments.any?(&:soon?)
   end
 
+  #Determines how the assignment type is handled in Quick Grade
   def grade_checkboxes?
     mass_grade_type == "Checkbox"
   end
@@ -66,8 +75,8 @@ class AssignmentType < ActiveRecord::Base
     mass_grade_type == "Text"
   end
 
-  def weight_for_student(student)
-    return 1 unless student_weightable?
-    assignment_weights.where(student: student).weight
+  def grade_per_assignment?
+    mass_grade_type == "Set per Assignment"
   end
+
 end

@@ -323,7 +323,8 @@ CREATE TABLE assignments (
     media_credit character varying(255),
     media_caption character varying(255),
     points_predictor_display character varying(255),
-    notify_released boolean DEFAULT true
+    notify_released boolean DEFAULT true,
+    mass_grade_type character varying(255)
 );
 
 
@@ -1379,6 +1380,44 @@ ALTER SEQUENCE lti_providers_id_seq OWNED BY lti_providers.id;
 
 
 --
+-- Name: submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE submissions (
+    id integer NOT NULL,
+    assignment_id integer,
+    student_id integer,
+    feedback character varying(255),
+    comment character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    attachment_file_name character varying(255),
+    attachment_content_type character varying(255),
+    attachment_file_size integer,
+    attachment_updated_at timestamp without time zone,
+    link character varying(255),
+    text_feedback text,
+    text_comment text,
+    creator_id integer,
+    group_id integer,
+    graded boolean,
+    released_at timestamp without time zone,
+    task_id integer,
+    course_id integer,
+    assignment_type_id integer,
+    assignment_type character varying(255)
+);
+
+
+--
+-- Name: membership_calculations; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW membership_calculations AS
+    SELECT m.id, m.id AS course_membership_id, m.course_id, m.user_id, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum FROM submissions WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, (SELECT sum(grades.score) AS sum FROM grades WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score_sum, cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key FROM (course_memberships m JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
+
+
+--
 -- Name: rubric_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1590,36 +1629,6 @@ CREATE SEQUENCE student_assignment_type_weights_id_seq
 --
 
 ALTER SEQUENCE student_assignment_type_weights_id_seq OWNED BY student_assignment_type_weights.id;
-
-
---
--- Name: submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE submissions (
-    id integer NOT NULL,
-    assignment_id integer,
-    student_id integer,
-    feedback character varying(255),
-    comment character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    attachment_file_name character varying(255),
-    attachment_content_type character varying(255),
-    attachment_file_size integer,
-    attachment_updated_at timestamp without time zone,
-    link character varying(255),
-    text_feedback text,
-    text_comment text,
-    creator_id integer,
-    group_id integer,
-    graded boolean,
-    released_at timestamp without time zone,
-    task_id integer,
-    course_id integer,
-    assignment_type_id integer,
-    assignment_type character varying(255)
-);
 
 
 --
@@ -2875,3 +2884,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131005225544');
 INSERT INTO schema_migrations (version) VALUES ('20131009035508');
 
 INSERT INTO schema_migrations (version) VALUES ('20131009035532');
+
+INSERT INTO schema_migrations (version) VALUES ('20131022111426');

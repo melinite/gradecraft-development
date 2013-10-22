@@ -1,4 +1,16 @@
 class Assignment < ActiveRecord::Base
+  attr_accessible :name, :description, :point_total, :due_at, :created_at,
+    :updated_at, :level, :present, :grades_attributes, :assignment_type,
+    :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
+    :open_time, :accepts_submissions, :student_logged_button_text,
+    :student_logged, :badge_set_id, :release_necessary,
+    :score_levels_attributes, :open_at, :close_time, :course,
+    :assignment_rubrics_attributes, :rubrics_attributes, :media,
+    :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
+    :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display,
+    :assignment_score_levels_attributes, :assignment_score_level, :notify_released,
+    :mass_grade_type
+
   self.inheritance_column = 'something_you_will_not_use'
 
   belongs_to :grade_scheme
@@ -42,17 +54,6 @@ class Assignment < ActiveRecord::Base
   accepts_nested_attributes_for :assignment_files
 
   validates_presence_of :assignment_type, :course, :name, :grade_scope
-
-  attr_accessible :name, :description, :point_total, :due_at, :created_at,
-    :updated_at, :level, :present, :grades_attributes, :assignment_type,
-    :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
-    :open_time, :accepts_submissions, :student_logged_button_text,
-    :student_logged, :badge_set_id, :release_necessary,
-    :score_levels_attributes, :open_at, :close_time, :course,
-    :assignment_rubrics_attributes, :rubrics_attributes, :media,
-    :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
-    :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display,
-    :assignment_score_levels_attributes, :assignment_score_level, :notify_released
 
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }
@@ -200,23 +201,23 @@ class Assignment < ActiveRecord::Base
   end
 
   def has_levels?
-    assignment_type.levels == true
+    assignment_type.score_levels.present? || self.score_levels.present?
   end
 
   def grade_checkboxes?
-    assignment_type.mass_grade_type == "Checkbox"
+    assignment_type.mass_grade_type == "Checkbox" || self.mass_grade_type == "Checkbox"
   end
 
   def grade_select?
-    assignment_type.mass_grade_type == "Select List"
+    assignment_type.mass_grade_type == "Select List" || self.mass_grade_type == "Select List"
   end
 
   def grade_radio?
-    assignment_type.mass_grade_type == "Radio Buttons"
+    assignment_type.mass_grade_type == "Radio Buttons" || self.mass_grade_type == "Radio Buttons"
   end
 
   def grade_text?
-    assignment_type.mass_grade_type == "Text"
+    assignment_type.mass_grade_type == "Text" || self.mass_grade_type == "Text"
   end
 
   def open?
