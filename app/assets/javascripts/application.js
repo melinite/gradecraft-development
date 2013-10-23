@@ -464,44 +464,78 @@ $(document).ready(function(){
     $('.table-toggle').on('click', assignmentTypeBars);
   }
 
-  if ($('#badge_stuff').length) {
-    var Badge = Backbone.Model.extend({
+  var Badge = Backbone.Model.extend({
+  })
+
+  var BadgeList = Backbone.Collection.extend({
+    model: Badge,
+    get_by_value: function (key, val) {
+      return this.filter( function (model) {
+        return model.get(key) === val
+      })
+    }
+  })
+
+  var allBadgesView = Backbone.View.extend({
+    el: $('.share_badge'),
+
+    events: {
+      'click .add_badge': 'add_badge',
+      'click .remove_badge': 'remove_badge'
+    },
+
+    initialize: function () {
+      this.shared_badges = window.shared_badges;
+    },
+
+    add_badge: function (e) {
+      this.shared_badges.add_badge(e)
+    )},
+
+    remove_badge: function (e) {
+      this.shared_badges.remove_badge(e)
     })
+  })
 
-    var BadgeList = Backbone.Collection.extend({
-      model: Badge
-    })
+  var SharedBadgeView = Backbone.View.extend({
+    el: $('#current_user_badges'),
 
-    var BadgeView = Backbone.View.extend({
-      el: $('#badge_stuff'),
+    events: {
+      'click button#add_badge': 'add_badge'
+    },
 
-      events: {
-        'click button#add_badge': 'add_badge'
-      },
+    initialize: function () {
+      this.collection = new BadgeList()
+      this.collection.bind('add', this.append_badge)
+      this.render()
+    },
 
-      initialize: function () {
-        this.collection = new BadgeList()
-        this.collection.bind('add', this.append_badge)
-        this.render()
-      },
+    render: function () {
+    },
 
-      render: function () {
-      },
+    add_badge: function (e) {
+      console.log(e)
+      var badge = new Badge();
+      badge.set({
+        name: $('#badge_name').val(),
+        url: ''
+      })
+      this.collection.add(badge)
+    },
 
-      add_badge: function () {
-        var badge = new Badge();
-        badge.set({
-          name: $('#badge_name').val()
-        })
-        this.collection.add(badge)
-      },
+    append_badge: function (badge) {
+      $(this.el).append('<img alt="' + badge.get('name') + '"src="' + badge.get('url') + '" width="40" />')
+    },
 
-      append_badge: function (badge) {
-        $('ul', this.el).append("<li>" + badge.get('name') + "</li>")
-        $('#badge_name').val('')
-      }
-    })
+    remove_badge: function (e) {
+      console.log(e)
+      //this.collection.remove(this.collection.get_by_value('name', badge_name))
+    }
+  })
 
-    var badge_list = new BadgeView()
+  if (!$('#current_user_badges').length) {
+    $('#shared_badges_table').append('<tr><td>My badges<td id="current_user_badges"></td></tr>')
   }
+
+  window.shared_badges = new SharedBadgeView()
 });
