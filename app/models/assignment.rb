@@ -201,7 +201,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def has_levels?
-    assignment_type.score_levels.present? || self.score_levels.present?
+   self.assignment_score_levels.present?
   end
 
   def grade_checkboxes?
