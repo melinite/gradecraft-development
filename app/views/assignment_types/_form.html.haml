@@ -22,22 +22,23 @@
     = f.input :mass_grade_type, :label => "Quick Grade Format", :hint => "Would you like the levels to be represented via checkbox, radio buttons or select forms?", :collection => [["Radio Buttons"], ["Select List"], ["Checkbox"], ["Text"], ["Set per Assignment"]], :input_html => {:class => "input-sm col-lg-3"}
     = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
     = f.input :student_logged_revert_button_text, :hint => "If a student unchecks this button, what should it say?", :label => "Revert Button Text", :input_html => {:class => 'col-lg-3'}
-    = f.input :levels, :label => "Leveled Grading", :hint => "This includes normal A - F grading schemes.", :as => :radio_buttons
+    //= f.input :levels, :label => "Leveled Grading", :hint => "This includes normal A - F grading schemes.", :as => :radio_buttons
     = f.input :notify_released, :hint => "Do you want to notify students by email when a grade is released?"
-    .well
-      %h5 Score Levels
-      .score-levels
-        %p.hint Example: You could create three score levels to produce this quick grading scheme - Complete (5000 points), Finalist (7000 points), and Winner (10,000 points). These levels will then be available to use for quick grading.
-        %script(id="score-level-template" type="text/x-template")
-          %fieldset.score-level
-            = f.simple_fields_for :score_levels, ScoreLevel.new, class: 'form-inline', child_index: 'child_index' do |slf|
-              = render 'score_level_fields', f: slf
-        - @assignment_type.score_levels.each do |score_level|
-          %fieldset.score-level
-            = f.simple_fields_for :score_levels, score_level, class: 'form-inline' do |slf|
-              = render 'score_level_fields', f: slf
-      %hr
-      = link_to 'Add a Level', '#', class: 'add-level'
+    - if ! @assignment_type.grade_per_assignment?
+      .well
+        %h5 Score Levels
+        .score-levels
+          %p.hint Example: You could create three score levels to produce this quick grading scheme - Complete (5000 points), Finalist (7000 points), and Winner (10,000 points). These levels will then be available to use for quick grading.
+          %script(id="score-level-template" type="text/x-template")
+            %fieldset.score-level
+              = f.simple_fields_for :score_levels, ScoreLevel.new, class: 'form-inline', child_index: 'child_index' do |slf|
+                = render 'score_level_fields', f: slf
+          - @assignment_type.score_levels.each do |score_level|
+            %fieldset.score-level
+              = f.simple_fields_for :score_levels, score_level, class: 'form-inline' do |slf|
+                = render 'score_level_fields', f: slf
+        %hr
+        = link_to 'Add a Level', '#', class: 'add-level'
 
 
   .form-actions.col-lg-offset-3

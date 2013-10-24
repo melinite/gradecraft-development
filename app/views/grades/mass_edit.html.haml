@@ -28,16 +28,20 @@
                   = gf.hidden_field :status, :value => "Graded"
                   = gf.hidden_field :student_id
                   = label_tag do
-                    - if @assignment.grade_select?
+                    - if @assignment.grade_select? && @assignment.assignment_type.has_levels?
                       = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name, grade.raw_score), include_blank: true
-                    - elsif @assignment.grade_radio?
+                    - elsif @assignment.grade_select? && @assignment.has_levels?
+                      = gf.select :raw_score, options_from_collection_for_select(@assignment_score_levels, :value, :name, grade.raw_score), include_blank: true
+                    - elsif @assignment.grade_radio? && @assignment.assignment_type.has_levels?
                       - @score_levels.each do |score_level|
                         = gf.label :raw_score, score_level.name, value: score_level.value
                         = gf.radio_button :raw_score, score_level.value, :class => "radio_inline"
-                    - elsif @assignment.grade_text?
-                      = gf.text_field :raw_score
+                    - elsif @assignment.grade_radio? && @assignment.has_levels?
+                      - @assignment_score_levels.each do |assignment_score_level|
+                        = gf.label :raw_score, assignment_score_level.name, value: assignment_score_level.value
+                        = gf.radio_button :raw_score, assignment_score_level.value, :class => "radio_inline"
                     - elsif @assignment.grade_checkboxes?
-                      = gf.check_box :raw_score, {}, @assignment.point_total
+                      = gf.check_box :raw_score, {}, @assignment.point_total, nil
                     - else
                       = gf.text_field :raw_score
 

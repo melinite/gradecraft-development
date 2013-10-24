@@ -9,7 +9,9 @@
 
 - current_course_data.by_assignment_type.each do |assignment_type, assignments|
   .col-lg-12
-    %h3= link_to assignment_type.name, assignment_type
+    %h3
+      = link_to assignment_type.name, assignment_type
+      = link_to "[Edit]", edit_assignment_type_path(assignment_type)
   %table.table.simpleTable.table-striped
     %thead
       %tr

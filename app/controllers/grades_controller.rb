@@ -16,6 +16,7 @@ class GradesController < ApplicationController
     redirect_to @assignment and return unless current_student.present?
     @grade = current_student_data.grade_for_assignment(@assignment)
     @score_levels = @assignment.score_levels
+    @assignment_score_levels = @assignment.assignment_score_levels
   end
 
   def update
@@ -76,6 +77,7 @@ class GradesController < ApplicationController
     @title = "Quick Grade #{@assignment.name}"
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
+    @assignment_score_levels = @assignment.assignment_score_levels
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
@@ -93,6 +95,7 @@ class GradesController < ApplicationController
       @title = "Quick Grade #{@assignment.name}"
       @assignment_type = @assignment.assignment_type
       @score_levels = @assignment_type.score_levels
+      @assignment_score_levels = @assignment.assignment_score_levels
       user_search_options = {}
       user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
       @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
@@ -109,6 +112,7 @@ class GradesController < ApplicationController
     @title = "Grading #{@group.name}'s #{@assignment.name}"
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
+    @assignment_score_levels = @assignment.assignment_score_levels
     @grades = @group.students.map do |student|
       @assignment.grades.where(:student_id => student).first || @assignment.grades.new(:student => student, :assignment => @assignment, :graded_by_id => current_user, :status => "Graded")
     end
@@ -123,6 +127,7 @@ class GradesController < ApplicationController
       @title = "Quick Grade #{@assignment.name}"
       @assignment_type = @assignment.assignment_type
       @score_levels = @assignment_type.score_levels
+      @assignment_score_levels = @assignment.assignment_score_levels
       @group = @assignment.groups.find(params[:group_id])
       @students = @group.students
       @grades = @students.map do |s|
