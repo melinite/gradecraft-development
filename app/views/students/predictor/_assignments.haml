@@ -21,7 +21,7 @@
             = "–"
             - if assignment_type.fixed?
               = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-              %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
+              %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id, :checked => current_student_data.grade_for_assignment(assignment).predicted_score > 0 }
             - elsif assignment_type.slider?
               %span.pScore= "0 "
               = "/ #{points current_student_data.point_total_for_assignment(assignment)} possible points"
@@ -29,16 +29,16 @@
               .slider{:id => "slider-#{assignment.id}", :max => current_student_data.point_total_for_assignment(assignment), :value => "#{current_student_data.grade_for_assignment(assignment).predicted_score}", :'data-scorelevelvals' => "#{assignment_type.score_levels.map(&:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map(&:name)}"}
             - elsif assignment_type.select?
               = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-              = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+              = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
             - elsif assignment_type.per_assignment?
               - if assignment.fixed?
                 = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-                %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id }
+                %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id, :checked => current_student_data.grade_for_assignment(assignment).predicted_score > 0 }
               - elsif assignment.slider?
                 %span.pScore= "0 "
                 = "/ #{points current_student_data.point_total_for_assignment(assignment)} possible points"
                 .slider{:id => "slider-#{assignment.id}", :max => current_student_data.point_total_for_assignment(assignment) , :value => "#{current_student_data.grade_for_assignment(assignment).predicted_score}", :'data-scorelevelvals' => "#{assignment_type.score_levels.map(&:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map(&:name)}"}
               - elsif assignment.select?
                 = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-                = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name'), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+                = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
     %hr
