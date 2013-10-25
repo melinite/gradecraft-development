@@ -5,41 +5,6 @@ class UsersController < ApplicationController
   before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new]
   before_filter :ensure_admin?, :only => [:all]
 
-  def import
-    if request.post? && params[:file].present?
-      infile = params[:file].read
-      n, errs = 0, []
-
-      CSV.parse(infile) do |row|
-        n += 1
-
-        next if n == 1 or row.join.blank?
-
-        user = User.build_from_csv(row)
-
-        if user.valid?
-          user.save
-        else
-          errs << row
-        end
-      end
-
-      if errs.any?
-        errFile ="errors_#{Date.today.strftime('%d%b%y')}.csv"
-        errs.insert(0, User.csv_header)
-        errCSV = CSV.generate do |csv|
-          errs.each {|row| csv << row}
-        end
-        send_data errCSV,
-          :type => 'text/csv; charset=iso-8859-1; header=present',
-          :disposition => "attachment; filename=#{errFile}.csv"
-      else
-        flash[:notice] = I18n.t('user.import.success')
-        redirect_to import_url
-      end
-    end
-  end
-
   def index
     @title = "View All Users"
     @users =  current_course.users
@@ -143,6 +108,7 @@ class UsersController < ApplicationController
     @title = "Import Users"
   end
 
+  #import users for class
   def upload
     require 'csv'
 
@@ -162,8 +128,6 @@ class UsersController < ApplicationController
       redirect_to users_path, :notice => "Upload successful"
     end
   end
-
-
 
   def final_grades
     @course = current_course

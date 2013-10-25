@@ -64,6 +64,8 @@ GradeCraft::Application.routes.draw do
         put :update_status
         post :self_log
         post :predict_score
+        get :import
+        post :upload
       end
     end
     resources :submissions

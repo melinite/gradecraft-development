@@ -156,6 +156,35 @@ class GradesController < ApplicationController
     redirect_to assignment_path(@assignment)
   end
 
+  #upload grades for an assignment
+  def upload
+    @assignment = current_course.assignments.find(params[:id])
+    @students = current_course.students
+
+    require 'csv'
+
+    if params[:file].blank?
+      flash[:notice] = "File missing"
+      redirect_to assignment_path(@assignment)
+    else
+      CSV.foreach(params[:file].tempfile, :headers => false) do |row|
+        @students.each do |student|
+          if student.username == row[1]
+            @assignment.grades.create! do |g|
+              g.assignment_id = @assignment.id
+              g.student_id = student.id
+              g.raw_score = row[2]
+              g.feedback = row[3]
+              g.status = "Graded"
+            end
+          end
+        end
+      end
+      redirect_to assignment_path(@assignment), :notice => "Upload successful"
+    end
+  end
+
+
   private
 
   def set_assignment
