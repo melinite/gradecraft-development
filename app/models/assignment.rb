@@ -16,7 +16,7 @@ class Assignment < ActiveRecord::Base
   belongs_to :grade_scheme
   has_many :grade_scheme_elements, :through => :grade_scheme
 
-  belongs_to :assignment_type, -> { order('order_placement ASC') }, touch: true
+  belongs_to :assignment_type, -> { order('order_placement ASC') }
   accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'

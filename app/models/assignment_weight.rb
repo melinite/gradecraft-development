@@ -3,9 +3,9 @@ class AssignmentWeight < ActiveRecord::Base
 
   include Canable::Ables
 
-  belongs_to :student, :class_name => 'User', touch: true
+  belongs_to :student, :class_name => 'User'
   belongs_to :assignment_type
-  belongs_to :assignment, touch: true
+  belongs_to :assignment
   belongs_to :course
 
   before_validation :cache_associations, :cache_point_total

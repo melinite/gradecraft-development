@@ -12,10 +12,10 @@ class Grade < ActiveRecord::Base
   STATUSES=%w(Graded Released)
 
   belongs_to :course
-  belongs_to :assignment, touch: true
+  belongs_to :assignment
   belongs_to :assignment_type
-  belongs_to :student, :class_name => 'User', touch: true
-  belongs_to :team, touch: true
+  belongs_to :student, :class_name => 'User'
+  belongs_to :team
   belongs_to :submission # Optional
   belongs_to :task # Optional
   belongs_to :group, :polymorphic => true # Optional
@@ -29,7 +29,7 @@ class Grade < ActiveRecord::Base
   has_many :grade_scheme_elements, :through => :assignment
 
   before_validation :cache_associations
-  before_save :cache_score_and_point_total
+  before_validation :cache_score_and_point_total
 
   has_many :grade_files, :dependent => :destroy
   accepts_nested_attributes_for :grade_files
