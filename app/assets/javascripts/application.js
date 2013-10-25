@@ -10,6 +10,7 @@
 //= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
+//= require jquery.ui.widget
 //= require jquery.sparkline.min
 //= require underscore.min
 //= require backbone.min
