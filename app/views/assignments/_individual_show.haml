@@ -31,8 +31,7 @@
               - if grade.is_graded?
                 = check_box_tag "grade_ids[]", grade.id
           %td= link_to student.name, student_path(student)
-          %td
-            = points grade.raw_score if grade.status?
+          %td{:data => { :"sort-value" => "#{grade.raw_score}"} }= points grade.raw_score if grade.status?
           - if @assignment.assignment_type.student_weightable?
             %td
               = points grade.score if grade.status?

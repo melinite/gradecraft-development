@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
     course_memberships.where(course: course).try('character_profile')
   end
 
-  #Grades
+  #Submissions - can be taken out?
 
   def submissions_by_assignment_id
     @submissions_by_assignment ||= submissions.group_by(&:assignment_id)
@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
     submissions_by_assignment_id[assignment.id].try(:first)
   end
 
-  #Badges
+  #Badges - can be taken out?
 
   def earned_badges_by_badge_id
     @earned_badges_by_badge ||= earned_badges.group_by(&:badge_id)

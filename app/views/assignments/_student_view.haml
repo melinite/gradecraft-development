@@ -22,7 +22,7 @@
 
   - if @assignment.due_at?
     %p
-      %b Close date:
+      %b No longer accepted after:
       = @assignment.due_at
 
   - if @assignment.accepts_submissions_until?

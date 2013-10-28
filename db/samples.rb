@@ -323,7 +323,7 @@ grinding_assignments = []
     a.name = "Reading Reaction #{n}"
     a.due_at = rand(n - 6).weeks.ago
     a.accepts_submissions = false
-    a.release_necessary = true
+    a.release_necessary = false
     a.grade_scope = "Individual"
     a.rubrics << rubric
   end
@@ -352,6 +352,7 @@ grinding_assignments.each do |assignment|
       student.grades.create! do |g|
         g.submission = submission
         g.raw_score = assignment.point_total * [0, 1].sample
+        g.status = "Graded"
       end
     end
   end
@@ -403,6 +404,7 @@ blog_assignments.each_with_index do |assignment, i|
       student.grades.create! do |g|
         g.submission = submission
         g.raw_score = assignment.point_total * [0, 1].sample
+        g.status = "Graded"
       end
     end
   end
@@ -436,6 +438,7 @@ assignments << Assignment.create! do |a|
       student.grades.create! do |g|
         g.submission = submission
         g.raw_score = 80000 * [0,1].sample
+        g.status = "Graded"
       end
     end
   end
@@ -448,7 +451,7 @@ assignments << Assignment.create! do |a|
   a.point_total = 120000
   a.due_at = rand(3).weeks.from_now
   a.accepts_submissions = true
-  a.release_necessary = true
+  a.release_necessary = false
   a.open_at = rand(2).weeks.from_now
   a.grade_scope = "Individual"
 end
@@ -460,7 +463,7 @@ assignments << Assignment.create! do |a|
   a.point_total = 120000
   a.due_at = rand(4).weeks.from_now
   a.accepts_submissions = true
-  a.release_necessary = true
+  a.release_necessary = false
   a.open_at = rand(3).weeks.from_now
   a.grade_scope = "Individual"
 end
@@ -484,7 +487,7 @@ ip1_assignment = Assignment.create! do |a|
   a.point_total = 200000
   a.due_at = rand(4).weeks.from_now
   a.accepts_submissions = true
-  a.release_necessary = true
+  a.release_necessary = false
   a.open_at = rand(3).weeks.from_now
   a.grade_scope = "Individual"
 end
@@ -503,7 +506,7 @@ ip2_assignment = Assignment.create! do |a|
   a.point_total = 300000
   a.due_at = rand(5).weeks.from_now
   a.accepts_submissions = true
-  a.release_necessary = true
+  a.release_necessary = false
   a.open_at = rand(4).weeks.from_now
   a.grade_scope = "Individual"
 end
@@ -512,7 +515,7 @@ puts "Individual Project 2 has been posted!"
 1.upto(8).each do |n|
   ip2_assignment.assignment_score_levels.create! do |asl|
     asl.name = "Assignment Score Level ##{n}"
-    asl.value = 300000/n
+    asl.value = 300000/(9-n)
   end
 end
 
@@ -522,7 +525,7 @@ ggd_assignment = Assignment.create! do |a|
   a.point_total = 400000
   a.due_at = rand(7).weeks.from_now
   a.accepts_submissions = true
-  a.release_necessary = true
+  a.release_necessary = false
   a.open_at = rand(6).weeks.from_now
   a.grade_scope = "Group"
 end
@@ -543,7 +546,7 @@ challenges << Challenge.create! do |c|
   c.point_total = 1000000
   c.due_at = rand(7).weeks.from_now
   c.accepts_submissions = true
-  c.release_necessary = true
+  c.release_necessary = false
   c.open_at = rand(6).weeks.from_now
   c.visible = true
 end
@@ -555,7 +558,7 @@ challenges << Challenge.create! do |c|
   c.point_total = 10000000
   c.due_at = rand(8).weeks.from_now
   c.accepts_submissions = true
-  c.release_necessary = true
+  c.release_necessary = false
   c.open_at = rand(8).weeks.from_now
   c.visible = true
 end

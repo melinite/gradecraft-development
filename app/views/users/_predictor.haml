@@ -20,4 +20,6 @@
         %ul.slides.col.col-lg-12
           = render partial: 'students/predictor/assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
           = render 'students/predictor/badges'
-  .clear
+          .clear
+          %hr
+          = render 'students/predictor/challenges'

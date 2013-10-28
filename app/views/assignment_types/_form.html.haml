@@ -20,7 +20,7 @@
     %hr
     //= f.input :mass_grade, :label => "Quick Grade", :hint => "Do you want to be able to grade all students who submit this #{term_for :assignment} in a single screen?"
     = f.input :mass_grade_type, :label => "Quick Grade Format", :hint => "Would you like the levels to be represented via checkbox, radio buttons or select forms?", :collection => [["Radio Buttons"], ["Select List"], ["Checkbox"], ["Text"], ["Set per Assignment"]], :input_html => {:class => "input-sm col-lg-3"}
-    = f.input :student_logged_button_text, :hint => "If yes, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
+    = f.input :student_logged_button_text, :hint => "If you would like students to be able to log their own grades, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
     = f.input :student_logged_revert_button_text, :hint => "If a student unchecks this button, what should it say?", :label => "Revert Button Text", :input_html => {:class => 'col-lg-3'}
     //= f.input :levels, :label => "Leveled Grading", :hint => "This includes normal A - F grading schemes.", :as => :radio_buttons
     = f.input :notify_released, :hint => "Do you want to notify students by email when a grade is released?"
