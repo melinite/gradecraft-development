@@ -43,7 +43,7 @@
                     - elsif @assignment.grade_checkboxes?
                       = gf.check_box :raw_score, {}, @assignment.point_total, nil
                     - else
-                      - if grade.persisted?
+                      - if grade.persisted? && grade.status == "Graded"
                         = gf.text_field :raw_score
                       - else
                         = gf.text_field :raw_score, :value => nil
