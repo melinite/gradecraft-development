@@ -43,7 +43,10 @@
                     - elsif @assignment.grade_checkboxes?
                       = gf.check_box :raw_score, {}, @assignment.point_total, nil
                     - else
-                      = gf.text_field :raw_score
+                      - if grade.persisted?
+                        = gf.text_field :raw_score
+                      - else
+                        = gf.text_field :raw_score, :value => nil
 
       .form-actions.col-lg-offset-3
         = f.button :submit, "Submit Grades", :class => "btn btn-primary"
