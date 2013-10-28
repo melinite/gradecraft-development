@@ -7,7 +7,7 @@ namespace :backup do
     puts "\nUploaded database dump to S3.\n\n"
   end
   task :files => :environment do
-    system "duplicity /var/www s3+http://gradecraft/backups/#{ENV['HOSTNAME']}"
+    system "duplicity /var/www s3+http://gradecraft/backups/#{ENV['BACKUP_BUCKET'] || 'unconfigured'}"
     puts "\nBacked up files to S3.\n\n"
   end
 end
