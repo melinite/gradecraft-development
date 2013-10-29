@@ -1,7 +1,7 @@
 class StaffController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_admin?
+  before_filter :ensure_staff?
 
   def index
     @title = "Staff Index"
