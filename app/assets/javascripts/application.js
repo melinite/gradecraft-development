@@ -10,6 +10,7 @@
 //= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
+//= require s3_direct_upload
 //= require jquery.ui.widget
 //= require jquery.sparkline.min
 //= require underscore.min
@@ -39,8 +40,7 @@
 //= require stupidtable
 //= require earned_badges
 //= require predictor
-//= require per-assign
-
+//= require per-assign 
 $(document).ready(function(){
 
   $('#gradeCurious').popover();
@@ -62,6 +62,18 @@ $(document).ready(function(){
   $(".alert").alert();
 
   $('.datetimepicker').datetimepicker()
+  $('.s3_uploader').S3Uploader()
+  $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
+    content.filepath = content.filepath.replace(/%2F/g, '\/')
+    console.log(content)
+    if ($('.s3_files').first().val()) {
+      var field = $('.s3_files').first()
+      field.parent.append(field)
+      $('s3_files').last().val(content.filepath)
+    } else {
+      $('.s3_files').first().val(content.filepath)
+    }
+  })
 
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
@@ -326,12 +338,14 @@ $(document).ready(function(){
 
   if ($('#student_grade_distro').length) {
     var data = JSON.parse($('#student_grade_distro').attr('data-scores'));
-    sparkOpts.height = '50px';
-    sparkOpts.target = data.user_score[0];
-    sparkOpts.tooltipOffsetY = -130;
-    sparkOpts.tooltipOffsetY = -80;
-    sparkOpts.targetColor = "#FF0000";
-    $('#student_grade_distro').sparkline(data.scores, sparkOpts);
+    if (data !== null) {
+      sparkOpts.height = '50px';
+      sparkOpts.target = data.user_score[0];
+      sparkOpts.tooltipOffsetY = -130;
+      sparkOpts.tooltipOffsetY = -80;
+      sparkOpts.targetColor = "#FF0000";
+      $('#student_grade_distro').sparkline(data.scores, sparkOpts);
+    }
   }
 
   if ($('.bar-chart').length) {
@@ -437,4 +451,57 @@ $(document).ready(function(){
     // Ask Cory.
     $('.table-toggle').on('click', assignmentTypeBars);
   }
+
+  $('.direct_upload').each( function () {
+    var form = $(this)
+    if (!window.location.origin) {
+      window.location.origin = window.location.protocol + "//" + window.location.host
+    }
+
+    $(this).fileupload({
+      url: form.attr('action'),
+      type: 'POST',
+      autoUpload: true,
+      dataType: 'xml',
+      add: function (e, data) {
+        $.ajax({
+          url: window.location.origin + '/submission_files',
+          type: 'GET',
+          dataType: 'json',
+          data: {doc: {title: data.files[0].name } },
+          async: false,
+          success: function (data) {
+            console.log(data)
+            form.find('input[name=key]').val(data.key)
+            form.find('input[name=policy]').val(data.policy)
+            form.find('input[name=signature]').val(data.signature)
+          }
+        })
+
+        data.submit()
+      },
+      send: function (e, data) {
+        $('.progress').fadeIn()
+      },
+
+      progress: function (e, data) {
+        var percent = (Math.round(e.loaded / e.total) * 100)
+        $('.bar').css('width', percent + '%')
+      },
+
+      fail: function (e, data) {
+        console.log('fail')
+      },
+      success: function (data) {
+        var url = $(data).find('Location').text()
+
+        $('#real_file_url').val(url)
+      },
+      done: function (e, data) {
+        $('.progress').fadeOut(300, function () {
+          $('.bar').css('width', 0)
+        })
+      }
+    })
+  })
 });

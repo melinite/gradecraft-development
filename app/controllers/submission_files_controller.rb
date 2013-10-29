@@ -1,17 +1,8 @@
 class SubmissionFilesController < ApplicationController
-  def signed_url
+  def index 
     s3 = AWS::S3.new
     bucket = s3.buckets["gradecraft-#{Rails.env}"]
-    signed_data = bucket.presigned_post(key: "uploads/#{SecureRandom.uuid}/#{params[:title]}")
-    render json: signed_data.fields
-=begin
-    render :json => {
-      policy: s3_policy_doc,
-      signature: s3_signature,
-      key: "uploads/#{SecureRandom.uuid}/#{params[:doc][:title]}",
-      success_action_redirect: "/"
-    }
-=end
+    return bucket.objects[params[:path]].url_for(:read, :expires => 15* 60).to_s #15 minutes
   end
 
   private
