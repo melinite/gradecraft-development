@@ -1,4 +1,4 @@
-.s3_uploader
+%div#s3_uploader
   = s3_uploader_form key: "uploads/submission_files/#{SecureRandom.hex}#{current_student.name}-${filename}", acl: "private" do
     = file_field_tag :file, multiple: true
 

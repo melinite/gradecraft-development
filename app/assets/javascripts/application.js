@@ -64,9 +64,7 @@ $(document).ready(function(){
   $('.datetimepicker').datetimepicker()
   $('.s3_uploader').S3Uploader()
   $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
-    console.log(content)
     if ($('.s3_files').first().val()) {
-      console.log('appending')
       var field = $('.s3_files').first().clone()
       $('.s3_files').parent().append(field)
       $('.s3_files').last().val(content.filepath)
