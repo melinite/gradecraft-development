@@ -8,7 +8,7 @@ class SubmissionFile < ActiveRecord::Base
   def url
     s3 = AWS::S3.new
     bucket = s3.buckets["gradecraft-#{Rails.env}"]
-    return bucket.objects[filename].url_for(:read, :expires => 15* 60).to_s #15 minutes
+    return bucket.objects[CGI::unescape(filename)].url_for(:read, :expires => 15* 60).to_s #15 minutes
   end
 
   private
@@ -17,7 +17,6 @@ class SubmissionFile < ActiveRecord::Base
     if filename.include? "gradecraft"
       filename.slice! "/gradecraft-#{Rails.env}/"
     end
-    filename = CGI::unescape(filename.to_s)
     write_attribute(:filename, filename)
   end
 
