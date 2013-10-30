@@ -73,6 +73,10 @@ $(document).ready(function(){
     }
   })
 
+  $('s3_uploader').bind('s3_upload_failed', function (e, content) {
+    alert(content.filename +' failed to upload: ' + content.error_thrown)
+  })
+
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
   });
@@ -455,51 +459,5 @@ $(document).ready(function(){
     if (!window.location.origin) {
       window.location.origin = window.location.protocol + "//" + window.location.host
     }
-
-    $(this).fileupload({
-      url: form.attr('action'),
-      type: 'POST',
-      autoUpload: true,
-      dataType: 'xml',
-      add: function (e, data) {
-        $.ajax({
-          url: window.location.origin + '/submission_files',
-          type: 'GET',
-          dataType: 'json',
-          data: {doc: {title: data.files[0].name } },
-          async: false,
-          success: function (data) {
-            console.log(data)
-            form.find('input[name=key]').val(data.key)
-            form.find('input[name=policy]').val(data.policy)
-            form.find('input[name=signature]').val(data.signature)
-          }
-        })
-
-        data.submit()
-      },
-      send: function (e, data) {
-        $('.progress').fadeIn()
-      },
-
-      progress: function (e, data) {
-        var percent = (Math.round(e.loaded / e.total) * 100)
-        $('.bar').css('width', percent + '%')
-      },
-
-      fail: function (e, data) {
-        console.log('fail')
-      },
-      success: function (data) {
-        var url = $(data).find('Location').text()
-
-        $('#real_file_url').val(url)
-      },
-      done: function (e, data) {
-        $('.progress').fadeOut(300, function () {
-          $('.bar').css('width', 0)
-        })
-      }
-    })
   })
 });
