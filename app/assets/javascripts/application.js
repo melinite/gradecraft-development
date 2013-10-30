@@ -64,14 +64,14 @@ $(document).ready(function(){
   $('.datetimepicker').datetimepicker()
   $('.s3_uploader').S3Uploader()
   $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
-    content.filepath = content.filepath.replace(/%2F/g, '\/')
     console.log(content)
     if ($('.s3_files').first().val()) {
-      var field = $('.s3_files').first()
-      field.parent.append(field)
-      $('s3_files').last().val(content.filepath)
+      console.log('appending')
+      var field = $('.s3_files').first().clone()
+      $('.s3_files').parent().append(field)
+      $('.s3_files').last().val(content.filepath)
     } else {
-      $('.s3_files').first().val(content.filepath)
+      $('.s3_files').val(content.filepath)
     }
   })
 
