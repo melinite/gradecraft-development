@@ -90,6 +90,10 @@ $(document).ready(function(){
 
   $('#predictorUsage').tooltip('show');
 
+  $('s3_uploader').bind('s3_upload_failed', function (e, content) {
+    alert(content.filename +' failed to upload: ' + content.error_thrown)
+  })
+
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
   });
