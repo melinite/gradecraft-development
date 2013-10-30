@@ -71,6 +71,7 @@ $(document).ready(function(){
     } else {
       $('.s3_files').val(content.filepath)
     }
+    $('#uploaded_files').append('<br /> ' + content.filename)
   })
 
   $('s3_uploader').bind('s3_upload_failed', function (e, content) {
@@ -453,11 +454,4 @@ $(document).ready(function(){
     // Ask Cory.
     $('.table-toggle').on('click', assignmentTypeBars);
   }
-
-  $('.direct_upload').each( function () {
-    var form = $(this)
-    if (!window.location.origin) {
-      window.location.origin = window.location.protocol + "//" + window.location.host
-    }
-  })
 });
