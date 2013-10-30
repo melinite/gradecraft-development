@@ -6,9 +6,9 @@ class StudentData < Struct.new(:student, :course)
     end
   end
 
-  #Released grades + Badges if they have value
+  #Released grades + Badges if they have value + Team score if it's present
   def score
-    @score ||= released_grades.where(course: course).score + earned_badge_score
+    @score ||= released_grades.where(course: course).score + earned_badge_score + team_score
   end
 
   #Grabbing the associated course grade scheme info for a student
@@ -134,10 +134,6 @@ class StudentData < Struct.new(:student, :course)
     challenge_grades[challenge.id]
   end
 
-  def team_for_course(course)
-    teams.where(course: course).first
-  end
-
   def challenge_grades(course)
     @challenge_grades ||= {}.tap do |challenge_grades|
       team_for_course(course).challenge_grades.each do |challenge_grade|
@@ -146,6 +142,13 @@ class StudentData < Struct.new(:student, :course)
     end
   end
 
+  def team
+    student.teams.where(course: course).first
+  end
+
+  def team_score
+    team.challenge_grade_score
+  end
 
   #Grabbing the challenge submission for a student's team
 

@@ -7,7 +7,7 @@
       .assignment.clear
         - current_course_data.challenges.each do |challenge|
           %span.assignmentName= challenge.name
-          %span.earned= points challenge.challenge_grade_for_team(current_student.team_for_course(current_course))
+          %span.earned= points challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).try(:score)
           = " / #{points challenge.point_total} points"
           = hidden_field_tag challenge.name, challenge.challenge_grade_for_team(current_student.team_for_course(current_course))
           .slider{:id => "slider-#{challenge.id}", :max => challenge.point_total}
