@@ -25,7 +25,8 @@
               %td
                 = f.simple_fields_for :grades, grade do |gf|
                   = gf.hidden_field :graded_by_id
-                  = gf.hidden_field :status, :value => "Graded"
+                  - if !grade.status
+                    = gf.hidden_field :status, :value => "Graded"
                   = gf.hidden_field :student_id
                   = label_tag do
                     - if @assignment.grade_select? && @assignment.assignment_type.has_levels?
@@ -47,6 +48,7 @@
                         = gf.text_field :raw_score
                       - else
                         = gf.text_field :raw_score, :value => nil
+                        = "/ #{@assignment.point_total}"
 
       .form-actions.col-lg-offset-3
         = f.button :submit, "Submit Grades", :class => "btn btn-primary"
