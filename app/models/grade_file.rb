@@ -1,11 +1,10 @@
-class GradeFile < ActiveRecord::Base
+class GradeFile < S3File
+include S3File
 
   attr_accessible :filename, :grade_id
 
   belongs_to :grade
 
-  mount_uploader :filename, GradeFileUploader
-
-  private
+  before_save :strip_path
 
 end

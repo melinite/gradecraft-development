@@ -1,11 +1,10 @@
 class AssignmentFile < ActiveRecord::Base
+  include S3File
 
   attr_accessible :filename, :assignment_id
 
   belongs_to :assignment
 
-  mount_uploader :filename, AssignmentFileUploader
-
-  private
+  before_save :strip_path
 
 end

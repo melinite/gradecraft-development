@@ -1,11 +1,10 @@
-class BadgeFile < ActiveRecord::Base
+class BadgeFile < S3File
+  include S3File
 
   attr_accessible :filename, :badge_id
 
   belongs_to :assignment
 
-  mount_uploader :filename, BadgeFileUploader
-
-  private
+  before_save :strip_path
 
 end
