@@ -22,9 +22,9 @@ class GradesController < ApplicationController
   def update
     redirect_to @assignment and return unless current_student.present?
     @grade = current_student_data.grade_for_assignment(@assignment)
-    @grade.attributes = params[:grade]
+    @grade.update_attributes(params[:grade])
     @grade.graded_by = current_user
-    if @grade.save && @assignment.notify_released? && @grade.is_released?
+    if @assignment.notify_released? && @grade.released
       NotificationMailer.grade_released(@grade.id).deliver
     end
     respond_with @grade, location: @assignment
@@ -148,7 +148,7 @@ class GradesController < ApplicationController
     @grades = @assignment.grades.find(params[:grade_ids])
     @grades.each do |grade|
       grade.update_attributes!(params[:grade].reject { |k,v| v.blank? })
-      if @assignment.notify_released? && grade.status == "Released"
+      if @assignment.notify_released? && grade.released
         NotificationMailer.grade_released(grade.id).deliver
       end
     end
