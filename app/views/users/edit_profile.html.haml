@@ -18,7 +18,7 @@
     = f.input :team_role, :hint => "What will you contribute to your team?"
     = f.simple_fields_for :course_memberships do |p|
       - if current_course.shared_badges?
-        = p.input :shared_badges, :label => "Social Badges", as: :boolean, :hint => "Do you want to publically display the badges you earn?", :collection => [["Yes"],["No"],["Decide per Badge"]]
+        = p.input :shared_badges, :label => "Social Badges", as: :boolean, :hint => "Do you want to publically display the #{term_for :badges} you earn?", :collection => [["Yes"],["No"],["Decide per Badge"]]
       - if current_course.character_profiles?
         = p.input :character_profile, :label => "Character Profile", :hint => "This will be displayed on the #{term_for :team} leaderboard"
       // Taken out bc of cosign

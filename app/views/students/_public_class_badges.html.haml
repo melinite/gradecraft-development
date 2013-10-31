@@ -6,7 +6,10 @@
   %tbody
     - SharedEarnedBadge.where(course: current_course).group_by(&:user_id).each do |user_id, sebs|
       %tr
-        %td= link_to sebs[0].student_name, student_path(sebs[0].user_id)
+        - if current_user.is_staff?
+          %td= link_to sebs[0].student_name, student_path(sebs[0].user_id)
+        - else
+          %td= sebs[0].student_name
         %td
           - sebs.each do |seb|
-            = image_tag seb.icon, :alt => seb.name, :width => '40'
+            = image_tag seb.icon, :alt => seb.name, :width => 40
