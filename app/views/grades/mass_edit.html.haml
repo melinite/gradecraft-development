@@ -48,6 +48,7 @@
                         = gf.text_field :raw_score
                       - else
                         = gf.text_field :raw_score, :value => nil
+                        = "/ #{@assignment.point_total}"
 
       .form-actions.col-lg-offset-3
         = f.button :submit, "Submit Grades", :class => "btn btn-primary"
