@@ -1,18 +1,20 @@
-%h3= current_student_data.team.name
+%h4= current_student_data.team.name
 %table.table.table-striped.simpleTable
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"} Name
+      %th
+      %th Name
       %th Character Profile
-      %th.sortable{"data-sort" => "string"} Role
+      %th Role
+      %th Score
   %tbody
-    //- j = 1
-    //- current_student.teams.students.order_by_high_score.each do |student|
-    //- cache ['v1', student, current_course, 'in_team_rankings'] do
-    //- if student.display_name?
-    //%tr
-    //%td= j
-    //%td= student.display_name
-    //%td= student.character_profile(current_course)
-    //%td= points student.score_for_course(current_course) if student.respond_to?(:grades)
-    //- j += 1
+    - j = 1
+    - current_student_data.team.sorted_students.each do |student|
+      - if student.display_name?
+        %tr
+          %td= j
+          %td= student.display_name
+          %td= student.character_profile(current_course)
+          %td= student.team_role
+          %td= points student.score_for_course(current_course) if student.respond_to?(:grades)
+        - j += 1
