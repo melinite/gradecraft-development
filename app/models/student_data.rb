@@ -11,6 +11,11 @@ class StudentData < Struct.new(:student, :course)
     @score ||= released_grades.where(course: course).score + earned_badge_score + team_score
   end
 
+  #Possible total points for student
+  def point_total
+    @point_total ||= course.assignments.point_total_for_student(student) + earned_badge_score
+  end
+
   #Grabbing the associated course grade scheme info for a student
   def grade_level
     @grade_level ||= course.grade_level_for_score(score)
@@ -22,11 +27,6 @@ class StudentData < Struct.new(:student, :course)
 
   def grade_letter
     @grade_letter ||= course.grade_letter_for_score(score)
-  end
-
-  #Not sure if we need both of these? Would be good to simplify
-  def point_total
-    @point_total ||= course.assignments.point_total_for_student(student) + earned_badge_score
   end
 
   #Summed score for a type of assignment type

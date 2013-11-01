@@ -81,6 +81,10 @@ class Course < ActiveRecord::Base
     team_setting == true
   end
 
+  def has_team_challenges?
+    team_challenges == true
+  end
+
   def graph_display?
     graph_display == true
   end
