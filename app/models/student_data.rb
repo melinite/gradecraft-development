@@ -186,6 +186,10 @@ class StudentData < Struct.new(:student, :course)
     @earned_badge_score ||= sums.earned_badge_score # student.earned_badges.where(course: course).score
   end
 
+  def grades
+    @grades ||= student.grades
+  end
+
   def released_grades
     @released_grades ||= student.grades.released
   end

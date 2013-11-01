@@ -53,6 +53,10 @@ class Grade < ActiveRecord::Base
     pluck('COALESCE(SUM(grades.score), 0)').first
   end
 
+  def self.predicted_score
+    pluck('COALESCE(SUM(grades.predicted_score), 0)').first
+  end
+
   def self.assignment_scores
     pluck('grades.assignment_id, grades.score')
   end

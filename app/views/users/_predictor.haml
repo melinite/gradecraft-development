@@ -9,7 +9,8 @@
           %span#predictor-course-total-display= points current_student_data.point_total
         %h4
           Predicted Final Grade:
-          %span#predictor-course-grade= current_student_data.grade_level
+          %span#predictor-course-grade{:'data-grade-levels' => "#{current_course.grade_scheme.elements.order(:low_range).pluck(:low_range, :letter, :level).to_json}"}
+            = current_student_data.predicted_grade_letter
       %span#expectedPointsValue
     .charts.dashboard-charts
       .chart-wrapper

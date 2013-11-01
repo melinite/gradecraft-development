@@ -93,8 +93,22 @@ var PredictorView = Backbone.View.extend({
       scoreTotal += assignmentType.get('score');
     });
     $('#predictor-score-display').html(addCommas(scoreTotal));
+    var gradeLevels = $('#predictor-course-grade').data('grade-levels');
+    if(gradeLevels.length){
+      var grade = $('#predictor-course-grade').text().trim();
+      gradeLevels.every(function(element, index){
+        grade = gradeLevels[index][1];
+        level = gradeLevels[index][2];
+        return gradeLevels.length > (index+1) && scoreTotal >= gradeLevels[index+1][0] && scoreTotal >= 0
+      })
+    }
+    if(level){
+      $('#predictor-course-grade').html(grade + " ("+level+")");
+    }else{
+      $('#predictor-course-grade').html(grade);     
+    }
     $('#predictor-course-total-display').html(addCommas(this.calculateCourseTotal()));
-    $('#predictor-course-grade').html();
+
   },
   createAssignmentTypes: function() {
     var assignmentTypes = this.collection;
