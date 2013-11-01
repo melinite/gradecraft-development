@@ -33,7 +33,7 @@
     %p
       %b Documents:
       - @assignment.assignment_files.each do |af|
-        = link_to af.filename.identifier, af.filename.url
+        = link_to af.filename, af.url
 
   - if @assignment.tasks.present?
 

@@ -1,9 +1,14 @@
+%div.s3_uploader
+  = s3_uploader_form key: "uploads/challenge_files/#{SecureRandom.hex}-#{current_user.name}-${filename}", acl: "private", max_file_size: 40.megabytes do
+    = file_field_tag :file, multiple: true
+  %div#uploaded_files Uploaded:
+
 = simple_form_for(@challenge, :html => {:class => 'form-horizontal' }) do |f|
 
   .form-inputs
     = f.input :name, :input_html => {:class => 'col-lg-3'}
     = f.simple_fields_for :challenge_files, @challenge.challenge_files.new do |cff|
-      = cff.input :filename, as: :file, :label => "Supporting Files"
+      = cff.input :filename, :input_html => { :class => 's3_files' }, :as => :hidden
     = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "What do the #{term_for :teams} need to do to succeed?"
     = f.input :point_total, :input_html => {:class => 'col-lg-3'}
     = f.input :due_at, as: :string, :start_year => Date.today.year, :include_blank => true, :input_html => { :class => 'datetimepicker' }

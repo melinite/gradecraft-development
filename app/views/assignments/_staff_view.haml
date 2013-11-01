@@ -38,7 +38,7 @@
     %p
       %b Documents:
       - @assignment.assignment_files.each do |af|
-        = link_to af.filename.identifier, af.filename.url
+        = link_to af.filename, af.url
 
   - if current_course.has_teams? && @assignment.is_individual?
     = form_tag assignment_path(@assignment), :method => :get do
