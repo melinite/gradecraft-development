@@ -1,3 +1,9 @@
-= form_tag({:action => :upload}, :multipart => true) do
-  = file_field_tag 'file'
-  = submit_tag("Import")
+= content_nav_for @assignment, "Import Grades" do
+  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+
+.col-lg-12.info
+  %h3 Import Grades for #{@assignment.name}
+
+  = form_tag({:action => :upload}, :multipart => true) do
+    = file_field_tag 'file'
+    = submit_tag("Import")

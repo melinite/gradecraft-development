@@ -4,6 +4,7 @@
   %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
   - if @assignment.assignment_type.mass_grade?
     %li= link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+  %li= link_to "Import Grades", import_grades_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
 
 
 .col-lg-12
