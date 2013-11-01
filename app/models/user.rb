@@ -295,6 +295,15 @@ def groups_by_assignment_id
     end
   end
 
+  def self.csv_roster_for_course(course, options = {})
+    CSV.generate(options) do |csv|
+      csv << ["First Name", "Last Name", "Uniqname", "Score", "Grade", "Feedback", "Team"]
+      course.students.each do |student|
+        csv << [student.first_name, student.last_name, student.username, "", "", "", student.team_for_course(course).try(:name) ]
+      end
+    end
+  end
+
   def team_score(course)
     teams.where(:course => course).pluck('score').first
   end
