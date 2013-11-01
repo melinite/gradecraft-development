@@ -10,8 +10,9 @@
 %ul.nav.nav-tabs
   %li.active
     = link_to 'Assignments', '#', data: { toggle: 'tab', target: '#syllabus' }
-  %li
-    %a{ "data-toggle" => "tab", "data-target" => "#timeline" } Timeline
+  - if current_course.use_timeline?
+    %li
+      %a{ "data-toggle" => "tab", "data-target" => "#timeline" } Timeline
   - if current_course.grading_philosophy.present?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#grading-philosophy"} Grading Philosophy
@@ -27,8 +28,9 @@
 .tab-content
   .tab-pane#syllabus.active
     = render "users/syllabus"
-  .tab-pane#timeline
-    = render "users/timeline"
+  - if current_course.use_timeline?
+    .tab-pane#timeline
+      = render "users/timeline"
   - if current_course.grading_philosophy.present?
     .tab-pane#grading-philosophy
       = render "users/grading_philosophy"

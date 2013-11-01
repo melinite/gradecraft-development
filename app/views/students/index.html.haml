@@ -14,6 +14,7 @@
 %table.table.simpleTable.table-striped
   %thead
     %tr
+      %th
       %th.sortable{"data-sort" => "string"} Name
       %th.sortable{"data-sort" => "string"} Email
       - if current_course.has_teams?
@@ -46,7 +47,7 @@
         - if current_course.team_roles?
           %td= student.try(:team_role)
         - if student.respond_to?(:grades)
-          %td= points student.score_for_course(current_course)
+          %td{:data => { :"sort-value" => "#{student.score_for_course(current_course)}"} }= points student.score_for_course(current_course)
           %td
             = student.grade_letter_for_course(current_course)
             = student.grade_level_for_course(current_course)

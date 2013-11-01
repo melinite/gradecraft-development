@@ -1,0 +1,15 @@
+- if current_course.team_challenges?
+  %li#slide-challenges(data-assignment-type-id="chalelnges" data-assignment-type-name)
+    %h3="#{term_for :challenges}"
+    .slide-panel.col.col-lg-12
+      .assignmentType
+        %span.badge.badge-warning.pull-right #{current_student.team_score(current_course)} points
+      .assignment.clear
+        - current_course_data.challenges.each do |challenge|
+          %span.assignmentName= challenge.name
+          %span.earned= points challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).try(:score)
+          = " / #{points challenge.point_total} points"
+          = hidden_field_tag challenge.name, challenge.challenge_grade_for_team(current_student.team_for_course(current_course))
+          .slider{:id => "slider-#{challenge.id}", :max => challenge.point_total}
+
+

@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
     course_memberships.where(course: course).try('character_profile')
   end
 
-  #Grades
+  #Submissions - can be taken out?
 
   def submissions_by_assignment_id
     @submissions_by_assignment ||= submissions.group_by(&:assignment_id)
@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
     submissions_by_assignment_id[assignment.id].try(:first)
   end
 
-  #Badges
+  #Badges - can be taken out?
 
   def earned_badges_by_badge_id
     @earned_badges_by_badge ||= earned_badges.group_by(&:badge_id)
@@ -189,7 +189,18 @@ class User < ActiveRecord::Base
     _assignments = assignments.where(course: course)
     in_progress = _assignments.graded_for_student(self)
 
-    if course.valuable_badges?
+    if course.valuable_badges? && course.has_team_challenges?
+      earned_badge_score = earned_badges.where(course: course).score
+      team_score = self.team_for_course(course).score
+      scores << { :data => [team_score], :name => "#{course.challenge_term.pluralize}" }
+      scores << { :data => [earned_badge_score], :name => "#{course.badge_term.pluralize}" }
+      return {
+        :student_name => name,
+        :scores => scores,
+        :course_total => course.total_points + earned_badge_score + team_score,
+        :in_progress => in_progress.point_total + earned_badge_score + team_score
+        }
+    elsif course.valuable_badges?
       earned_badge_score = earned_badges.where(course: course).score
       scores << { :data => [earned_badge_score], :name => "#{course.badge_term.pluralize}" }
       return {
@@ -197,6 +208,15 @@ class User < ActiveRecord::Base
         :scores => scores,
         :course_total => course.total_points + earned_badge_score,
         :in_progress => in_progress.point_total + earned_badge_score
+        }
+    elsif course.has_team_challenges?
+      team_score = self.team_for_course(course).score
+      scores << { :data => [team_score], :name => "#{course.challenge_term.pluralize}" }
+      return {
+        :student_name => name,
+        :scores => scores,
+        :in_progress => in_progress.point_total + earned_badge_score + team_score,
+        :course_total => course.total_points + earned_badge_score + team_score
         }
     else
       return {

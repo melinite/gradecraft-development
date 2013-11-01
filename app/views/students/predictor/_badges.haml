@@ -1,10 +1,11 @@
 - cache current_student_data.cache_key('v1', :badges_key, current_student.id) do
   - if current_course.valuable_badges?
-    %li#slide-badges(data-assignment-type-id="badges" data-assignment-type-name="#{term_for :badges}")
+    %li#slide-badges(data-assignment-type-id="badges" data-assignment-type-name)
+      %h3="#{term_for :badges}"
       .slide-panel.col.col-lg-12
         .assignmentType
-          %span.assignmentTypeTitle Badges
-          %span.badge.badge-warning.pull-right #{current_student_data.earned_badge_score} points
+          %span.assignmentTypeTitle= "#{term_for :badges}"
+          %span.badge.badge-warning.pull-right #{points current_student_data.earned_badge_score} points
         %p.lead
         %div
           - current_course_data.badges.each do |badge|
@@ -13,12 +14,13 @@
                 %img{:src => badge.icon, :alt => badge.name, :width => "40"}
                 .clearfix= badge.name
                 .clearfix
-                  %b= "#{badge.point_total} points"
+                  %b= "#{points badge.point_total} points"
                 = hidden_field_tag badge.name, badge.point_total
             - else
               .badgeField
                 %img{:src => badge.icon, :alt => badge.name, :width => "40"}
                 .clearfix= badge.name
                 .clearfix
-                  %b #{badge.point_total} points
+                  %b #{points badge.point_total} points
                 .clearfix= check_box_tag badge.name, badge.point_total, false, :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
+    %hr

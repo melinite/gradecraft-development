@@ -39,6 +39,10 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def challenge_grade_score
+    challenge_grades.pluck('score').sum
+  end
+
   private
   def cache_score
     if self.course.team_score_average?
