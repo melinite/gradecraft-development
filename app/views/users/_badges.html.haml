@@ -21,7 +21,7 @@
             - if current_course.shared_badges? && current_student.badges_shared(current_course)
               %th Share this with the class?
         %tbody
-          - current_course.badges.includes(:tasks).each do |badge|
+          - current_course_data.badges.each do |badge|
             %tr
               %td= image_tag badge.icon, :alt => badge.name, :width => 40
               %td

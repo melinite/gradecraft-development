@@ -1,6 +1,33 @@
 class StudentData < Struct.new(:student, :course)
+  def membership
+    @membership ||= CourseMembership.where(course_id: course.id, user_id: student.id)
+                                    .includes(:membership_calculation, :membership_scores).first
+  end
+
+  def sums
+    @sums ||= membership.membership_calculation
+  end
+
+  def predictions
+    scores = membership.membership_scores.map do |s|
+      { :data => [s.score], :name => s.name }
+    end
+    if course.valuable_badges?
+      earned_badge_score = membership.membership_calculation.earned_badge_score
+      scores << { :data => [earned_badge_score], :name => "#{course.badge_term.pluralize}" }
+    else
+      earned_badge_score = 0
+    end
+    return {
+      :student_name => student.name,
+      :scores => scores,
+      :course_total => membership.membership_calculation.assignment_score + earned_badge_score,
+      :in_progress => membership.membership_calculation.in_progress_assignment_score + earned_badge_score
+    }
+  end
+
   def cache_key(*args)
-    @cache_keys ||= MembershipCalculation.find_by(course_id: course.id, user_id: student.id)
+    @cache_keys ||= membership.membership_calculation
     args.map do |arg|
       arg.is_a?(Symbol) && @cache_keys[arg.to_s] || arg.to_s
     end
@@ -8,12 +35,12 @@ class StudentData < Struct.new(:student, :course)
 
   #Released grades + Badges if they have value + Team score if it's present
   def score
-    @score ||= released_grades.where(course: course).score + earned_badge_score + team_score
+    @score ||= sums.released_grade_score + sums.earned_badge_score + team_score
   end
 
   #Possible total points for student
   def point_total
-    @point_total ||= course.assignments.point_total_for_student(student) + earned_badge_score
+    @point_total ||= sums.weighted_assignment_score + earned_badge_score
   end
 
   #Grabbing the associated course grade scheme info for a student
@@ -154,7 +181,7 @@ class StudentData < Struct.new(:student, :course)
 
   #Sum of all earned badges value for a student
   def earned_badge_score
-    @earned_badge_score ||= student.earned_badges.where(course: course).score
+    @earned_badge_score ||= sums.earned_badge_score # student.earned_badges.where(course: course).score
   end
 
   def released_grades
@@ -184,7 +211,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def weighted_assignments?
-    @weighted_assignments_present ||= student.assignment_weights.count > 0
+    @weighted_assignments_present ||= sums.assignment_weight_count > 0
   end
 
   #What is this?

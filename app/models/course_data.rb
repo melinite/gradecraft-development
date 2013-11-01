@@ -40,7 +40,7 @@ class CourseData < Struct.new(:course)
   end
 
   def badges
-    @badges ||= course.badges
+    @badges ||= course.badges.includes(:tasks)
   end
 
   def challenges
