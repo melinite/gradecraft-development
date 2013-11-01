@@ -157,6 +157,10 @@ class GradesController < ApplicationController
   end
 
   #upload grades for an assignment
+  def import
+    @assignment = current_course.assignments.find(params[:id])
+  end
+
   def upload
     @assignment = current_course.assignments.find(params[:id])
     @students = current_course.students
