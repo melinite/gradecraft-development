@@ -1,6 +1,7 @@
 class InfoController < ApplicationController
   helper_method :sort_column, :sort_direction, :predictions
 
+  # TODO: Are these necessary? Most don't exist
   before_filter :require_login, :except => [:people, :research, :submit_a_bug, :news, :features, :using_gradecraft]
 
   def dashboard

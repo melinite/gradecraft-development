@@ -36,7 +36,7 @@ class ChallengeGradesController < ApplicationController
     @score_levels = @challenge.score_levels
     @students = current_course.users.students
     @challenge_grades = @teams.map do |t|
-      @challenge.challenge_grades.where(:team_id => t).first || @challenge.challenge_grades.new(:team => t, :challenge => @challenge)
+      @challenge.challenge_grades.where(:team_id => t).first_or_initialize
     end
   end
 
@@ -46,6 +46,7 @@ class ChallengeGradesController < ApplicationController
     if @challenge.update_attributes(params[:challenge])
       redirect_to challenge_path(@challenge)
     else
+      # TODO: Probably want to render form here so errors can be displayed
       redirect_to mass_edit_challenge_challenge_grades_path(@challenge)
     end
   end

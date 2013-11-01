@@ -112,7 +112,7 @@ class EarnedBadgesController < ApplicationController
       user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
       @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
       @earned_badges = @students.map do |s|
-        @badge.earned_badges.where(:student_id => s).first || @badge.earned_badges.new(:student => s)
+        @badge.earned_badges.where(:student_id => s).first_or_initialize
       end
     end
   end

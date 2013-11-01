@@ -3,7 +3,6 @@ class CourseMembershipsController < ApplicationController
 
   def create
     @course_membership = current_course.course_memberships.create(params[:course_membership])
-    @course_membership.save
 
     respond_with @course_membership
     expire_action :action => :index

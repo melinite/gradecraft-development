@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
 
+  # TODO: Necessary? No such action
   skip_before_filter :require_login, :except => [:index]
   skip_before_filter :verify_authenticity_token, :only => [:lti_create, :kerberos_create]
 

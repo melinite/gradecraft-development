@@ -34,6 +34,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # TODO: Necessary? No such route or view
   def staff
     @title = "Staff"
     @users = current_course.users

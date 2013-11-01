@@ -33,6 +33,7 @@ class TeamsController < ApplicationController
   def create
     @team =  current_course.teams.new(params[:team])
     @team.save
+    # TODO: Necessary?
     @team.team_memberships.build
     respond_with @team
   end

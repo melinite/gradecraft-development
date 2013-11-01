@@ -83,7 +83,7 @@ class GradesController < ApplicationController
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @students = current_course.students.includes(:teams).where(user_search_options).alpha
     @grades = @students.map do |s|
-      @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user)
+      @assignment.grades.where(:student_id => s.id).first_or_initialize(:assignment => @assignment, :graded_by_id => current_user)
     end
   end
 
@@ -100,7 +100,7 @@ class GradesController < ApplicationController
       user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
       @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
       @grades = @students.map do |s|
-        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user)
+        @assignment.grades.where(:student_id => s.id).first_or_initialize(:assignment => @assignment, :graded_by_id => current_user)
       end
       respond_with @assignment, :template => "grades/mass_edit"
     end
@@ -113,8 +113,8 @@ class GradesController < ApplicationController
     @assignment_type = @assignment.assignment_type
     @score_levels = @assignment_type.score_levels
     @assignment_score_levels = @assignment.assignment_score_levels
-    @grades = @group.students.map do |student|
-      @assignment.grades.where(:student_id => student).first || @assignment.grades.new(:student => student, :assignment => @assignment, :graded_by_id => current_user, :status => "Graded")
+    @grades = @group.student_ids.map do |student|
+      @assignment.grades.where(:student_id => student).first_or_initialize(:assignment => @assignment, :graded_by_id => current_user, :status => "Graded")
     end
     @submit_message = "Submit Grades"
   end
@@ -129,9 +129,9 @@ class GradesController < ApplicationController
       @score_levels = @assignment_type.score_levels
       @assignment_score_levels = @assignment.assignment_score_levels
       @group = @assignment.groups.find(params[:group_id])
-      @students = @group.students
+      @students = @group.student_ids
       @grades = @students.map do |s|
-        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user, :status => 'Graded')
+        @assignment.grades.where(:student_id => s).first_or_initialize(:assignment => @assignment, :graded_by_id => current_user, :status => 'Graded')
       end
       respond_with @assignment, :template => "grades/mass_edit"
     end
@@ -167,6 +167,8 @@ class GradesController < ApplicationController
       flash[:notice] = "File missing"
       redirect_to assignment_path(@assignment)
     else
+      # TODO: This loops through each row then loops through each
+      # student for each row, which is unnecessary. Just do a detect on @students
       CSV.foreach(params[:file].tempfile, :headers => false) do |row|
         @students.each do |student|
           if student.username == row[1]
