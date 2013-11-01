@@ -24,7 +24,7 @@ class GradesController < ApplicationController
     @grade = current_student_data.grade_for_assignment(@assignment)
     @grade.update_attributes(params[:grade])
     @grade.graded_by = current_user
-    if @assignment.notify_released? && @grade.released?
+    if @assignment.notify_released? && @grade.is_released?
       NotificationMailer.grade_released(@grade.id).deliver
     end
     respond_with @grade, location: @assignment

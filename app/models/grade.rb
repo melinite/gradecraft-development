@@ -90,7 +90,7 @@ class Grade < ActiveRecord::Base
   end
 
   def is_released?
-    status == 'Released'
+    (status = 'Graded' && ! assignment.release_necessary) || status == 'Released'
   end
 
   def is_graded_or_released?
