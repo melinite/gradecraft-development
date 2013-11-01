@@ -192,6 +192,24 @@ class StudentData < Struct.new(:student, :course)
     grade_for_assignment(assignment).raw_score == assignment.point_total
   end
 
+  #Groups for Assignments
+
+  def group_submission_for_assignment?(assignment, group)
+    assignment_submissions[assignment.id, group.id].present?
+  end
+
+  def group_for_assignment(assignment)
+    assignment_groups.where(assignment: assignment).first
+  end
+
+  def team
+    student.teams.where(course: course).first
+  end
+
+  def team_score
+    team.challenge_grade_score
+  end
+
   private
 
   def assignment_type_weights

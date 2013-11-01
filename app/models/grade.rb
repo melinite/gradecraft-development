@@ -40,8 +40,8 @@ class Grade < ActiveRecord::Base
   delegate :name, :description, :due_at, :assignment_type, :to => :assignment
 
   before_save :clean_html
-  after_save :save_student
-  after_destroy :save_student
+  after_save :save_student, :save_team
+  after_destroy :save_student, :save_team
 
   scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }
   scope :graded, -> { where('status = ?', 'Graded') }
@@ -128,6 +128,12 @@ class Grade < ActiveRecord::Base
 
   def save_student
     student.save
+  end
+
+  def save_team
+    if course.has_teams?
+      student.team_for_course(course).save
+    end
   end
 
   def cache_score_and_point_total

@@ -25,6 +25,10 @@ class Team < ActiveRecord::Base
     students.gsis.first
   end
 
+  def sorted_students
+    students.sort_by{ |student| - student.score_for_course(course) }
+  end
+
   def member_count
     students.count
   end
