@@ -104,4 +104,13 @@ class StudentsController < ApplicationController
     self.current_student = current_course.students.where(id: params[:id]).first
     @grades = current_student.grades.where(:course_id => current_course)
   end
+
+  def roster
+    @students = current_course.students.being_graded
+    respond_to do |format|
+      format.html
+      format.json { render json: @students }
+      format.csv { send_data @students.csv_roster_for_course(current_course) }
+    end
+  end
 end

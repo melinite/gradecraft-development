@@ -173,12 +173,12 @@ class GradesController < ApplicationController
     else
       CSV.foreach(params[:file].tempfile, :headers => false) do |row|
         @students.each do |student|
-          if student.username == row[1]
+          if student.username == row[2] && row[3].present?
             @assignment.grades.create! do |g|
               g.assignment_id = @assignment.id
               g.student_id = student.id
-              g.raw_score = row[2]
-              g.feedback = row[3]
+              g.raw_score = row[3].to_i
+              g.feedback = row[5]
               g.status = "Graded"
             end
           end

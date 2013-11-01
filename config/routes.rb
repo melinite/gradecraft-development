@@ -199,6 +199,7 @@ GradeCraft::Application.routes.draw do
       get :scores_for_single_assignment
       get :final_grades
       get :class_badges
+      get :roster
     end
   end
   resources :staff, only: [:index, :show]
