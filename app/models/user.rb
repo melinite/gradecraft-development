@@ -215,8 +215,8 @@ class User < ActiveRecord::Base
       return {
         :student_name => name,
         :scores => scores,
-        :in_progress => in_progress.point_total + earned_badge_score + team_score,
-        :course_total => course.total_points + earned_badge_score + team_score
+        :in_progress => in_progress.point_total + team_score,
+        :course_total => course.total_points + team_score
         }
     else
       return {
