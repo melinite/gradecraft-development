@@ -8,7 +8,7 @@ class StudentData < Struct.new(:student, :course)
 
   #Released grades + Badges if they have value + Team score if it's present
   def score
-    @score ||= released_grades.where(course: course).score + earned_badge_score + team_score
+    @score ||= released_grades.where(course: course).score + earned_badge_score
   end
 
   #Possible total points for student
