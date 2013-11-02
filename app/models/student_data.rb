@@ -8,7 +8,7 @@ class StudentData < Struct.new(:student, :course)
 
   #Released grades + Badges if they have value + Team score if it's present
   def score
-    @score ||= released_grades.where(course: course).score + earned_badge_score
+    @score ||= released_grades.where(course: course).score + earned_badge_score + team_score
   end
 
   #Possible total points for student
@@ -147,7 +147,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def team_score
-    team.challenge_grade_score if team
+    (team.challenge_grade_score if team) || 0
   end
 
   #Grabbing the challenge submission for a student's team
@@ -200,14 +200,6 @@ class StudentData < Struct.new(:student, :course)
 
   def group_for_assignment(assignment)
     assignment_groups.where(assignment: assignment).first
-  end
-
-  def team
-    student.teams.where(course: course).first
-  end
-
-  def team_score
-    team.challenge_grade_score
   end
 
   private
