@@ -19,7 +19,7 @@ class AssignmentsController < ApplicationController
         @submission = @assignment.submissions.new
       end
       if @assignment.has_groups?
-        @group = current_course.groups.find(params[:group_id])
+        #@group = current_course.groups.find(params[:group_id])
       else
         @student = current_user
       end

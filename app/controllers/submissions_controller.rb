@@ -109,7 +109,7 @@ class SubmissionsController < ApplicationController
 
   def destroy
     @assignment = current_course.assignments.find(params[:assignment_id])
-    @submission = current_couse.submissions.find(params[:id])
+    @submission = current_course.submissions.find(params[:id])
     @submission.destroy
     respond_to do |format|
       format.html { redirect_to assignment_submissions_path(@assignment), notice: 'Submission was successfully deleted.' }
