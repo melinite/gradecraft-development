@@ -147,7 +147,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def team_score
-    team.challenge_grade_score
+    team.challenge_grade_score if team
   end
 
   #Grabbing the challenge submission for a student's team
