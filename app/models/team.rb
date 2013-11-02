@@ -44,7 +44,7 @@ class Team < ActiveRecord::Base
   end
 
   def challenge_grade_score
-    challenge_grades.pluck('score').sum
+    challenge_grades.pluck('score').sum || 0
   end
 
   private
