@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  skip_before_filter :require_login, :only => [:create, :new]
-  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new]
+  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new, :create, :update]
   before_filter :ensure_admin?, :only => [:all]
 
   def index
@@ -33,12 +32,6 @@ class UsersController < ApplicationController
       format.xls { send_data @users.to_csv(col_sep: "\t") }
     end
   end
-
-  def staff
-    @title = "Staff"
-    @users = current_course.users
-  end
-
 
   def new
     @title = "Create a New User"
