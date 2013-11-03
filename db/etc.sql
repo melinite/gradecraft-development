@@ -4,9 +4,9 @@ CREATE OR REPLACE VIEW course_cache_keys AS
     md5(concat(courses.id, extract(epoch from updated_at))) AS course_key,
     md5(concat(
       courses.id,
-      (SELECT sum(extract(epoch from updated_at)) FROM assignments WHERE assignments.course_id = courses.id),
-      (SELECT sum(extract(epoch from updated_at)) FROM assignment_types WHERE assignment_types.course_id = courses.id),
-      (SELECT sum(extract(epoch from score_levels.updated_at))
+      (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM assignments WHERE assignments.course_id = courses.id),
+      (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM assignment_types WHERE assignment_types.course_id = courses.id),
+      (SELECT COALESCE(sum(extract(epoch from score_levels.updated_at)), 0)
         FROM assignment_types
         JOIN score_levels on score_levels.assignment_type_id = assignment_types.id
         WHERE assignment_types.course_id = courses.id)
@@ -15,9 +15,9 @@ CREATE OR REPLACE VIEW course_cache_keys AS
       (SELECT sum(extract(epoch from updated_at)) FROM grades WHERE grades.course_id = courses.id)
     )) AS grades_key,
     md5(concat(
-      (SELECT sum(extract(epoch from updated_at)) FROM tasks WHERE course_id = courses.id),
-      (SELECT sum(extract(epoch from updated_at)) FROM badges WHERE badges.course_id = courses.id),
-      (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE earned_badges.course_id = courses.id)
+      (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM tasks WHERE course_id = courses.id),
+      (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM badges WHERE badges.course_id = courses.id),
+      (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM earned_badges WHERE earned_badges.course_id = courses.id)
   )) AS badges_key
   FROM courses;
 
@@ -48,15 +48,15 @@ CREATE OR REPLACE
           md5(concat(
             m.course_id,
             m.user_id,
-            (SELECT sum(extract(epoch from updated_at)) FROM earned_badges WHERE course_id = m.course_id and student_id = m.user_id)
+            (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM earned_badges WHERE course_id = m.course_id and student_id = m.user_id)
           )) AS earned_badges_key,
           md5(concat(
             m.course_id,
             m.user_id,
-            (SELECT sum(extract(epoch from updated_at)) FROM submissions WHERE course_id = m.course_id and student_id = m.user_id)
+            (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM submissions WHERE course_id = m.course_id and student_id = m.user_id)
           )) AS submissions_key,
-          (SELECT sum(point_total) FROM assignments WHERE course_id = m.course_id and user_id = m.user_id) AS assignment_score,
-          (SELECT sum(point_total)
+          (SELECT COALESCE(sum(point_total), 0) FROM assignments WHERE course_id = m.course_id and user_id = m.user_id) AS assignment_score,
+          (SELECT COALESCE(sum(point_total), 0)
              FROM assignments
             WHERE course_id = m.course_id and user_id = m.user_id
               AND EXISTS(SELECT 1
@@ -65,14 +65,14 @@ CREATE OR REPLACE
                             AND (status = 'Released') OR (status = 'Graded' AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = m.user_id)
                         )
             ) AS in_progress_assignment_score,
-          (SELECT sum(score) FROM grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score,
+          (SELECT COALESCE(sum(score), 0) FROM grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score,
           (SELECT COALESCE(SUM(score), 0)
              FROM grades AS g
              JOIN assignments AS a ON g.assignment_id = a.id
             WHERE g.course_id = m.course_id AND g.student_id = m.user_id
               AND (g.status = 'Released' OR (g.status = 'Graded' AND NOT a.release_necessary))
               ) AS released_grade_score,
-          (SELECT sum(score) FROM earned_badges WHERE course_id = m.course_id and student_id = m.user_id) AS earned_badge_score,
+          (SELECT COALESCE(sum(score), 0) FROM earned_badges WHERE course_id = m.course_id and student_id = m.user_id) AS earned_badge_score,
           (SELECT SUM(COALESCE(assignment_weights.point_total, assignments.point_total))
              FROM assignments
         LEFT JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id
