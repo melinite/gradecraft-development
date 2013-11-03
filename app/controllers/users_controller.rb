@@ -43,7 +43,10 @@ class UsersController < ApplicationController
 
   def edit
     @teams = current_course.teams
-    @courses = Course.all
+
+    if current_user.is_admin?
+      @courses = Course.all
+    end
     @user = current_course.users.find(params[:id])
     @title = "Edit #{@user.name}"
     @academic_history = @user.student_academic_history
