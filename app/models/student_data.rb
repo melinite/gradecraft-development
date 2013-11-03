@@ -110,7 +110,9 @@ class StudentData < Struct.new(:student, :course)
 
   #Checking specifically if there is a released grade for an assignment
   def grade_released_for_assignment?(assignment)
-    (grade_for_assignment(assignment).is_graded? && !assignment.release_necessary?) || grade_for_assignment(assignment).is_released?
+    if grade_for_assignment(assignment).present?
+      (grade_for_assignment(assignment).status == "Graded" && !assignment.release_necessary?) || grade_for_assignment(assignment).status == "Released"
+    end
   end
 
   #Grabbing the grade for an assignment

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new, :create, :update]
+  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new, :create, :update, :upload, :import]
   before_filter :ensure_admin?, :only => [:all]
 
   def index
