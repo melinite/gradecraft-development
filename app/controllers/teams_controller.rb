@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :only => [:new, :edit, :create, :destroy]
+  before_filter :ensure_staff?, :only => [:new, :edit, :create, :destroy, :update]
 
   def index
     @teams = current_course.teams.includes(:earned_badges)
@@ -18,7 +18,7 @@ class TeamsController < ApplicationController
     @team =  current_course.teams.new
     @team_memberships = @team.team_memberships.new
     @title = "Create a New #{current_course.team_term}"
-    @courses = Course.all
+    @course = current_course
     @users = current_course.users
     @team.team_memberships.build
     @students = @users.students

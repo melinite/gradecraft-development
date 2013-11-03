@@ -8,7 +8,7 @@
           = "#{points current_student_data.score_for_assignment_type(assignment_type)} / "
           = "#{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
     - assignments.each do |assignment|
-      - if assignment.point_total && assignment.point_total > 0
+      - if assignment.point_total && assignment.try(:point_total) > 0
         .assignment.clear{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
           %span.assignmentName= assignment.name
           - if assignment.is_required?
