@@ -77,7 +77,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def self.point_total
-    pluck('SUM(assignments.point_total)').first || 0
+    pluck('COALESCE(SUM(assignments.point_total), 0)').first || 0
   end
 
   def self.assignment_type_point_totals_for_student(student)
@@ -129,7 +129,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def point_total
-    super || assignment_type.universal_point_value
+    super || assignment_type.universal_point_value || 0
   end
 
   def point_total_for_student(student, weight = nil)

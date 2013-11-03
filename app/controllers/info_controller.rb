@@ -23,10 +23,6 @@ class InfoController < ApplicationController
     end
   end
 
-  def predictions
-    current_student.predictions(current_course)
-  end
-
   def grading_status
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     @students = current_course.users.students

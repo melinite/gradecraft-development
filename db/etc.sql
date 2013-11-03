@@ -1,4 +1,4 @@
-CREATE VIEW course_cache_keys AS
+CREATE OR REPLACE VIEW course_cache_keys AS
   SELECT courses.id,
     courses.id AS course_id,
     md5(concat(courses.id, extract(epoch from updated_at))) AS course_key,
@@ -22,6 +22,24 @@ CREATE VIEW course_cache_keys AS
   FROM courses;
 
 CREATE OR REPLACE
+     VIEW released_grades AS
+   SELECT grades.*
+     FROM grades
+     JOIN assignments ON assignments.id = grades.assignment_id
+    WHERE (status = 'Released' OR (status = 'Graded' AND NOT assignments.release_necessary));
+
+CREATE OR REPLACE
+     VIEW membership_scores AS
+   SELECT m.id AS course_membership_id,
+          a.id AS assignment_type_id,
+          (SELECT COALESCE(SUM(g.score), 0) AS score
+             FROM released_grades AS g WHERE g.student_id = m.user_id AND g.assignment_type_id = a.id),
+          a.name
+     FROM course_memberships AS m
+     JOIN assignment_types AS a ON a.course_id = m.course_id
+ GROUP BY m.id, a.id, a.name;
+
+CREATE OR REPLACE
      VIEW membership_calculations AS
    SELECT m.id,
           m.id AS course_membership_id,
@@ -37,12 +55,35 @@ CREATE OR REPLACE
             m.user_id,
             (SELECT sum(extract(epoch from updated_at)) FROM submissions WHERE course_id = m.course_id and student_id = m.user_id)
           )) AS submissions_key,
-          (SELECT sum(score) FROM grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score_sum,
+          (SELECT sum(point_total) FROM assignments WHERE course_id = m.course_id and user_id = m.user_id) AS assignment_score,
+          (SELECT sum(point_total)
+             FROM assignments
+            WHERE course_id = m.course_id and user_id = m.user_id
+              AND EXISTS(SELECT 1
+                           FROM grades
+                          WHERE assignment_id = assignments.id
+                            AND (status = 'Released') OR (status = 'Graded' AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = m.user_id)
+                        )
+            ) AS in_progress_assignment_score,
+          (SELECT sum(score) FROM grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score,
+          (SELECT COALESCE(SUM(score), 0)
+             FROM grades AS g
+             JOIN assignments AS a ON g.assignment_id = a.id
+            WHERE g.course_id = m.course_id AND g.student_id = m.user_id
+              AND (g.status = 'Released' OR (g.status = 'Graded' AND NOT a.release_necessary))
+              ) AS released_grade_score,
+          (SELECT sum(score) FROM earned_badges WHERE course_id = m.course_id and student_id = m.user_id) AS earned_badge_score,
+          (SELECT SUM(COALESCE(assignment_weights.point_total, assignments.point_total))
+             FROM assignments
+        LEFT JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id
+                                    AND assignment_weights.student_id = m.user_id
+           WHERE assignments.course_id = m.course_id) AS weighted_assignment_score,
+          (SELECT COUNT(*) FROM assignment_weights WHERE student_id = m.user_id) AS assignment_weight_count,
           cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key
      FROM course_memberships AS m
      JOIN course_cache_keys AS cck ON m.course_id = cck.id;
 
-CREATE VIEW shared_earned_badges AS
+CREATE OR REPLACE VIEW shared_earned_badges AS
   SELECT course_memberships.course_id,
     (users.first_name || ' ' || users.last_name) as student_name,
     users.id as user_id,

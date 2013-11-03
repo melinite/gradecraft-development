@@ -1,6 +1,7 @@
 .col-lg-12
+  - puts "snert burglar!"
   - cache current_student_data.cache_key('v1', :assignments_key, :grades_key, :earned_badges_key) do
-    #data-predictor{'data-predictor' =>  predictions.to_json}
+    #data-predictor{'data-predictor' =>  current_student_data.predictions.to_json}
   -##data-predictor{ 'data-predictor' => render(:partial => 'timeline', :handlers => [:jbuilder], :formats => [:js])}
   .charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")
     .chart-wrapper.user-bar-in-progress-chart
