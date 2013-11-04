@@ -37,7 +37,7 @@ class InfoController < ApplicationController
 
   def leaderboard
     @teams = current_course.teams.includes(:earned_badges)
-    @students = current_course.users.students
+    @students = current_course.users.students.joins(:course_memberships).where('course_memberships.auditing = false')
     @top_ten_students = @students.order_by_high_score.limit(10)
     @bottom_ten_students = @students.order_by_low_score.limit(10)
     @submissions = current_course.submissions
