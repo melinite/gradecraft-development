@@ -131,7 +131,7 @@ class Grade < ActiveRecord::Base
   end
 
   def save_team
-    if course.has_teams? && student.team_for_course.present?
+    if course.has_teams? && student.team_for_course(course).present?
       student.team_for_course(course).save
     end
   end
