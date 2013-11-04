@@ -12,7 +12,6 @@ class InfoController < ApplicationController
       @bottom_ten_students = @students.order_by_low_score.limit(10)
       @submissions = current_course.submissions
     else
-      @sorted_teams = current_course.teams.order_by_high_score
       @grade_scheme = current_course.grade_scheme
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end

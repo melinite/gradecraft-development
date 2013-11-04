@@ -59,6 +59,10 @@ class CourseData < Struct.new(:course)
     badges_shared[student.id]
   end
 
+  def teams_by_high_score
+    @teams ||= course.teams.order_by_high_score
+  end
+
   def teams
     @teams ||= course.teams
   end
