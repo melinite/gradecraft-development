@@ -29,8 +29,13 @@
                     = gf.hidden_field :status, :value => "Graded"
                   = gf.hidden_field :student_id
                   = label_tag do
-                    - if @assignment.grade_select? && @assignment.assignment_type.has_levels?
+                    // Checking to see if the grade is actually graded before setting the default value to 0
+                    - if @assignment.grade_select? && @assignment.assignment_type.has_levels? && grade.status.present?
                       = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name, grade.raw_score), include_blank: true
+                    - elsif @assignment.grade_select? && @assignment.assignment_type.has_levels?
+                      = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name), include_blank: true
+                    - elsif @assignment.grade_select? && @assignment.has_levels? && grade.status.present?
+                      = gf.select :raw_score, options_from_collection_for_select(@assignment_score_levels, :value, :name), include_blank: true
                     - elsif @assignment.grade_select? && @assignment.has_levels?
                       = gf.select :raw_score, options_from_collection_for_select(@assignment_score_levels, :value, :name, grade.raw_score), include_blank: true
                     - elsif @assignment.grade_radio? && @assignment.assignment_type.has_levels?
@@ -48,7 +53,7 @@
                         = gf.text_field :raw_score
                       - else
                         = gf.text_field :raw_score, :value => nil
-                        = "/ #{@assignment.point_total}"
+                        = "/ #{points @assignment.point_total}"
 
       .form-actions.col-lg-offset-3
         = f.button :submit, "Submit Grades", :class => "btn btn-primary"
