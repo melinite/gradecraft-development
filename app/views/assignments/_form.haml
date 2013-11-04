@@ -34,7 +34,7 @@
       = f.input :accepts_submissions_until, :hint => "When would you like to accept submissions until?", :include_blank => true, :start_year => Date.today.year
     = f.input :student_logged, :hint => "Do students self-report their grade for this #{term_for :assignment}?"
     = f.input :release_necessary, :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
-    - if ! @assignment.assignment_type.notify_released?
+    - if @assignment.assignment_type.present? && ! @assignment.assignment_type.notify_released?
       = f.input :notify_released, :hint => "Do you want to notify students by email when a grade is awarded? If grade release is necessary, this email will not be sent out until the grade is officially released.", :label => "Notify by email?"
   //.well= render 'assignments/rubrics_form', f: f, assignment: @assignment, assignment_rubrics: @assignment_rubrics
 
