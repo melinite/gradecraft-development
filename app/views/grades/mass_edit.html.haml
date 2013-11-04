@@ -35,9 +35,9 @@
                     - elsif @assignment.grade_select? && @assignment.assignment_type.has_levels?
                       = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name), include_blank: true
                     - elsif @assignment.grade_select? && @assignment.has_levels? && grade.status.present?
-                      = gf.select :raw_score, options_from_collection_for_select(@assignment_score_levels, :value, :name), include_blank: true
-                    - elsif @assignment.grade_select? && @assignment.has_levels?
                       = gf.select :raw_score, options_from_collection_for_select(@assignment_score_levels, :value, :name, grade.raw_score), include_blank: true
+                    - elsif @assignment.grade_select? && @assignment.has_levels?
+                      = gf.select :raw_score, options_from_collection_for_select(@assignment_score_levels, :value, :name), include_blank: true
                     - elsif @assignment.grade_radio? && @assignment.assignment_type.has_levels?
                       - @score_levels.each do |score_level|
                         = gf.label :raw_score, score_level.name, value: score_level.value
