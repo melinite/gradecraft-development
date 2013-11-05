@@ -10,7 +10,7 @@
         .heading.col-lg-2 Documents:
         .col-lg-offset-2
           - grade.grade_files.each do |gf|
-            = link_to File.basename(gf.filename.path), gf.filename.url
+            = link_to File.basename(gf.filename), gf.url
 
       - if grade.feedback?
         .heading.col-lg-2 Feedback:
