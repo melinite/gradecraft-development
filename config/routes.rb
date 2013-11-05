@@ -147,6 +147,7 @@ GradeCraft::Application.routes.draw do
   get 'people' => 'pages#people'
   get 'contact' => 'pages#contact'
   get 'documentation' => 'pages#documentation'
+  get 'ping' => 'pages#ping'
 
   #11. Rubrics & Grade Schemes
   resources :rubrics do
