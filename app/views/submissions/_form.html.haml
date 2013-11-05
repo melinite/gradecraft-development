@@ -1,5 +1,5 @@
 %div.s3_uploader
-  = s3_uploader_form key: "uploads/submission_files/#{SecureRandom.hex}-#{current_student.name}-${filename}", acl: "private", max_file_size: 40.megabytes do
+  = s3_uploader_form key: "uploads/submission_files/#{SecureRandom.hex}-#{current_user.name}-${filename}", acl: "private", max_file_size: 40.megabytes do
     = file_field_tag :file, multiple: true
   %div#uploaded_files Uploaded:
 
