@@ -69,6 +69,8 @@ class StudentsController < ApplicationController
   def scores_by_team
     records = current_course.grades.released
                             .joins(:team)
+                            .joins('join course_memberships on grades.student_id = course_memberships.user_id')
+                            .where('course_memberships.auditing = false')
                             .group('grades.student_id, grades.team_id, teams.name')
                             .order('grades.team_id')
     scores = records.pluck('grades.team_id, SUM(grades.score), teams.name')
@@ -92,8 +94,9 @@ class StudentsController < ApplicationController
 
   def scores_for_single_assignment
     scores = current_course.grades.released
-                                  .where(assignment_id: params[:id])
-    scores = scores.pluck('score')
+                                  .joins('join course_memberships on grades.student_id = course_memberships.user_id')
+                                  .where('grades.assignment_id = ' + params[:id], 'course_memberships.auditing = false')
+    scores = scores.pluck('grades.score')
     render :json => {
       :scores => scores
     }

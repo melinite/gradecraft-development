@@ -97,15 +97,14 @@ class Assignment < ActiveRecord::Base
   end
 
   def high_score
-    grades.graded.maximum('score')
+    grades.graded.joins('JOIN course_memberships on course_memberships.user_id = grades.student_id').where('course_memberships.auditing = false').maximum('grades.score')
   end
-
   def low_score
-    grades.graded.minimum('score')
+    grades.graded.joins('JOIN course_memberships on course_memberships.user_id = grades.student_id').where('course_memberships.auditing = false').minimum('grades.score')
   end
 
   def average
-    grades.graded.average('score').round(2) if grades.graded.present?
+    grades.graded.joins('JOIN course_memberships on course_memberships.user_id = grades.student_id').where('course_memberships.auditing = false').average('grades.score').round(2) if grades.graded.present?
   end
 
   def submitted_average

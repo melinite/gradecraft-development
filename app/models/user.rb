@@ -169,10 +169,12 @@ class User < ActiveRecord::Base
   end
 
   def scores_for_course(course)
-     scores = course.grades.released.group(:student_id).order('SUM(score)')
+     scores = course.grades.released.joins('JOIN course_memberships on course_memberships.user_id = grades.student_id')
+                                    .where('course_memberships.auditing = false')
+                                    .group(:student_id).order('SUM(grades.score)')
      user_score = course.grades.released.group(:student_id)
-                                        .where(student_id: id).pluck('SUM(score)')
-     scores = scores.pluck('SUM(score)')
+                                        .where(student_id: id).pluck('SUM(grades.score)')
+     scores = scores.pluck('SUM(grades.score)')
      return {
       :scores => scores,
       :user_score => user_score

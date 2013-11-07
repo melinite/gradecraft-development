@@ -237,6 +237,7 @@ $(document).ready(function(){
       var series = []
       for (var i=0; i<data.length; i++) {
         series[i] = []
+        //sort scores.
         data[i] = data[i].sort(function (a, b) {return a - b})
         var q_length = data[i].length + 1
         //get lowest value
@@ -324,7 +325,6 @@ $(document).ready(function(){
 
   if ($('#student_grade_distro').length) {
     var data = JSON.parse($('#student_grade_distro').attr('data-scores'));
-    console.log(data)
     sparkOpts.height = '50px';
     sparkOpts.target = data.user_score[0];
     sparkOpts.tooltipOffsetY = -130;
