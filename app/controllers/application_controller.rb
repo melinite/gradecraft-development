@@ -15,10 +15,10 @@ class ApplicationController < ActionController::Base
   respond_to :html
 
   protect_from_forgery
-  force_ssl except: :ping
 
   Rails.env.production? do
     before_filter :check_url
+    force_ssl except: :ping
   end
 
   def check_url
