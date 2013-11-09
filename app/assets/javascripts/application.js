@@ -62,21 +62,27 @@ $(document).ready(function(){
   $(".alert").alert();
 
   $('.datetimepicker').datetimepicker()
-  $('.s3_uploader').S3Uploader()
-  $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
-    if ($('.s3_files').first().val()) {
-      var field = $('.s3_files').first().clone()
-      $('.s3_files').parent().append(field)
-      $('.s3_files').last().val(content.filepath)
-    } else {
-      $('.s3_files').val(content.filepath)
-    }
-    $('#uploaded_files').append('<br /> ' + content.filename)
-  })
+  if ($('.s3_uploader').length) {
+    $('.s3_uploader').S3Uploader({
+      allow_multiple_files: false,
+      remove_completed_progress_bar: false,
+      progress_bar_target: $('.s3_progress')
+    })
+    $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
+      if ($('.s3_files').first().val()) {
+        var field = $('.s3_files').first().clone()
+        $('.s3_files').parent().append(field)
+        $('.s3_files').last().val(content.filepath)
+      } else {
+        $('.s3_files').val(content.filepath)
+      }
+      $('#uploaded_files').append('<br /> ' + content.filename)
+    })
 
-  $('s3_uploader').bind('s3_upload_failed', function (e, content) {
-    alert(content.filename +' failed to upload: ' + content.error_thrown)
-  })
+    $('s3_uploader').bind('s3_upload_failed', function (e, content) {
+      alert(content.filename +' failed to upload: ' + content.error_thrown)
+    })
+  }
 
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
