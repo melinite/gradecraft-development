@@ -1,6 +1,9 @@
 %div.s3_uploader
   = s3_uploader_form key: "uploads/badge_files/#{SecureRandom.hex}-#{current_user.name}-${filename}", acl: "private", max_file_size: 40.megabytes do
     = file_field_tag :file, multiple: true
+  %div.upload.s3_progress
+    %div.progress
+      %div.bar
   %div#uploaded_files.col-lg-4.col-md-4.col-sm-5 Uploaded:
 
 = simple_form_for(@badge, :html => {:class => 'form-horizontal', :multipart => true }) do |f|
