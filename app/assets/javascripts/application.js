@@ -62,6 +62,8 @@ $(document).ready(function(){
 
   $('.datetimepicker').datetimepicker()
 
+  $('#predictorUsage').tooltip('show');
+
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
   });

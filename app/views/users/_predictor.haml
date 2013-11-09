@@ -7,6 +7,8 @@
           %span#predictor-score-display= points current_student_data.score
           = "/"
           %span#predictor-course-total-display= points current_student_data.point_total
+          .glyphicon.glyphicon-info-sign.tooltip
+            Tooltip!
         %h4
           Predicted Final Grade:
           %span#predictor-course-grade= current_student_data.grade_level
