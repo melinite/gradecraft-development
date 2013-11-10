@@ -232,3 +232,22 @@ th.sortable {
 b {
   font-family: Helvetica;
 }
+.slider.ui-widget-content {
+  background-color: #eeeeee;
+  border: none;
+}
+
+.ui-widget-header {
+  background-color: $green !important;
+}
+
+.ui-slider .ui-slider-handle {
+  width:20px;
+  height:20px;
+  position:absolute;
+  top:-5px;
+  margin-left:-12px;
+  z-index:200;
+  background: $lightblue;
+}
+
