@@ -17,6 +17,7 @@ class AssignmentType < ActiveRecord::Base
   accepts_nested_attributes_for :score_levels, allow_destroy: true
 
   validates_presence_of :name, :points_predictor_display, :point_setting
+  before_save :ensure_score_levels
 
   scope :student_weightable, -> { where(:student_weightable => true) }
   scope :ordered, -> { order 'order_placement ASC' }
@@ -77,6 +78,16 @@ class AssignmentType < ActiveRecord::Base
 
   def grade_per_assignment?
     mass_grade_type == "Set per Assignment"
+  end
+
+  private
+
+  def ensure_score_levels
+    if mass_grade_type == "Select List" || mass_grade_type == "Radio Buttons"
+      if score_levels.count <= 1
+        errors.add(:assignment_type, "To use the selected method of quick grading you must create at least 2 score levels")
+      end
+    end
   end
 
 end
