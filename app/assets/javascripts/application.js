@@ -62,6 +62,8 @@ $(document).ready(function(){
 
   $('.datetimepicker').datetimepicker()
 
+  $('#predictorUsage').tooltip('show');
+
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
   });
@@ -85,7 +87,6 @@ $(document).ready(function(){
 	$('#navbar').affix();
 
   // Temporarily commented out to revive dashboard charts & predictor
-/*
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider);
@@ -102,6 +103,7 @@ $(document).ready(function(){
       scoreNames.push("Maximum");
     }
     $slider.slider({
+      range: "min",
       min: min,
       max: max,
       stop: function(event, ui) {
@@ -126,7 +128,6 @@ $(document).ready(function(){
       }
     });
   });
-*/
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider)
