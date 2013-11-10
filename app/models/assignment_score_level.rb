@@ -3,4 +3,6 @@ class AssignmentScoreLevel < ActiveRecord::Base
 
   attr_accessible :name, :value, :assignment_id
 
+  validates_presence_of :value, :name
+
 end
