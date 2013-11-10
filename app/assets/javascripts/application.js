@@ -103,6 +103,7 @@ $(document).ready(function(){
       scoreNames.push("Maximum");
     }
     $slider.slider({
+      range: "min",
       min: min,
       max: max,
       stop: function(event, ui) {

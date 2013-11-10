@@ -233,12 +233,12 @@ b {
   font-family: Helvetica;
 }
 .slider.ui-widget-content {
-  background-color: #eeeeee;
+  background: #eeeeee;
   border: none;
 }
 
 .ui-widget-header {
-  background-color: $green !important;
+  background: image-url("cloud_bg.gif") no-repeat left;
 }
 
 .ui-slider .ui-slider-handle {
