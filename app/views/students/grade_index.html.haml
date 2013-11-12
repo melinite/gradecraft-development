@@ -25,7 +25,7 @@
     - @grades.each do |g|
       %tr
         %td= g.id
-        %td= "#{g.assignment_id} • #{g.assignment.name}"
+        %td= "#{g.assignment_id} • #{g.assignment.try(:name)}"
         %td= g.task.name if g.task.present?
         %td= g.submission.id if g.submission.present?
         %td= g.raw_score
