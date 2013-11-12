@@ -1,6 +1,7 @@
-class ChallengeFile < S3File
+class ChallengeFile < ActiveRecord::Base
+  include S3File
 
-  attr_accessible :filename, :challenge_id
+  attr_accessible :filename, :filepath, :challenge_id
 
   belongs_to :challenge
 

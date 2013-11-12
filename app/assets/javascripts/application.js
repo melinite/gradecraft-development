@@ -81,10 +81,17 @@ $(document).ready(function(){
         $('.s3_files').val(content.filepath)
       }
       $('#uploaded_files').append('<br /> ' + content.filename)
+
+      $('.s3_progress').css('visibility', 'hidden')
     })
 
-    $('s3_uploader').bind('s3_upload_failed', function (e, content) {
+    $('.s3_uploader').bind('s3_upload_failed', function (e, content) {
       alert(content.filename +' failed to upload: ' + content.error_thrown)
+      $('.s3_progress').css('visibility', 'hidden')
+    })
+
+    $('.s3_uploader').bind('s3_uploads_start', function (e) {
+      $('.s3_progress').css('visibility', 'visible')
     })
   }
 

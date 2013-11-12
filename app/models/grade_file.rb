@@ -1,7 +1,7 @@
-class GradeFile < S3File
+class GradeFile < ActiveRecord::Base
 include S3File
 
-  attr_accessible :filename, :grade_id
+  attr_accessible :filename, :filename, :grade_id
 
   belongs_to :grade
 

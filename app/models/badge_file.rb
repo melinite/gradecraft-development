@@ -1,4 +1,4 @@
-class BadgeFile < S3File
+class BadgeFile < ActiveRecord::Base
   include S3File
 
   attr_accessible :filename, :badge_id
