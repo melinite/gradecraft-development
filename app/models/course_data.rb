@@ -15,10 +15,17 @@ class CourseData < Struct.new(:course)
     @assignment_types ||= course.assignment_types
   end
 
+  #Only visible assignments
   def assignments
+    @assignments ||= course.assignments.visible.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
+  end
+
+  #Display all assignments - even invisible ones.
+  def all_assignments
     @assignments ||= course.assignments.includes(:course, assignment_type: [:score_levels]).alphabetical.chronological
   end
 
+  #Assignments that must be completed by a group of students working together
   def group_assignments
     @group_assignments ||= assignments.select { |a| a.grade_scope == 'Group' }
   end

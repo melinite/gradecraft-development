@@ -62,6 +62,7 @@ class Assignment < ActiveRecord::Base
   scope :chronological, -> { order('due_at ASC') }
   scope :alphabetical, -> { order('name ASC') }
 
+  scope :visible, -> { where visible: TRUE }
   scope :with_due_date, -> { where('assignments.due_at IS NOT NULL') }
   scope :without_due_date, ->  { where('assignments.due_at IS NULL') }
   scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
