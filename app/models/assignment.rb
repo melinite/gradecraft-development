@@ -26,7 +26,7 @@ class Assignment < ActiveRecord::Base
   has_many :tasks, :as => :assignment, :dependent => :destroy
   has_many :submissions, as: :assignment
   has_many :assignment_files
-  has_many :grades
+  has_many :grades, :dependent => :destroy
   accepts_nested_attributes_for :grades, :reject_if => Proc.new { |attrs| attrs[:raw_score].blank? }
 
   has_many :users, :through => :grades
