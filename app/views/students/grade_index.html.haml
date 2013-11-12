@@ -29,7 +29,7 @@
         %td= g.task.name if g.task.present?
         %td= g.submission.id if g.submission.present?
         %td= g.raw_score
-        %td= g.score
+        %td= g.try(:score)
         %td= g.predicted_score
         %td= g.feedback
         %td= g.status
