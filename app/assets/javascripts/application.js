@@ -109,6 +109,7 @@ $(document).ready(function(){
 	$('#navbar').affix();
 
   // Temporarily commented out to revive dashboard charts & predictor
+/*
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider);
@@ -150,6 +151,7 @@ $(document).ready(function(){
       }
     });
   });
+*/
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider)
