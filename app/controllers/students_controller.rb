@@ -80,17 +80,17 @@ class StudentsController < ApplicationController
   end
 
   # TODO: Outgoing? AG
-  def scores_for_current_course
-     scores = current_course.grades.released.group(:student_id).order('SUM(score)')
-     id = params[:user_id] || current_user.id
-     user_score = current_course.grades.released.group(:student_id)
-                                                .where(student_id: id).pluck('SUM(score)')
-     scores = scores.pluck('SUM(score)')
-     render :json => {
-      :scores => scores,
-      :user_score => user_score
-     }
-  end
+#   def scores_for_current_course
+#      scores = current_course.grades.released.group(:student_id).order('SUM(score)')
+#      id = params[:user_id] || current_user.id
+#      user_score = current_course.grades.released.group(:student_id)
+#                                                 .where(student_id: id).pluck('SUM(score)')
+#      scores = scores.pluck('SUM(score)')
+#      render :json => {
+#       :scores => scores,
+#       :user_score => user_score
+#      }
+#   end
 
   def scores_for_single_assignment
     scores = current_course.grades.released

@@ -168,13 +168,10 @@ class User < ActiveRecord::Base
     earned_badges.where(:course => course).score
   end
 
+  #I think this may be a little bit faster - ch
   def scores_for_course(course)
-     scores = course.grades.released.joins('JOIN course_memberships on course_memberships.user_id = grades.student_id')
-                                    .where('course_memberships.auditing = false')
-                                    .group(:student_id).order('SUM(grades.score)')
-     user_score = course.grades.released.group(:student_id)
-                                        .where(student_id: id).pluck('SUM(grades.score)')
-     scores = scores.pluck('SUM(grades.score)')
+     user_score = course_memberships.where(:course_id => course).pluck('score')
+     scores = course.students.pluck('score')
      return {
       :scores => scores,
       :user_score => user_score

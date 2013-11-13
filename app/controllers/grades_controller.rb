@@ -171,15 +171,17 @@ class GradesController < ApplicationController
       flash[:notice] = "File missing"
       redirect_to assignment_path(@assignment)
     else
-      CSV.foreach(params[:file].tempfile, :headers => false) do |row|
+      CSV.foreach(params[:file].tempfile, :headers => true) do |row|
+        product = find_by_id(row["id"]) || new
         @students.each do |student|
           if student.username == row[2] && row[3].present?
-            @assignment.grades.create! do |g|
+            @assignment.grades.first_or_initialize do |g|
               g.assignment_id = @assignment.id
               g.student_id = student.id
               g.raw_score = row[3].to_i
               g.feedback = row[5]
               g.status = "Graded"
+              g.save!
             end
           end
         end
