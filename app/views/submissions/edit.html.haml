@@ -37,7 +37,7 @@
     %p
       %b Documents:
       - @submission.submission_files.each do |sf|
-        = link_to File.basename(sf.filename), sf.url
+        = link_to sf.filename, sf.url
 
   - if @assignment.has_groups?
     - if current_user.is_student?
