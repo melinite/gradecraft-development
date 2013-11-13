@@ -1,10 +1,12 @@
 %div.s3_uploader
-  = s3_uploader_form key: "uploads/grade_files/#{SecureRandom.hex}-#{current_user.name}-${filename}", acl: "private", max_file_size: 40.megabytes do
-    = file_field_tag :file, multiple: true
+  = s3_uploader_form key: "uploads/badge_files/#{SecureRandom.hex}-#{current_user.name}-${filename}", acl: "private", max_file_size: 40.megabytes do
+    = file_field_tag :file
+    This image will be shown to the student, and shared with any communities if the student has chosen to make the award public.
+  %div#uploaded_files Uploaded:
   %div.upload.s3_progress
+    Progress:
     %div.progress
       %div.bar
-  %div#uploaded_files Uploaded:
 
 = simple_form_for @grade, url: assignment_grade_path(@assignment), method: :patch, :html => { :class => 'form-horizontal' } do |f|
   = hidden_field_tag :student_id, current_student.id

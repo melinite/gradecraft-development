@@ -70,6 +70,7 @@ $(document).ready(function(){
     $('.s3_uploader').S3Uploader({
       allow_multiple_files: false,
       remove_completed_progress_bar: false,
+      remove_failed_progress_bar: false,
       progress_bar_target: $('.s3_progress')
     })
     $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
