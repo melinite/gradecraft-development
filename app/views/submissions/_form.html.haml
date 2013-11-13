@@ -1,10 +1,18 @@
+%div.s3_uploader
+  = s3_uploader_form key: "uploads/submission_files/#{SecureRandom.hex}-#{current_user.name}-${filename}", acl: "private", max_file_size: 40.megabytes do
+    = file_field_tag :file
+  %div.upload.s3_progress
+    %div.progress
+      %div.bar
+  %div#uploaded_files Uploaded:
+
 = simple_form_for([@assignment, @submission], :html => {:class => 'form-horizontal' }) do |f|
   - if @assignment.has_groups? && current_user.is_student?
     = f.input :group_id, :input_html => { :value => current_student.group_for_assignment(@assignment).id }, :as => :hidden
   - elsif @assignment.has_groups? && current_user.is_staff?
     = f.input :group_id, :input_html => { :value => @group.id }, :as => :hidden
   = f.simple_fields_for :submission_files, @submission.submission_files.new do |sff|
-    = sff.input :filename, as: :file
+    = sff.input :filename, :input_html => { :class => 's3_files' }, :as => :hidden
   = f.input :link, :hint => "Where is the assignment located on the web?", :input_html => {:class => 'col col-lg-8' }
   = f.text_area :text_comment, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }, :label => "Comment. Note this must be <strong>TEXT ONLY</strong>"
 

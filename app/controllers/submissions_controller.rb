@@ -87,6 +87,11 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def upload
+    render :json => params.inspect
+    #To-Do: create a submission, add the file URL, save it, and redirect to edit
+  end
+
   def update
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.find(params[:id])

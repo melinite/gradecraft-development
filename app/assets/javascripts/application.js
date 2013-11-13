@@ -10,6 +10,8 @@
 //= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
+//= require s3_direct_upload
+//= require jquery.ui.widget
 //= require jquery.sparkline.min
 //= require underscore.min
 //= require backbone.min
@@ -38,8 +40,7 @@
 //= require stupidtable
 //= require earned_badges
 //= require predictor
-//= require per-assign
-
+//= require per-assign 
 $(document).ready(function(){
 
   $('#gradeCurious').popover();
@@ -61,6 +62,27 @@ $(document).ready(function(){
   $(".alert").alert();
 
   $('.datetimepicker').datetimepicker()
+  if ($('.s3_uploader').length) {
+    $('.s3_uploader').S3Uploader({
+      allow_multiple_files: false,
+      remove_completed_progress_bar: false,
+      progress_bar_target: $('.s3_progress')
+    })
+    $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
+      if ($('.s3_files').first().val()) {
+        var field = $('.s3_files').first().clone()
+        $('.s3_files').parent().append(field)
+        $('.s3_files').last().val(content.filepath)
+      } else {
+        $('.s3_files').val(content.filepath)
+      }
+      $('#uploaded_files').append('<br /> ' + content.filename)
+    })
+
+    $('s3_uploader').bind('s3_upload_failed', function (e, content) {
+      alert(content.filename +' failed to upload: ' + content.error_thrown)
+    })
+  }
 
   $('#predictorUsage').tooltip('show');
 
@@ -326,12 +348,14 @@ $(document).ready(function(){
 
   if ($('#student_grade_distro').length) {
     var data = JSON.parse($('#student_grade_distro').attr('data-scores'));
-    sparkOpts.height = '50px';
-    sparkOpts.target = data.user_score[0];
-    sparkOpts.tooltipOffsetY = -130;
-    sparkOpts.tooltipOffsetY = -80;
-    sparkOpts.targetColor = "#FF0000";
-    $('#student_grade_distro').sparkline(data.scores, sparkOpts);
+    if (data !== null) {
+      sparkOpts.height = '50px';
+      sparkOpts.target = data.user_score[0];
+      sparkOpts.tooltipOffsetY = -130;
+      sparkOpts.tooltipOffsetY = -80;
+      sparkOpts.targetColor = "#FF0000";
+      $('#student_grade_distro').sparkline(data.scores, sparkOpts);
+    }
   }
 
   if ($('.bar-chart').length) {

@@ -33,11 +33,11 @@
     %p
       %b Accept submissions until:
       = @assignment.accepts_submissions_until
-  - if @assignment.assignment_files.present?
+  - if @submission.submission_files.present?
     %p
       %b Documents:
-      - @assignment.assignment_files.each do |af|
-        = link_to af.filename.identifier, af.filename.url
+      - @submission.submission_files.each do |sf|
+        = link_to File.basename(sf.filename), sf.url
 
   - if @assignment.has_groups?
     - if current_user.is_student?

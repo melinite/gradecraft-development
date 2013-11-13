@@ -32,11 +32,6 @@
     %p
       %b Accept submissions until:
       = @assignment.accepts_submissions_until
-  - if @assignment.assignment_files.present?
-    %p
-      %b Documents:
-      - @assignment.assignment_files.each do |af|
-        = link_to af.filename.identifier, af.filename.url
 
   - if @assignment.has_groups? && current_user.is_student?
     %h4= "You are submitting this assignment for Group #{current_student.group_for_assignment(@assignment).name }"

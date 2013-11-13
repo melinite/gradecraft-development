@@ -68,12 +68,16 @@ GradeCraft::Application.routes.draw do
         post :upload
       end
     end
-    resources :submissions
+    resources :submissions do
+      post :upload
+    end
     resources :tasks
     resource :grade, only: [:show, :edit, :update, :destroy] do
       resources :earned_badges
     end
   end
+
+  resources :submission_files, only: :index
 
   resources :score_levels
 
