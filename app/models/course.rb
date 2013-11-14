@@ -39,7 +39,7 @@ class Course < ActiveRecord::Base
   has_many :grade_scheme_elements, :through => :grade_schemes
   belongs_to :grade_scheme
 
-  validates_presence_of :name
+  validates_presence_of :name, :courseno
 
   def user_term
     super.presence || 'Player'
