@@ -3,10 +3,18 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+
+--
+-- Name: binary_upgrade; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA binary_upgrade;
+
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -20,6 +28,89 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = binary_upgrade, pg_catalog;
+
+--
+-- Name: create_empty_extension(text, text, boolean, text, oid[], text[], text[]); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION create_empty_extension(text, text, boolean, text, oid[], text[], text[]) RETURNS void
+    LANGUAGE c
+    AS '$libdir/pg_upgrade_support', 'create_empty_extension';
+
+
+--
+-- Name: set_next_array_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_array_pg_type_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_array_pg_type_oid';
+
+
+--
+-- Name: set_next_heap_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_heap_pg_class_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_heap_pg_class_oid';
+
+
+--
+-- Name: set_next_index_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_index_pg_class_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_index_pg_class_oid';
+
+
+--
+-- Name: set_next_pg_authid_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_pg_authid_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_pg_authid_oid';
+
+
+--
+-- Name: set_next_pg_enum_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_pg_enum_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_pg_enum_oid';
+
+
+--
+-- Name: set_next_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_pg_type_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_pg_type_oid';
+
+
+--
+-- Name: set_next_toast_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_toast_pg_class_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_toast_pg_class_oid';
+
+
+--
+-- Name: set_next_toast_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_toast_pg_type_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_toast_pg_type_oid';
 
 
 SET search_path = public, pg_catalog;
@@ -806,7 +897,28 @@ CREATE TABLE tasks (
 --
 
 CREATE VIEW course_cache_keys AS
-    SELECT courses.id, courses.id AS course_id, md5(pg_catalog.concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, md5(pg_catalog.concat(courses.id, (SELECT sum(date_part('epoch'::text, assignments.updated_at)) AS sum FROM assignments WHERE (assignments.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, assignment_types.updated_at)) AS sum FROM assignment_types WHERE (assignment_types.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, score_levels.updated_at)) AS sum FROM (assignment_types JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id))) WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, md5(concat((SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum FROM grades WHERE (grades.course_id = courses.id)))) AS grades_key, md5(pg_catalog.concat((SELECT sum(date_part('epoch'::text, tasks.updated_at)) AS sum FROM tasks WHERE (tasks.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, badges.updated_at)) AS sum FROM badges WHERE (badges.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE (earned_badges.course_id = courses.id)))) AS badges_key FROM courses;
+ SELECT courses.id, 
+    courses.id AS course_id, 
+    md5(concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, 
+    md5(concat(courses.id, ( SELECT sum(date_part('epoch'::text, assignments.updated_at)) AS sum
+           FROM assignments
+          WHERE (assignments.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, assignment_types.updated_at)) AS sum
+           FROM assignment_types
+          WHERE (assignment_types.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, score_levels.updated_at)) AS sum
+           FROM (assignment_types
+      JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id)))
+     WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, 
+    md5(concat(( SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum
+           FROM grades
+          WHERE (grades.course_id = courses.id)))) AS grades_key, 
+    md5(concat(( SELECT sum(date_part('epoch'::text, tasks.updated_at)) AS sum
+           FROM tasks
+          WHERE (tasks.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, badges.updated_at)) AS sum
+           FROM badges
+          WHERE (badges.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
+           FROM earned_badges
+          WHERE (earned_badges.course_id = courses.id)))) AS badges_key
+   FROM courses;
 
 
 --
@@ -1420,7 +1532,25 @@ CREATE TABLE submissions (
 --
 
 CREATE VIEW membership_calculations AS
-    SELECT m.id, m.id AS course_membership_id, m.course_id, m.user_id, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum FROM submissions WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, (SELECT sum(grades.score) AS sum FROM grades WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score_sum, cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key FROM (course_memberships m JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
+ SELECT m.id, 
+    m.id AS course_membership_id, 
+    m.course_id, 
+    m.user_id, 
+    md5(concat(m.course_id, m.user_id, ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
+           FROM earned_badges
+          WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, 
+    md5(concat(m.course_id, m.user_id, ( SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum
+           FROM submissions
+          WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, 
+    ( SELECT sum(grades.score) AS sum
+           FROM grades
+          WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score_sum, 
+    cck.course_key, 
+    cck.assignments_key, 
+    cck.grades_key, 
+    cck.badges_key
+   FROM (course_memberships m
+   JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
 
 
 --
@@ -1562,7 +1692,17 @@ CREATE TABLE users (
 --
 
 CREATE VIEW shared_earned_badges AS
-    SELECT course_memberships.course_id, (((users.first_name)::text || ' '::text) || (users.last_name)::text) AS student_name, users.id AS user_id, earned_badges.id, badges.icon, badges.name FROM (((course_memberships JOIN users ON ((users.id = course_memberships.user_id))) JOIN earned_badges ON ((earned_badges.student_id = users.id))) JOIN badges ON ((badges.id = earned_badges.badge_id))) WHERE (((course_memberships.shared_badges = true) AND (badges.icon IS NOT NULL)) AND (earned_badges.shared = true));
+ SELECT course_memberships.course_id, 
+    (((users.first_name)::text || ' '::text) || (users.last_name)::text) AS student_name, 
+    users.id AS user_id, 
+    earned_badges.id, 
+    badges.icon, 
+    badges.name
+   FROM (((course_memberships
+   JOIN users ON ((users.id = course_memberships.user_id)))
+   JOIN earned_badges ON ((earned_badges.student_id = users.id)))
+   JOIN badges ON ((badges.id = earned_badges.badge_id)))
+  WHERE (((course_memberships.shared_badges = true) AND (badges.icon IS NOT NULL)) AND (earned_badges.shared = true));
 
 
 --
@@ -1642,7 +1782,17 @@ ALTER SEQUENCE student_assignment_type_weights_id_seq OWNED BY student_assignmen
 --
 
 CREATE VIEW student_cache_keys AS
-    SELECT cm.id, cm.id AS course_membership_id, cm.course_id, cm.user_id, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE ((earned_badges.course_id = cm.course_id) AND (earned_badges.student_id = cm.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum FROM submissions WHERE ((submissions.course_id = cm.course_id) AND (submissions.student_id = cm.user_id))))) AS submissions_key FROM course_memberships cm;
+ SELECT cm.id, 
+    cm.id AS course_membership_id, 
+    cm.course_id, 
+    cm.user_id, 
+    md5(concat(cm.course_id, cm.user_id, ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
+           FROM earned_badges
+          WHERE ((earned_badges.course_id = cm.course_id) AND (earned_badges.student_id = cm.user_id))))) AS earned_badges_key, 
+    md5(concat(cm.course_id, cm.user_id, ( SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum
+           FROM submissions
+          WHERE ((submissions.course_id = cm.course_id) AND (submissions.student_id = cm.user_id))))) AS submissions_key
+   FROM course_memberships cm;
 
 
 --
