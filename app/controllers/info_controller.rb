@@ -13,6 +13,7 @@ class InfoController < ApplicationController
       @submissions = current_course.submissions
     else
       @grade_scheme = current_course.grade_scheme
+      @grade_levels_json = @grade_scheme.elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
       @scores_for_current_course = current_student.scores_for_course(current_course)
     end
     if current_course.team_challenges?
