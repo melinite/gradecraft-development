@@ -4,12 +4,12 @@
       #projectedPoints
         %h4
           = "Your projected points:"
-          %span#predictor-score-display= points current_student_data.score
+          %span#predictor-score-display= points current_student_data.predicted_score
           = "/"
           %span#predictor-course-total-display= points current_student_data.point_total
         %h4
           Predicted Final Grade:
-          %span#predictor-course-grade{:'data-grade-levels' => "#{current_course.grade_scheme.elements.order(:low_range).pluck(:low_range, :letter, :level).to_json}"}
+          %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
             = current_student_data.predicted_grade_letter
       %span#expectedPointsValue
     .charts.dashboard-charts

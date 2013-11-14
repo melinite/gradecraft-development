@@ -46,6 +46,7 @@ class Grade < ActiveRecord::Base
   scope :completion, -> { where(order: "assignments.due_at ASC", :joins => :assignment) }
   scope :graded, -> { where('status = ?', 'Graded') }
   scope :released, -> { joins(:assignment).where("status = 'Released' OR (status = 'Graded' AND NOT assignments.release_necessary)") }
+  scope :not_released, -> { joins(:assignment).where("status != 'Released' AND (status != 'Graded' OR assignments.release_necessary)")}
 
   validates_numericality_of :raw_score, integer_only: true
 
@@ -53,8 +54,9 @@ class Grade < ActiveRecord::Base
     pluck('COALESCE(SUM(grades.score), 0)').first
   end
 
-  def self.predicted_score
-    pluck('COALESCE(SUM(grades.predicted_score), 0)').first
+  def self.predicted_points
+    #Only return back the total predicted points for a user, not including points they have been scored on
+    scoped.not_released.pluck('COALESCE(SUM(grades.predicted_score), 0)').first
   end
 
   def self.assignment_scores

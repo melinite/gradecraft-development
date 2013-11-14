@@ -38,6 +38,11 @@ class StudentData < Struct.new(:student, :course)
     @score ||= sums.released_grade_score + sums.earned_badge_score + team_score
   end
 
+  #Predicted score is the score already known to the user + all the predicted points for grades not released or not graded.
+  def predicted_score
+    @predicted_score ||= @score + grades.where(course: course).predicted_points
+  end
+
   #Possible total points for student
   def point_total
     @point_total ||= sums.weighted_assignment_score + earned_badge_score
@@ -54,6 +59,10 @@ class StudentData < Struct.new(:student, :course)
 
   def grade_letter
     @grade_letter ||= course.grade_letter_for_score(score)
+  end
+
+  def predicted_grade_letter
+    @predicted_grade_letter ||= course.grade_letter_for_score(predicted_score)
   end
 
   #Summed score for a type of assignment type
@@ -187,7 +196,7 @@ class StudentData < Struct.new(:student, :course)
   end
 
   def grades
-    @grades ||= student.grades
+    @grades ||= student.grades.where(course: course)
   end
 
   def released_grades
