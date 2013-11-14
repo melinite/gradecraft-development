@@ -8,7 +8,7 @@ class SubmissionFile < ActiveRecord::Base
   def url
     s3 = AWS::S3.new
     bucket = s3.buckets["gradecraft-#{Rails.env}"]
-    return bucket.objects[CGI::unescape(filename)].url_for(:read, :expires => 15* 60).to_s #15 minutes
+    return bucket.objects["uploads/submission_file/filename/#{id}/#{CGI::unescape(filename)}"].url_for(:read, :expires => 15* 60) #15 minutes
   end
 
   private
