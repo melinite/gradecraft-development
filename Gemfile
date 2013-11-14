@@ -14,7 +14,7 @@ gem 'bullet', :group => :development
 gem 'canable'
 gem 'carrierwave'
 gem 'coffee-rails'
-gem 'compass-rails', :git => 'https://github.com/milgner/compass-rails', :branch => 'rails4'
+gem "compass-rails", "~> 2.0.alpha.0"
 gem 'dalli'
 gem 'dotenv-rails'
 gem 'fog'
