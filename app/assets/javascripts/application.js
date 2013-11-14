@@ -40,7 +40,7 @@
 //= require stupidtable
 //= require earned_badges
 //= require predictor
-//= require per-assign 
+//= require per-assign
 $(document).ready(function(){
 
   $('#gradeCurious').popover();
@@ -61,7 +61,10 @@ $(document).ready(function(){
 
   $(".alert").alert();
 
-  $('.datetimepicker').datetimepicker()
+  $('.datetimepicker').datetimepicker( {
+    format: 'mm-dd-yyyy hh:ii'
+  });
+
   if ($('.s3_uploader').length) {
     $('.s3_uploader').S3Uploader({
       allow_multiple_files: false,
@@ -109,6 +112,7 @@ $(document).ready(function(){
 	$('#navbar').affix();
 
   // Temporarily commented out to revive dashboard charts & predictor
+/*
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider);
@@ -150,6 +154,7 @@ $(document).ready(function(){
       }
     });
   });
+*/
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider)

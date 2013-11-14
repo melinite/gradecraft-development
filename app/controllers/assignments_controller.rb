@@ -53,11 +53,8 @@ class AssignmentsController < ApplicationController
 
   def update
     @assignment = current_course.assignments.find(params[:id])
-    if @assignment.due_at.present? && @assignment.open_at.present? && @assignment.due_at < @assignment.open_at
-      redirect_to edit_assignment_path(@assignment), :error => 'Due date must be after open date.'
-    elsif @assignment.update_attributes(params[:assignment])
-      respond_with @assignment
-    end
+    @assignment.update_attributes(params[:assignment])
+    respond_with @assignment
   end
 
   def destroy

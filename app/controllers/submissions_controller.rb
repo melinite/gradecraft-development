@@ -76,7 +76,8 @@ class SubmissionsController < ApplicationController
         if @assignment.is_individual?
           user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}" }
           submission = { name: "#{@submission.assignment.name}", time: "#{@submission.created_at}" }
-          NotificationMailer.successful_submission(user, submission).deliver
+          course = { courseno: "#{current_course.courseno}" }
+          NotificationMailer.successful_submission(user, submission, course).deliver
         end
       elsif @submission.errors[:link].any?
         format.html { redirect_to new_assignment_submission_path(@assignment, @submission), notice: "Please provide a valid link for #{@assignment.name} submissions." }

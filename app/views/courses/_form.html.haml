@@ -3,7 +3,7 @@
     %h4 THE BASICS
     = f.input :name, :label => "Course Title", :input_html => {:class => "col-lg-4"}
     = f.input :tagline, :label => "Tagline", :input_html => {:class => "col-lg-4"}
-    = f.input :courseno, :label => "Course Number", :input_html => {:class => "col-lg-2"}
+    = f.input :courseno, :label => "Course Number", :input_html => {:class => "col-lg-2"}, :hint => "This will be used as the prefix to the subject line on all email notifications sent for the course"
     = f.input :semester, :collection => [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]], :input_html => {:class => "col-lg-4 input-sm"}
     = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2), :input_html => {:class => "col-lg-4 input-sm"}
     = f.input :office, :label => "Professor's Office", :input_html => {:class => "col-lg-4"}
@@ -18,7 +18,7 @@
     = f.input :assignment_term, :label => "Assignment Term", :hint => "Would you like to call assignments something else?"
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
-    = f.input :predictor_setting, :label => "Can the students see the predictor on their dashboard?", :as => :radio_buttons
+    = f.input :predictor_setting, :label => "Display grade predictor (Student Dashboard)?", :as => :radio_buttons
     %h4 Grading Philosophy
     %p What would you like to tell students about how they should expected to be graded?
     = f.text_area :grading_philosophy, :class => :ckeditor, :label => "What would you like to tell students about how they should expected to be graded?", :input_html => {:style => "width: 100%; height: 200px;"}

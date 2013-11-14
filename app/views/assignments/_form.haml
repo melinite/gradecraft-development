@@ -13,10 +13,6 @@
     = f.simple_fields_for :assignment_files, @assignment.assignment_files.new do |aff|
       = aff.input :filename, as: :file
     = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
-  - if @assignment.assignment_type.present? && @assignment.assignment_type.points_predictor_display == "Set per Assignment"
-    .well
-      %h4 Predictor
-      = f.input :points_predictor_display, :collection => [["Fixed"], ["Slider"], ["Select List"]], :input_html => {:class => "input-sm col-lg-3"}
 
   .well
     %h4 Timeline

@@ -18,10 +18,11 @@ class NotificationMailer < ActionMailer::Base
     end
   end
 
-  def successful_submission(user_info, submission_info)
+  def successful_submission(user_info, submission_info, course_info)
     @user = user_info
     @submission = submission_info
-    mail(:to => "#{@user[:email]}", :subject => "#{@submission[:name]} Submitted") do |format|
+    @course = course_info
+    mail(:to => "#{@user[:email]}", :subject => "#{@course[:courseno]} - #{@submission[:name]} Submitted") do |format|
       format.text
       format.html
     end
@@ -30,8 +31,9 @@ class NotificationMailer < ActionMailer::Base
   def grade_released(grade_id)
     @grade = Grade.find grade_id
     @user = @grade.student
+    @course = @grade.course
     @assignment = @grade.assignment
-    mail(:to => @user.email, :subject => "#{@assignment.name} Graded") do |format|
+    mail(:to => @user.email, :subject => "#{@course.courseno} - #{@assignment.name} Graded") do |format|
       format.text
       format.html
     end

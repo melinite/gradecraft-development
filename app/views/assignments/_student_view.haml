@@ -22,12 +22,12 @@
 
   - if @assignment.due_at?
     %p
-      %b No longer accepted after:
+      %b Due at:
       = @assignment.due_at
 
   - if @assignment.accepts_submissions_until?
     %p
-      %b Accept submissions until:
+      %b No longer accepted after:
       = @assignment.accepts_submissions_until
   - if @assignment.assignment_files.present?
     %p
@@ -50,7 +50,7 @@
             %td= task.name
             %td= task.description
 
-  - if @assignment.accepts_submissions?
+  - if @assignment.accepts_submissions? && @assignment.still_accepted?
     - if @assignment.is_individual? || (@assignment.has_groups? && current_student.group_for_assignment(@assignment))
       %h3 Submit #{@assignment.name}
       = render "/submissions/form"

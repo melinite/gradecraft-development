@@ -13,6 +13,7 @@ class GradesController < ApplicationController
   end
 
   def edit
+    session[:return_to] = request.referer
     redirect_to @assignment and return unless current_student.present?
     @grade = current_student_data.grade_for_assignment(@assignment)
     @score_levels = @assignment.score_levels
@@ -27,7 +28,7 @@ class GradesController < ApplicationController
     if @assignment.notify_released? && @grade.is_released?
       NotificationMailer.grade_released(@grade.id).deliver
     end
-    respond_with @grade, location: @assignment
+    redirect_to session.delete(:return_to)
   end
 
   def destroy
@@ -171,20 +172,29 @@ class GradesController < ApplicationController
       flash[:notice] = "File missing"
       redirect_to assignment_path(@assignment)
     else
-      CSV.foreach(params[:file].tempfile, :headers => false) do |row|
+      CSV.foreach(params[:file].tempfile, :headers => true) do |row|
         @students.each do |student|
           if student.username == row[2] && row[3].present?
-            @assignment.grades.create! do |g|
-              g.assignment_id = @assignment.id
-              g.student_id = student.id
-              g.raw_score = row[3].to_i
-              g.feedback = row[5]
-              g.status = "Graded"
+            if student.grades.where(:assignment_id => @assignment).present?
+              @assignment.grade_for_student(student).tap do |grade|
+                grade.raw_score = row[3].to_i
+                grade.feedback = row[5]
+                grade.status = "Graded"
+                grade.save!
+              end
+            else
+              @assignment.grades.create! do |g|
+                g.assignment_id = @assignment.id
+                g.student_id = student.id
+                g.raw_score = row[3].to_i
+                g.feedback = row[5]
+                g.status = "Graded"
+              end
             end
           end
         end
       end
-      redirect_to assignment_path(@assignment), :notice => "Upload successful"
+    redirect_to assignment_path(@assignment), :notice => "Upload successful"
     end
   end
 
