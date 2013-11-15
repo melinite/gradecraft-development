@@ -4,6 +4,8 @@ class ScoreLevel < ActiveRecord::Base
   belongs_to :challenge
 
   attr_accessible :name, :value, :assignment_id, :assignment_type_id
+
+  validates_presence_of :value, :name
   #validate :score_level_cannot_exceed_lowest_assignment_point_value
 
 
