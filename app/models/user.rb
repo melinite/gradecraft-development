@@ -346,7 +346,6 @@ def groups_by_assignment_id
 
   def cache_scores
     course_memberships.each do |membership|
-      debugger
       membership.update_attribute :score, self.score_for_course(membership.course.id)
     end
   end
