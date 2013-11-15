@@ -19,6 +19,7 @@ class SubmissionsController < ApplicationController
   end
 
   def new
+    session[:return_to] = request.referer
     @assignment = current_course.assignments.find(params[:assignment_id])
     @title = @assignment.name
     if current_user.is_staff?
@@ -41,6 +42,7 @@ class SubmissionsController < ApplicationController
   end
 
   def edit
+    session[:return_to] = request.referer
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = current_course.submissions.find(params[:id])
     if current_user.is_staff?
@@ -71,7 +73,7 @@ class SubmissionsController < ApplicationController
           format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was successfully submitted." }
           format.json { render json: @assignment, status: :created, location: @assignment }
         else
-          format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully submitted." }
+          format.html { redirect_to session.delete(:return_to), notice: "#{@assignment.name} was successfully submitted." }
         end
         if @assignment.is_individual?
           user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}" }
@@ -102,7 +104,7 @@ class SubmissionsController < ApplicationController
           format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "Your submission for #{@assignment.name} was successfully updated." }
           format.json { render json: @assignment, status: :created, location: @assignment }
         else
-          format.html { redirect_to assignment_path(@assignment), notice: "#{@assignment.name} was successfully updated." }
+          format.html { redirect_to session.delete(:return_to), notice: "#{@assignment.name} was successfully updated." }
         end
       elsif @submission.errors[:link].any?
         format.html { redirect_to edit_assignment_submission_path(@assignment, @submission), notice: "Please provide a valid link for #{@assignment.name} submissions." }
