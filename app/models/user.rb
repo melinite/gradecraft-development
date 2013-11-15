@@ -234,7 +234,7 @@ class User < ActiveRecord::Base
 
   #grabbing the stored score for the current course
   def cached_score_for_course(course)
-    course_memberships.where(:course_id => course).first.score
+    course_memberships.where(:course_id => course).first.score || 0
   end
 
   #student setting as to whether or not they wish to share their earned badges for this course
