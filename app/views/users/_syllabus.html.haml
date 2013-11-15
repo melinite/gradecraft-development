@@ -73,15 +73,19 @@
         %hr
   - if current_course.team_challenges?
     .col-lg-12.col-xs-12.col-md-12.col-sm-12
-      %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#challenges", "data-toggle" => "collapse"} #{term_for :challenges} #{ points current_student.team_for_course(current_course).challenge_grade_score }/#{points current_course_data.point_total_for_challenges}
+      %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#challenges", "data-toggle" => "collapse"} #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
       .collapse{:id => "challenges"}
         .col-lg-12
           - current_course_data.challenges.each do |challenge|
             .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
               %span.assignmentName= challenge.name
-              %span.points= points challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).try(:score)
-              %span.points= "/"
-              %span.points= points challenge.point_total
+              - if current_student.team_for_course(current_course)
+                - if challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).present?
+                  %span.points.earned= points challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).try(:score)
+                  %span.points= "/"
+              %span.points
+                = points challenge.point_total
+                = "points"
               - if challenge.future?
                 %span.bold= " • Due: #{challenge.due_at.strftime("%A, %B %d, %l:%M%p")}"
   %hr

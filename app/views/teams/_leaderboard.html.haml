@@ -8,6 +8,10 @@
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tabt3"} #{term_for :challenges}
 
+- if current_user.is_student? && ! current_student.display_name?
+  = "Want to see the your #{term_for :team} leaderboard?"
+  = link_to "Set your screen name!", edit_profile_users_path
+
 %br
 %br
 .tab-content

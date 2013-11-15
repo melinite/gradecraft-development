@@ -13,12 +13,14 @@
     = f.input :email
     = f.input :first_name
     = f.input :last_name
-    = f.input :display_name, :label => "Pseudonym", :hint => "What would you like your name to be on the leaderboards?"
+    - if current_course.teams_visible?
+      = f.input :display_name, :label => "Pseudonym", :hint => "What would you like your name to be on the leaderboards?"
     //= f.input :private_display, :label => "Private Browsing", :hint => "For privacy purposes would you like to hide all identifying information (name and email address) while browsing?"
-    = f.input :team_role, :hint => "What will you contribute to your team?"
+    - if current_course.team_roles?
+      = f.input :team_role, :hint => "What will you contribute to your team?"
     = f.simple_fields_for :course_memberships do |p|
       - if current_course.shared_badges?
-        = p.input :shared_badges, :label => "Social Badges", as: :boolean, :hint => "Do you want to publically display the #{term_for :badges} you earn?", :collection => [["Yes"],["No"],["Decide per Badge"]]
+        = p.input :shared_badges, :label => "Shared #{term_for :badges}", as: :boolean, :hint => "Do you want to publically display the #{term_for :badges} you earn?", :hint => "You'll still be able to decide which specific #{term_for :badges} you want to share."
       - if current_course.character_profiles?
         = p.input :character_profile, :label => "Character Profile", :hint => "This will be displayed on the #{term_for :team} leaderboard"
       // Taken out bc of cosign

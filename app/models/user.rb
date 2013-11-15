@@ -227,20 +227,27 @@ class User < ActiveRecord::Base
     end
   end
 
+  #recalculating the student's score for the course
   def score_for_course(course)
-    @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course)
+    @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course) + (team_for_course(course).try(:challenge_grade_score) || 0)
   end
 
+  #grabbing the stored score for the current course
+  def cached_score_for_course(course)
+    course_memberships.where(:course_id => course).first.score
+  end
+
+  #student setting as to whether or not they wish to share their earned badges for this course
   def badges_shared(course)
     course_memberships.any? { |m| m.course_id = course.id and m.shared_badges }
   end
 
   def grade_level_for_course(course)
-    course.grade_level_for_score(score_for_course(course))
+    course.grade_level_for_score(cached_score_for_course(course))
   end
 
   def grade_letter_for_course(course)
-    @grade_letter_for_course ||= course.grade_letter_for_score(score_for_course(course))
+    @grade_letter_for_course ||= course.grade_letter_for_score(cached_score_for_course(course))
   end
 
   def point_total_for_course(course)
@@ -339,7 +346,7 @@ def groups_by_assignment_id
 
   def cache_scores
     course_memberships.each do |membership|
-      membership.update_attribute :score, grades.where(course_id: membership.course_id).score
+      membership.update_attribute :score, self.score_for_course(membership.course)
     end
   end
 
