@@ -7,6 +7,11 @@
         %a{ "data-toggle" => "tab", "data-target" => "#tabb2"} Class #{term_for :badges}
   %br
   %br
+
+  - if current_user.is_student? && ! current_student.badges_shared(current_course)
+    = "Want to share your #{term_for :badges} with the class?"
+    = link_to "Turn on shared #{term_for :badges}!", edit_profile_users_path
+
   .tab-content
     .tab-pane#tabb1.active
       %table.table.table-striped.simpleTable

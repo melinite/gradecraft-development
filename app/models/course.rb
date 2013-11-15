@@ -177,6 +177,10 @@ class Course < ActiveRecord::Base
     assignment_weight_for_student(student) >= total_assignment_weight.to_i
   end
 
+  def score_for_student(student)
+    course_memberships.where(:user_id => student).first.score
+  end
+
   def minimum_course_score
     #.min
   end

@@ -10,6 +10,8 @@ class ChallengeGrade < ActiveRecord::Base
 
   validates_presence_of :team, :challenge
 
+  after_save :save_team
+
   delegate :name, :description, :due_at, :point_total, :to => :challenge
 
   private

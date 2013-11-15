@@ -47,7 +47,7 @@
         - if current_course.team_roles?
           %td= student.try(:team_role)
         - if student.respond_to?(:grades)
-          %td{:data => { :"sort-value" => "#{student.score_for_course(current_course)}"} }= points student.score_for_course(current_course)
+          %td{:data => { :"sort-value" => "#{current_course.score_for_student(student)}"} }= points current_course.score_for_student(student)
           %td
             = student.grade_letter_for_course(current_course)
             = student.grade_level_for_course(current_course)
