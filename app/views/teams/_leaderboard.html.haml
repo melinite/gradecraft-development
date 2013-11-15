@@ -1,9 +1,9 @@
 %ul.tabs
   %li.active
     %a{ "data-toggle" => "tab", "data-target" => "#tabt1"} #{term_for :team} Leaderboard
-  - if current_course.shared_badges?
+  - if current_course.teams_visible?
     %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tabt2"} My #{term_for :team} Rankings
+      %a{ "data-toggle" => "tab", "data-target" => "#tabt2"} In-#{term_for :team} Rankings
   - if current_course.team_challenges?
     %li
       %a{ "data-toggle" => "tab", "data-target" => "#tabt3"} #{term_for :challenges}
