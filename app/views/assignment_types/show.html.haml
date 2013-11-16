@@ -14,6 +14,11 @@
   %p
     %b= "Each #{current_course.assignment_term} is worth:"
     = points @assignment_type.universal_point_value
+
+  %p
+    %b Is there a cap to the number of points students can earn in this assignment type?
+    = points @assignment_type.max_value
+
   %p
     %b Are there due dates?
     = @assignment_type.due_date_present? ? "Yes" : "No"
@@ -39,7 +44,7 @@
 .well
   %h4 Grading
   %p.clear
-    %b Is this assignment quick gradeable?
+    %b Is this assignment type quick gradeable?
     = @assignment_type.mass_grade? ? "Yes" : "No"
   %p
     %b In what form?
@@ -47,7 +52,6 @@
   %p
     %b Are there levels to the grading? (This includes normal A - F grading schemes.)
     = @assignment_type.levels? ? "Yes" : "No"
-
   .well
     %h5 Score Levels
     %ul.clear

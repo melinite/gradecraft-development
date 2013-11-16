@@ -2,7 +2,10 @@
 - cache current_student_data.cache_key('v1', current_user.is_staff?, :assignments_key, :grades_key, :submissions_key) do
   - current_course_data.by_assignment_type.each do |assignment_type, assignments|
     .col-lg-12.col-xs-12.col-md-12.col-sm-12
-      %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
+      - if assignment_type.max_value?
+        %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
+      - else
+        %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
       .collapse{:id => "assignment_type-#{assignment_type.id}"}
         .col-lg-10
           - if assignment_type.predictor_description?

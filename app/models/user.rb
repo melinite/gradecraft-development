@@ -170,7 +170,7 @@ class User < ActiveRecord::Base
 
   #I think this may be a little bit faster - ch
   def scores_for_course(course)
-     user_score = course_memberships.where(:course_id => course).pluck('score')
+     user_score = course_memberships.where(:course_id => course, :auditing => FALSE).pluck('score')
      scores = course.students.pluck('score')
      return {
       :scores => scores,

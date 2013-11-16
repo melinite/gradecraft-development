@@ -3,7 +3,10 @@
     Your current score is
   - elsif current_user.is_staff?
     Current Score:
-  %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
+  - if current_course.point_total?
+    %span#userScoreNum #{points current_student_data.score}/#{points current_course.point_total}
+  - else
+    %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
   - if current_student_data.grade_level.present?
     Current Level:
     %span#userScoreNum= current_student_data.grade_level

@@ -12,7 +12,8 @@ class Course < ActiveRecord::Base
     :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times,
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
     :challenge_term, :badge_term, :grading_philosophy, :team_score_average,
-    :team_challenges, :team_leader_term, :max_assignment_types_weighted
+    :team_challenges, :team_leader_term, :max_assignment_types_weighted,
+    :point_total
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships

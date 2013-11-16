@@ -6,4 +6,5 @@ class CourseMembership < ActiveRecord::Base
   has_many :membership_scores
 
   attr_accessible :shared_badges, :auditing
+
 end

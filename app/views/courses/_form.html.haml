@@ -15,6 +15,7 @@
     = f.input :office_hours, :label => "Office Hours", :input_html => {:class => "col-lg-4"}
     = f.input :meeting_times, :label => "Class Meeting Times", :input_html => {:class => "col-lg-4"}
     = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :select, :input_html => {:class => "col-lg-4 input-sm"}
+    = f.input :point_total, :label => "Maximum Number of Points" , :input_html => {:class => "col-lg-4"}, :hint => "If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create."
     = f.input :assignment_term, :label => "Assignment Term", :hint => "Would you like to call assignments something else?"
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
     = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
