@@ -6,7 +6,11 @@
           = "Projected points:"
           %span#predictor-score-display= points current_student_data.predicted_score
           = "/"
-          %span#predictor-course-total-display= points current_student_data.point_total
+          - if current_course.point_total.present?
+            %span= points current_course.point_total
+          - else
+            %span#predictor-course-total-display= points current_student_data.point_total
+
           .glyphicon.glyphicon-info-sign.tooltip
             Tooltip!
         - if current_user.is_student?
