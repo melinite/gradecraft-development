@@ -17,7 +17,7 @@ namespace :transfer_to do
           obj.move_to('uploads/submission_files/' + obj.metadata.name)
         end
         if obj.key.include? 'icon'
-          obj.move_to('uploads/badge_files/' + obj.metadata.name)
+          obj.move_to('uploads/badge_icons/' + obj.metadata.name)
         end
       end
     end
