@@ -17,6 +17,8 @@
       %th
       %th.sortable{"data-sort" => "string"} Name
       %th.sortable{"data-sort" => "string"} Email
+      - if current_course.in_team_leaderboard?
+        %th.sortable{"data-sort" => "string"} Screenname
       - if current_course.has_teams?
         %th.sortable{"data-sort" => "string"} #{current_course.team_term}
       - if current_course.team_roles?
@@ -40,6 +42,8 @@
         %td= i
         %td{:data => { :"sort-value" => "#{student.last_name}"} }= link_to student.name, student_path(student)
         %td= mail_to student.email, student.email
+        - if current_course.in_team_leaderboard?
+          %td= student.display_name
         - if current_course.has_teams?
           %td
             - if student.team_for_course(current_course)
