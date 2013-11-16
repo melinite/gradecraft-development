@@ -41,6 +41,7 @@
 //= require earned_badges
 //= require predictor
 //= require per-assign
+
 $(document).ready(function(){
 
   $('#gradeCurious').popover();

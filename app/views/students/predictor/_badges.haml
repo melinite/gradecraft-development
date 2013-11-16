@@ -3,11 +3,9 @@
     %li#slide-badges(data-assignment-type-id="badges" data-assignment-type-name)
       %h3="#{term_for :badges}"
       .slide-panel.col.col-lg-12
-        .assignmentType
-          %span.assignmentTypeTitle= "#{term_for :badges}"
-          %span.badge.badge-warning.pull-right #{points current_student_data.earned_badge_score} points
-        %p.lead
-        %div
+        %span.badge.badge-info.pull-right #{points current_student_data.earned_badge_score} possible points
+        %p.clear.lead
+        %div.clear
           - current_course_data.badges.each do |badge|
             - if current_student_data.earned_badge?(badge)
               .earnedBadgeField
