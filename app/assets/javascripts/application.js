@@ -63,7 +63,6 @@ $(document).ready(function(){
   $(".alert").alert();
 
   $('.datetimepicker').datetimepicker( {
-    format: 'mm-dd-yyyy hh:ii'
   });
 
   if ($('.s3_uploader').length) {
