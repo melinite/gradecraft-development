@@ -36,6 +36,9 @@
   %p
     %b The Predictor is:
     = @course.predictor_setting? ? 'On' : 'Off'
+  %p
+    %b Maximum Number of Points:
+    = points @course.point_total
 
   %p
     %b Professor's Office Location:
