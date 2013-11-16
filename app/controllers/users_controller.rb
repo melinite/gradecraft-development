@@ -42,6 +42,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    session[:return_to] = request.referer
     @teams = current_course.teams
 
     if current_user.is_admin?
@@ -70,9 +71,9 @@ class UsersController < ApplicationController
     @teams = Team.all
     @user.update_attributes(params[:user])
     if @user.save && @user.is_student?
-      redirect_to students_path, :notice => "#{@user.name} was successfully updated!"
+      redirect_to session.delete(:return_to), :notice => "#{@user.name} was successfully updated!"
     elsif @user.save && @user.is_staff?
-      redirect_to staff_index_path, :notice => "#{@user.name} was successfully updated!"
+      redirect_to session.delete(:return_to), :notice => "#{@user.name} was successfully updated!"
     else
       render :edit
     end

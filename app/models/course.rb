@@ -13,7 +13,7 @@ class Course < ActiveRecord::Base
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
     :challenge_term, :badge_term, :grading_philosophy, :team_score_average,
     :team_challenges, :team_leader_term, :max_assignment_types_weighted,
-    :point_total
+    :point_total, :in_team_leaderboard
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -92,6 +92,10 @@ class Course < ActiveRecord::Base
 
   def teams_visible?
     teams_visible == true
+  end
+
+  def in_team_leaderboard?
+    in_team_leaderboard == true
   end
 
   def has_badges?

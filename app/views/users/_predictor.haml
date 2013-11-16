@@ -1,23 +1,28 @@
 - cache current_student_data.cache_key('v1', :assignments_key, :grades_key, :badges_key, current_student.id) do
   .col-lg-12
-    #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
-      #projectedPoints
-        %h4
-          = "Projected points:"
-          %span#predictor-score-display= points current_student_data.predicted_score
-          = "/"
-          %span#predictor-course-total-display= points current_student_data.point_total
-          .glyphicon.glyphicon-info-sign.tooltip
-            Tooltip!
-        - if current_user.is_student?
+    #gradePredictor
+      #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
+        #projectedPoints
           %h4
-            Predicted Final Grade:
-            %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
-              = current_student_data.predicted_grade_letter
-      %span#expectedPointsValue
-    .charts.dashboard-charts
-      .chart-wrapper
-        .chart#prediction
+            = "Projected points:"
+            %span#predictor-score-display= points current_student_data.predicted_score
+            = "/"
+            - if current_course.point_total.present?
+              %span= points current_course.point_total
+            - else
+              %span#predictor-course-total-display= points current_student_data.point_total
+
+            .glyphicon.glyphicon-info-sign.tooltip
+              Tooltip!
+          - if current_user.is_student?
+            %h4
+              Predicted Final Grade:
+              %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
+                = current_student_data.predicted_grade_letter
+
+      .charts.dashboard-charts
+        .chart-wrapper
+          .chart#prediction
 
     #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
       .col.col-lg-12

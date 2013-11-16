@@ -17,5 +17,5 @@
             %td= student.display_name
             %td= student.character_profile(current_course)
             %td= student.team_role
-            %td= points student.score_for_course(current_course) if student.respond_to?(:grades)
+            %td= points student.cached_score_for_course(current_course) if student.respond_to?(:grades)
           - j += 1

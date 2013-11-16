@@ -103,7 +103,7 @@ var PredictorView = Backbone.View.extend({
     if(level){
       $('#predictor-course-grade').html(grade + " ("+level+")");
     }else{
-      $('#predictor-course-grade').html(grade);     
+      $('#predictor-course-grade').html(grade);
     }
     $('#predictor-course-total-display').html(addCommas(this.calculateCourseTotal()));
 

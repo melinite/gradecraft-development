@@ -40,7 +40,8 @@
     = f.input :team_score_average, :label => "Team Score = Average User Score", :hint => "Will teams' scores be the average of their students' scores?"
     = f.input :team_challenges, :label => "Team Challenges", :hint => "Will the teams have to complete challenges as a group?", :input_html => {:class => "col-lg-4"}
     = f.input :challenge_term, :label => "Challenge Term", :hint => "What would you like to call these challenges? Quests, Boss Battles...", :input_html => {:class => "col-lg-4"}
-    = f.input :teams_visible, :label => "Can students see the teams, their points, and their badges?"
+    = f.input :teams_visible, :label => "#{term_for :team} Leaderboard", :hint => "Can students see a leaderboard of the #{term_for :team} rankings and their points?"
+    = f.input :in_team_leaderboard, :label => "In-#{term_for :team} Leaderboard", :hint => "Can students see in-#{term_for :team} rankings and points (students must opt in to this by adding a screenname to protect their privacy)?"
     = f.input :team_roles, :hint => "Do students self-declare their role within groups?"
     = f.input :team_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your team leaders?", :input_html => {:class => "col-lg-4"}
     = f.input :group_setting, :hint => "Will students work in groups on any assignments, and thus all receive the same grade?", :as => :radio_buttons

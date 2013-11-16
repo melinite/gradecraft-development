@@ -6,7 +6,10 @@
       .pull-right
         %span.badge.badge-info
           = "#{points current_student_data.score_for_assignment_type(assignment_type)} / "
-          = "#{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
+          - if assignment_type.max_value?
+            = "#{points assignment_type.max_value}"
+          - else
+            = "#{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
     - assignments.each do |assignment|
       - if assignment.point_total > 0
         .assignment.clear{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
