@@ -1,4 +1,5 @@
 class StudentData < Struct.new(:student, :course)
+
   def membership
     @membership ||= CourseMembership.where(course_id: course.id, user_id: student.id)
                                     .includes(:membership_calculation, :membership_scores).first
@@ -8,6 +9,7 @@ class StudentData < Struct.new(:student, :course)
     @sums ||= membership.membership_calculation
   end
 
+  #calculating student's predicted grade based on predictor choices
   def predictions
     scores = membership.membership_scores.map do |s|
       { :data => [s.score], :name => s.name }
@@ -57,10 +59,12 @@ class StudentData < Struct.new(:student, :course)
     @element_level ||= course.element_for_score(score)
   end
 
+  #Displays the student's current grade based on the student's score compared against the course grade scheme
   def grade_letter
     @grade_letter ||= course.grade_letter_for_score(score)
   end
 
+  #Displays the predicted grade based on the student's predicted score compared against the course grade scheme
   def predicted_grade_letter
     @predicted_grade_letter ||= course.grade_letter_for_score(predicted_score)
   end
@@ -180,25 +184,27 @@ class StudentData < Struct.new(:student, :course)
     end
   end
 
+  #Grabbing a student's team for current course
   def team
     student.teams.where(course: course).first
   end
 
+  #Grabbing the student's team's score
   def team_score
     (team.challenge_grade_score if team) || 0
   end
-
-  #Grabbing the challenge submission for a student's team
 
   #Sum of all earned badges value for a student
   def earned_badge_score
     @earned_badge_score ||= sums.earned_badge_score # student.earned_badges.where(course: course).score
   end
 
+  #All of a student's grades for a course
   def grades
     @grades ||= student.grades.where(course: course)
   end
 
+  #All of a student's released grades for a course
   def released_grades
     @released_grades ||= student.grades.released
   end
@@ -208,6 +214,7 @@ class StudentData < Struct.new(:student, :course)
     earned_badges[badge.id]
   end
 
+  #Guessing one of these needs to come out? -ch
   def earned_badge?(badge)
     earned_badges[badge.id].present?
   end
@@ -229,7 +236,7 @@ class StudentData < Struct.new(:student, :course)
     @weighted_assignments_present ||= sums.assignment_weight_count > 0
   end
 
-  #What is this?
+  #Used for self-logged attendance to check if the student already has a grade
   def present_for_class?(assignment)
     grade_for_assignment(assignment).raw_score == assignment.point_total
   end

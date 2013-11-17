@@ -7,7 +7,7 @@
       = f.input :point_total, :label => "Total Score Possible", :input_html => {:class => 'col-lg-3'}
       = f.input :points_predictor_display, :label => "Predictor Display", :collection => [["Fixed"], ["Slider"], ["Select List"]], :input_html => {:class => "input-sm col-lg-3"}
     = f.input :open_at, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker', :value => @assignment.try(:open_at) }
-    = f.input :due_at, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker', :value => @assignment.try(:due_at) }
+    = f.input :due_at, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker col-lg-3', :value => @assignment.due_at }
     = f.input :visible, :as => :boolean, :hint => "Can #{term_for :students} see this #{term_for :assignment} in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL #{term_for :students} expected to complete this #{term_for :assignment} to pass the course?"
     = f.simple_fields_for :assignment_files, @assignment.assignment_files.new do |aff|
