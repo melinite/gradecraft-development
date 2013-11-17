@@ -33,14 +33,15 @@
 //= require users
 //= require grade_schemes
 //= require user_dashboard
+//= require stickyMojo
+//= require stupidtable
 //= require submissions
 //= require submission_file
 //= require timelineJS/embed
 //= require timeline
-//= require stupidtable
 //= require earned_badges
-//= require predictor
 //= require per-assign
+//= require predictor
 
 $(document).ready(function(){
 

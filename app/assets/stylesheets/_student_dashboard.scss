@@ -43,11 +43,10 @@
   z-index: 10000;
   opacity: 1;
   box-shadow: 0px 3px 3px #888888;
+  left: 30px;
   top: 30px;
+  display: block;
   position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
   position: sticky;
 }
 
