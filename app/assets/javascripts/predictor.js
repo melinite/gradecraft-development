@@ -61,7 +61,7 @@ var chartOptions = {
     borderColor:null,
     reversed: true,
     itemStyle: {
-      color: '#CCCCCC'
+      color: '#333333'
     }
   },
   series: []

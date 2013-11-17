@@ -20,6 +20,7 @@ class Assignment < ActiveRecord::Base
   accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'
+
   has_many :assignment_groups
   has_many :groups, :through => :assignment_groups
 
@@ -63,15 +64,16 @@ class Assignment < ActiveRecord::Base
   scope :alphabetical, -> { order('name ASC') }
 
   scope :visible, -> { where visible: TRUE }
+
   scope :with_due_date, -> { where('assignments.due_at IS NOT NULL') }
   scope :without_due_date, ->  { where('assignments.due_at IS NULL') }
   scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
   scope :still_accepted, -> { with_due_date.where('assignments.accepts_submissions_until >= ?', Time.now) }
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
+
   scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ?) OR (status = ? AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', 'Graded', student.id) }
   scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
-
-  scope :grading_done, -> { where 'grades.present? == 1' }
+scope :grading_done, -> { where 'grades.present? == 1' }
 
   def start_time
     due_at
@@ -100,6 +102,7 @@ class Assignment < ActiveRecord::Base
   def high_score
     grades.graded.joins('JOIN course_memberships on course_memberships.user_id = grades.student_id').where('course_memberships.auditing = false').maximum('grades.score')
   end
+
   def low_score
     grades.graded.joins('JOIN course_memberships on course_memberships.user_id = grades.student_id').where('course_memberships.auditing = false').minimum('grades.score')
   end
@@ -124,8 +127,9 @@ class Assignment < ActiveRecord::Base
     grade_scope=="Group"
   end
 
+  #Currently we only have Assignments available to individuals and groups, but perhaps we should switch them to use assignments rather than challenges
   def has_teams?
-    grade_scope=="Group"
+    grade_scope=="Team"
   end
 
   def point_total
@@ -192,10 +196,12 @@ class Assignment < ActiveRecord::Base
     points_predictor_display == "Select List"
   end
 
+  #We allow students to record certain boolean grades - thus far has been used to let them record attendance
   def self_gradeable?
     student_logged == true
   end
 
+  #We allow instructors to mark if an assignment is 'required' - students must do the work to pass the class.
   def is_required?
     required == true
   end
@@ -204,6 +210,14 @@ class Assignment < ActiveRecord::Base
    self.assignment_score_levels.present?
   end
 
+  def grade_level(grade)
+    score_levels.each do |score_level|
+      return score_level.name if grade.raw_score == score_level.value
+    end
+    nil
+  end
+
+  #The below four are the Quick Grading Types, can be set at either the assignment or assignment type level
   def grade_checkboxes?
     assignment_type.mass_grade_type == "Checkbox" || self.mass_grade_type == "Checkbox"
   end
@@ -220,21 +234,18 @@ class Assignment < ActiveRecord::Base
     assignment_type.mass_grade_type == "Text" || self.mass_grade_type == "Text"
   end
 
+  #Checking to see if the assignment is still open and accepting submissons
   def open?
     (open_at != nil && open_at < Time.now) && (due_at != nil && due_at > Time.now)
   end
 
-  def grade_level(grade)
-    score_levels.each do |score_level|
-      return score_level.name if grade.raw_score == score_level.value
-    end
-    nil
-  end
 
+  #Counting how many non-zero grades there are for an assignment
   def positive_grades
     grades.where("score > 0").count
   end
 
+  #Calculating attendance rate, which tallies number of people who have positive grades for attendance divided by the total number of students in the class
   def attendance_rate(course)
    ((positive_grades / course.graded_student_count.to_f) * 100).round(2)
   end

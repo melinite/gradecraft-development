@@ -63,6 +63,7 @@ $(document).ready(function(){
   $(".alert").alert();
 
   $('.datetimepicker').datetimepicker( {
+    format: 'dd-mm-yyyy hh:ii'
   });
 
   if ($('.s3_uploader').length) {
@@ -231,8 +232,6 @@ $(document).ready(function(){
   });
 
   $('#course_id').change(function() { $(this).closest('form').submit(); });
-
-  //$('.nav-tabs').button();
 
 	// handle 'select all' button
 	$(".select-all").click(function(e){
