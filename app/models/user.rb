@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   scope :being_graded, -> { where('course_memberships.auditing IS FALSE') }
   scope :auditing, -> { where('course_memberships.auditing IS TRUE') }
 
-  has_many :course_memberships
+  has_many :course_memberships, :dependent => :destroy
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
   accepts_nested_attributes_for :student_academic_history
   has_many :courses, :through => :course_memberships
@@ -165,7 +165,7 @@ class User < ActiveRecord::Base
   end
 
   def earned_badge_score_for_course(course)
-    earned_badges.where(:course => course).score
+    earned_badges.where(:course_id => course).score
   end
 
   #I think this may be a little bit faster - ch
@@ -287,7 +287,7 @@ def groups_by_assignment_id
   end
 
   def team_for_course(course)
-    teams.where(course: course).first
+    teams.where(course_id: course).first
   end
 
   #Auditing Course
@@ -346,7 +346,7 @@ def groups_by_assignment_id
 
   def cache_scores
     course_memberships.each do |membership|
-      membership.update_attribute :score, self.score_for_course(membership.course)
+      membership.update_attribute :score, grades.released.where(course_id: membership.course_id).score + earned_badge_score_for_course(membership.course_id) + (team_for_course(membership.course_id).try(:challenge_grade_score) || 0)
     end
   end
 
