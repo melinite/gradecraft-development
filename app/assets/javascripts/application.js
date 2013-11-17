@@ -33,7 +33,6 @@
 //= require users
 //= require grade_schemes
 //= require user_dashboard
-//= require stickyMojo
 //= require stupidtable
 //= require submissions
 //= require submission_file
