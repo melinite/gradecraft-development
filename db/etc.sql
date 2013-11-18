@@ -21,11 +21,18 @@ CREATE OR REPLACE VIEW course_cache_keys AS
   )) AS badges_key
   FROM courses;
 
+CREATE OR REPLACE VIEW latest_grades AS
+                SELECT *
+                  FROM grades AS g
+                 WHERE NOT EXISTS (SELECT *
+                                     FROM grades AS g
+                                    WHERE student_id = g.student_id AND assignment_id = g.assignment_id AND id > g.id);
+
 CREATE OR REPLACE
      VIEW released_grades AS
-   SELECT grades.*
-     FROM grades
-     JOIN assignments ON assignments.id = grades.assignment_id
+   SELECT latest_grades.*
+     FROM latest_grades
+     JOIN assignments ON assignments.id = latest_grades.assignment_id
     WHERE (status = 'Released' OR (status = 'Graded' AND NOT assignments.release_necessary));
 
 CREATE OR REPLACE
@@ -60,14 +67,14 @@ CREATE OR REPLACE
              FROM assignments
             WHERE course_id = m.course_id and user_id = m.user_id
               AND EXISTS(SELECT 1
-                           FROM grades
+                           FROM latest_grades
                           WHERE assignment_id = assignments.id
                             AND (status = 'Released') OR (status = 'Graded' AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = m.user_id)
                         )
             ) AS in_progress_assignment_score,
-          (SELECT COALESCE(sum(score), 0) FROM grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score,
+          (SELECT COALESCE(sum(score), 0) FROM latest_grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score,
           (SELECT COALESCE(SUM(score), 0)
-             FROM grades AS g
+             FROM latest_grades AS g
              JOIN assignments AS a ON g.assignment_id = a.id
             WHERE g.course_id = m.course_id AND g.student_id = m.user_id
               AND (g.status = 'Released' OR (g.status = 'Graded' AND NOT a.release_necessary))
