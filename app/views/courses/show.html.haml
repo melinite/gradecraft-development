@@ -86,19 +86,26 @@
     = @course.badges_value? ? 'Yes' : 'No'
 
 .well
-  %h4 TEAMS & GROUPS
+  %h4 SECTIONS
   %p.clear
-    %b Students will be grouped into teams or sections:
+    %b Students will be grouped into sections:
     = @course.team_setting? ? 'Yes' : 'No'
   %p
     %b These sections will be called:
     = @course.team_term
   %p
-    %b Students can see the teams, the team's points, and the team's badges:
+    %b Students can see the sections, the section's points, and the team's badges:
     = @course.teams_visible? ? 'Yes' : 'No'
   %p
-    %b Team Score = Average User Score:
+    %b Section Score = Average User Score:
     = @course.team_score_average? ? 'Yes' : 'No'
+  %p
+    %b Section Leaders will be called:
+    = @course.team_leader_term
+
+
+.well
+  %h4 GROUPS
   %p
     %b Students will work in groups:
     = @course.group_setting? ? 'Yes' : 'No'
@@ -108,9 +115,6 @@
   %p
     %b Students self-declare their group roles:
     = @course.team_roles? ? 'Yes' : 'No'
-  %p
-    %b Section Leaders will be called:
-    = @course.team_leader_term
   %p
     %b Max Group Size:
     = @course.max_group_size

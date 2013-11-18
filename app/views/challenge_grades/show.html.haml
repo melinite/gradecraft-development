@@ -5,8 +5,8 @@
 .col-lg-12
   %h3= @title
   %p
-    %b Challenge:
-    = @challenge.name
+    %b #{term_for :challenge}:
+    = link_to @challenge.name, @challenge
   %p
     %b Score:
     = points @challenge_grade.score
@@ -17,8 +17,8 @@
     %b Status:
     = @challenge_grade.status
   %p
-    %b Team:
-    = @challenge_grade.team_id
+    %b #{term_for :team}:
+    = link_to @challenge_grade.team.name, @challenge_grade.team
   %p
     %b Final score:
     = @challenge_grade.final_score

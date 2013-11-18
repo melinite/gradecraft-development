@@ -17,7 +17,7 @@
       = f.input :display_name, :label => "Pseudonym", :hint => "What would you like your name to be on the leaderboards?"
     //= f.input :private_display, :label => "Private Browsing", :hint => "For privacy purposes would you like to hide all identifying information (name and email address) while browsing?"
     - if current_course.team_roles?
-      = f.input :team_role, :hint => "What will you contribute to your team?"
+      = f.input :team_role, :hint => "What will you contribute to your #{term_for :team}?", :label => "#{term_for :team} Role"
     = f.simple_fields_for :course_memberships do |p|
       - if current_course.shared_badges?
         = p.input :shared_badges, :label => "Shared #{term_for :badges}", as: :boolean, :hint => "Do you want to publically display the #{term_for :badges} you earn?", :hint => "You'll still be able to decide which specific #{term_for :badges} you want to share."

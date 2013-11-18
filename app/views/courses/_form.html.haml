@@ -18,7 +18,7 @@
     = f.input :point_total, :label => "Maximum Number of Points" , :input_html => {:class => "col-lg-4"}, :hint => "If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create."
     = f.input :assignment_term, :label => "Assignment Term", :hint => "Would you like to call assignments something else?"
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
-    = f.input :graph_display, :label => "Display current progress and total points charts simultaneously?", :as => :radio_buttons
+    = f.input :graph_display, :label => "Display charts simultaneously?", :as => :radio_buttons, :hint => "The student dashboard displays two charts to the students, one that shows how many points they have out of all of the points in the whole course, and one that shows how many points they have out of the assignments they've worked on so far. Would you like to display them both at the same time, or one at a time?"
     = f.input :predictor_setting, :label => "Display grade predictor (Student Dashboard)?", :as => :radio_buttons
     %h4 Grading Philosophy
     %p What would you like to tell students about how they should expected to be graded?
@@ -34,16 +34,19 @@
     = f.input :badges_value, :label => "Will badges have points attached to them?", :as => :radio_buttons
 
   .well
-    %h4 TEAMS & GROUPS
-    = f.input :team_setting, :hint => "Will you have semester-long teams or sections in your course?", :label => "Teams"
-    = f.input :team_term, :label => "Team Term", :hint => "What will you call these? Team, Group, Section...", :input_html => {:class => "col-lg-4"}
-    = f.input :team_score_average, :label => "Team Score = Average User Score", :hint => "Will teams' scores be the average of their students' scores?"
-    = f.input :team_challenges, :label => "Team Challenges", :hint => "Will the teams have to complete challenges as a group?", :input_html => {:class => "col-lg-4"}
-    = f.input :challenge_term, :label => "Challenge Term", :hint => "What would you like to call these challenges? Quests, Boss Battles...", :input_html => {:class => "col-lg-4"}
-    = f.input :teams_visible, :label => "#{term_for :team} Leaderboard", :hint => "Can students see a leaderboard of the #{term_for :team} rankings and their points?"
-    = f.input :in_team_leaderboard, :label => "In-#{term_for :team} Leaderboard", :hint => "Can students see in-#{term_for :team} rankings and points (students must opt in to this by adding a screenname to protect their privacy)?"
-    = f.input :team_roles, :hint => "Do students self-declare their role within groups?"
-    = f.input :team_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your team leaders?", :input_html => {:class => "col-lg-4"}
+    %h4 SECTIONS
+    = f.input :team_setting, :hint => "Will you have semester-long sections in your course?", :label => "Sections"
+    = f.input :team_term, :label => "Section Term", :hint => "What will you call these? Team, House, Section...", :input_html => {:class => "col-lg-4"}
+    = f.input :team_score_average, :label => "Section Score = Average User Score", :hint => "Will sections' scores be the average of their students' scores?"
+    = f.input :team_challenges, :label => "Section Assignments", :hint => "Will the sections have to complete assignments collaboratively?", :input_html => {:class => "col-lg-4"}
+    = f.input :challenge_term, :label => "Section Assignment Term", :hint => "What would you like to call these section assignments? Quests, Boss Battles, Challenges...", :input_html => {:class => "col-lg-4"}
+    = f.input :teams_visible, :label => "Section Leaderboard", :hint => "Can students see a leaderboard of the section rankings and their points?"
+    = f.input :in_team_leaderboard, :label => "In-Section Leaderboard", :hint => "Can students see in-section rankings and points (students must opt in to this by adding a screenname to protect their privacy)?"
+    = f.input :team_roles, :label => "Section Roles", :hint => "Do students self-declare their role within the section?"
+    = f.input :team_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your section leaders?", :input_html => {:class => "col-lg-4"}
+
+  .well
+    %h4 GROUPS
     = f.input :group_setting, :hint => "Will students work in groups on any assignments, and thus all receive the same grade?", :as => :radio_buttons
     = f.input :group_term, :hint => "What will these groups be called?", :input_html => {:class => "col-lg-4"}
     = f.input :max_group_size, :input_html => {:class => "col-lg-2"}
