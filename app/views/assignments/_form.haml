@@ -11,7 +11,7 @@
     = f.input :visible, :as => :boolean, :hint => "Can #{term_for :students} see this #{term_for :assignment} in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL #{term_for :students} expected to complete this #{term_for :assignment} to pass the course?"
     = f.simple_fields_for :assignment_files, @assignment.assignment_files.new do |aff|
-      = aff.input :filename, as: :file
+      = aff.input :filename, as: :file, :label => "Supporting Files"
     = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
 
   .well
