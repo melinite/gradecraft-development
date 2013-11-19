@@ -5,11 +5,7 @@
   .charts.dashboard-charts(class="#{current_course.graph_display? ? 'stacked-charts' : 'toggle-charts' }")
     .chart-wrapper.user-bar-in-progress-chart
       .chart#userBarInProgress
-      = link_to '#', 'data-shows' => '.user-bar-total-chart', class: 'dashboard-toggle' do
-        Show me my score out of the total course points
     .chart-wrapper.user-bar-total-chart
       .chart#userBarTotal
-      = link_to '#', 'data-shows' => '.user-bar-in-progress-chart', class: 'dashboard-toggle' do
-        Show me my score out of the points available points so far
 
   %hr
