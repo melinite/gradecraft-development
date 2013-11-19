@@ -35,7 +35,9 @@
                 - if grade && grade.is_graded?
                   = check_box_tag "grade_ids[]", grade.id
             %td= link_to student.name, student_path(student)
-            %td= grade.raw_score if grade && (grade.is_graded? || grade.is_released?)
+            %td
+              - if grade && (grade.is_graded? || grade.status == "Released" )
+                = grade.raw_score
             - if @assignment.assignment_type.student_weightable?
               %td= grade.score if grade
             - if @assignment.has_levels?
