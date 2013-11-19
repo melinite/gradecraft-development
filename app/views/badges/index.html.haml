@@ -41,6 +41,7 @@
                 Yes
               - else
                 No
+            %td= link_to "Quick Award", mass_award_badge_path(badge), :class => "btn btn-tiny btn-primary"
             %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-info'
             %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
       - else

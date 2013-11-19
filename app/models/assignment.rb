@@ -154,6 +154,11 @@ scope :grading_done, -> { where 'grades.present? == 1' }
     grades.graded.where(student_id: student).first
   end
 
+  #get a grade object for a student if it exists - graded or not. this is used in the import grade
+  def all_grade_statuses_grade_for_student(student)
+    grades.where(student_id: student).first
+  end
+
   def score_for_student(student)
     grades.graded.where(student_id: student).pluck('score').first
   end
