@@ -301,22 +301,12 @@ def groups_by_assignment_id
     "First Name,Last Name,Email,Username".split(',')
   end
 
-  #Export Users and Final Scores
-  def self.to_csv(options = {})
-    CSV.generate(options) do |csv|
-      csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Logins", "Pageviews", "Predictor Views"]
-      students.each do |user|
-        csv << [student.first_name, student.last_name, student.email, student.score_for_course(course), student.grade_level(course), student.visit_count, student.page_views, student.predictor_views]
-      end
-    end
-  end
-
-   #Export Users and Final Scores for Course
+  #Export Users and Final Scores for Course
   def self.csv_for_course(course, options = {})
     CSV.generate(options) do |csv|
-      csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Logins", "Pageviews", "Predictor Views"]
+      csv << ["First Name", "Last Name", "Email", "Score", "Grade" ]
       course.students.each do |student|
-        csv << [student.first_name, student.last_name, student.email, student.score_for_course(course), student.visit_count, student.page_views, student.predictor_views]
+        csv << [student.first_name, student.last_name, student.email, student.score_for_course(course)]
       end
     end
   end

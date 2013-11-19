@@ -26,7 +26,7 @@ class SubmissionsController < ApplicationController
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
       else
-        @student = current_course.students.find(params[:student_id])
+        @student = current_student
       end
     end
     if current_user.is_student?
@@ -50,7 +50,7 @@ class SubmissionsController < ApplicationController
         @group = current_course.groups.find(params[:group_id])
         @title = "Editing #{@group.name}'s Submission for #{@assignment.name}"
       else
-        @student = current_course.students.find(params[:student_id])
+        @student = current_student
         @title = "Editing #{@student.name}'s Submission for #{@assignment.name}"
       end
     end
@@ -75,7 +75,7 @@ class SubmissionsController < ApplicationController
         else
           format.html { redirect_to session.delete(:return_to), notice: "#{@assignment.name} was successfully submitted." }
         end
-        if @assignment.is_individual?
+        if @assignment.is_individual? && current_user.is_student?
           user = { name: "#{@submission.student.first_name}", email: "#{@submission.student.email}" }
           submission = { name: "#{@submission.assignment.name}", time: "#{@submission.created_at}" }
           course = { courseno: "#{current_course.courseno}" }

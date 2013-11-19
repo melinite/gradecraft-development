@@ -58,12 +58,12 @@
 
   .well
     %h4 MULTIPLIERS
-    = f.input :total_assignment_weight, :label => "Multiplier Count", :hint => "Multipliers allow students to 'boost' their grades on specific assignment categories. You decide how many multipliers students can assign, they choose which assignments they'd like to work on, and that assignment's point total is multiplied by the number of student sets.", :input_html => {:class => "col-lg-2"}
+    = f.input :total_assignment_weight, :label => "Multiplier Count", :hint => "Multipliers allow students to 'boost' their grades on specific assignment types. You decide how many multipliers students can allocate, then the students select which assignment types will get a boost (through their dashboard) and those assignment type's points are multiplied by the number of multipliers that the student allocates.", :input_html => {:class => "col-lg-2"}
     = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"]], :input_html => {:class => "col-lg-2 input-sm"}
     = f.input :assignment_weight_close_at, :label => "What date must they make this decision by?", :as => :string, :input_html => {:class => "input-sm datetimepicker"}
-    = f.input :max_assignment_weight, :label => "Maximum amount that students may set", :input_html => {:class => "col-lg-2"}
-    = f.input :max_assignment_types_weighted, :label => "Maximum Weighted Assignment Types", :hint => "Is there a maximum number of assignment types that students can select to weight?", :input_html => {:class => "col-lg-2"}
-    = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
+    = f.input :max_assignment_weight, :label => "Maximum amount that students may allocate", :input_html => {:class => "col-lg-2"}
+    = f.input :max_assignment_types_weighted, :label => "Maximum Multiplied Assignment Types", :hint => "Is there a maximum number of assignment types that students can select to weight?", :input_html => {:class => "col-lg-2"}
+    = f.input :default_assignment_weight, :label => "What amount should the assignment types that the student doesn't select to boost be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
     = f.input :weight_term, :label => "What do you want to call these weights/multipliers?", :input_html => {:class => "col-lg-2"}
 
   .well
