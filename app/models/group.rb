@@ -28,6 +28,8 @@ class Group < ActiveRecord::Base
 
   validate :max_group_number_not_exceeded, :min_group_number_met
 
+  #validates :assignment_id, :uniqueness => { scope: :student_id, message: "Oops, students can only belong to group per assignment" }
+
   #Grades
 
   def submissions_by_assignment_id

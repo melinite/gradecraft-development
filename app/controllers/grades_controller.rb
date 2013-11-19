@@ -176,7 +176,7 @@ class GradesController < ApplicationController
         @students.each do |student|
           if student.username == row[2] && row[3].present?
             if student.grades.where(:assignment_id => @assignment).present?
-              @assignment.grade_for_student(student).tap do |grade|
+              @assignment.all_grade_statuses_grade_for_student(student).tap do |grade|
                 grade.raw_score = row[3].to_i
                 grade.feedback = row[5]
                 grade.status = "Graded"
@@ -197,7 +197,6 @@ class GradesController < ApplicationController
     redirect_to assignment_path(@assignment), :notice => "Upload successful"
     end
   end
-
 
   private
 

@@ -8,7 +8,7 @@
   .heading.col-lg-2 #{term_for :student}
   .col-lg-offset-2= link_to @assignment.grade_for_student(student).student.name, student_path(@assignment.grade_for_student(student).student)
   .heading.col-lg-2 Raw Score:
-  .col-lg-offset-2= @assignment.grade_for_student(student).raw_score
+  .col-lg-offset-2= @assignment.grade_for_student(student).raw_score if (@assignment.grade_for_student(student).is_graded? || @assignment.grade_for_student(student).is_released?)
   - if @assignment.grade_for_student(student).final_score?
     .heading.col-lg-2 Final Score:
     .col-lg-offset-2= @assignment.grade_for_student(student).final_score
