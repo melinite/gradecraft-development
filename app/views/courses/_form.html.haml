@@ -18,7 +18,7 @@
     = f.input :point_total, :label => "Maximum Number of Points" , :input_html => {:class => "col-lg-4"}, :hint => "If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create."
     = f.input :assignment_term, :label => "Assignment Term", :hint => "Would you like to call assignments something else?"
     = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
-    = f.input :graph_display, :label => "Display charts simultaneously?", :as => :radio_buttons, :hint => "The student dashboard displays two charts to the students, one that shows how many points they have out of all of the points in the whole course, and one that shows how many points they have out of the assignments they've worked on so far. Would you like to display them both at the same time, or one at a time?"
+    //= f.input :graph_display, :label => "Display charts simultaneously?", :as => :radio_buttons, :hint => "The student dashboard displays two charts to the students, one that shows how many points they have out of all of the points in the whole course, and one that shows how many points they have out of the assignments they've worked on so far. Would you like to display them both at the same time, or one at a time?"
     = f.input :predictor_setting, :label => "Display grade predictor (Student Dashboard)?", :as => :radio_buttons
     %h4 Grading Philosophy
     %p What would you like to tell students about how they should expected to be graded?
@@ -58,12 +58,12 @@
 
   .well
     %h4 MULTIPLIERS
-    = f.input :total_assignment_weight, :label => "Student Weight Portion", :hint => "Do students decide how some or all of their grade will be decided? If so, what is that amount/percent?", :input_html => {:class => "col-lg-2"}
-    = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"],["Percent"]], :input_html => {:class => "col-lg-2 input-sm"}
+    = f.input :total_assignment_weight, :label => "Multiplier Count", :hint => "Multipliers allow students to 'boost' their grades on specific assignment types. You decide how many multipliers students can allocate, then the students select which assignment types will get a boost (through their dashboard) and those assignment type's points are multiplied by the number of multipliers that the student allocates.", :input_html => {:class => "col-lg-2"}
+    = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"]], :input_html => {:class => "col-lg-2 input-sm"}
     = f.input :assignment_weight_close_at, :label => "What date must they make this decision by?", :as => :string, :input_html => {:class => "input-sm datetimepicker"}
-    = f.input :max_assignment_weight, :label => "Maximum amount that students may set", :input_html => {:class => "col-lg-2"}
-    = f.input :max_assignment_types_weighted, :label => "Maximum Weighted Assignment Types", :hint => "Is there a maximum number of assignment types that students can select to weight?", :input_html => {:class => "col-lg-2"}
-    = f.input :default_assignment_weight, :label => "What amount should other assignment types be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
+    = f.input :max_assignment_weight, :label => "Maximum amount that students may allocate", :input_html => {:class => "col-lg-2"}
+    = f.input :max_assignment_types_weighted, :label => "Maximum Multiplied Assignment Types", :hint => "Is there a maximum number of assignment types that students can select to weight?", :input_html => {:class => "col-lg-2"}
+    = f.input :default_assignment_weight, :label => "What amount should the assignment types that the student doesn't select to boost be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
     = f.input :weight_term, :label => "What do you want to call these weights/multipliers?", :input_html => {:class => "col-lg-2"}
 
   .well
