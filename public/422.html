@@ -1,22 +1,26 @@
-!!! 5
-%html(lang="en")
-  %head
-    %meta(charset="utf-8")
-    %meta(name="viewport" content="width=device-width, initial-scale=1")
-    %title
-      = "Change Rejected (422) - "
-      = current_course.try(:name) || 'GradeCraft'
-    = csrf_meta_tags
-    /[if lt IE 9]
-      = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"
-    = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag 'application'
-    %script(src="/ckeditor/ckeditor.js")
-    %script(src="/ckeditor/adapters/jquery.js")
-    %script(src="/highcharts/js/highcharts.src.js")
-    %script(src="/highcharts/js/highcharts-more.src.js")
-    = yield(:head)
-  %body(class="#{body_class}")
-    .dialog
-      %h1 Eeek! The change you wanted was rejected.
-      %p Did you try to change something you didn't have access to?
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Change Rejected (422)  || GradeCraft</title>
+  <style type="text/css">
+    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+    div.dialog {
+      width: 25em;
+      padding: 0 4em;
+      margin: 4em auto 0 auto;
+      border: 1px solid #ccc;
+      border-right-color: #999;
+      border-bottom-color: #999;
+    }
+    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+  </style>
+</head>
+
+<body>
+  <!-- This file lives in public/422.html -->
+  <div class="dialog">
+    <h1>The change you wanted was rejected.</h1>
+    <p>Maybe you tried to change something you didn't have access to.</p>
+  </div>
+</body>
+</html>

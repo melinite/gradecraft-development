@@ -1,21 +1,26 @@
-!!! 5
-%html(lang="en")
-  %head
-    %meta(charset="utf-8")
-    %meta(name="viewport" content="width=device-width, initial-scale=1")
-    %title
-      = "No Page Found (404) - "
-      = current_course.try(:name) || 'GradeCraft'
-    = csrf_meta_tags
-    /[if lt IE 9]
-      = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"
-    = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag 'application'
-    %script(src="/ckeditor/ckeditor.js")
-    %script(src="/ckeditor/adapters/jquery.js")
-    %script(src="/highcharts/js/highcharts.src.js")
-    %script(src="/highcharts/js/highcharts-more.src.js")
-    = yield(:head)
-  %body(class="#{body_class}")
-    .dialog
-      %h1 I hate to tell you this, but the page you were looking for doesn't exist. We've sent a message to the GradeCraft developers, and we should have this fixed soon.
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page does not exist (404)  || GradeCraft</title>
+  <style type="text/css">
+    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+    div.dialog {
+      width: 25em;
+      padding: 0 4em;
+      margin: 4em auto 0 auto;
+      border: 1px solid #ccc;
+      border-right-color: #999;
+      border-bottom-color: #999;
+    }
+    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+  </style>
+</head>
+
+<body>
+  <!-- This file lives in public/404.html -->
+  <div class="dialog">
+    <h1>The page you were looking for doesn't exist.</h1>
+    <p>You may have mistyped the address or the page may have moved.</p>
+  </div>
+</body>
+</html>
