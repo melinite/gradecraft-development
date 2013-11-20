@@ -77,6 +77,7 @@
 }
 
 footer div {
+  margin: 0 auto;
   padding: 15px 15px 20px;
 }
 
@@ -93,6 +94,14 @@ footer a {
 footer a:hover {
   color: #1ABC9C;
   opacity: .7;
+}
+
+.col {
+  position: relative;
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 15%;
+  float: left;
 }
   </style>
 </head>
@@ -112,31 +121,40 @@ footer a:hover {
   </div>
 
 <footer>
-<div>
-<h5> &copy; 2012-13 Regents of the University of Michigan</h5>
-<h5>Explore</h5>
-  <ul>
-    <li><a href="/features">Features</a></li>
-    <li><a href="">See the Demo</a></li>
-  </ul>
-<h5>Using GradeCraft</h5>
-  <ul>
-    <li><a href="/using_gradecraft">Apply to Use</a></li>
-    <li><a href="/documentation">Documentation</a></li>
-    <li><a href="/submit_a_bug">Submit a Bug</a></li>
-  </ul>
-<h5>About </h5>
-  <ul>
-    <li><a href="/research">Research</a></li>
-    <li><a href="/people">People</a></li>
-    <li><a href="https://github.com/UM-USElab/gradecraft-development">Codebase</a></li>
-  </ul>
-<h5>Talk to Us</h5>
-  <ul>
-   <li><a href="mailto:gradecraft@gmail.com">Email</a></li>
-   <li><a href="http://twitter.com/gradecraft">Twitter</a></li>
-  </ul>
-</div>
+  <div class="col">
+    <h5> &copy; 2012-13 Regents of the University of Michigan</h5>
+  </div>
+
+  <div class="col">
+    <h5>Explore</h5>
+    <ul>
+      <li><a href="/features">Features</a></li>
+      <li><a href="">See the Demo</a></li>
+    </ul>
+  </div>
+  <div class="col">
+    <h5>Using GradeCraft</h5>
+    <ul>
+      <li><a href="/using_gradecraft">Apply to Use</a></li>
+      <li><a href="/documentation">Documentation</a></li>
+      <li><a href="/submit_a_bug">Submit a Bug</a></li>
+    </ul>
+  </div>
+  <div class="col">
+    <h5>About </h5>
+    <ul>
+      <li><a href="/research">Research</a></li>
+      <li><a href="/people">People</a></li>
+      <li><a href="https://github.com/UM-USElab/gradecraft-development">Codebase</a></li>
+    </ul>
+  </div>
+  <div class="col">
+    <h5>Talk to Us</h5>
+    <ul>
+     <li><a href="mailto:gradecraft@gmail.com">Email</a></li>
+     <li><a href="http://twitter.com/gradecraft">Twitter</a></li>
+    </ul>
+  </div>
 </footer>
 </body>
 </html>
