@@ -81,7 +81,7 @@
         .col-lg-12
           - current_course_data.challenges.each do |challenge|
             .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
-              %span.assignmentName= challenge.name
+              %span.assignmentName= link_to challenge.name, challenge
               - if current_student.team_for_course(current_course)
                 - if challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).present?
                   %span.points.earned= points challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).try(:score)

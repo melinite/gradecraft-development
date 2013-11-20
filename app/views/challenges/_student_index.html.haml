@@ -12,6 +12,6 @@
       - if challenge.visible?
         %tr
           %td= link_to challenge.name, challenge
-          %td= challenge.description
+          %td= raw challenge.description
           %td= points challenge.point_total
           %td= challenge.due_at
