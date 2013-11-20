@@ -24,8 +24,8 @@ $(document).ready(function() {
         } else {
           $('#shared_' + badge_id).text("Share")
         }
-        $('#shared_' + badge_id).toggleClass('btn-success', !data.shared)
-        $('#shared_' + badge_id).toggleClass('btn-warning', data.shared)
+        $('#shared_' + badge_id).toggleClass('btn-success btn-warning')
+        $('#shared_' + badge_id).toggleClass('add_badge remove_badge')
       }
     })
   })

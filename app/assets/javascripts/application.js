@@ -463,79 +463,86 @@ $(document).ready(function(){
     // Ask Cory.
     $('.table-toggle').on('click', assignmentTypeBars);
   }
-
-  var Badge = Backbone.Model.extend({
-  })
-
-  var BadgeList = Backbone.Collection.extend({
-    model: Badge,
-    get_by_value: function (key, val) {
-      return this.filter( function (model) {
-        return model.get(key) === val
-      })
+  if ($('#shared_badges_table').length) {
+    if (!$('#current_user_badges').length) {
+      $('#shared_badges_table').append('<tr><td>My badges<td id="current_user_badges"></td></tr>')
     }
-  })
 
-  var allBadgesView = Backbone.View.extend({
-    el: $('.share_badge'),
 
-    events: {
-      'click .add_badge': 'add_badge',
-      'click .remove_badge': 'remove_badge'
-    },
-
-    initialize: function () {
-      this.shared_badges = window.shared_badges;
-    },
-
-    add_badge: function (e) {
-      this.shared_badges.add_badge(e)
-    )},
-
-    remove_badge: function (e) {
-      this.shared_badges.remove_badge(e)
+    var Badge = Backbone.Model.extend({
     })
-  })
 
-  var SharedBadgeView = Backbone.View.extend({
-    el: $('#current_user_badges'),
+    var BadgeList = Backbone.Collection.extend({
+      model: Badge,
+      remove_by_value: function (key, val) {
+        this.forEach(model, function () {
+          if (model.get(key) === val) {
+            this.remove(model)
+          }
+        })
+      }
+    })
 
-    events: {
-      'click button#add_badge': 'add_badge'
-    },
+    var AllBadgesView = Backbone.View.extend({
+      el: $('.share_badge'),
 
-    initialize: function () {
-      this.collection = new BadgeList()
-      this.collection.bind('add', this.append_badge)
-      this.render()
-    },
+      events: {
+        'click .add_badge': 'add_badge',
+        'click .remove_badge': 'remove_badge'
+      },
 
-    render: function () {
-    },
+      initialize: function () {
+        this.shared_badges = window.shared_badges;
+      },
 
-    add_badge: function (e) {
-      console.log(e)
-      var badge = new Badge();
-      badge.set({
-        name: $('#badge_name').val(),
-        url: ''
-      })
-      this.collection.add(badge)
-    },
+      add_badge: function (e) {
+        this.shared_badges.add_badge(e)
+      },
 
-    append_badge: function (badge) {
-      $(this.el).append('<img alt="' + badge.get('name') + '"src="' + badge.get('url') + '" width="40" />')
-    },
+      remove_badge: function (e) {
+        this.shared_badges.remove_badge(e)
+      }
+    })
 
-    remove_badge: function (e) {
-      console.log(e)
-      //this.collection.remove(this.collection.get_by_value('name', badge_name))
-    }
-  })
+    var SharedBadgeView = Backbone.View.extend({
+      el: $('#current_user_badges'),
 
-  if (!$('#current_user_badges').length) {
-    $('#shared_badges_table').append('<tr><td>My badges<td id="current_user_badges"></td></tr>')
+      events: {
+        'click button#add_badge': 'add_badge'
+      },
+
+      initialize: function () {
+        this.collection = new BadgeList()
+        this.collection.bind('add', this.append_badge)
+        this.render()
+      },
+
+      render: function () {
+      },
+
+      add_badge: function (e) {
+        var badge = new Badge()
+        $(e.target).data('cid', badge.cid)
+        var elem = $(e.target).parent()
+        badge.set({
+          name: elem.data('name'),
+          url: elem.data('icon')
+        })
+        this.collection.add(badge)
+      },
+
+      append_badge: function (badge) {
+        $('#current_user_badges').append('<img alt="' + badge.get('name') + '"src="' + badge.get('url') + '" width="40" data-cid="' + badge.cid + '"/>')
+      },
+
+      remove_badge: function (e) {
+        console.log(e)
+        $('#current_user_badges [data-cid="' + $(e.target).data('cid') + '"]').remove()
+        //this.collection.remove_by_value('name', badge_name)
+      }
+    })
+
+    window.shared_badges = new SharedBadgeView()
+    window.all_badges = new AllBadgesView()
   }
-
-  window.shared_badges = new SharedBadgeView()
 });
