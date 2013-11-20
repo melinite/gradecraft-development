@@ -11,8 +11,9 @@ class StudentData < Struct.new(:student, :course)
 
   #calculating student's predicted grade based on predictor choices
   def predictions
-    scores = membership.membership_scores.map do |s|
-      { :data => [s.score], :name => s.name }
+    scores = []
+    membership.membership_scores.each do |s|
+      scores << { :data => [s.score], :name => s.name }
     end
     if course.valuable_badges?
       earned_badge_score = membership.membership_calculation.earned_badge_score
