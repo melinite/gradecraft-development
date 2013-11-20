@@ -466,6 +466,11 @@ $(document).ready(function(){
   if ($('#shared_badges_table').length) {
     if (!$('#current_user_badges').length) {
       $('#shared_badges_table').append('<tr><td>My badges<td id="current_user_badges"></td></tr>')
+    } else {
+     $('#current_user_badges').children().each( function (index, child) {
+        $(child).attr('data-cid', index + 100)
+        $($('.remove_badge')[index]).attr('data-cid', index + 100)
+      })
     }
 
 
@@ -475,11 +480,14 @@ $(document).ready(function(){
     var BadgeList = Backbone.Collection.extend({
       model: Badge,
       remove_by_value: function (key, val) {
-        this.forEach(model, function () {
+        if ( key === undefined || val === undefined) {
+          return
+        }
+        this.forEach(function (model) {
           if (model.get(key) === val) {
             this.remove(model)
           }
-        })
+        }, this)
       }
     })
 
@@ -507,10 +515,6 @@ $(document).ready(function(){
     var SharedBadgeView = Backbone.View.extend({
       el: $('#current_user_badges'),
 
-      events: {
-        'click button#add_badge': 'add_badge'
-      },
-
       initialize: function () {
         this.collection = new BadgeList()
         this.collection.bind('add', this.append_badge)
@@ -536,9 +540,8 @@ $(document).ready(function(){
       },
 
       remove_badge: function (e) {
-        console.log(e)
+        this.collection.remove_by_value('name', $(e.target).parent().data('name'))
         $('#current_user_badges [data-cid="' + $(e.target).data('cid') + '"]').remove()
-        //this.collection.remove_by_value('name', badge_name)
       }
     })
 
