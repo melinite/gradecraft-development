@@ -14,7 +14,7 @@ module S3File
     end
     write_attribute(:filepath, filepath)
     while filepath.include? "%2F"
-      filepath.slice(filepath.index("%2F"))
+      filepath.slice!(filepath.index("%2F"))
     end
     write_attribute(:filename, filepath)
   end
