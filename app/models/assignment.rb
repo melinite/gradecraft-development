@@ -259,6 +259,16 @@ scope :grading_done, -> { where 'grades.present? == 1' }
    ((positive_grades / course.graded_student_count.to_f) * 100).round(2)
   end
 
+  #gradebook
+  def self.gradebook_for_course(course, options = {})
+    CSV.generate(options) do |csv|
+      csv << ["First Name", "Last Name", "Email", "Score", "Grade" ]
+      course.students.each do |student|
+        csv << [student.first_name, student.last_name, student.email, student.score_for_course(course)]
+      end
+    end
+  end
+
   private
 
   def cache_point_total

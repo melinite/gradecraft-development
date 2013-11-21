@@ -52,7 +52,7 @@ class InfoController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @assignments }
-      format.csv { send_data @assignments.to_csv }
+      format.csv { send_data @assignments.gradebook_for_course(current_course) }
       format.xls { send_data @assignments.to_csv(col_sep: "\t") }
     end
   end

@@ -1,7 +1,7 @@
 = content_nav_for User, term_for(:students) do
   %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "btn btn-tiny btn-info"
   %li= link_to "Download CSV", students_path(format: 'csv'), :class => "btn btn-tiny btn-info"
-  %li= link_to "Downlaod Gradebook", gradebook_path(format: 'csv'), :class => "btn btn-tiny btn-info"
+  //%li= link_to "Downlaod Gradebook", gradebook_path(format: 'csv'), :class => "btn btn-tiny btn-info"
 
 .col-lg-12
   %h3= @title
