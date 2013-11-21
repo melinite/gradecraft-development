@@ -19,9 +19,10 @@
       - submissions.each do |ug|
         %tr
           - if ug.assignment.is_individual?
-            %td= link_to ug.student.name, student_path(ug.student)
-            - if current_course.has_teams? && ug.student.team_for_course(current_course).present?
-              %td= link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
+            %td= link_to ug.student.try(:name), student_path(ug.student)
+            %td
+              - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
+                = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
             %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
             %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
           - elsif ug.assignment.has_groups?
