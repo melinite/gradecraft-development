@@ -81,9 +81,13 @@ tr.achieved {
 }
 
 div.vco-storyjs {
-  height: 580px;
-  width: 800px;
+  width: 100%;
   display: block;
+}
+
+.student .vco-storyjs {
+  height: 580px;
+  width: 1000px;
 }
 
 .earnedBadgeField, .badgeField {
