@@ -25,10 +25,9 @@ class Group < ActiveRecord::Base
   before_validation :cache_associations
 
   validates_presence_of :course, :name
+  validates :assignment_id, :uniqueness => { :scope => :student_id }
 
   validate :max_group_number_not_exceeded, :min_group_number_met
-
-  #validates :assignment_id, :uniqueness => { scope: :student_id, message: "Oops, students can only belong to group per assignment" }
 
   #Grades
 

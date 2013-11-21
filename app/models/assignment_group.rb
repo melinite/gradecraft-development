@@ -5,4 +5,5 @@ class AssignmentGroup < ActiveRecord::Base
   belongs_to :assignment
   belongs_to :group
 
+  #validates :assignment_id, :uniqueness => { scope: [:student_id, :group_id] }
 end
