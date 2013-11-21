@@ -2,17 +2,52 @@
 <html>
 <head>
   <title>We're sorry, but something went wrong (500)</title>
-  <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+   <style type="text/css">
+    body {
+      background: rgba(147,206,222,1);
+      background: -moz-linear-gradient(left, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+      background: -webkit-gradient(left top, right top, color-stop(0%, rgba(147,206,222,1)), color-stop(41%, rgba(117,189,209,1)), color-stop(100%, rgba(73,165,191,1)));
+      background: -webkit-linear-gradient(left, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+      background: -o-linear-gradient(left, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+      background: -ms-linear-gradient(left, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+      background: linear-gradient(to right, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#49a5bf', GradientType=1 );
+      color: #666;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: arial, sans-serif;
+
+      }
     div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      border: 1px solid #ccc;
       margin: 6em auto;
       border-right-color: #999;
       border-bottom-color: #999;
+      color: #eee;
     }
-    h1 { font-size: 18pt; color: #f00; line-height: 1.5em; }
+    .navbar {
+      margin-bottom: 0;
+      max-height: auto;
+      overflow: visible;
+      height: 25px;
+      margin: 0;
+      padding: 0;
+      font-family: Futura, Helvetica, sans-serif;
+      background-color: #000;
+      color: #FFF;
+      padding: 6px 10px 5px 10px;
+      text-align: left;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      font-size: 20px;
+      color: #FFF;
+    }
+
+    .navbar .pull_right {
+      float: right;
+    }
 
     .navbar .pull_right a {
       background-color: #F4A425;
@@ -22,7 +57,7 @@
       font-size: 11px;
     }
 
-    h1 { font-size: 18pt; color: #FFF; line-height: 1.5em; }
+    h1 {font-size: 18pt; color: #FFF; line-height: 1.5em; }
 
     h5 {
       font-family: Futura, sans-serif;
@@ -99,47 +134,59 @@
 
 <body>
   <!-- This file lives in public/500.html -->
+  <div class="navbar navbar-fixed-top navbar-inverse">
+    <a href="/"> GradeCraft</a>
+    <div class="pull_right">
+    <a href="/dashboard">Back to My Dashboard</a>
+    </div>
+  </div>
+
   <div class="dialog">
     <h1>Hmmm... Looks like something went wrong :/ </h1>
     <p>We've sent an email to the GradeCraft developers, but feel free to <a href="mailto: gradecraft@gmail.com">get in touch</a> with more details.</p>
   </div>
 
 <footer>
-  <div id="footer-content">
-  <div class="col-2">
-    <h5> &copy; 2012-13 Regents of the University of Michigan</h5>
-  </div>
 
-  <div class="col">
-    <h5>Explore</h5>
-    <ul>
-      <li><a href="/features">Features</a></li>
-      <li><a href="">See the Demo</a></li>
-    </ul>
-  </div>
-  <div class="col">
-    <h5>Using GradeCraft</h5>
-    <ul>
-      <li><a href="/using_gradecraft">Apply to Use</a></li>
-      <li><a href="/documentation">Documentation</a></li>
-      <li><a href="/submit_a_bug">Submit a Bug</a></li>
-    </ul>
-  </div>
-  <div class="col">
-    <h5>About </h5>
-    <ul>
-      <li><a href="/research">Research</a></li>
-      <li><a href="/people">People</a></li>
-      <li><a href="https://github.com/UM-USElab/gradecraft-development">Codebase</a></li>
-    </ul>
-  </div>
-  <div class="col">
-    <h5>Talk to Us</h5>
-    <ul>
-     <li><a href="mailto:gradecraft@gmail.com">Email</a></li>
-     <li><a href="http://twitter.com/gradecraft">Twitter</a></li>
-    </ul>
-  </div>
+  <div id="footer-content">
+    <div class="col-2">
+      <h5> &copy; 2012-13 Regents of the University of Michigan</h5>
+    </div>
+
+    <div class="col">
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="/features">Features</a></li>
+        <li><a href="">See the Demo</a></li>
+      </ul>
+    </div>
+
+    <div class="col">
+      <h5>Using GradeCraft</h5>
+      <ul>
+        <li><a href="/using_gradecraft">Apply to Use</a></li>
+        <li><a href="/documentation">Documentation</a></li>
+        <li><a href="/submit_a_bug">Submit a Bug</a></li>
+      </ul>
+    </div>
+
+    <div class="col">
+      <h5>About </h5>
+      <ul>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/people">People</a></li>
+        <li><a href="https://github.com/UM-USElab/gradecraft-development">Codebase</a></li>
+      </ul>
+    </div>
+
+    <div class="col">
+      <h5>Talk to Us</h5>
+      <ul>
+       <li><a href="mailto:gradecraft@gmail.com">Email</a></li>
+       <li><a href="http://twitter.com/gradecraft">Twitter</a></li>
+      </ul>
+    </div>
+
   </div>
 </footer>
 </body>
