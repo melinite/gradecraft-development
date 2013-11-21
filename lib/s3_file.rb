@@ -13,9 +13,7 @@ module S3File
       filepath.slice! "/gradecraft-#{Rails.env}/"
     end
     write_attribute(:filepath, filepath)
-    while filepath.include? "%2F"
-      filepath.slice!(filepath.index("%2F"))
-    end
+    filepath.slice!(/.*\d\d.\d\d[%2]*/)
     write_attribute(:filename, filepath)
   end
 end
