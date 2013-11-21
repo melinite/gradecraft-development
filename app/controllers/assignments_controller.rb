@@ -45,6 +45,7 @@ class AssignmentsController < ApplicationController
       flash[:error] = 'Due date must be after open date.'
       render :action => "new", :assignment => @assignment
     elsif @assignment.save
+      set_assignment_weights
       respond_with @assignment, :location => assignment_path(@assignment), :notice => 'Assignment was successfully created.'
     else
       respond_with @assignment
@@ -76,5 +77,15 @@ class AssignmentsController < ApplicationController
 
   def assignment_params
     params.require(:assignment).permit(:assignment_rubrics_attributes => [:id, :rubric_id, :_destroy])
+  end
+
+  def set_assignment_weights
+    return unless @assignment.student_weightable?
+    @assignment.weights = current_course.students.map do |student|
+      assignment_weight = @assignment.weights.where(student: student).first || @assignment.weights.new(student: student)
+      assignment_weight.weight = @assignment.assignment_type.weight_for_student(student)
+      assignment_weight
+    end
+    @assignment.save
   end
 end

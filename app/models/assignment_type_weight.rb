@@ -43,5 +43,4 @@ class AssignmentTypeWeight < Struct.new(:student, :assignment_type)
       errors.add :weight, " Oops, you've set more Kapital than are allowed for a single category. Try it again?"
     end
   end
-
 end
