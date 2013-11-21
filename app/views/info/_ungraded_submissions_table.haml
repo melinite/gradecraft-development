@@ -1,8 +1,13 @@
+- if current_course.has_teams?
+  .filters
+    = form_tag grading_status_path, :method => :get do
+      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+      = submit_tag 'Filter', :class => 'btn btn-primary'
+
 - @ungraded_submissions.group_by(&:assignment).each do |assignment, submissions|
   %h5
-    = assignment.name
-    - if assignment.assignment_type.mass_grade?
-      = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
+    = link_to assignment.name, assignment
+    = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
   %table.table.simpleTable
     %thead
       %tr
@@ -17,14 +22,30 @@
         %th
     %tbody
       - submissions.each do |ug|
-        %tr
-          - if ug.assignment.is_individual?
-            %td= link_to ug.student.name, student_path(ug.student)
-            - if current_course.has_teams? && ug.student.team_for_course(current_course).present?
-              %td= link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
-            %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-            %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
-          - elsif ug.assignment.has_groups?
-            %td= link_to ug.group.try(:name), group_path(ug.group)
-            %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-            %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'btn btn-xs btn-success'
+        - if params[:team_id].present?
+          - if ug.student.team_for_course(current_course).id == params[:team_id].to_i
+            %tr
+              - if ug.assignment.is_individual?
+                %td= link_to ug.student.try(:name), student_path(ug.student)
+                %td
+                  - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
+                    = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
+                %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
+                %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
+              - elsif ug.assignment.has_groups?
+                %td= link_to ug.group.try(:name), group_path(ug.group)
+                %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
+                %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'btn btn-xs btn-success'
+        - else
+          %tr
+            - if ug.assignment.is_individual?
+              %td= link_to ug.student.try(:name), student_path(ug.student)
+              %td
+                - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
+                  = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
+              %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
+              %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
+            - elsif ug.assignment.has_groups?
+              %td= link_to ug.group.try(:name), group_path(ug.group)
+              %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
+              %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'btn btn-xs btn-success'

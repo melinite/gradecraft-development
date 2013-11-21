@@ -134,6 +134,7 @@ GradeCraft::Application.routes.draw do
 
   get 'leaderboard' => 'info#leaderboard'
   get 'grading_status' => 'info#grading_status'
+  get 'gradebook' => 'info#gradebook'
   get 'all_grades' => 'courses#all_grades'
 
   #9. Groups
