@@ -3,6 +3,7 @@ class GradesController < ApplicationController
 
   before_filter :set_assignment, only: [:show, :edit, :update, :destroy]
   before_filter :ensure_staff?, :except => [:self_log, :show, :predict_score]
+  before_filter :ensure_student?, only: [:predict_score]
 
   def show
     @grade = current_student_data.grade_for_assignment(@assignment)

@@ -5,7 +5,11 @@
         #projectedPoints
           %h4
             = "Projected points:"
-            %span#predictor-score-display= points current_student_data.predicted_score
+            %span#predictor-score-display
+              - if current_user.is_staff?
+                = points current_course.score_for_student(current_student)
+              - else
+                = points current_student_data.predicted_score
             = "/"
             - if current_course.point_total.present?
               %span= points current_course.point_total
@@ -14,11 +18,10 @@
 
             .glyphicon.glyphicon-info-sign.tooltip
               Tooltip!
-          - if current_user.is_student?
-            %h4
-              Predicted Final Grade:
-              %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
-                = current_student_data.predicted_grade_letter
+          %h4
+            Predicted Final Grade:
+            %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
+              = current_student_data.predicted_grade_letter
 
       .charts.dashboard-charts
         .chart-wrapper
