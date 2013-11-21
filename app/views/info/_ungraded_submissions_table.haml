@@ -1,8 +1,7 @@
 - @ungraded_submissions.group_by(&:assignment).each do |assignment, submissions|
   %h5
     = assignment.name
-    - if assignment.assignment_type.mass_grade?
-      = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
+    = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
   %table.table.simpleTable
     %thead
       %tr
