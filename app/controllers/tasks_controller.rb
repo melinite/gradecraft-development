@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 
   before_filter :ensure_staff?
 
-  before_filter :load_assignment
+  #before_filter :find_assignment
 
   def index
     redirect_to @assignment
@@ -13,6 +13,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    @assignment = find_assignment
     @title = "Create a New #{@assignment.name} Task"
     @task = @assignment.tasks.new
   end
@@ -50,8 +51,13 @@ class TasksController < ApplicationController
 
   private
 
-  def load_assignment
-    @assignment = current_course.assignments.find(params[:assignment_id])
+  def find_assignment
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
+    end
+    nil
   end
 
 end
