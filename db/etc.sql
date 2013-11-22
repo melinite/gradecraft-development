@@ -31,13 +31,14 @@ CREATE OR REPLACE
 CREATE OR REPLACE
      VIEW membership_scores AS
    SELECT m.id AS course_membership_id,
-          a.id AS assignment_type_id,
+          at.id AS assignment_type_id,
+          at.name,
           (SELECT COALESCE(SUM(g.score), 0) AS score
-             FROM released_grades AS g WHERE g.student_id = m.user_id AND g.assignment_type_id = a.id),
-          a.name
+             FROM released_grades AS g
+            WHERE g.student_id = m.user_id AND g.assignment_type_id = at.id AND g.course_id = m.course_id)
      FROM course_memberships AS m
-     JOIN assignment_types AS a ON a.course_id = m.course_id
- GROUP BY m.id, a.id, a.name;
+     JOIN assignment_types AS at ON at.course_id = m.course_id
+ GROUP BY m.id, at.id, at.name;
 
 CREATE OR REPLACE
      VIEW membership_calculations AS
@@ -55,15 +56,11 @@ CREATE OR REPLACE
             m.user_id,
             (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM submissions WHERE course_id = m.course_id and student_id = m.user_id)
           )) AS submissions_key,
-          (SELECT COALESCE(sum(point_total), 0) FROM assignments WHERE course_id = m.course_id and user_id = m.user_id) AS assignment_score,
+          (SELECT COALESCE(sum(point_total), 0) FROM assignments AS a WHERE a.course_id = m.course_id) AS assignment_score,
           (SELECT COALESCE(sum(point_total), 0)
              FROM assignments
             WHERE course_id = m.course_id and user_id = m.user_id
-              AND EXISTS(SELECT 1
-                           FROM grades
-                          WHERE assignment_id = assignments.id
-                            AND (status = 'Released') OR (status = 'Graded' AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = m.user_id)
-                        )
+              AND EXISTS(SELECT 1 FROM released_grades WHERE assignment_id = assignments.id AND student_id = m.user_id)
             ) AS in_progress_assignment_score,
           (SELECT COALESCE(sum(score), 0) FROM grades WHERE course_id = m.course_id and student_id = m.user_id) AS grade_score,
           (SELECT COALESCE(SUM(score), 0)
