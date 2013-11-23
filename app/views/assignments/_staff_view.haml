@@ -66,7 +66,7 @@
       - @assignment.tasks.each do |task|
         %tr
           %td= task.name
-          %td= task.description
+          %td= raw task.description
           %td= link_to "View", assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-success'
           %td= link_to "Edit", edit_assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-info'
           %td= link_to "Delete", assignment_task_path(@assignment.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete

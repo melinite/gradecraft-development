@@ -48,7 +48,7 @@
       - @badge.tasks.each do |task|
         %tr
           %td= task.name
-          %td= task.description
+          %td= raw task.description
           - if current_user.is_staff?
             %td= link_to "View", badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-success'
             %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-info'
