@@ -21,11 +21,17 @@ class StudentData < Struct.new(:student, :course)
     else
       earned_badge_score = 0
     end
+    if membership.membership_calculation.is_team_member?
+      challenge_grade_score = membership.membership_calculation.challenge_grade_score
+      scores << { :data => [challenge_grade_score], :name => "#{course.challenge_term.pluralize}" }
+    else
+      challenge_grade_score = 0
+    end
     return {
       :student_name => student.name,
       :scores => scores,
-      :course_total => membership.membership_calculation.assignment_score + earned_badge_score,
-      :in_progress => membership.membership_calculation.in_progress_assignment_score + earned_badge_score
+      :course_total => membership.membership_calculation.assignment_score + earned_badge_score + challenge_grade_score,
+      :in_progress => membership.membership_calculation.in_progress_assignment_score + earned_badge_score + challenge_grade_score
     }
   end
 

@@ -29,6 +29,13 @@ CREATE OR REPLACE
     WHERE (status = 'Released' OR (status = 'Graded' AND NOT assignments.release_necessary));
 
 CREATE OR REPLACE
+     VIEW released_challege_grades AS
+   SELECT challenge_grades.*
+     FROM challenge_grades
+     JOIN challenges ON challenges.id = challenge_grades.challenge_id
+    WHERE (status = 'Released' OR (status = 'Graded' AND NOT challenges.release_necessary));
+
+CREATE OR REPLACE
      VIEW membership_scores AS
    SELECT m.id AS course_membership_id,
           at.id AS assignment_type_id,
@@ -70,6 +77,16 @@ CREATE OR REPLACE
               AND (g.status = 'Released' OR (g.status = 'Graded' AND NOT a.release_necessary))
               ) AS released_grade_score,
           (SELECT COALESCE(sum(score), 0) FROM earned_badges WHERE course_id = m.course_id and student_id = m.user_id) AS earned_badge_score,
+          (SELECT COALESCE(SUM(challenge_grades.score), 0)
+             FROM challenge_grades
+             JOIN challenges ON challenge_grades.challenge_id = challenges.id
+             JOIN teams ON challenge_grades.team_id = teams.id
+             JOIN team_memberships ON team_memberships.team_id = teams.id
+            WHERE teams.course_id = m.course_id AND team_memberships.student_id = m.user_id) AS challenge_grade_score,
+          (SELECT teams.id
+             FROM teams
+             JOIN team_memberships ON team_memberships.team_id = teams.id
+            WHERE teams.course_id = m.course_id AND team_memberships.student_id = m.user_id) AS team_id,
           (SELECT SUM(COALESCE(assignment_weights.point_total, assignments.point_total))
              FROM assignments
         LEFT JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id
