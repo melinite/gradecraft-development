@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
     :student_academic_history_attributes, :team_role, :course_memberships_attributes,
-    :character_profile, :team_id, :lti_uid, :auditing
+    :character_profile, :team_id, :lti_uid, :course_membership
 
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
