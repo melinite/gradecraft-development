@@ -63,7 +63,10 @@ $(document).ready(function(){
   $(".alert").alert();
 
   $('.datetimepicker').datetimepicker( {
-    format: 'dd-mm-yyyy hh:ii'
+    format: "MM dd yyyy - hh:ii",
+    autoclose: true,
+    showMeridian: true,
+    todayBtn: true
   });
 
   if ($('.s3_uploader').length) {

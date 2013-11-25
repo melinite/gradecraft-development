@@ -21,9 +21,7 @@ class User < ActiveRecord::Base
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
     :student_academic_history_attributes, :team_role, :course_memberships_attributes,
-    :character_profile, :team_id, :lti_uid, :auditing
-
-  #has_secure_password
+    :character_profile, :team_id, :lti_uid, :course_membership
 
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
@@ -166,6 +164,14 @@ class User < ActiveRecord::Base
 
   def earned_badge_score_for_course(course)
     earned_badges.where(:course_id => course).score
+  end
+
+  def earned_badges_for_course(course)
+    @earned_badges ||= {}.tap do |earned_badges|
+      self.earned_badges.where(course: course).each do |earned_badge|
+        earned_badges[earned_badge.badge_id] = earned_badge
+      end
+    end
   end
 
   #I think this may be a little bit faster - ch

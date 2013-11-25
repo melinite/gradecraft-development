@@ -58,7 +58,7 @@
             = student.grade_level_for_course(current_course)
         - if current_course.has_badges?
           %td
-            - student.earned_badges.each do |badge|
+            - student.earned_badges_for_course(current_course).each do |badge|
               %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "20"}
         %td= link_to "Edit", edit_user_path(student), :class => 'btn btn-tiny btn-info'
         %td= link_to 'Remove from Course', course_membership_path(current_course.membership_for_student(student)), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure you want to remove this student from your course?' }, :method => :delete
