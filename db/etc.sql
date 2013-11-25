@@ -86,7 +86,7 @@ CREATE OR REPLACE
           (SELECT teams.id
              FROM teams
              JOIN team_memberships ON team_memberships.team_id = teams.id
-            WHERE teams.course_id = m.course_id AND team_memberships.student_id = m.user_id) AS team_id,
+            WHERE teams.course_id = m.course_id AND team_memberships.student_id = m.user_id ORDER BY team_memberships.updated_at DESC LIMIT 1) AS team_id,
           (SELECT SUM(COALESCE(assignment_weights.point_total, assignments.point_total))
              FROM assignments
         LEFT JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id
