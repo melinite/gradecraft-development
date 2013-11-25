@@ -3,7 +3,7 @@ module S3File
   def url
     s3 = AWS::S3.new
     bucket = s3.buckets["gradecraft-#{Rails.env}"]
-    return bucket.objects[CGI::unescape(filepath || filename)].url_for(:read, :expires => 15 * 60).to_s #15 minutes
+    return bucket.objects[CGI::unescape(filepath)].url_for(:read, :expires => 15 * 60).to_s #15 minutes
   end
 
   private
