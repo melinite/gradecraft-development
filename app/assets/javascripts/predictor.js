@@ -4,6 +4,10 @@ function addCommas(i){
 	return numWithCommas;
 };
 
+function isStaff(){
+  return !!$(".staff").length
+}
+
 var chartOptions = {
   chart: {
     renderTo: 'prediction',
@@ -95,7 +99,7 @@ var PredictorView = Backbone.View.extend({
     $('#predictor-score-display').html(addCommas(scoreTotal));
     var gradeLevels = $('#predictor-course-grade').data('grade-levels');
     var currentGradeLevel, grade, level;
-    if(gradeLevels.length){
+    if(gradeLevels != null && gradeLevels.length){
       current_grade_level = _.max(gradeLevels, function(gradeLevel){ return gradeLevel[0] <= scoreTotal })
       grade = current_grade_level[1];
       level = current_grade_level[2];
@@ -186,8 +190,12 @@ var getScore = function($item) {
     return parseInt($item.children('option:selected').val() || 0);
   } else if ($item.is('input[type="hidden"]')) {
     return parseInt($item.val());
-  } else if ($item.is('.ui-slider')) {
-    return parseInt($item.slider('value'));
+  } else if ($item.is('.slider') || $item.is(".ui-slider")) {
+    if($item.is(".ui-slider")){
+      return parseInt($item.slider('value'));
+    }else{
+      return parseInt($item.attr("value"));
+    }
   } else {
     return 0;
   }
@@ -198,4 +206,101 @@ $(document).ready(function() {
   if ($wrapper.length) {
     new PredictorView();
   }
+
+   // Temporarily commented out to revive dashboard charts & predictor
+
+  $('.slider').each(function(i,slider) {
+    $slider = $(slider);
+    var min = 0;
+    var max = $slider.attr('max');
+    var scoreValues = $slider.data("scorelevelvals");
+    var scoreNames = $slider.data("scorelevelnames");
+    if(scoreValues.length && !!$.inArray(min, scoreValues)){
+      scoreValues.unshift(+min);
+      scoreNames.unshift("Minimum");
+    }
+    if(scoreValues.length && !!$.inArray(max, scoreValues)){
+      scoreValues.push(+max);
+      scoreNames.push("Maximum");
+    }
+    $slider.slider({
+      range: "min",
+      min: min,
+      max: max,
+      stop: function(event, ui) {
+        console.log(ui.value);
+      },
+      slide: function(event, ui) {
+        if(scoreValues.length) {
+          var closest = null;
+          $.each(scoreValues, function(){
+            if (closest == null || Math.abs(this - ui.value) < Math.abs(closest - ui.value)) {
+              closest = this;
+            }
+          });
+          $(this).slider("value", closest);
+          $(slider).siblings("div.assignment > span.pScore").html(closest);
+          $(slider).siblings("div.assignment > span.score-level-name").html("(Score Level: " + scoreNames[scoreValues.indexOf(+closest)] + ")");
+          return false;
+        }
+        else {
+          $(slider).siblings("div.assignment > span.pScore").html(ui.value);
+        }
+      }
+    });
+  });
+
+  $('.slider').each(function(i,slider) {
+    $slider = $(slider)
+    $(slider).siblings("div.assignment > span.pScore").html($slider.attr('value'));
+    $slider.slider({
+      max: parseInt($slider.attr('max')),
+      value: parseInt($slider.attr('value')),
+      stop: function(event, ui) {
+        assignment_id = $(slider).parent().data("assignment");
+        if(!isStaff()){
+          $.ajax({
+              url: '/assignments/' + assignment_id + '/grades/predict_score',
+              type: "POST",
+              data: { predicted_score: ui.value },
+              dataType: 'json'
+          });        
+        }
+      }
+    });
+    $slider.on('slide', function(event, ui){
+      $(slider).siblings("div.assignment > span.pScore").html(ui.value)
+    });
+  });
+
+
+  $('#predictor').on('click', ':checkbox', function() {
+    var assignment_id = $(this).parent().data("assignment");
+    if(this.checked){
+      var value = $(this).val();
+    }else{
+      var value = 0;
+    }
+    if(!is_staff()){
+      $.ajax({
+        url: '/assignments/' + assignment_id + '/grades/predict_score',
+        type: "POST",
+        data: { predicted_score: value },
+        dataType: 'json'
+      });    
+    }
+  })
+
+  $("select.point-value").change(function(){
+    var assignment_id = $(this).parent().data("assignment");
+    var value = $(this).val().length ? $(this).val() : 0;
+    if(!isStaff()){
+      $.ajax({
+        url: '/assignments/' + assignment_id + '/grades/predict_score',
+        type: "POST",
+        data: { predicted_score: value },
+        dataType: 'json'
+      });    
+    }
+  })
 });

@@ -49,6 +49,9 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def ensure_student?
+    return not_authenticated unless current_user.is_student?
+  end
 
   def ensure_staff?
     return not_authenticated unless current_user.is_staff?

@@ -27,6 +27,7 @@ class StudentsController < ApplicationController
     @assignments_with_due_dates = current_course_data.assignments.select { |assignment| assignment.due_at.present? }
     @sorted_teams = current_course.teams.order_by_high_score
     @grade_scheme = current_course.grade_scheme
+    @grade_levels_json = @grade_scheme.elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
     @scores_for_current_course = current_student.scores_for_course(current_course)
     if current_course.team_challenges?
       @events = current_course_data.assignments.to_a + current_course.challenges
