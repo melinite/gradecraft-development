@@ -53,6 +53,7 @@ course = Course.create! do |c|
   c.assignment_term = "Quest"
   c.group_term = "League"
   c.team_term = "Horde"
+  c.team_challenges = true
   c.challenge_term = "Battle"
   c.grading_philosophy ="I believe a grading system should put the learner in control of their own destiny, promote autonomy, and reward effort and risk-taking. Whereas most grading systems start you off with 100% and then chips away at that “perfect grade” by averaging in each successive assignment, the grading system in this course starts everyone off at zero, and then gives you multiple ways to progress towards your goals. Different types of assignments are worth differing amounts of points. Some assignments are required of everyone, others are optional. Some assignments can only be done once, others can be repeated for more points. In most cases, the points you earn for an assignment are based on the quality of your work on that assignment. Do poor work, earn fewer points. Do high-quality work, earn more points. You decide what you want your grade to be. Learning in this class should be an active and engaged endeavor."
   c.media_file = "http://upload.wikimedia.org/wikipedia/commons/3/36/Michigan_Wolverines_Block_M.png"
@@ -130,6 +131,7 @@ students << User.create! do |u|
 end
 puts "Percy Weasley has arrived on campus, on time as usual"
 
+#Create demo academic history content
 students.each do |s|
   StudentAcademicHistory.create! do |ah|
     ah.student_id = s.id
@@ -549,8 +551,18 @@ challenges << Challenge.create! do |c|
   c.release_necessary = false
   c.open_at = rand(6).weeks.from_now
   c.visible = true
+  c.save
+  teams.each do |team|
+    c.challenge_grades.create! do |cg|
+      cg.team = team
+      cg.score = 1000000 * [0,1].sample
+      cg.status = "Graded"
+    end
+  end
 end
 puts "The House Cup Competition begins... "
+
+
 
 challenges << Challenge.create! do |c|
   c.course = course
