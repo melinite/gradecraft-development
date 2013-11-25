@@ -102,7 +102,7 @@ CREATE OR REPLACE VIEW shared_earned_badges AS
     (users.first_name || ' ' || users.last_name) as student_name,
     users.id as user_id,
     earned_badges.id as id,
-    badges.icon, badges.name
+    badges.icon, badges.name, badges.id as badge_id
   FROM course_memberships
   JOIN users ON users.id = course_memberships.user_id
   JOIN earned_badges ON earned_badges.student_id = users.id
