@@ -1,3 +1,11 @@
+%div.well.s3_uploader
+  = s3_uploader_form key: upload_url('assignment_files', @assignment), acl: "private", max_file_size: 40.megabytes do
+    = file_field_tag :file
+  %div#uploaded_files Uploaded:
+  %div.upload.s3_progress
+    Progress:
+    %div.progress
+      %div.bar
 = simple_form_for(@assignment, :html => { :class => 'form-horizontal' } ) do |f|
   .well
     %h4 The Basics
@@ -11,8 +19,13 @@
     = f.input :visible, :as => :boolean, :hint => "Can #{term_for :students} see this #{term_for :assignment} in their dashboard?"
     = f.input :required, :as => :boolean, :hint => "Are ALL #{term_for :students} expected to complete this #{term_for :assignment} to pass the course?"
     = f.simple_fields_for :assignment_files, @assignment.assignment_files.new do |aff|
-      = aff.input :filename, as: :file, :label => "Supporting Files"
+      = aff.input :filepath, :input_html => { :class => 's3_files' }, :as => :hidden
     = f.text_area :description, :class => "ckeditor", :label => "Description", :input_html => {:style => "width: 90%; height: 200px;"}, :hint => "This will be shown to students on their dashboard, and when they submit their assignment."
+  - if @assignment.assignment_type.present? && @assignment.assignment_type.points_predictor_display == "Set per Assignment"
+    .well
+      %h4 Predictor
+
+      = f.input :points_predictor_display, :collection => [["Fixed"], ["Slider"], ["Select List"]], :input_html => {:class => "input-sm col-lg-3"}
 
   .well
     %h4 Timeline

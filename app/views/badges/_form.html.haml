@@ -1,9 +1,17 @@
+%div.s3_uploader
+  = s3_uploader_form key: upload_url('badge_icons', @badge), acl: "private", max_file_size: 40.megabytes do
+    = file_field_tag :file
+  %div#uploaded_files Uploaded:
+  %div.upload.s3_progress
+    Progress:
+    %div.progress
+      %div.bar
+
 = simple_form_for(@badge, :html => {:class => 'form-horizontal', :multipart => true }) do |f|
   = f.association :badge_set, :collection => @badge_sets, :input_html => {:class => 'input-sm col-lg-3'}, :label => "#{term_for :badge} Set"
   = f.input :name, :label => "#{term_for :badge} Name", :input_html => {:class => 'col-lg-3'}
-  = f.input :icon, :as => :file, :label => "Icon", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5'}, :hint => "This image will be shown to the student, and shared with any communities if the student has chosen to make the award public."
   = f.simple_fields_for :badge_files, @badge.badge_files.new do |bff|
-    = bff.input :filename, as: :file, :label => "Documents", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5'}
+    = bff.input :filepath, :label => "Documents", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5'}, :as => :hidden
   = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "Describe what this #{term_for :badge} means, and how it can be earned. Note that if this badge is marked as visible then this description will also be viewable in the list of badges."
   = f.input :visible, :as => :boolean
   - if current_course.valuable_badges?

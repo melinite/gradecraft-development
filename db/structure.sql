@@ -501,7 +501,8 @@ ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
 CREATE TABLE challenge_files (
     id integer NOT NULL,
     filename character varying(255),
-    challenge_id integer
+    challenge_id integer,
+    filepath character varying(255)
 );
 
 
@@ -805,7 +806,7 @@ CREATE TABLE tasks (
 --
 
 CREATE VIEW course_cache_keys AS
-    SELECT courses.id, courses.id AS course_id, md5(pg_catalog.concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, md5(pg_catalog.concat(courses.id, (SELECT COALESCE(sum(date_part('epoch'::text, assignments.updated_at)), (0)::double precision) AS "coalesce" FROM assignments WHERE (assignments.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, assignment_types.updated_at)), (0)::double precision) AS "coalesce" FROM assignment_types WHERE (assignment_types.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, score_levels.updated_at)), (0)::double precision) AS "coalesce" FROM (assignment_types JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id))) WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, md5(concat((SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum FROM grades WHERE (grades.course_id = courses.id)))) AS grades_key, md5(pg_catalog.concat((SELECT COALESCE(sum(date_part('epoch'::text, tasks.updated_at)), (0)::double precision) AS "coalesce" FROM tasks WHERE (tasks.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, badges.updated_at)), (0)::double precision) AS "coalesce" FROM badges WHERE (badges.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, earned_badges.updated_at)), (0)::double precision) AS "coalesce" FROM earned_badges WHERE (earned_badges.course_id = courses.id)))) AS badges_key FROM courses;
+    SELECT courses.id, courses.id AS course_id, md5(pg_catalog.concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, md5(pg_catalog.concat(courses.id, (SELECT sum(date_part('epoch'::text, assignments.updated_at)) AS sum FROM assignments WHERE (assignments.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, assignment_types.updated_at)) AS sum FROM assignment_types WHERE (assignment_types.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, score_levels.updated_at)) AS sum FROM (assignment_types JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id))) WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, md5(concat((SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum FROM grades WHERE (grades.course_id = courses.id)))) AS grades_key, md5(pg_catalog.concat((SELECT sum(date_part('epoch'::text, tasks.updated_at)) AS sum FROM tasks WHERE (tasks.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, badges.updated_at)) AS sum FROM badges WHERE (badges.course_id = courses.id)), (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE (earned_badges.course_id = courses.id)))) AS badges_key FROM courses;
 
 
 --
@@ -1419,27 +1420,7 @@ CREATE TABLE submissions (
 --
 
 CREATE VIEW membership_calculations AS
-    SELECT m.id, m.id AS course_membership_id, m.course_id, m.user_id, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT COALESCE(sum(date_part('epoch'::text, earned_badges.updated_at)), (0)::double precision) AS "coalesce" FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT COALESCE(sum(date_part('epoch'::text, submissions.updated_at)), (0)::double precision) AS "coalesce" FROM submissions WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, (SELECT COALESCE(sum(assignments.point_total), (0)::bigint) AS "coalesce" FROM assignments WHERE ((assignments.course_id = m.course_id) AND (m.user_id = m.user_id))) AS assignment_score, (SELECT COALESCE(sum(assignments.point_total), (0)::bigint) AS "coalesce" FROM assignments WHERE (((assignments.course_id = m.course_id) AND (m.user_id = m.user_id)) AND (EXISTS (SELECT 1 FROM grades WHERE (((grades.assignment_id = assignments.id) AND ((grades.status)::text = 'Released'::text)) OR ((((grades.status)::text = 'Graded'::text) AND (NOT assignments.release_necessary)) AND ((assignments.due_at < now()) OR (grades.student_id = m.user_id)))))))) AS in_progress_assignment_score, (SELECT COALESCE(sum(grades.score), (0)::bigint) AS "coalesce" FROM grades WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score, (SELECT COALESCE(sum(g.score), (0)::bigint) AS "coalesce" FROM (grades g JOIN assignments a ON ((g.assignment_id = a.id))) WHERE (((g.course_id = m.course_id) AND (g.student_id = m.user_id)) AND (((g.status)::text = 'Released'::text) OR (((g.status)::text = 'Graded'::text) AND (NOT a.release_necessary))))) AS released_grade_score, (SELECT COALESCE(sum(earned_badges.score), (0)::bigint) AS "coalesce" FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))) AS earned_badge_score, (SELECT sum(COALESCE(assignment_weights.point_total, assignments.point_total)) AS sum FROM (assignments LEFT JOIN assignment_weights ON (((assignments.id = assignment_weights.assignment_id) AND (assignment_weights.student_id = m.user_id)))) WHERE (assignments.course_id = m.course_id)) AS weighted_assignment_score, (SELECT count(*) AS count FROM assignment_weights WHERE (assignment_weights.student_id = m.user_id)) AS assignment_weight_count, cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key FROM (course_memberships m JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
-
-
---
--- Name: membership_scores; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE membership_scores (
-    course_membership_id integer,
-    assignment_type_id integer,
-    score bigint,
-    name character varying(255)
-);
-
-
---
--- Name: released_grades; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW released_grades AS
-    SELECT grades.id, grades.raw_score, grades.assignment_id, grades.feedback, grades.created_at, grades.updated_at, grades.complete, grades.semis, grades.finals, grades.type, grades.status, grades.attempted, grades.substantial, grades.final_score, grades.submission_id, grades.course_id, grades.shared, grades.student_id, grades.task_id, grades.group_id, grades.group_type, grades.score, grades.assignment_type_id, grades.point_total, grades.admin_notes, grades.graded_by_id, grades.team_id, grades.released, grades.predicted_score FROM (grades JOIN assignments ON ((assignments.id = grades.assignment_id))) WHERE (((grades.status)::text = 'Released'::text) OR (((grades.status)::text = 'Graded'::text) AND (NOT assignments.release_necessary)));
+    SELECT m.id, m.id AS course_membership_id, m.course_id, m.user_id, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum FROM submissions WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, (SELECT sum(grades.score) AS sum FROM grades WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score_sum, cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key FROM (course_memberships m JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
 
 
 --
@@ -2769,13 +2750,6 @@ CREATE UNIQUE INDEX index_weights_on_student_id_and_assignment_id ON assignment_
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
--- Name: _RETURN; Type: RULE; Schema: public; Owner: -
---
-
-CREATE RULE "_RETURN" AS ON SELECT TO membership_scores DO INSTEAD SELECT m.id AS course_membership_id, a.id AS assignment_type_id, (SELECT COALESCE(sum(g.score), (0)::bigint) AS score FROM released_grades g WHERE ((g.student_id = m.user_id) AND (g.assignment_type_id = a.id))) AS score, a.name FROM (course_memberships m JOIN assignment_types a ON ((a.course_id = m.course_id))) GROUP BY m.id, a.id, a.name;
 
 
 --

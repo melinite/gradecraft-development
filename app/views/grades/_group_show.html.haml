@@ -16,7 +16,7 @@
     .heading.col-lg-2 Documents:
     .col-lg-offset-2
       - @assignment.grade_for_student(student).grade_files.each do |gf|
-        = link_to File.basename(gf.filename.path), gf.filename.url
+        = link_to File.basename(gf.filename), gf.url
 
   - if @assignment.grade_for_student(student).feedback?
     .heading.col-lg-2 Feedback:

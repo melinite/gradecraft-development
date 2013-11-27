@@ -73,6 +73,7 @@ $(document).ready(function(){
     $('.s3_uploader').S3Uploader({
       allow_multiple_files: false,
       remove_completed_progress_bar: false,
+      remove_failed_progress_bar: false,
       progress_bar_target: $('.s3_progress')
     })
     $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
@@ -84,14 +85,25 @@ $(document).ready(function(){
         $('.s3_files').val(content.filepath)
       }
       $('#uploaded_files').append('<br /> ' + content.filename)
+
+      $('.s3_progress').css('visibility', 'hidden')
     })
 
-    $('s3_uploader').bind('s3_upload_failed', function (e, content) {
+    $('.s3_uploader').bind('s3_upload_failed', function (e, content) {
       alert(content.filename +' failed to upload: ' + content.error_thrown)
+      $('.s3_progress').css('visibility', 'hidden')
+    })
+
+    $('.s3_uploader').bind('s3_uploads_start', function (e) {
+      $('.s3_progress').css('visibility', 'visible')
     })
   }
 
   $('#predictorUsage').tooltip('show');
+
+  $('s3_uploader').bind('s3_upload_failed', function (e, content) {
+    alert(content.filename +' failed to upload: ' + content.error_thrown)
+  })
 
   var table = $(".simpleTable").stupidtable({
     // Sort functions here

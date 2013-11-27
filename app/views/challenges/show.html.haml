@@ -24,7 +24,7 @@
       %b Documents:
       %ul
       - @challenge.challenge_files.each do |cf|
-        %li= link_to cf.filename.identifier, cf.filename.url
+        %li= link_to cf.filename, cf.url
 
 - if current_user.is_staff?
   .col-lg-12

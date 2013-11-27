@@ -3,6 +3,7 @@ class SubmissionsController < ApplicationController
   before_filter :ensure_staff?, :only=>[:index]
 
   include Canable::Enforcers
+  helper UploadsHelper
 
   def index
     @assignment = current_course.assignments.find(params[:assignment_id])

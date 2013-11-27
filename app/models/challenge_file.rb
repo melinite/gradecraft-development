@@ -1,11 +1,10 @@
 class ChallengeFile < ActiveRecord::Base
+  include S3File
 
-  attr_accessible :filename, :challenge_id
+  attr_accessible :filename, :filepath, :challenge_id
 
   belongs_to :challenge
 
-  mount_uploader :filename, ChallengeFileUploader
-
-  private
+  before_save :strip_path
 
 end

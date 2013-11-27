@@ -30,7 +30,7 @@
     %p
       %b Documents:
       - @badge.badge_files.each do |bf|
-        = link_to bf.filename.identifier, bf.filename.url
+        = link_to bf.filename, bf.url
 
   - if current_user.is_staff?
     .col-lg-12
