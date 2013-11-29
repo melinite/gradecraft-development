@@ -71,8 +71,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @course_membership = @user.course_memberships.where(course_id: current_course).first
     @teams = current_course.teams
-    #@course_membership.update_attributes(params[:course_membership])
-    @user.update_attributes(params[:user])
+    @user.teams.set_for_course(current_course.id, params[:user][:course_team_ids])
+    @user.save
     if @user.save && @user.is_student?
       redirect_to session.delete(:return_to), :notice => "#{@user.name} was successfully updated!"
     elsif @user.save && @user.is_staff?

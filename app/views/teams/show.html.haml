@@ -45,8 +45,8 @@
           %td= student.team_role
           %td= points student.cached_score_for_course(current_course) if student.respond_to?(:grades)
           %td
-          = student.grade_letter_for_course(current_course)
-          = student.grade_level_for_course(current_course)
+            = student.grade_letter_for_course(current_course)
+            = student.grade_level_for_course(current_course)
           - if current_course.has_badges?
             %td
               - student.earned_badges.each do |badge|

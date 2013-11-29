@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     scope role.pluralize, -> { where role: role }
   end
 
-  attr_accessor :remember_me, :password, :password_confirmation, :cached_last_login_at
+  attr_accessor :remember_me, :password, :password_confirmation, :cached_last_login_at, :course_team_ids
   attr_accessible :username, :email, :password, :password_confirmation,
     :avatar_file_name, :role, :first_name, :last_name, :rank, :user_id,
     :display_name, :private_display, :default_course_id, :last_activity_at,
@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
     :student_academic_history_attributes, :team_role, :course_memberships_attributes,
-    :character_profile, :team_id, :lti_uid, :course_membership
+    :character_profile, :team_id, :lti_uid
 
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
@@ -53,8 +53,15 @@ class User < ActiveRecord::Base
   has_many :group_memberships, :foreign_key => :student_id, :dependent => :destroy
   has_many :groups, :through => :group_memberships
   has_many :assignment_groups, :through => :groups
+
   has_many :team_memberships, :foreign_key => :student_id, :dependent => :destroy
-  has_many :teams, :through => :team_memberships
+
+  has_many :teams, :through => :team_memberships do
+    def set_for_course(course_id, ids)
+      other_team_ids = proxy_association.teams.where("course_id != ?", course_id).pluck(:id)
+      proxy_association.team_ids = other_team_ids | ids
+    end
+  end
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

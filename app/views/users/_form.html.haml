@@ -15,7 +15,10 @@
       = p.input :character_profile
       = p.input :shared_badges
   - if current_course.has_teams? && @user.is_student?
-    = f.association :teams, :collection => @teams, :prompt => "Select a #{current_course.team_term}", :label => "#{current_course.team_term}", :as => :radio_buttons
+    - if @user.team_for_course(current_course).present?
+      = f.association :course_team_ids, :collection => @teams, :prompt => "Select a #{current_course.team_term}", :label => "#{current_course.team_term}", :as => :radio_buttons, :checked => @user.team_for_course(current_course).id
+    - else
+      = f.association :course_team_ids, :collection => @teams, :prompt => "Select a #{current_course.team_term}", :label => "#{current_course.team_term}", :as => :radio_buttons
   - else
     = f.association :teams, :collection => @teams, :prompt => "Select a #{current_course.team_term}", :label => "#{current_course.team_term}", :as => :check_boxes
 
