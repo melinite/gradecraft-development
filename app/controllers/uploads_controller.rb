@@ -1,7 +1,7 @@
 class UploadsController < ApplicationController
   def remove
     puts params
-    upload = controller_name.classify.constantize.find params.values.last
+    upload = params[:model].classify.constantize.find params.values.first
     puts upload
     s3 = AWS::S3.new
     bucket = s3.buckets["gradecraft-#{Rails.env}"]
