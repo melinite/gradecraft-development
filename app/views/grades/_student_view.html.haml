@@ -3,16 +3,16 @@
   = content_nav_for @assignment, "My Grade" do
     %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
-
     .small-12.columns
-    %h3= link_to @grade.assignment.name, @grade.assignment
-    .heading.small-2 Score:
-    .col-lg-offset-2= points @grade.score
-    - if @grade.grade_files.present?
-      .heading.col-lg-2 Documents:
-      .col-lg-offset-2
-        - @grade.grade_files.each do |gf|
-          = link_to File.basename(gf.filename), gf.url
+      %h3= link_to @grade.assignment.name, @grade.assignment
+      .heading.small-2 Score:
+      .col-lg-offset-2= points @grade.score
+      - if @grade.grade_files.present?
+        .heading.col-lg-2 Documents:
+        .col-lg-offset-2
+          - @grade.grade_files.each do |gf|
+            = link_to gf.filename, gf.url
+            = link_to "(Remove)", grades_grade_file_remove_path({ :grade_id => @grade.id, :grade_file_id => gf.id, :redirect => { :controller => "grades", :id => @grade.id } } )
 
     - if @grade.feedback?
       .heading.col-lg-2 Instructor Feedback:

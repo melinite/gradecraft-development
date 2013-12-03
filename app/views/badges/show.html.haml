@@ -1,5 +1,67 @@
+<<<<<<< HEAD
 .small-12.panel.mainContent
   / Badge Navigation
+=======
+- if current_user.is_staff?
+  = content_nav_for @badge do
+    %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
+    %li= link_to "New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "btn btn-tiny btn-info"
+    %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "btn btn-tiny btn-info"
+- else
+  = content_nav_for @badge do
+    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
+
+
+.col-lg-12.info
+  %h3= @badge.name
+  %p
+    %img{:src => @badge.icon, :alt => @badge.name, :width => "40"}
+
+  - if @badge.point_total?
+    %p
+      %b Value:
+      = "#{@badge.point_total} points"
+
+  - if @badge.description?
+    %p
+      %b Description:
+      = raw @badge.description
+
+  - if @badge.badge_files.present?
+    %p
+      %b Documents:
+      - @badge.badge_files.each do |bf|
+        = link_to bf.filename, bf.url
+        = link_to "(Remove)", badges_badge_file_remove_path({ :badge_id => @badge.id, :badge_file_id => bf.id, :redirect => { :controller => "badges", :id => @badge.id } } )
+
+  - if current_user.is_staff?
+    .col-lg-12
+      %h4 Tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})
+
+  - if @badge.tasks.present?
+    %table.table.display.table-striped.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "string"} Description
+          - if current_user.is_staff?
+            %th
+            %th
+            %th
+      %tbody
+        - @badge.tasks.each do |task|
+          %tr
+            %td= task.name
+            %td= raw task.description
+            - if current_user.is_staff?
+              %td= link_to "View", badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-success'
+              %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-info'
+              %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
+
+>>>>>>> Update views for all uploads.
   - if current_user.is_staff?
     = content_nav_for @badge do
       %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
