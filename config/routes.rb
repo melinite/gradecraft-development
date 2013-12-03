@@ -69,6 +69,9 @@ GradeCraft::Application.routes.draw do
         post :predict_score
         get :import
         post :upload
+        resources :grade_files do
+          get :remove
+        end
       end
     end
     resources :submissions do
@@ -80,6 +83,9 @@ GradeCraft::Application.routes.draw do
     resources :tasks
     resource :grade, only: [:show, :edit, :update, :destroy] do
       resources :earned_badges
+    end
+    resources :assignment_files do
+      get :remove
     end
   end
 
@@ -125,6 +131,9 @@ GradeCraft::Application.routes.draw do
     member do
       get 'mass_edit' => 'challenge_grades#mass_edit', as: :mass_edit
       put 'mass_edit' => 'challenge_grades#mass_update'
+    end
+    resources :challenge_files do
+      get :remove
     end
   end
 
