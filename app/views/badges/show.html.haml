@@ -1,3 +1,4 @@
+
 .small-12.panel.mainContent
   / Badge Navigation
   - if current_user.is_staff?
@@ -12,29 +13,50 @@
       %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
       %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
 
-  .small-12.columns
-    %h2= @badge.name
+
+.small-12.columns
+  %h2= @badge.name
+  %p
+    %img{:src => @badge.icon, :alt => @badge.name, :width => "40"}
+
+  - if @badge.point_total?
     %p
-      %img{:src => @badge.icon, :alt => @badge.name, :width => "40"}
+      %b Value:
+      = "#{@badge.point_total} points"
 
-    - if @badge.point_total?
-      %p
-        %b Value:
-        = "#{@badge.point_total} points"
+  - if @badge.description?
+    %p
+      %b Description:
+      = raw @badge.description
 
-    - if @badge.description?
-      %p
-        %b Description:
-        = raw @badge.description
+  - if @badge.badge_files.present?
+    %p
+      %b Documents:
+      - @badge.badge_files.each do |bf|
+        = link_to bf.filename, bf.url
+        = link_to "(Remove)", badges_badge_file_remove_path({ :badge_id => @badge.id, :badge_file_id => bf.id, :redirect => { :controller => "badges", :id => @badge.id } } )
 
-    - if @badge.badge_files.present?
-      %p
-        %b Documents:
-        - @badge.badge_files.each do |bf|
-          = link_to bf.filename, bf.url
-          = link_to "(Remove)", badges_badge_file_remove_path({ :badge_id => @badge.id, :badge_file_id => bf.id, :redirect => { :controller => "badges", :id => @badge.id } } )
+  - if @badge.tasks.present?
+    %table.table.display.table-striped.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "string"} Description
+          - if current_user.is_staff?
+            %th
+            %th
+            %th
+      %tbody
+        - @badge.tasks.each do |task|
+          %tr
+            %td= task.name
+            %td= raw task.description
+            - if current_user.is_staff?
+              %td= link_to "View", badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-success'
+              %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-info'
+              %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
 
-    - if current_user.is_staff?
+  - if current_user.is_staff?
       .small-12
         %h4.clear Awarded #{term_for :badges}
 
@@ -59,3 +81,7 @@
                     %li= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
 
   .clearfix
+
+
+
+

@@ -9,9 +9,11 @@
   .heading Final Score:
   = @grade.final_score
 - if @grade.grade_files.present?
-  .heading Documents:
-  - @grade.grade_files.each do |gf|
-    = link_to File.basename(gf.filename), gf.url
+  .heading.col-lg-2 Documents:
+  .col-lg-offset-2
+    - @grade.grade_files.each do |gf|
+      = link_to gf.filename, gf.url
+      = link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :grade_file_id => gf.id, :redirect => { :controller => "grade", :id => @grade.id } } )
 
 - if @grade.feedback?
   .heading Feedback:

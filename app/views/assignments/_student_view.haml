@@ -51,14 +51,19 @@
         %tbody
           - @assignment.tasks.each do |task|
             %tr
-              %td= task.name
-              %td= task.description
+              %th.sortable{"data-sort" => "string"} Name
+              %th.sortable{"data-sort" => "string"} Description
+          %tbody
+            - @assignment.tasks.each do |task|
+              %tr
+                %td= task.name
+                %td= task.description
 
-    - if @assignment.accepts_submissions? && @assignment.still_accepted?
-      - if @assignment.is_individual? || (@assignment.has_groups? && current_student.group_for_assignment(@assignment))
-        %h3 Submit #{@assignment.name}
-        = render "/submissions/form"
-      - elsif @assignment.has_groups?
-        = link_to "Create a Group", new_group_path, :class => "button tiny radius"
+      - if @assignment.accepts_submissions? && @assignment.still_accepted?
+        - if @assignment.is_individual? || (@assignment.has_groups? && current_student.group_for_assignment(@assignment))
+          %h3 Submit #{@assignment.name}
+          = render "/submissions/form"
+        - elsif @assignment.has_groups?
+          = link_to "Create a Group", new_group_path, :class => "button tiny radius"
 
   .clearfix
