@@ -50,6 +50,8 @@
         .heading Files:
         - @submission.submission_files.each do |sf|
           = link_to sf.filename, sf.url
+          .col-lg-offset-2= link_to sf.filename, sf.url
+          .col-lg-offset-2= link_to "(Remove)", assignment_submission_submission_file_remove_path({ :submission_id => @submission.id, :assignment_id => @assignment.id, :submission_file_id => sf.id, :redirect => { :controller => "submissions", :id => @submission.id } } )
 
       .heading Statement:
       = raw @submission.text_comment

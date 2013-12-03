@@ -73,6 +73,9 @@ GradeCraft::Application.routes.draw do
     end
     resources :submissions do
       post :upload
+      resources :submission_files do
+        get :remove
+      end
     end
     resources :tasks
     resource :grade, only: [:show, :edit, :update, :destroy] do
@@ -80,7 +83,6 @@ GradeCraft::Application.routes.draw do
     end
   end
 
-  resources :submission_files, only: :index
 
   resources :score_levels
 
