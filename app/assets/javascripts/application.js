@@ -69,7 +69,7 @@ $(document).ready(function(){
 
   if ($('.s3_uploader').length) {
     $('.s3_uploader').S3Uploader({
-      allow_multiple_files: false,
+      allow_multiple_files: true,
       remove_completed_progress_bar: false,
       remove_failed_progress_bar: false,
       progress_bar_target: $('.s3_progress')

@@ -3,6 +3,7 @@
     = file_field_tag :file
   - if @badge.badge_files.present?
     %div#uploaded_files Uploaded:
+    = file_field_tag :file, :multiple => true
   %div.upload.s3_progress
     Progress:
     %div.progress

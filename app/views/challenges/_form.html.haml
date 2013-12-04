@@ -1,6 +1,6 @@
 %div.form-inputs.s3_uploader
   = s3_uploader_form key: upload_url('challenge_files', @challenge), acl: "private", max_file_size: 40.megabytes do
-    = file_field_tag :file
+    = file_field_tag :file, :multipled => true
   %div#uploaded_files Uploaded:
   %div.upload.s3_progress
     %div.progress
