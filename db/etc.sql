@@ -63,6 +63,13 @@ CREATE OR REPLACE
             m.user_id,
             (SELECT COALESCE(sum(extract(epoch from updated_at)), 0) FROM submissions WHERE course_id = m.course_id and student_id = m.user_id)
           )) AS submissions_key,
+          md5(concat(
+            m.course_id,
+            m.user_id,
+            (SELECT COALESCE(SUM(EXTRACT(epoch FROM updated_at)), 0)
+               FROM assignment_weights AS aw
+              WHERE aw.student_id = user_id AND aw.course_id = course_id)
+          )) AS assignment_weights_key,
           (SELECT COALESCE(sum(point_total), 0) FROM assignments AS a WHERE a.course_id = m.course_id) AS assignment_score,
           (SELECT COALESCE(sum(point_total), 0)
              FROM assignments
