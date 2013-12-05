@@ -17,6 +17,8 @@
   - if current_course.valuable_badges?
     = f.input :point_total, :input_html => {:class => 'col-lg-3'}
   = f.input :can_earn_multiple_times, :hint => "Can this #{term_for :badge} be given to one #{term_for :student} multiple times through the semester?", :label => "Multi-award", :input_html => {:class => 'input-sm col-lg-3'}
+  Choose an icon for this badge.
+  = f.file_field :icon, :label => "Select an icon for this badge.", :input_html => {:class => 'col-lg-3'}
 
   .form-actions.col-lg-offset-3
     = f.button :submit, :class => "btn-primary"
