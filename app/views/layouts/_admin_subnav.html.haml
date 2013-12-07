@@ -3,7 +3,7 @@
 %form.quick_search
   .dropdown
     %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
-%ul.nav.nav-list#sidebar
+%ul.four.side-nav
   %li.nav-header= term_for(:students)
   %li.icn_view_users= link_to term_for(:students), students_path
   - if current_course.has_teams?

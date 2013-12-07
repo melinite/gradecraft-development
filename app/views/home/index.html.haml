@@ -4,26 +4,26 @@
   - else
     %p Your account hasn't yet been connected to any courses. Contact us for help!
 - else
-  .col-lg-7.col-md-7.col-sm-7
+  .twelve.columns
     %h2 Welcome to GradeCraft
-    .lead GradeCraft is a learning management system dedicated to supporting the gameful classroom. We are actively researching and developing tools to encourage student engagement, and aid instructor workflow. GradeCraft is being developed at the University of Michigan, with the support of the Learning Analytics Taskforce. Interested in being involved? <a href="mailto:gradecraft@gmail.com">Get in touch!</a>
-  .col-lg-3.col-md-3.well.col-lg-offset-2.col-md-offset-2.col-sm-4.col-sm-offset-1
-    %h5 LOGIN
-    %ul.nav.nav-tabs
-      %li.active= link_to 'UM Login', '#', data: { toggle: 'tab', target: '#tabkerb' }
-      %li= link_to 'GradeCraft Login', '#', data: { toggle: 'tab', target: '#tabgc' }
-    .tab-content.login
-      .tab-pane#tabkerb.active
-        %ul
-          .kerberos-auth
-            = form_for User.new, :url => auth_kerberos_callback_path do |f|
-              %li= text_field_tag :username, nil, placeholder: 'Uniqname'
-              %li= password_field_tag :password, nil, placeholder: 'Password'
-              %li= f.submit 'Log in', class: 'btn btn-primary', alt: 'Log in'
-      .tab-pane#tabgc
-        %ul
-          .gradegraft-auth
-            = form_for User.new, :url => user_sessions_path do |f|
-              %li= f.text_field :email, placeholder: "Email"
-              %li= f.password_field :password, placeholder: 'Password'
-              %li= f.submit "Log in", class: 'btn btn-primary', alt: "Log in"
+    %p GradeCraft is a learning management system dedicated to supporting the gameful classroom. We are actively researching and developing tools to encourage student engagement, and aid instructor workflow. GradeCraft is being developed at the University of Michigan, with the support of the Learning Analytics Taskforce. Interested in being involved? <a href="mailto:gradecraft@gmail.com">Get in touch!</a>
+    .three.columns
+      %h5 LOGIN
+      %ul.nav.nav-tabs
+        %li.active= link_to 'UM Login', '#', data: { toggle: 'tab', target: '#tabkerb' }
+        %li= link_to 'GradeCraft Login', '#', data: { toggle: 'tab', target: '#tabgc' }
+      .tab-content.login
+        .tab-pane#tabkerb.active
+          %ul
+            .kerberos-auth
+              = form_for User.new, :url => auth_kerberos_callback_path do |f|
+                %li= text_field_tag :username, nil, placeholder: 'Uniqname'
+                %li= password_field_tag :password, nil, placeholder: 'Password'
+                %li= f.submit 'Log in', class: 'btn btn-primary', alt: 'Log in'
+        .tab-pane#tabgc
+          %ul
+            .gradegraft-auth
+              = form_for User.new, :url => user_sessions_path do |f|
+                %li= f.text_field :email, placeholder: "Email"
+                %li= f.password_field :password, placeholder: 'Password'
+                %li= f.submit "Log in", class: 'btn btn-primary', alt: "Log in"

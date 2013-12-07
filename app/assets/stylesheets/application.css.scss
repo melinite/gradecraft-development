@@ -2,14 +2,12 @@
  *= require jquery.fileupload-ui
  *= require s3_direct_upload_progress_bars
  *= require jquery.ui
- *= require bootstrap
- *= require bootstrap-glyphicons
- *= require flexslider
  *= require jquery.dynatable
  *= require_self
  *= require icons
  *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap-datetimepicker
+ *= require foundation_and_overrides
 */
 
 /* Branding colors */
@@ -55,7 +53,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Futura", sans-serif;
+  font-family: "Avenir", sans-serif;
 }
 
 .primaryContent {
@@ -153,10 +151,6 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 10px;
 }
 
-.heading {
-  font-family: 'Futura', sans-serif;
-}
-
 th.sortable {
   cursor: pointer;
 }
@@ -187,21 +181,6 @@ th.sortable {
 
 .info {
   min-height: 500px;
-}
-
-
-/** Jumbotron **/
-.jumbotron {
-  padding: 0.5em 1em;
-  background-color: transparent;
-}
-
-
-@media screen and (min-width: 768px) {
-  .jumbotron {
-    width: 70%;
-    min-height: 450px;
-  }
 }
 
 /** Modals **/

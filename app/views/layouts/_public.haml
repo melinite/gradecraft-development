@@ -1,12 +1,17 @@
 .row
-  .primaryContent.rounded.row
-    .col-lg-12.col-md-12
-      - if flash[:notice]
-        .alert.alert-success= flash[:notice]
-      - if flash[:error]
-        .alert.alert-error= flash[:error]
-      - if flash[:alert]
-        .alert.alert-info= flash[:alert]
+  .twelve.columns
+    - if flash[:notice]
+      %div.alert-box.success
+        = flash[:notice]
+        <a href="" class="close">&times;</a>
+    - if flash[:error]
+      %div.alert-box.alert
+        = flash[:error]
+        <a href="" class="close">&times;</a>
+    - if flash[:alert]
+      %div.alert-box
+        = flash[:alert]
+        <a href="" class="close">&times;</a>
     = render 'layouts/content'
-  %footer.row.rounded
-    = render 'layouts/footer'
+%footer.row
+  = render 'layouts/footer'

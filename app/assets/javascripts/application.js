@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require foundation
 //= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
@@ -474,3 +475,5 @@ $(document).ready(function(){
     window.all_badges = new AllBadgesView()
   }
 });
+
+$(function(){ $(document).foundation(); });
