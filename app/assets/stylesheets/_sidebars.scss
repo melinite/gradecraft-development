@@ -1,5 +1,7 @@
-/** Admin Sidebar **/
-.sidebar-nav-fixed {
+/*
+* Admin Sidebar **/
+/*
+.side-nav {
   background-image: image-url("sidebar.png");
   padding: 10px 0px 20px;
   border-bottom-right-radius: 15px;
@@ -11,7 +13,7 @@ ul.nav.nav-list > li > a {
   color: #333;
 }
 
-.sidebar-nav-fixed li.nav-header {
+.side-nav li.nav-header {
   font-family: Helvetica, sans-serif;
   color: $blue;
   text-transform: uppercase;
@@ -71,9 +73,11 @@ ul.nav.nav-list > li > a {
   width: 100%;
   height: 2px;
 }
+*/
 
 
 /** Student Dashboard Sidebar **/
+/*
 
 .sidebar_section  {
   margin-top: 10px;
@@ -141,3 +145,4 @@ ul.nav.nav-list > li > a {
     height: auto !important;
     width: auto !important;
 }
+*/

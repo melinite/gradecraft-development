@@ -1,13 +1,6 @@
-.row
-  %ul.four.side-nav
+.off-canvas-wrap
+  .inner-wrap
+
     = render 'layouts/admin_subnav'
-  .twelve.columns
-    - if flash[:notice]
-      .alert.alert-success= flash[:notice]
-    - if flash[:error]
-      .alert.alert-error= flash[:error]
-    - if flash[:alert]
-      .alert.alert-info= flash[:alert]
-    .row= render 'layouts/content'
-%footer.row
-  = render 'layouts/footer'
+
+    .small-12.columns= render 'layouts/content'

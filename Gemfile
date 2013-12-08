@@ -57,7 +57,7 @@ gem 'timelineJS-rails'
 gem 'uglifier'
 gem 'whenever'
 gem 'will_paginate', '~> 3.0'
-gem "zurb-foundation"
+gem 'foundation-rails'
 
 group :development do
   gem 'guard'

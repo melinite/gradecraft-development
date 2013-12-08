@@ -132,6 +132,9 @@ GEM
       dotenv (>= 0.7)
       thor (>= 0.13.6)
     formatador (0.2.4)
+    foundation-rails (5.0.2.0)
+      railties (>= 3.1.0)
+      sass (>= 3.2.0)
     fssm (0.2.10)
     gravatar_image_tag (1.1.3)
     guard (1.8.2)
@@ -364,8 +367,6 @@ GEM
     will_paginate (3.0.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    zurb-foundation (4.3.2)
-      sass (>= 3.2.0)
 
 PLATFORMS
   ruby
@@ -392,6 +393,7 @@ DEPENDENCIES
   faker
   fog
   foreman
+  foundation-rails
   gravatar_image_tag
   guard
   guard-minitest
@@ -443,4 +445,3 @@ DEPENDENCIES
   valid_attribute
   whenever
   will_paginate (~> 3.0)
-  zurb-foundation

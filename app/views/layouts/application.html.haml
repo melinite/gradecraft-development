@@ -10,36 +10,55 @@
     /[if lt IE 9]
       = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"
     = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag 'application'
     %script(src="/ckeditor/ckeditor.js")
     %script(src="/ckeditor/adapters/jquery.js")
     %script(src="/highcharts/js/highcharts.src.js")
     %script(src="/highcharts/js/highcharts-more.src.js")
+    = javascript_include_tag "vendor/modernizr"
     = yield(:head)
   %body(class="#{body_class}")
-    %nav.top-bar
-      %ul
-        %li.name
-          %a(href="/dashboard")
-            - if current_course
-              #{current_course.name}
-            - else
-              GradeCraft
-      %section
-        %ul.left
+    .fixed
+      %nav.top-bar
+        %ul.title-area
+          %li.name
+            %h1
+              %a(href="/dashboard")
+                - if current_course
+                  #{current_course.name}
+                - else
+                  GradeCraft
+        %section.top-bar-section
           - if current_course && current_course.tagline?
-            %span.earned= current_course.try(:tagline)
-      %section
-        %ul.right
+            %ul.left
+              %li
+                %a= link_to current_course.try(:tagline)
           - if current_user
-            = render 'layouts/authenticated_nav'
+            %ul.right
+              = render 'layouts/authenticated_nav'
     .row
-      - if current_user
-        - if current_user.is_staff?
-          = render 'layouts/staff'
-        - else
-          = render 'layouts/student'
+      .large-12.small-12.columns
+        - if flash[:notice]
+          .alert-box.success.radius
+            = flash[:notice]
+            <a href="" class="close">&times;</a>
+        - if flash[:error]
+          .alert-box.alert.radius
+            = flash[:error]
+            <a href="" class="close">&times;</a>
+        - if flash[:alert]
+          .alert-box.radius
+            = flash[:alert]
+            <a href="" class="close">&times;</a>
+    - if current_user
+      - if current_user.is_staff?
+        = render 'layouts/staff'
       - else
-        = render 'layouts/public'
-  = render 'layouts/google_analytics'
+        = render 'layouts/student'
+    - else
+      .row= render 'layouts/public'
 
+  %footer.radius
+    .row= render 'layouts/footer'
+
+  = render 'layouts/google_analytics'
+  = javascript_include_tag 'application'

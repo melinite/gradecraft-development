@@ -1,23 +1,28 @@
-%h5 &copy; 2012-13 Regents of the University of Michigan
-.col-lg-2.col-sm-2.col-md-2
+.small-12.medium-2.columns
   %h5 Explore
   %ul
     %li= link_to "Features", features_path
     %li= link_to "See the Demo", "http://staging.gradecraft.com"
-.col-lg-2.col-sm-2.col-md-2
+.small-12.medium-2.columns
   %h5 Using GradeCraft
   %ul
     %li= link_to "Apply to Use", using_gradecraft_path
     %li= link_to "Documentation", documentation_path
     %li= link_to "Submit a Bug", submit_a_bug_path
-.col-lg-2.col-sm-2.col-md-2
+.small-12.medium-2.columns
   %h5 About
   %ul
     %li= link_to "Research", research_path
     %li= link_to "People", people_path
     %li= link_to "Codebase", "https://github.com/bellotastudios/gradecraft"
-.col-lg-2.col-sm-2.col-md-2
+.small-12.medium-2.columns
   %h5 Talk to Us
   %ul
     %li= mail_to 'gradecraft@gmail.com', 'Email'
     %li= link_to "Twitter", "https://twitter.com/gradecraft"
+.small-12.medium-4.columns
+  %h5 &copy; 2012-13 Regents of the University of Michigan
+
+<script>
+$(document).foundation();
+</script>

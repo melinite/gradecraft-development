@@ -1,4 +1,3 @@
-.col-lg-12
 - cache current_student_data.cache_key('v1', current_user.is_staff?, :assignment_weights_key, :assignments_key, :grades_key, :submissions_key) do
   - current_course_data.by_assignment_type.each do |assignment_type, assignments|
     .col-lg-12.col-xs-12.col-md-12.col-sm-12
@@ -93,4 +92,4 @@
               - if challenge.future?
                 %span.bold= " • Due: #{challenge.due_at.strftime("%A, %B %d, %l:%M%p")}"
   %hr
-  = render 'users/scoreboard'
+  = render 'students/scoreboard'

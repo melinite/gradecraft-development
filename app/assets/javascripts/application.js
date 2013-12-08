@@ -18,7 +18,7 @@
 //= require backbone.min
 //= require best_in_place
 //= require best_in_place.purr
-//= require bootstrap
+//= require foundation_doc
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
 //= require gradecraft
@@ -44,24 +44,6 @@
 //= require predictor
 
 $(document).ready(function(){
-
-  $('#gradeCurious').popover();
-
-  $('collapse').collapse('toggle');
-
-  $('#toDoList').collapse('hide');
-
-  $('#courseInfo').collapse('hide');
-
-  $('#badgesInfo').collapse('hide');
-
-  $('#academicInfo').collapse('hide');
-
-  $('#gradeDistro').collapse('hide');
-
-  $('#myModal').modal('hide');
-
-  $(".alert").alert();
 
   $('.datetimepicker').datetimepicker( {
     format: "MM dd yyyy - hh:ii",
@@ -100,8 +82,6 @@ $(document).ready(function(){
     })
   }
 
-  $('#predictorUsage').tooltip('show');
-
   $('s3_uploader').bind('s3_upload_failed', function (e, content) {
     alert(content.filename +' failed to upload: ' + content.error_thrown)
   })
@@ -122,12 +102,6 @@ $(document).ready(function(){
 
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
-
-  $("a[rel=popover]").popover();
-  $('.tooltip, a[rel="tooltip"]').tooltip();
-
-	$('#navbar').affix();
-
 
   $('#userBarInProgress').show();
 	// $('#userBarTotal').hide();

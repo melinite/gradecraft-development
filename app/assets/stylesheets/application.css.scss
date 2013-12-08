@@ -3,14 +3,13 @@
  *= require s3_direct_upload_progress_bars
  *= require jquery.ui
  *= require jquery.dynatable
- *= require_self
- *= require icons
+ *= require foundation_and_overrides
  *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap-datetimepicker
- *= require foundation_and_overrides
 */
 
 /* Branding colors */
+
 $blue: #2C3E50;
 $lightblue: #45A1DE;
 $green: #1ABC9C;
@@ -22,177 +21,30 @@ $orange: #F4A425;
   src: font-url('pontano-sans-regular.ttf') format('truetype');
 }
 
-@font-face {
-  font-family: 'IMF';
-  src: font-url('IMFeDPrm28P.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Overlock';
-  src: font-url('Overlock-Regular.ttf') format('truetype');
-}
-
 
 @import 'compass';
 @import 'compass/css3';
 
 @import 'forms';
 @import 'tables';
-@import 'buttons';
-@import 'footer';
-@import 'navigation';
-@import 'sidebars';
 @import 'student_dashboard';
 @import 'tabs';
 @import 'timeline';
 @import 'analytics';
 
 body {
-  background: image-url("cloud_bg.gif");
+  padding-top: 60px !important;
   font-family: 'Pontano Sans', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5 {
   font-family: "Avenir", sans-serif;
 }
 
-.primaryContent {
-  h1, h2, h3, h4, h5, h6 {
-    padding: 5px 15px 5px 0;
-  }
-  .section-heading {
-    margin: 15px -15px 35px;
-    border-radius: 0;
-    h2 {
-      padding: 5px 10px;
-      margin: 0;
-      color: #FFF;
-    }
-  }
-}
-
-.logged-out {
-  .container {
-    max-width: 1070px;
-    margin-top: 45px;
-  }
-  .primaryContent {
-    background-color: white;
-    padding: 10px;
-    min-height: 550px;
-    p {
-      width: 70%;
-      margin: 25px 15px;
-    }
-  }
-}
-
-
-
-.tab-content.login {
-  background-color: #FFF;
-  padding: 5px 15px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  height: 150px;
-
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-  ul li {
-    list-style-type: none;
-  }
-
-  input {
-    width: 100%;
-    margin: 0 0 10px;
-  }
-}
-
-.logged-in {
-  .container {
-    margin-top: 35px;
-    max-width:  none;
-  }
-  .primaryContent {
-    margin: 10px 0 0 0;
-    padding-bottom: 5px;
-    border-radius: 15px;
-    background-color: #FFF;
-  }
-
-  .well {
-    margin: 10px;
-  }
-}
-
-.alert {
-  border: none;
-  font-size: 120%;
-}
-
-.clear {
-  clear: both;
-}
-
-%h4.center {
-  text-shadow: 1px 1px #333;
-}
-
-.underline {
-  text-decoration: underline;
-}
-
-.center{
-  text-align: center;
-}
-.rounded {
-  border-radius: 10px;
-}
-
-th.sortable {
-  cursor: pointer;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.smallcaps {
+h6 {
   text-transform: uppercase;
-}
-
-.points {
-  font-family: 'Overlock', sans-serif;
-}
-
-.earned {
-  color: $green;
-}
-
-.missed {
-  color: $red;
-}
-
-.possible {
-  color: $blue;
-}
-
-.info {
-  min-height: 500px;
-}
-
-/** Modals **/
-
-.modal-header {
-  background-color: $green;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.close {
-  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
+  font-family: Helvetica, sans-serif !important;
 }
 
  .vco-storyjs ol{
@@ -203,25 +55,6 @@ th.sortable {
   list-style: disc !important;
 }
 
-b {
-  font-family: Helvetica;
+.sub-nav {
+  margin: 0 !important;
 }
-.slider.ui-widget-content {
-  background: #eeeeee;
-  border: none;
-}
-
-.ui-widget-header {
-  background: $green;
-}
-
-.ui-slider .ui-slider-handle {
-  width:20px;
-  height:20px;
-  position:absolute;
-  top:-5px;
-  margin-left:-12px;
-  z-index:200;
-  background: $lightblue;
-}
-

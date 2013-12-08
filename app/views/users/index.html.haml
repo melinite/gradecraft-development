@@ -1,14 +1,13 @@
 = content_nav_for User do
   %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "btn btn-tiny btn-info"
 
-.col-lg-12
-  %h3= @title
+%h3= @title
 
-  - if current_course.has_teams?
-    .filters.col.col-lg-5.col-sm-5.col-md-5
-      = form_tag students_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
-        = submit_tag 'Filter', :class => 'btn btn-sm btn-primary col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
+- if current_course.has_teams?
+  .filters.col.col-lg-5.col-sm-5.col-md-5
+    = form_tag students_path, :method => :get do
+      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-2"
+      = submit_tag 'Filter', :class => 'button tiny radius'
 
 %table.table.table-striped.simpleTable
   %thead
@@ -34,5 +33,5 @@
         %td
           - if user.is_student?
             = points user.score_for_course(current_course) if user.respond_to?(:grades)
-        %td= link_to 'Edit', edit_user_path(user), :class => 'btn btn-tiny btn-info'
-        %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete
+        %td= link_to 'Edit', edit_user_path(user), :class => 'button tiny radius'
+        %td= link_to 'Delete', user, :class => 'button tiny radius', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete

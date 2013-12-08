@@ -10,8 +10,9 @@ module NavHelper
 
   def content_nav(&block)
     capture_haml do
-      haml_tag :div, class: 'navbar navbar-inverse' do
-        haml_tag :ul, class: 'nav navbar-nav', &block if block
+      haml_tag :dl, class: 'sub-nav' do
+        haml_tag :dt, "Options:"
+        haml_tag :dd, class: 'nav navbar-nav', &block if block
       end
     end
   end

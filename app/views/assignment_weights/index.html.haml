@@ -1,5 +1,5 @@
 = content_nav_for @student, AssignmentWeight do
-  %li= link_to "Back to My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Back to My Dashboard", dashboard_path, :class => "button radius tiny"
 
 - if current_user.is_staff?
   %h4= "#{@student.name}'s #{current_course.weight_term} Choices"
