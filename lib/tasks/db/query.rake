@@ -12,7 +12,7 @@ namespace :db do
         SQL
 
         columns = [ 'last_name', 'first_name', 'username', 'score', 'badges' ]
-        headers = [ 'Student' ]
+        headers = [ 'Last Name', 'First Name', 'Id', 'Score', 'Badges' ]
         assignments.each do |a|
           headers << a['name']
           columns << a['id']
