@@ -11,16 +11,34 @@ namespace :db do
           ORDER BY 2
         SQL
 
-        columns = [ 0 ]
-        headers = [ 'Student' ]
+        columns = [ 'last_name', 'first_name', 'username', 'score', 'badges' ]
+        headers = [ 'Last Name', 'First Name', 'Id', 'Score', 'Badges' ]
         assignments.each do |a|
           headers << a['name']
           columns << a['id']
         end
 
+        aggregates = connection.select_all(<<-SQL, nil, [[ nil, args[:course_id] ]])
+          SELECT *,
+                (SELECT COUNT(*)
+                   FROM earned_badges
+                  WHERE course_id = m.course_id AND student_id = m.user_id) AS badges
+            FROM membership_calculations AS m
+           WHERE course_id = $1
+        SQL
+
+        sums = {}
+
+        aggregates.each do |sum|
+          sums[sum['user_id']] = sum
+        end
+
         grades = connection.select_all(<<-SQL, nil, [[ nil, args[:course_id] ]])
           SELECT m.user_id,
-                 last_name || ', ' || first_name AS student, a.id as assignment_id, a.name, g.score
+                 last_name, first_name,
+                 username,
+                 0 as score, 0 as badges,
+                 a.id as assignment_id, a.name, g.score
             FROM users
             JOIN course_memberships AS m ON users.id = m.user_id
             JOIN grades AS g on g.course_id = m.course_id AND g.student_id = m.user_id
@@ -35,8 +53,17 @@ namespace :db do
         grades.each do |grade|
           if grade['user_id'] != user_id
             user_id = grade['user_id']
+            sum = sums[user_id]
             rows << row
-            row = { 0 => grade['student'] }
+            row = {
+              'last_name' => grade['last_name'],
+              'first_name' => grade['first_name'],
+              'username' => grade['username'],
+              'score' => sum['grade_score'].to_i +
+                sum['earned_badge_score'].to_i +
+                sum['challenge_grade_score'].to_i,
+              'badges' => sum['badges']
+            }
           end
           row[grade['assignment_id']] = grade['score'] || 0
         end
