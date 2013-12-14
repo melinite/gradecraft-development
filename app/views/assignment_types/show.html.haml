@@ -28,7 +28,7 @@
     %b Students set course weight?
     = @assignment_type.student_weightable? ? "Yes" : "No"
 
-.well
+
   %h4 Predictor Settings
   %p.clear
     %b Order:
@@ -40,7 +40,6 @@
     %b Predictor description:
     = raw @assignment_type.predictor_description
 
-.well
   %h4 Grading
   %p.clear
     %b Is this assignment type quick gradeable?

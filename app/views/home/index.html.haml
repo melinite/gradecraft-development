@@ -9,26 +9,4 @@
       %h2 Welcome to GradeCraft
       %p GradeCraft is a learning management system dedicated to supporting the gameful classroom. We are actively researching and developing tools to encourage student engagement, and aid instructor workflow. GradeCraft is being developed at the University of Michigan, with the support of the Learning Analytics Taskforce. Interested in being involved? <a href="mailto:gradecraft@gmail.com">Get in touch!</a>
   .panel.small-12.medium-3.columns
-    %h3 LOGIN
-    %dl.tabs
-      %dd
-        %a{ "href"=> "#panel1-1"} UM Login
-      %dd.active
-        %a{ "href" => "#panel1-2"} GradeCraft Login
-    .tabs-content
-      .content#panel1-1
-        .kerberos-auth
-          = form_for User.new, :url => auth_kerberos_callback_path do |f|
-            = label_tag(:username, 'Uniqname')
-            = text_field_tag :username, nil, placeholder: 'Uniqname'
-            = label_tag(:password, 'Password')
-            = password_field_tag :password, nil, placeholder: 'Password', label: "Password"
-            = f.submit 'Log in', class: 'button tiny radius', alt: 'Log in'
-      .content.active#panel1-2
-        .gradegraft-auth
-          = form_for User.new, :url => user_sessions_path do |f|
-            = label_tag(:email, 'Email')
-            = text_field_tag :email, nil, placeholder: "Email"
-            = label_tag(:password, 'Password')
-            = password_field_tag :password, nil, placeholder: 'Password'
-            = f.submit "Log in", class: 'button tiny radius', alt: "Log in"
+    = render "user_sessions/form"

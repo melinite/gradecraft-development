@@ -1,8 +1,8 @@
-= simple_form_for(@assignment_type, :html => {:class => 'form-horizontal'} ) do |f|
-  .well
+= simple_form_for(@assignment_type) do |f|
+  .row
     %h3 The Basics
     %hr
-    = f.input :name, :input_html => {:class => "col-lg-3"}
+    = f.input :name, :input_html => {:class => "small-12 large-6 columns"}
     = f.input :point_setting, :label => "How will points be set?", :hint => "Do all #{term_for :assignments} of this type have the same point value? For instance, if your type groups all class attendance #{term_for :assignments}, they could each be worth 100 points and you can set that universally here.", :collection => [["By Assignment"], ["For All Assignments"]], :input_html => {:class => "col-lg-3 input-sm"}
     = f.input :universal_point_value, :hint => "If #{term_for :assignments} in this category all have the same point value, what is that?", :input_html => {:class => "col-lg-3"}
     = f.input :max_value, :label => "Maximum Points", :hint => "Is there a cap on how many points students can earn here? (Leave blank if not)", :input_html => {:class => "col-lg-3"}

@@ -12,7 +12,7 @@ class CourseData < Struct.new(:course)
   end
 
   def assignment_types
-    @assignment_types ||= course.assignment_types
+    @assignment_types ||= course.assignment_types.ordered
   end
 
   #Displays only visible assignments
@@ -46,18 +46,22 @@ class CourseData < Struct.new(:course)
     end
   end
 
+  #Badges in the course, pulling in any related tasks as well
   def badges
     @badges ||= course.badges.includes(:tasks)
   end
 
+  #Team challenges in the course
   def challenges
     @challenges ||= course.challenges
   end
 
+  #Students in a course, sorted alphabetically
   def students
     @students ||= course.students.alpha
   end
 
+  #Students in a particular team within a course
   def students_for_team(team)
     course.students.select { |student| team.student_ids.include? student.id }
   end

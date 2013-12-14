@@ -1,4 +1,4 @@
-= simple_form_for([@user, @assignment_weight], :html => {:class => 'form-horizontal' }) do |f|
+= simple_form_for([@user, @assignment_weight]) do |f|
   %b= "You are setting the Kapital value for #{@assignment_type.name}"
   = f.input :assignment_type_id, :input_html => { :value => @assignment_type.id }, :as => :hidden
   = f.input :value, :hint => "You may set #{current_course.max_student_weight} #{current_course.multiplier_term}s", :collection => @amounts

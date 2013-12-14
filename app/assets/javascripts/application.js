@@ -13,12 +13,10 @@
 //= require jquery.fileupload
 //= require s3_direct_upload
 //= require jquery.ui.widget
-//= require jquery.sparkline.min
 //= require underscore.min
 //= require backbone.min
 //= require best_in_place
 //= require best_in_place.purr
-//= require foundation_doc
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
 //= require gradecraft

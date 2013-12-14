@@ -1,9 +1,9 @@
-%li.has_dropdown
+//%li.has-dropdown
+//= form_tag change_current_course_path  do
+//= select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name'), prompt: "My Courses"
+
+%li.has-dropdown
   = link_to current_user.public_name
   %ul.dropdown
     %li= link_to "My Account", edit_profile_users_path
     %li= link_to "Logout", :logout
-%li.has_dropdown
-  = form_tag change_current_course_path  do
-    = select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name'), prompt: "My Courses"
-

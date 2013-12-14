@@ -1,6 +1,6 @@
 = render "students/main_tabs"
 
-.pull-right.col.col-lg-3.col-md-3.col-sm-3.col-xs-12.sidebar
+.sidebar
   .gravatar.sidebar_section= gravatar_for current_student
 
   .sidebar_section.center.section= link_to current_student.email, "mailto:#{current_student.email}"
