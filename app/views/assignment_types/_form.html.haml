@@ -1,6 +1,6 @@
 = simple_form_for(@assignment_type) do |f|
   .row
-    %h3 The Basics
+    %h4 The Basics
     %hr
     = f.input :name, :input_html => {:class => "small-12 large-6 columns"}
     = f.input :point_setting, :label => "How will points be set?", :hint => "Do all #{term_for :assignments} of this type have the same point value? For instance, if your type groups all class attendance #{term_for :assignments}, they could each be worth 100 points and you can set that universally here.", :collection => [["By Assignment"], ["For All Assignments"]], :input_html => {:class => "col-lg-3 input-sm"}
@@ -12,12 +12,12 @@
     = f.input :order_placement, :label => "#{term_for :assignment} Type Order", :hint => "What order would you like the #{term_for :assignment} types to appear in on the student dashboard?", :input_html => {:class => "col-lg-3"}
     %h4 Description
     = f.text_area :predictor_description, :class => :ckeditor, :input_html => {:style => "width: 100%; height: 200px;"}, :label => "Display Text", :hint => "How would you like to describe this #{term_for :assignment} type on the student dashboard? Are there hints that you can give students that will help them understand how to succeed?"
-  .well
-    %h3 Predictor Settings
+  .row
+    %h4 Predictor Settings
     %hr
     = f.input :points_predictor_display, :collection => [["Fixed"], ["Slider"], ["Select List"], ["Set per Assignment"]], :input_html => {:class => "input-sm col-lg-3"}, :hint => "How would you like #{term_for :students} to interact with this assignment in the predictor? If you choose Slider or Select List you must create Score Levels below"
-  .well
-    %h3 Grading
+  .row
+    %h4 Grading
     %hr
     //= f.input :mass_grade, :label => "Quick Grade", :hint => "Do you want to be able to grade all students who submit this #{term_for :assignment} in a single screen?"
     = f.input :mass_grade_type, :label => "Quick Grade Format", :hint => "Would you like the levels to be represented via checkbox, radio buttons or select forms?", :collection => [["Radio Buttons"], ["Select List"], ["Checkbox"], ["Text"], ["Set per Assignment"]], :input_html => {:class => "input-sm col-lg-3"}
@@ -25,7 +25,7 @@
     = f.input :student_logged_revert_button_text, :hint => "If a student unchecks this button, what should it say?", :label => "Revert Button Text", :input_html => {:class => 'col-lg-3'}
     //= f.input :levels, :label => "Leveled Grading", :hint => "This includes normal A - F grading schemes.", :as => :radio_buttons
     = f.input :notify_released, :hint => "Do you want to notify students by email when a grade is awarded? If grade release is necessary, this email will not be sent out until the grade is officially released.", :label => "Notify by email?"
-    .well
+    .row
       %h5 Score Levels
       .score-levels
         %p.hint Example: You could create three score levels to produce this quick grading scheme - Complete (5000 points), Finalist (7000 points), and Winner (10,000 points). These levels will then be available to use for quick grading.
@@ -37,10 +37,11 @@
           %fieldset.score-level
             = f.simple_fields_for :score_levels, score_level, class: 'form-inline' do |slf|
               = render 'score_level_fields', f: slf
-      %hr
       = link_to 'Add a Level', '#', class: 'add-level'
 
 
-  .form-actions.col-lg-offset-3
+  .row.form-actions
+    %hr
+
     = f.button :submit, :class => "button radius tiny"
     = link_to 'Cancel', assignment_types_path, :class => "button radius tiny"

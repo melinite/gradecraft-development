@@ -6,7 +6,7 @@
     %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button radius tiny"
     %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "button radius tiny"
 
-.col-lg-12.info
+.small-12.medium-4
   - if current_course.assignment_weight_open? || current_user.is_staff?
     %h3 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
     .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
@@ -25,8 +25,8 @@
           .panel-body
             = atwf.input :weight, :label => "#{term_for :weight}"
       .form-actions.col-lg-offset-3
-        = f.button :submit, "Update #{term_for :weights}", :class => "btn btn-primary"
-        = link_to 'Cancel', current_user.is_student? ? dashboard_path : choices_students_path, class: 'btn btn-info'
+        = f.button :submit, "Update #{term_for :weights}", :class => "button radius tiny"
+        = link_to 'Cancel', current_user.is_student? ? dashboard_path : choices_students_path, class: 'button radius tiny'
 
 
   - else
