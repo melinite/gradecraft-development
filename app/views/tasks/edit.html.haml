@@ -1,6 +1,6 @@
 = content_nav_for @assignment, "Editing #{(@task.name)}".html_safe do
-  %li= link_to "See #{@assignment.try(:name)}", @assignment, :class => "btn btn-tiny btn-info"
+  %li= link_to "See #{@assignment.try(:name)}", @assignment, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
   = render 'form'

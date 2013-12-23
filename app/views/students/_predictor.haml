@@ -1,5 +1,5 @@
 - cache current_student_data.cache_key('v1', :assignment_weights_key, :assignments_key, :grades_key, :badges_key, current_student.id) do
-  .col-lg-12#content
+  .small-12#content
     #gradePredictor
       #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
         #projectedPoints
@@ -28,8 +28,8 @@
           .chart#prediction
 
     #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
-      .col.col-lg-12
-        %ul.slides.col.col-lg-12.clear
+      .small-12
+        %ul.slides.small-12.clear
           - if current_user.is_staff?
             = render partial: 'students/predictor/instructor_assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
           - elsif current_user.is_student?

@@ -1,18 +1,18 @@
 - if current_user.is_staff?
   = content_nav_for @badge do
-    %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
-    %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
-    %li= link_to "New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
-    %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "btn btn-tiny btn-info"
-    %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "btn btn-tiny btn-info"
+    %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
+    %li= link_to "New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
+    %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "button tiny radius"
+    %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "button tiny radius"
 - else
   = content_nav_for @badge do
-    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
-    %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+    %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
 
 
-.col-lg-12.info
-  %h3= @badge.name
+.small-12
+  %h2= @badge.name
   %p
     %img{:src => @badge.icon, :alt => @badge.name, :width => "40"}
 
@@ -33,11 +33,11 @@
         = link_to bf.filename, bf.url
 
   - if current_user.is_staff?
-    .col-lg-12
+    .small-12
       %h4 Tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})
 
   - if @badge.tasks.present?
-    %table.table.display.table-striped.simpleTable
+    %table.responsive.simpleTable
       %thead
         %tr
           %th.sortable{"data-sort" => "string"} Name
@@ -52,17 +52,17 @@
             %td= task.name
             %td= raw task.description
             - if current_user.is_staff?
-              %td= link_to "View", badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-success'
-              %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'btn btn-tiny btn-info'
-              %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
+              %td= link_to "View", badge_task_path(@badge.id, task.id), :class => 'button tiny radius'
+              %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'button tiny radius'
+              %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'button tiny radius', :method => :delete
 
   - if current_user.is_staff?
     %hr
 
-    .col-lg-12
+    .small-12
       %h4.clear Awarded #{term_for :badges}
 
-    %table.table.table-striped.table-condensed
+    %table.responsive.simpleTable
       %thead
         %tr
           %th= term_for(:student)
@@ -77,6 +77,6 @@
             %td= link_to earned_badge.student.try(:name), student_path(earned_badge.student)
             %td= raw earned_badge.feedback
             %td= earned_badge.created_at
-            %td= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-success'
-            %td= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-info'
-            %td= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
+            %td= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny radius'
+            %td= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny radius'
+            %td= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete

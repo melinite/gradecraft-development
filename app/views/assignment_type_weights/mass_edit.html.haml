@@ -24,7 +24,7 @@
             %h3.panel-title= atwf.object.assignment_type.name
           .panel-body
             = atwf.input :weight, :label => "#{term_for :weight}"
-      .form-actions.col-lg-offset-3
+      .form-actions
         = f.button :submit, "Update #{term_for :weights}", :class => "button radius tiny"
         = link_to 'Cancel', current_user.is_student? ? dashboard_path : choices_students_path, class: 'button radius tiny'
 

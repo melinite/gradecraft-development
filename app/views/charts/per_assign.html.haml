@@ -1,8 +1,8 @@
 #highchart
 - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-  .col-lg-12
+  .small-12
     %h3= link_to assignment_type.name, assignment_type
-  %table.table.simpleTable.table-striped
+  %table.responsive.simpleTable
     %thead
       %tr
         %th Name

@@ -10,11 +10,11 @@
         = form_for User.new, :url => auth_kerberos_callback_path do |f|
           %li= text_field_tag :username, nil, placeholder: 'Uniqname'
           %li= password_field_tag :password, nil, placeholder: 'Password'
-          %li= f.submit 'Log in', class: 'btn btn-primary', alt: 'Log in'
+          %li= f.submit 'Log in', class: 'button tiny radius', alt: 'Log in'
   .tab-pane#tabgc
     %ul
       .gradegraft-auth
         = form_for User.new, :url => user_sessions_path do |f|
           %li= f.text_field :email, placeholder: "Email"
           %li= f.password_field :password, placeholder: 'Password'
-          %li= f.submit "Log in", class: 'btn btn-primary', alt: "Log in"
+          %li= f.submit "Log in", class: 'button tiny radius', alt: "Log in"

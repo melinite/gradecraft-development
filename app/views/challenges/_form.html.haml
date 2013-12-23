@@ -19,6 +19,6 @@
     = f.input :accepts_submissions, :label => "Will the #{term_for :team} submit materials?", :hint => "All #{term_for :team} members will be able to submit work for their #{term_for :team} as a whole, and see their resulting grades."
     = f.input :release_necessary, :label => "Release necessary?", :hint => "Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important."
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn-primary"
-    = link_to 'Cancel', challenges_path, :class => 'btn btn-info'
+  .form-actions
+    = f.button :submit, :class => "button tiny radius"
+    = link_to 'Cancel', challenges_path, :class => 'button tiny radius'

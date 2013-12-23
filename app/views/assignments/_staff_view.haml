@@ -1,14 +1,14 @@
 = content_nav_for @assignment do
-  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "button tiny radius"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
+  %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius"
   - if @assignment.assignment_type.mass_grade?
-    %li= link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
-  %li= link_to "Import Grades", import_grades_assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+    %li= link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "button tiny radius"
+  %li= link_to "Import Grades", import_grades_assignment_path(@assignment), :class => "button tiny radius"
 
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
   - if @assignment.description?
     %p
@@ -44,17 +44,17 @@
     = form_tag assignment_path(@assignment), :method => :get do
       = hidden_field_tag :assignment_id, @assignment.id
       = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
-      = submit_tag 'Filter', :class => 'btn btn-success btn-small'
+      = submit_tag 'Filter', :class => 'button tiny radius'
 
-  .col-lg-offset-10.col-lg-1
+  .small-12
     - if @assignment.assignment_type.mass_grade?
-      = link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "btn btn-warning"
+      = link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "button tiny radius"
 
-.col-lg-12.clear
+.clear
   %h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
 
 - if @assignment.tasks.present?
-  %table.table.display.table-striped.simpleTable
+  %table.responsive.simpleTable
     %thead
       %tr
         %th.sortable{"data-sort" => "string"} Name
@@ -67,12 +67,12 @@
         %tr
           %td= task.name
           %td= raw task.description
-          %td= link_to "View", assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-success'
-          %td= link_to "Edit", edit_assignment_task_path(@assignment.id, task.id), :class => 'btn btn-tiny btn-info'
-          %td= link_to "Delete", assignment_task_path(@assignment.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
+          %td= link_to "View", assignment_task_path(@assignment.id, task.id), :class => 'button tiny radius'
+          %td= link_to "Edit", edit_assignment_task_path(@assignment.id, task.id), :class => 'button tiny radius'
+          %td= link_to "Delete", assignment_task_path(@assignment.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'button tiny radius', :method => :delete
 
-.col-lg-12
-  %h4.clear  Grades
+.small-12
+  %h2.clear  Grades
   - if @assignment.has_groups?
     = render 'group_show'
   - else

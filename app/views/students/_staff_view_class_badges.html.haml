@@ -1,6 +1,6 @@
 = content_nav_for Badge do
-  %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "See All #{current_course.badge_term.pluralize}", badges_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "button tiny radius"
+  %li= link_to "See All #{current_course.badge_term.pluralize}", badges_path, :class => "button tiny radius"
 
 .small-12
   %h4 #{current_course.badge_term.pluralize} Leaderboard

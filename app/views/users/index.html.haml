@@ -1,15 +1,15 @@
 = content_nav_for User do
-  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
 
-%h3= @title
+%h2= @title
 
 - if current_course.has_teams?
-  .filters.col.col-lg-5.col-sm-5.col-md-5
+  .filters.small-5
     = form_tag students_path, :method => :get do
       = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-2"
       = submit_tag 'Filter', :class => 'button tiny radius'
 
-%table.table.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Name

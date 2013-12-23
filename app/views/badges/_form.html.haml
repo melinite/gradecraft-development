@@ -20,6 +20,6 @@
   Choose an icon for this badge.
   = f.file_field :icon, :label => "Select an icon for this badge.", :input_html => {:class => 'col-lg-3'}
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn-primary"
-    = link_to 'Cancel', badges_path, :class => 'btn btn-info'
+  .form-actions
+    = f.button :submit, :class => "button tiny radius"
+    = link_to 'Cancel', badges_path, :class => 'button tiny radius'

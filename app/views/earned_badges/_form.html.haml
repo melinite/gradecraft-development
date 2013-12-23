@@ -6,9 +6,9 @@
   = f.text_area :feedback, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
   = hidden_field_tag "earned_badge[badge_ids][]", nil
 
-  .form-actions.col-lg-offset-3
+  .form-actions
     .btn-toolbar
       .btn-group
-        = f.button :submit, "#{@earned_badge.persisted? ? 'Update' : 'Award '} #{term_for :badge}",  :class => "btn-primary btn-sm"
+        = f.button :submit, "#{@earned_badge.persisted? ? 'Update' : 'Award '} #{term_for :badge}",  :class => "button tiny radius"
       .btn-group
-        = link_to 'Cancel', badge_path(@badge), :class => 'btn btn-info btn-sm'
+        = link_to 'Cancel', badge_path(@badge), :class => 'button tiny radius'

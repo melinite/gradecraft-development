@@ -1,16 +1,16 @@
 - cache current_student_data.cache_key('v1', current_user.is_staff?, :assignment_weights_key, :assignments_key, :grades_key, :submissions_key) do
   - current_course_data.by_assignment_type.each do |assignment_type, assignments|
-    .col-lg-12.col-xs-12.col-md-12.col-sm-12
+    .small-12
       - if assignment_type.max_value?
-        %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
+        %button.btn.btn-success.small-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
       - else
-        %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
+        %button.btn.btn-success.small-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
       .collapse{:id => "assignment_type-#{assignment_type.id}"}
-        .col-lg-10
+        .small-10
           - if assignment_type.predictor_description?
             = raw assignment_type.predictor_description
         - if assignment_type.student_weightable? && current_course.assignment_weight_open?
-          .col-lg-2
+          .small-2
             - if current_student_data.weighted_assignments?
               .badge.badge-primary= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
               .badge.badge-info= link_to "Change #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, user_id: current_student
@@ -20,10 +20,10 @@
           .badge.badge-primary= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
         .clear
         %p
-        .col-lg-12
+        .small-12
           - assignments.each do |assignment|
             - if assignment.visible? || current_student_data.grade_released_for_assignment?(assignment)
-              .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
+              .small-12.clear
                 %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
                 - if current_student_data.grade_released_for_assignment?(assignment)
                   %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)}  / "
@@ -75,12 +75,12 @@
 
         %hr
   - if current_course.team_challenges?
-    .col-lg-12.col-xs-12.col-md-12.col-sm-12
-      %button.btn.btn-success.col.col-xs-12.col-md-12.col-sm-12.col-lg-12{"data-target" => "#challenges", "data-toggle" => "collapse"} #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
+    .small-12
+      %button.btn.btn-success.small-12{"data-target" => "#challenges", "data-toggle" => "collapse"} #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
       .collapse{:id => "challenges"}
-        .col-lg-12
+        .small-12
           - current_course_data.challenges.each do |challenge|
-            .col.col-lg-12.col-sm-12.col-xs-12.col-md-12.clear
+            .small-12
               %span.assignmentName= link_to challenge.name, challenge
               - if current_student.team_for_course(current_course)
                 - if challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).present?

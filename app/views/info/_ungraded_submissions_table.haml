@@ -2,12 +2,12 @@
   .filters
     = form_tag grading_status_path, :method => :get do
       = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
-      = submit_tag 'Filter', :class => 'btn btn-primary'
+      = submit_tag 'Filter', :class => 'button tiny radius'
 
 - @ungraded_submissions.group_by(&:assignment).each do |assignment, submissions|
   %h5
     = link_to assignment.name, assignment
-    = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
+    = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "button tiny radius"
   %table.table.simpleTable
     %thead
       %tr
@@ -30,12 +30,12 @@
                 %td
                   - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
                     = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
-                %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-                %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
+                %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'button tiny radius'
+                %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'button tiny radius'
               - elsif ug.assignment.has_groups?
                 %td= link_to ug.group.try(:name), group_path(ug.group)
-                %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-                %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'btn btn-xs btn-success'
+                %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'button tiny radius'
+                %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'button tiny radius'
         - else
           %tr
             - if ug.assignment.is_individual?
@@ -43,9 +43,9 @@
               %td
                 - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
                   = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
-              %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-              %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'btn btn-xs btn-success'
+              %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'button tiny radius'
+              %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'button tiny radius'
             - elsif ug.assignment.has_groups?
               %td= link_to ug.group.try(:name), group_path(ug.group)
-              %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'btn btn-xs btn-success'
-              %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'btn btn-xs btn-success'
+              %td= link_to "See Submission", assignment_submission_path(ug.assignment, ug), :class => 'button tiny radius'
+              %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'button tiny radius'

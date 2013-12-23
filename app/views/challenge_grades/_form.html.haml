@@ -5,5 +5,5 @@
     = f.input :feedback, :input_html => {:style => "width: 90%; height: 200px;"}
     = f.input :status, :collection => Grade::STATUSES, :hint => "Can the student see this grade?", :include_blank => false
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn btn-primary"
+  .form-actions
+    = f.button :submit, :class => "button tiny radius"

@@ -4,11 +4,11 @@
 - @criteria.group_by(&:category).each do |category, criteria|
   .panel
     .panel-heading.clearfix
-      = link_to new_criterium_path(@rubric, category: category), class: 'btn btn-xs btn-info pull-right' do
+      = link_to new_criterium_path(@rubric, category: category), class: 'button tiny radius pull-right' do
         %span.glyphicon.glyphicon-plus
         Add '#{category}' Criterium
       %h3.panel-title= category
-    %table.table.display.table-striped.simpleTable
+    %table.responsive.simpleTable
       %thead
         %tr
           %th.sortable{"data-sort" => "string"} Name

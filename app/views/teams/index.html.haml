@@ -1,12 +1,12 @@
 = content_nav_for Team do
-  %li= link_to "Add #{term_for :team}", new_team_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Add #{term_for :team}", new_team_path, :class => "button tiny radius"
   - if current_course.team_challenges?
-    %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
-%table.table.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th{"data-sort" => "int"} Rank
@@ -34,6 +34,6 @@
             - team.earned_badges.each do |badge|
               %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "40"}
           %td= team.try(:student_badge_count)
-          %td= link_to 'Edit', edit_team_path(team), :class => 'btn btn-tiny btn-info'
-          %td= link_to 'Delete', team, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
+          %td= link_to 'Edit', edit_team_path(team), :class => 'button tiny radius'
+          %td= link_to 'Delete', team, :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete
       - i += 1

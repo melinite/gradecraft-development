@@ -333,7 +333,7 @@ window.refreshAnalytics = function() {
     url: $this.data('url'),
     data: requestOptions,
     beforeSend: function() {
-      $refresh.html('Loading...').removeClass('btn-success').addClass('analytics-loading');
+      $refresh.html('Loading...').removeClass('success').addClass('analytics-loading');
     },
     complete: function() {
       $refresh.html('Refresh').removeClass('analytics-loading');
@@ -374,7 +374,7 @@ $(document)
   })
   .delegate('[data-for-chart]', 'change', function() {
     var chart = $(this).data('for-chart');
-    $('[data-refresh-chart="' + chart + '"]').addClass('btn-success');
+    $('[data-refresh-chart="' + chart + '"]').addClass('success');
   });
 
 $(function () {

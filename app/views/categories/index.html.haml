@@ -1,10 +1,10 @@
 = content_nav_for Category do
-  %li= link_to 'New Category', new_category_path, :class => "btn btn-tiny btn-info"
+  %li= link_to 'New Category', new_category_path, :class => "button tiny radius"
 
-.col-lg-12
+.small-12
   %h3= @title
 
-%table.table.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Name
@@ -16,6 +16,5 @@
       %tr
         %td= link_to category.name, category
         %td= raw category.description
-        %td= link_to 'Edit', edit_category_path(category), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', category, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
-
+        %td= link_to 'Edit', edit_category_path(category), :class => 'button tiny radius'
+        %td= link_to 'Delete', category, :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete

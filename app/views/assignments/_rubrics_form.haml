@@ -1,4 +1,4 @@
-%h3 Rubrics
+%h2 Rubrics
 - if assignment_rubrics.present?
   .assignment-rubrics
     - assignment_rubrics.each do |assignment_rubric|
@@ -7,13 +7,13 @@
           .panel-heading.clearfix
             = arf.hidden_field :rubric_id
             = arf.hidden_field :_destroy, value: !assignment_rubric.persisted?, class: 'destroy'
-            = link_to "#rubric-#{assignment_rubric.rubric_id}", class: 'btn btn-xs btn-warning remove-assignment-rubric pull-right' do
+            = link_to "#rubric-#{assignment_rubric.rubric_id}", class: 'button tiny radius remove-assignment-rubric pull-right' do
               %span.glyphicon.glyphicon-remove
               Remove Rubric
             %h3.panel-title= assignment_rubric.name
           = assignment_rubric.description
   .btn-group.add-assignment-rubric
-    %button(type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown")
+    %button(type="button" class="button tiny radius dropdown-toggle" data-toggle="dropdown")
       Add a Rubric
       %span.caret
     %ul.dropdown-menu

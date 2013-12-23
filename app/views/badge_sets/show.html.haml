@@ -1,12 +1,12 @@
 = content_nav_for @badge_set do
-  %li= link_to 'See All Badge Sets', badge_sets_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@badge_set.name}", edit_badge_set_path(@badge_set), :class => "btn btn-tiny btn-info"
-  %li= link_to 'Add New Badge', new_badge_path, :class => "btn btn-tiny btn-info"
+  %li= link_to 'See All Badge Sets', badge_sets_path, :class => "button tiny radius"
+  %li= link_to "Edit #{@badge_set.name}", edit_badge_set_path(@badge_set), :class => "button tiny radius"
+  %li= link_to 'Add New Badge', new_badge_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
-%table.display.table-striped.table.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th Badge
@@ -24,7 +24,7 @@
         %td= badge.name
         %td= badge.point_total
         %td= raw badge.description
-        %td= link_to "View", badge_path(badge), :class => 'btn btn-tiny btn-success'
-        %td= link_to "Edit", edit_badge_path(badge), :class => 'btn btn-tiny btn-info'
-        %td= link_to "Delete", badge_path(badge), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-warning', :method => :delete
+        %td= link_to "View", badge_path(badge), :class => 'button tiny radius'
+        %td= link_to "Edit", edit_badge_path(badge), :class => 'button tiny radius'
+        %td= link_to "Delete", badge_path(badge), :data => { confirm: 'Are you sure?' }, :class => 'button tiny radius', :method => :delete
 

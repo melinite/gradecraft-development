@@ -1,4 +1,4 @@
-.col.col-lg-12.col-sm-12.section
+.small-12
   #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
   %hr
   %ul.tabs
@@ -20,7 +20,7 @@
       .tab-pane#tab3
         %h4= current_course.team_term.pluralize
         #teamChart= render 'teams_table', :course => current_course, :teams => @teams
-.col.col-lg-12.section
+.small-12.section
   %ul.tabs
     %li.active
       %a{ "data-toggle" => "tab", "data-target" => "#tab4"} Submissions

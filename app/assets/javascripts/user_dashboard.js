@@ -24,7 +24,7 @@ $(document).ready(function() {
         } else {
           $('#shared_' + badge_id).text("Share")
         }
-        $('#shared_' + badge_id).toggleClass('btn-success btn-warning')
+        $('#shared_' + badge_id).toggleClass('success warning')
         $('#shared_' + badge_id).toggleClass('add_badge remove_badge')
       }
     })

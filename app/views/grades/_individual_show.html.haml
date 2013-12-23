@@ -1,34 +1,32 @@
-.heading.col-lg-2= "#{term_for :student}:"
-.col-lg-offset-2= link_to @grade.student.try(:name), student_path(@grade.student)
-.heading.col-lg-2= "#{term_for :assignment}:"
-.col-lg-offset-2= link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
+.heading= "#{term_for :student}:"
+= link_to @grade.student.try(:name), student_path(@grade.student)
+= "#{term_for :assignment}:"
+= link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
 - if @grade.raw_score?
-  .heading.col-lg-2 Raw Score:
-  .col-lg-offset-2= @grade.raw_score
+  .heading Raw Score:
+  = @grade.raw_score
 - if @grade.final_score?
-  .heading.col-lg-2 Final Score:
-  .col-lg-offset-2= @grade.final_score
+  .heading Final Score:
+  = @grade.final_score
 - if @grade.grade_files.present?
-  .heading.col-lg-2 Documents:
-  .col-lg-offset-2
-    - @grade.grade_files.each do |gf|
-      = link_to File.basename(gf.filename), gf.url
+  .heading Documents:
+  - @grade.grade_files.each do |gf|
+    = link_to File.basename(gf.filename), gf.url
 
 - if @grade.feedback?
-  .heading.col-lg-2 Feedback:
-  .col-lg-offset-2= raw @grade.feedback
+  .heading Feedback:
+  = raw @grade.feedback
 
 - if @grade.earned_badges.present?
-  .heading.col-lg-2= "#{term_for :badges}:"
-  .col-lg-offset-2
-    - @grade.earned_badges.each do |badge|
-      %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
+  .heading= "#{term_for :badges}:"
+  - @grade.earned_badges.each do |badge|
+    %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
 
 - if @grade.assignment.release_necessary?
-  .heading.col-lg-2 Status:
-  .col.col-lg-offset-2= @grade.status
+  .heading Status:
+  = @grade.status
 
 - if @grade.student.submission_for_assignment(@assignment)
   .clear
-  .heading.col-lg-2 Submission:
-  .col.col-lg-offset-2= link_to "View Submission", assignment_submission_path(@assignment, @grade.student.submission_for_assignment(@assignment))
+  .heading Submission:
+  = link_to "View Submission", assignment_submission_path(@assignment, @grade.student.submission_for_assignment(@assignment))

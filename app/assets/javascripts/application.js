@@ -30,6 +30,7 @@
 //= require grade_schemes
 //= require nested_fields
 //= require users
+//= require responsive-tables
 //= require grade_schemes
 //= require user_dashboard
 //= require stupidtable

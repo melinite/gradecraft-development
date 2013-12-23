@@ -1,7 +1,7 @@
 = content_nav_for @assignment, "New Grade" do
-  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
 
-.col-lg-12
+.small-12
   %h3 Grading #{current_student.name}'s #{@assignment.name}
   - if @assignment.is_individual? && @assignment.accepts_submissions? && @student.submission_for_assignment(@assignment)
     - if @student.submission_for_assignment(@assignment).present?

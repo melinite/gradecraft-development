@@ -2,7 +2,7 @@
   = f.input :name, :label => "Category Name"
   = f.input :description, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Notes"
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn-primary"
-    = link_to 'Cancel', categories_path, :class => 'btn btn-info'
+  .form-actions
+    = f.button :submit, :class => "button tiny radius"
+    = link_to 'Cancel', categories_path, :class => 'button tiny radius'
 

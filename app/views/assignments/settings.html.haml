@@ -1,13 +1,13 @@
 = content_nav_for Assignment do
-  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
 
-.col-lg-12
+.small-12
   .pull-right
     = link_to "Assignments Info", settings_assignments_path, :class => "badge"
 - current_course_data.by_assignment_type.each do |assignment_type, assignments|
-  .col-lg-12
-    %h3= "#{assignment_type.try(:name)}"
-  %table.table.table-striped.simpleTable
+  .small-12
+    %h2= "#{assignment_type.try(:name)}"
+  %table.responsive.simpleTable
     %thead
       %tr
         %th.sortable{"data-sort" => "string"} Name
@@ -34,7 +34,7 @@
           %td= assignment.try(:due_at)
           %td
             - if assignment.self_gradeable?
-              %button.btn.btn-info.btn-tiny.btn-success #{assignment.assignment_type.student_logged_button_text}
+              %button.button.tiny.radius #{assignment.assignment_type.student_logged_button_text}
           %td= points assignment.point_total
           %td= assignment.visible? ? 'Yes' : 'No'
           %td= assignment.required? ? 'Yes' : 'No'
@@ -42,8 +42,8 @@
           %td= assignment.grade_scheme_id
           %td= assignment.accepts_submissions? ? 'Yes' : 'No'
           %td= assignment.release_necessary? ? 'Yes' : 'No'
-          %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-          %td= link_to 'Delete', assignment_path(assignment), :class => 'btn btn-tiny btn-success', :data => { :confirm => 'Are you sure?' }, :method => :delete
+          %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'button tiny radius'
+          %td= link_to 'Delete', assignment_path(assignment), :class => 'button tiny radius', :data => { :confirm => 'Are you sure?' }, :method => :delete
           %td
             - if assignment.has_groups?
               = link_to 'Create Group', new_group_path("assignment_id"=>assignment.id)

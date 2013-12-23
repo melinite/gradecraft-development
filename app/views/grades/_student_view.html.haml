@@ -1,10 +1,10 @@
 = content_nav_for @assignment, "My Grade" do
-  %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
 
-.col-lg-12.info
+.small-12
   %h3= link_to @grade.assignment.name, @grade.assignment
-  .heading.col-lg-2 Score:
+  .heading.small-2 Score:
   .col-lg-offset-2= points @grade.score
   - if @grade.grade_files.present?
     .heading.col-lg-2 Documents:

@@ -1,15 +1,15 @@
 = content_nav_for @assignment, "Grade" do
-  %li= link_to "All #{@grade.assignment.name } Grades", assignment_path(@grade.assignment_id), :class => "btn btn-tiny btn-info"
+  %li= link_to "All #{@grade.assignment.name } Grades", assignment_path(@grade.assignment_id), :class => "button tiny radius"
   - if @assignment.is_individual?
-    %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "btn btn-tiny btn-info"
-    %li= link_to "Delete Grade", assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "btn btn-tiny btn-info", :data => { confirm: 'Are you sure?' }, :method => :delete
-    //%li= link_to "Grade Another " +@grade.assignment.name, edit_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
+    %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "button tiny radius"
+    %li= link_to "Delete Grade", assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
+    //%li= link_to "Grade Another " +@grade.assignment.name, edit_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "button tiny radius"
   - else
-    %li= link_to 'Edit Grades', group_grade_assignment_path("assignment_id" => @assignment.id, "id" => @grade.id, :group_id => @grade.group_id), :class => "btn btn-tiny btn-info"
-    //%li= link_to "Grade Another " +@grade.assignment.name, edit_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "btn btn-tiny btn-info"
+    %li= link_to 'Edit Grades', group_grade_assignment_path("assignment_id" => @assignment.id, "id" => @grade.id, :group_id => @grade.group_id), :class => "button tiny radius"
+    //%li= link_to "Grade Another " +@grade.assignment.name, edit_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "button tiny radius"
 
 
-.col-lg-12.info
+.small-12
   %h3= @grade.assignment.name
   - if @grade.assignment.is_individual?
     = render "individual_show"

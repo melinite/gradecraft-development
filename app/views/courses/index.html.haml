@@ -1,10 +1,10 @@
 = content_nav_for Course do
-  %li= link_to 'New Course', new_course_path, :class => "btn btn-tiny btn-info"
+  %li= link_to 'New Course', new_course_path, :class => "button tiny radius"
 
-.col-lg-12
+.small-12
   %h3= @title
 
-%table.table.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Name
@@ -27,5 +27,5 @@
         %td
           //= course.total_points
         %td= course.grade_scheme_id
-        %td= link_to 'Edit', edit_course_path(course), :class => 'btn btn-tiny btn-info'
-        %td= link_to 'Delete', course, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
+        %td= link_to 'Edit', edit_course_path(course), :class => 'button tiny radius'
+        %td= link_to 'Delete', course, :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete

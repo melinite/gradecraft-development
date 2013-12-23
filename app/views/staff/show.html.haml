@@ -1,10 +1,10 @@
 = content_nav_for @user do
-  %li= link_to "Staff Index", staff_index_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Create a New Staff Member", new_user_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@user.name}", edit_user_path(@user), :class => "btn btn-tiny btn-info"
+  %li= link_to "Staff Index", staff_index_path, :class => "button tiny radius"
+  %li= link_to "Create a New Staff Member", new_user_path, :class => "button tiny radius"
+  %li= link_to "Edit #{@user.name}", edit_user_path(@user), :class => "button tiny radius"
 
-.col-lg-12
-  %h4 Courses
+.small-12
+  %h2 Courses
   %ul
     - @user.courses.each do |course|
       %li= link_to course.name, course

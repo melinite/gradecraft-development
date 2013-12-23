@@ -1,6 +1,6 @@
 = content_nav_for Assignment, "Edit #{current_course.assignment_term} '#{breadcrumb_link_for @assignment}'".html_safe do
-  %li= link_to "See All #{current_course.assignment_term}s", assignments_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{current_course.assignment_term}s", assignments_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
   = render 'form'

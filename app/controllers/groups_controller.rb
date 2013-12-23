@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
 
   def index
     @groups = current_course.groups
-    @title = "#{term_for :group} Index"
+    @title = current_course.group_term.pluralize
   end
 
   def show

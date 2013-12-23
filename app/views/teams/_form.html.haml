@@ -2,6 +2,6 @@
   = f.input :name, :label => "#{current_course.team_term} Name"
   = f.association :students, :collection => current_course_data.students, :as => :check_boxes
   = f.input :course_id, :collection => @courses, :as => :hidden, :input_html => { :value => current_course.id }
-  .form-actions.col-lg-offset-3
+  .form-actions
     = f.button :submit, @submit_message, :class => 'button tiny radius'
     = link_to 'Cancel', teams_path, :class => 'button tiny radius'

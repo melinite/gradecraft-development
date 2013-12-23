@@ -2,10 +2,11 @@
   %li= link_to "Back to My Dashboard", dashboard_path, :class => "button radius tiny"
 
 - if current_user.is_staff?
-  %h4= "#{@student.name}'s #{current_course.weight_term} Choices"
+  %h2= "#{@student.name}'s #{current_course.weight_term} Choices"
 - else
-  %h3= "My #{current_course.weight_term} Choices"
-%table.table.table-striped.simpleTable
+  %h2= "My #{current_course.weight_term} Choices"
+
+%table.responsive.simpleTable
   %tr
     %th.sortable{"data-sort" => "string"} Assignment Type
     %th.sortable{"data-sort" => "int"} Value

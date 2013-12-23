@@ -1,8 +1,8 @@
-.col-lg-12
+.small-12
   = raw current_course.grading_philosophy
 
   - if current_course.grade_scheme_id?
-    %table.table.simpleTable
+    %table.responsive.simpleTable
       %thead
         %tr
           %th.sortable{"data-sort" => "string"} Name

@@ -1,7 +1,7 @@
 = content_nav_for Assignment, "New #{term_for :assignment}" do
-  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
   = render 'form'
 

@@ -1,11 +1,11 @@
 = content_nav_for User, "Staff" do
-  %li= link_to 'See All Users', users_path, :class => "btn btn-tiny btn-info"
-  %li= link_to 'Create a New Staff Member', new_user_path, :class => "btn btn-tiny btn-info"
+  %li= link_to 'See All Users', users_path, :class => "button tiny radius"
+  %li= link_to 'Create a New Staff Member', new_user_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
-%table.table.display.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Name
@@ -23,5 +23,5 @@
             %ul
               - user.teams.each do |team|
                 %li= link_to team.try(:name), team
-          %td= link_to 'Edit', edit_user_path(user), {:class => 'btn btn-tiny btn-info'}
-          %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?'}, :method => :delete
+          %td= link_to 'Edit', edit_user_path(user), {:class => 'button tiny radius'}
+          %td= link_to 'Delete', user, :class => 'button tiny radius', :data => { confirm: 'Are you sure?'}, :method => :delete

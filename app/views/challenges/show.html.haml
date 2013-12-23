@@ -1,10 +1,10 @@
 = content_nav_for @challenge do
-  %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "button tiny radius"
   - if current_user.is_staff?
-    %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "btn btn-tiny btn-info"
+    %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
   %p
     %b Description:
@@ -27,14 +27,14 @@
         %li= link_to cf.filename, cf.url
 
 - if current_user.is_staff?
-  .col-lg-12
+  .small-12
     - if @challenge.mass_grade?
       .pull-right
-        = link_to 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "btn btn-tiny btn-success btn-primary"
+        = link_to 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "button tiny radius"
     %h3 Grades
 
   = simple_form_for @challenge do
-    %table.display.table-striped.table.simpleTable
+    %table.responsive.simpleTable
       %thead
         %tr
           - if @challenge.release_necessary?
@@ -77,9 +77,9 @@
               %td
             %td
               - if challenge_grade
-                = link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
+                = link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny radius'
               - else
-                = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'btn btn-tiny btn-success'
+                = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'button tiny radius'
 
     - if @challenge.release_necessary? && @challenge.challenge_grades.present?
-      = submit_tag "Update Grade Statuses", :class => "btn btn-info pull-right"
+      = submit_tag "Update Grade Statuses", :class => "button tiny radius"

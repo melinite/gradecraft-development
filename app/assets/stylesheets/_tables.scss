@@ -1,32 +1,22 @@
 
 /** Table Styles **/
-/*
-table {
-  background-color: #FFF;
-  font-size: 80%;
-  border-bottom: 2px solid #333;
+
+
+table.responsive {
+  width: 100%;
+
+  .button {
+    margin-bottom: 0;
+  }
 }
 
-thead {
-  background-color: $lightblue;
-  color: #000;
+table.responsive tbody, table.responsive tbody tr, table.responsive tbody td {
+  font-size: 0.77778rem;
+  padding: 0 10px;
 }
 
-#massGrade table {
-  margin-left: 20px;
-  background-color: #eee;
+table tbody tr td, table tr td, table tfoot tr td {
+  line-height: .8rem;
+  margin: 0;
+  padding: 0;
 }
-
-#massGrade table td {
-  padding: 5px 10px;
-}
-
-#massGrade .form-actions {
-  padding-left: 20px;
-  padding-top: 10px;
-}
-
-#massGrade .btn-group  {
-  padding: 20px 20px 0px;
-}
-*/

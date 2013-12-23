@@ -1,4 +1,4 @@
-%table.table.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"}= course.user_term
@@ -27,8 +27,8 @@
           %td= student.earned_badges.count
         %td= student.visit_count
         %td= student.page_views
-        %td= mail_to student.email, "Email #{student.first_name}", :class => "btn btn-tiny btn-success"
+        %td= mail_to student.email, "Email #{student.first_name}", :class => "button tiny radius"
         - if course.has_teams?
           %td
             - if student.team_for_course(course) && student.team_for_course(course).team_leader.present?
-              = mail_to student.team_for_course(course).team_leader.email, "Email #{student.team_for_course(course).team_leader.first_name}", :class => "btn btn-primary btn-tiny btn-success"
+              = mail_to student.team_for_course(course).team_leader.email, "Email #{student.team_for_course(course).team_leader.first_name}", :class => "button tiny radius success"

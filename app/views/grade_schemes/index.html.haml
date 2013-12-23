@@ -1,10 +1,10 @@
 = content_nav_for GradeScheme do
-  %li= link_to 'New Grade Scheme', new_grade_scheme_path, :class => "btn btn-tiny btn-info"
+  %li= link_to 'New Grade Scheme', new_grade_scheme_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
-%table.display.table-striped.table
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Scheme Name
@@ -15,6 +15,6 @@
     - for grade_scheme in @grade_schemes
       %tr
         %td= link_to grade_scheme.name, grade_scheme
-        %td= link_to 'View', grade_scheme, :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Edit', edit_grade_scheme_path(grade_scheme), :class => 'btn btn-tiny btn-info'
-        %td= link_to 'Delete', grade_scheme, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
+        %td= link_to 'View', grade_scheme, :class => 'button tiny radius'
+        %td= link_to 'Edit', edit_grade_scheme_path(grade_scheme), :class => 'button tiny radius'
+        %td= link_to 'Delete', grade_scheme, :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete

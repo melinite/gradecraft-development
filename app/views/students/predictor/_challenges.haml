@@ -1,7 +1,7 @@
 - if current_course.team_challenges?
   %li#slide-challenges(data-assignment-type-id="chalelnges" data-assignment-type-name)
     %h3="#{term_for :challenges}"
-    .slide-panel.col.col-lg-12
+    .slide-panel.small-12
       .assignmentType
         %span.badge.badge-warning.pull-right #{current_student.team_score(current_course)} points
       .assignment.clear

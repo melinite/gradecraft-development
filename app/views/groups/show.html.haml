@@ -1,15 +1,15 @@
 = content_nav_for @group do
   - if current_user.is_staff?
-    %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
-    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
-    %li= link_to "New #{term_for :group}", new_group_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "See All #{term_for :groups}", groups_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "button tiny radius"
+    %li= link_to "New #{term_for :group}", new_group_path, :class => "button tiny radius"
   - else
-    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-info btn-tiny"
-    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
+    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "button tiny radius"
 
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
   %p
     %b Group Name:
     = @group.name

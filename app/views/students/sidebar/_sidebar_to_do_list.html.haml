@@ -1,4 +1,4 @@
-.col.col-lg-12.col-md-12.col-sm-12.col-xs-12.center.badge-info#todo{"data-target" => "#toDoList", "data-toggle" => "collapse"}
+.small-12.center.badge-info#todo{"data-target" => "#toDoList", "data-toggle" => "collapse"}
   %h4.center Due This Week
   %div{:id => "toDoList", :class => "collapse clear"}
     - current_course_data.by_assignment_type.each do |assignment_type, assignments|

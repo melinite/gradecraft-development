@@ -1,9 +1,9 @@
 = content_nav_for @assignment do
-  %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
-  //%li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+  //%li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius"
 
-.col-lg-12.info
-  %h3= @title
+.small-12
+  %h2= @title
 
   - if @assignment.description?
     %p
@@ -39,7 +39,7 @@
 
     %h4.clear Tasks
 
-    %table.table.display.table-striped.simpleTable
+    %table.responsive.simpleTable
       %thead
         %tr
           %th.sortable{"data-sort" => "string"} Name
@@ -55,4 +55,4 @@
       %h3 Submit #{@assignment.name}
       = render "/submissions/form"
     - elsif @assignment.has_groups?
-      = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-xs"
+      = link_to "Create a Group", new_group_path, :class => "button tiny radius"

@@ -1,14 +1,14 @@
 = content_nav_for "Edit My Profile" do
-  %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-info btn-tiny"
+  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
 %p
-.col-lg-offset-3
+.small-3
   = gravatar_for @user, :size => 250
   %p
     Need a Gravatar?
     = link_to "Get One Here!", "https://en.gravatar.com/"
 
-.col-lg-12
+.small-12
   = simple_form_for(@user, method: :put, :html => {:class => 'form-horizontal' }, :url => update_profile_users_path(@user)) do |f|
     = f.input :email
     = f.input :first_name
@@ -28,6 +28,6 @@
       //= f.input :password_confirmation
 
 
-    .form-actions.col-lg-offset-3
-      = submit_tag 'Update Settings', :class => 'btn btn-primary'
-      = link_to 'Cancel', root_path, :class => 'btn btn-info'
+    .form-actions
+      = submit_tag 'Update Settings', :class => 'button tiny radius'
+      = link_to 'Cancel', root_path, :class => 'button tiny radius'

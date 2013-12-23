@@ -1,14 +1,14 @@
 = content_nav_for @assignment, "Quick Grade"do
-  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
   - if current_course.has_teams?
     .filters
       = form_tag mass_grade_assignment_path, :method => :get do
         = hidden_field_tag :assignment_id, @assignment.id
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
-        = submit_tag 'Filter', :class => 'btn btn-primary'
+        = submit_tag 'Filter', :class => 'button tiny radius'
 
   #massGrade
     = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
@@ -55,6 +55,6 @@
                         = gf.text_field :raw_score, :value => nil
                         = "/ #{points @assignment.point_total}"
 
-      .form-actions.col-lg-offset-3
-        = f.button :submit, "Submit Grades", :class => "btn btn-primary"
-        = link_to 'Cancel', assignments_path, :class => 'btn btn-info'
+      .form-actions
+        = f.button :submit, "Submit Grades", :class => "button tiny radius"
+        = link_to 'Cancel', assignments_path, :class => 'button tiny radius'

@@ -2,7 +2,7 @@
   - if current_course.valuable_badges?
     %li#slide-badges(data-assignment-type-id="badges" data-assignment-type-name)
       %h3="#{term_for :badges}"
-      .slide-panel.col.col-lg-12
+      .slide-panel.small-12
         %span.badge.badge-info.pull-right #{points current_student_data.earned_badge_score} possible points
         %p.clear.lead
         %div.clear

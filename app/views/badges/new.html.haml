@@ -1,6 +1,6 @@
 = content_nav_for Badge, "New #{term_for(:badge)}" do
-  %li= link_to "See All #{term_for(:badges)}", badges_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "See All #{term_for(:badges)}", badges_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
   = render 'form'

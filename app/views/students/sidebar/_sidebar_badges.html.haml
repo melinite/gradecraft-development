@@ -1,4 +1,4 @@
-.col-sm-12.col-md-12.col-lg-12.col-xs-12.center#badges.badge-success{"data-target" => "#badgesInfo" }
+.small-12.center#badges.badge-success{"data-target" => "#badgesInfo" }
   -#, "data-toggle" => "collapse"}
   %h4.center= term_for :badges
   #badgesInfo.collapse.clear
@@ -29,4 +29,4 @@
               - else
                 %a{:rel => "tooltip", :title => "#{badge.try(:name)}"}
                   %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
-    .col-lg-12.clear= "#{term_for :badges} you've earned will shine brightly!"
+    .small-12.clear= "#{term_for :badges} you've earned will shine brightly!"

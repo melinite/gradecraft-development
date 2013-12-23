@@ -1,7 +1,7 @@
 = content_nav_for BadgeSet, "New Badge Set" do
-  %li= link_to 'See All Badge Sets', badge_sets_path, :class => "btn btn-tiny btn-info"
+  %li= link_to 'See All Badge Sets', badge_sets_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
   = render 'form'
 

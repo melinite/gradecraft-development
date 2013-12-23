@@ -11,6 +11,6 @@
     = f.association :students, :collection => current_course_data.students, :as => :check_boxes
     = f.input :approved, :as => :select, :collection => [["Approved"], ["Rejected"]], :input_html => { :class => "input-sm col-lg-3" }
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn-primary"
-    = link_to 'Cancel', groups_path, :class => 'btn btn-info'
+  .form-actions
+    = f.button :submit, :class => "button tiny radius"
+    = link_to 'Cancel', groups_path, :class => 'button tiny radius'

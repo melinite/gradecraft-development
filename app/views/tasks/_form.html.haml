@@ -3,6 +3,6 @@
   = f.text_area :description, :class => "ckeditor", :input_html => { :style => "width: 90%; height: 200px;"}
   = f.input :due_at, :as => :string, :include_blank => true, :start_year => Date.today.year, :input_html => { :class => 'datetimepicker' }
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, @button_title, :class => "btn-primary"
-    //= link_to 'Cancel', taskable_path(@taskable), :class => 'btn btn-info'
+  .form-actions
+    = f.button :submit, @button_title, :class => "button tiny radius"
+    //= link_to 'Cancel', taskable_path(@taskable), :class => 'button tiny radius'

@@ -1,14 +1,14 @@
 - if current_user.is_staff?
   = content_nav_for Badge do
-    %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
 - else
   = content_nav_for Badge do
-    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
+    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
-%table.table.simpleTable.table-striped
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Icon
@@ -41,9 +41,9 @@
                 Yes
               - else
                 No
-            %td= link_to "Quick Award", mass_award_badge_path(badge), :class => "btn btn-tiny btn-primary"
-            %td= link_to 'Edit', edit_badge_path(badge), :class => 'btn btn-tiny btn-info'
-            %td= link_to 'Delete', badge_path(badge), :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
+            %td= link_to "Quick Award", mass_award_badge_path(badge), :class => "button tiny radius"
+            %td= link_to 'Edit', edit_badge_path(badge), :class => 'button tiny radius'
+            %td= link_to 'Delete', badge_path(badge), :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete
       - else
         - if badge.visible?
           %tr

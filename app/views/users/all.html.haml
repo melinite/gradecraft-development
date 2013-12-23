@@ -1,10 +1,10 @@
 = content_nav_for User do
-  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "btn btn-tiny btn-info"
+  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+.small-12
+  %h2= @title
 
-%table.table.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Name
@@ -29,5 +29,5 @@
         %td
           - if user.is_student?
             = points user.score_for_course(current_course) if user.respond_to?(:grades)
-        %td= link_to 'Edit', edit_user_path(user), :class => 'btn btn-tiny btn-info'
-        %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete
+        %td= link_to 'Edit', edit_user_path(user), :class => 'button tiny radius'
+        %td= link_to 'Delete', user, :class => 'button tiny radius', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete

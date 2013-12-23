@@ -3,9 +3,10 @@
  *= require s3_direct_upload_progress_bars
  *= require jquery.ui
  *= require jquery.dynatable
- *= require foundation_and_overrides
  *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap-datetimepicker
+ *= require responsive-tables
+ *= require foundation_and_overrides
 */
 
 /* Branding colors */
@@ -16,15 +17,9 @@ $green: #1ABC9C;
 $red: #E95D4E;
 $orange: #F4A425;
 
-@font-face {
-  font-family: 'Pontano Sans';
-  src: font-url('pontano-sans-regular.ttf') format('truetype');
-}
-
 
 @import 'compass';
 @import 'compass/css3';
-
 @import 'forms';
 @import 'tables';
 @import 'student_dashboard';
@@ -34,11 +29,14 @@ $orange: #F4A425;
 
 body {
   padding-top: 60px !important;
-  font-family: 'Pontano Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
   font-family: "Avenir", sans-serif;
+}
+
+h2 {
+  font-size: 1.7em;
 }
 
 h4 {
@@ -62,4 +60,12 @@ h4 {
 
 .sub-nav {
   margin: 0 !important;
+}
+
+.sub-nav dt a, .sub-nav dd a, .sub-nav li a {
+  color: #FFF;
+}
+
+.sub-nav dt a:hover, .sub-nav dd a:hover, .sub-nav li a:hover {
+  color: #FFF;
 }
