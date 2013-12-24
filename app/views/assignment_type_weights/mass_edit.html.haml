@@ -3,10 +3,10 @@
     %li= link_to "My Dashboard", dashboard_path, :class => "button radius tiny"
 - elsif current_user.is_staff?
   = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
-    %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button radius tiny"
-    %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "button radius tiny"
+    %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button radius tiny success"
+    %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "button radius tiny success"
 
-.small-12.medium-4
+.small-12.medium-12
   - if current_course.assignment_weight_open? || current_user.is_staff?
     %h3 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
     .hint You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
@@ -19,11 +19,9 @@
         .alert.alert-error= f.error :base
       = f.simple_fields_for :assignment_type_weights do |atwf|
         = atwf.hidden_field :assignment_type_id
-        .panel
-          .panel-heading
-            %h3.panel-title= atwf.object.assignment_type.name
-          .panel-body
-            = atwf.input :weight, :label => "#{term_for :weight}"
+        .small-12.medium-4.columns.panel.callout
+          %h3.panel-title= atwf.object.assignment_type.name
+          = atwf.input :weight, :label => "#{term_for :weight}"
       .form-actions
         = f.button :submit, "Update #{term_for :weights}", :class => "button radius tiny"
         = link_to 'Cancel', current_user.is_student? ? dashboard_path : choices_students_path, class: 'button radius tiny'

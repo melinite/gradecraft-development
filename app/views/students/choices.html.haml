@@ -1,38 +1,41 @@
 = content_nav_for :students, "#{term_for :weight} Choices" do
-  %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
+  %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius success"
 
-.small-12
-  %h2= @title
+.small-12.large-12.medium-12.columns
+  .small-12.medium-4.large-4.columns
+    %h2= @title
+
   - if current_course.has_teams?
-    .filters.small-12
+    .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
       = form_tag choices_students_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "col col-lg-9 col-sm-8 col-md-9 col-xs-9 input-sm teamfilter"
-        = submit_tag 'Filter', :class => 'button tiny radius col col-lg-2 col-sm-3 col-md-2 col-xs-2 pull-right'
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8 teamfilter"
+        = submit_tag 'Filter', :class => 'button tiny radius'
 
 
-%table.responsive.simpleTable
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"} #{current_course.user_term}
-      - @assignment_types.each do |assignment_type|
-        - if assignment_type.student_weightable?
-          %th.sortable{"data-sort" => "string"}= assignment_type.name
-      %th.sortable{"data-sort" => "int"} #{current_course.weight_term} Sum
-      %th.sortable{"data-sort" => "string"} #{current_course.weight_term} Awarded?
-      %th
-  %tbody
-    - if @team
-      - students = current_course_data.students_for_team(@team)
-    - else
-      - students = current_course_data.students
-    - students.each do |student|
+  %table.responsive.simpleTable
+    %thead
       %tr
-        %td= link_to student.name, student_path(student)
+        %th.sortable{"data-sort" => "string"} #{current_course.user_term}
         - @assignment_types.each do |assignment_type|
           - if assignment_type.student_weightable?
-            %td= assignment_type.weight_for_student(student)
-        %td= student.weight_count(current_course)
-        %td
-          = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"
-        %td
-          = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny radius"
+            %th.sortable{"data-sort" => "string"}= assignment_type.name
+        %th.sortable{"data-sort" => "string"} #{current_course.weight_term.pluralize} Awarded?
+        %th
+    %tbody
+      - if @team
+        - students = current_course_data.students_for_team(@team)
+      - else
+        - students = current_course_data.students
+      - students.each do |student|
+        %tr
+          %td= link_to student.name, student_path(student)
+          - @assignment_types.each do |assignment_type|
+            - if assignment_type.student_weightable?
+              %td= assignment_type.weight_for_student(student)
+          %td
+            = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"
+          %td
+            .button-bar
+              %ul.button-group.radius.round
+                = link_to "Dashboard", student_path(student), :class => "button tiny small large"
+                = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny"

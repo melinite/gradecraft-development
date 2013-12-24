@@ -1,85 +1,58 @@
 = content_nav_for @challenge do
-  %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "button tiny radius"
+  %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "button tiny radius success"
   - if current_user.is_staff?
-    %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "button tiny radius"
+    %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "button tiny radius success"
+    %li= link_to 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
   %h2= @title
 
-  %p
-    %b Description:
-    = raw @challenge.description
-  %p
-    %b Point Total:
-    = points @challenge.point_total
-  %p
-    %b Open date:
-    = @challenge.open_at
-  %p
-    %b Close date:
-    = @challenge.due_at
+  - if current_user.is_staff?
 
-  - if @challenge.challenge_files.present?
-    %p
-      %b Documents:
-      %ul
-      - @challenge.challenge_files.each do |cf|
-        %li= link_to cf.filename, cf.url
-
-- if current_user.is_staff?
-  .small-12
-    - if @challenge.mass_grade?
-      .pull-right
-        = link_to 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "button tiny radius"
-    %h3 Grades
-
-  = simple_form_for @challenge do
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          - if @challenge.release_necessary?
-            %th
-          %th.sortable{"data-sort" => "string"}= current_course.team_term
-          %th.sortable{"data-sort" => "int"} Score
-          - if @challenge.has_levels?
-            %th.sortable{"data-sort" => "string"} Level
-          - if current_course.has_badges?
-            %th.sortable{"data-sort" => "string"} Badges Earned
-          - if @challenge.release_necessary?
-            %th.sortable{"data-sort" => "string"} Status
-          - if @challenge.accepts_submissions?
-            %th.sortable{"data-sort" => "string"} Submission
-          %th
-      %tbody
-        - @teams.alpha.each do |team|
-          - challenge_grade = @challenge.challenge_grades.find_by team: team
+    = simple_form_for @challenge do
+      %table.responsive.simpleTable
+        %thead
           %tr
             - if @challenge.release_necessary?
-              %td
-                - if challenge_grade
-                  = check_box_tag "challenge_grade_ids[]", challenge_grade.id
-            %td= link_to team.name, team
-            %td
-              - if challenge_grade
-                = points challenge_grade.score
+              %th
+            %th.sortable{"data-sort" => "string"}= current_course.team_term
+            %th.sortable{"data-sort" => "int"} Score
             - if @challenge.has_levels?
+              %th.sortable{"data-sort" => "string"} Level
+            - if @challenge.release_necessary?
+              %th.sortable{"data-sort" => "string"} Status
+            - if @challenge.accepts_submissions?
+              %th.sortable{"data-sort" => "string"} Submission
+            %th
+        %tbody
+          - @teams.alpha.each do |team|
+            - challenge_grade = @challenge.challenge_grades.find_by team: team
+            %tr
+              - if @challenge.release_necessary?
+                %td
+                  - if challenge_grade
+                    = check_box_tag "challenge_grade_ids[]", challenge_grade.id
+              %td= link_to team.name, team
               %td
                 - if challenge_grade
-                  = @challenge.grade_level(grade)
-
-            - if current_course.has_badges?
+                  = points challenge_grade.score
+              - if @challenge.has_levels?
+                %td
+                  - if challenge_grade
+                    = @challenge.grade_level(grade)
+              - if @challenge.release_necessary?
+                %td= challenge_grade.try(:status) ? 'Released' : ''
+              - if @challenge.accepts_submissions?
+                %td
               %td
-                - team.earned_badges.each do |badge|
-                  %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => 40}
-            - if @challenge.release_necessary?
-              %td= challenge_grade.try(:status) ? 'Released' : ''
-            - if @challenge.accepts_submissions?
-              %td
-            %td
-              - if challenge_grade
-                = link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny radius'
-              - else
-                = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'button tiny radius'
+                - if challenge_grade
+                  .button-bar
+                    %ul.button-group.radius.round
+                      %li= link_to "See", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny'
+                      %li= link_to "Edit", edit_challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny'
+                      %li= link_to "Delete", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny', :action => :delete
+                - else
+                  = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'button tiny round'
 
-    - if @challenge.release_necessary? && @challenge.challenge_grades.present?
-      = submit_tag "Update Grade Statuses", :class => "button tiny radius"
+      - if @challenge.release_necessary? && @challenge.challenge_grades.present?
+        = submit_tag "Update Grade Statuses", :class => "button tiny radius"

@@ -4,10 +4,14 @@
       %tr
         - if @assignment.release_necessary?
           %th
-            .btn-group
-              %button.select-all.btn.btn-xs.btn-info= "Check"
-              %button.select-none.btn.btn-xs.btn-info= "Uncheck"
-        %th.sortable{"data-sort" => "string"}= term_for :student
+            .button-bar
+              %ul.button-group.radius.round
+                %li
+                  %button.select-all.tiny= "Check"
+                %li
+                  %button.select-none.tiny= "Uncheck"
+        %th.sortable{"data-sort" => "string"} First Name
+        %th.sortable{"data-sort" => "string"} Last Name
         %th.sortable{"data-sort" => "int"} Raw Score
         - if @assignment.assignment_type.student_weightable?
           %th.sortable{"data-sort" => "int"} Multiplied Score
@@ -30,7 +34,8 @@
             %td
               - if grade.is_graded?
                 = check_box_tag "grade_ids[]", grade.id
-          %td= link_to student.name, student_path(student)
+          %td= student.first_name
+          %td= student.last_name
           %td{:data => { :"sort-value" => "#{grade.raw_score}"} }= points grade.raw_score if grade.status?
           - if @assignment.assignment_type.student_weightable?
             %td
@@ -56,9 +61,9 @@
                   = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :user_id => student.id, :student_type => "User"), :class => 'button tiny radius'
           %td
             - if grade.is_graded? || grade.is_released?
-              = link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny radius'
+              = link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny round'
             - else
-              = link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny radius'
+              = link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny round'
 
   - if @assignment.release_necessary? && @assignment.grades.present?
     .small-12

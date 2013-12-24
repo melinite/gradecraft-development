@@ -1,10 +1,9 @@
 - if current_user.is_staff?
   = content_nav_for @badge do
-    %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
-    %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
-    %li= link_to "New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
-    %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "button tiny radius"
-    %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "button tiny radius"
+    %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius success"
+    %li= link_to "New #{term_for :badge}", new_badge_path, :class => "button tiny radius success"
+    %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "button tiny radius success"
+    %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "button tiny radius success"
 - else
   = content_nav_for @badge do
     %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
@@ -34,32 +33,6 @@
 
   - if current_user.is_staff?
     .small-12
-      %h4 Tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})
-
-  - if @badge.tasks.present?
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          %th.sortable{"data-sort" => "string"} Name
-          %th.sortable{"data-sort" => "string"} Description
-          - if current_user.is_staff?
-            %th
-            %th
-            %th
-      %tbody
-        - @badge.tasks.each do |task|
-          %tr
-            %td= task.name
-            %td= raw task.description
-            - if current_user.is_staff?
-              %td= link_to "View", badge_task_path(@badge.id, task.id), :class => 'button tiny radius'
-              %td= link_to "Edit", edit_badge_task_path(@badge.id, task.id), :class => 'button tiny radius'
-              %td= link_to "Delete", badge_task_path(@badge.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'button tiny radius', :method => :delete
-
-  - if current_user.is_staff?
-    %hr
-
-    .small-12
       %h4.clear Awarded #{term_for :badges}
 
     %table.responsive.simpleTable
@@ -69,14 +42,15 @@
           %th Feedback
           %th Date Awarded
           %th
-          %th
-          %th
       %tbody
         - @earned_badges.each do |earned_badge|
           %tr
             %td= link_to earned_badge.student.try(:name), student_path(earned_badge.student)
             %td= raw earned_badge.feedback
             %td= earned_badge.created_at
-            %td= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny radius'
-            %td= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny radius'
-            %td= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete
+            %td
+              .button-bar
+                %ul.button-group.radius.round
+                  %li= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny'
+                  %li= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny'
+                  %li= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete

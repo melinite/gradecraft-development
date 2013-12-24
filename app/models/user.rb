@@ -287,8 +287,9 @@ class User < ActiveRecord::Base
     assignment_weights.where(assignment_type: assignment_type).weight
   end
 
+  #Counts how many assignments are weighted for this student - note that this is an ASSIGNMENT count, and not the assignment type count. Because students make the choice at the AT level rather than the A level, this can be confusing.
   def weight_count(course)
-    assignment_weights.where(course: course).pluck('weight').sum
+    assignment_weights.where(course: course).pluck('weight').count
   end
 
 def groups_by_assignment_id

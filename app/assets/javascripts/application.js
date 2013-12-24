@@ -8,6 +8,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require foundation
+//= require foundation/foundation.tab
 //= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
@@ -449,4 +450,6 @@ $(document).ready(function(){
   }
 });
 
-$(function(){ $(document).foundation(); });
+$(function(){ $(document).foundation()});
+
+

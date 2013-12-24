@@ -1,79 +1,23 @@
 = content_nav_for @assignment do
-  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "button tiny radius"
-  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
-  %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius"
+  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "button tiny radius success"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius success"
+  %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius success"
   - if @assignment.assignment_type.mass_grade?
-    %li= link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "button tiny radius"
-  %li= link_to "Import Grades", import_grades_assignment_path(@assignment), :class => "button tiny radius"
+    %li= link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "button tiny radius success"
+  %li= link_to "Import Grades", import_grades_assignment_path(@assignment), :class => "button tiny radius success"
 
 
-.small-12
+.small-4.medium-4.large-4.columns
   %h2= @title
 
-  - if @assignment.description?
-    %p
-      %b Description:
-      = raw @assignment.description
-
-  - if @assignment.point_total?
-    %p
-      %b Point Total:
-      = points @assignment.point_total
-
-  - if @assignment.open_at?
-    %p
-      %b Open date:
-      = @assignment.open_at
-
-  - if @assignment.due_at?
-    %p
-      %b No longer accepted after:
-      = @assignment.due_at
-
-  - if @assignment.accepts_submissions_until?
-    %p
-      %b Accept submissions until:
-      = @assignment.accepts_submissions_until
-  - if @assignment.assignment_files.present?
-    %p
-      %b Documents:
-      - @assignment.assignment_files.each do |af|
-        = link_to af.filename, af.url
-
-  - if current_course.has_teams? && @assignment.is_individual?
+- if current_course.has_teams? && @assignment.is_individual?
+  .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
     = form_tag assignment_path(@assignment), :method => :get do
       = hidden_field_tag :assignment_id, @assignment.id
-      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm small-8 medium-8"
       = submit_tag 'Filter', :class => 'button tiny radius'
 
-  .small-12
-    - if @assignment.assignment_type.mass_grade?
-      = link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "button tiny radius"
-
-.clear
-  %h4 Tasks: (#{link_to 'Add task', new_assignment_task_path(@assignment)})
-
-- if @assignment.tasks.present?
-  %table.responsive.simpleTable
-    %thead
-      %tr
-        %th.sortable{"data-sort" => "string"} Name
-        %th.sortable{"data-sort" => "string"} Description
-        %th
-        %th
-        %th
-    %tbody
-      - @assignment.tasks.each do |task|
-        %tr
-          %td= task.name
-          %td= raw task.description
-          %td= link_to "View", assignment_task_path(@assignment.id, task.id), :class => 'button tiny radius'
-          %td= link_to "Edit", edit_assignment_task_path(@assignment.id, task.id), :class => 'button tiny radius'
-          %td= link_to "Delete", assignment_task_path(@assignment.id, task.id), :data => { confirm: 'Are you sure?' }, :class => 'button tiny radius', :method => :delete
-
-.small-12
-  %h2.clear  Grades
-  - if @assignment.has_groups?
-    = render 'group_show'
-  - else
-    = render 'individual_show'
+- if @assignment.has_groups?
+  = render 'group_show'
+- else
+  = render 'individual_show'

@@ -35,7 +35,7 @@
         - students = current_course_data.students_for_team(@team)
       - else
         - students = current_course_data.students.being_graded
-      - students.each_with_index do |student|
+      - students.each do |student|
         %tr
           %td= student.first_name
           %td= student.last_name

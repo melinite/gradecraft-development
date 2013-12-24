@@ -2,15 +2,15 @@
   %ul.tabs
     - if current_course.accepts_submissions?
       %li.active
-        %a{ "data-toggle" => "tab", "data-target" => "#tab5"} Submissions
+        %a{ "data-toggle" => "tab", "data-target" => "#tab5"} #{term_for :assignments}
     - if current_course.has_badges?
       %li
-        %a{ "data-toggle" => "tab", "data-target" => "#tab6"} Badges
+        %a{ "data-toggle" => "tab", "data-target" => "#tab6"} #{term_for :badges}
   .tab-content
     - if current_course.accepts_submissions?
       .tab-pane#tab5.active
-        .col-lg-12
-        %h4 Ungraded Assignment Submissions
+        .small-12.medium-4.large-4.columns
+          %h3 Ungraded Submissions
         = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
     - if current_course.has_badges?
       .tab-pane#tab6
