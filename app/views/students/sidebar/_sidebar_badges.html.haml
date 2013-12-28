@@ -1,32 +1,31 @@
-.small-12.center#badges.badge-success{"data-target" => "#badgesInfo" }
-  -#, "data-toggle" => "collapse"}
-  %h4.center= term_for :badges
-  #badgesInfo.collapse.clear
+.small-12.text-center
+  -#
+  %h4= term_for :badges
+  %ul.small-block-grid-4
     - current_course_data.badges.each do |badge|
       - if current_student_data.earned_badge?(badge)
-        .badgeIcon
+        %li
           - if ! current_course.valuable_badges? || ! badge.point_total.present?
-            %a{:href => "#", :rel => "tooltip", :title => "#{badge.name}"}
+            %span.has-tip{:title => "#{badge.name}", :data => {'tooltip' => true} }
               %img{:src => badge.icon, :alt => "You've earned the #{badge.name} badge", :class => "earned"}
           - elsif current_course.valuable_badges?
-            %a{:href => "#", :rel => "tooltip", :title => "#{badge.name}, #{badge.point_total} points"}
+            %span.has-tip{:title => "#{badge.name}", :data => {'tooltip' => true} }
               %img{:src => badge.icon, :alt => "You've earned the #{badge.name} badge", :class => "earned"}
       - else
-        - if badge.visible?
-          .badgeIcon
+        %li
+          - if badge.visible?
             - if current_course.valuable_badges?
               %a{:rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
                 %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
             - else
               %a{:rel => "tooltip", :title => "#{badge.try(:name)}"}
                 %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
-        - else
-          - if badge.visible?
-            .badgeIcon
-              - if current_course.valuable_badges?
-                %a{:rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
-                  %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
-              - else
-                %a{:rel => "tooltip", :title => "#{badge.try(:name)}"}
-                  %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
-    .small-12.clear= "#{term_for :badges} you've earned will shine brightly!"
+          - else
+            - if current_course.valuable_badges?
+              %a{:rel => "tooltip", :title => "#{badge.try(:name)}, #{badge.try(:point_total)} points"}
+                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
+            - else
+              %a{:rel => "tooltip", :title => "#{badge.try(:name)}"}
+                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
+    .clearfix
+    = "#{term_for :badges} you've earned will shine brightly!"

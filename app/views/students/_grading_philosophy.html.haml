@@ -1,6 +1,4 @@
-.small-12
-  = raw current_course.grading_philosophy
-
+.small-12.columns
   - if current_course.grade_scheme_id?
     %table.responsive.simpleTable
       %thead
@@ -27,3 +25,6 @@
               %td #{points element.high_range }
               %td #{element.letter}
               %td
+
+  %p= raw current_course.grading_philosophy
+

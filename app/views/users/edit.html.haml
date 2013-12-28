@@ -1,7 +1,7 @@
 = content_nav_for User do
-  %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
-  %li= link_to "View #{@user.name}'s Dashboard", @user, :class => "button tiny radius"
+  %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius success"
+  %li= link_to "View #{@user.name}'s Dashboard", @user, :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
   %h2= @title
   = render 'form'

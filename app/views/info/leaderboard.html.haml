@@ -1,4 +1,4 @@
-.small-12
+.small-12.columns
   %h4 Top 10
   = render 'students_table', :course => current_course, :students => @top_ten_students
   %hr
@@ -11,7 +11,7 @@
 
   %hr
 
-  .well
+  .panel
     %h4 Course Grade Distribution
     #grade_distro
 

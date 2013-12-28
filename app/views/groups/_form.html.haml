@@ -1,16 +1,31 @@
-- if current_user.is_student?
-  %h4= "Your group needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
-- else
-  %h4= "The group needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
-= simple_form_for @group, :html => {:class => 'form-horizontal' } do |f|
-  = f.association :assignments, :collection => current_course_data.group_assignments, :include_blank => false, :as => :check_boxes
-  = f.input :name, :label => "Group Name", :input_html => { :class => "col-lg-3" }
-  - if current_user.is_student?
-    = f.association :students, :collection => current_course_data.students - [current_student], :as => :check_boxes, :label => "Select Your Group Members"
+= simple_form_for @group do |f|
+  //= f.input :assignment, :collection => @assignments
+  .small-12.medium-4.columns
+    = f.label :name
+    = f.text_field :name
   - if current_user.is_staff?
-    = f.association :students, :collection => current_course_data.students, :as => :check_boxes
-    = f.input :approved, :as => :select, :collection => [["Approved"], ["Rejected"]], :input_html => { :class => "input-sm col-lg-3" }
+    .small-12.medium-4.columns
+      = f.label :approved, "Status"
+      = f.select :approved, [[], ["Approved"], ["Rejected"]]
+  .small-12.medium-12.columns
+    - if current_user.is_student?
+      .small-12.medium-4.columns
+        = f.label :students, "#{term_for :students}"
+        = f.select_tag :students
+    - if current_user.is_staff?
+      .small-12.medium-4.columns
+        = f.label :student_ids, "#{term_for :students}"
+        = f.check_box :student_ids
 
-  .form-actions
-    = f.button :submit, :class => "button tiny radius"
-    = link_to 'Cancel', groups_path, :class => 'button tiny radius'
+  .small-12.medium-12.columns
+    - if current_user.is_student?
+      %span.alert.round.label= "Your #{term_for :group} needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
+    - else
+      %span.alert.round.label= "The #{term_for :group} needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
+
+  .small-12.medium-12.columns
+    .form-actions
+      = submit_tag "Submit", :class => 'button tiny radius'
+      = link_to 'Cancel', groups_path, :class => 'button tiny radius'
+
+

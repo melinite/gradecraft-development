@@ -21,21 +21,18 @@ class CoursesController < ApplicationController
   def new
     @title = "Create a New Course"
     @course = Course.new
-    @badge_sets = BadgeSet.all
     @grade_schemes = GradeScheme.all
   end
 
   def edit
-    @title = "Edit Basic Settings"
+    @title = "Editing Basic Settings"
     @course = Course.find(params[:id])
     @grade_schemes = GradeScheme.all
-    @badge_sets = BadgeSet.all
     @grade_schemes = GradeScheme.all
   end
 
   def create
     @course = Course.new(params[:course])
-    @badge_sets = BadgeSet.all
 
     respond_to do |format|
       if @course.save

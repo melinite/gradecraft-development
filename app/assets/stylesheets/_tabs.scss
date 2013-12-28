@@ -1,2 +1,11 @@
 
 /** Tabs **/
+
+dl.tabs {
+  line-height: .2rem;
+}
+
+.tabs dd > a {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

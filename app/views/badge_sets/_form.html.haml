@@ -1,8 +1,0 @@
-= simple_form_for(@badge_set, :html => {:class => 'form-horizontal' }) do |f|
-  = f.input :name, :label => "Badge Set Name"
-  = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Notes"
-
-  .form-actions
-    = f.button :submit, :class => "button tiny radius"
-    = link_to 'Cancel', badge_sets_path, :class => 'button tiny radius'
-

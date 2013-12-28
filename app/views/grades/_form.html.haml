@@ -7,21 +7,41 @@
     %div.progress
       %div.bar
 
-= simple_form_for @grade, url: assignment_grade_path(@assignment), method: :patch, :html => { :class => 'form-horizontal' } do |f|
+= form_for @grade, url: assignment_grade_path(@assignment), method: :patch do |f|
+
   = hidden_field_tag :student_id, current_student.id
-  - if @assignment.assignment_type.has_levels?
-    = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select, :input_html => {:class => "col-lg-3"}
-  - elsif @assignment.has_levels?
-    = f.input :raw_score, :collection => @assignment_score_levels.map { |l| [l.name,l.value] }, :as => :select, :input_html => {:class => "col-lg-3"}
-  - else
-    = f.input :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{ points @assignment.point_total }", :input_html => {:class => "col-lg-3"}
-  = f.simple_fields_for :grade_files, @grade.grade_files.new do |gff|
-    = gff.input :filename, :input_html => { :class => 's3_files' }, :as => :hidden
-  = f.input :feedback, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}
-  - if @assignment.release_necessary?
-    = f.input :status, :as => :select, :collection => Grade::STATUSES, :hint => "Can the student see this grade?", :include_blank => false
-  - elsif @grade.status.blank?
-    = f.hidden_field :status, value: 'Graded'
-  .form-actions
-    = f.button :submit, "#{@grade.persisted? && @grade.is_graded? ? 'Update' : 'Submit'} Grade", :class => "button tiny radius"
+  .panel
+    .small-12.large-4.columns
+      = f.label :raw_score
+      - if @assignment.assignment_type.has_levels?
+        = f.select :raw_score, @score_levels.map { |l| [l.name,l.value] }
+      - elsif @assignment.has_levels?
+        = f.select :raw_score, :collection => @assignment_score_levels.map { |l| [l.name,l.value] }
+      - else
+        = f.text_field :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{ points @assignment.point_total }"
+
+
+    - if @assignment.release_necessary?
+      .small-12.large-4.columns
+        = f.label :status
+        = f.select :status, Grade::STATUSES
+        %h6.small Can the student see this grade?
+    - elsif @grade.status.blank?
+      = f.hidden_field :status, value: 'Graded'
+
+    .small-12.large-4.columns
+      = f.simple_fields_for :grade_files, @grade.grade_files.new do |gff|
+        = gff.input :filename, :input_html => { :class => 's3_files' }, :as => :hidden
+
+    .clearfix
+
+    .small-12.columns
+      = f.label :feedback
+      = f.bootsy_area :feedback
+
+    .clearfix
+
+
+  .right
+    = submit_tag "#{@grade.persisted? && @grade.is_graded? ? 'Update' : 'Submit'} Grade", :class => "button tiny radius"
     = link_to 'Cancel', assignment_path(@assignment), :class => 'button tiny radius'

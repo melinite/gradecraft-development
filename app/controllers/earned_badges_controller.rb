@@ -50,7 +50,7 @@ class EarnedBadgesController < ApplicationController
   end
 
   def edit
-    @title = "Edit Awarded #{term_for :badge}"
+    @title = "Editing Awarded #{term_for :badge}"
     @students = current_course.students
     @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.find(params[:id])
@@ -59,7 +59,6 @@ class EarnedBadgesController < ApplicationController
 
 
   def create
-    @badge_sets = current_course.badge_sets
     @badges = current_course.badges
     @badge = @badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.build(params[:earned_badge])
@@ -74,7 +73,6 @@ class EarnedBadgesController < ApplicationController
   end
 
   def update
-    @badge_sets = current_course.badge_sets
     @badges = current_course.badges
     @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.find(params[:id])

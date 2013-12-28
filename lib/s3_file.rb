@@ -9,10 +9,12 @@ module S3File
   private
 
   def strip_path
-    filepath.slice! "/gradecraft-#{Rails.env}/"
-    write_attribute(:filepath, filepath)
-    name = filepath.clone
-    name.slice!(/.*\d\d.\d\d[%2F]*/)
-    write_attribute(:filename, name)
+    if filepath.present?
+      filepath.slice! "/gradecraft-#{Rails.env}/"
+      write_attribute(:filepath, filepath)
+      name = filepath.clone
+      name.slice!(/.*\d\d.\d\d[%2F]*/)
+      write_attribute(:filename, name)
+    end
   end
 end

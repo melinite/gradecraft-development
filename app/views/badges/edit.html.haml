@@ -1,7 +1,7 @@
 = content_nav_for Badge, "Edit #{breadcrumb_link_for(@badge)}".html_safe do
-  %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
-  %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(:badge_id => @badge), :class => "button tiny radius"
+  %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius success"
+  %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(:badge_id => @badge), :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
   %h2= @title
   = render 'form'

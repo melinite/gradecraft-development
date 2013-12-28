@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  attr_accessible :badge_set_ids, :courseno, :name,
+  attr_accessible :courseno, :name,
     :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
     :user_id, :course_id, :homepage_message, :group_setting,
     :total_assignment_weight, :assignment_weight_close_at, :team_roles,
@@ -22,7 +22,6 @@ class Course < ActiveRecord::Base
   with_options :dependent => :destroy do |c|
     c.has_many :assignment_types
     c.has_many :assignments
-    c.has_many :badge_sets
     c.has_many :badges
     c.has_many :categories
     c.has_many :challenges

@@ -1,7 +1,7 @@
 = content_nav_for @assignment, "Group Grade" do
-  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
+  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
   %h2= @title
   .heading= "Grading out of: #{points @assignment.point_total} points"
   = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => group_grade_assignment_path(@assignment) do |f|

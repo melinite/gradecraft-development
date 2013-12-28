@@ -1,47 +1,111 @@
 = simple_form_for(@assignment_type) do |f|
-  .row
+  .panel
     %h4 The Basics
     %hr
-    = f.input :name, :input_html => {:class => "small-12 large-6 columns"}
-    = f.input :point_setting, :label => "How will points be set?", :hint => "Do all #{term_for :assignments} of this type have the same point value? For instance, if your type groups all class attendance #{term_for :assignments}, they could each be worth 100 points and you can set that universally here.", :collection => [["By Assignment"], ["For All Assignments"]], :input_html => {:class => "col-lg-3 input-sm"}
-    = f.input :universal_point_value, :hint => "If #{term_for :assignments} in this category all have the same point value, what is that?", :input_html => {:class => "col-lg-3"}
-    = f.input :max_value, :label => "Maximum Points", :hint => "Is there a cap on how many points students can earn here? (Leave blank if not)", :input_html => {:class => "col-lg-3"}
-    = f.input :due_date_present, :label => "Due Dates", :as => :radio_buttons, :hint => "Will #{term_for :assignments} in this category have due dates?"
-    = f.input :resubmission, :collection => [["Yes", "1"], ["No", "0"], ["Set per #{term_for :assignment}", "2"]], :as => :radio_buttons, :hint => "Will students be allowed to resubmit work after it's been graded?"
-    = f.input :student_weightable, :label => "Student Weighted", :hint => "Do students decide how much this #{term_for :assignment} type will count towards their grade?", :as => :radio_buttons, :item_wrapper_class => 'inline'
-    = f.input :order_placement, :label => "#{term_for :assignment} Type Order", :hint => "What order would you like the #{term_for :assignment} types to appear in on the student dashboard?", :input_html => {:class => "col-lg-3"}
-    %h4 Description
-    = f.text_area :predictor_description, :class => :ckeditor, :input_html => {:style => "width: 100%; height: 200px;"}, :label => "Display Text", :hint => "How would you like to describe this #{term_for :assignment} type on the student dashboard? Are there hints that you can give students that will help them understand how to succeed?"
-  .row
+    .small-12.large-4.columns
+      = f.label :name
+      = f.text_field :name
+
+    .small-12.large-4.columns
+      = f.label :point_setting
+      = f.select :point_setting, [[],["By Assignment"], ["For All Assignments"]]
+      %h6.small Do all #{term_for :assignments} of this type have the same point value? For instance, if your type groups all class attendance #{term_for :assignments}, they could each be worth 100 points and you can set that universally here.
+
+    .small-12.large-4.columns
+      = f.label :universal_point_value
+      = f.text_field :universal_point_value
+      %h6.small If #{term_for :assignments} in this category all have the same point value, what is that?
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :max_value
+      = f.text_field :max_value, :label => "Maximum Points"
+      %h6.small Is there a cap on how many points students can earn here? (Leave blank if not)
+
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "due_date_present" }
+        = f.check_box :due_date_present, {}, "yes"
+        Due Dates
+
+      %h6.small Will #{term_for :assignments} in this category have due dates?
+
+    .small-12.large-4.columns
+      = f.label :resubmission
+      = f.select :resubmission, options_for_select([["Yes", "1"], ["No", "0"], ["Set per #{term_for :assignment}", "2"]])
+      %h6.small Will students be allowed to resubmit work after it's been graded?
+
+    .clearfix
+
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "student_weightable" }
+        = f.check_box :student_weightable
+        Student Weighted
+      %h6.small Do students decide how much this #{term_for :assignment} type will count towards their grade?
+
+    .small-12.large-4.columns
+      = f.label :order_placement, "#{term_for :assignment} Type Order"
+      = f.text_field :order_placement
+      %h6.small What order would you like the #{term_for :assignment} types to appear in on the student dashboard?
+
+    .small-12.large-12.columns
+      = f.label :predictor_description, "Description"
+      %h6.small How would you like to describe this #{term_for :assignment} type on the student dashboard? Are there hints that you can give students that will help them understand how to succeed?
+      = f.bootsy_area :predictor_description
+
+    .clearfix
+
+  .panel
     %h4 Predictor Settings
     %hr
-    = f.input :points_predictor_display, :collection => [["Fixed"], ["Slider"], ["Select List"], ["Set per Assignment"]], :input_html => {:class => "input-sm col-lg-3"}, :hint => "How would you like #{term_for :students} to interact with this assignment in the predictor? If you choose Slider or Select List you must create Score Levels below"
-  .row
+    .small-12.large-4.columns
+      = f.label :points_predictor_display
+      = f.select :points_predictor_display, [[], ["Fixed"], ["Slider"], ["Select List"], ["Set per Assignment"]]
+      %h6.small How would you like #{term_for :students} to interact with this assignment in the predictor? If you choose Slider or Select List you must create Score Levels below
+    .clearfix
+
+  .panel
     %h4 Grading
     %hr
-    //= f.input :mass_grade, :label => "Quick Grade", :hint => "Do you want to be able to grade all students who submit this #{term_for :assignment} in a single screen?"
-    = f.input :mass_grade_type, :label => "Quick Grade Format", :hint => "Would you like the levels to be represented via checkbox, radio buttons or select forms?", :collection => [["Radio Buttons"], ["Select List"], ["Checkbox"], ["Text"], ["Set per Assignment"]], :input_html => {:class => "input-sm col-lg-3"}
-    = f.input :student_logged_button_text, :hint => "If you would like students to be able to log their own grades, what would you like the button that does this to say?", :label => "Button Text", :input_html => {:class => 'col-lg-3'}
-    = f.input :student_logged_revert_button_text, :hint => "If a student unchecks this button, what should it say?", :label => "Revert Button Text", :input_html => {:class => 'col-lg-3'}
-    //= f.input :levels, :label => "Leveled Grading", :hint => "This includes normal A - F grading schemes.", :as => :radio_buttons
-    = f.input :notify_released, :hint => "Do you want to notify students by email when a grade is awarded? If grade release is necessary, this email will not be sent out until the grade is officially released.", :label => "Notify by email?"
-    .row
-      %h5 Score Levels
-      .score-levels
-        %p.hint Example: You could create three score levels to produce this quick grading scheme - Complete (5000 points), Finalist (7000 points), and Winner (10,000 points). These levels will then be available to use for quick grading.
-        %script(id="score-level-template" type="text/x-template")
-          %fieldset.score-level
-            = f.simple_fields_for :score_levels, ScoreLevel.new, class: 'form-inline', child_index: 'child_index' do |slf|
-              = render 'score_level_fields', f: slf
-        - @assignment_type.score_levels.each do |score_level|
-          %fieldset.score-level
-            = f.simple_fields_for :score_levels, score_level, class: 'form-inline' do |slf|
-              = render 'score_level_fields', f: slf
-      = link_to 'Add a Level', '#', class: 'add-level'
+    .small-12.large-4.columns
+      = f.label :mass_grade_type, "Quick Grade Format"
+      = f.select :mass_grade_type, [[], ["Radio Buttons"], ["Select List"], ["Checkbox"], ["Text"], ["Set per Assignment"]]
+      %h6.small Would you like the levels to be represented via checkbox, radio buttons or select forms?
+
+    .small-12.large-4.columns
+      = f.label :student_logged_button_text, "Button Text"
+      = f.text_field :student_logged_button_text
+      %h6.small If you would like students to be able to log their own grades, what would you like the button that does this to say?
+
+    .small-12.large-4.columns
+      = f.label :student_logged_revert_button_text, "Revert Button Text"
+      = f.text_field :student_logged_revert_button_text
+      %h6.small If a student unchecks this button, what should it say?
+
+    .small-12.large-4.columns
+      = f.label :notify_released, "Notify by email?"
+      = f.check_box :notify_released
+      %h6.small Do you want to notify students by email when a grade is awarded? If grade release is necessary, this email will not be sent out until the grade is officially released.
+
+    .clearfix
+
+  .panel
+    %h5 Score Levels
+    .score-levels
+      %h6 Example: You could create three score levels to produce this quick grading scheme - Complete (5000 points), Finalist (7000 points), and Winner (10,000 points). These levels will then be available to use for quick grading.
+      %script(id="score-level-template" type="text/x-template")
+        %fieldset.score-level.callout.panel
+          = f.simple_fields_for :score_levels, ScoreLevel.new, class: 'form-inline', child_index: 'child_index' do |slf|
+            = render 'score_level_fields', f: slf
+      - @assignment_type.score_levels.each do |score_level|
+        %fieldset.score-level.callout.panel
+          = f.simple_fields_for :score_levels, score_level, class: 'form-inline' do |slf|
+            = render 'score_level_fields', f: slf
+    = link_to 'Add a Level', '#', class: 'add-level button tiny radius'
 
 
-  .row.form-actions
+  .form-actions
     %hr
-
-    = f.button :submit, :class => "button radius tiny"
-    = link_to 'Cancel', assignment_types_path, :class => "button radius tiny"
+    .right
+      = f.button :submit, :class => "button radius tiny"
+      = link_to 'Cancel', assignment_types_path, :class => "button radius tiny"

@@ -1,19 +1,17 @@
 - cache current_student_data.cache_key('v1', :badges_key, current_student.id) do
-  %ul.tabs
-    %li.active
-      %a{ "data-toggle" => "tab", "data-target" => "#tabb1"} My #{term_for :badges}
+  %dl.tabs{:data => {'tab' => true}}
+    %dd.active
+      %a{ "href" => "#tabb1"} My #{term_for :badges}
     - if current_course.shared_badges?
-      %li
-        %a{ "data-toggle" => "tab", "data-target" => "#tabb2"} Class #{term_for :badges}
-  %br
-  %br
+      %dd
+        %a{ "href" => "#tabb2"} Class #{term_for :badges}
 
   - if current_user.is_student? && ! current_student.badges_shared(current_course)
     = "Want to share your #{term_for :badges} with the class?"
     = link_to "Turn on shared #{term_for :badges}!", edit_profile_users_path
 
-  .tab-content
-    .tab-pane#tabb1.active
+  .tabs-content
+    .content#tabb1.active
       %table.responsive.simpleTable
         %thead
           %tr
@@ -31,7 +29,7 @@
               %td= image_tag badge.icon, :alt => badge.name, :width => 40
               %td
                 = link_to badge.name, badge_path(badge)
-                = badge.description
+                %p= raw badge.description
               %td
                 %ul
                   - badge.tasks.each do |task|
@@ -42,8 +40,7 @@
                 - if current_student_data.earned_badge?(badge)
                   %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
                   = current_student_data.earned_badge(badge).created_at
-                  %br
-                  = raw current_student_data.earned_badge(badge).try(:feedback)
+                  %p= raw current_student_data.earned_badge(badge).try(:feedback)
               - if current_course.shared_badges? && current_student.badges_shared(current_course)
                 %td
                   - earned_badge = current_student_data.earned_badge(badge)
@@ -53,5 +50,5 @@
                         %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"remove_badge button tiny radius"} Stop Sharing
                       - else
                         %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"add_badge button tiny radius"} Share
-    .tab-pane#tabb2
+    .content#tabb2
       = render "students/public_class_badges"

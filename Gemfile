@@ -10,6 +10,7 @@ gem 'active_model_serializers'
 gem 'addressable'
 gem 'aws-sdk'
 gem 's3_direct_upload'
+gem 'bootsy'
 gem 'bullet', :group => :development
 gem 'canable'
 gem 'carrierwave'
@@ -18,6 +19,7 @@ gem "compass-rails", "~> 2.0.alpha.0"
 gem 'dalli'
 gem 'dotenv-rails'
 gem 'fog'
+gem 'foundation-rails'
 gem 'gravatar_image_tag'
 gem 'haml'
 gem 'ims-lti'
@@ -57,7 +59,6 @@ gem 'timelineJS-rails'
 gem 'uglifier'
 gem 'whenever'
 gem 'will_paginate', '~> 3.0'
-gem 'foundation-rails'
 
 group :development do
   gem 'guard'

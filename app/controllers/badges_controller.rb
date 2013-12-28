@@ -16,13 +16,11 @@ class BadgesController < ApplicationController
   def new
     @title = "Create a New #{term_for :badge}"
     @badge = current_course.badges.new
-    @badge_sets = current_course.badge_sets
   end
 
   def edit
     @badge = current_course.badges.find(params[:id])
     @title = "Edit #{@badge.name}"
-    @badge_sets = current_course.badge_sets
   end
 
   def create

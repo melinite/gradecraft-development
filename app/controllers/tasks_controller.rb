@@ -21,7 +21,7 @@ class TasksController < ApplicationController
   def edit
     @assignment = find_assignment
     @task = @assignment.tasks.find(params[:id])
-    @title = "Edit #{@assignment.name} Task"
+    @title = "Editing #{@assignment.name} Task"
     @button_title = "Update"
   end
 

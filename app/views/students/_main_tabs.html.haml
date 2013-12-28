@@ -1,48 +1,55 @@
-%h4
+%h2
   - if current_user.is_student?
     Your current score is
   - elsif current_user.is_staff?
     Current Score:
+    / Check to see if the course has a pre-determined total number of points
   - if current_course.point_total?
     %span#userScoreNum #{points current_student_data.score}/#{points current_course.point_total}
+    / Else tally all of the points for all of the assignments in the course
   - else
     %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
   - if current_student_data.grade_level.present?
     Current Level:
     %span#userScoreNum= current_student_data.grade_level
-%ul.nav.nav-tabs
-  %li.active
-    = link_to 'Assignments', '#', data: { toggle: 'tab', target: '#syllabus' }
+
+%dl.tabs{:data => {'tab' => true}}
+  %dd
+    %a{ "href" => "#syllabus" } Assignments
   - if current_course.use_timeline?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#timeline" } Timeline
+    %dd
+      %a{ "href" => "#timeline" } Timeline
+  //%dd
+  //%a{ "href" => "#calendar" } Calendar
   - if current_course.grading_philosophy.present?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#grading-philosophy"} Grading Philosophy
+    %dd
+      %a{ "href" => "#grading-philosophy"} Grading Philosophy
   - if current_course.predictor_on?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#predictor"} Grade Predictor
+    %dd.active
+      %a{ "href" => "#predictor"} Grade Predictor
   - if current_course.has_badges?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#badges"} #{current_course.badge_term.pluralize}
+    %dd
+      %a{ "href" => "#badges"} #{current_course.badge_term.pluralize}
   - if current_course.teams_visible?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#leaderboard"} #{term_for :teams}
-.tab-content
-  .tab-pane#syllabus.active
+    %dd
+      %a{ "href" => "#leaderboard"} #{term_for :teams}
+.tabs-content
+  .content#syllabus
     = render "students/syllabus"
   - if current_course.use_timeline?
-    .tab-pane#timeline
+    .content#timeline
       = render "students/timeline"
+  .content#calendar
+    = render "students/calendar"
   - if current_course.grading_philosophy.present?
-    .tab-pane#grading-philosophy
+    .content#grading-philosophy
       = render "students/grading_philosophy"
   - if current_course.predictor_on?
-    .tab-pane#predictor
+    .content#predictor.active
       = render "students/predictor"
   - if current_course.has_badges?
-    .tab-pane#badges
+    .content#badges
       = render "students/badges"
   - if current_course.teams_visible?
-    .tab-pane#leaderboard
+    .content#leaderboard
       = render "teams/leaderboard"

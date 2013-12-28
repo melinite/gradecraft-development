@@ -60,10 +60,13 @@
                 - else
                   = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :user_id => student.id, :student_type => "User"), :class => 'button tiny radius'
           %td
-            - if grade.is_graded? || grade.is_released?
-              = link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny round'
-            - else
-              = link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny round'
+            .button-bar
+              %ul.button-group.radius.round
+                %li= link_to "Dashboard", student_path(student), :class => 'button tiny'
+                - if grade.is_graded? || grade.is_released?
+                  %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny'
+                - else
+                  %li= link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny'
 
   - if @assignment.release_necessary? && @assignment.grades.present?
     .small-12

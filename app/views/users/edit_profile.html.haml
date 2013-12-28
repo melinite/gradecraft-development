@@ -1,33 +1,47 @@
 = content_nav_for "Edit My Profile" do
-  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius success"
 
-%p
-.small-3
-  = gravatar_for @user, :size => 250
-  %p
-    Need a Gravatar?
-    = link_to "Get One Here!", "https://en.gravatar.com/"
+.small-12.columns
+  .small-3.columns
+    = gravatar_for @user, :size => 250
+    %p
+      Need a Gravatar?
+      = link_to "Get One Here!", "https://en.gravatar.com/"
 
-.small-12
-  = simple_form_for(@user, method: :put, :html => {:class => 'form-horizontal' }, :url => update_profile_users_path(@user)) do |f|
-    = f.input :email
-    = f.input :first_name
-    = f.input :last_name
-    - if current_course.teams_visible?
-      = f.input :display_name, :label => "Pseudonym", :hint => "What would you like your name to be on the leaderboards?"
-    //= f.input :private_display, :label => "Private Browsing", :hint => "For privacy purposes would you like to hide all identifying information (name and email address) while browsing?"
-    - if current_course.team_roles?
-      = f.input :team_role, :hint => "What will you contribute to your #{term_for :team}?", :label => "#{term_for :team} Role"
-    = f.simple_fields_for :course_memberships do |p|
-      - if current_course.shared_badges?
-        = p.input :shared_badges, :label => "Shared #{term_for :badges}", as: :boolean, :hint => "Do you want to publically display the #{term_for :badges} you earn?", :hint => "You'll still be able to decide which specific #{term_for :badges} you want to share."
-      - if current_course.character_profiles?
-        = p.input :character_profile, :label => "Character Profile", :hint => "This will be displayed on the #{term_for :team} leaderboard"
-      // Taken out bc of cosign
-      //= f.input :password
-      //= f.input :password_confirmation
+  .small-9.columns.panel
+    = simple_form_for(@user, method: :put, :url => update_profile_users_path(@user)) do |f|
+      .small-12.large-4.columns
+        = f.input :email
+      .small-12.large-4.columns
+        = f.input :first_name
+      .small-12.large-4.columns
+        = f.input :last_name
+      - if current_course.teams_visible?
+        .small-12.large-4.columns
+          = f.label :display_name, "Pseudonym"
+          = f.text_field :display_name
+          %h6.small What would you like your name to be on the leaderboards?
+      - if current_course.team_roles?
+        .small-12.large-4.columns
+          = f.label :team_role, "#{term_for :team} Role"
+          = f.text_edit :team_role
+          %h6.small What will you contribute to your #{term_for :team}?"
+      = f.simple_fields_for :course_memberships do |p|
+        - if current_course.shared_badges?
+          .small-12.large-4.columns
+            = p.input :shared_badges, :label => "Shared #{term_for :badges}", as: :boolean
+            %h6.small Do you want to publically display the #{term_for :badges} you earn? You'll still be able to decide which specific #{term_for :badges} you want to share.
+        - if current_course.character_profiles?
+          .small-12.large-4.columns
+            = p.input :character_profile, :label => "Character Profile", :hint => "This will be displayed on the #{term_for :team} leaderboard"
+        // Taken out bc of cosign
+        //= f.input :password
+        //= f.input :password_confirmation
 
+      %hr
 
-    .form-actions
-      = submit_tag 'Update Settings', :class => 'button tiny radius'
-      = link_to 'Cancel', root_path, :class => 'button tiny radius'
+      .clearfix
+
+      .right
+        = submit_tag 'Update Settings', :class => 'button tiny radius'
+        = link_to 'Cancel', root_path, :class => 'button tiny radius'

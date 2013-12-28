@@ -1,18 +1,17 @@
-= render "students/main_tabs"
+.small-12.medium-9.columns
+  = render "students/main_tabs"
 
-.sidebar
-  .gravatar.sidebar_section= gravatar_for current_student
+.small-12.medium-3.columns
+  %ul.side-nav.right
+    %li.gravatar.panel.radius
+      = gravatar_for current_student
+      = link_to current_student.email, "mailto:#{current_student.email}"
 
-  .sidebar_section.center.section= link_to current_student.email, "mailto:#{current_student.email}"
+    %li.panel.radius= render "students/sidebar/sidebar_history"
 
-  - if current_user.is_prof? || current_user.is_staff? && current_course.academic_history_visible?
-    .sidebar_section= render "students/sidebar/sidebar_class_info"
+    %li.panel.radius= render 'students/sidebar/sidebar_grade_distribution'
 
-  .sidebar_section= render "students/sidebar/sidebar_history"
+    - if current_course.has_badges?
+      %li.panel.radius= render "students/sidebar/sidebar_badges"
 
-  .sidebar_section= render 'students/sidebar/sidebar_grade_distribution'
-
-  - if current_course.has_badges?
-    .sidebar_section= render "students/sidebar/sidebar_badges"
-
-  .sidebar_section= render "students/sidebar/sidebar_to_do_list"
+    %li.panel.radius= render "students/sidebar/sidebar_to_do_list"

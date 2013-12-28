@@ -24,7 +24,7 @@ class ChallengeGradesController < ApplicationController
 
   def edit
     @challenge = current_course.challenges.find(params[:challenge_id])
-    @title = "Edit #{@challenge.name} Grade"
+    @title = "Editing #{@challenge.name} Grade"
     @teams = current_course.teams
     @challenge_grade = @challenge.challenge_grades.find(params[:id])
   end

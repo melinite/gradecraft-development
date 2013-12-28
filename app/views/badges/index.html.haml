@@ -3,7 +3,7 @@
     %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "button tiny radius success"
 - else
   = content_nav_for Badge do
-    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius success"
 
 .small-12.columns
   %h2= @title

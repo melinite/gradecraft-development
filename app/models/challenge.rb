@@ -2,7 +2,7 @@ class Challenge < ActiveRecord::Base
 
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
     :visible, :created_at, :updated_at, :image_file_name, :occurrence,
-    :badge_set, :category_id, :value, :multiplier, :point_total, :due_at,
+    :category_id, :value, :multiplier, :point_total, :due_at,
     :accepts_submissions, :release_necessary, :course,
     :challenge_file_ids, :challenge_files_attributes, :challenge_file
 

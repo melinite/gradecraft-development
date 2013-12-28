@@ -1,13 +1,13 @@
 - if current_user.is_student?
   = content_nav_for Challenge do
-    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius success"
 
   = render "student_index"
 
 - else
   = content_nav_for Challenge do
     - if current_user.is_staff?
-      %li= link_to "New #{term_for :challenge}", new_challenge_path, :class => "button tiny radius"
+      %li= link_to "New #{term_for :challenge}", new_challenge_path, :class => "button tiny radius success"
 
   .small-12.columns
     %h2= @title

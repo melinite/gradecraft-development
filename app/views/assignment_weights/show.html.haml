@@ -1,13 +1,14 @@
 = content_nav_for @assignment_weight do
-  %li= link_to 'Edit', edit_user_assignment_weight_path(@user, @assignment_weight), :class => "button radius tiny"
-  %li= link_to 'Back', user_assignment_weights_path(@user), :class => "button radius tiny"
+  %li= link_to 'Edit', edit_user_assignment_weight_path(@user, @assignment_weight), :class => "button radius tiny success"
+  %li= link_to 'Back', user_assignment_weights_path(@user), :class => "button radius tiny success"
 
-%p
-  %b User:
-  = @assignment_weight.user.try(:name)
-%p
-  %b Assignment:
-  = @assignment_weight.assignment_type.try(:name)
-%p
-  %b Multiplier Amount:
-  = @assignment_weight.value
+.small-12.columns
+  %p
+    %b User:
+    = @assignment_weight.user.try(:name)
+  %p
+    %b Assignment:
+    = @assignment_weight.assignment_type.try(:name)
+  %p
+    %b Multiplier Amount:
+    = @assignment_weight.value

@@ -1,8 +1,8 @@
 = content_nav_for @badge, "Earned By #{@earned_badge.student.name}" do
-  %li= link_to "See All Awarded #{term_for :badges}", @badge, :class => "button tiny radius"
-  %li= link_to 'Edit', [:edit, :badge, :earned_badge], :class => "button tiny radius"
+  %li= link_to "See All Awarded #{term_for :badges}", @badge, :class => "button tiny radius success"
+  %li= link_to 'Edit', [:edit, :badge, :earned_badge], :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
 
   %br
 

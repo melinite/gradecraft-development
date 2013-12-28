@@ -1,4 +1,4 @@
-// add commas
+// add commas to predictor displays below
 function addCommas(i){
 	numWithCommas = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return numWithCommas;
@@ -264,7 +264,7 @@ $(document).ready(function() {
               type: "POST",
               data: { predicted_score: ui.value },
               dataType: 'json'
-          });        
+          });
         }
       }
     });
@@ -287,7 +287,7 @@ $(document).ready(function() {
         type: "POST",
         data: { predicted_score: value },
         dataType: 'json'
-      });    
+      });
     }
   })
 
@@ -300,7 +300,7 @@ $(document).ready(function() {
         type: "POST",
         data: { predicted_score: value },
         dataType: 'json'
-      });    
+      });
     }
   })
 });

@@ -7,17 +7,17 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require bootsy
 //= require foundation
-//= require foundation/foundation.tab
 //= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
 //= require s3_direct_upload
 //= require jquery.ui.widget
+//= require jquery.sparkline.min
 //= require underscore.min
 //= require backbone.min
-//= require best_in_place
-//= require best_in_place.purr
+//= require bootstrap
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
 //= require gradecraft
@@ -31,9 +31,8 @@
 //= require grade_schemes
 //= require nested_fields
 //= require users
-//= require responsive-tables
 //= require grade_schemes
-//= require user_dashboard
+//= require student_dashboard
 //= require stupidtable
 //= require submissions
 //= require submission_file
@@ -42,15 +41,12 @@
 //= require earned_badges
 //= require per-assign
 //= require predictor
+//= require datetimepicker
+//= require highcharts
+
+$(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
-
-  $('.datetimepicker').datetimepicker( {
-    format: "MM dd yyyy - hh:ii",
-    autoclose: true,
-    showMeridian: true,
-    todayBtn: true
-  });
 
   if ($('.s3_uploader').length) {
     $('.s3_uploader').S3Uploader({
@@ -98,37 +94,6 @@ $(document).ready(function(){
     th.find(".arrow").remove();
     var arrow = data.direction === "asc" ? "↑" : "↓";
     th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
-  });
-
-  /* Activating Best In Place */
-  jQuery(".best_in_place").best_in_place();
-
-  $('#userBarInProgress').show();
-	// $('#userBarTotal').hide();
-	$('#userBarInProgressSim').show();
-	$('#userBarTotalSim').show();
-	$('#totalScoreToggle').show();
-  $('#soFarScoreToggle').hide();
-  var $totalChart = $('.user-bar-total-chart');
-  var $inProgressChart = $('#user-bar-in-progress-chart');
-
-  var $toggleCharts = $('.toggle-charts'), $toggles = $toggleCharts.find('.dashboard-toggle');
-
-  $toggleCharts.on('click', '.dashboard-toggle', function() {
-    var $toggle = $(this), selector = $toggle.data('shows');
-    $(selector).removeClass('hidden-chart');
-    $toggleCharts.children('.chart-wrapper').not(selector).addClass('hidden-chart');
-    return false;
-  });
-
-  if ($toggleCharts.length) {
-    $toggles.show();
-    $totalChart.addClass('hidden-chart');
-  }
-
-  // Fix input element click problem
-  $('.dropdown input, .dropdown label').click(function(e) {
-    e.stopPropagation();
   });
 
   $('#course_id').change(function() { $(this).closest('form').submit(); });
@@ -363,6 +328,7 @@ $(document).ready(function(){
     // Ask Cory.
     $('.table-toggle').on('click', assignmentTypeBars);
   }
+
   if ($('#shared_badges_table').length) {
     if (!$('#current_user_badges').length) {
       $('#shared_badges_table').append('<tr><td>My badges<td id="current_user_badges"></td></tr>')
@@ -449,7 +415,3 @@ $(document).ready(function(){
     window.all_badges = new AllBadgesView()
   }
 });
-
-$(function(){ $(document).foundation()});
-
-

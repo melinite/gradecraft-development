@@ -11,7 +11,6 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :key_3, 'Assignment Types', assignment_types_path
     primary.item :key_4, "#{current_course.assignment_term}s", assignments_path
     primary.item :key_5, "#{current_course.team_term}s", teams_path
-    primary.item :key_6, "Badge Sets", badge_sets_path
     primary.item :key_7, "#{current_course.badge_term}s", badges_path
     primary.item :key_8, "Tasks", tasks_path
     primary.item :key_9, "#{current_course.user_term}s", students_path

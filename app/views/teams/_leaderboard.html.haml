@@ -1,21 +1,19 @@
-%ul.tabs
-  %li.active
-    %a{ "data-toggle" => "tab", "data-target" => "#tabt1"} #{term_for :team} Leaderboard
+%dl.tabs{:data => {'tab' => true}}
+  %dd.active
+    %a{ "href" => "#tabt1"} #{term_for :team} Leaderboard
   - if current_course.in_team_leaderboard?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tabt2"} In-#{term_for :team} Rankings
+    %dd
+      %a{ "href" => "#tabt2"} In-#{term_for :team} Rankings
   - if current_course.team_challenges?
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tabt3"} #{term_for :challenges}
+    %dd
+      %a{ "href" => "#tabt3"} #{term_for :challenges}
 
 - if current_user.is_student? && ! current_student.display_name?
   = "Want to see the your #{term_for :team} leaderboard?"
   = link_to "Set your screen name!", edit_profile_users_path
 
-%br
-%br
-.tab-content
-  .tab-pane#tabt1.active
+.tabs-content
+  .content#tabt1.active
     %table.responsive.simpleTable
       %thead
         %tr
@@ -33,8 +31,8 @@
               %td= points team.try(:average_grade)
           - i += 1
 
-  .tab-pane#tabt2
+  .content#tabt2
     = render "teams/in_team_rankings"
 
-  .tab-pane#tabt3
+  .content#tabt3
     = render "challenges/student_index"

@@ -1,8 +1,8 @@
 = content_nav_for @badge, "Quick Award #{term_for :badges}" do
-  %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
-  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
+  %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius success"
+  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
   %h3= @title
   - if current_course.has_teams?
     .filters

@@ -1,9 +1,12 @@
-= simple_form_for([@challenge, @challenge_grade], :html => {:class => 'form-horizontal' }) do |f|
-  .form-inputs
-    = f.association :team, :collection => @teams, :input_html => {:class => "col-lg-3 input-sm"}
-    = f.input :score, :input_html => {:class => "col-lg-3"}, :hint => "out of #{points @challenge.point_total} points"
-    = f.input :feedback, :input_html => {:style => "width: 90%; height: 200px;"}
-    = f.input :status, :collection => Grade::STATUSES, :hint => "Can the student see this grade?", :include_blank => false
+= simple_form_for([@challenge, @challenge_grade]) do |f|
+  = f.association :team, @teams
+  = f.label :score
+  = f.text_field :score
+  %h6.small out of #{points @challenge.point_total} points
+  = f.bootsy_area :feedback
+  = f.label :status
+  = f.select :status, Grade::STATUSES
+  %h6.small Can the student see this grade?
 
   .form-actions
     = f.button :submit, :class => "button tiny radius"

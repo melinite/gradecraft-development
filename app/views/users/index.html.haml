@@ -1,16 +1,16 @@
 = content_nav_for User do
   %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius success"
 
+.small-12.medium-4.large-4.columns
+  %h2= @title
+
+- if current_course.has_teams?
+  .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
+    = form_tag students_path, :method => :get do
+      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "medium-8"
+      = submit_tag 'Filter', :class => 'button tiny radius'
+
 .small-12.columns
-  .small-12.medium-4.large-4.columns
-    %h2= @title
-
-  - if current_course.has_teams?
-    .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
-      = form_tag students_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "medium-8"
-        = submit_tag 'Filter', :class => 'button tiny radius'
-
   %table.responsive.simpleTable
     %thead
       %tr

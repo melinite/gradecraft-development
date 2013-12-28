@@ -7,12 +7,12 @@
 
   %dl.tabs{:data => {'tab' => true}}
     %dd.active
-      %a{ "data-target" => "#tab1" } Shared #{current_course.badge_term.pluralize}
+      %a{ "href" => "#tab1" } Shared #{current_course.badge_term.pluralize}
     %dd
-      %a{ "data-target" => "#tab2" } All #{current_course.badge_term.pluralize}
+      %a{ "href" => "#tab2" } All #{current_course.badge_term.pluralize}
 
   .tabs-content
-    .content#tab1.active
+    .content.active#tab1
       = render "students/public_class_badges"
     .content#tab2
       = render "students/all_class_badges"

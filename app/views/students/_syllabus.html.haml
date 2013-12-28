@@ -1,84 +1,80 @@
 - cache current_student_data.cache_key('v1', current_user.is_staff?, :assignment_weights_key, :assignments_key, :grades_key, :submissions_key) do
-  - current_course_data.by_assignment_type.each do |assignment_type, assignments|
-    .small-12
-      - if assignment_type.max_value?
-        %button.btn.btn-success.small-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
-      - else
-        %button.btn.btn-success.small-12{"data-target" => "#assignment_type-#{assignment_type.id}", "data-toggle" => "collapse"} #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
-      .collapse{:id => "assignment_type-#{assignment_type.id}"}
-        .small-10
+  %dl.accordion{:data => {'accordion' => true}}
+    - current_course_data.by_assignment_type.each do |assignment_type, assignments|
+      %dd.small-12.columns
+        - if assignment_type.max_value?
+          %a{ "href" => "#assignment_type-#{assignment_type.id}" } #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
+        - else
+          %a{ "href" => "#assignment_type-#{assignment_type.id}" } #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
+        .content{:id => "assignment_type-#{assignment_type.id}"}
           - if assignment_type.predictor_description?
             = raw assignment_type.predictor_description
-        - if assignment_type.student_weightable? && current_course.assignment_weight_open?
-          .small-2
-            - if current_student_data.weighted_assignments?
-              .badge.badge-primary= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
-              .badge.badge-info= link_to "Change #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, user_id: current_student
-            - else
-              .badge.badge-info= link_to "Set #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type
-        - elsif assignment_type.student_weightable?
-          .badge.badge-primary= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
-        .clear
-        %p
-        .small-12
-          - assignments.each do |assignment|
-            - if assignment.visible? || current_student_data.grade_released_for_assignment?(assignment)
-              .small-12.clear
-                %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
-                - if current_student_data.grade_released_for_assignment?(assignment)
-                  %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)}  / "
-                %span.points.total #{points current_student_data.point_total_for_assignment(assignment)} points
-                - if assignment.assignment_type.student_weightable?
-                  = "(Multiplied) "
-                  %b= "–"
+          - if assignment_type.student_weightable? && current_course.assignment_weight_open?
+            .small-2
+              - if current_student_data.weighted_assignments?
+                .label= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
+                .label= link_to "Change #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, user_id: current_student
+              - else
+                .label= link_to "Set #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type
+          - elsif assignment_type.student_weightable?
+            .label= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
+          .small-12
+            - assignments.each do |assignment|
+              - if assignment.visible? || current_student_data.grade_released_for_assignment?(assignment)
+                .small-12
+                  %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
                   - if current_student_data.grade_released_for_assignment?(assignment)
-                    - grade = current_student_data.grade_for_assignment(assignment)
-                    %span.points.earned= points grade.raw_score
-                    %span.points= "/"
-                  %span.points= points assignment.point_total
-                  %span.points points (Raw)
-                %span
-                - if assignment.future?
-                  %span.bold= " • Due: #{assignment.due_at.strftime("%A, %B %d, %l:%M%p")}"
-                - if assignment.is_required?
-                  %span.label.label-important Required!
-                - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
-                  = simple_form_for current_student_data.grade_for_assignment(assignment), :url => self_log_grades_assignment_path(assignment), :method => :post do |f|
-                    - present = current_student_data.present_for_class?(assignment)
-                    = hidden_field_tag :present, !present
-                    = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn #{present ? 'btn-warning' : 'btn-success'} btn-tiny"
-                - if assignment.has_groups?
-                  - if current_student.group_for_assignment(assignment)
-                    = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "btn btn-primary btn-xs"
-                    - if assignment.accepts_submissions?
-                      = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+                    %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)}  / "
+                  %span.points.total #{points current_student_data.point_total_for_assignment(assignment)} points
+                  - if assignment.assignment_type.student_weightable?
+                    = "(Multiplied) "
+                    %b= "–"
+                    - if current_student_data.grade_released_for_assignment?(assignment)
+                      - grade = current_student_data.grade_for_assignment(assignment)
+                      %span.points.earned= points grade.raw_score
+                      %span.points= "/"
+                    %span.points= points assignment.point_total
+                    %span.points points (Raw)
+                  %span
+                  - if assignment.future?
+                    %span.bold= " • Due: #{assignment.due_at.strftime("%A, %B %d, %l:%M%p")}"
+                  - if assignment.is_required?
+                    %span.label.label-important Required!
+                  - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
+                    = simple_form_for current_student_data.grade_for_assignment(assignment), :url => self_log_grades_assignment_path(assignment), :method => :post do |f|
+                      - present = current_student_data.present_for_class?(assignment)
+                      = hidden_field_tag :present, !present
+                      = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "btn #{present ? 'btn-warning' : 'btn-success'} btn-tiny"
+                  - if assignment.has_groups?
+                    - if current_student.group_for_assignment(assignment)
+                      = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny radius"
+                      - if assignment.accepts_submissions?
+                        = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+                    - else
+                      = link_to "Create a Group", new_group_path, :class => "button tiny radius"
                   - else
-                    = link_to "Create a Group", new_group_path, :class => "btn btn-primary btn-xs"
-                - else
-                  - if assignment.accepts_submissions?
-                    = render "students/submissions", assignment: assignment
-                - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
-                  = link_to "See Feedback", assignment_grade_path(assignment, :student_id => current_student), :class => "btn btn-info btn-xs"
-                - if current_user.is_staff?
-                  - if assignment.is_individual?
-                    - if current_student_data.grade_released_for_assignment?(assignment)
-                      - grade = current_student_data.grade_for_assignment(assignment)
-                      = link_to "Edit Grade", edit_assignment_grade_path(assignment.id, :student_id => current_student.id), :class => 'btn btn-xs btn-info'
-                    - else
-                      = link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => current_student.id), :class => 'btn btn-xs btn-success'
-                  - elsif assignment.has_groups?
-                    - if current_student_data.grade_released_for_assignment?(assignment)
-                      - grade = current_student_data.grade_for_assignment(assignment)
-                      = link_to "Edit Grade", group_grade_assignment_path(assignment, :group_id => current_student.group_for_assignment(assignment)), :class => 'btn btn-xs btn-info'
-                    - else
-                      = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'btn btn-xs btn-success'
+                    - if assignment.accepts_submissions?
+                      = render "students/submissions", assignment: assignment
+                  - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
+                    = link_to "See Feedback", assignment_grade_path(assignment, :student_id => current_student), :class => "button tiny radius"
+                  - if current_user.is_staff?
+                    - if assignment.is_individual?
+                      - if current_student_data.grade_released_for_assignment?(assignment)
+                        - grade = current_student_data.grade_for_assignment(assignment)
+                        = link_to "Edit Grade", edit_assignment_grade_path(assignment.id, :student_id => current_student.id), :class => 'button tiny radius'
+                      - else
+                        = link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => current_student.id), :class => 'button tiny radius'
+                    - elsif assignment.has_groups?
+                      - if current_student_data.grade_released_for_assignment?(assignment)
+                        - grade = current_student_data.grade_for_assignment(assignment)
+                        = link_to "Edit Grade", group_grade_assignment_path(assignment, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius'
+                      - else
+                        = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius'
 
-        %hr
-  - if current_course.team_challenges?
-    .small-12
-      %button.btn.btn-success.small-12{"data-target" => "#challenges", "data-toggle" => "collapse"} #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
-      .collapse{:id => "challenges"}
-        .small-12
+    - if current_course.team_challenges?
+      %dd.small-12.columns
+        %a{ "href" => "#challenges" } #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
+        .content{:id => "challenges"}
           - current_course_data.challenges.each do |challenge|
             .small-12
               %span.assignmentName= link_to challenge.name, challenge
@@ -91,5 +87,4 @@
                 = "points"
               - if challenge.future?
                 %span.bold= " • Due: #{challenge.due_at.strftime("%A, %B %d, %l:%M%p")}"
-  %hr
   = render 'students/scoreboard'

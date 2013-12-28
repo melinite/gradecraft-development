@@ -1,5 +1,6 @@
 GradeCraft::Application.routes.draw do
 
+  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   #1. Analytics & Charts
   #2. Assignments, Submissions, Tasks, Grades
   #3. Assignment Types
@@ -93,7 +94,6 @@ GradeCraft::Application.routes.draw do
   resources :assignment_weights
 
   #5. Badges
-  resources :badge_sets
   resources :badges do
     resources :tasks
     resources :earned_badges do

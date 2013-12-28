@@ -25,7 +25,7 @@ class GradeSchemesController < ApplicationController
   def edit
     @grade_scheme = current_course.grade_schemes.find(params[:id])
     @assignments = current_course.assignments
-    @title = "Edit #{@grade_scheme.name}"
+    @title = "Editing #{@grade_scheme.name}"
   end
 
   def create

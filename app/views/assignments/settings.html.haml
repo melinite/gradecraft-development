@@ -1,11 +1,11 @@
 = content_nav_for Assignment do
-  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
+  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
   .pull-right
     = link_to "Assignments Info", settings_assignments_path, :class => "badge"
 - current_course_data.by_assignment_type.each do |assignment_type, assignments|
-  .small-12
+  .small-12.columns
     %h2= "#{assignment_type.try(:name)}"
   %table.responsive.simpleTable
     %thead

@@ -1,62 +1,61 @@
 = content_nav_for Assignment do
   - if current_user.is_staff?
-    %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
+    %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius success"
   - else
-    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius success"
 
 .small-12.columns
   %h2= @title
 
-  %dl.accordion
+  %dl.accordion{:data => {'accordion' => true}}
     - current_course_data.by_assignment_type.each do |assignment_type, assignments|
       %dd
-        = link_to assignment_type.name
-
-      %div
-        %table.responsive.simpleTable
-          %thead
-            %tr
-              %th.sortable{"data-sort" => "string"} Name
-              %th.sortable{"data-sort" => "date"} Open - Due
-              %th.sortable{"data-sort" => "int"} Points
-              %th
-          %tbody
-            - assignments.each do |assignment|
-              - if assignment.visible? || (current_user.is_student? && current_student_data.grade_released_for_assignment?(assignment)) || current_user.is_staff?
-                %tr
-                  %td= link_to assignment.name, assignment
-                  %td
-                    = "#{assignment.open_at } -" if assignment.open_at.present?
-                    = assignment.try(:due_at) || "Ongoing"
-                  %td= points assignment.point_total
-                  - if current_user.is_staff?
+        %a{"href" => "##{assignment_type.id}" }= assignment_type.name
+        .content{:id => "#{assignment_type.id}" }
+          %table.responsive.simpleTable
+            %thead
+              %tr
+                %th.sortable{"data-sort" => "string"} Name
+                %th.sortable{"data-sort" => "date"} Open - Due
+                %th.sortable{"data-sort" => "int"} Points
+                %th
+            %tbody
+              - assignments.each do |assignment|
+                - if assignment.visible? || (current_user.is_student? && current_student_data.grade_released_for_assignment?(assignment)) || current_user.is_staff?
+                  %tr
+                    %td= link_to assignment.name, assignment
                     %td
-                      .button-bar
-                        %ul.button-group.radius.round
-                          %li= link_to "Grade", assignment_path(assignment), :class => "button tiny"
-                          %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny'
-                          %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
-                  - else
-                    - if assignment.accepts_submissions? && assignment.has_groups?
-                      - if current_student.group_for_assignment(assignment)
-                        %td= link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny radius"
-                        - if assignment.accepts_submissions?
-                          = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
-                      - else
-                        %td= link_to "Create a Group", new_group_path, :class => "button tiny radius"
-                    - elsif assignment.accepts_submissions? && assignment.is_individual?
-                      - current_student.submission_for_assignment(assignment).tap do |submission|
-                        - if submission
-                          %td= link_to "See Submission", assignment_submission_path(assignment.id, submission, :student_id => current_student.id), :class => 'button tiny radius'
-                          %td
-                          %td
-                          %td
-                        - else
-                          %td= link_to "Submit", new_assignment_submission_path(assignment, @submission, :user_id => current_student.id, :student_type => "User"), :class => 'button tiny radius'
-                          %td
-                          %td
-                          %td
+                      = "#{assignment.open_at } -" if assignment.open_at.present?
+                      = assignment.try(:due_at) || "Ongoing"
+                    %td= points assignment.point_total
+                    - if current_user.is_staff?
+                      %td
+                        .button-bar
+                          %ul.button-group.radius.round
+                            %li= link_to "Grade", assignment_path(assignment), :class => "button tiny"
+                            %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny'
+                            %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
                     - else
-                      %td
-                      %td
-                      %td
+                      - if assignment.accepts_submissions? && assignment.has_groups?
+                        - if current_student.group_for_assignment(assignment)
+                          %td= link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny radius"
+                          - if assignment.accepts_submissions?
+                            = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+                        - else
+                          %td= link_to "Create a Group", new_group_path, :class => "button tiny radius"
+                      - elsif assignment.accepts_submissions? && assignment.is_individual?
+                        - current_student.submission_for_assignment(assignment).tap do |submission|
+                          - if submission
+                            %td= link_to "See Submission", assignment_submission_path(assignment.id, submission, :student_id => current_student.id), :class => 'button tiny radius'
+                            %td
+                            %td
+                            %td
+                          - else
+                            %td= link_to "Submit", new_assignment_submission_path(assignment, @submission, :user_id => current_student.id, :student_type => "User"), :class => 'button tiny radius'
+                            %td
+                            %td
+                            %td
+                      - else
+                        %td
+                        %td
+                        %td

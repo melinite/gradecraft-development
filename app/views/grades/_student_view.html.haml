@@ -1,8 +1,8 @@
 = content_nav_for @assignment, "My Grade" do
-  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius success"
 
 
-.small-12
+.small-12.columns
   %h3= link_to @grade.assignment.name, @grade.assignment
   .heading.small-2 Score:
   .col-lg-offset-2= points @grade.score

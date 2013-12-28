@@ -170,14 +170,9 @@ criteria.each do |criterium|
   end
 end
 
-#Generate badge set
-badge_set = course.badge_sets.create! do |bs|
-  bs.name = "Hogwarts Most Officially Official Badge Set"
-end
-puts "Awards may now be given!"
 
 badges = badge_names.map do |badge_name|
-  badge_set.badges.create! do |b|
+  badges.create! do |b|
     b.name = badge_name
     b.point_total = 100 * rand(10)
     b.icon = File.open(badge_icon_paths.sample)

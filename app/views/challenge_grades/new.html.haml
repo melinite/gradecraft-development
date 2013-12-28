@@ -1,6 +1,6 @@
 = content_nav_for @challenge, "New Grade" do
-  %li= link_to "See All #{@challenge.name} Grades", challenge_path(@challenge), :class => "button tiny radius"
+  %li= link_to "See All #{@challenge.name} Grades", challenge_path(@challenge), :class => "button tiny radius success"
 
-.small-12
+.small-12.columns
   %h3= @title
   = render 'form'

@@ -50,7 +50,7 @@ class UsersController < ApplicationController
     end
     @user = current_course.users.find(params[:id])
     @course_membership = @user.course_memberships.where(course_id: current_course).first
-    @title = "Edit #{@user.name}"
+    @title = "Editing #{@user.name}"
     @academic_history = @user.student_academic_history
   end
 
