@@ -316,6 +316,8 @@ GEM
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
+    select2-rails (3.5.2)
+      thor (~> 0.14)
     sendgrid (1.2.0)
       json
       json
@@ -441,6 +443,7 @@ DEPENDENCIES
   sampler
   sanitize
   sass-rails (~> 4.0.0.beta1)
+  select2-rails
   sendgrid
   sidekiq
   simple_calendar (~> 0.1.9)

@@ -3,8 +3,10 @@ class Group < ActiveRecord::Base
 
   APPROVED_STATUSES = ['Pending', 'Approved', 'Rejected']
 
-  attr_accessible :name, :proposal, :approved, :assignment_id, :assignment_ids,
-    :text_proposal, :student_ids, :students, :assignment_groups_attributes, :group_membership_attributes
+  attr_accessible :name, :proposal, :approved, :assignment_id, :assignment_ids, :student_tokens,
+    :text_proposal, :assignment_groups_attributes, :group_membership_attributes
+
+  attr_reader :student_tokens
 
   belongs_to :course
 
@@ -43,6 +45,10 @@ class Group < ActiveRecord::Base
 
   def earned_badges_by_badge_id
     @earned_badges_by_badge ||= earned_badges.group_by(&:badge_id)
+  end
+
+  def student_tokens=(ids)
+    self.student_ids = ids.split(",")
   end
 
 

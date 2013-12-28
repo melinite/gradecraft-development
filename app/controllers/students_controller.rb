@@ -12,7 +12,7 @@ class StudentsController < ApplicationController
     @students = current_course.students.being_graded
     respond_to do |format|
       format.html
-      format.json { render json: @students }
+      format.json { render json: @students.where("first_name like ?", "%#{params[:q]}%") }
       format.csv { send_data @students.csv_for_course(current_course) }
     end
   end

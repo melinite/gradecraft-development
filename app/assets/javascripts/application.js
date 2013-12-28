@@ -43,10 +43,16 @@
 //= require predictor
 //= require datetimepicker
 //= require highcharts
+//= require select2
 
 $(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
+
+  $("#group_student_tokens").select2({
+    placeholder: "Select Students",
+    allowClear: true
+  });
 
   if ($('.s3_uploader').length) {
     $('.s3_uploader').S3Uploader({

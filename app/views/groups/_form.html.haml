@@ -1,5 +1,5 @@
 = simple_form_for @group do |f|
-  //= f.input :assignment, :collection => @assignments
+  = f.association :assignments, :collection => @assignments, :as => :check_boxes
   .small-12.medium-4.columns
     = f.label :name
     = f.text_field :name
@@ -11,11 +11,11 @@
     - if current_user.is_student?
       .small-12.medium-4.columns
         = f.label :students, "#{term_for :students}"
-        = f.select_tag :students
+        = f.collection_select :student_tokens, current_course_data.students, :id, :name, {}, {multiple:true}
     - if current_user.is_staff?
       .small-12.medium-4.columns
         = f.label :student_ids, "#{term_for :students}"
-        = f.check_box :student_ids
+        = f.collection_select :student_tokens, current_course_data.students, :id, :name, {}, {multiple:true}
 
   .small-12.medium-12.columns
     - if current_user.is_student?

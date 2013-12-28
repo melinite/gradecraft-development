@@ -15,6 +15,7 @@ class GroupsController < ApplicationController
 
   def new
     @group = current_course.groups.new
+    @assignments = current_course.assignments.group_assignments
   end
 
   def create
