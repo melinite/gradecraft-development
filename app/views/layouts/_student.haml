@@ -1,5 +1,5 @@
 .row
-  .small-12
+  .small-10.columns
     - if flash[:notice]
       %div.alert-box.success
         = flash[:notice]
@@ -13,8 +13,5 @@
         = flash[:alert]
         <a class="close" data-dismiss="alert" href="#">&times;</a>
     = render 'layouts/content'
-  .small-12
-    = render 'layouts/student_sidebar'
-%footer.row
-  .small-12
-    = render 'layouts/footer'
+  .small-2.columns
+    = render 'students/student_sidebar'

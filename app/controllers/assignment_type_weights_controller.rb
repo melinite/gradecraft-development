@@ -9,6 +9,7 @@ class AssignmentTypeWeightsController < ApplicationController
     @form = AssignmentTypeWeightForm.new(current_student, current_course)
 
     @form.update_attributes(student_params)
+
     if @form.save
       redirect_to current_user.is_student? ? dashboard_path : choices_students_path
     else

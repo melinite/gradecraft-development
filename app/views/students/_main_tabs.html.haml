@@ -19,8 +19,6 @@
   - if current_course.use_timeline?
     %dd
       %a{ "href" => "#timeline" } Timeline
-  //%dd
-  //%a{ "href" => "#calendar" } Calendar
   - if current_course.grading_philosophy.present?
     %dd
       %a{ "href" => "#grading-philosophy"} Grading Philosophy
@@ -39,8 +37,6 @@
   - if current_course.use_timeline?
     .content#timeline
       = render "students/timeline"
-  .content#calendar
-    = render "students/calendar"
   - if current_course.grading_philosophy.present?
     .content#grading-philosophy
       = render "students/grading_philosophy"
