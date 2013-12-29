@@ -13,9 +13,6 @@ class Assignment < ActiveRecord::Base
 
   self.inheritance_column = 'something_you_will_not_use'
 
-  belongs_to :grade_scheme
-  has_many :grade_scheme_elements, :through => :grade_scheme
-
   belongs_to :assignment_type, -> { order('order_placement ASC') }, touch: true
   accepts_nested_attributes_for :assignment_type
 
@@ -74,6 +71,11 @@ class Assignment < ActiveRecord::Base
   scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ?) OR (status = ? AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', 'Graded', student.id) }
   scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
 scope :grading_done, -> { where 'grades.present? == 1' }
+
+  amoeba do
+    enable
+    clone [ :tasks, :assignment_files, :score_levels ]
+  end
 
   def start_time
     due_at

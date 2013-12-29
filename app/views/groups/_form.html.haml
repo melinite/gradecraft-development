@@ -15,7 +15,7 @@
     - if current_user.is_staff?
       .small-12.medium-4.columns
         = f.label :student_ids, "#{term_for :students}"
-        = f.collection_select :student_tokens, current_course_data.students, :id, :name, {}, {multiple:true}
+        = f.association :students, :collection => current_course_data.students, as: :select
 
   .small-12.medium-12.columns
     - if current_user.is_student?

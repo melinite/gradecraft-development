@@ -49,7 +49,7 @@ $(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
 
-  $("#group_student_tokens").select2({
+  $("#group_student_ids").select2({
     placeholder: "Select Students",
     allowClear: true
   });
