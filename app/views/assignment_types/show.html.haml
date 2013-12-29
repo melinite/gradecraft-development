@@ -14,7 +14,7 @@
         %th.sortable{"data-sort" => "int"} Points
         %th
     %tbody
-      - @assignment_type.assignments.each do |assignment|
+      - @assignment_type.assignments.alphabetical.chronological.each do |assignment|
         - if assignment.visible? || (current_user.is_student? && current_student_data.grade_released_for_assignment?(assignment)) || current_user.is_staff?
           %tr
             %td= link_to assignment.name, assignment
@@ -29,6 +29,7 @@
                     %li= link_to "Grade", assignment_path(assignment), :class => "button tiny"
                     %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny'
                     %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+                    %li= link_to "Copy", copy_assignments_path(:id => assignment), :class => 'button tiny', :method => :copy
             - else
               - if assignment.accepts_submissions? && assignment.has_groups?
                 - if current_student.group_for_assignment(assignment)

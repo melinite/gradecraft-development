@@ -72,10 +72,6 @@
       %b Badges will be used:
       = @course.badge_setting? ? 'Yes' : 'No'
     %p
-      %b Badge Set:
-      - @course.badge_sets.each do |b|
-        = b.try(:name)
-    %p
       %b Badges will be awarded through...
       = @course.badge_use_scope
     %p

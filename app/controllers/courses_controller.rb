@@ -31,6 +31,13 @@ class CoursesController < ApplicationController
     @grade_schemes = GradeScheme.all
   end
 
+  def copy
+    @course = Course.find(params[:id])
+    new_course = @course.amoeba_dup
+    new_course.save
+    redirect_to courses_path
+  end
+
   def create
     @course = Course.new(params[:course])
 

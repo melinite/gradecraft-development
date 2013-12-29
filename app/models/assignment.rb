@@ -74,7 +74,7 @@ scope :grading_done, -> { where 'grades.present? == 1' }
 
   amoeba do
     enable
-    clone [ :tasks, :assignment_files, :score_levels ]
+    clone [ :tasks, :assignment_files ]
   end
 
   def start_time

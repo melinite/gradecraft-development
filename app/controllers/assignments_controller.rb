@@ -39,6 +39,13 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def copy
+    @assignment = current_course.assignments.find(params[:id])
+    new_assignment = @assignment.amoeba_dup
+    new_assignment.save
+    redirect_to assignments_path
+  end
+
   def create
     @assignment = current_course.assignments.new(params[:assignment])
     if @assignment.due_at.present? && @assignment.open_at.present? && @assignment.due_at < @assignment.open_at

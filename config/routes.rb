@@ -53,6 +53,7 @@ GradeCraft::Application.routes.draw do
   resources :assignments do
     collection do
       get :feed
+      post 'copy' => 'assignments#copy'
       get :settings
       get 'weights' => 'assignment_weights#mass_edit', :as => :mass_edit_weights
     end
@@ -124,6 +125,7 @@ GradeCraft::Application.routes.draw do
   resources :courses do
     collection do
       get :all_grades
+      post 'copy' => 'courses#copy'
     end
   end
   resources :course_memberships

@@ -25,6 +25,7 @@
           %td= points course.total_points
           %td
             .button-bar
-              %ul.button-group.radius.round
-                %li= link_to 'Edit', edit_course_path(course), :class => 'button tiny radius'
-                %li= link_to 'Delete', course, :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete
+              %ul.button-group.round
+                %li= link_to 'Edit', edit_course_path(course), :class => 'button tiny'
+                %li= link_to 'Delete', course, :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+                %li= link_to "Copy", copy_courses_path(:id => current_course), :class => 'button tiny', :method => :copy
