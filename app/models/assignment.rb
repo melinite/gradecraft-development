@@ -73,8 +73,7 @@ class Assignment < ActiveRecord::Base
 scope :grading_done, -> { where 'grades.present? == 1' }
 
   amoeba do
-    enable
-    clone [ :tasks, :assignment_files ]
+    clone [ :tasks, :assignment_files, :assignment_score_levels ]
   end
 
   def start_time

@@ -42,7 +42,6 @@ class Course < ActiveRecord::Base
   validates_presence_of :name, :courseno
 
   amoeba do
-    enable
     clone [ :assignments, :assignment_types, :badges, :categories, :challenges, :grade_schemes, :rubrics ]
     prepend :name => "Copy of "
   end
