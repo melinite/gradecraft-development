@@ -58,8 +58,8 @@ class User < ActiveRecord::Base
 
   has_many :teams, :through => :team_memberships do
     def set_for_course(course_id, ids)
-      other_team_ids = proxy_association.teams.where("course_id != ?", course_id).pluck(:id)
-      proxy_association.team_ids = other_team_ids | ids
+      other_team_ids = proxy_association.owner.teams.where("course_id != ?", course_id).pluck(:id)
+      proxy_association.owner.team_ids = other_team_ids | [ids]
     end
   end
 
