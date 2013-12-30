@@ -3,8 +3,6 @@ class AssignmentTypesController < ApplicationController
   before_filter :ensure_staff?
 
   def index
-    #@assignment_types = current_course.assignment_types.ordered
-    #render json: @assignment_types.as_json(only:[:id, :name, :point_setting, :levels, :points_predictor_display, :resubmission, :max_value, :percentage_course, :predictor_description, :universal_point_value, :minimum_score, :step_value, :due_date_present])
   end
 
   def show
@@ -27,13 +25,32 @@ class AssignmentTypesController < ApplicationController
   def create
     @assignment_type = current_course.assignment_types.new(params[:assignment_type])
     @assignment_type.save
+
+    respond_to do |format|
+      if @assignment_type.save
+        format.html { redirect_to @assignment_type, notice: "#{@assignment_type.name} was successfully created." }
+        format.json { render json: @assignment_type, status: :created, location: @assignment_type }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @assignment_type.errors, notice: "#{@assignment_type.name} was not created." }
+      end
+    end
     respond_with(@assignment_type)
   end
 
   def update
     @assignment_type = current_course.assignment_types.find(params[:id])
     @assignment_type.update_attributes(params[:assignment_type])
-    respond_with(@assignment_type)
+
+    respond_to do |format|
+      if @assignment_type.save
+        format.html { redirect_to @assignment_type, notice: "#{@assignment_type.name} was successfully update." }
+        format.json { render json: @assignment_type, status: :created, location: @assignment_type }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @assignment_type.errors, notice: "#{@assignment_type.name} was not updated." }
+      end
+    end
   end
 
   def destroy

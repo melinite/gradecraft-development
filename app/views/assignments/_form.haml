@@ -156,5 +156,5 @@
     = link_to 'Add a Level', '#', class: 'add-assignment-score-level'
 
   .right
-    = f.button :submit, :class => "button radius tiny"
+    = f.button :submit, "#{@assignment.persisted? ? 'Update' : 'Create'} #{term_for :assignment}", :class => "button radius tiny"
     = link_to 'Cancel', assignments_path, :class => "button radius tiny"

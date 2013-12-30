@@ -8,5 +8,5 @@
   .clearfix
 
   .small-12
-    = f.submit "#{@submit_message}", :class => 'button tiny radius'
+    = f.submit "#{@team.persisted? ? 'Update' : 'Create'} #{ term_for :team }", :class => 'button tiny radius'
     = link_to 'Cancel', teams_path, :class => 'button tiny radius'

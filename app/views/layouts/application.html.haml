@@ -31,19 +31,6 @@
         - if current_user
           %section.top-bar-section
             %ul.right= render 'layouts/authenticated_nav'
-    .small-12.columns
-      - if flash[:notice]
-        .alert-box.success.radius
-          = flash[:notice]
-          <a href="" class="close">&times;</a>
-      - if flash[:error]
-        .alert-box.alert.radius
-          = flash[:error]
-          <a href="" class="close">&times;</a>
-      - if flash[:alert]
-        .alert-box.radius
-          = flash[:alert]
-          <a href="" class="close">&times;</a>
     - if current_user
       - if current_user.is_staff?
         = render 'layouts/staff'

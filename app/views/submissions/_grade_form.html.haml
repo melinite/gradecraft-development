@@ -9,4 +9,4 @@
   - if @assignment.release_necessary?
     = f.input :status, :as => :radio_buttons, :collection => [["New"], ["Graded"],["Released"]]
 
-  = f.submit :class => 'button tiny radius'
+  = f.submit, "#{@grade.persisted? ? 'Update' : 'Submit'} Grade", :class => 'button tiny radius'

@@ -51,5 +51,5 @@
 
 
   .right
-    = f.button :submit, :class => "button tiny radius"
+    = f.button :submit, "#{@challenge.persisted? ? 'Update' : 'Create'} #{term_for :challenge }", :class => "button tiny radius"
     = link_to 'Cancel', challenges_path, :class => 'button tiny radius'

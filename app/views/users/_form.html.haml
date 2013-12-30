@@ -87,5 +87,5 @@
 
 
   .right
-    = submit_tag "Create", :class => "button tiny radius"
+    = submit_tag "#{@user.persisted? ? 'Update' : 'Create'} #{term_for :user}", :class => "button tiny radius"
     = link_to 'Cancel', users_path, :class => 'button tiny radius'

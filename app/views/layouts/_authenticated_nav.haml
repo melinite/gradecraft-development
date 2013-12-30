@@ -4,20 +4,16 @@
 
 %li.has-dropdown
   %a Class Info
-  %ul.dropdown
-    %li
-      Professor #{ current_course.professor.try(:name) }
+  %ul.dropdown.classInfo
+    %li Professor #{ current_course.professor.try(:name) }
     - if current_user.is_student?
       - current_student.team_leader.tap do |team_leader|
         - if team_leader.present?
-          %li
-            = link_to "Email #{current_course.team_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}"
+          %li= link_to "Email #{current_course.team_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}"
     - if current_course.phone.present?
-      %li
-        Phone Number: #{current_course.phone }
+      %li Phone Number: #{current_course.phone }
     - if current_course.class_email.present?
-      %li
-        Class Email: #{mail_to current_course.class_email, current_course.class_email}
+      %li Class Email: #{mail_to current_course.class_email, current_course.class_email}
     - if current_course.twitter_handle.present?
       %li
         Twitter Handle:

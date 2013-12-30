@@ -1052,7 +1052,8 @@ CREATE TABLE course_memberships (
     shared_badges boolean,
     character_profile text,
     last_login_at timestamp without time zone,
-    auditing boolean DEFAULT false NOT NULL
+    auditing boolean DEFAULT false NOT NULL,
+    role character varying(255) DEFAULT 'student'::character varying NOT NULL
 );
 
 
@@ -3120,3 +3121,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131116142154');
 INSERT INTO schema_migrations (version) VALUES ('20131225013628');
 
 INSERT INTO schema_migrations (version) VALUES ('20131225013629');
+
+INSERT INTO schema_migrations (version) VALUES ('20131229171602');

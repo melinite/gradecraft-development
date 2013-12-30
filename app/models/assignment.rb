@@ -41,7 +41,7 @@ class Assignment < ActiveRecord::Base
 
   #for instances where the assignment needs it's own unique score levels
   has_many :assignment_score_levels
-  accepts_nested_attributes_for :assignment_score_levels, allow_destroy: true
+  accepts_nested_attributes_for :assignment_score_levels, allow_destroy: true, :reject_if => proc { |a| a['value'].blank? || a['name'].blank? }
 
   delegate :mass_grade?, :student_weightable?, :to => :assignment_type
 

@@ -1,17 +1,5 @@
-.row
-  .small-10.columns
-    - if flash[:notice]
-      %div.alert-box.success
-        = flash[:notice]
-        <a class="close" data-dismiss="alert" href="#">&times;</a>
-    - if flash[:error]
-      %div.alert-box.alert
-        = flash[:error]
-        <a class="close" data-dismiss="alert" href="#">&times;</a>
-    - if flash[:alert]
-      %div.alert-box
-        = flash[:alert]
-        <a class="close" data-dismiss="alert" href="#">&times;</a>
-    = render 'layouts/content'
-  .small-2.columns
-    = render 'students/student_sidebar'
+.small-10.columns
+  = render 'layouts/alerts'
+  = render 'layouts/content'
+.small-2.columns
+  = render 'students/student_sidebar'

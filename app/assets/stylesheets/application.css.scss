@@ -1,41 +1,48 @@
 /*
  *= require jquery.fileupload-ui
  *= require s3_direct_upload_progress_bars
- *= require jquery.ui
+ *= require jquery-ui.min
  *= require jquery.dynatable
  *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap
+ *= require bootstrap-glyphicons
  *= require bootstrap-datetimepicker
- *= require bootstrap-wysihtml5
- *= require bootstrap-submenu
  *= require responsive-tables
- *= require foundation_and_overrides
+ *= require foundation.min
  *= require bootsy
  *= require select2
-*/
+
 
 /* Branding colors */
 
-$blue: #2C3E50;
+$blue: #0D9AFF;
 $lightblue: #45A1DE;
-$green: #1ABC9C;
+$green: #67CF30;
 $red: #E95D4E;
+$yellow: #FFF90D;
 $orange: #F4A425;
 
-
+/* Importing supporting files. If you create a new css file you'll need to add it here.  */
 @import 'compass';
 @import 'compass/css3';
+@import 'sidebars';
 @import 'forms';
 @import 'tables';
 @import 'student_dashboard';
 @import 'tabs';
 @import 'timeline';
 @import 'analytics';
+@import 'breadcrumbs';
+@import 'navigation';
+@import 'buttons';
+
+/* Background color for page */
 
 body {
-  background-image: image-url("cloud_bg.gif");
+  background-color: $blue;
 }
 
+/* Header styles */
 h1, h2, h3, h4, h5 {
   font-family: "Avenir", sans-serif;
 }
@@ -58,9 +65,11 @@ h6 {
   font-size: .7rem;
 }
 
-  .vco-storyjs {
-    z-index: 0;
-  }
+/* Timeline overrides */
+
+.vco-storyjs {
+  z-index: 0;
+}
 
  .vco-storyjs ol{
   list-style: decimal !important;
@@ -70,17 +79,8 @@ h6 {
   list-style: disc !important;
 }
 
-.sub-nav {
-  margin: 0 !important;
-}
 
-.sub-nav dt a, .sub-nav dd a, .sub-nav li a {
-  color: #FFF;
-}
-
-.sub-nav dt a:hover, .sub-nav dd a:hover, .sub-nav li a:hover {
-  color: #FFF;
-}
+/* Text editor box styling */
 
 .wysihtml5-sandbox  {
   height: 15rem !important;
@@ -89,4 +89,14 @@ h6 {
 
 .wysihtml5-sandbox body.wysihtml5-editor {
   padding: 0 !important;
+}
+
+.wysihtml5-toolbar li {
+  list-style-type: none;
+  display: inline;
+}
+
+ul.wysihtml5-toolbar {
+  margin: 0;
+  padding: 0;
 }

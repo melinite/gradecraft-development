@@ -14,7 +14,7 @@ class AssignmentType < ActiveRecord::Base
   has_many :assignment_weights
   has_many :grades
   has_many :score_levels, -> { order "value" }
-  accepts_nested_attributes_for :score_levels, allow_destroy: true
+  accepts_nested_attributes_for :score_levels, allow_destroy: true, :reject_if => proc { |a| a['value'].blank? || a['name'].blank? }
 
   validates_presence_of :name, :points_predictor_display, :point_setting
   before_save :ensure_score_levels, :if => :multi_select?

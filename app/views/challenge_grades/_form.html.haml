@@ -9,4 +9,4 @@
   %h6.small Can the student see this grade?
 
   .form-actions
-    = f.button :submit, :class => "button tiny radius"
+    = f.button :submit, "#{ @challenge_grade.persisted? ? 'Update' : 'Submit'} #{ term_for :challenge_grade }",  :class => "button tiny radius"

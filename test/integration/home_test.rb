@@ -22,7 +22,7 @@ class HomeTest < ActionDispatch::IntegrationTest
     log_in 'ilovegood@hogwarts.edu', 'password'
 
     visit '/'
-    click_link 'Log In'
+    click_link 'GradeCraft Login'
     fill_in 'Email', :with => 'llovegood@hogwarts.edu'
     fill_in 'Password', :with => 'password'
     click_button 'Log in'

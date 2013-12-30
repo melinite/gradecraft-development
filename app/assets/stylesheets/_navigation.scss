@@ -1,0 +1,33 @@
+.top-bar-section .classInfo {
+  width: 20rem;
+  background-color: #333;
+  font-size: .8rem;
+  color: #FFF;
+  padding: 1rem;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+.top-bar-section .classInfo li {
+  margin-bottom: .75rem;
+}
+
+.top-bar-section .dropdown.classInfo li a, .top-bar-section .dropdown.classInfo li a:hover {
+  background-color: #333;
+  padding: 0;
+  display: inline;
+}
+
+.top-bar-section .dropdown.classInfo li a {
+  color: $lightblue;
+}
+
+.sub-nav dt a, .sub-nav dd a, .sub-nav li a {
+  color: #FFF;
+}
+
+.sub-nav dt a:hover, .sub-nav dd a:hover, .sub-nav li a:hover {
+  color: #FFF;
+}
+

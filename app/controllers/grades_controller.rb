@@ -173,7 +173,7 @@ class GradesController < ApplicationController
       flash[:notice] = "File missing"
       redirect_to assignment_path(@assignment)
     else
-      CSV.foreach(params[:file].tempfile, :headers => true) do |row|
+      CSV.foreach(params[:file].tempfile, :headers => true, :encoding => 'ISO-8859-1') do |row|
         @students.each do |student|
           if student.username == row[2] && row[3].present?
             if student.grades.where(:assignment_id => @assignment).present?

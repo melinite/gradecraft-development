@@ -1,7 +1,10 @@
+/ Assignment Type Navigation
 = content_nav_for AssignmentType, "New #{term_for :assignment}" do
   %li= link_to "See All #{term_for :assignment} Types", assignment_types_path, :class => "button radius tiny success"
 
 %h2= @title
+
+= render 'layouts/alerts'
 
 = render 'form'
 

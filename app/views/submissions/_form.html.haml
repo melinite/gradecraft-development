@@ -23,6 +23,6 @@
   .form-actions
     .btn-toolbar
       .btn-group
-        = f.button :submit, "Submit", :class => "button tiny radius"
+        = f.button :submit, "#{@submission.persisted? ? 'Update' : 'Create'} Submission", :class => "button tiny radius"
       .btn-group
         = link_to 'Cancel', assignment_path(@assignment), :class => 'button tiny radius'

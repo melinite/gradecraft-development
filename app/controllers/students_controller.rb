@@ -8,9 +8,11 @@ class StudentsController < ApplicationController
   def index
     @title = "#{current_course.user_term} Roster"
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+  end
+
+  def export
     @auditing = current_course.students.auditing
-    @students = current_course.students.being_graded
-    respond_to do |format|
+    @students = current_course.students.being_gradedrespond_to do |format|
       format.html
       format.json { render json: @students.where("first_name like ?", "%#{params[:q]}%") }
       format.csv { send_data @students.csv_for_course(current_course) }

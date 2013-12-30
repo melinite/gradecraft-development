@@ -12,5 +12,5 @@
   .form-actions
     .btn-toolbar
       .btn-group
-        = f.button :submit, :class => "button tiny radius"
+        = f.button :submit, "#{@criterium.persisted? ? 'Update' : 'Create'} Criterium", :class => "button tiny radius"
       .btn-group

@@ -70,6 +70,7 @@ group :development do
   gem 'minitest-matchers'
   gem 'minitest-reporters'
   gem 'minitest-capybara'
+  gem 'rack-mini-profiler'
   gem 'valid_attribute'
   gem 'capybara'
   gem 'foreman'

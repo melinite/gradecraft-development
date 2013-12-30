@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AssignmentTypeTest < ActiveSupport::TestCase
   test "sets weight for a particular student" do
-    assignment_type.
+
   end
 
   # Max weight for any particular assignment type
@@ -20,7 +20,7 @@ class AssignmentTypeTest < ActiveSupport::TestCase
 
   #does this assignment type have assignments coming up soon?
 
-  #is this assignment type mass gradeable? 
+  #is this assignment type mass gradeable?
 
   #how is this assignment graded?
 

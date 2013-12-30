@@ -290,5 +290,5 @@
     .clearfix
 
   .right
-    = f.button :submit, :class => "button tiny radius"
+    = f.button :submit, "#{@course.persisted? ? 'Update' : 'Create'} Course", :class => "button tiny radius"
     = link_to 'Cancel', courses_path, :class => 'button tiny radius'
