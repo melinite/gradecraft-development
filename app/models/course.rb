@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
     :has_submissions, :teams_visible, :badge_use_scope,
     :weight_term, :badges_value, :predictor_setting, :max_group_size,
     :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
-    :assignments, :default_assignment_weight, :grade_scheme_id, :accepts_submissions,
+    :assignments, :default_assignment_weight, :accepts_submissions,
     :tagline, :academic_history_visible, :office, :phone, :class_email,
     :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times,
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
@@ -27,7 +27,7 @@ class Course < ActiveRecord::Base
     c.has_many :challenges
     c.has_many :challenge_grades, :through => :challenges
     c.has_many :earned_badges
-    c.has_many :grade_schemes
+    c.has_many :grade_scheme_elements
     c.has_many :grades
     c.has_many :groups
     c.has_many :group_memberships
@@ -36,13 +36,10 @@ class Course < ActiveRecord::Base
     c.has_many :teams
   end
 
-  has_many :grade_scheme_elements, :through => :grade_schemes
-  belongs_to :grade_scheme
-
   validates_presence_of :name, :courseno
 
   amoeba do
-    clone [ :assignments, :assignment_types, :badges, :categories, :challenges, :grade_schemes, :rubrics ]
+    clone [ :assignments, :assignment_types, :badges, :categories, :challenges, :grade_scheme_elements, :rubrics ]
     prepend :name => "Copy of "
   end
 
@@ -163,15 +160,15 @@ class Course < ActiveRecord::Base
   end
 
   def grade_level_for_score(score)
-    grade_scheme.try(:level, score)
+    grade_scheme_elements.where('low_range <= ? AND high_range >= ?', score, score).pluck('level').first
   end
 
   def grade_letter_for_score(score)
-    grade_scheme.try(:letter, score)
+    grade_scheme_elements.where('low_range <= ? AND high_range >= ?', score, score).pluck('letter').first
   end
 
   def element_for_score(score)
-    grade_scheme.try(:element_earned ,score)
+    grade_scheme_elements.where('low_range <= ? AND high_range >= ?', score, score).first
   end
 
   def membership_for_student(student)

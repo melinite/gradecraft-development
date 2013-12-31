@@ -161,8 +161,7 @@ GradeCraft::Application.routes.draw do
   resources :rubrics do
     resources :criteria
   end
-  resources :grade_schemes do
-    resources :grade_scheme_elements
+  resources :grade_scheme_elements do
     collection do
       post :destroy_multiple
     end

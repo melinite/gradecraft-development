@@ -1,7 +1,7 @@
 class Assignment < ActiveRecord::Base
   attr_accessible :name, :description, :point_total, :due_at, :created_at,
     :updated_at, :level, :present, :grades_attributes, :assignment_type,
-    :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
+    :assignment_type_id, :grade_scope, :visible, :required,
     :open_time, :accepts_submissions, :student_logged_button_text,
     :student_logged, :release_necessary,
     :score_levels_attributes, :open_at, :close_time, :course,
@@ -9,7 +9,7 @@ class Assignment < ActiveRecord::Base
     :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
     :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display,
     :assignment_score_levels_attributes, :assignment_score_level, :notify_released,
-    :mass_grade_type
+    :mass_grade_type, :include_in_timeline, :include_in_predictor
 
   self.inheritance_column = 'something_you_will_not_use'
 
@@ -56,6 +56,9 @@ class Assignment < ActiveRecord::Base
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }
   scope :team_assignments, -> { where grade_scope: "Team" }
+
+  scope :timelineable, -> { where(:include_in_timeline => true) }
+  scope :predictable, -> { where(:include_in_predictor => true) }
 
   scope :chronological, -> { order('due_at ASC') }
   scope :alphabetical, -> { order('name ASC') }
@@ -281,7 +284,9 @@ scope :grading_done, -> { where 'grades.present? == 1' }
   end
 
   def save_grades
-    grades.reload.each(&:save)
+    if self.point_total_changed?
+      grades.reload.each(&:save)
+    end
   end
 
   def save_weights

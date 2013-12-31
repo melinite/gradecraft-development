@@ -5,10 +5,9 @@ class AssignmentType < ActiveRecord::Base
     :course_id, :order_placement, :student_weightable, :mass_grade,
     :score_levels_attributes, :score_level, :mass_grade_type, :course,
     :student_logged_revert_button_text, :student_logged_button_text,
-    :notify_released
+    :notify_released, :include_in_timeline, :include_in_predictor
 
   belongs_to :course
-  belongs_to :grade_scheme
   has_many :assignments
   has_many :submissions, :through => :assignments
   has_many :assignment_weights
@@ -20,6 +19,8 @@ class AssignmentType < ActiveRecord::Base
   before_save :ensure_score_levels, :if => :multi_select?
 
   scope :student_weightable, -> { where(:student_weightable => true) }
+  scope :timelinable, -> { where(:include_in_timeline => true) }
+  scope :predictable, -> { where(:include_in_predictor => true) }
   scope :ordered, -> { order 'order_placement ASC' }
   scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignment_types.id = assignment_weights.assignment_type_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
 

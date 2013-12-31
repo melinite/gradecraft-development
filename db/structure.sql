@@ -315,7 +315,9 @@ CREATE TABLE assignment_types (
     student_weightable boolean,
     student_logged_button_text character varying(255),
     student_logged_revert_button_text character varying(255),
-    notify_released boolean DEFAULT true
+    notify_released boolean DEFAULT true,
+    include_in_timeline boolean DEFAULT true,
+    include_in_predictor boolean DEFAULT true
 );
 
 
@@ -415,7 +417,9 @@ CREATE TABLE assignments (
     media_caption character varying(255),
     points_predictor_display character varying(255),
     notify_released boolean DEFAULT true,
-    mass_grade_type character varying(255)
+    mass_grade_type character varying(255),
+    include_in_timeline boolean DEFAULT true,
+    include_in_predictor boolean DEFAULT true
 );
 
 
@@ -1359,7 +1363,8 @@ CREATE TABLE grade_scheme_elements (
     grade_scheme_id integer,
     description character varying(255),
     high_range integer,
-    team_id integer
+    team_id integer,
+    course_id integer
 );
 
 
@@ -1602,7 +1607,9 @@ CREATE TABLE teams (
     rank integer,
     score integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    teams_leaderboard boolean DEFAULT false,
+    in_team_leaderboard boolean DEFAULT false
 );
 
 
@@ -3123,3 +3130,9 @@ INSERT INTO schema_migrations (version) VALUES ('20131225013628');
 INSERT INTO schema_migrations (version) VALUES ('20131225013629');
 
 INSERT INTO schema_migrations (version) VALUES ('20131229171602');
+
+INSERT INTO schema_migrations (version) VALUES ('20131231042054');
+
+INSERT INTO schema_migrations (version) VALUES ('20131231135740');
+
+INSERT INTO schema_migrations (version) VALUES ('20131231151417');

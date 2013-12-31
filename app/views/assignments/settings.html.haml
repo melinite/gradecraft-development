@@ -19,7 +19,6 @@
         %th.sortable{"data-sort" => "string"} Visible
         %th.sortable{"data-sort" => "string"} Required
         %th.sortable{"data-sort" => "string"} Grade Scope
-        %th.sortable{"data-sort" => "string"} Grade Scheme
         %th.sortable{"data-sort" => "string"} Submissions?
         %th.sortable{"data-sort" => "string"} Release Necessary?
         %th
@@ -39,7 +38,6 @@
           %td= assignment.visible? ? 'Yes' : 'No'
           %td= assignment.required? ? 'Yes' : 'No'
           %td= assignment.grade_scope
-          %td= assignment.grade_scheme_id
           %td= assignment.accepts_submissions? ? 'Yes' : 'No'
           %td= assignment.release_necessary? ? 'Yes' : 'No'
           %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'button tiny radius'

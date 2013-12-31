@@ -1,0 +1,24 @@
+.small-12.columns
+  %h3= @title
+
+  %table.responsive.simpleTable
+    %thead
+      %tr
+        %th.sortable{"data-sort" => "string"} Grade
+        %th.sortable{"data-sort" => "string"} Level
+        %th.sortable{"data-sort" => "int"} Low Range
+        %th.sortable{"data-sort" => "int"} High Range
+        %th
+    %tbody
+      - @grade_scheme_elements.order_by_high_range.each do |element|
+        %tr
+          %td= element.letter
+          %td= element.level
+          %td= points element.low_range
+          %td= points element.high_range
+          %td
+            .button-bar
+              %ul.button-group.radius.round
+                %li= link_to 'View', grade_scheme_element_path(element), :class => 'button tiny small large'
+                %li= link_to 'Edit', edit_grade_scheme_element_path(element), :class => 'button tiny small large'
+                %li= link_to 'Delete', grade_scheme_element_path(element), :class => 'button tiny small large', :data => { confirm: 'Are you sure?' }, :method => :delete

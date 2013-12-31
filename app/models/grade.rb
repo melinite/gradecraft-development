@@ -26,8 +26,6 @@ class Grade < ActiveRecord::Base
   has_many :badges, :through => :earned_badges
   accepts_nested_attributes_for :earned_badges
 
-  has_many :grade_scheme_elements, :through => :assignment
-
   before_validation :cache_associations
   before_save :cache_score_and_point_total
 
@@ -133,7 +131,9 @@ class Grade < ActiveRecord::Base
   end
 
   def save_student
-    student.save
+    if self.raw_score_changed?
+      student.save
+    end
   end
 
   def save_team

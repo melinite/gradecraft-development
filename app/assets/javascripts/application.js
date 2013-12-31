@@ -28,10 +28,9 @@
 //= require analytics_dashboard
 //= require assignment_types
 //= require assignments
-//= require grade_schemes
+//= require grade_scheme_elements
 //= require nested_fields
 //= require users
-//= require grade_schemes
 //= require student_dashboard
 //= require stupidtable
 //= require submissions
@@ -44,6 +43,7 @@
 //= require datetimepicker
 //= require highcharts
 //= require select2
+//= require responsive-tables
 
 $(function(){ $(document).foundation(); });
 

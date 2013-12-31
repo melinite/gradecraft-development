@@ -21,14 +21,11 @@ class CoursesController < ApplicationController
   def new
     @title = "Create a New Course"
     @course = Course.new
-    @grade_schemes = GradeScheme.all
   end
 
   def edit
     @title = "Editing Basic Settings"
     @course = Course.find(params[:id])
-    @grade_schemes = GradeScheme.all
-    @grade_schemes = GradeScheme.all
   end
 
   def copy
@@ -94,9 +91,10 @@ class CoursesController < ApplicationController
   def timeline
     @course = current_course
     if current_course.team_challenges?
-      @events = @course.assignments + @course.challenges
+      @events = @course.assignments.timelineable + @course.challenges
+      debugger
     else
-      @events = @course.assignments
+      @events = @course.assignments.timelineable
     end
   end
 end

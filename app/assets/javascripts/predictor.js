@@ -12,7 +12,7 @@ var chartOptions = {
   chart: {
     renderTo: 'prediction',
     type: 'bar',
-    backgroundColor:null
+    backgroundColor: '#FFF'
   },
   title: {
     text: ' ',
@@ -37,8 +37,79 @@ var chartOptions = {
     min: 0,
     title: {
       text: 'Available Points'
-    }
-  },
+      },
+    plotBands: [{ // Light air
+                    from: 0,
+                    to: 500000,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'F',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Light breeze
+                    from: 500001,
+                    to: 600000,
+                    color: 'rgba(0, 0, 0, 0)',
+                    label: {
+                        text: 'D',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Gentle breeze
+                    from: 600001,
+                    to: 700000,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'C',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Moderate breeze
+                    from: 700001,
+                    to: 800000,
+                    color: 'rgba(0, 0, 0, 0)',
+                    label: {
+                        text: 'B',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Fresh breeze
+                    from: 800001,
+                    to: 900000,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'A-',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Strong breeze
+                    from: 900001,
+                    to: 1000000,
+                    color: 'rgba(0, 0, 0, 0)',
+                    label: {
+                        text: 'A',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // High wind
+                    from: 1000001,
+                    to: 2000000,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'A+',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }]
+            },
   labels: {
     formatter: function(){
       return this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

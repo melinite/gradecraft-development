@@ -32,8 +32,7 @@
     %h4 Course Setup
   %li.icn_film= link_to "Timeline", dashboard_path
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
-  - if current_course.grade_scheme_id?
-    %li.icn_calculator= link_to "Grading Scheme", grade_scheme_path(current_course.grade_scheme)
+  %li.icn_calculator= link_to "Grading Scheme", grade_scheme_elements_path
   %li.icn_group= link_to "Staff", staff_index_path
   %li.divider
 

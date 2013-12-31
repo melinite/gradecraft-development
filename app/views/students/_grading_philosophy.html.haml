@@ -1,5 +1,5 @@
 .small-12.columns
-  - if current_course.grade_scheme_id?
+  - if current_course.grade_scheme_elements.present?
     %table.responsive.simpleTable
       %thead
         %tr
@@ -9,7 +9,7 @@
           %th.sortable{"data-sort" => "string"} Letter Grade
           %th
       %tbody
-        - @grade_scheme.elements.order_by_high_range.each do |element|
+        - @grade_scheme_elements.order_by_high_range.each do |element|
           - if current_student_data.element_level == element
             %tr.achieved
               %td #{element.level}

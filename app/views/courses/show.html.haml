@@ -22,9 +22,6 @@
       %b Year:
       = @course.year
     %p
-      %b Course Grade Scheme:
-      = @course.grade_scheme.try(:name)
-    %p
       %b GradeCraft will accept assignment submissions for this course:
       = @course.has_submissions? ? 'Yes' : 'No'
     %p
