@@ -54,6 +54,11 @@ $(document).ready(function(){
     allowClear: true
   });
 
+  $("#team_student_ids").select2({
+    placeholder: "Select Students",
+    allowClear: true
+  });
+
   if ($('.s3_uploader').length) {
     $('.s3_uploader').S3Uploader({
       allow_multiple_files: false,

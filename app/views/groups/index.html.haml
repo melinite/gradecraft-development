@@ -12,8 +12,6 @@
         %th.sortable{"data-sort" => "string"} Status
         %th.sortable{"data-sort" => "string"} Assignments
         %th
-        %th
-        %th
     %tbody
       - @groups.each do |group|
         %tr
@@ -25,6 +23,9 @@
           %td
             - group.assignment_groups.each do |ag|
               %li= link_to ag.assignment.name, ag.assignment
-          %td= link_to "See #{term_for :group}", group_path(group), :class => 'button tiny radius'
-          %td= link_to 'Edit', edit_group_path(group), :class => 'button tiny radius'
-          %td= link_to 'Delete', group_path(group), :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete
+          %td
+            .button-bar
+              %ul.button-group.round
+                %li= link_to "See #{term_for :group}", group_path(group), :class => 'button tiny'
+                %li= link_to 'Edit', edit_group_path(group), :class => 'button tiny'
+                %li= link_to 'Delete', group_path(group), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete

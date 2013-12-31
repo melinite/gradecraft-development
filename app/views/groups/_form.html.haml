@@ -9,13 +9,9 @@
       = f.select :approved, [[], ["Approved"], ["Rejected"]]
   .small-12.medium-12.columns
     - if current_user.is_student?
-      .small-12.medium-4.columns
-        = f.label :students, "#{term_for :students}"
-        = f.collection_select :student_tokens, current_course_data.students, :id, :name, {}, {multiple:true}
+      = f.association :students, :collection => current_course_data.students, as: :select
     - if current_user.is_staff?
-      .small-12.medium-4.columns
-        = f.label :student_ids, "#{term_for :students}"
-        = f.association :students, :collection => current_course_data.students, as: :select
+      = f.association :students, :collection => current_course_data.students, as: :select
 
   .small-12.medium-12.columns
     - if current_user.is_student?
@@ -25,7 +21,5 @@
 
   .small-12.medium-12.columns
     .form-actions
-      = submit_tag, "#{@group.persisted? ? 'Update' : 'Create'} #{ term_for :group } ",  :class => 'button tiny radius'
+      = submit_tag "#{@group.persisted? ? 'Update' : 'Create'} #{ term_for :group } ",  :class => 'button tiny radius'
       = link_to 'Cancel', groups_path, :class => 'button tiny radius'
-
-

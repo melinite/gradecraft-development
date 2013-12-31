@@ -80,12 +80,11 @@
       %label.checkbox{ :for => "accepts_submissions" }
         = f.label :accepts_submissions, "Assignment Submissions"
         = f.check_box :accepts_submissions
-      %h6.small Will you be using GradeCraft to accept assignment submissions?"
+      %h6.small Will you be using GradeCraft to accept assignment submissions?
 
     .small-12.large-4.columns
-      = f.label :predictor_setting, "Display grade predictor (Student Dashboard)?"
-      = f.radio_button :predictor_setting, "Yes"
-      = f.radio_button :predictor_setting, "No"
+      = f.input :predictor_setting, :label => "Grade Predictor"
+      %h6.small The grade predictor is a tab on the student dashboard where students can plan out their course work and estimate their grade.
 
     .clearfix
 
@@ -99,9 +98,7 @@
     %h4 BADGES
     %hr
     .small-12.large-4.columns
-      = f.label :badge_setting, "Badges"
-      = f.radio_button :badge_setting, "Yes"
-      = f.radio_button :badge_setting, "No"
+      = f.input :badge_setting, :label => "Badges"
       %h6.small Do you want to use badges in your course?"
 
     .small-12.large-4.columns
@@ -110,9 +107,7 @@
       %h6.small Would you like to call badges something else?"
 
     .small-12.large-4.columns
-      = f.label :shared_badges, "Social Badges"
-      = f.radio_button :shared_badges, "Yes"
-      = f.radio_button :shared_badges, "No"
+      = f.input :shared_badges, :label => "Social Badges"
       %h6.small Students can share badges with the class"
 
     .clearfix
@@ -153,9 +148,9 @@
       %h6.small Will the sections have to complete assignments collaboratively?
 
     .small-12.large-4.columns
-      %label.checkbox{ :for => "challenge_term" }
+      %label.text_field{ :for => "challenge_term" }
         = f.label :challenge_term, "Section Assignment Term"
-        = f.check_box :challenge_term
+        = f.text_field :challenge_term
       %h6.small What would you like to call these section assignments? Quests, Boss Battles, Challenges...
 
     .small-12.large-4.columns
@@ -175,7 +170,7 @@
     .small-12.large-4.columns
       = f.label :team_roles, "Section Roles"
       = f.text_field :team_roles
-      %h6.small Do students self-declare their role within the section?"
+      %h6.small Do students self-declare their role within the section?
 
     .small-12.large-4.columns
       = f.label :team_leader_term, "What do you call your section leaders?"
@@ -198,14 +193,15 @@
       = f.text_field :group_term
       %h6.small What will these groups be called?
 
-    .small-12.large-4.columns
-      = f.label :max_group_size
-      = f.text_field :max_group_size
-
     .clearfix
 
     .small-12.large-4.columns
-      = f.label :min_group_size
+      = f.label :max_group_size, "Maximum Group Size"
+      = f.text_field :max_group_size
+
+
+    .small-12.large-4.columns
+      = f.label :min_group_size, "Minimum Group Size"
       = f.text_field :min_group_size
 
     .clearfix

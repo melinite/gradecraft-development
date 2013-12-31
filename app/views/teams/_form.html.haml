@@ -1,9 +1,9 @@
-= form_for @team do |f|
+= simple_form_for @team do |f|
   .small-12.medium-4.columns
     = f.label :name, "#{current_course.team_term} Name"
     = f.text_field :name
-  .small-12.columns
-    = f.check_box :student_ids
+  .small-12.medium-4.columns
+    = f.association :students, :collection => current_course_data.students, as: :select
 
   .clearfix
 
