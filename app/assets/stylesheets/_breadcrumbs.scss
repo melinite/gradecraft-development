@@ -1,7 +1,5 @@
 .content-nav {
-  margin-top: 1rem;
-  opacity: .9;
-  margin-bottom: 1.45rem;
+  margin-bottom: 1rem;
 }
 
 ul.breadcrumbs {
@@ -9,6 +7,7 @@ ul.breadcrumbs {
   border: none;
   border-top-right-radius: 1.5rem;
   border-bottom-left-radius: 0;
+  border-top-left-radius: .3rem;
   border-bottom-right-radius: 0;
   margin-bottom: 0;
 
@@ -19,15 +18,13 @@ ul.breadcrumbs {
   height: 40px;
   margin: 0;
   background-color: $green;
-  border-bottom-left-radius: 1.5rem;
-  border-bottom-right-radius: .5rem;
   dt {
     color: #FFF;
 
   }
 
   li {
-    box-shadow: 0px 0px 5px #666;
+    box-shadow: 0px 0px 4px #777;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
   }

@@ -1,6 +1,10 @@
-= content_nav_for Category, "New Category" do
-  %li= link_to "See All Categories", categories_path, :class => "button tiny radius"
+.small-12.panel.mainContent
+  / Category Navigation
+  = content_nav_for Category, "New Category" do
+    %li= link_to "See All Categories", categories_path, :class => "button tiny radius"
 
-.small-12
-  %h3= @title
-  = render 'form'
+  .small-12
+    %h3= @title
+    = render 'form'
+
+  .clearfix

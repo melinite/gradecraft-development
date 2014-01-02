@@ -20,7 +20,7 @@ class BadgesController < ApplicationController
 
   def edit
     @badge = current_course.badges.find(params[:id])
-    @title = "Edit #{@badge.name}"
+    @title = "Editing #{@badge.name}"
   end
 
   def create

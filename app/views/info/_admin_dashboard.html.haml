@@ -1,6 +1,12 @@
-.small-12.section
-  %h2= "Course Dashboard"
+.small-12.panel.columns.mainContent
+  = content_nav_for "My Dashboard" do
+    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
 
-  %hr
+  .small-12.columns
+    %h2= "Course Dashboard"
+
+    %hr
 
   #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
+
+  .clearfix

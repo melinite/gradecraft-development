@@ -9,7 +9,6 @@
       })
     }
 
-
     var Badge = Backbone.Model.extend({
     })
 

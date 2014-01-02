@@ -1,58 +1,60 @@
-- if current_user.is_staff?
-  = content_nav_for @assignment, Submission do
-    %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "button tiny radius success"
-    - if @assignment.is_individual?
-      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius success"
-    - elsif @assignment.has_groups?
-      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :group_id => @submission.group_id), :class => "button tiny radius success"
-    - if @assignment.grade_for_student(@submission.student) && @assignment.is_individual?
-      %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "button tiny radius success"
-    - elsif @assignment.is_individual?
-      %li= link_to 'Grade Submission', edit_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => @submission.student.id), :class => 'button tiny radius success'
-    - if @assignment.has_groups?
-      %li= link_to 'Edit Grades', group_grade_assignment_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "button tiny radius success"
-      %li= link_to 'Grade Submission', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => @submission.group.id), :class => 'button tiny radius success'
-
-    %li= link_to "Delete Submission", assignment_submission_path(@assignment, @submission), :class => "button tiny radius success", :data => { confirm: 'Are you sure?' }, :method => :delete
-- else
-  = content_nav_for "My #{@assignment.name} Submission" do
-    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius success"
-    - if @assignment.is_individual?
-      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius success"
-    - elsif @assignment.has_groups?
-      %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :group_id => @submission.group_id), :class => "button tiny radius success"
-
-
-.small-12.columns
-  %h2
-    = link_to "#{@assignment.try(:name)}", @submission.assignment
+.small-12.panel.mainContent
+  / Submissions navigation
   - if current_user.is_staff?
-    %h4
+    = content_nav_for @assignment, Submission do
+      %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "button tiny radius"
       - if @assignment.is_individual?
-        = "#{term_for :student}:"
-        = link_to @submission.student.try(:name), student_path(@submission.student)
+        %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius"
       - elsif @assignment.has_groups?
-        = "#{term_for :group}:"
-        = link_to @submission.group.try(:name), group_path(@submission.group)
-  .small-12
-    .heading Submitted:
-    = @submission.created_at
-    - if @submission.updated_at != @submission.created_at
-      .heading Updated:
-      = @submission.updated_at
-    - if @submission.link?
-      .heading Link:
-      = link_to @submission.link, @submission.link
+        %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :group_id => @submission.group_id), :class => "button tiny radius"
+      - if @assignment.grade_for_student(@submission.student) && @assignment.is_individual?
+        %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "button tiny radius"
+      - elsif @assignment.is_individual?
+        %li= link_to 'Grade Submission', edit_assignment_grade_path("assignment_id"=>@assignment.id, :student_id => @submission.student.id), :class => 'button tiny radius'
+      - if @assignment.has_groups?
+        %li= link_to 'Edit Grades', group_grade_assignment_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "button tiny radius"
+        %li= link_to 'Grade Submission', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => @submission.group.id), :class => 'button tiny radius'
 
-    - if @submission.submission_files.present?
-      .heading Files:
-      - @submission.submission_files.each do |sf|
-        = link_to sf.filename, sf.url
+      %li= link_to "Delete Submission", assignment_submission_path(@assignment, @submission), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
+  - else
+    = content_nav_for "My #{@assignment.name} Submission" do
+      %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+      - if @assignment.is_individual?
+        %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius"
+      - elsif @assignment.has_groups?
+        %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :group_id => @submission.group_id), :class => "button tiny radius"
 
-    .heading Statement:
-    = raw @submission.text_comment
 
-  - if @assignment.is_individual?
-    = render 'individual_show'
-  - elsif @assignment.has_groups?
-    = render 'group_show'
+  .small-12.columns
+    %h2
+      = link_to "#{@assignment.try(:name)}", @submission.assignment
+    - if current_user.is_staff?
+      %h4
+        - if @assignment.is_individual?
+          = "#{term_for :student}:"
+          = link_to @submission.student.try(:name), student_path(@submission.student)
+        - elsif @assignment.has_groups?
+          = "#{term_for :group}:"
+          = link_to @submission.group.try(:name), group_path(@submission.group)
+    .small-12
+      .heading Submitted:
+      = @submission.created_at
+      - if @submission.updated_at != @submission.created_at
+        .heading Updated:
+        = @submission.updated_at
+      - if @submission.link?
+        .heading Link:
+        = link_to @submission.link, @submission.link
+
+      - if @submission.submission_files.present?
+        .heading Files:
+        - @submission.submission_files.each do |sf|
+          = link_to sf.filename, sf.url
+
+      .heading Statement:
+      = raw @submission.text_comment
+
+    - if @assignment.is_individual?
+      = render 'individual_show'
+    - elsif @assignment.has_groups?
+      = render 'group_show'

@@ -1,23 +1,25 @@
-#highchart
-- @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-  .small-12
-    %h3= link_to assignment_type.name, assignment_type
-  %table.responsive.simpleTable
-    %thead
-      %tr
-        %th Name
-        %th Minimum Score
-        %th Maximum Score
-        %th Average
-        %th Average Earned Score
-        %th Grade Distribution
-    %tbody
-      - assignments.each do |assignment|
+.small-12.panel.mainContent
+  / Assignment Charts Navigation
+  #highchart
+  - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+    .small-12
+      %h3= link_to assignment_type.name, assignment_type
+    %table.responsive.simpleTable
+      %thead
         %tr
-          %td= link_to assignment.name, assignment
-          %td= assignment.low_score
-          %td= assignment.high_score
-          %td= assignment.average
-          %td= assignment.submitted_average
-          %td
-            %div{:class => "grades_per_assign", :data => { :id => assignment.id.to_s }}
+          %th Name
+          %th Minimum Score
+          %th Maximum Score
+          %th Average
+          %th Average Earned Score
+          %th Grade Distribution
+      %tbody
+        - assignments.each do |assignment|
+          %tr
+            %td= link_to assignment.name, assignment
+            %td= assignment.low_score
+            %td= assignment.high_score
+            %td= assignment.average
+            %td= assignment.submitted_average
+            %td
+              %div{:class => "grades_per_assign", :data => { :id => assignment.id.to_s }}

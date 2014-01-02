@@ -1,13 +1,14 @@
 %table.responsive.simpleTable
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"} #{term_for :student}
+      %th.sortable{"data-sort" => "string"} First Name
+      %th.sortable{"data-sort" => "string"} Last Name
       %th.sortable{"data-sort" => "string"} #{term_for :badges}
   %tbody#shared_badges_table
     - SharedEarnedBadge.where(course: current_course).group_by(&:user_id).each do |user_id, sebs|
       %tr
         %td= link_to sebs[0].student_name, student_path(sebs[0].user_id)
-        - if user_id == current_student.id
+        - if current_user.is_student? && user_id == current_student.id
           %td#current_user_badges
             - sebs.each do |seb|
               = image_tag seb.icon, :alt => seb.name, :width => '40'

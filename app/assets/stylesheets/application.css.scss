@@ -2,7 +2,6 @@
  *= require jquery.fileupload-ui
  *= require s3_direct_upload_progress_bars
  *= require jquery-ui.min
->>>>>>> Stashed changes
  *= require jquery.dynatable
  *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap
@@ -10,6 +9,7 @@
  *= require bootstrap-datetimepicker
  *= require responsive-tables
  *= require foundation.min
+ *= require foundation_and_overrides
  *= require bootsy
  *= require select2
 
@@ -41,6 +41,15 @@ $orange: #F4A425;
 
 body {
   background-color: $blue;
+}
+
+.small-12.panel.mainContent {
+  margin-top: 1rem;
+  padding: 0;
+  border-left: 10px solid $green;
+  background-color: #FFF;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: .3rem;
 }
 
 /* Header styles */
@@ -81,23 +90,3 @@ h6 {
 }
 
 
-/* Text editor box styling */
-
-.wysihtml5-sandbox  {
-  height: 15rem !important;
-  padding-top: 0;
-}
-
-.wysihtml5-sandbox body.wysihtml5-editor {
-  padding: 0 !important;
-}
-
-.wysihtml5-toolbar li {
-  list-style-type: none;
-  display: inline;
-}
-
-ul.wysihtml5-toolbar {
-  margin: 0 0 5px;
-  padding: 0;
-}

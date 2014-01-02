@@ -30,7 +30,7 @@ class CoursesController < ApplicationController
 
   def copy
     @course = Course.find(params[:id])
-    new_course = @course.amoeba_dup
+    new_course = @course.dup
     new_course.save
     redirect_to courses_path
   end

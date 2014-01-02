@@ -1,16 +1,18 @@
-= content_nav_for @user do
-  %li= link_to "Staff Index", staff_index_path, :class => "button tiny radius success"
-  %li= link_to "Create a New Staff Member", new_user_path, :class => "button tiny radius success"
-  %li= link_to "Edit #{@user.name}", edit_user_path(@user), :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Staff Navigation
+  = content_nav_for @user do
+    %li= link_to "Staff Index", staff_index_path, :class => "button tiny radius"
+    %li= link_to "Create a New Staff Member", new_user_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@user.name}", edit_user_path(@user), :class => "button tiny radius"
 
-.small-12.columns
-  %h2 Courses
-  %ul
-    - @user.courses.each do |course|
-      %li= link_to course.name, course
+  .small-12.columns
+    %h2 Courses
+    %ul
+      - @user.courses.each do |course|
+        %li= link_to course.name, course
 
-  %h4 Recently Graded
-  - current_course.grades.where(:graded_by => current_user).each do |grade|
-    = grade.assignment
-    = grade.score
-    = grade.student
+    %h4 Recently Graded
+    - current_course.grades.where(:graded_by => current_user).each do |grade|
+      = grade.assignment
+      = grade.score
+      = grade.student

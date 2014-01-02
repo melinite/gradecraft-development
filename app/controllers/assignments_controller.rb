@@ -13,7 +13,10 @@ class AssignmentsController < ApplicationController
     @assignment = current_course.assignments.find(params[:id])
     @title = @assignment.name
     @groups = @assignment.groups
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
     if current_user.is_student?
       if @assignment.accepts_submissions?
         @submission = @assignment.submissions.new
@@ -41,7 +44,7 @@ class AssignmentsController < ApplicationController
 
   def copy
     @assignment = current_course.assignments.find(params[:id])
-    new_assignment = @assignment.amoeba_dup
+    new_assignment = @assignment.dup
     new_assignment.save
     redirect_to assignments_path
   end

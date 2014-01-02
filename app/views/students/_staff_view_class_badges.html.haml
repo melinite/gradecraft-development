@@ -1,18 +1,17 @@
 = content_nav_for Badge do
-  %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "button tiny radius success"
-  %li= link_to "See All #{current_course.badge_term.pluralize}", badges_path, :class => "button tiny radius success"
+  %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "button tiny radius"
 
 .small-12.columns
   %h2 #{current_course.badge_term.pluralize} Leaderboard
 
   %dl.tabs{:data => {'tab' => true}}
     %dd.active
-      %a{ "href" => "#tab1" } Shared #{current_course.badge_term.pluralize}
+      %a{ "href" => "#tab1" } All Awarded #{current_course.badge_term.pluralize}
     %dd
-      %a{ "href" => "#tab2" } All #{current_course.badge_term.pluralize}
+      %a{ "href" => "#tab2" } Shared #{current_course.badge_term.pluralize}
 
   .tabs-content
-    .content.active#tab1
-      = render "students/public_class_badges"
-    .content#tab2
+    .content.active#tab1.small-12.columns
       = render "students/all_class_badges"
+    .content#tab2.small-12.columns
+      = render "students/public_class_badges"

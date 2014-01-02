@@ -1,38 +1,40 @@
-= content_nav_for @assignment, "Group Grade" do
-  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Grades Navigation
+  = content_nav_for @assignment, "Group Grade" do
+    %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
 
-.small-12.columns
-  %h2= @title
-  .heading= "Grading out of: #{points @assignment.point_total} points"
-  = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => group_grade_assignment_path(@assignment) do |f|
+  .small-12.columns
+    %h2= @title
+    .heading= "Grading out of: #{points @assignment.point_total} points"
+    = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => group_grade_assignment_path(@assignment) do |f|
 
-    #massGrade
-      %table
-        - @grades.each_with_index do |grade, i|
-          %tr
-            %td= grade.student.try(:name)
-            %td
-              = f.simple_fields_for :grades, grade do |gf|
-                = gf.hidden_field :graded_by_id
-                - if grade.status.nil? || ! grade.persisted?
-                  = gf.hidden_field :status, :value => "Graded"
-                = gf.hidden_field :student_id
-                = gf.hidden_field :group_id, :value => "#{@group.id}"
-                = label_tag do
-                  - if @assignment.grade_select?
-                    = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name, grade.raw_score), include_blank: true
-                  - elsif @assignment.grade_radio?
-                    - @score_levels.each do |score_level|
-                      = gf.label :raw_score, score_level.name, value: score_level.value
-                      = gf.radio_button :raw_score, score_level.value, :class => "radio_inline"
-                  - elsif @assignment.grade_text?
-                    = gf.text_field :raw_score
-                  - elsif @assignment.grade_checkboxes?
-                    = gf.check_box :raw_score, {}, @assignment.point_total
-                  - else
-                    = gf.text_field :raw_score
-                = gf.text_area :feedback, :style => "width: 300px; height: 60px;"
+      #massGrade
+        %table
+          - @grades.each_with_index do |grade, i|
+            %tr
+              %td= grade.student.try(:name)
+              %td
+                = f.simple_fields_for :grades, grade do |gf|
+                  = gf.hidden_field :graded_by_id
+                  - if grade.status.nil? || ! grade.persisted?
+                    = gf.hidden_field :status, :value => "Graded"
+                  = gf.hidden_field :student_id
+                  = gf.hidden_field :group_id, :value => "#{@group.id}"
+                  = label_tag do
+                    - if @assignment.grade_select?
+                      = gf.select :raw_score, options_from_collection_for_select(@score_levels, :value, :name, grade.raw_score), include_blank: true
+                    - elsif @assignment.grade_radio?
+                      - @score_levels.each do |score_level|
+                        = gf.label :raw_score, score_level.name, value: score_level.value
+                        = gf.radio_button :raw_score, score_level.value, :class => "radio_inline"
+                    - elsif @assignment.grade_text?
+                      = gf.text_field :raw_score
+                    - elsif @assignment.grade_checkboxes?
+                      = gf.check_box :raw_score, {}, @assignment.point_total
+                    - else
+                      = gf.text_field :raw_score
+                  = gf.text_area :feedback, :style => "width: 300px; height: 60px;"
 
-      .form-actions
-        = f.button :submit, @submit_message, :class => "button tiny radius"
-        = link_to 'Cancel', assignment_path(@assignment), :class => 'button tiny radius'
+        .form-actions
+          = f.button :submit, @submit_message, :class => "button tiny radius"
+          = link_to 'Cancel', assignment_path(@assignment), :class => 'button tiny radius'

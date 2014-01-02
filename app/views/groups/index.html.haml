@@ -1,31 +1,35 @@
-= content_nav_for Group do
-  %li= link_to "New #{term_for :group}", new_group_path(@assignment), :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Groups Navigation
+  = content_nav_for Group do
+    %li= link_to "New #{term_for :group}", new_group_path(@assignment), :class => "button tiny radius"
 
-.small-12.columns
-  %h2= @title
+  .small-12.columns
+    %h2= @title
 
-  %table.responsive.simpleTable
-    %thead
-      %tr
-        %th.sortable{"data-sort" => "string"} Group Name
-        %th.sortable{"data-sort" => "string"}= "#{current_course.user_term}s"
-        %th.sortable{"data-sort" => "string"} Status
-        %th.sortable{"data-sort" => "string"} Assignments
-        %th
-    %tbody
-      - @groups.each do |group|
+    %table.responsive.simpleTable
+      %thead
         %tr
-          %td= link_to group.name, group_path(group)
-          %td
-            - group.group_memberships.each do |gm|
-              %li= link_to gm.student.name, student_path(gm.student)
-          %td= group.approved
-          %td
-            - group.assignment_groups.each do |ag|
-              %li= link_to ag.assignment.name, ag.assignment
-          %td
-            .button-bar
-              %ul.button-group.round
-                %li= link_to "See #{term_for :group}", group_path(group), :class => 'button tiny'
-                %li= link_to 'Edit', edit_group_path(group), :class => 'button tiny'
-                %li= link_to 'Delete', group_path(group), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+          %th.sortable{"data-sort" => "string"} Group Name
+          %th.sortable{"data-sort" => "string"}= "#{current_course.user_term}s"
+          %th.sortable{"data-sort" => "string"} Status
+          %th.sortable{"data-sort" => "string"} Assignments
+          %th
+      %tbody
+        - @groups.each do |group|
+          %tr
+            %td= link_to group.name, group_path(group)
+            %td
+              - group.group_memberships.each do |gm|
+                %li= link_to gm.student.name, student_path(gm.student)
+            %td= group.approved
+            %td
+              - group.assignment_groups.each do |ag|
+                %li= link_to ag.assignment.name, ag.assignment
+            %td
+              .button-bar
+                %ul.button-group.round
+                  %li= link_to "See #{term_for :group}", group_path(group), :class => 'button tiny'
+                  %li= link_to 'Edit', edit_group_path(group), :class => 'button tiny'
+                  %li= link_to 'Delete', group_path(group), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+
+  .clearfix

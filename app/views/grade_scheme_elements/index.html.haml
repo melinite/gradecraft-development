@@ -1,4 +1,5 @@
-.small-12.columns
+.small-12.panel.mainContent
+  / Criteria Levels Navigation
   %h3= @title
 
   %table.responsive.simpleTable
@@ -22,3 +23,5 @@
                 %li= link_to 'View', grade_scheme_element_path(element), :class => 'button tiny small large'
                 %li= link_to 'Edit', edit_grade_scheme_element_path(element), :class => 'button tiny small large'
                 %li= link_to 'Delete', grade_scheme_element_path(element), :class => 'button tiny small large', :data => { confirm: 'Are you sure?' }, :method => :delete
+
+  .clearfix

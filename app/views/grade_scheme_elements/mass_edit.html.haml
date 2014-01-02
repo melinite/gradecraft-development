@@ -1,6 +1,10 @@
-= content_nav_for GradeSchemeElement do
-  %li= link_to "Grade Scheme", grade_scheme_elements_path, :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Criteria Levels Navigation
+  = content_nav_for GradeSchemeElement do
+    %li= link_to "Grade Scheme", grade_scheme_elements_path, :class => "button tiny radius"
 
-.small-12.columns
-  %h3= @title
-  = render 'form'
+  .small-12.columns
+    %h3= @title
+    = render 'form'
+
+  .clearfix

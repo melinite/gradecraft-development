@@ -1,30 +1,34 @@
-= content_nav_for @badge, "Quick Award #{term_for :badges}" do
-  %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius success"
-  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Earned Badges Navigation
+  = content_nav_for @badge, "Quick Award #{term_for :badges}" do
+    %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
 
-.small-12.columns
-  %h3= @title
-  - if current_course.has_teams?
-    .filters
-      = form_tag mass_award_badge_path, :method => :get do
-        = hidden_field_tag :badge_id, @badge.id
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
-        = submit_tag 'Filter', :class => 'button tiny radius'
+  .small-12.columns
+    %h3= @title
+    - if current_course.has_teams?
+      .filters
+        = form_tag mass_award_badge_path, :method => :get do
+          = hidden_field_tag :badge_id, @badge.id
+          = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
+          = submit_tag 'Filter', :class => 'button tiny radius'
 
-  #massGrade
-    = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|
-      .btn-group
-        %button.select-all.button.tiny.radius= "Check All"
-        %button.select-none.button.tiny.radius.success= "Uncheck"
-      %table
-        - @earned_badges.each_with_index do |eb, i|
-          %tr
-            %td= link_to eb.student.name, student_path(eb.student)
-            %td
-              = f.simple_fields_for :earned_badges, eb do |ebf|
-                = ebf.hidden_field :student_id
-                = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
-                = ebf.check_box :score, {}, @badge.point_total
-      .form-actions
-        = f.button :submit, "Award", :class => "button tiny radius"
-        = link_to 'Cancel', badges_path, :class => 'button tiny radius'
+    #massGrade
+      = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|
+        .btn-group
+          %button.select-all.button.tiny.radius= "Check All"
+          %button.select-none.button.tiny.radius.success= "Uncheck"
+        %table
+          - @earned_badges.each_with_index do |eb, i|
+            %tr
+              %td= link_to eb.student.name, student_path(eb.student)
+              %td
+                = f.simple_fields_for :earned_badges, eb do |ebf|
+                  = ebf.hidden_field :student_id
+                  = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
+                  = ebf.check_box :score, {}, @badge.point_total
+        .form-actions
+          = f.button :submit, "Award", :class => "button tiny radius"
+          = link_to 'Cancel', badges_path, :class => 'button tiny radius'
+
+  .clearfix

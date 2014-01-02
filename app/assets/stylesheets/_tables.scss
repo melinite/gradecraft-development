@@ -2,21 +2,37 @@
 /** Table Styles **/
 
 table.responsive {
-  width: 100%;
 
   .button {
     margin-bottom: 0;
   }
 }
-
-table.responsive tbody, table.responsive tbody tr, table.responsive tbody td {
-  font-size: 0.77778rem;
-  padding: .2rem 1rem;
-  border-collapse: true;
+table.responsive tbody, table.responsive tbody tr {
+  padding: 0;
 }
 
-table tbody tr td, table tr td, table tfoot tr td {
-  line-height: 1.0rem;
+table td {
   margin: 0;
   padding: 0;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0 !important;
+  border-radius: .4rem;
+}
+
+table th {
+  text-transform: capitalize;
+  font-weight: normal;
+}
+
+ table .button-group li button.tiny {
+  margin: 0;
+  border-radius: 0;
+  padding: .4rem .5rem;
+}
+
+th.sorting-desc, th.sorting-asc {
+  color: $yellow;
 }

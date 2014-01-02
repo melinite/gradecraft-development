@@ -8,6 +8,9 @@ class StudentsController < ApplicationController
   def index
     @title = "#{current_course.user_term} Roster"
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
   end
 
   def export
@@ -56,7 +59,6 @@ class StudentsController < ApplicationController
 
 
   def class_badges
-    @badges = current_course.badges
   end
 
   def scores_by_assignment

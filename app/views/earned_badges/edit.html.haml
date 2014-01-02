@@ -1,5 +1,9 @@
-= content_nav_for @badge, @earned_badge do
-  %li
+.small-12.panel.mainContent
+  / Criteria Levels Navigation
+  = content_nav_for @badge, @earned_badge do
+    %li
 
-.small-12
-  = render 'form'
+  .small-12
+    = render 'form'
+
+  .clearfix

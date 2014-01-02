@@ -1,23 +1,27 @@
-= content_nav_for @assignment do
-  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "button tiny radius success"
-  %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius success"
-  %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius success"
-  - if @assignment.assignment_type.mass_grade?
-    %li= link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "button tiny radius success"
-  %li= link_to "Import Grades", import_grades_assignment_path(@assignment), :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Assignment Navigation
+  = content_nav_for @assignment do
+    %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius"
+    - if @assignment.assignment_type.mass_grade?
+      %li= link_to 'Quick Grade', mass_grade_assignment_path(@assignment), :class => "button tiny radius"
+    %li= link_to "Import Grades", import_grades_assignment_path(@assignment), :class => "button tiny radius"
 
 
-.small-4.medium-4.large-4.columns
-  %h2= @title
+  .small-4.medium-5.columns
+    %h2= @title
 
-- if current_course.has_teams? && @assignment.is_individual?
-  .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
-    = form_tag assignment_path(@assignment), :method => :get do
-      = hidden_field_tag :assignment_id, @assignment.id
-      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm small-8 medium-8"
-      = submit_tag 'Filter', :class => 'button tiny radius'
+  - if current_course.has_teams? && @assignment.is_individual?
+    .small-12.right.medium-5.columns
+      = form_tag assignment_path(@assignment), :method => :get do
+        = hidden_field_tag :assignment_id, @assignment.id
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8"
+        = submit_tag 'Filter', :class => 'button tiny radius medium-3'
 
-- if @assignment.has_groups?
-  = render 'group_show'
-- else
-  = render 'individual_show'
+  .small-12.columns
+    - if @assignment.has_groups?
+      = render 'group_show'
+    - else
+      = render 'individual_show'
+
+  .clearfix

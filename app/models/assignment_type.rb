@@ -86,6 +86,10 @@ class AssignmentType < ActiveRecord::Base
     mass_grade_type == "Set per Assignment"
   end
 
+  def max_value
+    super.presence || assignments.map{ |a| a.point_total }.sum
+  end
+
   private
 
   def ensure_score_levels

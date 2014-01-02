@@ -38,11 +38,6 @@ class Course < ActiveRecord::Base
 
   validates_presence_of :name, :courseno
 
-  amoeba do
-    clone [ :assignments, :assignment_types, :badges, :categories, :challenges, :grade_scheme_elements, :rubrics ]
-    prepend :name => "Copy of "
-  end
-
   def user_term
     super.presence || 'Player'
   end

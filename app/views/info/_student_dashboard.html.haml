@@ -1,1 +1,19 @@
-= render 'users/student_dashboard'
+.small-12.panel.mainContent
+
+  .small-12.columns
+    %h2
+      - if current_user.is_student?
+        Your current score is
+        / Check to see if the course has a pre-determined total number of points
+      - if current_course.point_total?
+        %span#userScoreNum #{points current_student_data.score}/#{points current_course.point_total}
+        / Else tally all of the points for all of the assignments in the course
+      - else
+        %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
+      - if current_student_data.grade_level.present?
+        Current Level:
+        %span#userScoreNum= current_student_data.grade_level
+
+    = render "students/main_tabs"
+
+  .clearfix

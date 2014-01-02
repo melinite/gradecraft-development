@@ -1,39 +1,43 @@
-- if current_user.is_staff?
-  = content_nav_for current_student do
-    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius success"
-    %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius success"
-    %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Students Navigation
+  - if current_user.is_staff?
+    = content_nav_for current_student do
+      %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
+      %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
+      %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button tiny radius"
 
-.small-12.columns
-  %h2= current_student.name
+  .small-12.columns
+    %h2= current_student.name
 
-  %table.responsive.simpleTable
-    %thead
-      %tr
-        %th.sortable{"data-sort" => "int"} ID
-        %th.sortable{"data-sort" => "int"} ID | Assignment
-        %th.sortable{"data-sort" => "string"} Task
-        %th.sortable{"data-sort" => "string"} Submission
-        %th.sortable{"data-sort" => "int"} Raw Score
-        %th.sortable{"data-sort" => "int"} Score
-        %th.sortable{"data-sort" => "int"} Predicted Score
-        %th.sortable{"data-sort" => "string"} Feedback
-        %th.sortable{"data-sort" => "string"} Status
-        %th
-        %th
-        %th
-    %tbody
-      - @grades.each do |g|
+    %table.responsive.simpleTable
+      %thead
         %tr
-          %td= g.id
-          %td= "#{g.assignment_id} • #{g.assignment.try(:name)}"
-          %td= g.task.name if g.task.present?
-          %td= g.submission.id if g.submission.present?
-          %td= g.raw_score
-          //%td= g.try(:score)
-          %td= g.predicted_score
-          %td= g.feedback
-          %td= g.status
-          %td= link_to "Edit Grade", edit_assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => 'button tiny radius'
-          %td= link_to "See Grade", assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => "button tiny radius"
-          %td= link_to "Delete Grade", assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
+          %th.sortable{"data-sort" => "int"} ID
+          %th.sortable{"data-sort" => "int"} ID | Assignment
+          %th.sortable{"data-sort" => "string"} Task
+          %th.sortable{"data-sort" => "string"} Submission
+          %th.sortable{"data-sort" => "int"} Raw Score
+          %th.sortable{"data-sort" => "int"} Score
+          %th.sortable{"data-sort" => "int"} Predicted Score
+          %th.sortable{"data-sort" => "string"} Feedback
+          %th.sortable{"data-sort" => "string"} Status
+          %th
+          %th
+          %th
+      %tbody
+        - @grades.each do |g|
+          %tr
+            %td= g.id
+            %td= "#{g.assignment_id} • #{g.assignment.try(:name)}"
+            %td= g.task.name if g.task.present?
+            %td= g.submission.id if g.submission.present?
+            %td= g.raw_score
+            //%td= g.try(:score)
+            %td= g.predicted_score
+            %td= g.feedback
+            %td= g.status
+            %td= link_to "Edit Grade", edit_assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => 'button tiny radius'
+            %td= link_to "See Grade", assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => "button tiny radius"
+            %td= link_to "Delete Grade", assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
+
+  .clearfix

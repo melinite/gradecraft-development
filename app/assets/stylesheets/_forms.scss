@@ -5,3 +5,29 @@
 h6.small {
   line-height: 120%;
 }
+
+
+/* Text editor box styling */
+
+.wysihtml5-sandbox  {
+  height: 15rem !important;
+  padding-top: 0;
+}
+
+.wysihtml5-sandbox body.wysihtml5-editor {
+  padding: 0 !important;
+}
+
+.wysihtml5-toolbar li {
+  list-style-type: none;
+  display: inline;
+}
+
+ul.wysihtml5-toolbar {
+  margin: 0 0 5px;
+  padding: 0;
+}
+
+form {
+  margin: 0;
+}

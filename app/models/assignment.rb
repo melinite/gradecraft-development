@@ -75,10 +75,6 @@ class Assignment < ActiveRecord::Base
   scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
 scope :grading_done, -> { where 'grades.present? == 1' }
 
-  amoeba do
-    clone [ :tasks, :assignment_files, :assignment_score_levels ]
-  end
-
   def start_time
     due_at
   end

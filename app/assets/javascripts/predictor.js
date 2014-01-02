@@ -35,90 +35,15 @@ var chartOptions = {
   },
   yAxis: {
     min: 0,
+    gridLineWidth: 0,
     title: {
       text: 'Available Points'
-      },
-    plotBands: [{ // Light air
-                    from: 0,
-                    to: 500000,
-                    color: 'rgba(68, 170, 213, 0.1)',
-                    label: {
-                        text: 'F',
-                        style: {
-                            color: '#606060'
-                        }
-                    }
-                }, { // Light breeze
-                    from: 500001,
-                    to: 600000,
-                    color: 'rgba(0, 0, 0, 0)',
-                    label: {
-                        text: 'D',
-                        style: {
-                            color: '#606060'
-                        }
-                    }
-                }, { // Gentle breeze
-                    from: 600001,
-                    to: 700000,
-                    color: 'rgba(68, 170, 213, 0.1)',
-                    label: {
-                        text: 'C',
-                        style: {
-                            color: '#606060'
-                        }
-                    }
-                }, { // Moderate breeze
-                    from: 700001,
-                    to: 800000,
-                    color: 'rgba(0, 0, 0, 0)',
-                    label: {
-                        text: 'B',
-                        style: {
-                            color: '#606060'
-                        }
-                    }
-                }, { // Fresh breeze
-                    from: 800001,
-                    to: 900000,
-                    color: 'rgba(68, 170, 213, 0.1)',
-                    label: {
-                        text: 'A-',
-                        style: {
-                            color: '#606060'
-                        }
-                    }
-                }, { // Strong breeze
-                    from: 900001,
-                    to: 1000000,
-                    color: 'rgba(0, 0, 0, 0)',
-                    label: {
-                        text: 'A',
-                        style: {
-                            color: '#606060'
-                        }
-                    }
-                }, { // High wind
-                    from: 1000001,
-                    to: 2000000,
-                    color: 'rgba(68, 170, 213, 0.1)',
-                    label: {
-                        text: 'A+',
-                        style: {
-                            color: '#606060'
-                        }
-                    }
-                }]
+      }
             },
   labels: {
     formatter: function(){
       return this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-    plotLines: [{
-      value: 0,
-      width: 1,
-      color: '#808080'
-    }]
+    }
   },
   tooltip: {
     formatter: function() {
@@ -139,13 +64,20 @@ var chartOptions = {
       color: '#333333'
     }
   },
-  series: []
+  series: [],
+  plotBands: []
 };
 
 var AssignmentType = Backbone.Model.extend();
 
 var AssignmentTypesArray = Backbone.Collection.extend({
   model: AssignmentType
+});
+
+var GradeSchemeElement = Backbone.Model.extend();
+
+var GradeSchemeElementsArray = Backbone.Collection.extend({
+  model: GradeSchemeElement
 });
 
 var PredictorView = Backbone.View.extend({
@@ -210,14 +142,21 @@ var PredictorView = Backbone.View.extend({
   },
   calculateCourseTotal: function() {
     var courseTotal = 0;
-    var $slide = this.$el.find('li#slide-badges')
-    $.each($slide.find('input'), function(i,item) {
-      var $item = $(item);
-      if ($item.is(':checked')) {
-        courseTotal += parseInt($item.val());
+    var courseSetTotal = $('#course-total-preset').data('coursetotal');
+    var $slide = this.$el.find('li#slide-badges');
+    if(courseSetTotal != null){
+        courseTotal =  courseSetTotal;
       }
-    });
-    courseTotal += parseInt(this.$el.data('course-total'));
+    else {
+      $.each($slide.find('input'), function(i,item) {
+        var $item = $(item);
+        if ($item.is(':checked')) {
+          courseTotal += parseInt($item.val());
+        }
+    })
+      courseTotal += parseInt(this.$el.data('course-total'));
+    };
+
     return courseTotal;
   },
   calculateScores: function(e) {
@@ -277,8 +216,6 @@ $(document).ready(function() {
   if ($wrapper.length) {
     new PredictorView();
   }
-
-   // Temporarily commented out to revive dashboard charts & predictor
 
   $('.slider').each(function(i,slider) {
     $slider = $(slider);

@@ -1,28 +1,32 @@
-= content_nav_for @assignment, "My Grade" do
-  %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Criteria Levels Navigation
+  = content_nav_for @assignment, "My Grade" do
+    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
 
-.small-12.columns
-  %h3= link_to @grade.assignment.name, @grade.assignment
-  .heading.small-2 Score:
-  .col-lg-offset-2= points @grade.score
-  - if @grade.grade_files.present?
-    .heading.col-lg-2 Documents:
-    .col-lg-offset-2
-      - @grade.grade_files.each do |gf|
-        = link_to File.basename(gf.filename), gf.url
+    .small-12.columns
+    %h3= link_to @grade.assignment.name, @grade.assignment
+    .heading.small-2 Score:
+    .col-lg-offset-2= points @grade.score
+    - if @grade.grade_files.present?
+      .heading.col-lg-2 Documents:
+      .col-lg-offset-2
+        - @grade.grade_files.each do |gf|
+          = link_to File.basename(gf.filename), gf.url
 
-  - if @grade.feedback?
-    .heading.col-lg-2 Instructor Feedback:
-    .col-lg-offset-2= raw @grade.feedback
+    - if @grade.feedback?
+      .heading.col-lg-2 Instructor Feedback:
+      .col-lg-offset-2= raw @grade.feedback
 
-  - if @grade.earned_badges.present?
-    .heading.col-lg-2= "#{term_for :badges}:"
-    .col-lg-offset-2
-      - @grade.earned_badges.each do |badge|
-        %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
+    - if @grade.earned_badges.present?
+      .heading.col-lg-2= "#{term_for :badges}:"
+      .col-lg-offset-2
+        - @grade.earned_badges.each do |badge|
+          %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
 
-  - if @grade.student.submission_for_assignment(@assignment)
-    .clear
-    .heading.col-lg-2 Submission:
-    .col.col-lg-offset-2= link_to "View My Submission", assignment_submission_path(@assignment, @grade.student.submission_for_assignment(@assignment))
+    - if @grade.student.submission_for_assignment(@assignment)
+      .clear
+      .heading.col-lg-2 Submission:
+      .col.col-lg-offset-2= link_to "View My Submission", assignment_submission_path(@assignment, @grade.student.submission_for_assignment(@assignment))
+
+  .clearfix

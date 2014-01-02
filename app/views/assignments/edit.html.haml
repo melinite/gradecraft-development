@@ -1,6 +1,10 @@
-= content_nav_for Assignment, "Edit #{current_course.assignment_term} '#{breadcrumb_link_for @assignment}'".html_safe do
-  %li= link_to "See All #{current_course.assignment_term}s", assignments_path, :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Assignment Navigation
+  = content_nav_for Assignment, "Edit #{current_course.assignment_term} '#{breadcrumb_link_for @assignment}'".html_safe do
+    %li= link_to "See All #{current_course.assignment_term}s", assignments_path, :class => "button tiny radius"
 
-.small-12.columns
-  %h2= @title
-  = render 'form'
+  .small-12.columns
+    %h2= @title
+    = render 'form'
+
+  .clearfix

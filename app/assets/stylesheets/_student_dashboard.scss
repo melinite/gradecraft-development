@@ -1,1 +1,22 @@
 /** Student Dashboard Styles **/
+
+#gradePredictor {
+  background-color: #eee;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0px 3px 3px #888888;
+}
+
+#prediction {
+  height: 200px;
+}
+
+#prediction.fixed {
+}
+
+#predictorPage ul.slides, #predictorPage ul.slides li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

@@ -15,6 +15,9 @@ class Challenge < ActiveRecord::Base
 
   validates_presence_of :course, :name
 
+  scope :chronological, -> { order('due_at ASC') }
+  scope :alphabetical, -> { order('name ASC') }
+
   def has_levels?
     levels == true
   end

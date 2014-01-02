@@ -1,24 +1,27 @@
-= content_nav_for @assignment, @task do
-  %li= link_to "See #{@assignment.name}", @assignment, :class => "button tiny radius success"
-  - if @task.assignment_type == "Assignment"
-    %li= link_to 'Edit #{@task.name} Task', edit_assignment_task_path, :class => "button tiny radius success"
-  - else
-    %li= link_to "Edit #{@task.name} Task", edit_badge_task_path(@assignment.id, @task.id), :class => 'button tiny radius success'
-  %li= link_to 'Create a New Task', new_assignment_task_path, :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Tasks
+  = content_nav_for @assignment, @task do
+    %li= link_to "See #{@assignment.name}", @assignment, :class => "button tiny radius"
+    - if @task.assignment_type == "Assignment"
+      %li= link_to 'Edit #{@task.name} Task', edit_assignment_task_path, :class => "button tiny radius"
+    - else
+      %li= link_to "Edit #{@task.name} Task", edit_badge_task_path(@assignment.id, @task.id), :class => 'button tiny radius'
+    %li= link_to 'Create a New Task', new_assignment_task_path, :class => "button tiny radius"
 
-.small-12.columns
-  %h2= @title
-  %p
-    %b Assignment:
-    = @assignment.name
+  .small-12.columns
+    %h2= @title
+    %p
+      %b Assignment:
+      = @assignment.name
 
-  %p
-    %b Title:
-    = @task.name
-  %p
-    %b Description:
-    = raw @task.description
-  %p
-    %b Due Date:
-    = @task.due_at
+    %p
+      %b Title:
+      = @task.name
+    %p
+      %b Description:
+      = raw @task.description
+    %p
+      %b Due Date:
+      = @task.due_at
 
+  .clearfix

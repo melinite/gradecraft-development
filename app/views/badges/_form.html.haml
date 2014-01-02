@@ -48,7 +48,6 @@
 
   .clearfix
 
-  .small-12.columns
-    .form-actions
-      = submit_tag, "#{@badge.persisted? ? 'Update' : 'Create'} #{term_for :badge}", :class => "button tiny radius"
-      = link_to 'Cancel', badges_path, :class => 'button tiny radius'
+  .right
+    = submit_tag "#{@badge.persisted? ? 'Update' : 'Create'} #{term_for :badge}", :class => "button tiny radius"
+    = link_to 'Cancel', badges_path, :class => 'button tiny radius'

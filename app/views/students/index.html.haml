@@ -1,93 +1,105 @@
-= content_nav_for User, term_for(:students) do
-  %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius success"
-  %li= link_to "Download CSV", students_path(format: 'csv'), :class => "button tiny radius success"
-  %li= link_to "Download Gradebook", gradebook_path(format: 'csv'), :class => "button tiny radius success"
-
-.small-12.medium-4.columns
-  %h2= @title
-
-.small-12.medium-4.medium-offset-4.columns
-  - if current_course.has_teams?
-    = form_tag students_path, :method => :get do
-      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8"
-      = submit_tag 'Filter', :class => 'button tiny radius'
+.small-12.panel.mainContent
+  / Student Index breadcrumbs
+  = content_nav_for User, term_for(:students) do
+    / Link to create a new student
+    %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
+    / Link to download CSV of student index - current scores, final grade, badge counts
+    %li= link_to "Download CSV", students_path(format: 'csv'), :class => "button tiny radius"
+    / Link to download csv of total gradebook. Should probably be updated to trigger a background job and send the instructor an email when the download is ready
+    %li= link_to "Download Gradebook", gradebook_path(format: 'csv'), :class => "button tiny radius"
 
 
-.small-12.columns
-  %table.responsive.simpleTable
-    %thead
-      %tr
-        %th.sortable{"data-sort" => "string"} First Name
-        %th.sortable{"data-sort" => "string"} Last Name
-        %th.sortable{"data-sort" => "string"} Email
-        - if current_course.in_team_leaderboard?
-          %th.sortable{"data-sort" => "string"} Screenname
-        - if current_course.has_teams?
-          %th.sortable{"data-sort" => "string"} #{current_course.team_term}
-        - if current_course.team_roles?
-          %th.sortable{"data-sort" => "string"} Role
-        - if current_user.is_staff?
-          %th.sortable{"data-sort" => "int"} Score
-          %th.sortable{"data-sort" => "string"} Current Grade
-        %th
-    %tbody
-      - if @team
-        - students = current_course_data.students_for_team(@team)
-      - else
-        - students = current_course_data.students.being_graded
-      - students.each do |student|
-        %tr
-          %td= student.first_name
-          %td= student.last_name
-          %td= mail_to student.email, student.email
-          - if current_course.in_team_leaderboard?
-            %td= student.display_name
-          - if current_course.has_teams?
-            %td
-              - if student.team_for_course(current_course)
-                = link_to student.team_for_course(current_course).name, student.team_for_course(current_course)
-          - if current_course.team_roles?
-            %td= student.try(:team_role)
-          - if student.respond_to?(:grades)
-            %td{:data => { :"sort-value" => "#{current_course.score_for_student(student)}"} }= points current_course.score_for_student(student)
-            %td
-              = student.grade_letter_for_course(current_course)
-              = student.grade_level_for_course(current_course)
-          %td
-            .button-bar
-              %ul.button-group.radius.round
-                %li= link_to "Dashboard", student_path(student), :class => "button tiny small large radius"
-                %li= link_to "Edit", edit_user_path(student), :class => "button tiny small large radius"
+  .small-12.medium-6.columns
+    %h2= @title
 
-  - if @auditing.present?
+  .small-12.medium-5.columns.right
+    / Checking to see if the current course has teams, displaying the team filter if it does
+    - if current_course.has_teams?
+      = form_tag students_path, :method => :get do
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8"
+        = submit_tag 'Filter', :class => 'button tiny radius medium-3 small-3 right'
 
-    %h6 Auditing
-
-    %table.simpleTable.responsive
+  .small-12.columns
+    / Display the table of course students, their leaderboard display, their team affiation, their score and their grade
+    %table.responsive.simpleTable
       %thead
         %tr
           %th.sortable{"data-sort" => "string"} First Name
           %th.sortable{"data-sort" => "string"} Last Name
-          %th.sortable{"data-sort" => "string"} Email
+          - if current_course.in_team_leaderboard?
+            %th.sortable{"data-sort" => "string"} Screenname
+          - if current_course.has_teams?
+            %th.sortable{"data-sort" => "string"} #{current_course.team_term}
           - if current_course.team_roles?
             %th.sortable{"data-sort" => "string"} Role
-          - if current_user.is_staff?
-            %th.sortable{"data-sort" => "int"} Score
-            %th.sortable{"data-sort" => "string"} Current Grade
-          %th
+          %th.sortable{"data-sort" => "int"} Score
+          %th.sortable{"data-sort" => "string"} Current Grade
+          %th{"width" => 200 }
       %tbody
-        - current_course_data.students.auditing.each do |student|
+        - if @team
+          - students = current_course_data.students_for_team(@team)
+        - else
+          - students = current_course_data.students
+        - students.each do |student|
           %tr
-            %td= link_to student.first_name
-            %td= link_to student.last_name
-            %td= mail_to student.email, student.email
+            %td= student.first_name
+            %td= student.last_name
+            - if current_course.in_team_leaderboard?
+              %td= student.display_name
+            - if current_course.has_teams?
+              %td
+                - if student.team_for_course(current_course)
+                  = link_to student.team_for_course(current_course).name, student.team_for_course(current_course)
             - if current_course.team_roles?
               %td= student.try(:team_role)
             - if student.respond_to?(:grades)
-              %td= points student.score_for_course(current_course)
-              %td= student.grade_level_for_course(current_course)
+              %td{:data => { :"sort-value" => "#{current_course.score_for_student(student)}"} }= points current_course.score_for_student(student)
+              %td
+                = student.grade_letter_for_course(current_course)
+                = student.grade_level_for_course(current_course)
             %td
-              .button-bar.medium-2
+              .button-bar
                 %ul.button-group.radius.round
                   %li= link_to "Dashboard", student_path(student), :class => "button tiny small large radius"
                   %li= link_to "Edit", edit_user_path(student), :class => "button tiny small large radius"
+
+
+    - if (@team && current_course_data.auditing_students_for_team(@team).present?) || ! @team
+      / Display the table of auditing students if they're present
+      %h2 Auditing
+
+      %table.simpleTable.responsive
+        %thead
+          %tr
+            %th.sortable{"data-sort" => "string"} First Name
+            %th.sortable{"data-sort" => "string"} Last Name
+            - if current_course.has_teams?
+              %th.sortable{"data-sort" => "string"} #{current_course.team_term}
+            - if current_course.team_roles?
+              %th.sortable{"data-sort" => "string"} Role
+            - if current_user.is_staff?
+              %th.sortable{"data-sort" => "int"} Score
+              %th.sortable{"data-sort" => "string"} Current Grade
+            %th
+        %tbody
+          - if @team
+            - students = current_course_data.auditing_students_for_team(@team)
+          - else
+            - students = current_course_data.auditing_students
+          - students.each do |student|
+            %tr
+              %td= student.first_name
+              %td= student.last_name
+              - if current_course.has_teams?
+                %td= link_to student.team_for_course(current_course).name, student.team_for_course(current_course)
+              - if current_course.team_roles?
+                %td= student.try(:team_role)
+              - if student.respond_to?(:grades)
+                %td= points student.score_for_course(current_course)
+                %td= student.grade_level_for_course(current_course)
+              %td
+                .button-bar
+                  %ul.button-group.radius.round
+                    %li= link_to "Dashboard", student_path(student), :class => "button tiny small large radius"
+                    %li= link_to "Edit", edit_user_path(student), :class => "button tiny small large radius"
+  .clearfix

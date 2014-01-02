@@ -1,3 +1,7 @@
-= content_nav_for @rubric, Criterium, @criterium.category ? "Add '#{@criterium.category}' Criterium" : 'Add Criterium'
+.small-12.panel.mainContent
+  / Criteria Navigation
+  = content_nav_for @rubric, Criterium, @criterium.category ? "Add '#{@criterium.category}' Criterium" : 'Add Criterium'
 
-= render 'form'
+  = render 'form'
+
+  .clearfix

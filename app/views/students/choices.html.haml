@@ -1,41 +1,82 @@
-= content_nav_for :students, "#{term_for :weight} Choices" do
-  %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Students Navigation
+  = content_nav_for :students, "#{term_for :weight} Choices" do
+    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
 
-.small-12.columns
-  .small-12.medium-4.columns
-    %h2= @title
+  .small-12.columns
+    .small-12.medium-4.columns
+      %h2= @title
 
-  - if current_course.has_teams?
-    .small-12.medium-4.medium-offset-4.columns
-      = form_tag choices_students_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8 teamfilter"
-        = submit_tag 'Filter', :class => 'button tiny radius'
+    - if current_course.has_teams?
+      .small-12.medium-4.medium-offset-4.columns
+        = form_tag choices_students_path, :method => :get do
+          = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8 teamfilter"
+          = submit_tag 'Filter', :class => 'button tiny radius'
 
 
-  %table.responsive.simpleTable
-    %thead
-      %tr
-        %th.sortable{"data-sort" => "string"} #{current_course.user_term}
-        - @assignment_types.each do |assignment_type|
-          - if assignment_type.student_weightable?
-            %th.sortable{"data-sort" => "string"}= assignment_type.name
-        %th.sortable{"data-sort" => "string"} #{current_course.weight_term.pluralize} Awarded?
-        %th
-    %tbody
-      - if @team
-        - students = current_course_data.students_for_team(@team)
-      - else
-        - students = current_course_data.students
-      - students.each do |student|
+    %table.responsive.simpleTable
+      %thead
         %tr
-          %td= link_to student.name, student_path(student)
+          %th.sortable{"data-sort" => "string"} First Name
+          %th.sortable{"data-sort" => "string"} Last Name
           - @assignment_types.each do |assignment_type|
             - if assignment_type.student_weightable?
-              %td= assignment_type.weight_for_student(student)
-          %td
-            = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"
-          %td
-            .button-bar
-              %ul.button-group.radius.round
-                = link_to "Dashboard", student_path(student), :class => "button tiny small large"
-                = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny"
+              %th.sortable{"data-sort" => "string"}= assignment_type.name
+          %th.sortable{"data-sort" => "string"} #{current_course.weight_term.pluralize} Awarded?
+          %th
+      %tbody
+        - if @team
+          - students = current_course_data.students_for_team(@team)
+        - else
+          - students = current_course_data.students
+        - students.each do |student|
+          %tr
+            %td= link_to student.first_name, student_path(student)
+            %td= link_to student.last_name, student_path(student)
+            - @assignment_types.each do |assignment_type|
+              - if assignment_type.student_weightable?
+                %td= assignment_type.weight_for_student(student)
+            %td
+              = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"
+            %td
+              .button-bar
+                %ul.button-group.radius.round
+                  = link_to "Dashboard", student_path(student), :class => "button tiny small large"
+                  = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny"
+
+    - if current_course_data.auditing_students.present?
+      %h2 Auditing
+
+      %table.responsive.simpleTable
+        %thead
+          %tr
+            %th.sortable{"data-sort" => "string"} First Name
+            %th.sortable{"data-sort" => "string"} Last Name
+            - @assignment_types.each do |assignment_type|
+              - if assignment_type.student_weightable?
+                %th.sortable{"data-sort" => "string"}= assignment_type.name
+            %th.sortable{"data-sort" => "string"} #{current_course.weight_term.pluralize} Awarded?
+            %th
+        %tbody
+          - if @team
+            - students = current_course_data.auditing_students_for_team(@team)
+          - else
+            - students = current_course_data.auditing_students
+          - students.each do |student|
+            %tr
+              %td= link_to student.first_name, student_path(student)
+              %td= link_to student.last_name, student_path(student)
+              - @assignment_types.each do |assignment_type|
+                - if assignment_type.student_weightable?
+                  %td= assignment_type.weight_for_student(student)
+              %td
+                = current_course.assignment_weight_spent_for_student(student) ? "Yes" : "No"
+              %td
+                .button-bar
+                  %ul.button-group.radius.round
+                    = link_to "Dashboard", student_path(student), :class => "button tiny small large"
+                    = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny"
+
+
+
+  .clearfix

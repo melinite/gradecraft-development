@@ -1,1 +1,39 @@
-= render 'users/student_dashboard'
+.small-12.panel.mainContent
+  / Student Dashboard Breadcrumbs
+  = content_nav_for current_student do
+    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
+    %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
+
+  .small-12.medium-9.columns
+
+    %h2
+      Current Score:
+      / Check to see if the course has a pre-determined total number of points
+      - if current_course.point_total?
+        %span#userScoreNum #{points current_student_data.score}/#{points current_course.point_total}
+        / Else tally all of the points for all of the assignments in the course
+      - else
+        %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
+      - if current_student_data.grade_level.present?
+        Current Level:
+        %span#userScoreNum= current_student_data.grade_level
+
+    = render "students/main_tabs"
+
+  .small-12.medium-3.columns
+    %ul.side-nav.right
+      %li.gravatar.panel.radius
+        = gravatar_for current_student
+        = link_to current_student.email, "mailto:#{current_student.email}"
+
+      %li.panel.radius= render "students/sidebar/sidebar_history"
+
+      %li.panel.radius= render 'students/sidebar/sidebar_grade_distribution'
+
+      - if current_course.has_badges?
+        %li.panel.radius= render "students/sidebar/sidebar_badges"
+
+      %li.panel.radius= render "students/sidebar/sidebar_to_do_list"
+
+
+  .clearfix

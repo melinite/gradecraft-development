@@ -58,12 +58,22 @@ class CourseData < Struct.new(:course)
 
   #Students in a course, sorted alphabetically
   def students
-    @students ||= course.students.alpha
+    @students ||= course.students.being_graded.alpha
+  end
+
+  #Students in a course, sorted alphabetically
+  def auditing_students
+    @auditing_students ||= course.students.auditing.alpha
   end
 
   #Students in a particular team within a course
   def students_for_team(team)
-    course.students.select { |student| team.student_ids.include? student.id }
+    course.students.being_graded.select { |student| team.student_ids.include? student.id }
+  end
+
+  #Auditing students in a particular team within a course
+  def auditing_students_for_team(team)
+    course.students.auditing.select { |student| team.student_ids.include? student.id }
   end
 
   def badges_shared_for_student?(student)

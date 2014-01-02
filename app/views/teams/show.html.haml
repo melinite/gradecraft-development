@@ -1,84 +1,70 @@
-= content_nav_for @team do
-  %li= link_to "See All #{term_for :teams}", teams_path, :class => "button tiny radius success"
-  %li= link_to "Edit #{@team.name}", edit_team_path(@team), :class => "button tiny radius success"
-  %li= link_to "Add #{term_for :team}", new_team_path, :class => "button tiny radius success"
-  - if current_course.team_challenges?
-    %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Student Dashboard Breadcrumbs
+  = content_nav_for @team do
+    %li= link_to "Edit #{@team.name}", edit_team_path(@team), :class => "button tiny radius"
+    %li= link_to "Add #{term_for :team}", new_team_path, :class => "button tiny radius"
+    - if current_course.team_challenges?
+      %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "button tiny radius"
 
-.small-12.columns
-  %h2= @team.name
-  %p.clear
-    %b Average Score:
-    = points @team.score
-  %p.clear
-    %b= "#{term_for :challenges} Score:"
-    = points @team.challenge_grade_score
-  %p
-    %b Rank:
-  - if @team.earned_badges.present?
-    %p
-      %b Badges:
-      - @team.earned_badges.each do |badge|
-        %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "40"}
-        = @team.earned_badges.count
+  .small-12.columns
+    %h2= @team.name
 
-.small-12
-  %h2= "#{current_course.user_term}s"
-
-%table.responsive.simpleTable
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"} First Name
-      %th.sortable{"data-sort" => "string"} Last Name
-      %th.sortable{"data-sort" => "string"} Email
-      %th.sortable{"data-sort" => "string"} Role
-      %th.sortable{"data-sort" => "int"} Score
-      %th.sortable{"data-sort" => "string"} Level
-      - if current_course.has_badges?
-        %th{:width => '250'} #{term_for :badges} Earned
-      %th
-  %tbody
-    - @team.students.each do |student|
-      - if student.is_student?
+    %table.responsive.simpleTable
+      %thead
         %tr
-          %td= student.first_name
-          %td= student.last_name
-          %td= mail_to student.email, student.email
-          %td= student.team_role
-          %td= points student.cached_score_for_course(current_course) if student.respond_to?(:grades)
-          %td
-            = student.grade_letter_for_course(current_course)
-            = student.grade_level_for_course(current_course)
+          %th.sortable{"data-sort" => "string"} First Name
+          %th.sortable{"data-sort" => "string"} Last Name
+          %th.sortable{"data-sort" => "string"} Email
+          %th.sortable{"data-sort" => "string"} Role
+          %th.sortable{"data-sort" => "int"} Score
+          %th.sortable{"data-sort" => "string"} Level
           - if current_course.has_badges?
+            %th{:width => '250'} #{term_for :badges} Earned
+          %th
+      %tbody
+        - @team.students.each do |student|
+          - if student.is_student?
+            %tr
+              %td= link_to student.first_name, student_path(student)
+              %td= link_to student.last_name, student_path(student)
+              %td= mail_to student.email, student.email
+              %td= student.team_role
+              %td= points student.cached_score_for_course(current_course) if student.respond_to?(:grades)
+              %td
+                = student.grade_letter_for_course(current_course)
+                = student.grade_level_for_course(current_course)
+              - if current_course.has_badges?
+                %td
+                  - student.earned_badges.each do |badge|
+                    %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
+              %td
+                .button-bar
+                  %ul.button-group.radius.round
+                    = link_to 'Dashboard', student_path(student), :class => 'button tiny'
+                    = link_to 'Edit', edit_user_path(student), :class => 'button tiny'
+
+
+    %hr
+
+    .small-12
+      %h2 Challenge Grades
+
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th{"data-sort" => "string"} Name
+          %th Score
+          %th
+
+      %tbody
+        - @challenges.each do |challenge|
+          %tr
+            %td= link_to challenge.name, challenge
+            %td= points challenge.challenge_grade_for_team(@team).try(:score)
             %td
-              - student.earned_badges.each do |badge|
-                %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
-          %td
-            .button-bar
-              %ul.button-group.radius.round
-                = link_to 'Dashboard', student_path(student), :class => 'button tiny'
-                = link_to 'Edit', edit_user_path(student), :class => 'button tiny'
+              - if challenge.challenge_grade_for_team(@team).present?
+                = link_to 'Edit Grade', edit_challenge_challenge_grade_path(:challenge_id => challenge, :id => challenge.challenge_grade_for_team(@team).id), :class => 'button tiny round'
+              - else
+                = link_to "Grade", new_challenge_challenge_grade_path(:challenge_id => challenge, :team_id => @team.id), :class => 'button tiny round'
 
-
-%hr
-
-.small-12
-  %h2 Challenge Grades
-
-%table.responsive.simpleTable
-  %thead
-    %tr
-      %th{"data-sort" => "string"} Name
-      %th Score
-      %th
-
-  %tbody
-    - @challenges.each do |challenge|
-      %tr
-        %td= link_to challenge.name, challenge
-        %td= challenge.challenge_grade_for_team(@team).try(:score)
-        %td
-          - if challenge.challenge_grade_for_team(@team).present?
-            = link_to 'Edit Grade', edit_challenge_challenge_grade_path(:challenge_id => challenge, :id => challenge.challenge_grade_for_team(@team).id), :class => 'button tiny round'
-          - else
-            = link_to "Grade", new_challenge_challenge_grade_path(:challenge_id => challenge, :team_id => @team.id), :class => 'button tiny round'
+  .clearfix

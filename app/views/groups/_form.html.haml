@@ -1,5 +1,6 @@
 = simple_form_for @group do |f|
-  = f.association :assignments, :collection => @assignments, :as => :check_boxes
+  .small-12.medium-4.columns
+    = f.association :assignments, :collection => @assignments, :as => :check_boxes
   .small-12.medium-4.columns
     = f.label :name
     = f.text_field :name

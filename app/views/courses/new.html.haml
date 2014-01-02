@@ -1,6 +1,10 @@
-= content_nav_for Course do
-  %li= link_to 'See All Courses', courses_path, :class => "button tiny radius success"
+.small-12.panel.mainContent
+  / Courses Navigation
+  = content_nav_for Course do
+    %li= link_to 'See All Courses', courses_path, :class => "button tiny radius"
 
-.small-12.columns
-  %h3= @title
-  = render 'form'
+  .small-12.columns
+    %h3= @title
+    = render 'form'
+
+  .clearfix

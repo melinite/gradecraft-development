@@ -1,18 +1,3 @@
-%h2
-  - if current_user.is_student?
-    Your current score is
-  - elsif current_user.is_staff?
-    Current Score:
-    / Check to see if the course has a pre-determined total number of points
-  - if current_course.point_total?
-    %span#userScoreNum #{points current_student_data.score}/#{points current_course.point_total}
-    / Else tally all of the points for all of the assignments in the course
-  - else
-    %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
-  - if current_student_data.grade_level.present?
-    Current Level:
-    %span#userScoreNum= current_student_data.grade_level
-
 %dl.tabs{:data => {'tab' => true}}
   %dd
     %a{ "href" => "#syllabus" } Assignments
@@ -41,7 +26,7 @@
     .content#grading-philosophy
       = render "students/grading_philosophy"
   - if current_course.predictor_on?
-    .content#predictor.active
+    .content#predictor.active.columns.small-12
       = render "students/predictor"
   - if current_course.has_badges?
     .content#badges
