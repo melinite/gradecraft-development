@@ -74,9 +74,20 @@ $(document).ready(function(){
       remove_failed_progress_bar: false,
       progress_bar_target: $('.s3_progress')
     })
+
+    // formatSubmissionField :: jQuery input object -> form length -> correct field
+    function formatSubmissionField (field, n) {
+      var newName, newId
+      newName = field.attr('name').replace('0', n)
+      newId = field.attr('id').replace('0', n)
+      field.attr('id', newId)
+      field.attr('name', newName)
+      return field
+    }
     $('.s3_uploader').bind('s3_upload_complete', function (e, content) {
-      if ($('.s3_files').first().val()) {
+      if ($('.s3_files').val()) {
         var field = $('.s3_files').first().clone()
+        field = formatSubmissionField(field, $('.s3_files').length)
         $('.s3_files').parent().append(field)
         $('.s3_files').last().val(content.filepath)
       } else {
