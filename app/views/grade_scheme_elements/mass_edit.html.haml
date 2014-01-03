@@ -13,7 +13,7 @@
             = render 'element_fields', f: ef
 
       %fieldset.elements
-        - @grade_scheme_elements.each do |element|
+        - @grade_scheme_elements.order_by_high_range.each do |element|
           %fieldset.element
             = f.simple_fields_for :grade_scheme_elements, element do |ef|
               = render 'element_fields', f: ef

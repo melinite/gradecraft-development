@@ -117,7 +117,12 @@ GradeCraft::Application.routes.draw do
     resources :challenge_grades do
       collection do
         get :mass_edit
+
       end
+    end
+    member do
+      get 'mass_edit' => 'challenge_grades#mass_edit', as: :mass_edit
+      put 'mass_edit' => 'challenge_grades#mass_update'
     end
   end
 

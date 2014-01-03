@@ -1,6 +1,6 @@
 class ChallengeGrade < ActiveRecord::Base
 
-  attr_accessible :name, :course_id, :rank, :score, :challenge_id, :feedback, :status, :team_id, :final_score, :status
+  attr_accessible :name, :course_id, :rank, :score, :challenge_id, :feedback, :status, :team_id, :final_score, :status, :team, :challenge
 
   belongs_to :course
   belongs_to :challenge
@@ -17,6 +17,8 @@ class ChallengeGrade < ActiveRecord::Base
   private
 
   def save_team
-    team.save
+    if self.score_changed?
+      team.save
+    end
   end
 end

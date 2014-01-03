@@ -8,11 +8,12 @@
     .small-12.medium-4.columns
       = f.label :approved, "Status"
       = f.select :approved, [[], ["Approved"], ["Rejected"]]
-  .small-12.medium-12.columns
+  .small-12.medium-6.columns
     - if current_user.is_student?
       = f.association :students, :collection => current_course_data.students, as: :select
     - if current_user.is_staff?
       = f.association :students, :collection => current_course_data.students, as: :select
+    %h6.small Enter a #{term_for :student}'s name to add them to this #{term_for :group}. Only one #{term_for :student} needs to create the #{term_for :group}, after which all #{term_for :group} members will be able to submit work, see submitted materials, and see instructor grades and feedback.
 
   .small-12.medium-12.columns
     - if current_user.is_student?

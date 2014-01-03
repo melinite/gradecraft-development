@@ -41,8 +41,7 @@ class ChallengeGradesController < ApplicationController
   end
 
   def mass_update
-    @team = find_team
-    @challenge = current_course.challenges.find(params[:challenge_id])
+    @challenge = current_course.challenges.find(params[:id])
     if @challenge.update_attributes(params[:challenge])
       redirect_to challenge_path(@challenge)
     else
