@@ -1,6 +1,11 @@
-= f.input :low_range
-= f.input :high_range
-= f.input :level
-= f.input :letter
-= f.input :_destroy, :as => :hidden
-= link_to 'Remove Element', '#', class: 'remove-element button tiny radius'
+.small-12.medium-2.columns
+  = f.input :low_range
+.small-12.medium-2.columns
+  = f.input :high_range
+.small-12.medium-3.columns
+  = f.input :level
+.small-12.medium-3.columns
+  = f.input :letter
+.small-12.medium-2.columns
+  = f.input :_destroy, :as => :hidden
+  = link_to 'Remove Element', '#', class: 'remove-element button tiny radius'

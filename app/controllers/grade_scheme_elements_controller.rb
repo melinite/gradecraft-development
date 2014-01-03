@@ -7,6 +7,19 @@ class GradeSchemeElementsController < ApplicationController
     @grade_scheme_elements = current_course.grade_scheme_elements
   end
 
+  def mass_edit
+    @course = current_course
+    @grade_scheme_elements = current_course.grade_scheme_elements
+  end
+
+  def mass_update
+    @course = current_course
+    @course.update_attributes(params[:course])
+    if @course.save
+      redirect_to grade_scheme_elements_path
+    end
+  end
+
   def show
     @title = "Course Grade Scheme"
     @grade_scheme_element = current_course.grade_scheme_elements.find(params[:id])

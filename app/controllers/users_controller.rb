@@ -1,9 +1,29 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, (:only => [:index, :destroy, :show, :edit, :new, :create, :update, :upload, :import])
+  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new, :create, :update, :upload, :import]
   # { |user| user.ensure_staff_for_course(current_course)? }
   before_filter :ensure_admin?, :only => [:all]
+
+  def dashboard
+    if current_user.is_staff?
+      @students = current_course.users.students
+      @teams = current_course.teams.includes(:earned_badges)
+      @users = current_course.users
+      @top_ten_students = @students.order_by_high_score.limit(10)
+      @bottom_ten_students = @students.order_by_low_score.limit(10)
+      @submissions = current_course.submissions
+    else
+      @grade_scheme_elements = current_course.grade_scheme_elements
+      @grade_levels_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    end
+    if current_course.team_challenges?
+      @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
+    else
+      @events = current_course_data.assignments.timelineable.to_a
+    end
+  end
 
   def index
     @title = "View All Users"

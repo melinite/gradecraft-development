@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
 
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new, :choices, :grade_index, :roster]
+  before_filter :ensure_staff?, :except=> [:timeline, :predictor, :grading_philosophy, :badges, :teams]
 
   def index
     @title = "#{current_course.user_term} Roster"
@@ -11,6 +11,15 @@ class StudentsController < ApplicationController
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
+  end
+
+  def timeline
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_course.team_challenges?
+      @events = current_course_data.assignments.to_a + current_course.challenges
+    else
+      @events = current_course_data.assignments.to_a
+    end
   end
 
   def export
@@ -57,9 +66,27 @@ class StudentsController < ApplicationController
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
   end
 
+  def grading_philosophy
+    @grade_scheme_elements = current_course.grade_scheme_elements
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
 
   def class_badges
   end
+
+  def badges
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
+  def predictor
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
+  def teams
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
 
   def scores_by_assignment
     scores = current_course.grades.released.joins(:assignment_type)

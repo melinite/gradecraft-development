@@ -6,9 +6,6 @@
   = f.bootsy_area :feedback
   = hidden_field_tag "earned_badge[badge_ids][]", nil
 
-  .form-actions
-    .btn-toolbar
-      .btn-group
-        = f.button :submit, "#{@earned_badge.persisted? ? 'Update' : 'Award '} #{term_for :badge}",  :class => "button tiny radius"
-      .btn-group
-        = link_to 'Cancel', badge_path(@badge), :class => 'button tiny radius'
+  .right
+    = f.button :submit, "#{@earned_badge.persisted? ? 'Update' : 'Award '} #{term_for :badge}",  :class => "button tiny radius"
+    = link_to 'Cancel', badge_path(@badge), :class => 'button tiny radius'

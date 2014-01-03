@@ -1,5 +1,9 @@
 .small-12.panel.mainContent
-  / Criteria Levels Navigation
+  = content_nav_for :grade_scheme_elements, "#{current_course.name} Grading" do
+    %li= link_to "Edit Grading Scheme", mass_edit_grade_scheme_elements_path, :class => "button tiny radius"
+
+  / Grade Scheme Elements
+
   %h3= @title
 
   %table.responsive.simpleTable

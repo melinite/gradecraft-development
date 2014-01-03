@@ -22,6 +22,7 @@ $green: #67CF30;
 $red: #E95D4E;
 $yellow: #FFF90D;
 $orange: #F4A425;
+$darkblue: #120470;
 
 /* Importing supporting files. If you create a new css file you'll need to add it here.  */
 @import 'compass';
@@ -47,9 +48,87 @@ body {
   margin-top: 1rem;
   padding: 0;
   border-left: 10px solid $green;
+  border-right: 10px solid $green;
+  border-bottom: 10px solid $green;
+  border-top: none;
   background-color: #FFF;
-  border-top-right-radius: 1.5rem;
-  border-top-left-radius: .3rem;
+}
+
+.row.panel.publicContent {
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  padding-top: 2rem;
+  border-left: 10px solid $green;
+  border-right: 10px solid $green;
+  border-top: 10px solid $green;
+  background-color: #FFF;
+}
+
+.row.panel.footer {
+  margin-top: 0;
+  background-color: #444;
+  border: none;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+
+  h6 {
+    font-weight: bold;
+    color: #FFF;
+  }
+
+  a {
+    color: #FFF;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    list-style-type: none;
+    font-family: "Avenir", sans-serif;
+    font-size: .9rem;
+  }
+}
+
+.login_forms {
+  background-color: #FFF;
+  border: none;
+
+  .content {
+    background-color: #eee;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    input {
+      width: 85%;
+      margin-left: 15px;
+    }
+  }
+
+  dd a {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-collapse: true;
+    padding: 14px;
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+    background-color: $lightblue;
+  }
+  dd.active a {
+    background-color: #eee;
+  }
+
+  .right {
+    margin-right: 25px;
+  }
 }
 
 /* Header styles */
@@ -72,6 +151,10 @@ h4 {
 }
 
 h6 {
+  font-size: .9rem;
+}
+
+h6.small {
   font-size: .7rem;
 }
 
@@ -89,4 +172,6 @@ h6 {
   list-style: disc !important;
 }
 
-
+.bold {
+  font-weight: bold;
+}

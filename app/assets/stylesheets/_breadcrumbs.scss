@@ -3,14 +3,16 @@
 }
 
 ul.breadcrumbs {
-  background-color: $yellow;
   border: none;
-  border-top-right-radius: 1.5rem;
   border-bottom-left-radius: 0;
-  border-top-left-radius: .3rem;
   border-bottom-right-radius: 0;
   margin-bottom: 0;
 
+  li {
+      font-size: 1rem;
+  font-family: "Avenir", sans-serif;
+
+  }
 }
 
 .sub-nav {
@@ -28,4 +30,15 @@ ul.breadcrumbs {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
   }
+
+  li a {
+
+    background-color: $blue;
+  }
+
+  li a.active {
+    background-color: $darkblue;
+    color: #ccc;
+  }
 }
+

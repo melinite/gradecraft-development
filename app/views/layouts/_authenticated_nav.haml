@@ -1,6 +1,9 @@
-//%li.has-dropdown
-//= form_tag change_current_course_path  do
-//= select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name'), prompt: "My Courses"
+- if current_user.multiple_courses?
+  %li.has-dropdown.course_switch
+    %a My Courses
+    %ul.dropdown
+      = form_tag change_current_course_path  do
+        %li= select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name')
 
 %li.has-dropdown
   %a Class Info

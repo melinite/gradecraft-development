@@ -1,33 +1,33 @@
-.small-12#historyInfo.badge-primary{"data-target" => "#academicInfo", "data-toggle" => "collapse"}
+.small-12.text-center
   %h4.center Academic History
-  #academicInfo.collapse
-    %p
-      %b Major
-      = current_student.student_academic_history.try(:major)
-    %p
-      %b UM GPA
-      = current_student.student_academic_history.try(:gpa)
-    %p
-      %b Credits enrolled this term
-      = current_student.student_academic_history.try(:current_term_credits)
-    %p
-      %b Accumulated credits
-      = current_student.student_academic_history.try(:accumulated_credits)
-    %p
-      %b Year in School
-      = current_student.student_academic_history.try(:year_in_school)
-    %p
-      %b State of Residence
-      = current_student.student_academic_history.try(:state_of_residence)
-    %p
-      %b High School
-      = current_student.student_academic_history.try(:high_school)
-    %p
-      %b Athlete
-      = current_student.student_academic_history.try(:athlete)
-    %p
-      %b ACT score
-      = current_student.student_academic_history.try(:act_score)
-    %p
-      %b SAT score
-      = current_student.student_academic_history.try(:sat_score)
+  %h4
+  %p
+    %b Major
+    = current_student.student_academic_history.try(:major)
+  %p
+    %b UM GPA
+    = current_student.student_academic_history.try(:gpa)
+  %p
+    %b Credits enrolled this term
+    = current_student.student_academic_history.try(:current_term_credits)
+  %p
+    %b Accumulated credits
+    = current_student.student_academic_history.try(:accumulated_credits)
+  %p
+    %b Year in School
+    = current_student.student_academic_history.try(:year_in_school)
+  %p
+    %b State of Residence
+    = current_student.student_academic_history.try(:state_of_residence)
+  %p
+    %b High School
+    = current_student.student_academic_history.try(:high_school)
+  %p
+    %b Athlete
+    = current_student.student_academic_history.try(:athlete)
+  %p
+    %b ACT score
+    = current_student.student_academic_history.try(:act_score)
+  %p
+    %b SAT score
+    = current_student.student_academic_history.try(:sat_score)

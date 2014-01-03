@@ -164,6 +164,8 @@ GradeCraft::Application.routes.draw do
   resources :grade_scheme_elements do
     collection do
       post :destroy_multiple
+      get 'mass_edit' => 'grade_scheme_elements#mass_edit', as: :mass_edit
+      put 'mass_edit' => 'grade_scheme_elements#mass_update'
     end
   end
 
@@ -189,7 +191,6 @@ GradeCraft::Application.routes.draw do
       get :edit_profile
       get :all
       put :update_profile
-      get :predictor
       get :test
       get :import
       post :upload
@@ -198,6 +199,13 @@ GradeCraft::Application.routes.draw do
   end
   resources :students do
     get :grade_index
+    get :timeline
+    get :syllabus
+    get :calendar
+    get :badges
+    get :predictor
+    get :grading_philosophy
+    get :teams
     collection do
       get :leaderboard
       get :choices
@@ -213,6 +221,16 @@ GradeCraft::Application.routes.draw do
   resources :staff, only: [:index, :show]
   resources :user_sessions
   resources :password_resets
+
+
+  get 'calendar' => 'students#calendar'
+  get 'timeline' => 'students#timeline'
+  get 'badges' => 'students#badges'
+  get 'calendar' => 'students#calendar'
+  get 'predictor' => 'students#predictor'
+  get 'grading_philosophy' => 'students#grading_philosophy'
+  get 'my_badges' => 'students#badges'
+  get 'my_team' => 'students#teams'
 
   #14. User Auth
   post 'auth/kerberos/callback', to: 'user_sessions#kerberos_create', as: :auth_kerberos_callback

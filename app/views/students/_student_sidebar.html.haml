@@ -1,6 +1,7 @@
-.sidebar_section= render 'students/sidebar/sidebar_to_do_list'
+.sideBar.panel
+  .panel.small-12= render 'students/sidebar/sidebar_to_do_list'
 
-.sidebar_section= render 'students/sidebar/sidebar_grade_distribution'
+  .panel.small-12= render 'students/sidebar/sidebar_grade_distribution'
 
-- if current_course.has_badges?
-  .sidebar_section= render 'students/sidebar/sidebar_badges'
+  - if current_course.has_badges?
+    .panel.small-12= render 'students/sidebar/sidebar_badges'

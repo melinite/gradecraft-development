@@ -37,10 +37,13 @@
       - else
         = render 'layouts/student'
     - else
-      .row= render 'layouts/public'
-
-  %footer.radius
-    .row= render 'layouts/footer'
+      .row.panel.publicContent
+        .small-12.columns
+          = render 'layouts/public'
+      - if ! current_user
+        .row.panel.footer
+          .small-12.medium-12.columns
+            = render 'layouts/footer'
 
   = render 'layouts/google_analytics'
   = javascript_include_tag 'application'

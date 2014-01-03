@@ -4,6 +4,12 @@
     = f.text_field :name
   .small-12.medium-4.columns
     = f.association :students, :collection => current_course_data.students, as: :select
+  .small-12.columns.medium-4
+    = f.input :teams_leaderboard, :label => "#{term_for :team} Leaderboard Display"
+    %h6.small= "#{term_for :students} in this #{term_for :team} will be able to see the overall {term_for :team} rankings and scores"
+  .small-12.columns.medium-4
+    = f.input :in_team_leaderboard, :label => "In-#{term_for :team} Leaderboard Display"
+    %h6.small= "#{term_for :students} in this #{term_for :team} will be able to see the in-{term_for :team} rankings, with #{term_for :students}'s listed by their chosen screenname, and accompanying scores"
 
   .clearfix
 

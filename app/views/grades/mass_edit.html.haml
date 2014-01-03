@@ -1,6 +1,6 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  = content_nav_for @assignment, "Quick Grade"do
+  = content_nav_for @assignment, "Quick Grade" do
     %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
 
   .small-12.medium-6.columns

@@ -49,15 +49,22 @@ $(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
 
+
+  // Select2 Search forms for group creation
+
   $("#group_student_ids").select2({
     placeholder: "Select Students",
     allowClear: true
   });
 
+  // Select2 Search forms for team creation
+
   $("#team_student_ids").select2({
     placeholder: "Select Students",
     allowClear: true
   });
+
+  // File Uploads
 
   if ($('.s3_uploader').length) {
     $('.s3_uploader').S3Uploader({
@@ -93,6 +100,8 @@ $(document).ready(function(){
     alert(content.filename +' failed to upload: ' + content.error_thrown)
   })
 
+  // Sortable Tables, should be replaced with Dynatable
+
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
   });
@@ -107,9 +116,12 @@ $(document).ready(function(){
     th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
   });
 
+  // Switching users between courses
+
   $('#course_id').change(function() { $(this).closest('form').submit(); });
 
-	// handle 'select all' button
+	// handle 'select all' buttons, used on release grade forms
+
 	$(".select-all").click(function(e){
 		var $link = $(this);
 
@@ -117,7 +129,7 @@ $(document).ready(function(){
 		$link.parents().find('input[type="checkbox"]').prop('checked', 'checked').trigger('change');
 	});
 
-	// handle 'select none' button
+	// handle 'select none' button, used on release grade forms
 	$(".select-none").click(function(e){
 	 var $link = $(this);
 
@@ -126,10 +138,6 @@ $(document).ready(function(){
 
 	});
 
-  var sparkOpts = {
-    type: 'box',
-    width: '100%',
-  };
 
   if ($('#highchart').length) {
 
@@ -217,6 +225,12 @@ $(document).ready(function(){
     })
   }
 
+  //
+  var sparkOpts = {
+    type: 'box',
+    width: '100%',
+  };
+
   if ($('#grade_distro').length) {
     $.getJSON('/students/scores_for_current_course.json', function (data) {
       sparkOpts.height = '50px';
@@ -227,11 +241,19 @@ $(document).ready(function(){
   if ($('#student_grade_distro').length) {
     var data = JSON.parse($('#student_grade_distro').attr('data-scores'));
     if (data !== null) {
-      sparkOpts.height = '50px';
       sparkOpts.target = data.user_score[0];
       sparkOpts.tooltipOffsetY = -130;
+      sparkOpts.height = '35';
       sparkOpts.tooltipOffsetY = -80;
       sparkOpts.targetColor = "#FF0000";
+      sparkOpts.boxFillColor = '#eee';
+      sparkOpts.lineColor = '#333';
+      sparkOpts.boxLineColor = '#333';
+      sparkOpts.whiskerColor = '#333';
+      sparkOpts.outlierLineColor = '#333';
+      sparkOpts.outlierFillColor = '#F4A425';
+      sparkOpts.spotRadius = '10';
+      sparkOpts.medianColor = '#0D9AFF';
       $('#student_grade_distro').sparkline(data.scores, sparkOpts);
     }
   }

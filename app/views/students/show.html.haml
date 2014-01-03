@@ -1,16 +1,26 @@
 .small-12.panel.mainContent
   / Student Dashboard Breadcrumbs
   = content_nav_for current_student do
-    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
     %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
+    %li= link_to "Grades", student_path(current_student), :class => "button tiny radius active"
+    - if current_course.use_timeline?
+      %li= link_to "Timeline", student_timeline_path(current_student), :class => "button tiny radius"
+    - if current_course.grading_philosophy.present?
+      %li= link_to "Grade Philosophy", student_grading_philosophy_path(current_student), :class => "button tiny radius"
+    - if current_course.predictor_on?
+      %li= link_to "Grade Predictor", student_predictor_path(current_student), :class => "button tiny radius"
+    - if current_course.has_badges?
+      %li= link_to "#{term_for :badges}", student_badges_path(current_student), :class => "button tiny radius"
+    - if current_course.has_teams? && current_course.teams_visible?
+      %li= link_to "#{term_for :teams}", student_teams_path(current_student), :class => "button tiny radius"
 
-  .small-12.medium-9.columns
-
+  .small-9.columns
     %h2
       Current Score:
       / Check to see if the course has a pre-determined total number of points
       - if current_course.point_total?
-        %span#userScoreNum #{points current_student_data.score}/#{points current_course.point_total}
+        %span.bold#userScoreNum #{points current_student_data.score}
+        %span /#{points current_course.point_total} points
         / Else tally all of the points for all of the assignments in the course
       - else
         %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
@@ -18,22 +28,23 @@
         Current Level:
         %span#userScoreNum= current_student_data.grade_level
 
-    = render "students/main_tabs"
+    = render 'students/syllabus'
 
-  .small-12.medium-3.columns
-    %ul.side-nav.right
-      %li.gravatar.panel.radius
-        = gravatar_for current_student
-        = link_to current_student.email, "mailto:#{current_student.email}"
 
-      %li.panel.radius= render "students/sidebar/sidebar_history"
+    .clearfix
 
-      %li.panel.radius= render 'students/sidebar/sidebar_grade_distribution'
+  .small-3.sideBar.panel.columns
+    .gravatar.panel.radius.small-12
+      = gravatar_for current_student
+      = link_to current_student.email, "mailto:#{current_student.email}"
 
-      - if current_course.has_badges?
-        %li.panel.radius= render "students/sidebar/sidebar_badges"
+    .small-12.panel.radius= render "students/sidebar/sidebar_to_do_list"
 
-      %li.panel.radius= render "students/sidebar/sidebar_to_do_list"
+    .small-12.panel.radius= render 'students/sidebar/sidebar_grade_distribution'
 
+    - if current_course.has_badges?
+      .small-12.panel.radius= render "students/sidebar/sidebar_badges"
 
   .clearfix
+
+

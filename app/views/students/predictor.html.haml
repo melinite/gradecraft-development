@@ -1,0 +1,74 @@
+.small-12.panel.mainContent
+  - if current_user.is_student?
+    = content_nav_for "My Dashboard" do
+      %li= link_to "Syllabus", dashboard_path, :class => "button tiny radius"
+      - if current_course.use_timeline?
+        %li= link_to "Timeline", timeline_path, :class => "button tiny radius"
+      - if current_course.grading_philosophy.present?
+        %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
+      - if current_course.predictor_on?
+        %li= link_to "Grade Predictor", "#", :class => "button tiny radius active"
+      - if current_course.has_badges?
+        %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
+      - if current_course.has_teams? && current_course.teams_visible?
+        %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
+
+  - else
+    / Student Dashboard Breadcrumbs
+    = content_nav_for current_student do
+      %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
+      %li= link_to "Grades", student_path(current_student), :class => "button tiny radius"
+      - if current_course.use_timeline?
+        %li= link_to "Timeline", student_timeline_path(current_student), :class => "button tiny radius"
+      - if current_course.grading_philosophy.present?
+        %li= link_to "Grade Philosophy", student_grading_philosophy_path(current_student), :class => "button tiny radius"
+      - if current_course.predictor_on?
+        %li= link_to "Grade Predictor", "#", :class => "button tiny radius active"
+      - if current_course.has_badges?
+        %li= link_to "#{term_for :badges}", student_badges_path(current_student), :class => "button tiny radius"
+      - if current_course.has_teams? && current_course.teams_visible?
+        %li= link_to "#{term_for :teams}", student_teams_path(current_student), :class => "button tiny radius"
+
+  .small-12.columns
+    - cache current_student_data.cache_key('v1', :assignment_weights_key, :assignments_key, :grades_key, :badges_key, current_student.id) do
+      #gradePredictor{ 'data-magellan-expedition' => "fixed" }
+        #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
+          %h3
+            Projected points:
+            %span#predictor-score-display.bold
+              - if current_user.is_staff?
+                = points current_course.score_for_student(current_student)
+              - else
+                = points current_student_data.predicted_score
+            = "/"
+            - if current_course.point_total.present?
+              %span#course-total-preset{ 'data-coursetotal' => "#{current_course.point_total}" }= points current_course.point_total
+            - else
+              %span#predictor-course-total-display= points current_student_data.point_total
+
+            %h3
+              Predicted final grade:
+              %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
+                = current_student_data.predicted_grade_letter
+
+          .charts.dashboard-charts
+            .chart-wrapper
+              .chart-inner
+                #prediction{ :width => '100%', :height => '100%' }
+
+          .clearfix
+
+    %hr
+
+    %h3 Predictions
+
+    #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
+      %ul.slides.small-12.columns
+        - if current_user.is_staff?
+          = render partial: 'students/predictor/instructor_assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
+        - elsif current_user.is_student?
+          = render partial: 'students/predictor/assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
+        = render 'students/predictor/badges'
+        //= render 'students/predictor/challenges'
+
+  .clearfix

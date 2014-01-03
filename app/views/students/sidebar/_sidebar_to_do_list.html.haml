@@ -1,21 +1,23 @@
-.small-12.center.badge-info#todo{"data-target" => "#toDoList", "data-toggle" => "collapse"}
-  %h4.center Due This Week
-  %div{:id => "toDoList", :class => "collapse clear"}
-    - current_course_data.by_assignment_type.each do |assignment_type, assignments|
-      -# Do not use `assignment_type.has_soon_assignments?' It will trigger a query.
-      - if assignments.any?(&:soon?) && assignment_type.name != "Attendance"
-        - assignments.each do |assignment|
-          - if assignment.soon? && assignment.visible?
-            - if current_student_data.submission_for_assignment?(assignment)
-              %div.submitted
-                = "#{assignment.try(:name)}"
-                = "Due: #{assignment.try(:due_at).strftime("%b-%d")}"
-            - else
-              %div
-                %h5= "#{assignment.try(:name)}"
-                = "Due: #{assignment.try(:due_at).strftime("%B %d, %Y")}"
-            - if assignment.accepts_submissions?
+%h4.text-center Due This Week
+%hr
+- current_course_data.by_assignment_type.each do |assignment_type, assignments|
+  -# Do not use `assignment_type.has_soon_assignments?' It will trigger a query.
+  - if assignments.any?(&:soon?) && assignment_type.name != "Attendance"
+    - assignments.each do |assignment|
+      - if assignment.soon? && assignment.visible?
+        .small-12.text-left
+          - if current_student_data.submission_for_assignment?(assignment)
+            .small-9.columns
+              = "#{assignment.try(:name)}"
+              = "Due: #{assignment.try(:due_at).strftime("%b-%d")}"
+          - else
+            .small-9.columns
+              %h5= "#{assignment.try(:name)}"
+              %h6= "Due: #{assignment.try(:due_at).strftime("%A, %B %d, %Y, at %H:%M%p")}"
+          - if assignment.accepts_submissions?
+            .small-3.columns
               - if assignment.is_individual?
-                = render "students/submissions", assignment: assignment
+                .right= render "students/submissions", assignment: assignment
               - else
-                = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+                .right= render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+          .clearfix

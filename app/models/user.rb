@@ -125,6 +125,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def multiple_courses?
+    course_memberships.count > 1
+  end
+
   def team_leader
     teams.first.try(:team_leader)
   end

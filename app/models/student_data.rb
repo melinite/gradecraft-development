@@ -27,12 +27,21 @@ class StudentData < Struct.new(:student, :course)
     else
       challenge_grade_score = 0
     end
-    return {
-      :student_name => student.name,
-      :scores => scores,
-      :course_total => membership.membership_calculation.assignment_score + earned_badge_score + challenge_grade_score,
-      :in_progress => membership.membership_calculation.in_progress_assignment_score + earned_badge_score + challenge_grade_score
-    }
+    if course.point_total?
+      return {
+        :student_name => student.name,
+        :scores => scores,
+        :course_total => course.point_total,
+        :in_progress => membership.membership_calculation.in_progress_assignment_score + earned_badge_score + challenge_grade_score
+        }
+    else
+      return {
+        :student_name => student.name,
+        :scores => scores,
+        :course_total => membership.membership_calculation.assignment_score + earned_badge_score + challenge_grade_score,
+        :in_progress => membership.membership_calculation.in_progress_assignment_score + earned_badge_score + challenge_grade_score
+       }
+    end
   end
 
   def cache_key(*args)
@@ -49,7 +58,7 @@ class StudentData < Struct.new(:student, :course)
 
   #Predicted score is the score already known to the user + all the predicted points for grades not released or not graded.
   def predicted_score
-    @predicted_score ||= @score + grades.where(course: course).predicted_points
+    #@predicted_score ||= @score + grades.where(course: course).predicted_points
   end
 
   #Possible total points for student
