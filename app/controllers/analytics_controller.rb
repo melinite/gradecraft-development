@@ -1,5 +1,5 @@
 class AnalyticsController < ApplicationController
-  before_filter :ensure_staff_for_course(current_course)?
+  before_filter :ensure_staff?
   before_filter :set_granularity_and_range
 
   def index
