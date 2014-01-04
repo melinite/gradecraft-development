@@ -1,9 +1,0 @@
-- if current_user.is_staff?
-  = content_nav_for current_student do
-    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
-    %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
-
-  = render 'students/staff_view_student_dashboard'
-
-- elsif current_user.is_student?
-  = render 'students/student_view_student_dashboard'

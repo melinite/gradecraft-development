@@ -56,5 +56,7 @@
               %td #{element.letter}
               %td
 
-  %p= raw current_course.grading_philosophy
+  .small-12.columns
+    %p= raw current_course.grading_philosophy
+    %h6= "-- Prof. #{current_course.professor.try(:last_name) }"
 

@@ -52,6 +52,7 @@ body {
   border-bottom: 10px solid $green;
   border-top: none;
   background-color: #FFF;
+  min-height: 815px;
 }
 
 .row.panel.publicContent {
@@ -174,4 +175,12 @@ h6.small {
 
 .bold {
   font-weight: bold;
+}
+
+ul.side-nav li a {
+  color: #666;
+}
+
+ul.side-nav li a:hover {
+  color: $blue;
 }

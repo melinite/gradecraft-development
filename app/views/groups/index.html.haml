@@ -13,7 +13,7 @@
           %th.sortable{"data-sort" => "string"}= "#{current_course.user_term}s"
           %th.sortable{"data-sort" => "string"} Status
           %th.sortable{"data-sort" => "string"} Assignments
-          %th
+          %th{:width => '300'}
       %tbody
         - @groups.each do |group|
           %tr
@@ -28,8 +28,8 @@
             %td
               .button-bar
                 %ul.button-group.round
-                  %li= link_to "See #{term_for :group}", group_path(group), :class => 'button tiny'
-                  %li= link_to 'Edit', edit_group_path(group), :class => 'button tiny'
-                  %li= link_to 'Delete', group_path(group), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+                  %li= link_to "See #{term_for :group}", group_path(group), :class => 'button tiny secondary'
+                  %li= link_to 'Edit', edit_group_path(group), :class => 'button tiny secondary'
+                  %li= link_to 'Delete', group_path(group), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
 
   .clearfix

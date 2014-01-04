@@ -24,7 +24,7 @@
             %th.sortable{"data-sort" => "string"} Visible
             %th.sortable{"data-sort" => "int"} Submissions?
             %th.sortable{"data-sort" => "string"} Release necessary
-            %th
+            %th{ :width => "250" }
 
         %tbody
           - @challenges.each do |challenge|
@@ -39,8 +39,8 @@
               %td
                 .button-bar
                   %ul.button-group.round
-                    %li= link_to 'See', challenge, :class => 'button tiny'
-                    %li= link_to 'Edit', edit_challenge_path(challenge), :class => 'button tiny'
-                    %li= link_to 'Delete', challenge, :class => 'button tiny', :method => :delete, data: { confirm: 'Are you sure?' }
+                    %li= link_to 'See', challenge, :class => 'button tiny secondary'
+                    %li= link_to 'Edit', edit_challenge_path(challenge), :class => 'button tiny secondary'
+                    %li= link_to 'Delete', challenge, :class => 'button tiny secondary', :method => :delete, data: { confirm: 'Are you sure?' }
 
   .clearfix

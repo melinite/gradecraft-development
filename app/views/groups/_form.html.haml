@@ -1,13 +1,21 @@
 = simple_form_for @group do |f|
-  .small-12.medium-4.columns
-    = f.association :assignments, :collection => @assignments, :as => :check_boxes
+
   .small-12.medium-4.columns
     = f.label :name
     = f.text_field :name
+
   - if current_user.is_staff?
     .small-12.medium-4.columns
       = f.label :approved, "Status"
       = f.select :approved, [[], ["Approved"], ["Rejected"]]
+      %h6.small If rejected, this #{term_for :group} will be unable to submit any further work for these assignments
+
+  .small-12.medium-4.columns
+    = f.association :assignments, :collection => @assignments, :as => :check_boxes
+    %h6.small What #{term_for :assignments} will this #{term_for :group} work on together?
+
+  .clearfix
+
   .small-12.medium-6.columns
     - if current_user.is_student?
       = f.association :students, :collection => current_course_data.students, as: :select
@@ -21,7 +29,8 @@
     - else
       %span.alert.round.label= "The #{term_for :group} needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
 
-  .small-12.medium-12.columns
-    .form-actions
-      = submit_tag "#{@group.persisted? ? 'Update' : 'Create'} #{ term_for :group } ",  :class => 'button tiny radius'
-      = link_to 'Cancel', groups_path, :class => 'button tiny radius'
+  %hr
+
+  .right
+    = submit_tag "#{@group.persisted? ? 'Update' : 'Create'} #{ term_for :group } ",  :class => 'button tiny radius'
+    = link_to 'Cancel', groups_path, :class => 'button tiny radius'

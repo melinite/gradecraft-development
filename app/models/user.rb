@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
   scope :being_graded, -> { where('course_memberships.auditing IS FALSE') }
   scope :auditing, -> { where('course_memberships.auditing IS TRUE') }
+  scope :order_by_auditing, -> { order 'course_memberships.auditing ASC' }
 
   has_many :course_memberships, :dependent => :destroy
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'

@@ -20,7 +20,7 @@
                   %th.sortable{"data-sort" => "string"} Name
                   %th.sortable{"data-sort" => "date"} Open - Due
                   %th.sortable{"data-sort" => "int"} Points
-                  %th
+                  %th{:width => "350"}
               %tbody
                 - assignments.each do |assignment|
                   - if assignment.visible? || (current_user.is_student? && current_student_data.grade_released_for_assignment?(assignment)) || current_user.is_staff?
@@ -34,10 +34,10 @@
                         %td
                           .button-bar
                             %ul.button-group.radius.round
-                              %li= link_to "Quick Grade", mass_grade_assignment_path(assignment), :class => "button tiny"
-                              %li= link_to "See", assignment_path(assignment), :class => "button tiny"
-                              %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny'
-                              %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+                              %li= link_to "Quick Grade", mass_grade_assignment_path(assignment), :class => "button tiny secondary"
+                              %li= link_to "See", assignment_path(assignment), :class => "button tiny secondary"
+                              %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny secondary'
+                              %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
                       - else
                         - if assignment.accepts_submissions? && assignment.has_groups?
                           - if current_student.group_for_assignment(assignment)

@@ -11,8 +11,8 @@
         - if current_user.is_student? && user_id == current_student.id
           %td#current_user_badges
             - sebs.each do |seb|
-              = image_tag seb.icon, :alt => seb.name, :width => '40'
+              = image_tag seb.icon, :alt => seb.name, :width => '20'
         - else
           %td
             - sebs.each do |seb|
-              = image_tag seb.icon, :alt => seb.name, :width => '40'
+              = image_tag seb.icon, :alt => seb.name, :width => '20'

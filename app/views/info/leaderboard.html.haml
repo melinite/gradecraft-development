@@ -1,5 +1,11 @@
 .small-12.panel.mainContent
   / Leaderboards
+  = content_nav_for User, term_for(:students) do
+    %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
+    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
+    %li= link_to "See All #{term_for :teams}", teams_path, :class => "button tiny radius"
+
+
   .small-12.columns
     %h4 Top 10
     = render 'students_table', :course => current_course, :students => @top_ten_students

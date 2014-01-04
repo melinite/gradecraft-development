@@ -15,12 +15,11 @@
         %tr
           %th.sortable{"data-sort" => "string"} Icon
           %th.sortable{"data-sort" => "string"} Description
-          %th.sortable{"data-sort" => "string"} Criteria
           - if current_course.valuable_badges?
             %th{"data-sort" => "int"} Value
           - if current_user.is_staff?
             %th.sortable{"data-sort" => "string"} Visible to Students
-            %th
+            %th{:width => "300"}
       %tbody
         - current_course_data.badges.each do |badge|
           - if current_user.is_staff?
@@ -30,10 +29,6 @@
                 %td
                   = link_to badge.name, badge_path(badge)
                   = raw badge.description
-                %td
-                  %ul
-                    - badge.tasks.each do |task|
-                      %li= task.name
                 - if current_course.valuable_badges?
                   %td= points badge.point_total
                 %td
@@ -44,9 +39,9 @@
                 %td
                   .button-bar
                     %ul.button-group.radius.round
-                      %li= link_to "Quick Award", mass_award_badge_path(badge), :class => "button tiny"
-                      %li= link_to 'Edit', edit_badge_path(badge), :class => 'button tiny'
-                      %li= link_to 'Delete', badge_path(badge), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+                      %li= link_to "Quick Award", mass_award_badge_path(badge), :class => "button tiny secondary"
+                      %li= link_to 'Edit', edit_badge_path(badge), :class => 'button tiny secondary'
+                      %li= link_to 'Delete', badge_path(badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
           - else
             - if badge.visible?
               %tr

@@ -20,7 +20,7 @@
           %th.sortable{"data-sort" => "string"} Level
           - if current_course.has_badges?
             %th{:width => '250'} #{term_for :badges} Earned
-          %th
+          %th{:width => '250'}
       %tbody
         - @team.students.each do |student|
           - if student.is_student?
@@ -40,8 +40,8 @@
               %td
                 .button-bar
                   %ul.button-group.radius.round
-                    = link_to 'Dashboard', student_path(student), :class => 'button tiny'
-                    = link_to 'Edit', edit_user_path(student), :class => 'button tiny'
+                    = link_to 'Dashboard', student_path(student), :class => 'button tiny secondary'
+                    = link_to 'Edit', edit_user_path(student), :class => 'button tiny secondary'
 
 
     %hr
@@ -63,8 +63,8 @@
             %td= points challenge.challenge_grade_for_team(@team).try(:score)
             %td
               - if challenge.challenge_grade_for_team(@team).present?
-                = link_to 'Edit Grade', edit_challenge_challenge_grade_path(:challenge_id => challenge, :id => challenge.challenge_grade_for_team(@team).id), :class => 'button tiny round'
+                = link_to 'Edit Grade', edit_challenge_challenge_grade_path(:challenge_id => challenge, :id => challenge.challenge_grade_for_team(@team).id), :class => 'button tiny round secondary'
               - else
-                = link_to "Grade", new_challenge_challenge_grade_path(:challenge_id => challenge, :team_id => @team.id), :class => 'button tiny round'
+                = link_to "Grade", new_challenge_challenge_grade_path(:challenge_id => challenge, :team_id => @team.id), :class => 'button tiny round secondary'
 
   .clearfix

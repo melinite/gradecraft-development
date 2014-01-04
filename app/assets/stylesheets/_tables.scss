@@ -2,6 +2,13 @@
 /** Table Styles **/
 
 table.responsive {
+  a {
+    color: #333;
+  }
+
+  a:hover {
+    color: $lightblue;
+  }
 
   .button {
     margin-bottom: 0;
@@ -35,4 +42,9 @@ table th {
 
 th.sorting-desc, th.sorting-asc {
   color: $yellow;
+}
+
+dd .content.active {
+  margin: 0;
+  padding: 0;
 }

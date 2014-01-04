@@ -50,9 +50,13 @@ class Team < ActiveRecord::Base
   private
   def cache_score
     if self.course.team_score_average?
-      self.score = average_grade
+      if self.score_changed?
+        self.score = average_grade
+      end
     else
-      self.score = challenge_grades.pluck('score').sum
+      if self.score_changed?
+        self.score = challenge_grades.pluck('score').sum
+      end
     end
   end
 

@@ -60,8 +60,8 @@
             %td
               .button-bar
                 %ul.button-group.radius.round
-                  %li= link_to "Dashboard", student_path(student), :class => "button tiny small large radius"
-                  %li= link_to "Edit", edit_user_path(student), :class => "button tiny small large radius"
+                  %li= link_to "Dashboard", student_path(student), :class => "button tiny secondary"
+                  %li= link_to "Edit", edit_user_path(student), :class => "button tiny secondary"
 
 
     - if (@team && current_course_data.auditing_students_for_team(@team).present?) || ! @team

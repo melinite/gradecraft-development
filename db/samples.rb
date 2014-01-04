@@ -31,7 +31,6 @@ course = Course.create! do |c|
   c.badge_use_scope = "Both"
   c.shared_badges = true
   c.badges_value = true
-  c.grade_scheme_id = 1
   c.accepts_submissions = true
   c.predictor_setting = true
   c.graph_display = true
@@ -60,10 +59,8 @@ course = Course.create! do |c|
 end
 puts "Videogames and Learning has been installed"
 
-grade_scheme = GradeScheme.create(:name => 'N.E.W.T. Grades', :course => course)
-
 grade_scheme_hash.each do |range,letter|
-  grade_scheme.elements.create do |e|
+  course.grade_scheme_elements.create do |e|
     e.letter = letter
     e.low_range = range.first
     e.high_range = range.last
@@ -172,7 +169,7 @@ end
 
 
 badges = badge_names.map do |badge_name|
-  badges.create! do |b|
+  course.badges.create! do |b|
     b.name = badge_name
     b.point_total = 100 * rand(10)
     b.icon = File.open(badge_icon_paths.sample)

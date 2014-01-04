@@ -8,8 +8,6 @@
         %th.sortable{"data-sort" => "string"}= course.team_term
       - if course.has_badges?
         %th.sortable{"data-sort" => "int"} Badges
-      %th.sortable{"data-sort" => "int"} Logins
-      %th.sortable{"data-sort" => "int"} Pageviews
       %th.sortable{"data-sort" => "string"} Email
       - if course.has_teams?
         %th.sortable{"data-sort" => "string"}= course.team_leader_term
@@ -25,10 +23,8 @@
               = link_to student.team_for_course(current_course).name
         - if course.has_badges?
           %td= student.earned_badges.count
-        %td= student.visit_count
-        %td= student.page_views
-        %td= mail_to student.email, "Email #{student.first_name}", :class => "button tiny radius"
+        %td= mail_to student.email, "Email #{student.first_name}", :class => "button tiny radius secondary"
         - if course.has_teams?
           %td
             - if student.team_for_course(course) && student.team_for_course(course).team_leader.present?
-              = mail_to student.team_for_course(course).team_leader.email, "Email #{student.team_for_course(course).team_leader.first_name}", :class => "button tiny radius"
+              = mail_to student.team_for_course(course).team_leader.email, "Email #{student.team_for_course(course).team_leader.first_name}", :class => "button tiny radius secondary"
