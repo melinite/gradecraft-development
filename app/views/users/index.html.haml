@@ -22,13 +22,16 @@
           %th.sortable{"data-sort" => "string"} Role
           %th.sortable{"data-sort" => "string"} #{term_for :team}
           %th.sortable{"data-sort" => "int"} Score
-          %th
+          %th{:width => '300'}
       %tbody
         - @users.each do |user|
           %tr
             %td
-              = user.first_name
-            %td= user.last_name
+              = link_to user.first_name, student_path(user) if user.is_student?
+              = link_to user.first_name, staff_path(user) if user.is_staff?
+            %td
+              = link_to user.last_name, student_path(user) if user.is_student?
+              = link_to user.last_name, staff_path(user) if user.is_staff?
             %td= user.email
             %td= user.role.capitalize
             %td
