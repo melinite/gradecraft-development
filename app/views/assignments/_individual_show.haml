@@ -30,8 +30,8 @@
       - students.each do |student|
         - grade = current_course_data.grade_for_student_and_assignment(student, @assignment)
         %tr
-          %td= student.first_name
-          %td= student.last_name
+          %td= link_to student.first_name, student_path(student)
+          %td= link_to student.last_name, student_path(student)
           %td{:data => { :"sort-value" => "#{grade.raw_score}"} }= points grade.raw_score if grade.status?
           - if @assignment.assignment_type.student_weightable?
             %td
@@ -58,11 +58,11 @@
           %td
             .button-bar
               %ul.button-group.radius.round
-                %li= link_to "Dashboard", student_path(student), :class => 'button tiny'
+                %li= link_to "Dashboard", student_path(student), :class => 'button tiny secondary'
                 - if grade.is_graded? || grade.is_released?
-                  %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny'
+                  %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
                 - else
-                  %li= link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny'
+                  %li= link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
           - if @assignment.release_necessary?
             %td.text-center
               - if grade.is_graded?
@@ -106,8 +106,8 @@
         - students.each do |student|
           - grade = current_course_data.grade_for_student_and_assignment(student, @assignment)
           %tr
-            %td= student.first_name
-            %td= student.last_name
+            %td= link_to student.first_name, student_path(student)
+            %td= link_to student.last_name, student_path(student)
             %td{:data => { :"sort-value" => "#{grade.raw_score}"} }= points grade.raw_score if grade.status?
             - if @assignment.assignment_type.student_weightable?
               %td
@@ -133,11 +133,11 @@
             %td
               .button-bar
                 %ul.button-group.radius.round
-                  %li= link_to "Dashboard", student_path(student), :class => 'button tiny'
+                  %li= link_to "Dashboard", student_path(student), :class => 'button tiny secondary'
                   - if grade.is_graded? || grade.is_released?
-                    %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny'
+                    %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
                   - else
-                    %li= link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny'
+                    %li= link_to 'Grade', edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
             - if @assignment.release_necessary?
               %td.text-center
                 - if grade.is_graded?

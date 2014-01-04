@@ -31,17 +31,7 @@
 
     .clearfix
 
-  .small-3.sideBar.panel.columns
-    .gravatar.panel.radius.small-12
-      = gravatar_for current_student
-      = link_to current_student.email, "mailto:#{current_student.email}"
-
-    .small-12.panel.radius= render "students/sidebar/sidebar_to_do_list"
-
-    .small-12.panel.radius= render 'students/sidebar/sidebar_grade_distribution'
-
-    - if current_course.has_badges?
-      .small-12.panel.radius= render "students/sidebar/sidebar_badges"
+  = render "staff_view_student_sidebar"
 
   .clearfix
 

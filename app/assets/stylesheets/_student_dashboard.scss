@@ -59,7 +59,21 @@
   border: none;
   border-radius: none;
   padding: .5rem 0 0 .5rem;
-  margin-top: -1.5rem;
+  margin-top: -1rem;
+
+    h6 {
+      line-height: 120%;
+    }
+}
+
+.assignmentName a {
+  color: $darkblue;
+  text-decoration: underline;
+}
+
+p.assignmentDescription {
+  margin-top: 1rem;
+  font-size: .85rem;
 }
 
 .student .sideBar.panel {
