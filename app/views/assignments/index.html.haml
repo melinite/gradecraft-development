@@ -9,7 +9,7 @@
   .small-12.columns
     %h2= @title
 
-    %dl.accordion{:data => {'accordion' => true}}
+    %dl.accordion{:data => {'accordion' => true, 'collapse' => "persist" } }
       - current_course_data.by_assignment_type.each do |assignment_type, assignments|
         %dd
           %a{"href" => "##{assignment_type.id}" }= "#{assignment_type.name} – #{points assignment_type.max_value} points"
