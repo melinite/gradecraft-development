@@ -29,6 +29,6 @@
               %td
                 .button-bar
                   %ul.button-group.radius.round
-                    %li= link_to 'See', staff_path(user), {:class => 'button tiny'}
-                    %li= link_to 'Edit', edit_user_path(user), {:class => 'button tiny'}
-                    %li= link_to 'Delete', user, :class => 'button tiny', :data => { confirm: 'Are you sure?'}, :method => :delete
+                    %li= link_to 'See', staff_path(user), {:class => 'button tiny secondary'}
+                    %li= link_to 'Edit', edit_user_path(user), {:class => 'button tiny secondary'}
+                    %li= link_to 'Delete', user, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?'}, :method => :delete
