@@ -53,8 +53,8 @@
               %td
                 .button-bar
                   %ul.button-group.radius.round
-                    %li= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny'
-                    %li= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny'
-                    %li= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+                    %li= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary'
+                    %li= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary'
+                    %li= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
 
   .clearfix

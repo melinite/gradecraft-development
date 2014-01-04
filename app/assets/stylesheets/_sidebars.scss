@@ -13,3 +13,13 @@
 #student_grade_distro canvas {
   width: 100% !important;
 }
+
+
+/** Link Colors on admin subnav **/
+ul.side-nav li a {
+  color: #666;
+}
+
+ul.side-nav li a:hover {
+  color: $blue;
+}
