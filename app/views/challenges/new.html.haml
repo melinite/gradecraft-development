@@ -1,8 +1,12 @@
-= content_nav_for Challenge, "Create a New #{term_for :challenge}" do
-  %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Create a Challenge Navigation
+  = content_nav_for Challenge, "Create a New #{term_for :challenge}" do
+    %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
-  = render 'form'
+  .small-12.columns
+    %h3= @title
+    = render 'form'
+
+  .clearfix
 
 

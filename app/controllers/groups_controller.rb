@@ -3,7 +3,8 @@ class GroupsController < ApplicationController
 
   def index
     @groups = current_course.groups
-    @title = "#{term_for :group} Index"
+    @assignments = current_course.assignments.group_assignments
+    @title = current_course.group_term.pluralize
   end
 
   def show
@@ -11,14 +12,17 @@ class GroupsController < ApplicationController
       @user = current_user
     end
     @group = current_course.groups.find(params[:id])
+    @assignments = current_course.assignments.group_assignments
   end
 
   def new
     @group = current_course.groups.new
+    @assignments = current_course.assignments.group_assignments
   end
 
   def create
     @group = current_course.groups.new(params[:group])
+    @assignments = current_course.assignments.group_assignments
     @group.students << current_user if current_user.is_student?
     @group.save
     respond_with @group
@@ -26,6 +30,7 @@ class GroupsController < ApplicationController
 
   def edit
     @group = current_course.groups.find(params[:id])
+    @assignments = current_course.assignments.group_assignments
     if current_user.is_student?
       @student = current_student
       @group.students << current_student

@@ -1,10 +1,13 @@
-:javascript
-  Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
-%form.quick_search
-  .dropdown
-    %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
-%ul.nav.nav-list#sidebar
-  %li.nav-header= term_for(:students)
+%ul.side-nav
+  %li
+    :javascript
+      Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
+    %form.quick_search
+      .dropdown
+        %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
+
+  %li
+    %h4= term_for(:students)
   %li.icn_view_users= link_to term_for(:students), students_path
   - if current_course.has_teams?
     %li.icn_team= link_to term_for(:teams), teams_path
@@ -14,39 +17,40 @@
   - if current_course.student_weighted?
     %li.icn_playing_dic= link_to "#{term_for :weight} Chart", choices_students_path
   %li.divider
-  %li.nav-header= term_for(:assignments)
-  //%li.icn_attendance= link_to "Attendance"
+
+  %li
+    %h4= term_for(:assignments)
   %li.icn_flash= link_to term_for(:assignments), assignments_path
-  %li.icn_categories= link_to term_for(:assignment_types), assignment_types_path
   - if current_course.has_badges?
     %li.icn_certificate= link_to term_for(:badges), badges_path
   - if current_course.team_challenges?
     %li.icn_cup= link_to term_for(:challenges), challenges_path
-
-  //%li.icn_screenshot= link_to "Learning Objectives"
-  //%li.icn_star= link_to 'Rubrics', rubrics_path
   %li.divider
-  %li.nav-header Analytics
-  //%li.icn_flag= link_to "Early Warnings"
-  //%li.icn_dashboard= link_to "Class Engagement"
-  //%li.icn_stats= link_to "Explore Class Trends"
+
+  %li
+    %h4 Analytics
   %li.icn_charts= link_to "Leaderboard", leaderboard_path
   %li.icn_flag= link_to "Grading Status", grading_status_path
   %li.icn_cardio= link_to "Course Analytics", analytics_root_path
   %li.divider
-  %li.nav-header Course Setup
+
+  %li
+    %h4 Course Setup
   %li.icn_film= link_to "Timeline", dashboard_path
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
-  - if current_course.grade_scheme_id?
-    %li.icn_calculator= link_to "Grading Scheme", grade_scheme_path(current_course.grade_scheme)
+  %li.icn_calculator= link_to "Grading Scheme", grade_scheme_elements_path
   %li.icn_group= link_to "Staff", staff_index_path
   %li.divider
-  %li.nav-header Tools
+
+  %li
+    %h4 Tools
   - LTIProvider.all.each do |tool|
     %li= link_to tool.name, launch_lti_provider_path(tool)
+  %li.divider
+
   - if current_user.is_admin?
-    %li.divider
-    %li.nav-header Admin
+    %li
+      %h4 Admin
     %li.icn_add_user= link_to "Add New #{current_course.user_term.pluralize}", new_student_path
     %li= link_to "All Users", users_path
     %li= link_to "Course Index", courses_path

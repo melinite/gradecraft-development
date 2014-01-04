@@ -10,33 +10,40 @@
     /[if lt IE 9]
       = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"
     = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag 'application'
-    %script(src="/ckeditor/ckeditor.js")
-    %script(src="/ckeditor/adapters/jquery.js")
-    %script(src="/highcharts/js/highcharts.src.js")
-    %script(src="/highcharts/js/highcharts-more.src.js")
+    = javascript_include_tag "vendor/modernizr"
     = yield(:head)
   %body(class="#{body_class}")
-    .navbar.navbar-fixed-top.navbar-inverse
-      .navbar-inner
-        .col-lg-8.col-sm-9.col-md-9.col-xs-9
-          %a.brand(href="/dashboard")
-            - if current_course
-              #{current_course.name}
-            - else
-              GradeCraft
-          - if current_course && current_course.tagline?
-            %span.earned= current_course.try(:tagline)
-        .pull-right.col-lg-4.col-sm-3.col-md-3.col-xs-3
-          - if current_user
-            = render 'layouts/authenticated_nav'
-    .container
-      - if current_user
-        - if current_user.is_staff?
-          = render 'layouts/staff'
-        - else
-          = render 'layouts/student'
+    .fixed
+      %nav.top-bar{:data => {'topbar' => true}}
+        %ul.title-area
+          %li.name
+            %h1
+              %a(href="/dashboard")
+                - if current_course
+                  #{current_course.name}
+                - else
+                  gradecraft
+        - if current_course && current_course.tagline?
+          %section.top-bar-section
+            %ul.left
+              %li
+                %a= current_course.try(:tagline)
+        - if current_user
+          %section.top-bar-section
+            %ul.right= render 'layouts/authenticated_nav'
+    - if current_user
+      - if current_user.is_staff?
+        = render 'layouts/staff'
       - else
-        = render 'layouts/public'
-  = render 'layouts/google_analytics'
+        = render 'layouts/student'
+    - else
+      .row.panel.publicContent
+        .small-12.columns
+          = render 'layouts/public'
+      - if ! current_user
+        .row.panel.footer
+          .small-12.medium-12.columns
+            = render 'layouts/footer'
 
+  = render 'layouts/google_analytics'
+  = javascript_include_tag 'application'

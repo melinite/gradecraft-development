@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-  attr_accessible :name, :course, :course_id, :student_ids, :score, :students
+  attr_accessible :name, :course, :course_id, :student_ids, :score, :students, :teams_leaderboard, :in_team_leaderboard
 
   belongs_to :course
 
@@ -50,9 +50,13 @@ class Team < ActiveRecord::Base
   private
   def cache_score
     if self.course.team_score_average?
-      self.score = average_grade
+      if self.score_changed?
+        self.score = average_grade
+      end
     else
-      self.score = challenge_grades.pluck('score').sum
+      if self.score_changed?
+        self.score = challenge_grades.pluck('score').sum
+      end
     end
   end
 

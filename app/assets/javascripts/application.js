@@ -7,6 +7,8 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require bootsy
+//= require foundation
 //= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
@@ -15,8 +17,6 @@
 //= require jquery.sparkline.min
 //= require underscore.min
 //= require backbone.min
-//= require best_in_place
-//= require best_in_place.purr
 //= require bootstrap
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
@@ -28,11 +28,10 @@
 //= require analytics_dashboard
 //= require assignment_types
 //= require assignments
-//= require grade_schemes
+//= require grade_scheme_elements
 //= require nested_fields
 //= require users
-//= require grade_schemes
-//= require user_dashboard
+//= require student_dashboard
 //= require stupidtable
 //= require submissions
 //= require submission_file
@@ -41,33 +40,32 @@
 //= require earned_badges
 //= require per-assign
 //= require predictor
+//= require datetimepicker
+//= require highcharts
+//= require select2
+//= require responsive-tables
+//= require grade_distribution
+
+$(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
 
-  $('#gradeCurious').popover();
 
-  $('collapse').collapse('toggle');
+  // Select2 Search forms for group creation
 
-  $('#toDoList').collapse('hide');
-
-  $('#courseInfo').collapse('hide');
-
-  $('#badgesInfo').collapse('hide');
-
-  $('#academicInfo').collapse('hide');
-
-  $('#gradeDistro').collapse('hide');
-
-  $('#myModal').modal('hide');
-
-  $(".alert").alert();
-
-  $('.datetimepicker').datetimepicker( {
-    format: "MM dd yyyy - hh:ii",
-    autoclose: true,
-    showMeridian: true,
-    todayBtn: true
+  $("#group_student_ids").select2({
+    placeholder: "Select Students",
+    allowClear: true
   });
+
+  // Select2 Search forms for team creation
+
+  $("#team_student_ids").select2({
+    placeholder: "Select Students",
+    allowClear: true
+  });
+
+  // File Uploads
 
   if ($('.s3_uploader').length) {
     $('.s3_uploader').S3Uploader({
@@ -99,11 +97,11 @@ $(document).ready(function(){
     })
   }
 
-  $('#predictorUsage').tooltip('show');
-
   $('s3_uploader').bind('s3_upload_failed', function (e, content) {
     alert(content.filename +' failed to upload: ' + content.error_thrown)
   })
+
+  // Sortable Tables, should be replaced with Dynatable
 
   var table = $(".simpleTable").stupidtable({
     // Sort functions here
@@ -119,46 +117,12 @@ $(document).ready(function(){
     th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
   });
 
-  /* Activating Best In Place */
-  jQuery(".best_in_place").best_in_place();
-
-  $("a[rel=popover]").popover();
-  $('.tooltip, a[rel="tooltip"]').tooltip();
-
-	$('#navbar').affix();
-
-
-  $('#userBarInProgress').show();
-	// $('#userBarTotal').hide();
-	$('#userBarInProgressSim').show();
-	$('#userBarTotalSim').show();
-	$('#totalScoreToggle').show();
-  $('#soFarScoreToggle').hide();
-  var $totalChart = $('.user-bar-total-chart');
-  var $inProgressChart = $('#user-bar-in-progress-chart');
-
-  var $toggleCharts = $('.toggle-charts'), $toggles = $toggleCharts.find('.dashboard-toggle');
-
-  $toggleCharts.on('click', '.dashboard-toggle', function() {
-    var $toggle = $(this), selector = $toggle.data('shows');
-    $(selector).removeClass('hidden-chart');
-    $toggleCharts.children('.chart-wrapper').not(selector).addClass('hidden-chart');
-    return false;
-  });
-
-  if ($toggleCharts.length) {
-    $toggles.show();
-    $totalChart.addClass('hidden-chart');
-  }
-
-  // Fix input element click problem
-  $('.dropdown input, .dropdown label').click(function(e) {
-    e.stopPropagation();
-  });
+  // Switching users between courses
 
   $('#course_id').change(function() { $(this).closest('form').submit(); });
 
-	// handle 'select all' button
+	// handle 'select all' buttons, used on release grade forms
+
 	$(".select-all").click(function(e){
 		var $link = $(this);
 
@@ -166,7 +130,7 @@ $(document).ready(function(){
 		$link.parents().find('input[type="checkbox"]').prop('checked', 'checked').trigger('change');
 	});
 
-	// handle 'select none' button
+	// handle 'select none' button, used on release grade forms
 	$(".select-none").click(function(e){
 	 var $link = $(this);
 
@@ -175,10 +139,6 @@ $(document).ready(function(){
 
 	});
 
-  var sparkOpts = {
-    type: 'box',
-    width: '100%',
-  };
 
   if ($('#highchart').length) {
 
@@ -264,25 +224,6 @@ $(document).ready(function(){
         series: [ scores ]
       })
     })
-  }
-
-  if ($('#grade_distro').length) {
-    $.getJSON('/students/scores_for_current_course.json', function (data) {
-      sparkOpts.height = '50px';
-      $('#grade_distro').sparkline(data.scores, sparkOpts);
-    })
-  }
-
-  if ($('#student_grade_distro').length) {
-    var data = JSON.parse($('#student_grade_distro').attr('data-scores'));
-    if (data !== null) {
-      sparkOpts.height = '50px';
-      sparkOpts.target = data.user_score[0];
-      sparkOpts.tooltipOffsetY = -130;
-      sparkOpts.tooltipOffsetY = -80;
-      sparkOpts.targetColor = "#FF0000";
-      $('#student_grade_distro').sparkline(data.scores, sparkOpts);
-    }
   }
 
   if ($('.bar-chart').length) {
@@ -388,6 +329,7 @@ $(document).ready(function(){
     // Ask Cory.
     $('.table-toggle').on('click', assignmentTypeBars);
   }
+
   if ($('#shared_badges_table').length) {
     if (!$('#current_user_badges').length) {
       $('#shared_badges_table').append('<tr><td>My badges<td id="current_user_badges"></td></tr>')

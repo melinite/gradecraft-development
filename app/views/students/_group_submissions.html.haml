@@ -1,4 +1,4 @@
 - if group && group.submission_for_assignment(assignment)
-  = link_to "See Submission", assignment_submission_path(assignment, group.submission_for_assignment(assignment), :group_id => group), :class => 'btn btn-tiny btn-info'
+  = link_to "See Submission", assignment_submission_path(assignment, group.submission_for_assignment(assignment), :group_id => group), :class => 'button tiny'
 - else
-  = link_to "Submit", new_assignment_submission_path(assignment, :group_id => group), :class => 'btn btn-tiny btn-success'
+  = link_to "Submit", new_assignment_submission_path(assignment, :group_id => group), :class => 'button tiny'

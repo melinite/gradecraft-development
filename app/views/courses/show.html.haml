@@ -1,152 +1,149 @@
-= content_nav_for "#{@course.name}" do
-  - if current_user.is_admin?
-    %li= link_to 'See All Courses', courses_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@course.name}", edit_course_path(@course), :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Courses Navigation
+  = content_nav_for "#{@course.name}" do
+    - if current_user.is_admin?
+      %li= link_to 'See All Courses', courses_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@course.name}", edit_course_path(@course), :class => "button tiny radius"
 
 
-.col-lg-12
-  %h3= @title
+  .small-12.columns
+    %h3= @title
 
-.well
-  %h4 THE BASICS
-  %p.clear
-    %b Course Title:
-    = @course.name
-  %p
-    %b Course Number:
-    = @course.courseno
-  %p
-    %b Semester:
-    = @course.semester
-  %p
-    %b Year:
-    = @course.year
-  %p
-    %b Course Grade Scheme:
-    = @course.grade_scheme.try(:name)
-  %p
-    %b GradeCraft will accept assignment submissions for this course:
-    = @course.has_submissions? ? 'Yes' : 'No'
-  %p
-    %b Course Status:
-    = @course.status? ? 'Active' : 'Archived'
-  %p
-    %b Display current progress and total points charts simultaneously?
-    = @course.graph_display? ? 'Simultaneous' : 'Toggle'
-  %p
-    %b The Predictor is:
-    = @course.predictor_setting? ? 'On' : 'Off'
-  %p
-    %b Maximum Number of Points:
-    = points @course.point_total
+    .panel
+      %h4 THE BASICS
+      %p.clear
+        %b Course Title:
+        = @course.name
+      %p
+        %b Course Number:
+        = @course.courseno
+      %p
+        %b Semester:
+        = @course.semester
+      %p
+        %b Year:
+        = @course.year
+      %p
+        %b GradeCraft will accept assignment submissions for this course:
+        = @course.has_submissions? ? 'Yes' : 'No'
+      %p
+        %b Course Status:
+        = @course.status? ? 'Active' : 'Archived'
+      %p
+        %b Display current progress and total points charts simultaneously?
+        = @course.graph_display? ? 'Simultaneous' : 'Toggle'
+      %p
+        %b The Predictor is:
+        = @course.predictor_setting? ? 'On' : 'Off'
+      %p
+        %b Maximum Number of Points:
+        = points @course.point_total
 
-  %p
-    %b Professor's Office Location:
-    = @course.office
-  %p
-    %b Official Phone Number:
-    = @course.phone
-  %p
-    %b Class Email:
-    = @course.class_email
-  %p
-    %b Twitter Handle:
-    = @course.twitter_handle
-  %p
-    %b Hashtag:
-    = @course.twitter_hashtag
-  %p
-    %b Meeting Location:
-    = @course.location
-  %p
-    %b Office Hours:
-    = auto_link(@course.office_hours)
-  %p
-    %b Meeting Time:
-    = @course.meeting_times
+      %p
+        %b Professor's Office Location:
+        = @course.office
+      %p
+        %b Official Phone Number:
+        = @course.phone
+      %p
+        %b Class Email:
+        = @course.class_email
+      %p
+        %b Twitter Handle:
+        = @course.twitter_handle
+      %p
+        %b Hashtag:
+        = @course.twitter_hashtag
+      %p
+        %b Meeting Location:
+        = @course.location
+      %p
+        %b Office Hours:
+        = auto_link(@course.office_hours)
+      %p
+        %b Meeting Time:
+        = @course.meeting_times
 
 
-.well
-  %h4 BADGES
-  %p.clear
-    %b Badges will be used:
-    = @course.badge_setting? ? 'Yes' : 'No'
-  %p
-    %b Badge Set:
-    - @course.badge_sets.each do |b|
-      = b.try(:name)
-  %p
-    %b Badges will be awarded through...
-    = @course.badge_use_scope
-  %p
-    %b Social Badges:
-    = @course.shared_badges? ? 'Yes' : 'No'
-  %p
-    %b Badges are valuable:
-    = @course.badges_value? ? 'Yes' : 'No'
+    .panel
+      %h4 BADGES
+      %p.clear
+        %b Badges will be used:
+        = @course.badge_setting? ? 'Yes' : 'No'
+      %p
+        %b Badges will be awarded through...
+        = @course.badge_use_scope
+      %p
+        %b Social Badges:
+        = @course.shared_badges? ? 'Yes' : 'No'
+      %p
+        %b Badges are valuable:
+        = @course.badges_value? ? 'Yes' : 'No'
 
-.well
-  %h4 SECTIONS
-  %p.clear
-    %b Students will be grouped into sections:
-    = @course.team_setting? ? 'Yes' : 'No'
-  %p
-    %b These sections will be called:
-    = @course.team_term
-  %p
-    %b Students can see the sections, the section's points, and the team's badges:
-    = @course.teams_visible? ? 'Yes' : 'No'
-  %p
-    %b Section Score = Average User Score:
-    = @course.team_score_average? ? 'Yes' : 'No'
-  %p
-    %b Section Leaders will be called:
-    = @course.team_leader_term
+    .panel
+      %h4 SECTIONS
+      %p.clear
+        %b Students will be grouped into sections:
+        = @course.team_setting? ? 'Yes' : 'No'
+      %p
+        %b These sections will be called:
+        = @course.team_term
+      %p
+        %b Students can see the sections, the section's points, and the team's badges:
+        = @course.teams_visible? ? 'Yes' : 'No'
+      %p
+        %b Section Score = Average User Score:
+        = @course.team_score_average? ? 'Yes' : 'No'
+      %p
+        %b Section Leaders will be called:
+        = @course.team_leader_term
 
 
-.well
-  %h4 GROUPS
-  %p
-    %b Students will work in groups:
-    = @course.group_setting? ? 'Yes' : 'No'
-  %p
-    %b Groups will be called:
-    = @course.group_term
-  %p
-    %b Students self-declare their group roles:
-    = @course.team_roles? ? 'Yes' : 'No'
-  %p
-    %b Max Group Size:
-    = @course.max_group_size
-  %p
-    %b Min Group Size:
-    = @course.min_group_size
+    .panel
+      %h4 GROUPS
+      %p
+        %b Students will work in groups:
+        = @course.group_setting? ? 'Yes' : 'No'
+      %p
+        %b Groups will be called:
+        = @course.group_term
+      %p
+        %b Students self-declare their group roles:
+        = @course.team_roles? ? 'Yes' : 'No'
+      %p
+        %b Max Group Size:
+        = @course.max_group_size
+      %p
+        %b Min Group Size:
+        = @course.min_group_size
 
 
-.well
-  %h4 STUDENTS
-  %p.clear
-    %b Students will be called:
-    = @course.user_term
+    .panel
+      %h4 STUDENTS
+      %p.clear
+        %b Students will be called:
+        = @course.user_term
 
-.well
-  %h4 MULTIPLIERS
-  %p.clear
-    %b User's set:
-    = @course.max_assignment_weight
-    = @course.assignment_weight_type
-  %p
-    %b Minimum size:
-    //= @course.min_size
-  %p
-    %b Maximium size:
-    = @course.max_assignment_weight
-  %p
-    %b Multipliers must be set by:
-    = @course.assignment_weight_close_at
-  %p
-    %b Multiplier/weight term:
-    = @course.weight_term
-  %p
-    %b What amount should other (unselected) assignment types be multiplied by?
-    = @course.default_assignment_weight
+    .panel
+      %h4 MULTIPLIERS
+      %p.clear
+        %b User's set:
+        = @course.max_assignment_weight
+        = @course.assignment_weight_type
+      %p
+        %b Minimum size:
+        //= @course.min_size
+      %p
+        %b Maximium size:
+        = @course.max_assignment_weight
+      %p
+        %b Multipliers must be set by:
+        = @course.assignment_weight_close_at
+      %p
+        %b Multiplier/weight term:
+        = @course.weight_term
+      %p
+        %b What amount should other (unselected) assignment types be multiplied by?
+        = @course.default_assignment_weight
+
+  .clearfix

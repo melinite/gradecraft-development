@@ -1,59 +1,60 @@
-= content_nav_for @assignment_type do
-  %li= link_to "See All #{term_for :assignment} Types", assignment_types_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@assignment_type.name}", edit_assignment_type_path(@assignment_type), :class => "btn btn-tiny btn-info"
-  %li= link_to "Create New #{term_for :assignment} Type", new_assignment_type_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Assignment Type Navigation
+  = content_nav_for @assignment_type do
+    %li= link_to "See All #{term_for :assignment} Types", assignment_types_path, :class => "button radius tiny"
+    %li= link_to "Edit #{@assignment_type.name}", edit_assignment_type_path(@assignment_type), :class => "button radius tiny"
+    %li= link_to "Create New #{term_for :assignment} Type", new_assignment_type_path, :class => "button radius tiny"
 
-.col-lg-12
-  %h3= @title
+  .small-12.columns
+    %h2= @title
 
-.well
-  %h4 The Basics
-  %p.clear
-    %b Point setting:
-    = @assignment_type.point_setting
-  %p
-    %b= "Each #{current_course.assignment_term} is worth:"
-    = points @assignment_type.universal_point_value
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "date"} Open - Due
+          %th.sortable{"data-sort" => "int"} Points
+          %th
+      %tbody
+        - @assignment_type.assignments.alphabetical.chronological.each do |assignment|
+          - if assignment.visible? || (current_user.is_student? && current_student_data.grade_released_for_assignment?(assignment)) || current_user.is_staff?
+            %tr
+              %td= link_to assignment.name, assignment
+              %td
+                = "#{assignment.open_at } -" if assignment.open_at.present?
+                = assignment.try(:due_at) || "Ongoing"
+              %td= points assignment.point_total
+              - if current_user.is_staff?
+                %td
+                  .button-bar
+                    %ul.button-group.radius.round
+                      %li= link_to "Grade", assignment_path(assignment), :class => "button tiny"
+                      %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny'
+                      %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
+                      %li= link_to "Copy", copy_assignments_path(:id => assignment), :class => 'button tiny', :method => :copy
+              - else
+                - if assignment.accepts_submissions? && assignment.has_groups?
+                  - if current_student.group_for_assignment(assignment)
+                    %td= link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny radius"
+                    - if assignment.accepts_submissions?
+                      = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+                  - else
+                    %td= link_to "Create a Group", new_group_path, :class => "button tiny radius"
+                - elsif assignment.accepts_submissions? && assignment.is_individual?
+                  - current_student.submission_for_assignment(assignment).tap do |submission|
+                    - if submission
+                      %td= link_to "See Submission", assignment_submission_path(assignment.id, submission, :student_id => current_student.id), :class => 'button tiny radius'
+                      %td
+                      %td
+                      %td
+                    - else
+                      %td= link_to "Submit", new_assignment_submission_path(assignment, @submission, :user_id => current_student.id, :student_type => "User"), :class => 'button tiny radius'
+                      %td
+                      %td
+                      %td
+                - else
+                  %td
+                  %td
+                  %td
 
-  %p
-    %b Is there a cap to the number of points students can earn in this assignment type?
-    = points @assignment_type.max_value
-
-  %p
-    %b Are there due dates?
-    = @assignment_type.due_date_present? ? "Yes" : "No"
-  %p
-    %b Resubmission:
-    = @assignment_type.resubmission? ? "Yes" : "No"
-  %p
-    %b Students set course weight?
-    = @assignment_type.student_weightable? ? "Yes" : "No"
-
-.well
-  %h4 Predictor Settings
-  %p.clear
-    %b Order:
-    = @assignment_type.order_placement
-  %p
-    %b Points predictor display:
-    = @assignment_type.points_predictor_display
-  %p
-    %b Predictor description:
-    = raw @assignment_type.predictor_description
-
-.well
-  %h4 Grading
-  %p.clear
-    %b Is this assignment type quick gradeable?
-    = @assignment_type.mass_grade? ? "Yes" : "No"
-  %p
-    %b In what form?
-    = @assignment_type.mass_grade_type
-  %p
-    %b Are there levels to the grading? (This includes normal A - F grading schemes.)
-    = @assignment_type.levels? ? "Yes" : "No"
-  .well
-    %h5 Score Levels
-    %ul.clear
-    - @score_levels.order('value DESC').each do |sl|
-      %li= "#{sl.name} - #{sl.value}"
+  .clearfix

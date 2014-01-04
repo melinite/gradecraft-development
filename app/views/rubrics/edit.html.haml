@@ -1,3 +1,5 @@
-= content_nav_for Rubric, "Edit #{breadcrumb_link_for(@rubric)}".html_safe
+.small-12.panel.mainContent
+  / Rubrics Navigation
+  = content_nav_for Rubric, "Edit #{breadcrumb_link_for(@rubric)}".html_safe
 
-= render 'form'
+  = render 'form'

@@ -1,5 +1,5 @@
 = simple_form_for @assignment do
-  %table.display.table-striped.table.simpleTable
+  %table.responsive.simpleTable
     %thead
       %tr
         - if @assignment.release_necessary?
@@ -43,15 +43,15 @@
             %td
               - group.submission_for_assignment(@assignment).tap do |submission|
                 - if submission && grade
-                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :grade_id => grade.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :grade_id => grade.id, :group_id => group.id), :class => "button radius tiny"
                 - elsif submission
-                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :group_id => group.id, :grade_id => @grade), :class => 'btn btn-tiny btn-success'
+                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :group_id => group.id, :grade_id => @grade), :class => "button radius tiny"
                 - else
-                  = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+                  = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => "button radius tiny"
           %td
             - if grade
-              = link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+              = link_to "See Grade", assignment_grade_path(@assignment.id, grade.id, :group_id => group.id), :class => "button radius tiny"
             - else
-              = link_to 'Grade', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => group.id), :class => 'btn btn-tiny btn-success'
+              = link_to 'Grade', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => group.id), :class => "button radius tiny"
   - if @assignment.release_necessary? && @assignment.grades.present?
-    = submit_tag "Update Grade Statuses", :class => "btn btn-info"
+    = submit_tag "Update Grade Statuses", :class => "button radius tiny"

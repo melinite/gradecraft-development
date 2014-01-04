@@ -1,20 +1,18 @@
-%ul.nav.nav-tabs
-  %li.active
-    %a{ "data-toggle" => "tab", "data-target" => "#tabkerb" } UM Login
-  %li
-    %a{ "data-toggle" => "tab", "data-target" => "#tabgc"} GradeCraft Login
-.tab-content.login
-  .tab-pane#tabkerb.active
-    %ul
-      .kerberos-auth
-        = form_for User.new, :url => auth_kerberos_callback_path do |f|
-          %li= text_field_tag :username, nil, placeholder: 'Uniqname'
-          %li= password_field_tag :password, nil, placeholder: 'Password'
-          %li= f.submit 'Log in', class: 'btn btn-primary', alt: 'Log in'
-  .tab-pane#tabgc
-    %ul
-      .gradegraft-auth
-        = form_for User.new, :url => user_sessions_path do |f|
-          %li= f.text_field :email, placeholder: "Email"
-          %li= f.password_field :password, placeholder: 'Password'
-          %li= f.submit "Log in", class: 'btn btn-primary', alt: "Log in"
+%dl.tabs{:data => {'tab' => true}}
+  %dd.active
+    %a{ "href" => "#tabkerb" } UM Login
+  %dd
+    %a{ "href" => "#tabgc"} GradeCraft Login
+.tabs-content
+  .content.small-12#tabkerb.active
+    .kerberos-auth
+      = form_for User.new, :url => auth_kerberos_callback_path do |f|
+        = text_field_tag :username, nil, placeholder: 'Uniqname'
+        = password_field_tag :password, nil, placeholder: 'Password'
+        .right= f.submit 'Log in', class: 'button tiny radius', alt: 'Log in'
+  .content.small-12#tabgc
+    .gradegraft-auth
+      = form_for User.new, :url => user_sessions_path do |f|
+        = f.text_field :email, placeholder: "Email"
+        = f.password_field :password, placeholder: 'Password'
+        .right= f.submit "Log in", class: 'button tiny radius', alt: "Log in"

@@ -1,39 +1,42 @@
-= content_nav_for Team do
-  %li= link_to "Add #{term_for :team}", new_team_path, :class => "btn btn-tiny btn-info"
-  - if current_course.team_challenges?
-    %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Team Index Breadcrumbs
+  = content_nav_for Team do
+    %li= link_to "Add #{term_for :team}", new_team_path, :class => "button tiny radius"
+    - if current_course.team_challenges?
+      %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+  .small-12.columns
+    %h2= @title
 
-%table.table.table-striped.simpleTable
-  %thead
-    %tr
-      %th{"data-sort" => "int"} Rank
-      %th{"data-sort" => "string"} Name
-      %th{"data-sort" => "int"} No. of Students
-      - if current_course.team_score_average?
-        %th{"data-sort" => "int"} Score
-      - else
-        %th{"data-sort" => "int"} Ave. Score
-      - if current_user.is_staff?
-        %th{"data-sort" => "string"} #{term_for :badges} Earned
-        %th{"data-sort" => "int"} Total #{term_for :badges}
-        %th
-        %th
-  %tbody
-    - i = 1
-    - @teams.order_by_high_score.each do |team|
-      %tr
-        %td= i
-        %td= link_to team.name, team
-        %td= team.member_count
-        %td= points team.try(:average_grade)
-        - if current_user.is_staff?
-          %td
-            - team.earned_badges.each do |badge|
-              %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "40"}
-          %td= team.try(:student_badge_count)
-          %td= link_to 'Edit', edit_team_path(team), :class => 'btn btn-tiny btn-info'
-          %td= link_to 'Delete', team, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?' }, :method => :delete
-      - i += 1
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th{"data-sort" => "int"} Rank
+          %th{"data-sort" => "string"} Name
+          %th{"data-sort" => "int"} # Students
+          - if current_course.team_score_average?
+            %th{"data-sort" => "int"} Score
+          - else
+            %th{"data-sort" => "int"} Ave. Score
+          - if current_user.is_staff?
+            %th{"data-sort" => "int"} # #{term_for :badges}
+            %th{:width => "250"}
+      %tbody
+        - i = 1
+        - @teams.alpha.order_by_high_score.each do |team|
+          %tr
+            %td= i
+            %td= link_to team.name, team
+            %td= team.member_count
+            %td= points team.try(:average_grade)
+            - if current_user.is_staff?
+              %td= team.try(:student_badge_count)
+              %td
+                .button-bar
+                  %ul.button-group.radius.round
+                    = link_to 'See', team, :class => 'button tiny secondary'
+                    = link_to 'Edit', edit_team_path(team), :class => 'button tiny secondary'
+                    = link_to 'Delete', team, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+          - i += 1
+
+  .clearfix

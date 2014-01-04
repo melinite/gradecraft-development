@@ -13,7 +13,10 @@ class AssignmentsController < ApplicationController
     @assignment = current_course.assignments.find(params[:id])
     @title = @assignment.name
     @groups = @assignment.groups
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
     if current_user.is_student?
       if @assignment.accepts_submissions?
         @submission = @assignment.submissions.new
@@ -33,10 +36,17 @@ class AssignmentsController < ApplicationController
 
   def edit
     @assignment = current_course.assignments.find(params[:id])
-    @title = "Edit #{@assignment.name}"
+    @title = "Editing #{@assignment.name}"
     @assignment_rubrics = current_course.rubric_ids.map do |rubric_id|
       @assignment.assignment_rubrics.where(rubric_id: rubric_id).first_or_initialize
     end
+  end
+
+  def copy
+    @assignment = current_course.assignments.find(params[:id])
+    new_assignment = @assignment.dup
+    new_assignment.save
+    redirect_to assignments_path
   end
 
   def create

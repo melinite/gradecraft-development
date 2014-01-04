@@ -2,9 +2,9 @@ class Challenge < ActiveRecord::Base
 
   attr_accessible :assignment, :assignment_id, :name, :description, :icon,
     :visible, :created_at, :updated_at, :image_file_name, :occurrence,
-    :badge_set, :category_id, :value, :multiplier, :point_total, :due_at,
-    :accepts_submissions, :release_necessary, :course,
-    :challenge_file_ids, :challenge_files_attributes, :challenge_file
+    :category_id, :value, :multiplier, :point_total, :due_at,
+    :accepts_submissions, :release_necessary, :course, :team, :challenge,
+    :challenge_file_ids, :challenge_files_attributes, :challenge_file, :challenge_grades_attributes
 
   belongs_to :course
   has_many :submissions
@@ -12,8 +12,12 @@ class Challenge < ActiveRecord::Base
   has_many :score_levels
   has_many :challenge_files, :dependent => :destroy
   accepts_nested_attributes_for :challenge_files
+  accepts_nested_attributes_for :challenge_grades
 
   validates_presence_of :course, :name
+
+  scope :chronological, -> { order('due_at ASC') }
+  scope :alphabetical, -> { order('name ASC') }
 
   def has_levels?
     levels == true

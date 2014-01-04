@@ -1,0 +1,26 @@
+.small-12.panel.mainContent
+  / Grade Scheme Elements Navigation
+  = content_nav_for "#{current_course.name} Grading" do
+    %li= link_to "Edit Grading Scheme", mass_edit_grade_scheme_elements_path, :class => "button tiny radius"
+
+  / Grade Scheme Elements Table Display
+
+  .small-12.columns
+    %h3= @title
+
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Grade
+          %th.sortable{"data-sort" => "string"} Level
+          %th.sortable{"data-sort" => "int"} Low Range
+          %th.sortable{"data-sort" => "int"} High Range
+      %tbody
+        - @grade_scheme_elements.order_by_high_range.each do |element|
+          %tr
+            %td= element.letter
+            %td= element.level
+            %td= points element.low_range
+            %td= points element.high_range
+
+  .clearfix

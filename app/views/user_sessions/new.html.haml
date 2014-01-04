@@ -1,12 +1,8 @@
 .row
-  .col.col-lg-9
-    .well.alert-danger
-      %h3 Forgot Your Password?
-      .col-lg-12 Enter the email address associated with your account, and you'll receive a link via email that will allow you to create a new password.
-      %br
-      .col-lg-12= render 'forgot_password_form'
+  .small-12.medium-6.columns.panel.radius
+    %h5 Forgot Your Password?
+    %p Enter the email address associated with your account, and you'll receive a link via email that will allow you to create a new password.
+    = render 'forgot_password_form'
 
-  .col.col-lg-3
-    .well
-      %h5 LOGIN
-      = render 'form'
+  .small-12.medium-6.columns.panel.callout.radius
+    = render 'form'

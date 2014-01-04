@@ -1,30 +1,50 @@
 
 /** Table Styles **/
+
+table.responsive {
+  a {
+    color: #333;
+  }
+
+  a:hover {
+    color: $lightblue;
+  }
+
+  .button {
+    margin-bottom: 0;
+  }
+}
+table.responsive tbody, table.responsive tbody tr {
+  padding: 0;
+}
+
+table td {
+  margin: 0;
+  padding: 0;
+}
+
 table {
-  background-color: #FFF;
-  font-size: 80%;
-  border-bottom: 2px solid #333;
+  width: 100%;
+  border-spacing: 0 !important;
+  border-radius: .4rem;
 }
 
-thead {
-  background-color: $lightblue;
-  color: #000;
+table th {
+  text-transform: capitalize;
+  font-weight: normal;
 }
 
-#massGrade table {
-  margin-left: 20px;
-  background-color: #eee;
+ table .button-group li button.tiny {
+  margin: 0;
+  border-radius: 0;
+  padding: .4rem .5rem;
 }
 
-#massGrade table td {
-  padding: 5px 10px;
+th.sorting-desc, th.sorting-asc {
+  color: $yellow;
 }
 
-#massGrade .form-actions {
-  padding-left: 20px;
-  padding-top: 10px;
-}
-
-#massGrade .btn-group  {
-  padding: 20px 20px 0px;
+dd .content.active {
+  margin: 0;
+  padding: 0;
 }

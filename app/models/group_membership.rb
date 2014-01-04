@@ -4,6 +4,6 @@ class GroupMembership < ActiveRecord::Base
   belongs_to :group
   belongs_to :student, class_name: 'User'
 
-  #validates :student_id, :uniqueness => { :scope => [ :student_id, :assignment_id ] }
+  validates_uniqueness_of :student_id, { :scope => :group_id }
 
 end

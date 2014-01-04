@@ -1,78 +1,290 @@
-= simple_form_for(@course, :html => {:class => 'form-horizontal' }, :validate => false)  do |f|
-  .well
+= simple_form_for(@course, :validate => false)  do |f|
+  .panel
     %h4 THE BASICS
-    = f.input :name, :label => "Course Title", :input_html => {:class => "col-lg-4"}
-    = f.input :tagline, :label => "Tagline", :input_html => {:class => "col-lg-4"}
-    = f.input :courseno, :label => "Course Number", :input_html => {:class => "col-lg-2"}, :hint => "This will be used as the prefix to the subject line on all email notifications sent for the course"
-    = f.input :semester, :collection => [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]], :input_html => {:class => "col-lg-4 input-sm"}
-    = f.input :year, :collection => (Date.today.year)..(Date.today.year + 2), :input_html => {:class => "col-lg-4 input-sm"}
-    = f.input :office, :label => "Professor's Office", :input_html => {:class => "col-lg-4"}
-    = f.input :phone, :label => "Contact Phone #", :input_html => {:class => "col-lg-4"}
-    = f.input :class_email, :label => "Class Email", :input_html => {:class => "col-lg-4"}
-    = f.input :twitter_handle, :label => "Twitter Handle", :input_html => {:class => "col-lg-4"}
-    = f.input :twitter_hashtag, :label => "Hashtag", :input_html => {:class => "col-lg-4"}
-    = f.input :location, :label => "Location", :input_html => {:class => "col-lg-4"}
-    = f.input :office_hours, :label => "Office Hours", :input_html => {:class => "col-lg-4"}
-    = f.input :meeting_times, :label => "Class Meeting Times", :input_html => {:class => "col-lg-4"}
-    = f.input :grade_scheme_id, :collection => @grade_schemes, :as => :select, :input_html => {:class => "col-lg-4 input-sm"}
-    = f.input :point_total, :label => "Maximum Number of Points" , :input_html => {:class => "col-lg-4"}, :hint => "If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create."
-    = f.input :assignment_term, :label => "Assignment Term", :hint => "Would you like to call assignments something else?"
-    = f.input :accepts_submissions, :hint=> "Will you be using GradeCraft to accept assignment submissions?", :label => "Assignment Submissions"
-    //= f.input :graph_display, :label => "Display charts simultaneously?", :as => :radio_buttons, :hint => "The student dashboard displays two charts to the students, one that shows how many points they have out of all of the points in the whole course, and one that shows how many points they have out of the assignments they've worked on so far. Would you like to display them both at the same time, or one at a time?"
-    = f.input :predictor_setting, :label => "Display grade predictor (Student Dashboard)?", :as => :radio_buttons
-    %h4 Grading Philosophy
-    %p What would you like to tell students about how they should expected to be graded?
-    = f.text_area :grading_philosophy, :class => :ckeditor, :label => "What would you like to tell students about how they should expected to be graded?", :input_html => {:style => "width: 100%; height: 200px;"}
+    %hr
+    .small-12.large-4.columns
+      = f.label :name, "Course Title"
+      = f.text_field :name
 
-  .well
+    .small-12.large-4.columns
+      = f.label :tagline, "Tagline"
+      = f.text_field :tagline
+
+    .small-12.large-4.columns
+      = f.label :courseno, "Course Number"
+      = f.text_field :courseno
+      %h6.small This will be used as the prefix to the subject line on all email notifications sent for the course
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :semester
+      = f.select :semester, [["Winter", "winter"], ["Spring", "spring"], ["Summer", "summer"], ["Fall", "fall"]]
+
+    .small-12.large-4.columns
+      = f.label :year
+      = f.select :year, (Date.today.year)..(Date.today.year + 2)
+
+    .small-12.large-4.columns
+      = f.label :office, "Professor's Office"
+      = f.text_field :office
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :phone, "Contact Phone #"
+      = f.text_field :phone
+
+    .small-12.large-4.columns
+      = f.label :class_email, "Class Email"
+      = f.text_field :class_email
+
+    .small-12.large-4.columns
+      = f.label :twitter_handle, "Twitter Handle"
+      = f.text_field :twitter_handle
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :twitter_hashtag, "Hashtag"
+      = f.text_field :twitter_hashtag
+
+    .small-12.large-4.columns
+      = f.label :location, "Location"
+      = f.text_field :location
+
+    .small-12.large-4.columns
+      = f.label :office_hours, "Office Hours"
+      = f.text_field :office_hours
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :meeting_times, "Class Meeting Times"
+      = f.text_field :meeting_times
+
+    .small-12.large-4.columns
+      = f.label :point_total, "Maximum Number of Points"
+      = f.text_field :point_total
+      %h6.small If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create.
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :assignment_term, "Assignment Term"
+      = f.text_field :assignment_term
+      %h6.small Would you like to call assignments something else?
+
+
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "accepts_submissions" }
+        = f.label :accepts_submissions, "Assignment Submissions"
+        = f.check_box :accepts_submissions
+      %h6.small Will you be using GradeCraft to accept assignment submissions?
+
+    .small-12.large-4.columns
+      = f.input :predictor_setting, :label => "Grade Predictor"
+      %h6.small The grade predictor is a tab on the student dashboard where students can plan out their course work and estimate their grade.
+
+    .clearfix
+
+    .small-12
+      %h6.small What would you like to tell students about how they should expected to be graded?
+      = f.bootsy_area :grading_philosophy
+
+    .clearfix
+
+  .panel
     %h4 BADGES
-    = f.input :badge_setting, :hint => "Do you want to use badges in your course?", :label => "Badges", :as => :radio_buttons
-    = f.input :badge_term, :label => "Badge Term", :hint => "Would you like to call badges something else?"
-    = f.association :badge_sets, :collection => @badge_sets, :label => "Badge Set", :as => :check_boxes
-    = f.input :shared_badges, :label => "Social Badges", :hint => "Students can share badges with the class", :as => :radio_buttons
-    = f.input :badges_value, :label => "Will badges have points attached to them?", :as => :radio_buttons
+    %hr
+    .small-12.large-4.columns
+      = f.input :badge_setting, :label => "Badges"
+      %h6.small Do you want to use badges in your course?"
 
-  .well
+    .small-12.large-4.columns
+      = f.label :badge_term, "Badge Term"
+      = f.text_field :badge_term
+      %h6.small Would you like to call badges something else?"
+
+    .small-12.large-4.columns
+      = f.input :shared_badges, :label => "Social Badges"
+      %h6.small Students can share badges with the class"
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :badge_value, "Will badges have points attached to them?"
+      = f.radio_button :badges_value, "Yes"
+      = f.radio_button :badges_value, "No"
+
+    .clearfix
+
+  .panel
     %h4 SECTIONS
-    = f.input :team_setting, :hint => "Will you have semester-long sections in your course?", :label => "Sections"
-    = f.input :team_term, :label => "Section Term", :hint => "What will you call these? Team, House, Section...", :input_html => {:class => "col-lg-4"}
-    = f.input :team_score_average, :label => "Section Score = Average User Score", :hint => "Will sections' scores be the average of their students' scores?"
-    = f.input :team_challenges, :label => "Section Assignments", :hint => "Will the sections have to complete assignments collaboratively?", :input_html => {:class => "col-lg-4"}
-    = f.input :challenge_term, :label => "Section Assignment Term", :hint => "What would you like to call these section assignments? Quests, Boss Battles, Challenges...", :input_html => {:class => "col-lg-4"}
-    = f.input :teams_visible, :label => "Section Leaderboard", :hint => "Can students see a leaderboard of the section rankings and their points?"
-    = f.input :in_team_leaderboard, :label => "In-Section Leaderboard", :hint => "Can students see in-section rankings and points (students must opt in to this by adding a screenname to protect their privacy)?"
-    = f.input :team_roles, :label => "Section Roles", :hint => "Do students self-declare their role within the section?"
-    = f.input :team_leader_term, :hint => "TA, GSI, Team Leader...", :label => "What do you call your section leaders?", :input_html => {:class => "col-lg-4"}
+    %hr
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "team_setting" }
+        = f.label :team_setting, "Sections"
+        = f.check_box :team_setting
+      %h6.small Will you have semester-long sections in your course?
 
-  .well
+    .small-12.large-4.columns
+      = f.label :team_term, "Section Term"
+      = f.text_field :team_term
+      %h6.small What will you call these? Team, House, Section...
+
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "team_score_average" }
+        = f.label :team_score_average, "Section Score = Average User Score"
+        = f.check_box :team_score_average
+      %h6.small Will sections' scores be the average of their students' scores?
+
+    .clearfix
+
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "team_challenges" }
+        = f.label :team_challenges, "Section Assignments"
+        = f.check_box :team_challenges
+      %h6.small Will the sections have to complete assignments collaboratively?
+
+    .small-12.large-4.columns
+      %label.text_field{ :for => "challenge_term" }
+        = f.label :challenge_term, "Section Assignment Term"
+        = f.text_field :challenge_term
+      %h6.small What would you like to call these section assignments? Quests, Boss Battles, Challenges...
+
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "teams_visible" }
+        = f.label :teams_visible, "Section Leaderboard"
+        = f.check_box :teams_visible
+      %h6.small Can students see a leaderboard of the section rankings and their points?
+
+    .clearfix
+
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "in_team_leaderboard" }
+        = f.label :in_team_leaderboard, "In-Section Leaderboard"
+        = f.check_box :in_team_leaderboard
+      %h6.small Can students see in-section rankings and points (students must opt in to this by adding a screenname to protect their privacy)?
+
+    .small-12.large-4.columns
+      = f.label :team_roles, "Section Roles"
+      = f.text_field :team_roles
+      %h6.small Do students self-declare their role within the section?
+
+    .small-12.large-4.columns
+      = f.label :team_leader_term, "What do you call your section leaders?"
+      = f.text_field :team_leader_term
+      %h6.small TA, GSI, Team Leader..."
+
+    .clearfix
+
+  .panel
     %h4 GROUPS
-    = f.input :group_setting, :hint => "Will students work in groups on any assignments, and thus all receive the same grade?", :as => :radio_buttons
-    = f.input :group_term, :hint => "What will these groups be called?", :input_html => {:class => "col-lg-4"}
-    = f.input :max_group_size, :input_html => {:class => "col-lg-2"}
-    = f.input :min_group_size, :input_html => {:class => "col-lg-2"}
+    %hr
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "group_setting" }
+        = f.label :group_setting, "Groups"
+        = f.check_box :group_setting
+      %h6.small Will students work in groups on any assignments, and thus all receive the same grade?
 
-  .well
+    .small-12.large-4.columns
+      = f.label :group_term
+      = f.text_field :group_term
+      %h6.small What will these groups be called?
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :max_group_size, "Maximum Group Size"
+      = f.text_field :max_group_size
+
+
+    .small-12.large-4.columns
+      = f.label :min_group_size, "Minimum Group Size"
+      = f.text_field :min_group_size
+
+    .clearfix
+
+  .panel
     %h4 STUDENTS
-    = f.input :user_term, :hint => "What will you call your user? Student, Learner, Player...", :label => "User Term", :input_html => {:class => "col-lg-4"}
-    = f.input :academic_history_visible, :label => "Academic History Visible to GSIs", :as => :boolean
+    %hr
 
-  .well
-    %h4 MULTIPLIERS
-    = f.input :total_assignment_weight, :label => "Multiplier Count", :hint => "Multipliers allow students to 'boost' their grades on specific assignment types. You decide how many multipliers students can allocate, then the students select which assignment types will get a boost (through their dashboard) and those assignment type's points are multiplied by the number of multipliers that the student allocates.", :input_html => {:class => "col-lg-2"}
-    = f.input :assignment_weight_type, :label => "Amount type", :collection => [["Multiplier"]], :input_html => {:class => "col-lg-2 input-sm"}
-    = f.input :assignment_weight_close_at, :label => "What date must they make this decision by?", :as => :string, :input_html => {:class => "input-sm datetimepicker"}
-    = f.input :max_assignment_weight, :label => "Maximum amount that students may allocate", :input_html => {:class => "col-lg-2"}
-    = f.input :max_assignment_types_weighted, :label => "Maximum Multiplied Assignment Types", :hint => "Is there a maximum number of assignment types that students can select to weight?", :input_html => {:class => "col-lg-2"}
-    = f.input :default_assignment_weight, :label => "What amount should the assignment types that the student doesn't select to boost be multiplied by?", :validate => false, :input_html => {:class => "col-lg-2"}
-    = f.input :weight_term, :label => "What do you want to call these weights/multipliers?", :input_html => {:class => "col-lg-2"}
+    .small-12.large-4.columns
+      = f.label :user_term, "User Term"
+      = f.text_field :user_term
+      %h6.small What will you call your user? Student, Learner, Player..."
 
-  .well
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "academic_history_visible" }
+        = f.label :academic_history_visible, "Academic History Visible to GSIs"
+        = f.check_box :academic_history_visible
+
+    .clearfix
+
+  .panel
+    %span.has-tip{:title => "Multipliers allow students to 'boost' their grades on specific assignment types. You decide how many multipliers students can allocate, then the students select which assignment types will get a boost (through their dashboard) and those assignment type's points are multiplied by the number of multipliers that the student allocates.", :data => {'tooltip' => true} } MULTIPLIERS
+
+    %hr
+    .small-12.large-4.columns
+      = f.label :total_assignment_weight, "Multiplier Count"
+      = f.text_field :total_assignment_weight
+      %h6.small
+
+    .small-12.large-4.columns
+      = f.label :assignment_weight_close_at, "Multiplier Close Date"
+      = f.input :assignment_weight_close_at, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker', :value => @assignment.try(:open_at) }, :label => false
+      %h6.small What date must they make this decision by?
+
+    .small-12.large-4.columns
+      = f.label :max_assignment_weight, "Maximum amount that students may allocate"
+      = f.text_field :max_assignment_weight
+
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :max_assignment_types_weighted, "Maximum Multiplied Assignment Types"
+      = f.text_field :max_assignment_types_weighted
+      %h6.small Is there a maximum number of assignment types that students can select to weight?"
+
+    .small-12.large-4.columns
+      = f.label :default_assignment_weight
+      = f.text_field :default_assignment_weight
+      %h6.small What amount should the assignment types that the student doesn't select to boost be multiplied by?
+
+    .small-12.large-4.columns
+      = f.label :weight_term
+      = f.text_field :weight_term
+      %h6.small What do you want to call these weights/multipliers?
+
+    .clearfix
+
+  .panel
     %h4 TIMELINE
-    = f.input :use_timeline, :label => "Would you like to use the interactive timeline to display your syllabus?"
-    = f.input :media_file, :label => "What video or image file (on YouTube, Flickr or Vimeo) would you like to display here?"
-    = f.input :media_credit, :label => "Media Credit"
-    = f.input :media_caption, :label => "Media Caption"
+    %hr
+    .small-12.large-4.columns
+      %label.checkbox{ :for => "use_timeline" }
+        = f.label :use_timeline, "Timeline"
+        = f.check_box :use_timeline
+      %h6.small Would you like to use the interactive timeline to display your syllabus?
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn-primary"
-    = link_to 'Cancel', courses_path, :class => 'btn btn-info'
+    .clearfix
+
+    .small-12.large-4.columns
+      = f.label :media_file
+      = f.text_field :media_file
+      %h6.small What video or image file (on YouTube, Flickr or Vimeo) would you like to display here?
+
+    .small-12.large-4.columns
+      = f.label :media_credit, "Media Credit"
+      = f.text_field :media_credit
+
+    .small-12.large-4.columns
+      = f.label :media_caption, "Media Caption"
+      = f.text_field :media_caption
+
+    .clearfix
+
+  .right
+    = f.button :submit, "#{@course.persisted? ? 'Update' : 'Create'} Course", :class => "button tiny radius"
+    = link_to 'Cancel', courses_path, :class => 'button tiny radius'

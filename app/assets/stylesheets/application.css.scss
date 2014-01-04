@@ -1,219 +1,168 @@
 /*
  *= require jquery.fileupload-ui
  *= require s3_direct_upload_progress_bars
- *= require jquery.ui
+ *= require jquery-ui.min
+ *= require jquery.dynatable
+ *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap
  *= require bootstrap-glyphicons
- *= require flexslider
- *= require jquery.dynatable
- *= require_self
- *= require icons
- *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap-datetimepicker
-*/
+ *= require responsive-tables
+ *= require foundation.min
+ *= require foundation_and_overrides
+ *= require bootsy
+ *= require select2
+
 
 /* Branding colors */
-$blue: #2C3E50;
+
+$blue: #0D9AFF;
 $lightblue: #45A1DE;
-$green: #1ABC9C;
+$green: #67CF30;
 $red: #E95D4E;
+$yellow: #FFF90D;
 $orange: #F4A425;
+$darkblue: #120470;
 
-@font-face {
-  font-family: 'Pontano Sans';
-  src: font-url('pontano-sans-regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'IMF';
-  src: font-url('IMFeDPrm28P.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Overlock';
-  src: font-url('Overlock-Regular.ttf') format('truetype');
-}
-
-
+/* Importing supporting files. If you create a new css file you'll need to add it here.  */
 @import 'compass';
 @import 'compass/css3';
-
+@import 'sidebars';
 @import 'forms';
 @import 'tables';
-@import 'buttons';
-@import 'footer';
-@import 'navigation';
-@import 'sidebars';
 @import 'student_dashboard';
 @import 'tabs';
 @import 'timeline';
 @import 'analytics';
+@import 'breadcrumbs';
+@import 'navigation';
+@import 'buttons';
+
+/* Background color for page */
 
 body {
-  background: image-url("cloud_bg.gif");
-  font-family: 'Pontano Sans', sans-serif;
+  background-color: $blue;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Futura", sans-serif;
-}
-
-.primaryContent {
-  h1, h2, h3, h4, h5, h6 {
-    padding: 5px 15px 5px 0;
-  }
-  .section-heading {
-    margin: 15px -15px 35px;
-    border-radius: 0;
-    h2 {
-      padding: 5px 10px;
-      margin: 0;
-      color: #FFF;
-    }
-  }
-}
-
-.logged-out {
-  .container {
-    max-width: 1070px;
-    margin-top: 45px;
-  }
-  .primaryContent {
-    background-color: white;
-    padding: 10px;
-    min-height: 550px;
-    p {
-      width: 70%;
-      margin: 25px 15px;
-    }
-  }
-}
-
-
-
-.tab-content.login {
+.small-12.panel.mainContent {
+  margin-top: 1rem;
+  padding: 0;
+  border-left: 10px solid $green;
+  border-right: 10px solid $green;
+  border-bottom: 10px solid $green;
+  border-top: none;
   background-color: #FFF;
-  padding: 5px 15px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  height: 150px;
+  min-height: 815px;
+}
+
+.row.panel.publicContent {
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  padding-top: 2rem;
+  border-left: 10px solid $green;
+  border-right: 10px solid $green;
+  border-top: 10px solid $green;
+  background-color: #FFF;
+}
+
+.row.panel.footer {
+  margin-top: 0;
+  background-color: #444;
+  border: none;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+
+  h6 {
+    font-weight: bold;
+    color: #FFF;
+  }
+
+  a {
+    color: #FFF;
+  }
 
   ul {
     margin: 0;
     padding: 0;
   }
-  ul li {
+
+  li {
     list-style-type: none;
-  }
-
-  input {
-    width: 100%;
-    margin: 0 0 10px;
+    font-family: "Avenir", sans-serif;
+    font-size: .9rem;
   }
 }
 
-.logged-in {
-  .container {
-    margin-top: 35px;
-    max-width:  none;
-  }
-  .primaryContent {
-    margin: 10px 0 0 0;
-    padding-bottom: 5px;
-    border-radius: 15px;
-    background-color: #FFF;
-  }
-
-  .well {
-    margin: 10px;
-  }
-}
-
-.alert {
+.login_forms {
+  background-color: #FFF;
   border: none;
-  font-size: 120%;
+
+  .content {
+    background-color: #eee;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    input {
+      width: 85%;
+      margin-left: 15px;
+    }
+  }
+
+  dd a {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-collapse: true;
+    padding: 14px;
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+    background-color: $lightblue;
+  }
+  dd.active a {
+    background-color: #eee;
+  }
+
+  .right {
+    margin-right: 25px;
+  }
 }
 
-.clear {
-  clear: both;
+/* Header styles */
+h1, h2, h3, h4, h5 {
+  font-family: "Avenir", sans-serif;
 }
 
-%h4.center {
-  text-shadow: 1px 1px #333;
+h2 {
+  font-size: 1.7rem;
 }
 
-.underline {
-  text-decoration: underline;
+h3 {
+  font-size: 1.4em;
 }
 
-.center{
-  text-align: center;
-}
-.rounded {
-  border-radius: 10px;
-}
-
-.heading {
-  font-family: 'Futura', sans-serif;
-}
-
-th.sortable {
-  cursor: pointer;
-}
-
-.bold {
+h4 {
+  font-size: .9rem;
+  text-transform: uppercase;
   font-weight: bold;
 }
 
-.smallcaps {
-  text-transform: uppercase;
+h6 {
+  font-size: .9rem;
 }
 
-.points {
-  font-family: 'Overlock', sans-serif;
+h6.small {
+  font-size: .7rem;
 }
 
-.earned {
-  color: $green;
-}
+/* Timeline overrides */
 
-.missed {
-  color: $red;
-}
-
-.possible {
-  color: $blue;
-}
-
-.info {
-  min-height: 500px;
-}
-
-
-/** Jumbotron **/
-.jumbotron {
-  padding: 0.5em 1em;
-  background-color: transparent;
-}
-
-
-@media screen and (min-width: 768px) {
-  .jumbotron {
-    width: 70%;
-    min-height: 450px;
-  }
-}
-
-/** Modals **/
-
-.modal-header {
-  background-color: $green;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.close {
-  font-family: 'Helvetica', sans-serif;
+.vco-storyjs {
+  z-index: 0;
 }
 
  .vco-storyjs ol{
@@ -224,25 +173,14 @@ th.sortable {
   list-style: disc !important;
 }
 
-b {
-  font-family: Helvetica;
-}
-.slider.ui-widget-content {
-  background: #eeeeee;
-  border: none;
+.bold {
+  font-weight: bold;
 }
 
-.ui-widget-header {
-  background: $green;
+ul.side-nav li a {
+  color: #666;
 }
 
-.ui-slider .ui-slider-handle {
-  width:20px;
-  height:20px;
-  position:absolute;
-  top:-5px;
-  margin-left:-12px;
-  z-index:200;
-  background: $lightblue;
+ul.side-nav li a:hover {
+  color: $blue;
 }
-

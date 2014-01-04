@@ -1,4 +1,4 @@
-%table.table.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"} Assignment
@@ -12,6 +12,6 @@
           %th= assignment.submissions.count
           %th
             - if assignment.assignment_type.mass_grade?
-              = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "btn btn-tiny btn-info"
+              = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "button tiny radius"
             - elsif assignment.rubrics.present?
               = link_to "Rubric Grading"

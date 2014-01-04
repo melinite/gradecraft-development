@@ -18,7 +18,7 @@ class AssignmentWeight < ActiveRecord::Base
   scope :except_weight, ->(weight) { where('assignment_weights.id != ?', weight.id) }
   scope :for_course, ->(course) { where(:assignment_id => course.assignments.pluck(:id)) }
 
-  delegate :course, :to => :assignment, :allow_nil => false
+  #delegate :course, :to => :assignment, :allow_nil => false
 
   def self.weight
     limit(1).pluck(:weight).first || 0

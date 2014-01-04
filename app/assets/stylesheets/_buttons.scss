@@ -1,47 +1,32 @@
-/** Buttons **/
+/* Buttons */
 
-.btn {
-  font-family: 'Pontano Sans',sans-serif;
-  border: none;
-}
-
-.btn-primary, .btn-group.open .btn-primary.dropdown-toggle, .badge-primary {
-  background-color: $lightblue;
-}
-
-.badge-secondary-info, .btn-secondary {
-  background-color: $blue;
-}
-
-.btn a, .badge a {
+.panel.callout a.button {
   color: #FFF;
 }
 
-.btn a:hover {
+a.button:hover {
   text-decoration: none;
-  color: #FFF;
 }
 
-.alert {
-  padding: 5px;
-  margin-top: 10px;
-  color: #FFF;
+@media (max-width: 1080px) {
+  .round .button.tiny {
+    padding: .4rem;
+  }
 }
 
-.btn-info, .badge-info, .alert-info {
-  background-color: $orange;
-}
+@media (max-width: 640px) {
+  .round .button.tiny {
+  padding: .75rem;
+  border-radius: none;
+  width: 5rem;
+  border: 1px solid #eee;
+  }
 
-.btn-success, .badge-success, .alert-success {
-  background-color: $green;
-}
 
-.btn-warning, .badge-warning, .alert-error, .label-important {
-  background-color: $red;
+.button-group.round>*:first-child, .button-group.round>*:first-child>a, .button-group.round>*:first-child>button, .button-group.round>*:first-child>.button, .button-group.round>*:last-child, .button-group.round>*:last-child>a, .button-group.round>*:last-child>button, .button-group.round>*:last-child>.button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
-
-.btn.btn-tiny {
-  font-size: 11px;
-  line-height: 1.0;
-  border-radius: 4px;
 }

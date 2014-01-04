@@ -1,7 +1,10 @@
-= content_nav_for @badge, "Award #{term_for :badge}" do
-  %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Earned Badge Navigation
+  = content_nav_for @badge, "Award #{term_for :badge}" do
+    %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
 
-.col-lg-12
-  = render 'form'
+  .small-12.columns
+    = render 'form'
 
+  .clearfix

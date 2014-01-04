@@ -1,21 +1,27 @@
-= content_nav_for Category do
-  %li= link_to 'New Category', new_category_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Category Navigation
+  = content_nav_for Category do
+    %li= link_to 'New Category', new_category_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+  .small-12
+    %h2= @title
 
-%table.table.table-striped.simpleTable
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"} Name
-      %th.sortable{"data-sort" => "string"} Description
-      %th
-      %th
-  %tbody
-    - @categories.each do |category|
+  %table.responsive.simpleTable
+    %thead
       %tr
-        %td= link_to category.name, category
-        %td= raw category.description
-        %td= link_to 'Edit', edit_category_path(category), :class => 'btn btn-tiny btn-success'
-        %td= link_to 'Delete', category, :class => 'btn btn-tiny btn-success', :data => { confirm: 'Are you sure?' }, :method => :delete
+        %th.sortable{"data-sort" => "string"} Name
+        %th.sortable{"data-sort" => "string"} Description
+        %th
+        %th
+    %tbody
+      - @categories.each do |category|
+        %tr
+          %td= link_to category.name, category
+          %td= raw category.description
+          %td
+            .button-bar
+              %ul.button-group.radius.round
+                %li= link_to 'Edit', edit_category_path(category), :class => 'button tiny radius'
+                %li= link_to 'Delete', category, :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete
 
+  .clearfix

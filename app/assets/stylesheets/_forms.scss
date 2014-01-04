@@ -1,39 +1,37 @@
-.help-block {
-  clear: both;
+.select2-search-field {
+  width: 20rem;
 }
 
-.form-horizontal {
-  background-color: #eee;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+h6.small {
+  line-height: 120%;
 }
 
-.form-horizontal input {
-  margin-top: 5px;
-  padding-left: 5px;
+
+/* Text editor box styling */
+
+.wysihtml5-sandbox  {
+  height: 15rem !important;
+  padding-top: 0;
 }
 
-.form-horizontal .help-inline {
-  color: $red;
+.wysihtml5-sandbox body.wysihtml5-editor {
+  padding: 0 !important;
 }
 
-.form-actions {
-  padding-bottom: 20px;
+.wysihtml5-toolbar li {
+  list-style-type: none;
+  display: inline;
 }
 
-.form-group {
-  clear: left;
-}
-.form-actions input {
-  margin-top: 0px;
+ul.wysihtml5-toolbar {
+  margin: 0 0 5px;
+  padding: 0;
 }
 
-.well .form-horizontal select  {
-  background-color: blue;
+form {
+  margin: 0;
 }
 
-.form-horizontal .radio_inline {
-  margin-right: 20px ;
+label.checkbox input {
+  margin-right: 10px;
 }

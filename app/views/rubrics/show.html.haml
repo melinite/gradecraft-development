@@ -1,10 +1,12 @@
-= content_nav_for @rubric do
-  %li= link_to 'Edit', edit_rubric_path(@rubric)
-  %li= link_to 'Criteria', rubric_criteria_path(@rubric)
+.small-12.panel.mainContent
+  / Rubrics Navigation
+  = content_nav_for @rubric do
+    %li= link_to 'Edit', edit_rubric_path(@rubric)
+    %li= link_to 'Criteria', rubric_criteria_path(@rubric)
 
-%p
-  %b Name:
-  = @rubric.name
-%p
-  %b Description:
-  = @rubric.description
+  %p
+    %b Name:
+    = @rubric.name
+  %p
+    %b Description:
+    = @rubric.description

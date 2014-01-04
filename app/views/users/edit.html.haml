@@ -1,7 +1,15 @@
-= content_nav_for User do
-  %li= link_to "See All #{term_for :students}", students_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "View #{@user.name}'s Dashboard", @user, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Edit user breadcrumbs
+  = content_nav_for User do
+    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
+    - if @user.is_student?
+      %li= link_to "View #{@user.name}'s Dashboard", student_path(@user), :class => "button tiny radius"
+    - else
+      %li= link_to "View #{@user.name}'s Dashboard", staff_path(@user), :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
-  = render 'form'
+  .small-12.columns
+    / Form to edit user
+    %h2= @title
+    = render 'form'
+
+  .clearfix

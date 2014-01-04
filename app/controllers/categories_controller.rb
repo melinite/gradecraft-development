@@ -19,7 +19,7 @@ class CategoriesController < ApplicationController
 
   def edit
     @category = current_course.categories.find(params[:id])
-    @title = "Edit #{@category.name}"
+    @title = "Editing #{@category.name}"
   end
 
   def create

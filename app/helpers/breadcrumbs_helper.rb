@@ -2,7 +2,7 @@ module BreadcrumbsHelper
   def breadcrumbs_for(*breadcrumbs)
     breadcrumbs = expand_breadcrumbs(breadcrumbs)
     capture_haml do
-      haml_tag :ul, class: 'breadcrumb' do
+      haml_tag :ul, class: 'breadcrumbs' do
         breadcrumbs.each_with_index do |breadcrumb, i|
           previous = breadcrumbs[i - 1] if i > 0
           haml_concat breadcrumb_for breadcrumb, previous: previous, active: breadcrumbs.last == breadcrumb

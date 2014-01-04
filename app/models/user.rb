@@ -7,12 +7,16 @@ class User < ActiveRecord::Base
   after_save :cache_scores
 
   ROLES = %w(student professor gsi admin)
-
+#
+#   ROLES.each do |role|
+#     scope role.pluralize, -> { where course_memberships.role: role }
+#   end
+#
   ROLES.each do |role|
     scope role.pluralize, -> { where role: role }
   end
 
-  attr_accessor :remember_me, :password, :password_confirmation, :cached_last_login_at
+  attr_accessor :remember_me, :password, :password_confirmation, :cached_last_login_at, :course_team_ids
   attr_accessible :username, :email, :password, :password_confirmation,
     :avatar_file_name, :role, :first_name, :last_name, :rank, :user_id,
     :display_name, :private_display, :default_course_id, :last_activity_at,
@@ -21,13 +25,14 @@ class User < ActiveRecord::Base
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
     :student_academic_history_attributes, :team_role, :course_memberships_attributes,
-    :character_profile, :team_id, :lti_uid, :course_membership
+    :character_profile, :team_id, :lti_uid
 
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
   scope :order_by_low_score, -> { order 'course_memberships.score ASC' }
   scope :being_graded, -> { where('course_memberships.auditing IS FALSE') }
   scope :auditing, -> { where('course_memberships.auditing IS TRUE') }
+  scope :order_by_auditing, -> { order 'course_memberships.auditing ASC' }
 
   has_many :course_memberships, :dependent => :destroy
   has_one :student_academic_history, :foreign_key => :student_id, :dependent => :destroy, :class_name => 'StudentAcademicHistory'
@@ -53,8 +58,15 @@ class User < ActiveRecord::Base
   has_many :group_memberships, :foreign_key => :student_id, :dependent => :destroy
   has_many :groups, :through => :group_memberships
   has_many :assignment_groups, :through => :groups
+
   has_many :team_memberships, :foreign_key => :student_id, :dependent => :destroy
-  has_many :teams, :through => :team_memberships
+
+  has_many :teams, :through => :team_memberships do
+    def set_for_course(course_id, ids)
+      other_team_ids = proxy_association.owner.teams.where("course_id != ?", course_id).pluck(:id)
+      proxy_association.owner.team_ids = other_team_ids | [ids]
+    end
+  end
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -114,11 +126,27 @@ class User < ActiveRecord::Base
     end
   end
 
+  def multiple_courses?
+    course_memberships.count > 1
+  end
+
   def team_leader
     teams.first.try(:team_leader)
   end
 
-  def is_prof?
+ #  def is_prof_for_course(course)?
+#     course_memberships.where(course: course).role == "professor"
+#   end
+#
+#   def is_gsi_for_course(course)?
+#     course_memberships.where(course: course).role == "gsi"
+#   end
+#
+#   def is_student_for_course(course)?
+#     course_memberships.where(course: course).role == "student" || role.blank?
+#   end
+
+ def is_prof?
     role == "professor"
   end
 
@@ -280,8 +308,9 @@ class User < ActiveRecord::Base
     assignment_weights.where(assignment_type: assignment_type).weight
   end
 
+  #Counts how many assignments are weighted for this student - note that this is an ASSIGNMENT count, and not the assignment type count. Because students make the choice at the AT level rather than the A level, this can be confusing.
   def weight_count(course)
-    assignment_weights.where(course: course).pluck('weight').sum
+    assignment_weights.where(course: course).pluck('weight').count
   end
 
 def groups_by_assignment_id

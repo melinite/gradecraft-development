@@ -1,16 +1,49 @@
-%table.table.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"} #{current_course.user_term}
+      %th.sortable{"data-sort" => "string"} First Name
+      %th.sortable{"data-sort" => "string"} Last Name
       %th.sortable{"data-sort" => "string"} #{current_course.badge_term.pluralize}
       - if current_course.valuable_badges?
         %th.sortable{"data-sort" => "int"} Total Badge Score
   %tbody
-    - current_course_data.students.each do |student|
+    - if @team
+      - students = current_course_data.students_for_team(@team)
+    - else
+      - students = current_course_data.students
+    - students.each do |student|
       %tr
-        %td= link_to student.name, student_path(student)
+        %td= link_to student.first_name, student_path(student)
+        %td= link_to student.last_name, student_path(student)
         %td
           - student.earned_badges.each do |eb|
-            %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "40"}
+            %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "20"}
         - if current_course.valuable_badges?
           %td= points student.earned_badge_score_for_course(current_course)
+
+- if (@team && current_course_data.auditing_students_for_team(@team).present?) || ! @team
+
+  %h2 Auditing
+
+  %table.responsive.simpleTable
+    %thead
+      %tr
+        %th.sortable{"data-sort" => "string"} First Name
+        %th.sortable{"data-sort" => "string"} Last Name
+        %th.sortable{"data-sort" => "string"} #{current_course.badge_term.pluralize}
+        - if current_course.valuable_badges?
+          %th.sortable{"data-sort" => "int"} Total Badge Score
+    %tbody
+      - if @team
+        - students = current_course_data.auditing_students_for_team(@team)
+      - else
+        - students = current_course_data.auditing_students
+      - students.each do |student|
+        %tr
+          %td= link_to student.first_name, student_path(student)
+          %td= link_to student.last_name, student_path(student)
+          %td
+            - student.earned_badges.each do |eb|
+              %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "40"}
+          - if current_course.valuable_badges?
+            %td= points student.earned_badge_score_for_course(current_course)

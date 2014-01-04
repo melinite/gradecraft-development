@@ -3,16 +3,30 @@ class StudentsController < ApplicationController
 
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :only => [:index, :destroy, :show, :edit, :new, :choices, :grade_index, :roster]
+  before_filter :ensure_staff?, :except=> [:timeline, :predictor, :grading_philosophy, :badges, :teams]
 
   def index
     @title = "#{current_course.user_term} Roster"
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
+  end
+
+  def timeline
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_course.team_challenges?
+      @events = current_course_data.assignments.to_a + current_course.challenges
+    else
+      @events = current_course_data.assignments.to_a
+    end
+  end
+
+  def export
     @auditing = current_course.students.auditing
-    @students = current_course.students.being_graded
-    respond_to do |format|
+    @students = current_course.students.being_gradedrespond_to do |format|
       format.html
-      format.json { render json: @students }
+      format.json { render json: @students.where("first_name like ?", "%#{params[:q]}%") }
       format.csv { send_data @students.csv_for_course(current_course) }
     end
   end
@@ -26,8 +40,8 @@ class StudentsController < ApplicationController
     self.current_student = current_course.students.where(id: params[:id]).first
     @assignments_with_due_dates = current_course_data.assignments.select { |assignment| assignment.due_at.present? }
     @sorted_teams = current_course.teams.order_by_high_score
-    @grade_scheme = current_course.grade_scheme
-    @grade_levels_json = @grade_scheme.elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
+    @grade_scheme_elements = current_course.grade_scheme_elements
+    @grade_levels_elements_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
     @scores_for_current_course = current_student.scores_for_course(current_course)
     if current_course.team_challenges?
       @events = current_course_data.assignments.to_a + current_course.challenges
@@ -52,10 +66,27 @@ class StudentsController < ApplicationController
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
   end
 
+  def grading_philosophy
+    @grade_scheme_elements = current_course.grade_scheme_elements
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
 
   def class_badges
-    @badges = current_course.badges
   end
+
+  def badges
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
+  def predictor
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
+  def teams
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
 
   def scores_by_assignment
     scores = current_course.grades.released.joins(:assignment_type)

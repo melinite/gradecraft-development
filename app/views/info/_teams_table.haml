@@ -1,8 +1,8 @@
-%table.table.table-striped.simpleTable
+%table.responsive.simpleTable
   %thead
     %tr
       %th.sortable{"data-sort" => "string"}= course.team_term
-      - if !current_course.team_score_average
+      - if ! current_course.team_score_average
         %th.sortable{"data-sort" => "int"} Score
       %th.sortable{"data-sort" => "string"} Badges
       %th.sortable{"data-sort" => "int"} Average #{course.user_term} Grade
@@ -11,8 +11,9 @@
     - teams.order_by_high_score.each do |team|
       %tr
         %td= link_to team.name, team_path(team)
-        - if !current_course.team_score_average
+        - if ! current_course.team_score_average
           %td= points team.try(:score)
+
         %td
           - team.earned_badges.each do |badge|
             = image_tag badge.icon, :alt => badge.name, :width => 40

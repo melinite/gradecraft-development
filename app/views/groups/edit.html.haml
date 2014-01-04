@@ -1,6 +1,10 @@
-= content_nav_for Group, "Editing #{@group.name}" do
-  %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Groups Navigation
+  = content_nav_for Group, "Editing #{@group.name}" do
+    %li= link_to "See All #{term_for :groups}", groups_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
-  = render 'form'
+  .small-12.columns
+    %h2= @title
+    = render 'form'
+
+  .clearfix

@@ -1,16 +1,16 @@
 = form_tag edit_status_grades_assignment_path(@assignment) do
   - @groups.each do |group|
-    .col-lg-12
+    .small-12
       %h3
         = "#{group.name} Grades"
         - group.submission_for_assignment(@assignment).tap do |submission|
           - if submission
-            = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :group_id => group.id, :grade_id => @grade), :class => 'btn btn-tiny btn-success'
+            = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :group_id => group.id, :grade_id => @grade), :class => 'button tiny radius'
           - else
-            = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'btn btn-tiny btn-success'
-        = link_to "Grade", group_grade_assignment_path(@assignment, :group_id => group), :class => 'btn btn-tiny btn-success'
+            = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'button tiny radius'
+        = link_to "Grade", group_grade_assignment_path(@assignment, :group_id => group), :class => 'button tiny radius'
 
-    %table.display.table-striped.table.simpleTable
+    %table.responsive.simpleTable
       %thead
         %tr
           - if @assignment.release_necessary?
@@ -47,4 +47,4 @@
             - if @assignment.release_necessary?
               %td= grade.try(:status)
   - if @assignment.release_necessary? && @assignment.grades.present?
-    = submit_tag "Update Grade Statuses", :class => "btn btn-info pull-right"
+    = submit_tag "Update Grade Statuses", :class => "button tiny radius"

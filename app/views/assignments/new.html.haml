@@ -1,7 +1,10 @@
-= content_nav_for Assignment, "New #{term_for :assignment}" do
-  %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Assignments Navigation
+  = content_nav_for Assignment, "New #{term_for :assignment}" do
+    %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
-  = render 'form'
+  .small-12.columns
+    %h2= @title
+    = render 'form'
 
+  .clearfix

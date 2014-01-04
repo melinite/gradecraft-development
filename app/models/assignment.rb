@@ -1,20 +1,17 @@
 class Assignment < ActiveRecord::Base
   attr_accessible :name, :description, :point_total, :due_at, :created_at,
     :updated_at, :level, :present, :grades_attributes, :assignment_type,
-    :assignment_type_id, :grade_scope, :visible, :grade_scheme_id, :required,
+    :assignment_type_id, :grade_scope, :visible, :required,
     :open_time, :accepts_submissions, :student_logged_button_text,
-    :student_logged, :badge_set_id, :release_necessary,
+    :student_logged, :release_necessary,
     :score_levels_attributes, :open_at, :close_time, :course,
     :assignment_rubrics_attributes, :rubrics_attributes, :media,
     :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
     :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display,
     :assignment_score_levels_attributes, :assignment_score_level, :notify_released,
-    :mass_grade_type
+    :mass_grade_type, :include_in_timeline, :include_in_predictor
 
   self.inheritance_column = 'something_you_will_not_use'
-
-  belongs_to :grade_scheme
-  has_many :grade_scheme_elements, :through => :grade_scheme
 
   belongs_to :assignment_type, -> { order('order_placement ASC') }, touch: true
   accepts_nested_attributes_for :assignment_type
@@ -44,7 +41,7 @@ class Assignment < ActiveRecord::Base
 
   #for instances where the assignment needs it's own unique score levels
   has_many :assignment_score_levels
-  accepts_nested_attributes_for :assignment_score_levels, allow_destroy: true
+  accepts_nested_attributes_for :assignment_score_levels, allow_destroy: true, :reject_if => proc { |a| a['value'].blank? || a['name'].blank? }
 
   delegate :mass_grade?, :student_weightable?, :to => :assignment_type
 
@@ -59,6 +56,9 @@ class Assignment < ActiveRecord::Base
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }
   scope :team_assignments, -> { where grade_scope: "Team" }
+
+  scope :timelineable, -> { where(:include_in_timeline => true) }
+  scope :predictable, -> { where(:include_in_predictor => true) }
 
   scope :chronological, -> { order('due_at ASC') }
   scope :alphabetical, -> { order('name ASC') }
@@ -280,7 +280,9 @@ scope :grading_done, -> { where 'grades.present? == 1' }
   end
 
   def save_grades
-    grades.reload.each(&:save)
+    if self.point_total_changed?
+      grades.reload.each(&:save)
+    end
   end
 
   def save_weights

@@ -1,0 +1,45 @@
+.content-nav {
+  margin-bottom: 1rem;
+}
+
+ul.breadcrumbs {
+  border: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+  background-color: #FFF;
+
+  li {
+      font-size: 1rem;
+  font-family: "Avenir", sans-serif;
+
+  }
+}
+
+.sub-nav {
+  padding: 10px;
+  height: 40px;
+  margin: 0;
+  background-color: $green;
+  dt {
+    color: #FFF;
+
+  }
+
+  li {
+    box-shadow: 0px 0px 4px #777;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  li a {
+
+    background-color: $blue;
+  }
+
+  li a.active {
+    background-color: $darkblue;
+    color: #ccc;
+  }
+}
+

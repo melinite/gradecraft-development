@@ -2,10 +2,11 @@ require 'test_helper'
 
 class AssignmentTypeTest < ActionDispatch::IntegrationTest
 
-  test "test assignment type index as professor" do
+  #view assignment type index
+  test "assignment type index as professor" do
     create_professor(email: 'dumble@hogwarts.edu', password: 'password')
     visit '/'
-    click_link 'Log In'
+    click_link 'GradeCraft Login'
     fill_in 'Email', :with => 'dumble@hogwarts.edu'
     fill_in 'Password', :with => 'password'
     click_button 'Log in'
@@ -15,9 +16,10 @@ class AssignmentTypeTest < ActionDispatch::IntegrationTest
     page.text.must_include "Test Assignment Type"
   end
 
-#new
+  #new assignment type
 
-  test "test assignment type show as professor" do
+  #show assignment type
+  test "assignment type show as professor" do
     create_professor(email: 'sev@hogwarts.edu', password: 'password')
 
     visit assignment_type_path(assignment_type)
@@ -25,8 +27,12 @@ class AssignmentTypeTest < ActionDispatch::IntegrationTest
   end
 
 
-#edit
+  #edit assignment type
+  test "assignment type edit as professor" do
+    visit edit_assignment_type_path(assignment_type)
+    page.text.must_include "Test Assignment Type"
+  end
 
-#delete
+  #delete assignment type
 
 end

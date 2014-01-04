@@ -1,4 +1,4 @@
-// add commas
+// add commas to predictor displays below
 function addCommas(i){
 	numWithCommas = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return numWithCommas;
@@ -12,7 +12,7 @@ var chartOptions = {
   chart: {
     renderTo: 'prediction',
     type: 'bar',
-    backgroundColor:null
+    backgroundColor: '#FFF'
   },
   title: {
     text: ' ',
@@ -35,19 +35,15 @@ var chartOptions = {
   },
   yAxis: {
     min: 0,
+    gridLineWidth: 0,
     title: {
       text: 'Available Points'
-    }
-  },
+      }
+            },
   labels: {
     formatter: function(){
       return this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-    plotLines: [{
-      value: 0,
-      width: 1,
-      color: '#808080'
-    }]
+    }
   },
   tooltip: {
     formatter: function() {
@@ -68,13 +64,20 @@ var chartOptions = {
       color: '#333333'
     }
   },
-  series: []
+  series: [],
+  plotBands: []
 };
 
 var AssignmentType = Backbone.Model.extend();
 
 var AssignmentTypesArray = Backbone.Collection.extend({
   model: AssignmentType
+});
+
+var GradeSchemeElement = Backbone.Model.extend();
+
+var GradeSchemeElementsArray = Backbone.Collection.extend({
+  model: GradeSchemeElement
 });
 
 var PredictorView = Backbone.View.extend({
@@ -139,14 +142,21 @@ var PredictorView = Backbone.View.extend({
   },
   calculateCourseTotal: function() {
     var courseTotal = 0;
-    var $slide = this.$el.find('li#slide-badges')
-    $.each($slide.find('input'), function(i,item) {
-      var $item = $(item);
-      if ($item.is(':checked')) {
-        courseTotal += parseInt($item.val());
+    var courseSetTotal = $('#course-total-preset').data('coursetotal');
+    var $slide = this.$el.find('li#slide-badges');
+    if(courseSetTotal != null){
+        courseTotal =  courseSetTotal;
       }
-    });
-    courseTotal += parseInt(this.$el.data('course-total'));
+    else {
+      $.each($slide.find('input'), function(i,item) {
+        var $item = $(item);
+        if ($item.is(':checked')) {
+          courseTotal += parseInt($item.val());
+        }
+    })
+      courseTotal += parseInt(this.$el.data('course-total'));
+    };
+
     return courseTotal;
   },
   calculateScores: function(e) {
@@ -207,8 +217,6 @@ $(document).ready(function() {
     new PredictorView();
   }
 
-   // Temporarily commented out to revive dashboard charts & predictor
-
   $('.slider').each(function(i,slider) {
     $slider = $(slider);
     var min = 0;
@@ -264,7 +272,7 @@ $(document).ready(function() {
               type: "POST",
               data: { predicted_score: ui.value },
               dataType: 'json'
-          });        
+          });
         }
       }
     });
@@ -287,7 +295,7 @@ $(document).ready(function() {
         type: "POST",
         data: { predicted_score: value },
         dataType: 'json'
-      });    
+      });
     }
   })
 
@@ -300,7 +308,7 @@ $(document).ready(function() {
         type: "POST",
         data: { predicted_score: value },
         dataType: 'json'
-      });    
+      });
     }
   })
 });

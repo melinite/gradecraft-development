@@ -12,7 +12,7 @@ json.set! :timeline do
 
   json.set! :date do
     json.array! @events do |event|
-      json.startDate event.due_at.strftime("%Y,%m,%d") if event.due_at
+      json.startDate event.open_at.strftime("%Y,%m,%d") if event.open_at
       json.endDate event.due_at.strftime("%Y,%m,%d") if event.due_at
       json.headline event.name
       json.text event.description

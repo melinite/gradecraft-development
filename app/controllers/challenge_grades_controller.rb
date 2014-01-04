@@ -24,7 +24,7 @@ class ChallengeGradesController < ApplicationController
 
   def edit
     @challenge = current_course.challenges.find(params[:challenge_id])
-    @title = "Edit #{@challenge.name} Grade"
+    @title = "Editing #{@challenge.name} Grade"
     @teams = current_course.teams
     @challenge_grade = @challenge.challenge_grades.find(params[:id])
   end
@@ -41,8 +41,7 @@ class ChallengeGradesController < ApplicationController
   end
 
   def mass_update
-    @team = find_team
-    @challenge = current_course.challenges.find(params[:challenge_id])
+    @challenge = current_course.challenges.find(params[:id])
     if @challenge.update_attributes(params[:challenge])
       redirect_to challenge_path(@challenge)
     else
@@ -69,7 +68,6 @@ class ChallengeGradesController < ApplicationController
   def update
     @challenge = current_course.challenges.find(params[:challenge_id])
     @challenge_grades = current_course.challenge_grades.find(params[:id])
-
     respond_to do |format|
       if @challenge_grades.update_attributes(params[:challenge])
         format.html { redirect_to @challenge, notice: 'Challenge was successfully updated.' }

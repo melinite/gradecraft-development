@@ -5,7 +5,7 @@ class BadgeTest < ActionDispatch::IntegrationTest
   test "test badge index as professor" do
     create_professor(email: 'dumbledore@hogwarts.edu', password: 'password')
     visit '/'
-    click_link 'Log In'
+    click_link 'GradeCraft Login'
     fill_in 'Email', :with => 'dumbledore@hogwarts.edu'
     fill_in 'Password', :with => 'password'
     click_button 'Log in'

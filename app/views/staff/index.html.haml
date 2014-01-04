@@ -1,27 +1,34 @@
-= content_nav_for User, "Staff" do
-  %li= link_to 'See All Users', users_path, :class => "btn btn-tiny btn-info"
-  %li= link_to 'Create a New Staff Member', new_user_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Staff Navigation
+  = content_nav_for User, "Staff" do
+    %li= link_to 'See All Users', users_path, :class => "button tiny radius"
+    %li= link_to 'Create a New Staff Member', new_user_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+  .small-12.columns
+    %h2= @title
 
-%table.table.display.table-striped.simpleTable
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"} Name
-      %th.sortable{"data-sort" => "string"} Role
-      %th.sortable{"data-sort" => "string"} #{term_for :team}
-      %th
-      %th
-  %tbody
-    - current_course.users.each do |user|
-      - if user.is_staff?
+    %table.responsive.simpleTable
+      %thead
         %tr
-          %td= link_to user.name, staff_path(user)
-          %td= user.role.capitalize
-          %td
-            %ul
-              - user.teams.each do |team|
-                %li= link_to team.try(:name), team
-          %td= link_to 'Edit', edit_user_path(user), {:class => 'btn btn-tiny btn-info'}
-          %td= link_to 'Delete', user, :class => 'btn btn-tiny btn-warning', :data => { confirm: 'Are you sure?'}, :method => :delete
+          %th.sortable{"data-sort" => "string"} First Name
+          %th.sortable{"data-sort" => "string"} Last Name
+          %th.sortable{"data-sort" => "string"} Role
+          %th.sortable{"data-sort" => "string"} #{term_for :team}
+          %th
+      %tbody
+        - current_course.users.each do |user|
+          - if user.is_staff?
+            %tr
+              %td= user.first_name
+              %td= user.last_name
+              %td= user.role.capitalize
+              %td
+                %ul
+                  - user.teams.each do |team|
+                    %li= link_to team.try(:name), team
+              %td
+                .button-bar
+                  %ul.button-group.radius.round
+                    %li= link_to 'See', staff_path(user), {:class => 'button tiny'}
+                    %li= link_to 'Edit', edit_user_path(user), {:class => 'button tiny'}
+                    %li= link_to 'Delete', user, :class => 'button tiny', :data => { confirm: 'Are you sure?'}, :method => :delete

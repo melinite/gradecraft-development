@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -316,7 +315,9 @@ CREATE TABLE assignment_types (
     student_weightable boolean,
     student_logged_button_text character varying(255),
     student_logged_revert_button_text character varying(255),
-    notify_released boolean DEFAULT true
+    notify_released boolean DEFAULT true,
+    include_in_timeline boolean DEFAULT true,
+    include_in_predictor boolean DEFAULT true
 );
 
 
@@ -416,7 +417,9 @@ CREATE TABLE assignments (
     media_caption character varying(255),
     points_predictor_display character varying(255),
     notify_released boolean DEFAULT true,
-    mass_grade_type character varying(255)
+    mass_grade_type character varying(255),
+    include_in_timeline boolean DEFAULT true,
+    include_in_predictor boolean DEFAULT true
 );
 
 
@@ -550,6 +553,70 @@ CREATE SEQUENCE badges_id_seq
 --
 
 ALTER SEQUENCE badges_id_seq OWNED BY badges.id;
+
+
+--
+-- Name: bootsy_image_galleries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bootsy_image_galleries (
+    id integer NOT NULL,
+    bootsy_resource_id integer,
+    bootsy_resource_type character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: bootsy_image_galleries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bootsy_image_galleries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bootsy_image_galleries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bootsy_image_galleries_id_seq OWNED BY bootsy_image_galleries.id;
+
+
+--
+-- Name: bootsy_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bootsy_images (
+    id integer NOT NULL,
+    image_file character varying(255),
+    image_gallery_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: bootsy_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bootsy_images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bootsy_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bootsy_images_id_seq OWNED BY bootsy_images.id;
 
 
 --
@@ -897,28 +964,7 @@ CREATE TABLE tasks (
 --
 
 CREATE VIEW course_cache_keys AS
- SELECT courses.id, 
-    courses.id AS course_id, 
-    md5(concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, 
-    md5(concat(courses.id, ( SELECT sum(date_part('epoch'::text, assignments.updated_at)) AS sum
-           FROM assignments
-          WHERE (assignments.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, assignment_types.updated_at)) AS sum
-           FROM assignment_types
-          WHERE (assignment_types.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, score_levels.updated_at)) AS sum
-           FROM (assignment_types
-      JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id)))
-     WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, 
-    md5(concat(( SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum
-           FROM grades
-          WHERE (grades.course_id = courses.id)))) AS grades_key, 
-    md5(concat(( SELECT sum(date_part('epoch'::text, tasks.updated_at)) AS sum
-           FROM tasks
-          WHERE (tasks.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, badges.updated_at)) AS sum
-           FROM badges
-          WHERE (badges.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
-           FROM earned_badges
-          WHERE (earned_badges.course_id = courses.id)))) AS badges_key
-   FROM courses;
+    SELECT courses.id, courses.id AS course_id, md5(pg_catalog.concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, md5(pg_catalog.concat(courses.id, (SELECT COALESCE(sum(date_part('epoch'::text, assignments.updated_at)), (0)::double precision) AS "coalesce" FROM assignments WHERE (assignments.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, assignment_types.updated_at)), (0)::double precision) AS "coalesce" FROM assignment_types WHERE (assignment_types.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, score_levels.updated_at)), (0)::double precision) AS "coalesce" FROM (assignment_types JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id))) WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, md5(concat((SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum FROM grades WHERE (grades.course_id = courses.id)))) AS grades_key, md5(pg_catalog.concat((SELECT COALESCE(sum(date_part('epoch'::text, tasks.updated_at)), (0)::double precision) AS "coalesce" FROM tasks WHERE (tasks.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, badges.updated_at)), (0)::double precision) AS "coalesce" FROM badges WHERE (badges.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, earned_badges.updated_at)), (0)::double precision) AS "coalesce" FROM earned_badges WHERE (earned_badges.course_id = courses.id)))) AS badges_key FROM courses;
 
 
 --
@@ -1010,7 +1056,8 @@ CREATE TABLE course_memberships (
     shared_badges boolean,
     character_profile text,
     last_login_at timestamp without time zone,
-    auditing boolean DEFAULT false NOT NULL
+    auditing boolean DEFAULT false NOT NULL,
+    role character varying(255) DEFAULT 'student'::character varying NOT NULL
 );
 
 
@@ -1316,7 +1363,8 @@ CREATE TABLE grade_scheme_elements (
     grade_scheme_id integer,
     description character varying(255),
     high_range integer,
-    team_id integer
+    team_id integer,
+    course_id integer
 );
 
 
@@ -1498,6 +1546,14 @@ ALTER SEQUENCE lti_providers_id_seq OWNED BY lti_providers.id;
 
 
 --
+-- Name: released_grades; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW released_grades AS
+    SELECT grades.id, grades.raw_score, grades.assignment_id, grades.feedback, grades.created_at, grades.updated_at, grades.complete, grades.semis, grades.finals, grades.type, grades.status, grades.attempted, grades.substantial, grades.final_score, grades.submission_id, grades.course_id, grades.shared, grades.student_id, grades.task_id, grades.group_id, grades.group_type, grades.score, grades.assignment_type_id, grades.point_total, grades.admin_notes, grades.graded_by_id, grades.team_id, grades.released, grades.predicted_score FROM (grades JOIN assignments ON ((assignments.id = grades.assignment_id))) WHERE (((grades.status)::text = 'Released'::text) OR (((grades.status)::text = 'Graded'::text) AND (NOT assignments.release_necessary)));
+
+
+--
 -- Name: submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1528,29 +1584,61 @@ CREATE TABLE submissions (
 
 
 --
+-- Name: team_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE team_memberships (
+    id integer NOT NULL,
+    team_id integer,
+    student_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE teams (
+    id integer NOT NULL,
+    name character varying(255),
+    course_id integer,
+    rank integer,
+    score integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    teams_leaderboard boolean DEFAULT false,
+    in_team_leaderboard boolean DEFAULT false
+);
+
+
+--
 -- Name: membership_calculations; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW membership_calculations AS
- SELECT m.id, 
-    m.id AS course_membership_id, 
-    m.course_id, 
-    m.user_id, 
-    md5(concat(m.course_id, m.user_id, ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
-           FROM earned_badges
-          WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, 
-    md5(concat(m.course_id, m.user_id, ( SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum
-           FROM submissions
-          WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, 
-    ( SELECT sum(grades.score) AS sum
-           FROM grades
-          WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score_sum, 
-    cck.course_key, 
-    cck.assignments_key, 
-    cck.grades_key, 
-    cck.badges_key
-   FROM (course_memberships m
-   JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
+    SELECT m.id, m.id AS course_membership_id, m.course_id, m.user_id, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT COALESCE(sum(date_part('epoch'::text, earned_badges.updated_at)), (0)::double precision) AS "coalesce" FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT COALESCE(sum(date_part('epoch'::text, submissions.updated_at)), (0)::double precision) AS "coalesce" FROM submissions WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT COALESCE(sum(date_part('epoch'::text, aw.updated_at)), (0)::double precision) AS "coalesce" FROM assignment_weights aw WHERE ((aw.student_id = m.user_id) AND (aw.course_id = aw.course_id))))) AS assignment_weights_key, (SELECT COALESCE(sum(a.point_total), (0)::bigint) AS "coalesce" FROM assignments a WHERE (a.course_id = m.course_id)) AS assignment_score, (SELECT COALESCE(sum(assignments.point_total), (0)::bigint) AS "coalesce" FROM assignments WHERE (((assignments.course_id = m.course_id) AND (m.user_id = m.user_id)) AND (EXISTS (SELECT 1 FROM released_grades WHERE ((released_grades.assignment_id = assignments.id) AND (released_grades.student_id = m.user_id)))))) AS in_progress_assignment_score, (SELECT COALESCE(sum(grades.score), (0)::bigint) AS "coalesce" FROM grades WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score, (SELECT COALESCE(sum(g.score), (0)::bigint) AS "coalesce" FROM (grades g JOIN assignments a ON ((g.assignment_id = a.id))) WHERE (((g.course_id = m.course_id) AND (g.student_id = m.user_id)) AND (((g.status)::text = 'Released'::text) OR (((g.status)::text = 'Graded'::text) AND (NOT a.release_necessary))))) AS released_grade_score, (SELECT COALESCE(sum(earned_badges.score), (0)::bigint) AS "coalesce" FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))) AS earned_badge_score, (SELECT COALESCE(sum(challenge_grades.score), (0)::bigint) AS "coalesce" FROM (((challenge_grades JOIN challenges ON ((challenge_grades.challenge_id = challenges.id))) JOIN teams ON ((challenge_grades.team_id = teams.id))) JOIN team_memberships ON ((team_memberships.team_id = teams.id))) WHERE ((teams.course_id = m.course_id) AND (team_memberships.student_id = m.user_id))) AS challenge_grade_score, (SELECT teams.id FROM (teams JOIN team_memberships ON ((team_memberships.team_id = teams.id))) WHERE ((teams.course_id = m.course_id) AND (team_memberships.student_id = m.user_id)) ORDER BY team_memberships.updated_at DESC LIMIT 1) AS team_id, (SELECT sum(COALESCE(assignment_weights.point_total, assignments.point_total)) AS sum FROM (assignments LEFT JOIN assignment_weights ON (((assignments.id = assignment_weights.assignment_id) AND (assignment_weights.student_id = m.user_id)))) WHERE (assignments.course_id = m.course_id)) AS weighted_assignment_score, (SELECT count(*) AS count FROM assignment_weights WHERE (assignment_weights.student_id = m.user_id)) AS assignment_weight_count, cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key FROM (course_memberships m JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
+
+
+--
+-- Name: membership_scores; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE membership_scores (
+    course_membership_id integer,
+    assignment_type_id integer,
+    name character varying(255),
+    score bigint
+);
+
+
+--
+-- Name: released_challege_grades; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW released_challege_grades AS
+    SELECT challenge_grades.id, challenge_grades.challenge_id, challenge_grades.score, challenge_grades.feedback, challenge_grades.status, challenge_grades.team_id, challenge_grades.final_score, challenge_grades.created_at, challenge_grades.updated_at FROM (challenge_grades JOIN challenges ON ((challenges.id = challenge_grades.challenge_id))) WHERE (((challenge_grades.status)::text = 'Released'::text) OR (((challenge_grades.status)::text = 'Graded'::text) AND (NOT challenges.release_necessary)));
 
 
 --
@@ -1692,17 +1780,7 @@ CREATE TABLE users (
 --
 
 CREATE VIEW shared_earned_badges AS
- SELECT course_memberships.course_id, 
-    (((users.first_name)::text || ' '::text) || (users.last_name)::text) AS student_name, 
-    users.id AS user_id, 
-    earned_badges.id, 
-    badges.icon, 
-    badges.name
-   FROM (((course_memberships
-   JOIN users ON ((users.id = course_memberships.user_id)))
-   JOIN earned_badges ON ((earned_badges.student_id = users.id)))
-   JOIN badges ON ((badges.id = earned_badges.badge_id)))
-  WHERE (((course_memberships.shared_badges = true) AND (badges.icon IS NOT NULL)) AND (earned_badges.shared = true));
+    SELECT course_memberships.course_id, (((users.first_name)::text || ' '::text) || (users.last_name)::text) AS student_name, users.id AS user_id, earned_badges.id, badges.icon, badges.name, badges.id AS badge_id FROM (((course_memberships JOIN users ON ((users.id = course_memberships.user_id))) JOIN earned_badges ON ((earned_badges.student_id = users.id))) JOIN badges ON ((badges.id = earned_badges.badge_id))) WHERE (((course_memberships.shared_badges = true) AND (badges.icon IS NOT NULL)) AND (earned_badges.shared = true));
 
 
 --
@@ -1782,17 +1860,7 @@ ALTER SEQUENCE student_assignment_type_weights_id_seq OWNED BY student_assignmen
 --
 
 CREATE VIEW student_cache_keys AS
- SELECT cm.id, 
-    cm.id AS course_membership_id, 
-    cm.course_id, 
-    cm.user_id, 
-    md5(concat(cm.course_id, cm.user_id, ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
-           FROM earned_badges
-          WHERE ((earned_badges.course_id = cm.course_id) AND (earned_badges.student_id = cm.user_id))))) AS earned_badges_key, 
-    md5(concat(cm.course_id, cm.user_id, ( SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum
-           FROM submissions
-          WHERE ((submissions.course_id = cm.course_id) AND (submissions.student_id = cm.user_id))))) AS submissions_key
-   FROM course_memberships cm;
+    SELECT cm.id, cm.id AS course_membership_id, cm.course_id, cm.user_id, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum FROM earned_badges WHERE ((earned_badges.course_id = cm.course_id) AND (earned_badges.student_id = cm.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(cm.course_id, cm.user_id, (SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum FROM submissions WHERE ((submissions.course_id = cm.course_id) AND (submissions.student_id = cm.user_id))))) AS submissions_key FROM course_memberships cm;
 
 
 --
@@ -1865,19 +1933,6 @@ ALTER SEQUENCE tasks_id_seq OWNED BY tasks.id;
 
 
 --
--- Name: team_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE team_memberships (
-    id integer NOT NULL,
-    team_id integer,
-    student_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
 -- Name: team_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1894,21 +1949,6 @@ CREATE SEQUENCE team_memberships_id_seq
 --
 
 ALTER SEQUENCE team_memberships_id_seq OWNED BY team_memberships.id;
-
-
---
--- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE teams (
-    id integer NOT NULL,
-    name character varying(255),
-    course_id integer,
-    rank integer,
-    score integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
 
 
 --
@@ -2056,6 +2096,20 @@ ALTER TABLE ONLY badge_sets ALTER COLUMN id SET DEFAULT nextval('badge_sets_id_s
 --
 
 ALTER TABLE ONLY badges ALTER COLUMN id SET DEFAULT nextval('badges_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bootsy_image_galleries ALTER COLUMN id SET DEFAULT nextval('bootsy_image_galleries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bootsy_images ALTER COLUMN id SET DEFAULT nextval('bootsy_images_id_seq'::regclass);
 
 
 --
@@ -2389,6 +2443,22 @@ ALTER TABLE ONLY badge_sets
 
 ALTER TABLE ONLY badges
     ADD CONSTRAINT badges_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bootsy_image_galleries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bootsy_image_galleries
+    ADD CONSTRAINT bootsy_image_galleries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bootsy_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bootsy_images
+    ADD CONSTRAINT bootsy_images_pkey PRIMARY KEY (id);
 
 
 --
@@ -2903,6 +2973,13 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: _RETURN; Type: RULE; Schema: public; Owner: -
+--
+
+CREATE RULE "_RETURN" AS ON SELECT TO membership_scores DO INSTEAD SELECT m.id AS course_membership_id, at.id AS assignment_type_id, at.name, (SELECT COALESCE(sum(g.score), (0)::bigint) AS score FROM released_grades g WHERE (((g.student_id = m.user_id) AND (g.assignment_type_id = at.id)) AND (g.course_id = m.course_id))) AS score FROM (course_memberships m JOIN assignment_types at ON ((at.course_id = m.course_id))) GROUP BY m.id, at.id, at.name;
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -3047,3 +3124,15 @@ INSERT INTO schema_migrations (version) VALUES ('20131022111426');
 INSERT INTO schema_migrations (version) VALUES ('20131113012440');
 
 INSERT INTO schema_migrations (version) VALUES ('20131116142154');
+
+INSERT INTO schema_migrations (version) VALUES ('20131225013628');
+
+INSERT INTO schema_migrations (version) VALUES ('20131225013629');
+
+INSERT INTO schema_migrations (version) VALUES ('20131229171602');
+
+INSERT INTO schema_migrations (version) VALUES ('20131231042054');
+
+INSERT INTO schema_migrations (version) VALUES ('20131231135740');
+
+INSERT INTO schema_migrations (version) VALUES ('20131231151417');

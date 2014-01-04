@@ -1,5 +1,6 @@
 GradeCraft::Application.routes.draw do
 
+  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   #1. Analytics & Charts
   #2. Assignments, Submissions, Tasks, Grades
   #3. Assignment Types
@@ -52,6 +53,7 @@ GradeCraft::Application.routes.draw do
   resources :assignments do
     collection do
       get :feed
+      post 'copy' => 'assignments#copy'
       get :settings
       get 'weights' => 'assignment_weights#mass_edit', :as => :mass_edit_weights
     end
@@ -93,7 +95,6 @@ GradeCraft::Application.routes.draw do
   resources :assignment_weights
 
   #5. Badges
-  resources :badge_sets
   resources :badges do
     resources :tasks
     resources :earned_badges do
@@ -116,7 +117,12 @@ GradeCraft::Application.routes.draw do
     resources :challenge_grades do
       collection do
         get :mass_edit
+
       end
+    end
+    member do
+      get 'mass_edit' => 'challenge_grades#mass_edit', as: :mass_edit
+      put 'mass_edit' => 'challenge_grades#mass_update'
     end
   end
 
@@ -124,6 +130,7 @@ GradeCraft::Application.routes.draw do
   resources :courses do
     collection do
       get :all_grades
+      post 'copy' => 'courses#copy'
     end
   end
   resources :course_memberships
@@ -159,10 +166,11 @@ GradeCraft::Application.routes.draw do
   resources :rubrics do
     resources :criteria
   end
-  resources :grade_schemes do
-    resources :grade_scheme_elements
+  resources :grade_scheme_elements do
     collection do
       post :destroy_multiple
+      get 'mass_edit' => 'grade_scheme_elements#mass_edit', as: :mass_edit
+      put 'mass_edit' => 'grade_scheme_elements#mass_update'
     end
   end
 
@@ -188,7 +196,6 @@ GradeCraft::Application.routes.draw do
       get :edit_profile
       get :all
       put :update_profile
-      get :predictor
       get :test
       get :import
       post :upload
@@ -197,6 +204,13 @@ GradeCraft::Application.routes.draw do
   end
   resources :students do
     get :grade_index
+    get :timeline
+    get :syllabus
+    get :calendar
+    get :badges
+    get :predictor
+    get :grading_philosophy
+    get :teams
     collection do
       get :leaderboard
       get :choices
@@ -212,6 +226,16 @@ GradeCraft::Application.routes.draw do
   resources :staff, only: [:index, :show]
   resources :user_sessions
   resources :password_resets
+
+
+  get 'calendar' => 'students#calendar'
+  get 'timeline' => 'students#timeline'
+  get 'badges' => 'students#badges'
+  get 'calendar' => 'students#calendar'
+  get 'predictor' => 'students#predictor'
+  get 'grading_philosophy' => 'students#grading_philosophy'
+  get 'my_badges' => 'students#badges'
+  get 'my_team' => 'students#teams'
 
   #14. User Auth
   post 'auth/kerberos/callback', to: 'user_sessions#kerberos_create', as: :auth_kerberos_callback

@@ -1,48 +1,52 @@
-- if current_user.is_staff?
-  = content_nav_for @assignment, Submission, "New Submission" do
-    %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "btn btn-tiny btn-info"
-- else
-  = content_nav_for "New Submission" do
-    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
-    %li= link_to "See Submission", assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Submissions Navigation
+  - if current_user.is_staff?
+    = content_nav_for @assignment, Submission, "New Submission" do
+      %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "button tiny radius"
+  - else
+    = content_nav_for "New Submission" do
+      %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+      %li= link_to "See Submission", assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+  .small-12.columns
+    %h2= @title
 
-  - if @assignment.description?
-    %p
-      %b Description:
-      = raw @assignment.description
+    - if @assignment.description?
+      %p
+        %b Description:
+        = raw @assignment.description
 
-  - if @assignment.point_total?
-    %p
-      %b Point Total:
-      = points @assignment.point_total
+    - if @assignment.point_total?
+      %p
+        %b Point Total:
+        = points @assignment.point_total
 
-  - if @assignment.open_at?
-    %p
-      %b Open date:
-      = @assignment.open_at
+    - if @assignment.open_at?
+      %p
+        %b Open date:
+        = @assignment.open_at
 
-  - if @assignment.due_at?
-    %p
-      %b Close date:
-      = @assignment.due_at
+    - if @assignment.due_at?
+      %p
+        %b Close date:
+        = @assignment.due_at
 
-  - if @assignment.accepts_submissions_until?
-    %p
-      %b Accept submissions until:
-      = @assignment.accepts_submissions_until
-  - if @submission.submission_files.present?
-    %p
-      %b Documents:
-      - @submission.submission_files.each do |sf|
-        = link_to sf.filename, sf.url
+    - if @assignment.accepts_submissions_until?
+      %p
+        %b Accept submissions until:
+        = @assignment.accepts_submissions_until
+    - if @submission.submission_files.present?
+      %p
+        %b Documents:
+        - @submission.submission_files.each do |sf|
+          = link_to sf.filename, sf.url
 
-  - if @assignment.has_groups?
-    - if current_user.is_student?
-      %h4= "You are editing the assignment submission for Group #{current_student.group_for_assignment(@assignment).name }"
-    - else
-      %h4= "You are editing the assignment submission for Group #{@submission.group.name }"
+    - if @assignment.has_groups?
+      - if current_user.is_student?
+        %h4= "You are editing the assignment submission for Group #{current_student.group_for_assignment(@assignment).name }"
+      - else
+        %h4= "You are editing the assignment submission for Group #{@submission.group.name }"
 
-  = render 'form'
+    = render 'form'
+
+  .clearfix

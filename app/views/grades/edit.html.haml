@@ -1,6 +1,10 @@
-= content_nav_for @assignment, "Editing Grade" do
-  %li= link_to "All #{@assignment.name} Grades", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Grades Navigation
+  = content_nav_for @assignment, "Editing Grade" do
+    %li= link_to "All #{@assignment.name} Grades", assignment_path(@assignment), :class => "button tiny radius"
 
-.col-lg-12
-  %h3 Editing #{current_student.name}'s Grade for #{@assignment.name}
-  = render 'form'
+  .small-12.columns
+    %h3 Editing #{current_student.name}'s Grade for #{@assignment.name}
+    = render 'form'
+
+  .clearfix

@@ -1,21 +1,50 @@
-.assignmentName {
-  font-family: Futura, sans-serif;
+/** Student Dashboard Styles **/
+
+#gradePredictor {
+  background-color: #eee;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0px 3px 3px #888888;
+
+  .chart-wrapper {
+    position: relative;
+  }
+
+  .chart-inner {
+    width: 100%;
+  }
 }
 
-.gravatar img {
-  width: 100%;
-  height: auto;
+#prediction {
+  height: 200px;
 }
 
-#userScoreNum {
-  color: $green;
+#predictorPage ul.slides, #predictorPage ul.slides li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-.outer_container {
-  padding-top: 5px;
+.slider.ui-widget-content {
+  background: #eeeeee;
+  border: none;
 }
 
-.dashboard-charts {
+.ui-widget-header {
+  background: $green;
+}
+
+.ui-slider .ui-slider-handle {
+  width:20px;
+  height:20px;
+  position:absolute;
+  top:-5px;
+  margin-left:-12px;
+  background: $lightblue;
+}
+
+#userBarInProgress, #userBarTotal {
   min-height: 180px;
   width: 100%;
   clear: both;
@@ -24,75 +53,39 @@
     height: 200px;
   }
 }
-.toggle-charts {
-  .dashboard-charts {
-    overflow: hidden;
-    display: relative;
+
+.sideBar.panel {
+  background-color: $green;
+  border: none;
+  border-radius: none;
+  padding: .5rem 0 0 .5rem;
+  margin-top: -1.5rem;
+}
+
+.student .sideBar.panel {
+
+  margin-top: 1rem;
+  padding: .75rem;
+}
+
+.sideBar.panel .panel {
+  background-color: #FFF;
+  margin-bottom: .75rem;
+}
+
+.sideBar.panel .small-9, .small-3 {
+  margin: 0;
+  padding: 0;
+}
+
+.sideBar.panel .small-9, .small-3 {
+
+  .button.tiny {
+    padding: .4rem;
   }
-  .chart-wrapper {
-    position: absolute;
-    width: 100%;
-  }
-}
-
-#gradePredictor {
-  background-color: #eee;
-  border: 1px solid #eee;
-  border-radius: 15px;
-  padding: 15px;
-  z-index: 10000;
-  opacity: 1;
-  box-shadow: 0px 3px 3px #888888;
-  left: 30px;
-  top: 30px;
-  display: block;
-  position: -webkit-sticky;
-  position: sticky;
-}
-
-#prediction {
-  height: 200px;
-  margin-left: 10px;
-  width: 55% !important;
-}
-
-.dashboard-toggle {
-  display: none;
-}
-
-.hidden-chart {
-  visibility: hidden;
-}
-
-.tab-pane button {
-  margin-bottom: 10px;
-}
-
-#predictorPage .assignment {
-  margin-bottom: 10px;
-}
-
-.badge.badge-primary a {
-  color: #FFF;
 }
 
 tr.achieved {
-  background-color: $green !important;
-}
-
-div.vco-storyjs {
-  width: 100%;
-  display: block;
-}
-
-.student .vco-storyjs {
-  height: 580px;
-  width: 1000px;
-}
-
-.earnedBadgeField, .badgeField {
-  width: 20%;
-  text-align: center;
-  margin-bottom: 15px;
-  float: left;
+  background-color: $yellow;
+  color: #FFF;
 }

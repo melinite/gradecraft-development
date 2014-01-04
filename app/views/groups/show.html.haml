@@ -1,34 +1,38 @@
-= content_nav_for @group do
-  - if current_user.is_staff?
-    %li= link_to "See All #{term_for :groups}", groups_path, :class => "btn btn-tiny btn-info"
-    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
-    %li= link_to "New #{term_for :group}", new_group_path, :class => "btn btn-tiny btn-info"
-  - else
-    %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-info btn-tiny"
-    %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Group Navigation
+  = content_nav_for @group do
+    - if current_user.is_staff?
+      %li= link_to "See All #{term_for :groups}", groups_path, :class => "button tiny radius"
+      %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "button tiny radius"
+      %li= link_to "New #{term_for :group}", new_group_path, :class => "button tiny radius"
+    - else
+      %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+      %li= link_to "Edit #{@group.name}", edit_group_path(@group), :class => "button tiny radius"
 
 
-.col-lg-12
-  %h3= @title
-  %p
-    %b Group Name:
-    = @group.name
-
-  %p
-    %b Assignment:
-    %ul
-      - @group.assignment_groups.each do |ag|
-        %li= link_to ag.assignment.name, ag.assignment
-
-  - if @group.text_proposal?
+  .small-12.columns
+    %h2= @title
     %p
-      %b Proposal:
-      = raw @group.text_proposal
-  %p
-    %b Members:
-  %ul
-    - @group.group_memberships.each do |gm|
-      - if current_user.is_staff?
-        %li= link_to gm.student.name, student_path(gm.student)
-      - else
-        %li= gm.student.name
+      %b Group Name:
+      = @group.name
+
+    %p
+      %b Assignment:
+      %ul
+        - @group.assignment_groups.each do |ag|
+          %li= link_to ag.assignment.name, ag.assignment
+
+    - if @group.text_proposal?
+      %p
+        %b Proposal:
+        = raw @group.text_proposal
+    %p
+      %b Members:
+    %ul
+      - @group.group_memberships.each do |gm|
+        - if current_user.is_staff?
+          %li= link_to gm.student.name, student_path(gm.student)
+        - else
+          %li= gm.student.name
+
+  .clearfix

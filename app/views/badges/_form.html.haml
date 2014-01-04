@@ -1,25 +1,53 @@
 %div.s3_uploader
   = s3_uploader_form key: upload_url('badge_icons', @badge), acl: "private", max_file_size: 40.megabytes do
     = file_field_tag :file
-  %div#uploaded_files Uploaded:
+  - if @badge.badge_files.present?
+    %div#uploaded_files Uploaded:
   %div.upload.s3_progress
     Progress:
     %div.progress
       %div.bar
 
-= simple_form_for(@badge, :html => {:class => 'form-horizontal', :multipart => true }) do |f|
-  = f.association :badge_set, :collection => @badge_sets, :input_html => {:class => 'input-sm col-lg-3'}, :label => "#{term_for :badge} Set"
-  = f.input :name, :label => "#{term_for :badge} Name", :input_html => {:class => 'col-lg-3'}
-  = f.simple_fields_for :badge_files, @badge.badge_files.new do |bff|
-    = bff.input :filepath, :label => "Documents", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5'}, :as => :hidden
-  = f.input :description, :as => :text, :input_html => {:style => "width: 90%; height: 200px;"}, :label => "Description", :placeholder => "Describe what this #{term_for :badge} means, and how it can be earned. Note that if this badge is marked as visible then this description will also be viewable in the list of badges."
-  = f.input :visible, :as => :boolean
-  - if current_course.valuable_badges?
-    = f.input :point_total, :input_html => {:class => 'col-lg-3'}
-  = f.input :can_earn_multiple_times, :hint => "Can this #{term_for :badge} be given to one #{term_for :student} multiple times through the semester?", :label => "Multi-award", :input_html => {:class => 'input-sm col-lg-3'}
-  Choose an icon for this badge.
-  = f.file_field :icon, :label => "Select an icon for this badge.", :input_html => {:class => 'col-lg-3'}
+= form_for @badge do |f|
+  .small-12.medium-4.columns
+    = f.fields_for :badge_files, @badge.badge_files.new do |bff|
+      = bff.label :filepath, "Supporting Files"
+      = bff.text_field :filepath
 
-  .form-actions.col-lg-offset-3
-    = f.button :submit, :class => "btn-primary"
-    = link_to 'Cancel', badges_path, :class => 'btn btn-info'
+
+    = f.file_field :icon, :label => "Select an icon for this badge."
+    %span.label.secondary.radius Choose an icon for this badge.
+  .clearfix
+
+
+  .small-12.medium-4.columns
+    = f.label :name, "Name"
+    = f.text_field :name
+  - if current_course.valuable_badges?
+    .small-12.medium-2.columns
+      = f.label :point_total
+      = f.text_field :point_total
+  .small-12.medium-6.columns
+    .small-12.medium-6.columns
+      %label.checkbox{ :for => "visible" }
+        = f.label :visible
+        = f.check_box :visible
+      %span.label.secondary.radius Can #{term_for :students} see this #{term_for :badge}?
+    .small-12.medium-6.columns
+      %label.checkbox{ :for => "can_earn_multiple_times" }
+        = f.label :can_earn_multiple_times,"Multi-award"
+        = f.check_box :can_earn_multiple_times
+      %h6.small Can this #{term_for :badge} be given to one #{term_for :student} multiple times through the semester?
+
+  .small-12.medium-9.columns
+    = f.label :description, "#{term_for :badge} Description"
+    = f.bootsy_area :description, editor_options: {link: false, color: false}
+    %span.label.secondary.radius Describe what this #{term_for :badge} means, and how it can be earned. Note that if this badge is marked as visible then this description will also be viewable in the list of badges.
+
+
+
+  .clearfix
+
+  .right
+    = submit_tag "#{@badge.persisted? ? 'Update' : 'Create'} #{term_for :badge}", :class => "button tiny radius"
+    = link_to 'Cancel', badges_path, :class => 'button tiny radius'

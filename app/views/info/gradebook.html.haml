@@ -1,26 +1,29 @@
-%table.table#sortableTable.tablesorter.table-bordered
-  %thead
-    %tr
-      %th #{current_course.user_term}
-      - for assignment in current_course_data.assignments
-        %th= assignment.name
-      - if current_course.valuable_badges?
-        %th Badge Score
-      %th Total Score
-      %th Final Grade
-      %th #{current_course.user_term}
-  %tbody
-    - current_course_data.students.each do |student|
-      %tr
-        %td= link_to student.name, user_path(student)
-        - current_course_data.assignments.each do |assignment|
-          - assignment.grade_for_student(student).tap do |grade|
-            - if grade
-              %td= link_to "#{points grade.score}", edit_assignment_grade_path(assignment, :student_id => student.id)
-            - else
-              %td
-        - if current_course.valuable_badges?
-          %td= student.earned_badge_score_for_course(current_course)
-        %td= points student.cached_score_for_course(current_course)
-        %td= student.grade_level_for_course(current_course)
-        %td= link_to student.name, user_path(student)
+.small-12.panel.mainContent
+  / Gradebook Table
+  .small-12.columns
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} #{current_course.user_term}
+          - for assignment in current_course_data.assignments
+            %th.sortable{"data-sort" => "int"}= assignment.name
+          - if current_course.valuable_badges?
+            %th.sortable{"data-sort" => "int"} Badge Score
+          %th.sortable{"data-sort" => "int"} Total Score
+          %th.sortable{"data-sort" => "string"} Final Grade
+          %th.sortable{"data-sort" => "string"} #{current_course.user_term}
+      %tbody
+        - current_course_data.students.each do |student|
+          %tr
+            %td= link_to student.name, user_path(student)
+            - current_course_data.assignments.each do |assignment|
+              - assignment.grade_for_student(student).tap do |grade|
+                - if grade
+                  %td= link_to "#{points grade.score}", edit_assignment_grade_path(assignment, :student_id => student.id)
+                - else
+                  %td
+            - if current_course.valuable_badges?
+              %td= student.earned_badge_score_for_course(current_course)
+            %td= points student.cached_score_for_course(current_course)
+            %td= student.grade_level_for_course(current_course)
+            %td= link_to student.name, user_path(student)

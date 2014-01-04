@@ -1,26 +1,30 @@
-= content_nav_for @assignment, "Updating Grade Statuses" do
-  %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Grades Navigation
+  = content_nav_for @assignment, "Updating Grade Statuses" do
+    %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
 
-.col-lg-12
-  %h3 Selected Grades
+  .small-12.columns
+    %h3 Selected Grades
 
-%table.table.table-striped.simpleTable
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"}= term_for :student
-      %th.sortable{"data-sort" => "int"} Score
-      %th.sortable{"data-sort" => "string"} Current Status
-  %tbody
-    - for grade in @grades
-      %tr
-        %td= grade.student.name
-        %td= grade.raw_score
-        %td= grade.status
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"}= term_for :student
+          %th.sortable{"data-sort" => "int"} Score
+          %th.sortable{"data-sort" => "string"} Current Status
+      %tbody
+        - for grade in @grades
+          %tr
+            %td= grade.student.name
+            %td= grade.raw_score
+            %td= grade.status
 
-.col-lg-12
-  = simple_form_for :grade, :url => update_status_grades_assignment_path(@assignment), :html => { :method => :put, :class => "form-horizontal" } do |f|
-    - for grade in @grades
-      = hidden_field_tag "grade_ids[]", grade.id
-    = f.input :status, :label => "Update Status to:", :as => :select, :collection => Grade::STATUSES
-    .col-lg-offset-3.form-actions
-      = f.button :submit, "Update Statuses", :class => "btn btn-info"
+    .small-12
+      = simple_form_for :grade, :url => update_status_grades_assignment_path(@assignment), :html => { :method => :put, :class => "form-horizontal" } do |f|
+        - for grade in @grades
+          = hidden_field_tag "grade_ids[]", grade.id
+        = f.input :status, :label => "Update Status to:", :as => :select, :collection => Grade::STATUSES
+        .form-actions
+          = f.button :submit, "Update Statuses", :class => "button tiny radius"
+
+  .clearfix

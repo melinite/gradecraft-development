@@ -1,30 +1,33 @@
-= content_nav_for @category do
-  %li= link_to 'See All Categories', categories_path, :class => "btn btn-tiny btn-info"
-  %li= link_to "Edit #{@category.name}", edit_category_path(@category), :class => "btn btn-tiny btn-info"
-  %li= link_to 'Add New Assignment', new_assignment_path, :class => "btn btn-tiny btn-info"
+.small-12.panel.mainContent
+  / Category Navigation
+  = content_nav_for @category do
+    %li= link_to 'See All Categories', categories_path, :class => "button tiny radius"
+    %li= link_to "Edit #{@category.name}", edit_category_path(@category), :class => "button tiny radius"
+    %li= link_to 'Add New Assignment', new_assignment_path, :class => "button tiny radius"
 
-.col-lg-12
-  %h3= @title
+  .small-12
+    %h3= @title
 
-%table.table.simpleTable.table-striped
-  %thead
-    %tr
-      %th.sortable{"data-sort" => "string"} Assignment
-      %th.sortable{"data-sort" => "string"} Name
-      %th.sortable{"data-sort" => "string"} Value
-      %th.sortable{"data-sort" => "string"} Description
-      %th
-      %th
-      %th
-  %tbody
-    - @category.assignments.each do |assignment|
+  %table.responsive.simpleTable
+    %thead
       %tr
-        %td
-          %img{:src => assignment.icon, :alt => assignment.name}
-        %td= assignment.name
-        %td= assignment.point_total
-        %td= raw assignment.description
-        %td= link_to "View", assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-        %td= link_to "Edit", edit_assignment_path(assignment), :class => 'btn btn-tiny btn-success'
-        %td= link_to "Delete", assignment_path(assignment), :data => { confirm: 'Are you sure?' }, :class => 'btn btn-tiny btn-success', :method => :delete
+        %th.sortable{"data-sort" => "string"} Assignment
+        %th.sortable{"data-sort" => "string"} Name
+        %th.sortable{"data-sort" => "string"} Value
+        %th.sortable{"data-sort" => "string"} Description
+        %th
+        %th
+        %th
+    %tbody
+      - @category.assignments.each do |assignment|
+        %tr
+          %td
+            %img{:src => assignment.icon, :alt => assignment.name}
+          %td= assignment.name
+          %td= assignment.point_total
+          %td= raw assignment.description
+          %td= link_to "View", assignment_path(assignment), :class => 'button tiny radius'
+          %td= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny radius'
+          %td= link_to "Delete", assignment_path(assignment), :data => { confirm: 'Are you sure?' }, :class => 'button tiny radius', :method => :delete
 
+  .clearfix

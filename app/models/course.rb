@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  attr_accessible :badge_set_ids, :courseno, :name,
+  attr_accessible :courseno, :name,
     :semester, :year, :badge_setting, :team_setting, :team_term, :user_term,
     :user_id, :course_id, :homepage_message, :group_setting,
     :total_assignment_weight, :assignment_weight_close_at, :team_roles,
@@ -7,13 +7,13 @@ class Course < ActiveRecord::Base
     :has_submissions, :teams_visible, :badge_use_scope,
     :weight_term, :badges_value, :predictor_setting, :max_group_size,
     :min_group_size, :shared_badges, :graph_display, :max_assignment_weight,
-    :assignments, :default_assignment_weight, :grade_scheme_id, :accepts_submissions,
+    :assignments, :default_assignment_weight, :accepts_submissions,
     :tagline, :academic_history_visible, :office, :phone, :class_email,
     :twitter_handle, :twitter_hashtag, :location, :office_hours, :meeting_times,
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
     :challenge_term, :badge_term, :grading_philosophy, :team_score_average,
     :team_challenges, :team_leader_term, :max_assignment_types_weighted,
-    :point_total, :in_team_leaderboard
+    :point_total, :in_team_leaderboard, :grade_scheme_elements_attributes
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships
@@ -22,13 +22,12 @@ class Course < ActiveRecord::Base
   with_options :dependent => :destroy do |c|
     c.has_many :assignment_types
     c.has_many :assignments
-    c.has_many :badge_sets
     c.has_many :badges
     c.has_many :categories
     c.has_many :challenges
     c.has_many :challenge_grades, :through => :challenges
     c.has_many :earned_badges
-    c.has_many :grade_schemes
+    c.has_many :grade_scheme_elements
     c.has_many :grades
     c.has_many :groups
     c.has_many :group_memberships
@@ -37,8 +36,7 @@ class Course < ActiveRecord::Base
     c.has_many :teams
   end
 
-  has_many :grade_scheme_elements, :through => :grade_schemes
-  belongs_to :grade_scheme
+  accepts_nested_attributes_for :grade_scheme_elements, allow_destroy: true
 
   validates_presence_of :name, :courseno
 
@@ -159,15 +157,15 @@ class Course < ActiveRecord::Base
   end
 
   def grade_level_for_score(score)
-    grade_scheme.try(:level, score)
+    grade_scheme_elements.where('low_range <= ? AND high_range >= ?', score, score).pluck('level').first
   end
 
   def grade_letter_for_score(score)
-    grade_scheme.try(:letter, score)
+    grade_scheme_elements.where('low_range <= ? AND high_range >= ?', score, score).pluck('letter').first
   end
 
   def element_for_score(score)
-    grade_scheme.try(:element_earned ,score)
+    grade_scheme_elements.where('low_range <= ? AND high_range >= ?', score, score).first
   end
 
   def membership_for_student(student)

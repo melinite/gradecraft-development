@@ -1,47 +1,47 @@
 - assignment_type, assignments = assignment_type_and_assignments
 %li{:id => "slide-#{assignment_type.id}", :'data-assignment-type-id' => assignment_type.id, :'data-assignment-type-name' => assignment_type.name}
-  .slide-panel
-    .assignmentType
-      %h4= assignment_type.name
-      .pull-right
-        %span.badge.badge-info
-          = "#{points current_student_data.score_for_assignment_type(assignment_type)} / "
-          - if assignment_type.max_value?
-            = "#{points assignment_type.max_value}"
-          - else
-            = "#{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
+  .slide-panel.panel
+    .small-12.medium-8.columns
+      %h3.bold= assignment_type.name
+    .small-12.medium-4.columns
+      %span.label.right
+        = "#{points current_student_data.score_for_assignment_type(assignment_type)} / "
+        - if assignment_type.max_value?
+          = "#{points assignment_type.max_value} possible points"
+        - else
+          = "#{points current_student_data.point_total_for_assignment_type(assignment_type)} possible points"
+    %hr
+    .clearfix
     - assignments.each do |assignment|
-      - if assignment.point_total && assignment.try(:point_total) > 0
-        .assignment.clear{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
-          %span.assignmentName= assignment.name
+      - if assignment.visible? && assignment.include_in_predictor? && assignment.try(:point_total) > 0
+        .assignment{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
+          = assignment.name
           - if assignment.is_required?
             %span.label.label-important Required!
           - if current_student_data.grade_released_for_assignment?(assignment)
             %span.earned= points current_student_data.score_for_assignment(assignment)
-            = " / #{points current_student_data.point_total_for_assignment(assignment)} points"
+            = " / #{points current_student_data.point_total_for_assignment(assignment)} possible points"
             = hidden_field_tag assignment.name, current_student_data.score_for_assignment(assignment), :'data-assignment-type-id' => assignment.assignment_type_id
           - else
             = "–"
-            - if assignment_type.fixed?
+
+            - if assignment.fixed? || assignment_type.fixed?
               = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
               %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id, :checked => current_student_data.grade_for_assignment(assignment).predicted_score > 0 }
-            - elsif assignment_type.slider?
+
+            - elsif assignment.slider? || assignment_type.slider?
               %span.pScore= "0 "
               = "/ #{points current_student_data.point_total_for_assignment(assignment)} possible points"
               %span.score-level-name
-              .slider{:id => "slider-#{assignment.id}", :max => current_student_data.point_total_for_assignment(assignment), :value => "#{current_student_data.grade_for_assignment(assignment).predicted_score}", :'data-scorelevelvals' => "#{assignment_type.score_levels.map(&:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map(&:name)}", :'data-highlight' => "true"}
-            - elsif assignment_type.select?
-              = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-              = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
-            - elsif assignment_type.per_assignment?
-              - if assignment.fixed?
-                = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-                %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id, :checked => current_student_data.grade_for_assignment(assignment).predicted_score > 0 }
-              - elsif assignment.slider?
-                %span.pScore= "0 "
-                = "/ #{points current_student_data.point_total_for_assignment(assignment)} possible points"
-                .slider{:id => "slider-#{assignment.id}", :max => current_student_data.point_total_for_assignment(assignment) , :value => "#{current_student_data.grade_for_assignment(assignment).predicted_score}", :'data-scorelevelvals' => "#{assignment_type.score_levels.map(&:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map(&:name)}", :'data-highlight' => "true"}
-              - elsif assignment.select?
+
+              .small-12.medium-5.columns.right
+                .slider{:id => "slider-#{assignment.id}", :max => current_student_data.point_total_for_assignment(assignment), :value => "#{current_student_data.grade_for_assignment(assignment).predicted_score}", :'data-scorelevelvals' => "#{assignment_type.score_levels.map(&:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map(&:name)}", :'data-highlight' => "true"}
+            - elsif assignment.select? || assignment_type.select?
+              .small-12.medium-5.columns.right
                 = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
                 = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
-    %hr
+      .clearfix
+
+
+
+    .clearfix

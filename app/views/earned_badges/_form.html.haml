@@ -3,12 +3,9 @@
   = f.input :badge_id, :as => :hidden, :collection => @badges
   = f.input :student_id, :collection => current_course_data.students, :label => "#{term_for :student}"
   %h5 Feedback
-  = f.text_area :feedback, :class => :ckeditor, :input_html => { :ckeditor => {:toolbar => "Mini", :id => 'some-textarea', :class => 'span12', :maxlength => 1000} }
+  = f.bootsy_area :feedback
   = hidden_field_tag "earned_badge[badge_ids][]", nil
 
-  .form-actions.col-lg-offset-3
-    .btn-toolbar
-      .btn-group
-        = f.button :submit, "#{@earned_badge.persisted? ? 'Update' : 'Award '} #{term_for :badge}",  :class => "btn-primary btn-sm"
-      .btn-group
-        = link_to 'Cancel', badge_path(@badge), :class => 'btn btn-info btn-sm'
+  .right
+    = f.button :submit, "#{@earned_badge.persisted? ? 'Update' : 'Award '} #{term_for :badge}",  :class => "button tiny radius"
+    = link_to 'Cancel', badge_path(@badge), :class => 'button tiny radius'

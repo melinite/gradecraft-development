@@ -21,21 +21,22 @@ class CoursesController < ApplicationController
   def new
     @title = "Create a New Course"
     @course = Course.new
-    @badge_sets = BadgeSet.all
-    @grade_schemes = GradeScheme.all
   end
 
   def edit
-    @title = "Edit Basic Settings"
+    @title = "Editing Basic Settings"
     @course = Course.find(params[:id])
-    @grade_schemes = GradeScheme.all
-    @badge_sets = BadgeSet.all
-    @grade_schemes = GradeScheme.all
+  end
+
+  def copy
+    @course = Course.find(params[:id])
+    new_course = @course.dup
+    new_course.save
+    redirect_to courses_path
   end
 
   def create
     @course = Course.new(params[:course])
-    @badge_sets = BadgeSet.all
 
     respond_to do |format|
       if @course.save
@@ -90,9 +91,10 @@ class CoursesController < ApplicationController
   def timeline
     @course = current_course
     if current_course.team_challenges?
-      @events = @course.assignments + @course.challenges
+      @events = @course.assignments.timelineable + @course.challenges
+      debugger
     else
-      @events = @course.assignments
+      @events = @course.assignments.timelineable
     end
   end
 end

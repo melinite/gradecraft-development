@@ -1,0 +1,62 @@
+.small-12.panel.mainContent
+  - if current_user.is_student?
+    = content_nav_for "My Dashboard" do
+      %li= link_to "Syllabus", dashboard_path, :class => "button tiny radius"
+      - if current_course.use_timeline?
+        %li= link_to "Timeline", timeline_path, :class => "button tiny radius"
+      - if current_course.grading_philosophy.present?
+        %li= link_to "Grade Philosophy", "#", :class => "button tiny radius active"
+      - if current_course.predictor_on?
+        %li= link_to "Grade Predictor", predictor_path, :class => "button tiny radius"
+      - if current_course.has_badges?
+        %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
+      - if current_course.has_teams? && current_course.teams_visible?
+        %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
+  - else
+    / Student Dashboard Breadcrumbs
+    = content_nav_for current_student do
+      %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
+      %li= link_to "Grades", student_path(current_student), :class => "button tiny radius"
+      - if current_course.use_timeline?
+        %li= link_to "Timeline", student_timeline_path(current_student), :class => "button tiny radius"
+      - if current_course.grading_philosophy.present?
+        %li= link_to "Grade Philosophy", "#", :class => "button tiny radius active"
+      - if current_course.predictor_on?
+        %li= link_to "Grade Predictor", student_predictor_path(current_student), :class => "button tiny radius"
+      - if current_course.has_badges?
+        %li= link_to "#{term_for :badges}", student_badges_path(current_student), :class => "button tiny radius"
+      - if current_course.has_teams? && current_course.teams_visible?
+        %li= link_to "#{term_for :teams}", student_teams_path(current_student), :class => "button tiny radius"
+
+
+  - if current_course.grade_scheme_elements.present?
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "int"} Low Range
+          %th.sortable{"data-sort" => "int"} High Range
+          %th.sortable{"data-sort" => "string"} Letter Grade
+          %th
+      %tbody
+        - @grade_scheme_elements.order_by_high_range.each do |element|
+          - if current_student_data.element_level == element
+            %tr.achieved
+              %td #{element.level}
+              %td #{points element.low_range }
+              %td #{points element.high_range }
+              %td
+                = element.letter
+              %td= "You are here."
+          - else
+            %tr
+              %td #{element.level}
+              %td #{points element.low_range }
+              %td #{points element.high_range }
+              %td #{element.letter}
+              %td
+
+  .small-12.columns
+    %p= raw current_course.grading_philosophy
+    %h6= "-- Prof. #{current_course.professor.try(:last_name) }"
+
