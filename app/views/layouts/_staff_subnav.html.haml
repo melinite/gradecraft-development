@@ -3,7 +3,7 @@
     Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
   %form.quick_search
     .dropdown
-      %input.search-query.col-lg-9{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
+      %input.search-query{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
   %li
     %h4= term_for(:students)
   %li.icn_view_users= link_to term_for(:students), students_path

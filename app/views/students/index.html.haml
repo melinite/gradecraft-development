@@ -91,7 +91,9 @@
               %td= student.first_name
               %td= student.last_name
               - if current_course.has_teams?
-                %td= link_to student.team_for_course(current_course).name, student.team_for_course(current_course)
+                %td
+                  - if student.team_for_course(current_course)
+                    = link_to student.team_for_course(current_course).name, student.team_for_course(current_course)
               - if current_course.team_roles?
                 %td= student.try(:team_role)
               - if student.respond_to?(:grades)

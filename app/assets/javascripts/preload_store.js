@@ -4,7 +4,7 @@
   app.preloadStore = {};
 
   var set = function(k, v) {
-    data[k] = v; 
+    data[k] = v;
   };
   app.preloadStore.set = set;
 
