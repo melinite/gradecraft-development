@@ -13,7 +13,8 @@
   .col-lg-offset-2
     - @grade.grade_files.each do |gf|
       = link_to gf.filename, gf.url
-      = link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :grade_file_id => gf.id, :redirect => { :controller => "grade", :id => @grade.id } } )
+      if current_user.is_staff?
+        = link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :upload_id => gf.id, :redirect => { :controller => "grade", :id => @grade.id } } )
 
 - if @grade.feedback?
   .heading Feedback:

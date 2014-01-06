@@ -34,7 +34,12 @@
       %b Documents:
       - @badge.badge_files.each do |bf|
         = link_to bf.filename, bf.url
-        = link_to "(Remove)", badges_badge_file_remove_path({ :badge_id => @badge.id, :badge_file_id => bf.id, :redirect => { :controller => "badges", :id => @badge.id } } )
+        - if current_user.is_staff?
+          = link_to "(Remove)", remove_uploads_path({ :model => "BadgeFile", :upload_id => bf.id, :redirect => { :controller => "badges", :id => @badge.id } } )
+
+  - if current_user.is_staff?
+    .col-lg-12
+      %h4 Tasks: (#{link_to 'Add task', new_badge_task_path(@badge)})
 
   - if @badge.tasks.present?
     %table.table.display.table-striped.simpleTable

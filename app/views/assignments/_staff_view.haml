@@ -36,7 +36,7 @@
       %b Documents:
       - @assignment.assignment_files.each do |af|
         = link_to af.filename, af.url
-        = link_to " (Remove)", remove_uploads_path({ :model => "AssignmentFile", :assignment_file_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id } } )
+        = link_to " (Remove)", remove_uploads_path({ :model => "AssignmentFile", :upload_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id} } )
 
   - if current_course.has_teams? && @assignment.is_individual?
     .small-12.right.medium-5.columns

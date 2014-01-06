@@ -18,7 +18,7 @@
           - @challenge.challenge_files.each do |cf|
             %li= link_to cf.filename, cf.url
             - if current_user.is_staff?
-              = link_to "(Remove)", remove_uploads_path({ :model => "ChallengeFile", :challenge_file_id => cf.id, :redirect => { :controller => "challenges", :id => @challenge.id } } )
+              = link_to "(Remove)", remove_uploads_path({ :model => "ChallengeFile", :upload_id => cf.id, :redirect => { :controller => "challenges", :id => @challenge.id} })
 
       = simple_form_for @challenge do
         %table.responsive.simpleTable
