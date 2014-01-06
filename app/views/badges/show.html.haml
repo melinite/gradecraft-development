@@ -35,7 +35,7 @@
       - @badge.badge_files.each do |bf|
         = link_to bf.filename, bf.url
         - if current_user.is_staff?
-          = link_to "(Remove)", remove_uploads_path({ :model => "BadgeFile", :upload_id => bf.id, :redirect => { :controller => "badges", :id => @badge.id } } )
+          = link_to "(Remove)", remove_uploads_path({ :model => "BadgeFile", :upload_id => bf.id } )
 
   - if current_user.is_staff?
     .col-lg-12
