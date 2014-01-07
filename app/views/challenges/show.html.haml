@@ -11,6 +11,14 @@
     %h2= @title
 
     - if current_user.is_staff?
+      - if @challenge.challenge_files.present?
+        %p
+          %b Documents:
+          %ul
+          - @challenge.challenge_files.each do |cf|
+            %li= link_to cf.filename, cf.url
+            - if current_user.is_staff?
+              = link_to "(Remove)", remove_uploads_path({ :model => "ChallengeFile", :upload_id => cf.id })
 
       = simple_form_for @challenge do
         %table.responsive.simpleTable

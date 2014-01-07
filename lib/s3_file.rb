@@ -6,6 +6,12 @@ module S3File
     return bucket.objects[CGI::unescape(filepath)].url_for(:read, :expires => 15 * 60).to_s #15 minutes
   end
 
+  def remove
+    s3 = AWS::S3.new
+    bucket = s3.buckets["gradecraft-#{Rails.env}"]
+    bucket.objects[CGI::unescape(filepath)].delete
+  end
+
   private
 
   def strip_path

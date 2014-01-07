@@ -119,7 +119,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: assignment_files; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_files; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignment_files (
@@ -150,7 +150,7 @@ ALTER SEQUENCE assignment_files_id_seq OWNED BY assignment_files.id;
 
 
 --
--- Name: assignment_groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_groups; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignment_groups (
@@ -180,7 +180,7 @@ ALTER SEQUENCE assignment_groups_id_seq OWNED BY assignment_groups.id;
 
 
 --
--- Name: assignment_rubrics; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_rubrics; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignment_rubrics (
@@ -212,7 +212,7 @@ ALTER SEQUENCE assignment_rubrics_id_seq OWNED BY assignment_rubrics.id;
 
 
 --
--- Name: assignment_score_levels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_score_levels; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignment_score_levels (
@@ -245,50 +245,7 @@ ALTER SEQUENCE assignment_score_levels_id_seq OWNED BY assignment_score_levels.i
 
 
 --
--- Name: assignment_submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE assignment_submissions (
-    id integer NOT NULL,
-    assignment_id integer,
-    user_id integer,
-    feedback character varying(255),
-    comment character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    attachment_file_name character varying(255),
-    attachment_content_type character varying(255),
-    attachment_file_size integer,
-    attachment_updated_at timestamp without time zone,
-    link character varying(255),
-    submittable_id integer,
-    submittable_type character varying(255),
-    text_feedback text,
-    text_comment text
-);
-
-
---
--- Name: assignment_submissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE assignment_submissions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: assignment_submissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE assignment_submissions_id_seq OWNED BY assignment_submissions.id;
-
-
---
--- Name: assignment_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_types; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignment_types (
@@ -341,7 +298,7 @@ ALTER SEQUENCE assignment_types_id_seq OWNED BY assignment_types.id;
 
 
 --
--- Name: assignment_weights; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_weights; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignment_weights (
@@ -377,7 +334,7 @@ ALTER SEQUENCE assignment_weights_id_seq OWNED BY assignment_weights.id;
 
 
 --
--- Name: assignments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignments; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignments (
@@ -443,7 +400,7 @@ ALTER SEQUENCE assignments_id_seq OWNED BY assignments.id;
 
 
 --
--- Name: badge_files; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: badge_files; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE badge_files (
@@ -474,7 +431,7 @@ ALTER SEQUENCE badge_files_id_seq OWNED BY badge_files.id;
 
 
 --
--- Name: badge_sets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: badge_sets; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE badge_sets (
@@ -488,7 +445,7 @@ CREATE TABLE badge_sets (
 
 
 --
--- Name: badge_sets_courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: badge_sets_courses; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE badge_sets_courses (
@@ -517,7 +474,7 @@ ALTER SEQUENCE badge_sets_id_seq OWNED BY badge_sets.id;
 
 
 --
--- Name: badges; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: badges; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE badges (
@@ -556,7 +513,7 @@ ALTER SEQUENCE badges_id_seq OWNED BY badges.id;
 
 
 --
--- Name: bootsy_image_galleries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: bootsy_image_galleries; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE bootsy_image_galleries (
@@ -588,7 +545,7 @@ ALTER SEQUENCE bootsy_image_galleries_id_seq OWNED BY bootsy_image_galleries.id;
 
 
 --
--- Name: bootsy_images; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: bootsy_images; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE bootsy_images (
@@ -620,7 +577,7 @@ ALTER SEQUENCE bootsy_images_id_seq OWNED BY bootsy_images.id;
 
 
 --
--- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE categories (
@@ -653,7 +610,7 @@ ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
 
 
 --
--- Name: challenge_files; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: challenge_files; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE challenge_files (
@@ -684,7 +641,7 @@ ALTER SEQUENCE challenge_files_id_seq OWNED BY challenge_files.id;
 
 
 --
--- Name: challenge_grades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: challenge_grades; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE challenge_grades (
@@ -720,7 +677,7 @@ ALTER SEQUENCE challenge_grades_id_seq OWNED BY challenge_grades.id;
 
 
 --
--- Name: challenges; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: challenges; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE challenges (
@@ -767,7 +724,7 @@ ALTER SEQUENCE challenges_id_seq OWNED BY challenges.id;
 
 
 --
--- Name: course_badge_sets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: course_badge_sets; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE course_badge_sets (
@@ -797,7 +754,7 @@ ALTER SEQUENCE course_badge_sets_id_seq OWNED BY course_badge_sets.id;
 
 
 --
--- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE courses (
@@ -865,7 +822,7 @@ CREATE TABLE courses (
 
 
 --
--- Name: earned_badges; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: earned_badges; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE earned_badges (
@@ -887,7 +844,7 @@ CREATE TABLE earned_badges (
 
 
 --
--- Name: grades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: grades; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE grades (
@@ -924,7 +881,7 @@ CREATE TABLE grades (
 
 
 --
--- Name: score_levels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: score_levels; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE score_levels (
@@ -939,7 +896,7 @@ CREATE TABLE score_levels (
 
 
 --
--- Name: tasks; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: tasks; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE tasks (
@@ -964,89 +921,111 @@ CREATE TABLE tasks (
 --
 
 CREATE VIEW course_cache_keys AS
-    SELECT courses.id, courses.id AS course_id, md5(pg_catalog.concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, md5(pg_catalog.concat(courses.id, (SELECT COALESCE(sum(date_part('epoch'::text, assignments.updated_at)), (0)::double precision) AS "coalesce" FROM assignments WHERE (assignments.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, assignment_types.updated_at)), (0)::double precision) AS "coalesce" FROM assignment_types WHERE (assignment_types.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, score_levels.updated_at)), (0)::double precision) AS "coalesce" FROM (assignment_types JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id))) WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, md5(concat((SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum FROM grades WHERE (grades.course_id = courses.id)))) AS grades_key, md5(pg_catalog.concat((SELECT COALESCE(sum(date_part('epoch'::text, tasks.updated_at)), (0)::double precision) AS "coalesce" FROM tasks WHERE (tasks.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, badges.updated_at)), (0)::double precision) AS "coalesce" FROM badges WHERE (badges.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, earned_badges.updated_at)), (0)::double precision) AS "coalesce" FROM earned_badges WHERE (earned_badges.course_id = courses.id)))) AS badges_key FROM courses;
+ SELECT courses.id,
+    courses.id AS course_id,
+    md5(concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key,
+    md5(concat(courses.id, ( SELECT sum(date_part('epoch'::text, assignments.updated_at)) AS sum
+           FROM assignments
+          WHERE (assignments.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, assignment_types.updated_at)) AS sum
+           FROM assignment_types
+          WHERE (assignment_types.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, score_levels.updated_at)) AS sum
+           FROM (assignment_types
+      JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id)))
+     WHERE (assignment_types.course_id = courses.id)))) AS assignments_key,
+    md5(concat(( SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum
+           FROM grades
+          WHERE (grades.course_id = courses.id)))) AS grades_key,
+    md5(concat(( SELECT sum(date_part('epoch'::text, tasks.updated_at)) AS sum
+           FROM tasks
+          WHERE (tasks.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, badges.updated_at)) AS sum
+           FROM badges
+          WHERE (badges.course_id = courses.id)), ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
+           FROM earned_badges
+          WHERE (earned_badges.course_id = courses.id)))) AS badges_key
+   FROM courses;
+   SELECT courses.id, courses.id AS course_id, md5(pg_catalog.concat(courses.id, date_part('epoch'::text, courses.updated_at))) AS course_key, md5(pg_catalog.concat(courses.id, (SELECT COALESCE(sum(date_part('epoch'::text, assignments.updated_at)), (0)::double precision) AS "coalesce" FROM assignments WHERE (assignments.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, assignment_types.updated_at)), (0)::double precision) AS "coalesce" FROM assignment_types WHERE (assignment_types.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, score_levels.updated_at)), (0)::double precision) AS "coalesce" FROM (assignment_types JOIN score_levels ON ((score_levels.assignment_type_id = assignment_types.id))) WHERE (assignment_types.course_id = courses.id)))) AS assignments_key, md5(concat((SELECT sum(date_part('epoch'::text, grades.updated_at)) AS sum FROM grades WHERE (grades.course_id = courses.id)))) AS grades_key, md5(pg_catalog.concat((SELECT COALESCE(sum(date_part('epoch'::text, tasks.updated_at)), (0)::double precision) AS "coalesce" FROM tasks WHERE (tasks.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, badges.updated_at)), (0)::double precision) AS "coalesce" FROM badges WHERE (badges.course_id = courses.id)), (SELECT COALESCE(sum(date_part('epoch'::text, earned_badges.updated_at)), (0)::double precision) AS "coalesce" FROM earned_badges WHERE (earned_badges.course_id = courses.id)))) AS badges_key FROM courses;
+   >>>>>>> Fix challenge files and grade files.
+
+   --
+   -- Name: course_categories; Type: TABLE; Schema: public; Owner: -; Tablespace:
+   --
+
+   CREATE TABLE course_categories (
+       course_id integer,
+       category_id integer
+       );
 
 
---
--- Name: course_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+   --
+   -- Name: course_grade_scheme_elements; Type: TABLE; Schema: public; Owner: -; Tablespace:
+   --
 
-CREATE TABLE course_categories (
-    course_id integer,
-    category_id integer
-);
-
-
---
--- Name: course_grade_scheme_elements; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE course_grade_scheme_elements (
-    id integer NOT NULL,
-    name character varying(255),
-    letter_grade character varying(255),
-    low_range integer,
-    high_range integer,
-    course_grade_scheme_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
+   CREATE TABLE course_grade_scheme_elements (
+       id integer NOT NULL,
+       name character varying(255),
+       letter_grade character varying(255),
+       low_range integer,
+       high_range integer,
+       course_grade_scheme_id integer,
+       created_at timestamp without time zone NOT NULL,
+       updated_at timestamp without time zone NOT NULL
+       );
 
 
---
--- Name: course_grade_scheme_elements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+   --
+   -- Name: course_grade_scheme_elements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+   --
 
-CREATE SEQUENCE course_grade_scheme_elements_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: course_grade_scheme_elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE course_grade_scheme_elements_id_seq OWNED BY course_grade_scheme_elements.id;
+   CREATE SEQUENCE course_grade_scheme_elements_id_seq
+   START WITH 1
+   INCREMENT BY 1
+   NO MINVALUE
+   NO MAXVALUE
+   CACHE 1;
 
 
---
--- Name: course_grade_schemes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+   --
+   -- Name: course_grade_scheme_elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+   --
 
-CREATE TABLE course_grade_schemes (
-    id integer NOT NULL,
-    name character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    course_id integer
-);
+   ALTER SEQUENCE course_grade_scheme_elements_id_seq OWNED BY course_grade_scheme_elements.id;
 
 
---
--- Name: course_grade_schemes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+   --
+   -- Name: course_grade_schemes; Type: TABLE; Schema: public; Owner: -; Tablespace:
+   --
 
-CREATE SEQUENCE course_grade_schemes_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: course_grade_schemes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE course_grade_schemes_id_seq OWNED BY course_grade_schemes.id;
+   CREATE TABLE course_grade_schemes (
+       id integer NOT NULL,
+       name character varying(255),
+       created_at timestamp without time zone NOT NULL,
+       updated_at timestamp without time zone NOT NULL,
+       course_id integer
+       );
 
 
---
--- Name: course_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+   --
+   -- Name: course_grade_schemes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+   --
+
+   CREATE SEQUENCE course_grade_schemes_id_seq
+   START WITH 1
+   INCREMENT BY 1
+   NO MINVALUE
+   NO MAXVALUE
+   CACHE 1;
+
+
+   --
+   -- Name: course_grade_schemes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+   --
+
+   ALTER SEQUENCE course_grade_schemes_id_seq OWNED BY course_grade_schemes.id;
+
+
+   --
+   -- Name: course_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace:
+   --
 
 CREATE TABLE course_memberships (
     id integer NOT NULL,
@@ -1061,47 +1040,47 @@ CREATE TABLE course_memberships (
 );
 
 
---
--- Name: course_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+   --
+   -- Name: course_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+   --
 
-CREATE SEQUENCE course_memberships_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: course_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE course_memberships_id_seq OWNED BY course_memberships.id;
+   CREATE SEQUENCE course_memberships_id_seq
+   START WITH 1
+   INCREMENT BY 1
+   NO MINVALUE
+   NO MAXVALUE
+   CACHE 1;
 
 
---
--- Name: courses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+   --
+   -- Name: course_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+   --
 
-CREATE SEQUENCE courses_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+   ALTER SEQUENCE course_memberships_id_seq OWNED BY course_memberships.id;
 
 
---
--- Name: courses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
+   --
+   -- Name: courses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+   --
 
-ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
+   CREATE SEQUENCE courses_id_seq
+   START WITH 1
+   INCREMENT BY 1
+   NO MINVALUE
+   NO MAXVALUE
+   CACHE 1;
 
 
---
--- Name: criteria; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+   --
+   -- Name: courses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+   --
+
+   ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
+
+
+   --
+   -- Name: criteria; Type: TABLE; Schema: public; Owner: -; Tablespace:
+   --
 
 CREATE TABLE criteria (
     id integer NOT NULL,
@@ -1111,247 +1090,247 @@ CREATE TABLE criteria (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     category character varying(255)
-);
+    );
 
 
---
--- Name: criteria_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: criteria_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE criteria_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: criteria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE criteria_id_seq OWNED BY criteria.id;
+  CREATE SEQUENCE criteria_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: criteria_levels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: criteria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE TABLE criteria_levels (
-    id integer NOT NULL,
-    name character varying(255),
-    criteria_id integer,
-    description text,
-    value integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
+  ALTER SEQUENCE criteria_id_seq OWNED BY criteria.id;
 
 
---
--- Name: criteria_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: criteria_levels; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
-CREATE SEQUENCE criteria_levels_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: criteria_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE criteria_levels_id_seq OWNED BY criteria_levels.id;
+  CREATE TABLE criteria_levels (
+      id integer NOT NULL,
+      name character varying(255),
+      criteria_id integer,
+      description text,
+      value integer,
+      created_at timestamp without time zone NOT NULL,
+      updated_at timestamp without time zone NOT NULL
+      );
 
 
---
--- Name: criterium_levels; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: criteria_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE TABLE criterium_levels (
-    id integer NOT NULL,
-    name character varying(255),
-    criterium_id integer,
-    description text,
-    value integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
+  CREATE SEQUENCE criteria_levels_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: criterium_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: criteria_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE criterium_levels_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+  ALTER SEQUENCE criteria_levels_id_seq OWNED BY criteria_levels.id;
 
 
---
--- Name: criterium_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
+  --
+  -- Name: criterium_levels; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
-ALTER SEQUENCE criterium_levels_id_seq OWNED BY criterium_levels.id;
-
-
---
--- Name: dashboards; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE dashboards (
-    id integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
+  CREATE TABLE criterium_levels (
+      id integer NOT NULL,
+      name character varying(255),
+      criterium_id integer,
+      description text,
+      value integer,
+      created_at timestamp without time zone NOT NULL,
+      updated_at timestamp without time zone NOT NULL
+      );
 
 
---
--- Name: dashboards_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: criterium_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE dashboards_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: dashboards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE dashboards_id_seq OWNED BY dashboards.id;
+  CREATE SEQUENCE criterium_levels_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: earned_badges_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: criterium_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE earned_badges_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+  ALTER SEQUENCE criterium_levels_id_seq OWNED BY criterium_levels.id;
 
 
---
--- Name: earned_badges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
+  --
+  -- Name: dashboards; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
-ALTER SEQUENCE earned_badges_id_seq OWNED BY earned_badges.id;
-
-
---
--- Name: elements; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE elements (
-    id integer NOT NULL,
-    name character varying(255),
-    description character varying(255),
-    badge_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
+  CREATE TABLE dashboards (
+      id integer NOT NULL,
+      created_at timestamp without time zone,
+      updated_at timestamp without time zone
+      );
 
 
---
--- Name: elements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: dashboards_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE elements_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE elements_id_seq OWNED BY elements.id;
+  CREATE SEQUENCE dashboards_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: faqs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: dashboards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE TABLE faqs (
-    id integer NOT NULL,
-    question character varying(255),
-    answer text,
-    "order" integer,
-    category character varying(255),
-    audience character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
+  ALTER SEQUENCE dashboards_id_seq OWNED BY dashboards.id;
 
 
---
--- Name: faqs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: earned_badges_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE faqs_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: faqs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE faqs_id_seq OWNED BY faqs.id;
+  CREATE SEQUENCE earned_badges_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: grade_files; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: earned_badges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
+
+  ALTER SEQUENCE earned_badges_id_seq OWNED BY earned_badges.id;
+
+
+  --
+  -- Name: elements; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
+
+  CREATE TABLE elements (
+      id integer NOT NULL,
+      name character varying(255),
+      description character varying(255),
+      badge_id integer,
+      created_at timestamp without time zone NOT NULL,
+      updated_at timestamp without time zone NOT NULL
+      );
+
+
+  --
+  -- Name: elements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
+
+  CREATE SEQUENCE elements_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
+
+
+  --
+  -- Name: elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
+
+  ALTER SEQUENCE elements_id_seq OWNED BY elements.id;
+
+
+  --
+  -- Name: faqs; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
+
+  CREATE TABLE faqs (
+      id integer NOT NULL,
+      question character varying(255),
+      answer text,
+      "order" integer,
+      category character varying(255),
+      audience character varying(255),
+      created_at timestamp without time zone NOT NULL,
+      updated_at timestamp without time zone NOT NULL
+      );
+
+
+  --
+  -- Name: faqs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
+
+  CREATE SEQUENCE faqs_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
+
+
+  --
+  -- Name: faqs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
+
+  ALTER SEQUENCE faqs_id_seq OWNED BY faqs.id;
+
+
+  --
+  -- Name: grade_files; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
 CREATE TABLE grade_files (
     id integer NOT NULL,
     grade_id integer,
     filename character varying(255),
     filepath character varying(255)
-);
+    );
 
 
---
--- Name: grade_files_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: grade_files_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE grade_files_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: grade_files_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE grade_files_id_seq OWNED BY grade_files.id;
+  CREATE SEQUENCE grade_files_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: grade_scheme_elements; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: grade_files_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
+
+  ALTER SEQUENCE grade_files_id_seq OWNED BY grade_files.id;
+
+
+  --
+  -- Name: grade_scheme_elements; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
 CREATE TABLE grade_scheme_elements (
     id integer NOT NULL,
@@ -1366,83 +1345,81 @@ CREATE TABLE grade_scheme_elements (
     team_id integer,
     course_id integer
 );
+  --
+  -- Name: grade_scheme_elements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
+
+  CREATE SEQUENCE grade_scheme_elements_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: grade_scheme_elements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: grade_scheme_elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE grade_scheme_elements_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+  ALTER SEQUENCE grade_scheme_elements_id_seq OWNED BY grade_scheme_elements.id;
 
 
---
--- Name: grade_scheme_elements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
+  --
+  -- Name: grade_schemes; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
-ALTER SEQUENCE grade_scheme_elements_id_seq OWNED BY grade_scheme_elements.id;
-
-
---
--- Name: grade_schemes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE grade_schemes (
-    id integer NOT NULL,
-    assignment_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    course_id integer,
-    name character varying(255),
-    description text
-);
+  CREATE TABLE grade_schemes (
+      id integer NOT NULL,
+      assignment_id integer,
+      created_at timestamp without time zone,
+      updated_at timestamp without time zone,
+      course_id integer,
+      name character varying(255),
+      description text
+      );
 
 
---
--- Name: grade_schemes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: grade_schemes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE grade_schemes_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: grade_schemes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE grade_schemes_id_seq OWNED BY grade_schemes.id;
+  CREATE SEQUENCE grade_schemes_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: grade_schemes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE grades_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+  ALTER SEQUENCE grade_schemes_id_seq OWNED BY grade_schemes.id;
 
 
---
--- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
+  --
+  -- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-ALTER SEQUENCE grades_id_seq OWNED BY grades.id;
+  CREATE SEQUENCE grades_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: group_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
+
+  ALTER SEQUENCE grades_id_seq OWNED BY grades.id;
+
+
+  --
+  -- Name: group_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
 CREATE TABLE group_memberships (
     id integer NOT NULL,
@@ -1453,109 +1430,108 @@ CREATE TABLE group_memberships (
     updated_at timestamp without time zone NOT NULL,
     course_id integer,
     group_type character varying(255)
-);
+    );
 
 
---
--- Name: group_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: group_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE group_memberships_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: group_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE group_memberships_id_seq OWNED BY group_memberships.id;
+  CREATE SEQUENCE group_memberships_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: group_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE TABLE groups (
-    id integer NOT NULL,
-    name character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    course_id integer,
-    approved character varying(255),
-    proposal character varying(255),
-    text_proposal text
-);
+  ALTER SEQUENCE group_memberships_id_seq OWNED BY group_memberships.id;
 
 
---
--- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: groups; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
-CREATE SEQUENCE groups_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
+  CREATE TABLE groups (
+      id integer NOT NULL,
+      name character varying(255),
+      created_at timestamp without time zone,
+      updated_at timestamp without time zone,
+      course_id integer,
+      approved character varying(255),
+      proposal character varying(255),
+      text_proposal text
+      );
 
 
---
--- Name: lti_providers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE TABLE lti_providers (
-    id integer NOT NULL,
-    name character varying(255),
-    uid character varying(255),
-    consumer_key character varying(255),
-    consumer_secret character varying(255),
-    launch_url character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
+  CREATE SEQUENCE groups_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: lti_providers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
+  --
+  -- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
 
-CREATE SEQUENCE lti_providers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+  ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
 
 
---
--- Name: lti_providers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
+  --
+  -- Name: lti_providers; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
-ALTER SEQUENCE lti_providers_id_seq OWNED BY lti_providers.id;
+  CREATE TABLE lti_providers (
+      id integer NOT NULL,
+      name character varying(255),
+      uid character varying(255),
+      consumer_key character varying(255),
+      consumer_secret character varying(255),
+      launch_url character varying(255),
+      created_at timestamp without time zone,
+      updated_at timestamp without time zone
+      );
 
 
---
--- Name: released_grades; Type: VIEW; Schema: public; Owner: -
---
+  --
+  -- Name: lti_providers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+  --
 
-CREATE VIEW released_grades AS
-    SELECT grades.id, grades.raw_score, grades.assignment_id, grades.feedback, grades.created_at, grades.updated_at, grades.complete, grades.semis, grades.finals, grades.type, grades.status, grades.attempted, grades.substantial, grades.final_score, grades.submission_id, grades.course_id, grades.shared, grades.student_id, grades.task_id, grades.group_id, grades.group_type, grades.score, grades.assignment_type_id, grades.point_total, grades.admin_notes, grades.graded_by_id, grades.team_id, grades.released, grades.predicted_score FROM (grades JOIN assignments ON ((assignments.id = grades.assignment_id))) WHERE (((grades.status)::text = 'Released'::text) OR (((grades.status)::text = 'Graded'::text) AND (NOT assignments.release_necessary)));
+  CREATE SEQUENCE lti_providers_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE
+  CACHE 1;
 
 
---
--- Name: submissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
+  --
+  -- Name: lti_providers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+  --
+
+  ALTER SEQUENCE lti_providers_id_seq OWNED BY lti_providers.id;
+
+  --
+  -- Name: released_grades; Type: VIEW; Schema: public; Owner: -
+  --
+
+  CREATE VIEW released_grades AS
+  SELECT grades.id, grades.raw_score, grades.assignment_id, grades.feedback, grades.created_at, grades.updated_at, grades.complete, grades.semis, grades.finals, grades.type, grades.status, grades.attempted, grades.substantial, grades.final_score, grades.submission_id, grades.course_id, grades.shared, grades.student_id, grades.task_id, grades.group_id, grades.group_type, grades.score, grades.assignment_type_id, grades.point_total, grades.admin_notes, grades.graded_by_id, grades.team_id, grades.released, grades.predicted_score FROM (grades JOIN assignments ON ((assignments.id = grades.assignment_id))) WHERE (((grades.status)::text = 'Released'::text) OR (((grades.status)::text = 'Graded'::text) AND (NOT assignments.release_necessary)));
+
+
+  --
+  -- Name: submissions; Type: TABLE; Schema: public; Owner: -; Tablespace:
+  --
 
 CREATE TABLE submissions (
     id integer NOT NULL,
@@ -1565,9 +1541,7 @@ CREATE TABLE submissions (
     comment character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    attachment_file_name character varying(255),
     attachment_content_type character varying(255),
-    attachment_file_size integer,
     attachment_updated_at timestamp without time zone,
     link character varying(255),
     text_feedback text,
@@ -1584,7 +1558,7 @@ CREATE TABLE submissions (
 
 
 --
--- Name: team_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: team_memberships; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE team_memberships (
@@ -1593,11 +1567,11 @@ CREATE TABLE team_memberships (
     student_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
+
 );
 
-
 --
--- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE teams (
@@ -1607,11 +1581,9 @@ CREATE TABLE teams (
     rank integer,
     score integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
     teams_leaderboard boolean DEFAULT false,
     in_team_leaderboard boolean DEFAULT false
 );
-
 
 --
 -- Name: membership_calculations; Type: VIEW; Schema: public; Owner: -
@@ -1622,7 +1594,7 @@ CREATE VIEW membership_calculations AS
 
 
 --
--- Name: membership_scores; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: membership_scores; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE membership_scores (
@@ -1639,10 +1611,50 @@ CREATE TABLE membership_scores (
 
 CREATE VIEW released_challege_grades AS
     SELECT challenge_grades.id, challenge_grades.challenge_id, challenge_grades.score, challenge_grades.feedback, challenge_grades.status, challenge_grades.team_id, challenge_grades.final_score, challenge_grades.created_at, challenge_grades.updated_at FROM (challenge_grades JOIN challenges ON ((challenges.id = challenge_grades.challenge_id))) WHERE (((challenge_grades.status)::text = 'Released'::text) OR (((challenge_grades.status)::text = 'Graded'::text) AND (NOT challenges.release_necessary)));
+SELECT m.id,
+       m.id AS course_membership_id,
+       m.course_id,
+       m.user_id,
+       md5(concat(m.course_id, m.user_id, ( SELECT sum(date_part('epoch'::text, earned_badges.updated_at)) AS sum
+               FROM earned_badges
+               WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key,
+       md5(concat(m.course_id, m.user_id, ( SELECT sum(date_part('epoch'::text, submissions.updated_at)) AS sum
+               FROM submissions
+               WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key,
+       ( SELECT sum(grades.score) AS sum
+         FROM grades
+         WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score_sum,
+       cck.course_key,
+       cck.assignments_key,
+       cck.grades_key,
+       cck.badges_key
+       FROM (course_memberships m
+           JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
+       SELECT m.id, m.id AS course_membership_id, m.course_id, m.user_id, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT COALESCE(sum(date_part('epoch'::text, earned_badges.updated_at)), (0)::double precision) AS "coalesce" FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))))) AS earned_badges_key, md5(pg_catalog.concat(m.course_id, m.user_id, (SELECT COALESCE(sum(date_part('epoch'::text, submissions.updated_at)), (0)::double precision) AS "coalesce" FROM submissions WHERE ((submissions.course_id = m.course_id) AND (submissions.student_id = m.user_id))))) AS submissions_key, (SELECT COALESCE(sum(a.point_total), (0)::bigint) AS "coalesce" FROM assignments a WHERE (a.course_id = m.course_id)) AS assignment_score, (SELECT COALESCE(sum(assignments.point_total), (0)::bigint) AS "coalesce" FROM assignments WHERE (((assignments.course_id = m.course_id) AND (m.user_id = m.user_id)) AND (EXISTS (SELECT 1 FROM released_grades WHERE ((released_grades.assignment_id = assignments.id) AND (released_grades.student_id = m.user_id)))))) AS in_progress_assignment_score, (SELECT COALESCE(sum(grades.score), (0)::bigint) AS "coalesce" FROM grades WHERE ((grades.course_id = m.course_id) AND (grades.student_id = m.user_id))) AS grade_score, (SELECT COALESCE(sum(g.score), (0)::bigint) AS "coalesce" FROM (grades g JOIN assignments a ON ((g.assignment_id = a.id))) WHERE (((g.course_id = m.course_id) AND (g.student_id = m.user_id)) AND (((g.status)::text = 'Released'::text) OR (((g.status)::text = 'Graded'::text) AND (NOT a.release_necessary))))) AS released_grade_score, (SELECT COALESCE(sum(earned_badges.score), (0)::bigint) AS "coalesce" FROM earned_badges WHERE ((earned_badges.course_id = m.course_id) AND (earned_badges.student_id = m.user_id))) AS earned_badge_score, (SELECT COALESCE(sum(challenge_grades.score), (0)::bigint) AS "coalesce" FROM (((challenge_grades JOIN challenges ON ((challenge_grades.challenge_id = challenges.id))) JOIN teams ON ((challenge_grades.team_id = teams.id))) JOIN team_memberships ON ((team_memberships.team_id = teams.id))) WHERE ((teams.course_id = m.course_id) AND (team_memberships.student_id = m.user_id))) AS challenge_grade_score, (SELECT teams.id FROM (teams JOIN team_memberships ON ((team_memberships.team_id = teams.id))) WHERE ((teams.course_id = m.course_id) AND (team_memberships.student_id = m.user_id)) ORDER BY team_memberships.updated_at LIMIT 1) AS team_id, (SELECT sum(COALESCE(assignment_weights.point_total, assignments.point_total)) AS sum FROM (assignments LEFT JOIN assignment_weights ON (((assignments.id = assignment_weights.assignment_id) AND (assignment_weights.student_id = m.user_id)))) WHERE (assignments.course_id = m.course_id)) AS weighted_assignment_score, (SELECT count(*) AS count FROM assignment_weights WHERE (assignment_weights.student_id = m.user_id)) AS assignment_weight_count, cck.course_key, cck.assignments_key, cck.grades_key, cck.badges_key FROM (course_memberships m JOIN course_cache_keys cck ON ((m.course_id = cck.id)));
+
+
+       --
+       -- Name: membership_scores; Type: TABLE; Schema: public; Owner: -; Tablespace:
+       --
+
+       CREATE TABLE membership_scores (
+           course_membership_id integer,
+           assignment_type_id integer,
+           name character varying(255),
+           score bigint
+           );
+
+
+       --
+       -- Name: released_challege_grades; Type: VIEW; Schema: public; Owner: -
+       --
+
+       CREATE VIEW released_challege_grades AS
+       SELECT challenge_grades.id, challenge_grades.challenge_id, challenge_grades.score, challenge_grades.feedback, challenge_grades.status, challenge_grades.team_id, challenge_grades.final_score, challenge_grades.created_at, challenge_grades.updated_at FROM (challenge_grades JOIN challenges ON ((challenges.id = challenge_grades.challenge_id))) WHERE (((challenge_grades.status)::text = 'Released'::text) OR (((challenge_grades.status)::text = 'Graded'::text) AND (NOT challenges.release_necessary)));
 
 
 --
--- Name: rubric_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: rubric_categories; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE rubric_categories (
@@ -1672,7 +1684,7 @@ ALTER SEQUENCE rubric_categories_id_seq OWNED BY rubric_categories.id;
 
 
 --
--- Name: rubrics; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: rubrics; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE rubrics (
@@ -1706,7 +1718,7 @@ ALTER SEQUENCE rubrics_id_seq OWNED BY rubrics.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE schema_migrations (
@@ -1734,7 +1746,7 @@ ALTER SEQUENCE score_levels_id_seq OWNED BY score_levels.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE users (
@@ -1784,7 +1796,7 @@ CREATE VIEW shared_earned_badges AS
 
 
 --
--- Name: student_academic_histories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: student_academic_histories; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE student_academic_histories (
@@ -1823,7 +1835,7 @@ ALTER SEQUENCE student_academic_histories_id_seq OWNED BY student_academic_histo
 
 
 --
--- Name: student_assignment_type_weights; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: student_assignment_type_weights; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE student_assignment_type_weights (
@@ -1864,7 +1876,7 @@ CREATE VIEW student_cache_keys AS
 
 
 --
--- Name: submission_files; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: submission_files; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE submission_files (
@@ -1971,7 +1983,7 @@ ALTER SEQUENCE teams_id_seq OWNED BY teams.id;
 
 
 --
--- Name: themes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: themes; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE themes (
@@ -2047,13 +2059,6 @@ ALTER TABLE ONLY assignment_rubrics ALTER COLUMN id SET DEFAULT nextval('assignm
 --
 
 ALTER TABLE ONLY assignment_score_levels ALTER COLUMN id SET DEFAULT nextval('assignment_score_levels_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY assignment_submissions ALTER COLUMN id SET DEFAULT nextval('assignment_submissions_id_seq'::regclass);
 
 
 --
@@ -2358,7 +2363,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: assignment_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY assignment_files
@@ -2366,7 +2371,7 @@ ALTER TABLE ONLY assignment_files
 
 
 --
--- Name: assignment_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY assignment_groups
@@ -2374,7 +2379,7 @@ ALTER TABLE ONLY assignment_groups
 
 
 --
--- Name: assignment_rubrics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_rubrics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY assignment_rubrics
@@ -2382,7 +2387,7 @@ ALTER TABLE ONLY assignment_rubrics
 
 
 --
--- Name: assignment_score_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_score_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY assignment_score_levels
@@ -2390,15 +2395,7 @@ ALTER TABLE ONLY assignment_score_levels
 
 
 --
--- Name: assignment_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY assignment_submissions
-    ADD CONSTRAINT assignment_submissions_pkey PRIMARY KEY (id);
-
-
---
--- Name: assignment_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY assignment_types
@@ -2406,7 +2403,7 @@ ALTER TABLE ONLY assignment_types
 
 
 --
--- Name: assignment_weights_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_weights_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY assignment_weights
@@ -2414,7 +2411,7 @@ ALTER TABLE ONLY assignment_weights
 
 
 --
--- Name: assignments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY assignments
@@ -2422,7 +2419,7 @@ ALTER TABLE ONLY assignments
 
 
 --
--- Name: badge_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: badge_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY badge_files
@@ -2430,7 +2427,7 @@ ALTER TABLE ONLY badge_files
 
 
 --
--- Name: badge_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: badge_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY badge_sets
@@ -2438,7 +2435,7 @@ ALTER TABLE ONLY badge_sets
 
 
 --
--- Name: badges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: badges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY badges
@@ -2446,7 +2443,7 @@ ALTER TABLE ONLY badges
 
 
 --
--- Name: bootsy_image_galleries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bootsy_image_galleries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bootsy_image_galleries
@@ -2454,7 +2451,7 @@ ALTER TABLE ONLY bootsy_image_galleries
 
 
 --
--- Name: bootsy_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bootsy_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY bootsy_images
@@ -2462,7 +2459,7 @@ ALTER TABLE ONLY bootsy_images
 
 
 --
--- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY categories
@@ -2470,7 +2467,7 @@ ALTER TABLE ONLY categories
 
 
 --
--- Name: challenge_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: challenge_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY challenge_files
@@ -2478,7 +2475,7 @@ ALTER TABLE ONLY challenge_files
 
 
 --
--- Name: challenge_grades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: challenge_grades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY challenge_grades
@@ -2486,7 +2483,7 @@ ALTER TABLE ONLY challenge_grades
 
 
 --
--- Name: challenges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: challenges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY challenges
@@ -2494,7 +2491,7 @@ ALTER TABLE ONLY challenges
 
 
 --
--- Name: course_badge_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: course_badge_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY course_badge_sets
@@ -2502,7 +2499,7 @@ ALTER TABLE ONLY course_badge_sets
 
 
 --
--- Name: course_grade_scheme_elements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: course_grade_scheme_elements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY course_grade_scheme_elements
@@ -2510,7 +2507,7 @@ ALTER TABLE ONLY course_grade_scheme_elements
 
 
 --
--- Name: course_grade_schemes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: course_grade_schemes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY course_grade_schemes
@@ -2518,7 +2515,7 @@ ALTER TABLE ONLY course_grade_schemes
 
 
 --
--- Name: course_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: course_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY course_memberships
@@ -2526,7 +2523,7 @@ ALTER TABLE ONLY course_memberships
 
 
 --
--- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY courses
@@ -2534,7 +2531,7 @@ ALTER TABLE ONLY courses
 
 
 --
--- Name: criteria_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: criteria_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY criteria_levels
@@ -2542,7 +2539,7 @@ ALTER TABLE ONLY criteria_levels
 
 
 --
--- Name: criteria_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: criteria_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY criteria
@@ -2550,7 +2547,7 @@ ALTER TABLE ONLY criteria
 
 
 --
--- Name: criterium_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: criterium_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY criterium_levels
@@ -2558,7 +2555,7 @@ ALTER TABLE ONLY criterium_levels
 
 
 --
--- Name: dashboards_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: dashboards_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY dashboards
@@ -2566,7 +2563,7 @@ ALTER TABLE ONLY dashboards
 
 
 --
--- Name: earned_badges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: earned_badges_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY earned_badges
@@ -2574,7 +2571,7 @@ ALTER TABLE ONLY earned_badges
 
 
 --
--- Name: elements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: elements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY elements
@@ -2582,7 +2579,7 @@ ALTER TABLE ONLY elements
 
 
 --
--- Name: faqs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: faqs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY faqs
@@ -2590,7 +2587,7 @@ ALTER TABLE ONLY faqs
 
 
 --
--- Name: grade_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: grade_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY grade_files
@@ -2598,7 +2595,7 @@ ALTER TABLE ONLY grade_files
 
 
 --
--- Name: grade_scheme_elements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: grade_scheme_elements_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY grade_scheme_elements
@@ -2606,7 +2603,7 @@ ALTER TABLE ONLY grade_scheme_elements
 
 
 --
--- Name: grade_schemes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: grade_schemes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY grade_schemes
@@ -2614,7 +2611,7 @@ ALTER TABLE ONLY grade_schemes
 
 
 --
--- Name: grades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: grades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY grades
@@ -2622,7 +2619,7 @@ ALTER TABLE ONLY grades
 
 
 --
--- Name: group_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: group_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY group_memberships
@@ -2630,7 +2627,7 @@ ALTER TABLE ONLY group_memberships
 
 
 --
--- Name: groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY groups
@@ -2638,7 +2635,7 @@ ALTER TABLE ONLY groups
 
 
 --
--- Name: lti_providers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: lti_providers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY lti_providers
@@ -2646,7 +2643,7 @@ ALTER TABLE ONLY lti_providers
 
 
 --
--- Name: rubric_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: rubric_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY rubric_categories
@@ -2654,7 +2651,7 @@ ALTER TABLE ONLY rubric_categories
 
 
 --
--- Name: rubrics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: rubrics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY rubrics
@@ -2662,7 +2659,7 @@ ALTER TABLE ONLY rubrics
 
 
 --
--- Name: score_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: score_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY score_levels
@@ -2670,7 +2667,7 @@ ALTER TABLE ONLY score_levels
 
 
 --
--- Name: student_academic_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: student_academic_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY student_academic_histories
@@ -2678,7 +2675,7 @@ ALTER TABLE ONLY student_academic_histories
 
 
 --
--- Name: student_assignment_type_weights_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: student_assignment_type_weights_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY student_assignment_type_weights
@@ -2686,7 +2683,7 @@ ALTER TABLE ONLY student_assignment_type_weights
 
 
 --
--- Name: submission_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: submission_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY submission_files
@@ -2694,7 +2691,7 @@ ALTER TABLE ONLY submission_files
 
 
 --
--- Name: submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY submissions
@@ -2702,7 +2699,7 @@ ALTER TABLE ONLY submissions
 
 
 --
--- Name: tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY tasks
@@ -2710,7 +2707,7 @@ ALTER TABLE ONLY tasks
 
 
 --
--- Name: team_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: team_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY team_memberships
@@ -2718,7 +2715,7 @@ ALTER TABLE ONLY team_memberships
 
 
 --
--- Name: teams_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: teams_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY teams
@@ -2726,7 +2723,7 @@ ALTER TABLE ONLY teams
 
 
 --
--- Name: themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY themes
@@ -2734,7 +2731,7 @@ ALTER TABLE ONLY themes
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY users
@@ -2742,231 +2739,231 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_assignment_rubrics_on_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_assignment_rubrics_on_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_assignment_rubrics_on_assignment_id ON assignment_rubrics USING btree (assignment_id);
 
 
 --
--- Name: index_assignment_rubrics_on_rubric_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_assignment_rubrics_on_rubric_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_assignment_rubrics_on_rubric_id ON assignment_rubrics USING btree (rubric_id);
 
 
 --
--- Name: index_assignment_weights_on_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_assignment_weights_on_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_assignment_weights_on_assignment_id ON assignment_weights USING btree (assignment_id);
 
 
 --
--- Name: index_assignment_weights_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_assignment_weights_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_assignment_weights_on_course_id ON assignment_weights USING btree (course_id);
 
 
 --
--- Name: index_assignment_weights_on_student_id_and_assignment_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_assignment_weights_on_student_id_and_assignment_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_assignment_weights_on_student_id_and_assignment_type_id ON assignment_weights USING btree (student_id, assignment_type_id);
 
 
 --
--- Name: index_assignments_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_assignments_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_assignments_on_course_id ON assignments USING btree (course_id);
 
 
 --
--- Name: index_categories_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_categories_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_categories_on_course_id ON categories USING btree (course_id);
 
 
 --
--- Name: index_course_memberships_on_course_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_course_memberships_on_course_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_course_memberships_on_course_id_and_user_id ON course_memberships USING btree (course_id, user_id);
 
 
 --
--- Name: index_courses_on_lti_uid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_courses_on_lti_uid; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_courses_on_lti_uid ON courses USING btree (lti_uid);
 
 
 --
--- Name: index_courses_users_on_course_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_courses_users_on_course_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_courses_users_on_course_id_and_user_id ON course_memberships USING btree (course_id, user_id);
 
 
 --
--- Name: index_courses_users_on_user_id_and_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_courses_users_on_user_id_and_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_courses_users_on_user_id_and_course_id ON course_memberships USING btree (user_id, course_id);
 
 
 --
--- Name: index_grades_on_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_grades_on_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_grades_on_assignment_id ON grades USING btree (assignment_id);
 
 
 --
--- Name: index_grades_on_assignment_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_grades_on_assignment_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_grades_on_assignment_type_id ON grades USING btree (assignment_type_id);
 
 
 --
--- Name: index_grades_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_grades_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_grades_on_course_id ON grades USING btree (course_id);
 
 
 --
--- Name: index_grades_on_group_id_and_group_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_grades_on_group_id_and_group_type; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_grades_on_group_id_and_group_type ON grades USING btree (group_id, group_type);
 
 
 --
--- Name: index_grades_on_score; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_grades_on_score; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_grades_on_score ON grades USING btree (score);
 
 
 --
--- Name: index_grades_on_task_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_grades_on_task_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_grades_on_task_id ON grades USING btree (task_id);
 
 
 --
--- Name: index_group_memberships_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_group_memberships_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_group_memberships_on_course_id ON group_memberships USING btree (course_id);
 
 
 --
--- Name: index_group_memberships_on_group_id_and_group_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_group_memberships_on_group_id_and_group_type; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_group_memberships_on_group_id_and_group_type ON group_memberships USING btree (group_id, group_type);
 
 
 --
--- Name: index_group_memberships_on_student_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_group_memberships_on_student_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_group_memberships_on_student_id ON group_memberships USING btree (student_id);
 
 
 --
--- Name: index_rubrics_on_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rubrics_on_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_rubrics_on_category_id ON rubrics USING btree (category_id);
 
 
 --
--- Name: index_rubrics_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rubrics_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_rubrics_on_course_id ON rubrics USING btree (course_id);
 
 
 --
--- Name: index_submissions_on_assignment_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_submissions_on_assignment_type; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_submissions_on_assignment_type ON submissions USING btree (assignment_type);
 
 
 --
--- Name: index_submissions_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_submissions_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_submissions_on_course_id ON submissions USING btree (course_id);
 
 
 --
--- Name: index_tasks_on_assignment_id_and_assignment_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_tasks_on_assignment_id_and_assignment_type; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_tasks_on_assignment_id_and_assignment_type ON tasks USING btree (assignment_id, assignment_type);
 
 
 --
--- Name: index_tasks_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_tasks_on_course_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_tasks_on_course_id ON tasks USING btree (course_id);
 
 
 --
--- Name: index_tasks_on_id_and_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_tasks_on_id_and_type; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_tasks_on_id_and_type ON tasks USING btree (id, type);
 
 
 --
--- Name: index_users_on_kerberos_uid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_kerberos_uid; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_users_on_kerberos_uid ON users USING btree (kerberos_uid);
 
 
 --
--- Name: index_users_on_last_logout_at_and_last_activity_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_last_logout_at_and_last_activity_at; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_users_on_last_logout_at_and_last_activity_at ON users USING btree (last_logout_at, last_activity_at);
 
 
 --
--- Name: index_users_on_remember_me_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_remember_me_token; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_users_on_remember_me_token ON users USING btree (remember_me_token);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: index_weights_on_student_id_and_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_weights_on_student_id_and_assignment_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_weights_on_student_id_and_assignment_id ON assignment_weights USING btree (student_id, assignment_id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -3136,3 +3133,9 @@ INSERT INTO schema_migrations (version) VALUES ('20131231042054');
 INSERT INTO schema_migrations (version) VALUES ('20131231135740');
 
 INSERT INTO schema_migrations (version) VALUES ('20131231151417');
+
+INSERT INTO schema_migrations (version) VALUES ('20131126223557');
+
+INSERT INTO schema_migrations (version) VALUES ('20131126223757');
+
+INSERT INTO schema_migrations (version) VALUES ('20131203202332');

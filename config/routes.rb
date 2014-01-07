@@ -15,6 +15,7 @@ GradeCraft::Application.routes.draw do
   #12. Teams
   #13. Users
   #14. User Auth
+  #15. Uploads
 
   #1. Analytics & Charts
   namespace :analytics do
@@ -80,7 +81,6 @@ GradeCraft::Application.routes.draw do
     end
   end
 
-  resources :submission_files, only: :index
 
   resources :score_levels
 
@@ -123,6 +123,9 @@ GradeCraft::Application.routes.draw do
     member do
       get 'mass_edit' => 'challenge_grades#mass_edit', as: :mass_edit
       put 'mass_edit' => 'challenge_grades#mass_update'
+    end
+    resources :challenge_files do
+      get :remove
     end
   end
 
@@ -250,4 +253,9 @@ GradeCraft::Application.routes.draw do
   get 'lti/:provider/launch', to: 'lti#launch', :as => :launch_lti_provider
 
   # get 'cosign_test' => 'info#cosign_test'
+
+  #15. Uploads
+  resource :uploads do
+    get :remove
+  end
 end

@@ -31,11 +31,13 @@
       %p
         %b No longer accepted after:
         = @assignment.accepts_submissions_until
-    - if @assignment.assignment_files.present?
-      %p
-        %b Documents:
-        - @assignment.assignment_files.each do |af|
-          = link_to af.filename, af.url
+      - if @assignment.assignment_files.present?
+        %p
+          %b Documents:
+          - @assignment.assignment_files.each do |af|
+            = link_to af.filename, af.url
+            = link_to "(Remove)", assignment_assignment_file_file_remove_path({ :assignment_id => @assignment.id, :assignment_file_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id } } )
+
 
     - if @assignment.tasks.present?
 
@@ -49,14 +51,19 @@
         %tbody
           - @assignment.tasks.each do |task|
             %tr
-              %td= task.name
-              %td= task.description
+              %th.sortable{"data-sort" => "string"} Name
+              %th.sortable{"data-sort" => "string"} Description
+          %tbody
+            - @assignment.tasks.each do |task|
+              %tr
+                %td= task.name
+                %td= task.description
 
-    - if @assignment.accepts_submissions? && @assignment.still_accepted?
-      - if @assignment.is_individual? || (@assignment.has_groups? && current_student.group_for_assignment(@assignment))
-        %h3 Submit #{@assignment.name}
-        = render "/submissions/form"
-      - elsif @assignment.has_groups?
-        = link_to "Create a Group", new_group_path, :class => "button tiny radius"
+      - if @assignment.accepts_submissions? && @assignment.still_accepted?
+        - if @assignment.is_individual? || (@assignment.has_groups? && current_student.group_for_assignment(@assignment))
+          %h3 Submit #{@assignment.name}
+          = render "/submissions/form"
+        - elsif @assignment.has_groups?
+          = link_to "Create a Group", new_group_path, :class => "button tiny radius"
 
   .clearfix
