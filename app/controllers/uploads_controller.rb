@@ -4,7 +4,7 @@ class UploadsController < ApplicationController
     s3 = AWS::S3.new
     bucket = s3.buckets["gradecraft-#{Rails.env}"]
     bucket.objects[CGI::unescape(upload.filepath)].delete
-    upload.delete
+    upload.destroy
 
     redirect_to :back
   end

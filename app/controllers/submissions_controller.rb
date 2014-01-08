@@ -69,6 +69,7 @@ class SubmissionsController < ApplicationController
     @submission = @assignment.submissions.new(params[:submission])
     @submission.student = current_student if current_user.is_student?
     respond_to do |format|
+      self.check_uploads
       if @submission.save
         if current_user.is_student?
           format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was successfully submitted." }
@@ -91,15 +92,18 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  def upload
-    render :json => params.inspect
-    #To-Do: create a submission, add the file URL, save it, and redirect to edit
+  def check_uploads
+    if params[:submission][:submission_files_attributes]["0"][:filepath].empty?
+      params[:submission].delete(:submission_files_attributes)
+      @submission.submission_files.destroy_all
+    end
   end
 
   def update
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.find(params[:id])
     respond_to do |format|
+      self.check_uploads
       if @submission.update_attributes(params[:submission])
         if current_user.is_student?
           format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "Your submission for #{@assignment.name} was successfully updated." }

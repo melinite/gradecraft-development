@@ -40,7 +40,7 @@
         %b Documents:
         - @submission.submission_files.each do |sf|
           = link_to sf.filename, sf.url
-          = link_to "(Remove)", assignment_submission_submission_file_remove_path({ :submission_id => @submission.id, :assignment_id => @assignment.id, :submission_file_id => sf.id, :redirect => { :controller => "submissions", :id => @submission.id, :upload_id => sf.id } } )
+          = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
 
     - if @assignment.has_groups?
       - if current_user.is_student?
