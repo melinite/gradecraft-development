@@ -22,7 +22,8 @@
         %span /#{points current_course.point_total} points
         / Else tally all of the points for all of the assignments in the course
       - else
-        %span#userScoreNum #{points current_student_data.score}/#{points current_student_data.point_total}
+        %span#userScoreNum #{points current_student_data.score}
+        %span /#{points current_student_data.point_total}
       - if current_student_data.grade_level.present?
         Current Level:
         %span#userScoreNum= current_student_data.grade_level
