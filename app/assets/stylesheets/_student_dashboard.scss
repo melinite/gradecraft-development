@@ -122,3 +122,11 @@ tr.achieved {
 .assignment {
   padding-bottom: 10px;
 }
+
+img.unearned {
+  opacity: .2 !important;
+}
+
+img.earned {
+  opacity: 1;
+}
