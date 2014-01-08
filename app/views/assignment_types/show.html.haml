@@ -27,11 +27,11 @@
               - if current_user.is_staff?
                 %td
                   .button-bar
-                    %ul.button-group.radius.round
-                      %li= link_to "Grade", assignment_path(assignment), :class => "button tiny"
-                      %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny'
-                      %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
-                      %li= link_to "Copy", copy_assignments_path(:id => assignment), :class => 'button tiny', :method => :copy
+                    %ul.button-group.round
+                      %li= link_to "Grade", assignment_path(assignment), :class => "button tiny secondary"
+                      %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny secondary'
+                      %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                      %li= link_to "Copy", copy_assignments_path(:id => assignment), :class => 'button tiny secondary', :method => :copy
               - else
                 - if assignment.accepts_submissions? && assignment.has_groups?
                   - if current_student.group_for_assignment(assignment)

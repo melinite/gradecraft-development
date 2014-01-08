@@ -12,9 +12,10 @@
     %dl.accordion{:data => {'accordion' => true, 'collapse' => "persist" } }
       - current_course_data.by_assignment_type.each do |assignment_type, assignments|
         %dd
-          %a{"href" => "##{assignment_type.id}" }= "#{assignment_type.name} – #{points assignment_type.max_value} points"
+          %a.small-12{"href" => "##{assignment_type.id}" }= "#{assignment_type.name} – #{points assignment_type.max_value} points"
+          .small-2.right= link_to "Edit #{assignment_type.name}", edit_assignment_type_path(assignment_type), :class => "button tiny round aindex"
           .content{:id => "#{assignment_type.id}" }
-            #{link_to "Edit", edit_assignment_type_path(assignment_type) }
+
             %table.responsive.simpleTable
               %thead
                 %tr

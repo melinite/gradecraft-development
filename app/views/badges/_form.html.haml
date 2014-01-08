@@ -11,8 +11,8 @@
 
 = form_for @badge do |f|
   .small-12.medium-4.columns
-      = f.simple_fields_for :badge_files, @badge.badge_files.new do |bff|
-        = bff.input :filepath, :label => "Documents", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5 s3_files'}, :as => :hidden
+    = f.simple_fields_for :badge_files, @badge.badge_files.new do |bff|
+      = bff.input :filepath, :label => "Documents", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5 s3_files'}, :as => :hidden
 
     = f.file_field :icon, :label => "Select an icon for this badge."
     %span.label.secondary.radius Choose an icon for this badge.

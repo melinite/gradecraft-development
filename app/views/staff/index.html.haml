@@ -16,7 +16,7 @@
           %th.sortable{"data-sort" => "string"} #{term_for :team}
           %th
       %tbody
-        - current_course.users.each do |user|
+        - current_course.users.alpha.each do |user|
           - if user.is_staff?
             %tr
               %td= user.first_name

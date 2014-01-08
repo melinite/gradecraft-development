@@ -16,15 +16,15 @@ class StudentsController < ApplicationController
   def timeline
     @scores_for_current_course = current_student.scores_for_course(current_course)
     if current_course.team_challenges?
-      @events = current_course_data.assignments.to_a + current_course.challenges
+      @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
     else
-      @events = current_course_data.assignments.to_a
+      @events = current_course_data.timelineable.to_a
     end
   end
 
   def export
     @auditing = current_course.students.auditing
-    @students = current_course.students.being_gradedrespond_to do |format|
+    @students = current_course.students.being_graded respond_to do |format|
       format.html
       format.json { render json: @students.where("first_name like ?", "%#{params[:q]}%") }
       format.csv { send_data @students.csv_for_course(current_course) }
@@ -44,9 +44,9 @@ class StudentsController < ApplicationController
     @grade_levels_elements_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
     @scores_for_current_course = current_student.scores_for_course(current_course)
     if current_course.team_challenges?
-      @events = current_course_data.assignments.to_a + current_course.challenges
+      @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
     else
-      @events = current_course_data.assignments.to_a
+      @events = current_course_data.assignments.timelineable.to_a
     end
 
     scores = []

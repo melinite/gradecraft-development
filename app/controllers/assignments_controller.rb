@@ -29,6 +29,26 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def detailed_grades
+    @assignment = current_course.assignments.find(params[:id])
+    @title = @assignment.name
+    @groups = @assignment.groups
+    user_search_options = {}
+    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
+    @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
+    if current_user.is_student?
+      if @assignment.accepts_submissions?
+        @submission = @assignment.submissions.new
+      end
+      if @assignment.has_groups?
+        #@group = current_course.groups.find(params[:group_id])
+      else
+        @student = current_user
+      end
+    end
+  end
+
   def new
     @title = "Create a New #{term_for :assignment}"
     @assignment = current_course.assignments.new

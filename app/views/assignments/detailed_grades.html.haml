@@ -3,7 +3,7 @@
   = content_nav_for @assignment do
     %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
     %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius"
-    %li= link_to "See Detailed Grades", detailed_grades_assignment_path(@assignment), :class => "button tiny radius"
+    %li= link_to "See Standard Grade View", assignment_path(@assignment), :class => "button tiny radius"
 
   .small-4.medium-5.columns
     %h2= @title
@@ -52,6 +52,6 @@
     - if @assignment.has_groups?
       = render 'group_show'
     - else
-      = render 'individual_show'
+      = render 'detailed_individual_show'
 
   .clearfix

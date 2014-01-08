@@ -93,8 +93,11 @@
         %h4 Predictor
         %hr
 
-        = f.label :points_predictor_display
-        = f.select :points_predictor_display, :collection => [[], ["Fixed"], ["Slider"], ["Select List"]]
+        .small-12.large-3.columns
+          = f.label :points_predictor_display
+          = f.select :points_predictor_display, [[], ["Fixed"], ["Slider"], ["Select List"]]
+
+        .clearfix
 
     .panel
       %h4 Timeline
