@@ -46,10 +46,10 @@
             - else
               %span#predictor-course-total-display= points current_student_data.point_total
 
-            %h3
-              Predicted final grade:
-              %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
-                = current_student_data.predicted_grade_letter
+            //%h3
+            //Predicted final grade:
+            //%span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
+            //= current_student_data.predicted_grade_letter
 
         .charts.dashboard-charts
           .chart-wrapper
