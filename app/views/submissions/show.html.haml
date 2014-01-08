@@ -37,21 +37,26 @@
           = "#{term_for :group}:"
           = link_to @submission.group.try(:name), group_path(@submission.group)
     .small-12
-      %h6.bold Submitted:
-      = @submission.created_at
+      %h6
+        %span.bold Submitted:
+        = @submission.created_at
       - if @submission.updated_at != @submission.created_at
-        %h6.bold Updated:
-        = @submission.updated_at
+        %h6
+          %span.bold Updated:
+          = @submission.updated_at
 
       - if @submission.link?
-        %h6.bold Link:
-        = link_to @submission.link, @submission.link
+        %h6
+          %span.bold Link:
+          = link_to @submission.link, @submission.link
 
       - if @submission.submission_files.present?
         %h6.bold Attachments:
-        - @submission.submission_files.each do |sf|
-          .col-lg-offset-2= link_to sf.filename, sf.url
-          .col-lg-offset-2= link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+        %ul
+          - @submission.submission_files.each do |sf|
+            %li
+              = link_to sf.filename, sf.url
+              = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
 
       %p
 
