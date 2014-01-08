@@ -94,7 +94,7 @@ class AssignmentsController < ApplicationController
     @assignment = current_course.assignments.find(params[:id])
     respond_to do |format|
       self.check_uploads
-      if @assignment.update_attributes(params[:submission])
+      if @assignment.update_attributes(params[:assignment])
         format.html { respond_with @assignment }
       else
         format.html { redirect_to edit_assignment_path(@assignment), notice: "#{@assignment.name} was not successfully updated! Please try again." }

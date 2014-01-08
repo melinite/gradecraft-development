@@ -5,7 +5,7 @@
     %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius"
     %li= link_to "See Detailed Grades", detailed_grades_assignment_path(@assignment), :class => "button tiny radius"
 
-  .small-4.medium-5.columns
+  .small-4.medium-10.columns
     %h2= @title
 
     - if @assignment.description?
