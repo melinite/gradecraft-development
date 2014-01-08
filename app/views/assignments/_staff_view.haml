@@ -9,9 +9,7 @@
     %h2= @title
 
     - if @assignment.description?
-      %p
-        %b Description:
-        = raw @assignment.description
+      %p= raw @assignment.description
 
     - if @assignment.point_total?
       %p

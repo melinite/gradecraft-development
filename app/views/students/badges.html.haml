@@ -30,18 +30,17 @@
         %li= link_to "#{term_for :teams}", student_teams_path(current_student), :class => "button tiny radius"
 
 
-  - cache current_student_data.cache_key('v1', :badges_key, current_student.id) do
-    %dl.tabs{:data => {'tab' => true}}
-      %dd.active
-        %a{ "href" => "#tabb1"} My #{term_for :badges}
-      - if current_course.shared_badges?
-        %dd
-          %a{ "href" => "#tabb2"} Class #{term_for :badges}
+  %dl.tabs{:data => {'tab' => true}}
+    %dd.active
+      %a{ "href" => "#tabb1"} My #{term_for :badges}
+    - if current_course.shared_badges?
+      %dd
+        %a{ "href" => "#tabb2"} Class #{term_for :badges}
 
-    .small-12.columns
-      - if current_user.is_student? && ! current_student.badges_shared(current_course)
-        = "Want to share your #{term_for :badges} with the class?"
-        = link_to "Turn on shared #{term_for :badges}!", edit_profile_users_path
+      .small-12.columns
+        - if current_user.is_student? && ! current_student.badges_shared(current_course)
+          = "Want to share your #{term_for :badges} with the class?"
+          = link_to "Turn on shared #{term_for :badges}!", edit_profile_users_path
 
     .tabs-content
       .content#tabb1.active
