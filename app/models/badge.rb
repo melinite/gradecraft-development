@@ -44,7 +44,7 @@ class Badge < ActiveRecord::Base
   end
 
   def icon
-    super.presence || '/assets/badge.png'
+    super.presence || "/assets/badge.png"
   end
 
 end
