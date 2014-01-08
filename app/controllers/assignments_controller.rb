@@ -55,6 +55,7 @@ class AssignmentsController < ApplicationController
       flash[:error] = 'Due date must be after open date.'
       render :action => "new", :assignment => @assignment
     elsif @assignment.save
+      self.check_uploads
       set_assignment_weights
       respond_with @assignment, :location => assignment_path(@assignment), :notice => 'Assignment was successfully created.'
     else
@@ -62,10 +63,24 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def check_uploads
+    if params[:assignment][:assignment_files_attributes]["0"][:filepath].empty?
+      params[:assignment].delete(:assignment_files_attributes)
+      @assignment.assignment_files.destroy_all
+    end
+  end
+
   def update
     @assignment = current_course.assignments.find(params[:id])
-    @assignment.update_attributes(params[:assignment])
-    respond_with @assignment
+    respond_to do |format|
+      self.check_uploads
+      if @assignment.update_attributes(params[:submission])
+        format.html { respond_with @assignment }
+      else
+        format.html { redirect_to edit_assignment_path(@assignment), notice: "#{@assignment.name} was not successfully updated! Please try again." }
+        format.json { render json: @assignment.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
