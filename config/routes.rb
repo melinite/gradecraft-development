@@ -237,6 +237,7 @@ GradeCraft::Application.routes.draw do
   get 'badges' => 'students#badges'
   get 'calendar' => 'students#calendar'
   get 'predictor' => 'students#predictor'
+  get 'syllabus' => 'students#syllabus'
   get 'grading_philosophy' => 'students#grading_philosophy'
   get 'my_badges' => 'students#badges'
   get 'my_team' => 'students#teams'

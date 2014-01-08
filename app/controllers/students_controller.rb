@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
 
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except=> [:timeline, :predictor, :grading_philosophy, :badges, :teams]
+  before_filter :ensure_staff?, :except=> [:timeline, :predictor, :grading_philosophy, :badges, :teams, :syllabus]
 
   def index
     @title = "#{current_course.user_term} Roster"

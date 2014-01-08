@@ -1,9 +1,9 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
     = content_nav_for "My Dashboard" do
-      %li= link_to "Syllabus", dashboard_path, :class => "button tiny radius"
       - if current_course.use_timeline?
         %li= link_to "Timeline", timeline_path, :class => "button tiny radius"
+      %li= link_to "Syllabus", dashboard_path, :class => "button tiny radius"
       - if current_course.grading_philosophy.present?
         %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
       - if current_course.predictor_on?
@@ -31,25 +31,26 @@
 
   .small-12.columns
     - cache current_student_data.cache_key('v1', :assignment_weights_key, :assignments_key, :grades_key, :badges_key, current_student.id) do
-      #gradePredictor{ 'data-magellan-expedition' => "fixed" }
-        #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
-          %h3
-            Projected points:
-            %span#predictor-score-display.bold
-              - if current_user.is_staff?
-                = points current_course.score_for_student(current_student)
-              - else
-                = points current_student_data.predicted_score
-            = "/"
-            - if current_course.point_total.present?
-              %span#course-total-preset{ 'data-coursetotal' => "#{current_course.point_total}" }= points current_course.point_total
-            - else
-              %span#predictor-course-total-display= points current_student_data.point_total
-
+      .sticky
+        #gradePredictor{ 'data-magellan-expedition' => "fixed small-12 large-8" }
+          #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
             %h3
-              Predicted final grade:
-              %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
-                = current_student_data.predicted_grade_letter
+              Projected points:
+              %span#predictor-score-display.bold
+                - if current_user.is_staff?
+                  = points current_course.score_for_student(current_student)
+                - else
+                  = points current_student_data.predicted_score
+              = "/"
+              - if current_course.point_total.present?
+                %span#course-total-preset{ 'data-coursetotal' => "#{current_course.point_total}" }= points current_course.point_total
+              - else
+                %span#predictor-course-total-display= points current_student_data.point_total
+
+              %h3
+                Predicted final grade:
+                %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
+                  = current_student_data.predicted_grade_letter
 
           .charts.dashboard-charts
             .chart-wrapper
