@@ -17,7 +17,7 @@
   .small-12.columns
     %h2= @badge.name
     .panel.small-12.large-2.columns.text-center
-      = image_tag @badge.icon, :alt => @badge.name, :width => "100"
+      %img{:src => @badge.icon, :alt => @badge.name, :width => "100" }
     - if @badge.point_total?
       %b Value:= "#{@badge.point_total} points"
 
