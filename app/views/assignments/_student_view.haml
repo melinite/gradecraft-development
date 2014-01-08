@@ -2,9 +2,8 @@
   / Assignment Navigation
   = content_nav_for @assignment do
     %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
-    %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius"
 
-  .small-12
+  .small-12.columns
     %h2= @title
 
     - if @assignment.description?

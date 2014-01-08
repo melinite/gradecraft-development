@@ -1,22 +1,25 @@
 - cache current_student_data.cache_key('v1', :badges_key, current_student.id) do
-  - if current_course.valuable_badges?
-    %li#slide-badges(data-assignment-type-id="badges" data-assignment-type-name)
-      %h3="#{term_for :badges}"
-      .slide-panel
-        %span.badge.badge-info.pull-right #{points current_student_data.earned_badge_score} possible points
-        - current_course_data.badges.each do |badge|
-          .small-12.medium-3.columns.panel.callout
-            - if current_student_data.earned_badge?(badge)
-              .earnedBadgeField
-                %img{:src => badge.icon, :alt => badge.name, :width => "40"}
-                .clearfix= badge.name
-                .clearfix
-                  %b= "#{points badge.point_total} points"
-                = hidden_field_tag badge.name, badge.point_total
-            - else
-              .badgeField
-                %img{:src => badge.icon, :alt => badge.name, :width => "40"}
-                .clearfix= badge.name
-                .clearfix
-                  %b #{points badge.point_total} points
-                .clearfix= check_box_tag badge.name, badge.point_total, false, :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
+  .small-12.columns
+    - if current_course.valuable_badges?
+      %li#slide-badges(data-assignment-type-id="badges" data-assignment-type-name)
+        %h5.bold
+          ="#{term_for :badges}"
+          .right.label #{points current_student_data.earned_badge_score} possible points
+        .slide-panel
+          .clearfix
+          - current_course_data.badges.each do |badge|
+            .small-12.medium-3.columns.panel.callout
+              - if current_student_data.earned_badge?(badge)
+                .earnedBadgeField
+                  %img{:src => badge.icon, :alt => badge.name, :width => "40"}
+                  .clearfix= badge.name
+                  .clearfix
+                    %b= "#{points badge.point_total} points"
+                  = hidden_field_tag badge.name, badge.point_total
+              - else
+                .badgeField
+                  %img{:src => badge.icon, :alt => badge.name, :width => "40"}
+                  .clearfix= badge.name
+                  .clearfix
+                    %b #{points badge.point_total} points
+                  .clearfix= check_box_tag badge.name, badge.point_total, false, :class => 'class-checkbox', :'data-assignment-type-id' => 'grades'
