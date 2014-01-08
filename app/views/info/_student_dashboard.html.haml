@@ -1,8 +1,8 @@
 .small-12.panel.mainContent
   = content_nav_for "My Dashboard" do
-    %li= link_to "Syllabus", "#", :class => "button tiny radius active"
     - if current_course.use_timeline?
-      %li= link_to "Timeline", timeline_path, :class => "button tiny radius"
+      %li= link_to "Timeline", "#", :class => "button tiny radius active"
+    %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
     - if current_course.grading_philosophy.present?
       %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
     - if current_course.predictor_on?
@@ -11,7 +11,6 @@
       %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
     - if current_course.has_teams? && current_course.teams_visible?
       %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
-
 
   .small-12.columns
     %h2
@@ -28,6 +27,6 @@
         Current Level:
         %span#userScoreNum= current_student_data.grade_level
 
-    = render "students/syllabus"
+    = render "students/timeline"
 
   .clearfix

@@ -6,14 +6,16 @@
   border-radius: 15px;
   padding: 15px;
   box-shadow: 0px 3px 3px #888888;
-
   .chart-wrapper {
     position: relative;
   }
 
   .chart-inner {
-    width: 100%;
   }
+}
+
+#gradePredictor.fixed {
+  width: 80% !important;
 }
 
 #prediction {
@@ -67,7 +69,12 @@
 }
 
 .assignmentName a {
-  color: $darkblue;
+  color: $blue;
+  font-family: "Avenir", sans-serif;
+}
+
+.assignmentName a:hover {
+  color: $green;
   text-decoration: underline;
 }
 
@@ -102,4 +109,8 @@ p.assignmentDescription {
 tr.achieved {
   background-color: $yellow;
   color: #FFF;
+}
+
+.assignmentContent {
+  background-color: #FFF;
 }

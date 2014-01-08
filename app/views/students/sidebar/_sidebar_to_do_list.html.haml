@@ -2,7 +2,7 @@
 %hr
 - current_course_data.by_assignment_type.each do |assignment_type, assignments|
   -# Do not use `assignment_type.has_soon_assignments?' It will trigger a query.
-  - if assignments.any?(&:soon?) && assignment_type.name != "Attendance"
+  - if assignments.any?(&:soon?) && assignment_type.name != "Class Attendance" || "Reading Reactions"
     - assignments.each do |assignment|
       - if assignment.soon? && assignment.visible?
         .small-12.text-left

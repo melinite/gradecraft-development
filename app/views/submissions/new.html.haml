@@ -8,30 +8,25 @@
       %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
   .small-12.columns
-    %h2= @title
+    %h2= "#{@title} (#{points @assignment.point_total} points possible)"
 
     - if @assignment.description?
       %p
         %b Description:
         = raw @assignment.description
 
-    - if @assignment.point_total?
-      %p
-        %b Point Total:
-        = points @assignment.point_total
-
     - if @assignment.open_at?
-      %p
+      .small-12.columns.large-4
         %b Open date:
         = @assignment.open_at
 
     - if @assignment.due_at?
-      %p
+      .small-12.columns.large-4
         %b Close date:
         = @assignment.due_at
 
     - if @assignment.accepts_submissions_until?
-      %p
+      .small-12.columns.large-4
         %b Accept submissions until:
         = @assignment.accepts_submissions_until
 

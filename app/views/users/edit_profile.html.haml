@@ -3,21 +3,24 @@
   = content_nav_for "Edit My Profile" do
     %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
-  .small-12.columns
-    .small-3.columns
-      = gravatar_for @user, :size => 250
+  .small-12.columns.panel
+    .small-3.columns.text-center
+      = gravatar_for @user, :size => 200
+      .clearfix
       %p
+      %h6
         Need a Gravatar?
         = link_to "Get One Here!", "https://en.gravatar.com/"
 
-    .small-9.columns.panel
+    .small-9.columns
       = simple_form_for(@user, method: :put, :url => update_profile_users_path(@user)) do |f|
-        .small-12.large-4.columns
-          = f.input :email
         .small-12.large-4.columns
           = f.input :first_name
         .small-12.large-4.columns
           = f.input :last_name
+
+        .small-12.large-4.columns
+          = f.input :email
         - if current_course.teams_visible?
           .small-12.large-4.columns
             = f.label :display_name, "Pseudonym"
@@ -28,6 +31,12 @@
             = f.label :team_role, "#{term_for :team} Role"
             = f.text_edit :team_role
             %h6.small What will you contribute to your #{term_for :team}?"
+
+        .small-12.medium-4.columns
+          = f.label :default_course_id, "Default Course"
+          = f.select :default_course_id, options_from_collection_for_select(@default_course_options, "id", "name")
+          %h6.small This course will be automatically loaded when you log in to GradeCraft
+
         = f.simple_fields_for :course_memberships do |p|
           - if current_course.shared_badges?
             .small-12.large-4.columns
@@ -39,6 +48,7 @@
           // Taken out bc of cosign
           //= f.input :password
           //= f.input :password_confirmation
+
 
         %hr
 

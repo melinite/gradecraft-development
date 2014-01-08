@@ -73,6 +73,7 @@ class UsersController < ApplicationController
     @course_membership = @user.course_memberships.where(course_id: current_course).first
     @title = "Editing #{@user.name}"
     @academic_history = @user.student_academic_history
+    @default_course_options = @user.courses
   end
 
   def create
@@ -117,6 +118,7 @@ class UsersController < ApplicationController
   def edit_profile
     @title = "Edit My Account"
     @user = current_user
+    @default_course_options = @user.courses
   end
 
   def update_profile

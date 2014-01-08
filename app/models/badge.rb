@@ -4,7 +4,7 @@ class Badge < ActiveRecord::Base
     :category_id, :value, :multiplier, :point_total,
     :earned_badges, :earned_badges_attributes, :score, :badge_files_attributes
 
-  mount_uploader :icon, BadgeIconUploader
+  #mount_uploader :icon, BadgeIconUploader
 
   has_many :earned_badges, :dependent => :destroy
 
@@ -44,7 +44,7 @@ class Badge < ActiveRecord::Base
   end
 
   def icon
-    super.presence || '/assets/favicon.ico'
+    super.presence || '/assets/badge.png'
   end
 
 end

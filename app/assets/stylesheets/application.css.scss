@@ -7,6 +7,7 @@
  *= require bootstrap
  *= require bootstrap-glyphicons
  *= require bootstrap-datetimepicker
+ *= require bootstrap-wysihtml5
  *= require responsive-tables
  *= require foundation.min
  *= require foundation_and_overrides
@@ -40,8 +41,8 @@ $darkblue: #120470;
 
 /* Background color for page */
 
-body {
-  background-color: $blue;
+body.logged-in, body.logged-out {
+  background: image-url("cloud_bg.gif");
 }
 
 .small-12.panel.mainContent {
@@ -174,5 +175,17 @@ h6.small {
 }
 
 .bold {
+  font-weight: bold;
+}
+
+#attachments {
+  clear: both;
+  margin: 2rem 0 1.5rem;
+  background-color: #eee;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+label {
   font-weight: bold;
 }

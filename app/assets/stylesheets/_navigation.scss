@@ -41,7 +41,10 @@ select#course_id {
 
 .top-bar-section .left a {
   color: $lightblue;
-    font-family: "Avenir", sans-serif;
-
+  font-family: "Avenir", sans-serif;
+  margin-top: 1px;
+  height: 1rem !important;
+  position: relative;
+  margin-right: 0;
 }
 

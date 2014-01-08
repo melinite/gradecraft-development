@@ -1,9 +1,9 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
     = content_nav_for "My Dashboard" do
-      %li= link_to "Syllabus", dashboard_path, :class => "button tiny radius"
       - if current_course.use_timeline?
         %li= link_to "Timeline", timeline_path, :class => "button tiny radius"
+      %li= link_to "Syllabus", dashboard_path, :class => "button tiny radius"
       - if current_course.grading_philosophy.present?
         %li= link_to "Grade Philosophy", "#", :class => "button tiny radius active"
       - if current_course.predictor_on?
