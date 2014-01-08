@@ -58,7 +58,7 @@ class StudentData < Struct.new(:student, :course)
 
   #Predicted score is the score already known to the user + all the predicted points for grades not released or not graded.
   def predicted_score
-    #@predicted_score ||= @score + grades.where(course: course).predicted_points
+    @predicted_score ||= @score + grades.where(course: course).predicted_points
   end
 
   #Possible total points for student
