@@ -2,7 +2,7 @@
   / Student Dashboard Breadcrumbs
   = content_nav_for current_student do
     %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
-    %li= link_to "Grades", student_path(current_student), :class => "button tiny radius active"
+    %li= link_to "Syllabus", student_path(current_student), :class => "button tiny radius active"
     - if current_course.grading_philosophy.present?
       %li= link_to "Grade Philosophy", student_grading_philosophy_path(current_student), :class => "button tiny radius"
     - if current_course.predictor_on?

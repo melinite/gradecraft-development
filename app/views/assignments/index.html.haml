@@ -14,6 +14,7 @@
         %dd
           %a{"href" => "##{assignment_type.id}" }= "#{assignment_type.name} – #{points assignment_type.max_value} points"
           .content{:id => "#{assignment_type.id}" }
+            #{link_to "Edit", edit_assignment_type_path(assignment_type) }
             %table.responsive.simpleTable
               %thead
                 %tr

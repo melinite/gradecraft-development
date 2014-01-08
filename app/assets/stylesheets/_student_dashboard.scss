@@ -67,7 +67,12 @@
 }
 
 .assignmentName a {
-  color: $darkblue;
+  color: $blue;
+  font-family: "Avenir", sans-serif;
+}
+
+.assignmentName a:hover {
+  color: $green;
   text-decoration: underline;
 }
 
@@ -102,4 +107,8 @@ p.assignmentDescription {
 tr.achieved {
   background-color: $yellow;
   color: #FFF;
+}
+
+.assignmentContent {
+  background-color: #FFF;
 }
