@@ -48,3 +48,9 @@ select#course_id {
   margin-right: 0;
 }
 
+.top-bar-section .left li a:hover {
+  color: $lightblue;
+  cursor: default;
+  background-color: #333;
+}
+
