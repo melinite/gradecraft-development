@@ -27,7 +27,7 @@
               %td
                 %img{:src => badge.icon, :alt => badge.name, :width => "40"}
                 %td
-                  = link_to badge.name, badge_path(badge)
+                  .bold= link_to badge.name, badge_path(badge)
                   = raw badge.description
                 - if current_course.valuable_badges?
                   %td= points badge.point_total
