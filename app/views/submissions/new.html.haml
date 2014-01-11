@@ -4,7 +4,7 @@
     = content_nav_for @assignment, Submission, "New Submission" do
       %li= link_to "Back to #{@assignment.name}", @assignment, :class => "button tiny radius"
   - else
-    = content_nav_for "#{@assignment.name}" do
+    = content_nav_for @assignment, "Submit My #{@assignment.name}" do
       - if current_course.use_timeline?
         %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
       %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
@@ -18,27 +18,28 @@
         %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
 
   .small-12.columns
-    %h2= "#{@title} (#{points @assignment.point_total} points possible)"
-
-    - if @assignment.description?
-      %p
-        %b Description:
-        = raw @assignment.description
+    %h2= "#{@title} (#{points @assignment.point_total} points)"
 
     - if @assignment.open_at?
-      .small-12.columns.large-4
+      .small-12.columns.large-4.panel
         %b Open date:
         = @assignment.open_at
 
     - if @assignment.due_at?
-      .small-12.columns.large-4
+      .small-12.columns.large-4.panel
         %b Close date:
         = @assignment.due_at
 
-    - if @assignment.accepts_submissions_until?
-      .small-12.columns.large-4
+    - if @assignment.accepts_submissions_until? && current_user.is_staff?
+      .small-12.columns.large-4.panel
         %b Accept submissions until:
         = @assignment.accepts_submissions_until
+
+    .clearfix
+
+    - if @assignment.description?
+      %p= raw @assignment.description
+
 
     - if @assignment.has_groups? && current_user.is_student?
       %h4= "You are submitting this assignment for Group #{current_student.group_for_assignment(@assignment).name }"

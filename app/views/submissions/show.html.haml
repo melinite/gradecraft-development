@@ -14,10 +14,9 @@
       - if @assignment.has_groups?
         %li= link_to 'Edit Grades', group_grade_assignment_path(@assignment, @assignment.grade_for_student(@submission.student), :student_id => @submission.student_id), :class => "button tiny radius"
         %li= link_to 'Grade Submission', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => @submission.group.id), :class => 'button tiny radius'
-
       %li= link_to "Delete Submission", assignment_submission_path(@assignment, @submission), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
   - else
-    = content_nav_for "My #{@assignment.name} Submission" do
+    = content_nav_for @assignment, "My #{@assignment.name} Submission" do
       - if current_course.use_timeline?
         %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
       %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"

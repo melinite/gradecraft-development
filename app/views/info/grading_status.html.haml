@@ -1,20 +1,7 @@
 .small-12.panel.mainContent
   / Ungraded Assignments
-  .small-12.columns.section
-    %ul.tabs
-      - if current_course.accepts_submissions?
-        %li.active
-          %a{ "data-toggle" => "tab", "data-target" => "#tab5"} #{term_for :assignments}
-      - if current_course.has_badges?
-        %li
-          %a{ "data-toggle" => "tab", "data-target" => "#tab6"} #{term_for :badges}
-    .tab-content
-      - if current_course.accepts_submissions?
-        .tab-pane#tab5.active
-          .small-12.medium-4.large-4.columns
-            %h3 Ungraded Submissions
-          = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
-      - if current_course.has_badges?
-        .tab-pane#tab6
-          %h4 Badges
-          = render 'badges_table', :course => current_course, :badges => @badges
+  = content_nav_for @assignments
+
+  .small-12.columns
+    %h3 Ungraded Submissions
+    = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions

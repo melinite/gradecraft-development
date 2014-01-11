@@ -53,13 +53,13 @@ class SubmissionsController < ApplicationController
         @group = current_course.groups.find(params[:group_id])
         @title = "Editing #{@group.name}'s Submission for #{@assignment.name}"
       else
-        @student = current_student
-        @title = "Editing #{@student.name}'s Submission for #{@assignment.name}"
+        @title = "Editing #{@group.name}'s Submission for #{@assignment.name}"
       end
     end
     if current_user.is_student?
       @title = "Editing My Submission for #{@assignment.name}"
       @user = current_user
+      @scores_for_current_course = current_student.scores_for_course(current_course)
       enforce_view_permission(@submission)
     end
     @groups = @assignment.groups

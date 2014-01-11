@@ -4,7 +4,7 @@
     = content_nav_for @assignment, Submission, "Edit Submission" do
       %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "button tiny radius"
   - else
-    = content_nav_for @assignment, "Edit Submission" do
+    = content_nav_for @assignment, "Edit My Submission" do
       - if current_course.use_timeline?
         %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
       %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
@@ -21,25 +21,21 @@
   .small-12.columns
     %h2= "#{@title}"
 
-    - if @assignment.description?
-      %p
-        %b Description:
-        = raw @assignment.description
-
     - if @assignment.open_at?
-      %p
+      .small-12.columns.large-4.panel
         %b Open date:
         = @assignment.open_at
 
     - if @assignment.due_at?
-      %p
+      .small-12.columns.large-4.panel
         %b Close date:
         = @assignment.due_at
 
-    - if @assignment.accepts_submissions_until?
-      %p
-        %b Accept submissions until:
-        = @assignment.accepts_submissions_until
+    .clearfix
+
+    - if @assignment.description?
+      %p= raw @assignment.description
+
     - if @submission.submission_files.present?
       %p
         %b Documents:

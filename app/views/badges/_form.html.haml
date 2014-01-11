@@ -15,7 +15,7 @@
       = bff.input :filepath, :label => "Documents", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5 s3_files'}, :as => :hidden
 
     = f.file_field :icon, :label => "Select an icon for this badge."
-    %span.label.secondary.radius Choose an icon for this badge.
+    %h6.small Choose an icon for this badge.
   .clearfix
 
   .small-12.medium-4.columns
@@ -31,7 +31,7 @@
       %label.checkbox{ :for => "visible" }
         = f.label :visible
         = f.check_box :visible
-      %span.label.secondary.radius Can #{term_for :students} see this #{term_for :badge}?
+      %h6.small Can #{term_for :students} see this #{term_for :badge}?
     .small-12.medium-6.columns
       %label.checkbox{ :for => "can_earn_multiple_times" }
         = f.label :can_earn_multiple_times,"Multi-award"
@@ -41,12 +41,13 @@
   .small-12.medium-9.columns
     = f.label :description, "#{term_for :badge} Description"
     = f.bootsy_area :description, editor_options: {link: false, color: false}
-    %span.label.secondary.radius Describe what this #{term_for :badge} means, and how it can be earned. Note that if this badge is marked as visible then this description will also be viewable in the list of badges.
+    %h6.small Describe what this #{term_for :badge} means, and how it can be earned. Note that if this badge is marked as visible then this description will also be viewable in the list of badges.
 
 
 
   .clearfix
 
+  %hr
   .right
     = submit_tag "#{@badge.persisted? ? 'Update' : 'Create'} #{term_for :badge}", :class => "button tiny radius"
     = link_to 'Cancel', badges_path, :class => 'button tiny radius'

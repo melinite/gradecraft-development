@@ -21,7 +21,7 @@
 
         .small-12.large-4.columns
           = f.input :email
-        - if current_course.teams_visible?
+        - if current_course.teams_visible? && (current_course.in_team_leaderboard? || current_student.team_for_course(current_course).in_team_leaderboard?)
           .small-12.large-4.columns
             = f.label :display_name, "Pseudonym"
             = f.text_field :display_name
