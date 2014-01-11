@@ -172,15 +172,15 @@ scope :grading_done, -> { where 'grades.present? == 1' }
   end
 
   def past?
-    due_at != nil && due_at < Date.today
+    due_at != nil && due_at < Time.now
   end
 
   def future?
-    due_at != nil && due_at >= Date.today
+    due_at != nil && due_at >= Time.now
   end
 
   def still_accepted?
-    (accepts_submissions_until? && accepts_submissions_until >= Date.today) || (due_at? && due_at >= Date.today) || (due_at == nil && accepts_submissions_until == nil)
+    (accepts_submissions_until.present? && accepts_submissions_until >= Time.now) || (due_at.present? && due_at >= Time.now ) || (due_at == nil && accepts_submissions_until == nil)
   end
 
   def soon?

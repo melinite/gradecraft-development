@@ -11,6 +11,7 @@ class AssignmentsController < ApplicationController
 
   def show
     @assignment = current_course.assignments.find(params[:id])
+    @scores_for_current_course = current_student.scores_for_course(current_course)
     @title = @assignment.name
     @groups = @assignment.groups
     user_search_options = {}
