@@ -1,6 +1,6 @@
 class ChallengesController < ApplicationController
 
-  before_filter :ensure_staff?, :only=>[:new,:edit,:create,:update,:destroy]
+  before_filter :ensure_staff?, :except=>[:index, :show]
 
   def index
     @title = "View All #{term_for :challenges}"

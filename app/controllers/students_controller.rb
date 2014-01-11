@@ -14,7 +14,11 @@ class StudentsController < ApplicationController
   end
 
   def timeline
-    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    elsif current_user.is_staff?
+      redirect_to dashboard_path
+    end
     if current_course.team_challenges?
       @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
     else

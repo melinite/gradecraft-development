@@ -1,6 +1,6 @@
 class StudentAcademicHistoriesController < ApplicationController
 
-  before_filter :ensure_staff?, :except => [:index, :show]
+  before_filter :ensure_staff?
 
   def index
     @students = current_course.users.students

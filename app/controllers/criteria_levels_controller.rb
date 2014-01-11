@@ -1,4 +1,7 @@
 class CriteriaLevelsController < ApplicationController
+
+  before_filter :ensure_staff
+
   def index
     @criteria_levels = current_course.criteria_levels.all
     respond_with(@criteria_levels)

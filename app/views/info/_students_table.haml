@@ -19,7 +19,7 @@
         %td{:data => { :id => student.id.to_s}, :class => "bar-chart" }
         - if course.has_teams?
           %td
-            - if student.teams.present?
+            - if student.team_for_course(current_course).present?
               = link_to student.team_for_course(current_course).name
         - if course.has_badges?
           %td= student.earned_badges.count
