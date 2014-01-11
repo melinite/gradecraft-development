@@ -37,39 +37,38 @@
   .small-12.columns
     %h2
       = link_to "#{@assignment.try(:name)}", @submission.assignment
+    %hr
     - if current_user.is_staff?
-      %h4
+      %h5
         - if @assignment.is_individual?
-          = "#{term_for :student}:"
+          Submitted by:
           = link_to @submission.student.try(:name), student_path(@submission.student)
         - elsif @assignment.has_groups?
           = "#{term_for :group}:"
           = link_to @submission.group.try(:name), group_path(@submission.group)
     .small-12
-      %h6
-        %span.bold Submitted:
+      %h5
+        Submitted:
         = @submission.created_at
       - if @submission.updated_at != @submission.created_at
-        %h6
-          %span.bold Updated:
+        %h5
+          Updated:
           = @submission.updated_at
 
       - if @submission.link?
-        %h6
-          %span.bold Link:
+        %h5
+          Link:
           = link_to @submission.link, @submission.link
 
       - if @submission.submission_files.present?
-        %h6.bold Attachments:
+        %h5 Attachments:
         %ul
           - @submission.submission_files.each do |sf|
             %li
               = link_to sf.filename, sf.url
               = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
 
-      %p
-
-      %h6.bold Statement:
+      %h5 Statement:
       %p= raw @submission.text_comment
 
     - if @assignment.is_individual?

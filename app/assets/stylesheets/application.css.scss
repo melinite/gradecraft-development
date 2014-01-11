@@ -42,6 +42,10 @@ $darkblue: #120470;
 
 /* Background color for page */
 
+body {
+  font-family: "Avenir", sans-serif;
+}
+
 body.logged-in, body.logged-out {
   background: image-url("cloud_bg.gif");
 }
@@ -92,7 +96,6 @@ body.logged-in, body.logged-out {
 
   li {
     list-style-type: none;
-    font-family: "Avenir", sans-serif;
     font-size: .9rem;
   }
 }
@@ -140,9 +143,6 @@ p {
 }
 
 /* Header styles */
-h1, h2, h3, h4, h5 {
-  font-family: "Avenir", sans-serif;
-}
 
 h2 {
   font-size: 1.7rem;
