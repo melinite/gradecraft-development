@@ -62,7 +62,7 @@
                 %td= task.name
                 %td= task.description
 
-      - if @assignment.accepts_submissions? && @assignment.still_accepted?
+      - if @assignment.accepts_submissions? && @assignment.still_accepted? && current_student
         - if @assignment.is_individual? || (@assignment.has_groups? && current_student.group_for_assignment(@assignment))
           %h3 Submit #{@assignment.name}
           = render "/submissions/form"

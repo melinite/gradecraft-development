@@ -1,6 +1,6 @@
 class ChallengeGradesController < ApplicationController
 
-  before_filter :ensure_staff?, :except => [:show, :index]
+  before_filter :ensure_staff?, :except => [:show]
 
   def index
     @title = "View All #{term_for :challenge} Grades"

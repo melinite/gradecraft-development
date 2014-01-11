@@ -1,25 +1,30 @@
 .small-12.panel.mainContent
   / Submissions Navigation
   - if current_user.is_staff?
-    = content_nav_for @assignment, Submission, "New Submission" do
+    = content_nav_for @assignment, Submission, "Edit Submission" do
       %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "button tiny radius"
   - else
-    = content_nav_for "New Submission" do
-      %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+    = content_nav_for @assignment, "Edit Submission" do
+      - if current_course.use_timeline?
+        %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
+      %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
+      - if current_course.grading_philosophy.present?
+        %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
+      - if current_course.predictor_on?
+        %li= link_to "Grade Predictor", predictor_path, :class => "button tiny radius"
+      - if current_course.has_badges?
+        %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
+      - if current_course.has_teams? && current_course.teams_visible?
+        %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
       %li= link_to "See Submission", assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius"
 
   .small-12.columns
-    %h2= @title
+    %h2= "#{@title}"
 
     - if @assignment.description?
       %p
         %b Description:
         = raw @assignment.description
-
-    - if @assignment.point_total?
-      %p
-        %b Point Total:
-        = points @assignment.point_total
 
     - if @assignment.open_at?
       %p

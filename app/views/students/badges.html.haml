@@ -60,8 +60,8 @@
               %tr
                 %td= image_tag badge.icon, :alt => badge.name, :width => 40
                 %td
-                  = link_to badge.name, badge_path(badge)
-                  %p= raw badge.description
+                  .bold= link_to badge.name, badge_path(badge)
+                  = raw badge.description
                 %td
                   %ul
                     - badge.tasks.each do |task|
@@ -70,7 +70,7 @@
                   %td= points badge.point_total
                 %td
                   - if current_student_data.earned_badge?(badge)
-                    %img{:src => "/icons/icn_check.png", :alt => "You've earned this badge!" }
+                    %i.fi-check
                     = current_student_data.earned_badge(badge).created_at
                     %p= raw current_student_data.earned_badge(badge).try(:feedback)
                 - if current_course.shared_badges? && current_student.badges_shared(current_course)

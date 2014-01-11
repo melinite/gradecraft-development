@@ -3,6 +3,9 @@ class BadgesController < ApplicationController
   before_filter :ensure_staff?, :except =>[:index, :show]
 
   def index
+    if current_user.is_student?
+      redirect_to my_badges_path
+    end
     @title = "View All #{term_for :badges}"
   end
 
@@ -11,6 +14,9 @@ class BadgesController < ApplicationController
     @title = @badge.name
     @earned_badges = @badge.earned_badges
     @tasks = @badge.tasks
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    end
   end
 
   def new

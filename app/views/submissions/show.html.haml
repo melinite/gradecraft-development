@@ -18,7 +18,17 @@
       %li= link_to "Delete Submission", assignment_submission_path(@assignment, @submission), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
   - else
     = content_nav_for "My #{@assignment.name} Submission" do
-      %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+      - if current_course.use_timeline?
+        %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
+      %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
+      - if current_course.grading_philosophy.present?
+        %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
+      - if current_course.predictor_on?
+        %li= link_to "Grade Predictor", predictor_path, :class => "button tiny radius"
+      - if current_course.has_badges?
+        %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
+      - if current_course.has_teams? && current_course.teams_visible?
+        %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
       - if @assignment.is_individual?
         %li= link_to 'Edit Submission', edit_assignment_submission_path(@assignment, @submission, :student_id => @submission.student_id), :class => "button tiny radius"
       - elsif @assignment.has_groups?

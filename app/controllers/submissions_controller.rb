@@ -16,6 +16,7 @@ class SubmissionsController < ApplicationController
     @submission = @assignment.submissions.find(params[:id])
     if current_user.is_student?
       enforce_view_permission(@submission)
+      @scores_for_current_course = current_student.scores_for_course(current_course)
     end
   end
 
@@ -32,6 +33,7 @@ class SubmissionsController < ApplicationController
     end
     if current_user.is_student?
       @user = current_user
+      @scores_for_current_course = current_student.scores_for_course(current_course)
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
       else

@@ -22,6 +22,10 @@ class StudentsController < ApplicationController
     end
   end
 
+  def syllabus
+    @scores_for_current_course = current_student.scores_for_course(current_course)
+  end
+
   def export
     @auditing = current_course.students.auditing
     @students = current_course.students.being_graded respond_to do |format|
@@ -120,6 +124,7 @@ class StudentsController < ApplicationController
       :scores => scores
     }
   end
+
 
   #All Admins to see all of one student's grades at once, proof for duplicates
   def grade_index
