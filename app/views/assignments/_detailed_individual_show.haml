@@ -40,7 +40,7 @@
           - if @assignment.has_levels?
             %td
               = @assignment.grade_level(grade) if grade.status?
-          %td= grade.feedback if grade.feedback?
+          %td=raw grade.feedback if grade.feedback?
           - if @assignment.release_necessary?
             %td
               - if grade.is_released?
