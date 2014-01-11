@@ -65,7 +65,7 @@ class UsersController < ApplicationController
     session[:return_to] = request.referer
     @teams = current_course.teams
 
-    if current_user.is_admin?
+    if current_user.is_staff?
       @courses = Course.all
     end
     @user = current_course.users.find(params[:id])
@@ -118,6 +118,9 @@ class UsersController < ApplicationController
     @title = "Edit My Account"
     @user = current_user
     @default_course_options = @user.courses
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    end
   end
 
   def update_profile

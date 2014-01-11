@@ -8,7 +8,7 @@
         .small-12.text-left
           - if current_student_data.submission_for_assignment?(assignment)
             .small-9.columns
-              = "#{assignment.try(:name)}"
+              = link_to "#{assignment.try(:name)}", assignment
               = "Due: #{assignment.try(:due_at).strftime("%b-%d")}"
           - else
             .small-9.columns

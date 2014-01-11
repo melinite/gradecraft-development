@@ -33,10 +33,10 @@
               %td= team.try(:student_badge_count)
               %td
                 .button-bar
-                  %ul.button-group.radius.round
-                    = link_to 'See', team, :class => 'button tiny secondary'
-                    = link_to 'Edit', edit_team_path(team), :class => 'button tiny secondary'
-                    = link_to 'Delete', team, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                  %ul.button-group.round
+                    %li= link_to 'See', team, :class => 'button tiny secondary'
+                    %li= link_to 'Edit', edit_team_path(team), :class => 'button tiny secondary'
+                    %li= link_to 'Delete', team, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
           - i += 1
 
   .clearfix
