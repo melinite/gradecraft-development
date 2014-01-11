@@ -17,8 +17,8 @@ class GradesController < ApplicationController
     session[:return_to] = request.referer
     redirect_to @assignment and return unless current_student.present?
     @grade = current_student_data.grade_for_assignment(@assignment)
-    @score_levels = @assignment.score_levels
-    @assignment_score_levels = @assignment.assignment_score_levels
+    @score_levels = @assignment.score_levels.order_by_value
+    @assignment_score_levels = @assignment.assignment_score_levels.order_by_value
   end
 
   def update
@@ -78,8 +78,8 @@ class GradesController < ApplicationController
     @assignment = current_course.assignments.find(params[:id])
     @title = "Quick Grade #{@assignment.name}"
     @assignment_type = @assignment.assignment_type
-    @score_levels = @assignment_type.score_levels
-    @assignment_score_levels = @assignment.assignment_score_levels
+    @score_levels = @assignment_type.score_levels.order_by_value
+    @assignment_score_levels = @assignment.assignment_score_levels.order_by_value
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?

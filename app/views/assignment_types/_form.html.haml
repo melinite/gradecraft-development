@@ -129,7 +129,7 @@
         %fieldset.score-level.callout.panel
           = f.simple_fields_for :score_levels, ScoreLevel.new, class: 'form-inline', child_index: 'child_index' do |slf|
             = render 'score_level_fields', f: slf
-      - @assignment_type.score_levels.each do |score_level|
+      - @assignment_type.score_levels.order_by_value.each do |score_level|
         %fieldset.score-level.callout.panel
           = f.simple_fields_for :score_levels, score_level, class: 'form-inline' do |slf|
             = render 'score_level_fields', f: slf
