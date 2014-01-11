@@ -13,7 +13,7 @@
           %th.sortable{"data-sort" => "string"} Status
         - if @assignment.accepts_submissions?
           %th.sortable{"data-sort" => "int"} Submission
-        %th
+        %th{:width => "320"}
         - if @assignment.release_necessary?
           %th
             .button-bar

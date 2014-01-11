@@ -29,8 +29,8 @@
             %th.sortable{"data-sort" => "int"} Score
             %th.sortable{"data-sort" => "string"} Grade
           - if current_course.has_badges?
-            %th.sortable{"data-sort" => "string", :width => "200" } Badges Earned
-          %th
+            %th.sortable{"data-sort" => "string", :width => "150" } Badges Earned
+          %th{:width => "320"}
       %tbody
         - i = 1
         - current_course_data.students.order_by_high_score.each do |student|
@@ -53,10 +53,10 @@
                   %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "20"}
             %td
               .button-bar
-                %ul.button-group.radius.round
-                  %li= link_to "Dashboard", student_path(student), :class => "button tiny small large"
-                  %li= mail_to student.email, "Email", :class => "button tiny small large"
-                  %li= link_to "Edit", edit_user_path(student), :class => "button tiny small large"
+                %ul.button-group.round
+                  %li= link_to "Dashboard", student_path(student), :class => "button tiny secondary"
+                  %li= mail_to student.email, "Email", :class => "button tiny secondary"
+                  %li= link_to "Edit", edit_user_path(student), :class => "button tiny secondary"
           - i += 1
 
   .clearfix
