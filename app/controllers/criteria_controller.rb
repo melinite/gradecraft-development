@@ -1,5 +1,7 @@
 class CriteriaController < ApplicationController
+
   before_filter :set_rubric
+  before_filter :ensure_staff
 
   def index
     respond_with @criteria = @rubric.criteria

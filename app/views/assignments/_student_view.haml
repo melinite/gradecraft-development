@@ -1,46 +1,50 @@
 .small-12.panel.mainContent
   / Assignment Navigation
   = content_nav_for @assignment do
-    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+    - if current_course.use_timeline?
+      %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
+    %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
+    - if current_course.grading_philosophy.present?
+      %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
+    - if current_course.predictor_on?
+      %li= link_to "Grade Predictor", predictor_path, :class => "button tiny radius"
+    - if current_course.has_badges?
+      %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
+    - if current_course.has_teams? && current_course.teams_visible?
+      %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
+
 
   .small-12.columns
-    %h2= @title
-
-    - if @assignment.description?
-      %p
-        %b Description:
-        = raw @assignment.description
-
-    - if @assignment.point_total?
-      %p
-        %b Point Total:
-        = points @assignment.point_total
+    %h2= "#{@title} (#{ points @assignment.point_total } points)"
 
     - if @assignment.open_at?
-      %p
-        %b Open date:
+      .small-12.large-4.columns.panel
+        .bold Open date:
         = @assignment.open_at
 
     - if @assignment.due_at?
-      %p
-        %b Due at:
+      .small-12.large-4.columns.panel
+        .bold Due date:
         = @assignment.due_at
+        - if @assignment.past?
+          .label.alert.round= "Late!"
 
-    - if @assignment.accepts_submissions_until?
+    .clearfix
+    - if @assignment.description?
+      %p= raw @assignment.description
+
+
+    - if @assignment.assignment_files.present?
       %p
-        %b No longer accepted after:
-        = @assignment.accepts_submissions_until
-      - if @assignment.assignment_files.present?
-        %p
-          %b Documents:
-          - @assignment.assignment_files.each do |af|
-            = link_to af.filename, af.url
-            = link_to "(Remove)", assignment_assignment_file_file_remove_path({ :assignment_id => @assignment.id, :assignment_file_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id } } )
+        %b Documents:
+        - @assignment.assignment_files.each do |af|
+          = link_to af.filename, af.url
+          = link_to "(Remove)", assignment_assignment_file_file_remove_path({ :assignment_id => @assignment.id, :assignment_file_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id } } )
 
 
     - if @assignment.tasks.present?
 
-      %h4.clear Tasks
+      %h3.clear Tasks
 
       %table.responsive.simpleTable
         %thead
@@ -58,7 +62,7 @@
                 %td= task.name
                 %td= task.description
 
-      - if @assignment.accepts_submissions? && @assignment.still_accepted?
+      - if @assignment.accepts_submissions? && @assignment.still_accepted? && current_student
         - if @assignment.is_individual? || (@assignment.has_groups? && current_student.group_for_assignment(@assignment))
           %h3 Submit #{@assignment.name}
           = render "/submissions/form"

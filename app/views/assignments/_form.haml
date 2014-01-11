@@ -145,8 +145,7 @@
         .clearfix
 
         .small-12.large-4.columns
-          = f.label :accepts_submissions_until
-          = f.text_field :accepts_submissions_until
+          = f.input :accepts_submissions_until, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker', :value => @assignment.try(:accepts_submissions_until) }
           %h6.small When would you like to accept submissions until?
 
         .small-12.large-4.columns

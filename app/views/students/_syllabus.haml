@@ -77,7 +77,7 @@
         %a{ "href" => "#challenges" } #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
         .content{:id => "challenges"}
           - current_course_data.challenges.each do |challenge|
-            .small-12
+            .small-12.columns
               %span= link_to challenge.name, challenge
               - if current_student.team_for_course(current_course)
                 - if challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).present?

@@ -14,12 +14,20 @@ class StudentsController < ApplicationController
   end
 
   def timeline
-    @scores_for_current_course = current_student.scores_for_course(current_course)
+    if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    elsif current_user.is_staff?
+      redirect_to dashboard_path
+    end
     if current_course.team_challenges?
       @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
     else
       @events = current_course_data.timelineable.to_a
     end
+  end
+
+  def syllabus
+    @scores_for_current_course = current_student.scores_for_course(current_course)
   end
 
   def export
@@ -120,6 +128,7 @@ class StudentsController < ApplicationController
       :scores => scores
     }
   end
+
 
   #All Admins to see all of one student's grades at once, proof for duplicates
   def grade_index

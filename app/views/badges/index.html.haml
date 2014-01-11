@@ -1,28 +1,23 @@
-.small-12.panel.mainContent
-  / Badge Navigation
-  - if current_user.is_staff?
+- if current_user.is_staff?
+  .small-12.panel.mainContent
+    / Badge Navigation
     = content_nav_for Badge do
       %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
-  - else
-    = content_nav_for Badge do
-      %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
 
-  .small-12.columns
-    %h2= @title
+    .small-12.columns
+      %h2= @title
 
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          %th.sortable{"data-sort" => "string"} Icon
-          %th.sortable{"data-sort" => "string"} Description
-          - if current_course.valuable_badges?
-            %th{"data-sort" => "int"} Value
-          - if current_user.is_staff?
+      %table.responsive.simpleTable
+        %thead
+          %tr
+            %th.sortable{"data-sort" => "string"} Icon
+            %th.sortable{"data-sort" => "string"} Description
+            - if current_course.valuable_badges?
+              %th{"data-sort" => "int"} Value
             %th.sortable{"data-sort" => "string"} Visible to Students
             %th{:width => "300"}
-      %tbody
-        - current_course_data.badges.each do |badge|
-          - if current_user.is_staff?
+        %tbody
+          - current_course_data.badges.each do |badge|
             %tr
               %td
                 %img{:src => badge.icon, :alt => badge.name, :width => "40"}
@@ -42,18 +37,4 @@
                       %li= link_to "Quick Award", mass_award_badge_path(badge), :class => "button tiny secondary"
                       %li= link_to 'Edit', edit_badge_path(badge), :class => 'button tiny secondary'
                       %li= link_to 'Delete', badge_path(badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
-          - else
-            - if badge.visible?
-              %tr
-                %td
-                  %img{:src => badge.icon, :alt => badge.name}
-                %td
-                  = link_to badge.name, badge_path(badge)
-                  = raw badge.description
-                %td
-                  %ul
-                    - badge.tasks.each do |task|
-                      %li= task.name
-                - if current_course.valuable_badges?
-                  %td= badge.point_total
-  .clearfix
+    .clearfix

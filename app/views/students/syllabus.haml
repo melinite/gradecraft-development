@@ -33,9 +33,11 @@
         - current_course_data.by_assignment_type.each do |assignment_type, assignments|
           %dd
             - if assignment_type.max_value?
-              %a{ "href" => "#assignment_type-#{assignment_type.id}" } #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
+              %a{ "href" => "#assignment_type-#{assignment_type.id}" }
+                #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
             - else
-              %a{ "href" => "#assignment_type-#{assignment_type.id}" } #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
+              %a{ "href" => "#assignment_type-#{assignment_type.id}" }
+                #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
             .content{:id => "assignment_type-#{assignment_type.id}"}
               .small-12.columns.assignmentContent
                 - if assignment_type.predictor_description?
@@ -107,7 +109,7 @@
             %a{ "href" => "#challenges" } #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
             .content{:id => "challenges"}
               - current_course_data.challenges.each do |challenge|
-                .small-12
+                .small-12.columns.assignmentContent
                   %span= link_to challenge.name, challenge
                   - if current_student.team_for_course(current_course)
                     - if challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).present?

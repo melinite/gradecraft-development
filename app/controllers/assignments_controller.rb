@@ -2,6 +2,9 @@ class AssignmentsController < ApplicationController
   before_filter :ensure_staff?, :except => [:feed, :show, :index]
 
   def index
+    if current_user.is_student?
+      redirect_to syllabus_path
+    end
     @title = "#{term_for :assignment} Index"
   end
 
@@ -18,6 +21,7 @@ class AssignmentsController < ApplicationController
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
     if current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
       if @assignment.accepts_submissions?
         @submission = @assignment.submissions.new
       end

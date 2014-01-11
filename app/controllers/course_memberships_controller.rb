@@ -1,4 +1,5 @@
 class CourseMembershipsController < ApplicationController
+
   before_filter :ensure_staff?
 
   def create
