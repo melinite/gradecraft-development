@@ -20,7 +20,7 @@ class Submission < ActiveRecord::Base
   has_many :submission_files, :dependent => :destroy
   accepts_nested_attributes_for :submission_files
 
-  scope :ungraded, -> { where('NOT EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id)') }
+  scope :ungraded, -> { where('NOT EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id OR ((assignment_id = submissions.assignment_id) AND (student_id = submissions.student_id)))') }
   scope :graded, -> { where('EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id)') }
 
   before_validation :cache_associations
