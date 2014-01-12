@@ -3,7 +3,9 @@
   = content_nav_for @assignments
 
   .small-12.columns
-    %h3 Ungraded Submissions
+    %h3
+      Ungraded Submissions
+      .label.alert.radius= @count_ungraded
     = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
 
   .clearfix
