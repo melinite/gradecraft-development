@@ -8,11 +8,10 @@
         .small-12.text-left
           - if current_student_data.submission_for_assignment?(assignment)
             .small-9.columns
-              = link_to "#{assignment.try(:name)}", assignment
-              = "Due: #{assignment.try(:due_at).strftime("%b-%d")}"
+              %h5.strikethrough= link_to "#{assignment.try(:name)}", assignment
           - else
             .small-9.columns
-              %h5= "#{assignment.try(:name)}"
+              %h5= link_to "#{assignment.try(:name)}", assignment
               %h6= "Due: #{assignment.try(:due_at).strftime("%A, %B %d, %Y, at %H:%M%p")}"
           - if assignment.accepts_submissions?
             .small-3.columns
