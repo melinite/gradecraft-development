@@ -20,8 +20,10 @@ class Submission < ActiveRecord::Base
   has_many :submission_files, :dependent => :destroy
   accepts_nested_attributes_for :submission_files
 
-  scope :ungraded, -> { where('NOT EXISTS(SELECT 1 FROM grades WHERE assignment_id = submissions.assignment_id)') }
-  scope :graded, -> { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = submission.id)') }
+  scope :ungraded, -> { where('NOT EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id OR (assignment_id = submissions.assignment_id AND student_id = submissions.student_id) AND NOT (status = ?))', 'Graded') }
+
+  #scope :ungraded, -> { where('NOT EXISTS(SELECT 1 FROM grades WHERE (submission_id = submissions.id OR (assignment_id = submissions.assignment_id AND student_id = submissions.student_id)) AND (status = ? OR (status = ? AND NOT submissions.assignments.release_necessary)))', 'Released', 'Graded' ) }
+  scope :graded, -> { where('EXISTS(SELECT 1 FROM grades WHERE submission_id = submissions.id)') }
 
   before_validation :cache_associations
 
@@ -46,6 +48,10 @@ class Submission < ActiveRecord::Base
     elsif assignment.has_groups?
       group_id == user.group_for_assignment(assignment).id
     end
+  end
+
+  def ungraded?
+    ! grade.present? || grade.raw_score == nil?
   end
 
   def viewable_by?(user)
