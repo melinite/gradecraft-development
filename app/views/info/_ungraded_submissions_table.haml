@@ -8,6 +8,8 @@
     = link_to assignment.name, assignment
     = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "button tiny radius"
 
+  .label.alert= @count_ungraded
+
   %table.responsive.simpleTable
     %thead
       %tr
