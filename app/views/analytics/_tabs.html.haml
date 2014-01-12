@@ -1,7 +1,7 @@
-%ul.nav.nav-tabs
-  %li{:class => ('active' if current_page?(analytics_root_path))}
-    = link_to "All", analytics_root_path
-  %li{:class => ('active' if current_page?(analytics_students_path))}
-    = link_to "Students", analytics_students_path
-  %li{:class => ('active' if current_page?(analytics_staff_path))}
-    = link_to "Staff", analytics_staff_path
+%dl.tabs{:data => {'tab' => true}}
+  %dd{:class => ('active' if current_page?(analytics_root_path)) }
+    %a{:href => analytics_root_path } All
+  %dd{:class => ('active' if current_page?(analytics_students_path))}
+    %a{:href => analytics_students_path } Students
+  %dd{:class => ('active' if current_page?(analytics_staff_path))}
+    %a{:href => analytics_staff_path } Staff
