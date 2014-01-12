@@ -12,12 +12,14 @@
     %thead
       %tr
         - if assignment.is_individual?
-          %th.sortable{"data-sort" => "string"} Student
+          %th.sortable{"data-sort" => "string"} First Name
+          %th.sortable{"data-sort" => "string"} Last Name
+          - if current_course.has_teams?
+            %th= #{term_for :team}
         - elsif assignment.has_groups?
           %th.sortable{"data-sort" => "string"} Group
 
-        - if current_course.has_teams? && assignment.is_individual?
-          %th
+
         %th
         %th
     %tbody
@@ -27,7 +29,8 @@
             - if ug.student.team_for_course(current_course).id == params[:team_id].to_i
               %tr
                 - if ug.assignment.is_individual?
-                  %td= link_to ug.student.try(:name), student_path(ug.student)
+                  %td= link_to ug.student.try(:first_name), student_path(ug.student)
+                  %td= link_to ug.student.try(:last_name), student_path(ug.student)
                   %td
                     - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
                       = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
@@ -40,7 +43,8 @@
           - else
             %tr
               - if ug.assignment.is_individual?
-                %td= link_to ug.student.try(:name), student_path(ug.student)
+                %td= link_to ug.student.try(:first_name), student_path(ug.student)
+                %td= link_to ug.student.try(:last_name), student_path(ug.student)
                 %td
                   - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
                     = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
