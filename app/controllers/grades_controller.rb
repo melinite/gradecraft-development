@@ -29,7 +29,7 @@ class GradesController < ApplicationController
     if @assignment.notify_released? && @grade.is_released?
       NotificationMailer.grade_released(@grade.id).deliver
     end
-    redirect_to session.delete(:return_to)
+    redirect_to session[:return_to]
   end
 
   def destroy

@@ -3,6 +3,7 @@
     / Assignment navigation
     = content_nav_for Assignment do
       %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
+      %li= link_to "See All Ungraded Submissions", grading_status_path, :class => "button tiny radius"
 
     .small-12.columns
       %h2= @title
