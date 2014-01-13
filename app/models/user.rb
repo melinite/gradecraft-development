@@ -216,6 +216,12 @@ class User < ActiveRecord::Base
      }
   end
 
+
+  #recalculating the student's score for the course
+  def score_for_course(course)
+    @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course) + (team_for_course(course).try(:challenge_grade_score) || 0)
+  end
+
   def predictions(course)
     scores = []
     course.assignment_types.each do |assignment_type|
@@ -265,10 +271,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  #recalculating the student's score for the course
-  def score_for_course(course)
-    @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course) + (team_for_course(course).try(:challenge_grade_score) || 0)
-  end
 
   #grabbing the stored score for the current course
   def cached_score_for_course(course)
