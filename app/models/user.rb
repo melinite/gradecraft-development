@@ -202,6 +202,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  #grabbing the stored score for the current course
+  def cached_score_for_course(course)
+    course_memberships.where(:course_id => course).first.score || 0
+  end
+
   #I think this may be a little bit faster - ch
   def scores_for_course(course)
      user_score = course_memberships.where(:course_id => course, :auditing => FALSE).pluck('score')
@@ -268,10 +273,7 @@ class User < ActiveRecord::Base
   end
 
 
-  #grabbing the stored score for the current course
-  def cached_score_for_course(course)
-    course_memberships.where(:course_id => course).first.score || 0
-  end
+
 
   #student setting as to whether or not they wish to share their earned badges for this course
   def badges_shared(course)
