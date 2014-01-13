@@ -17,15 +17,15 @@
       Current Score:
       / Check to see if the course has a pre-determined total number of points
       - if current_course.point_total?
-        %span.bold#userScoreNum #{points current_student_data.score}
+        %span#userScoreNum.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_course.point_total} points
         / Else tally all of the points for all of the assignments in the course
       - else
-        %span#userScoreNum #{points current_student_data.score}
-        %span /#{points current_student_data.point_total} points
-      - if current_student_data.grade_level.present?
-        Current Level:
-        %span#userScoreNum= current_student_data.grade_level
+        %span#userScoreNum #{points current_student.cached_score_for_course(current_course)}
+        %span /#{points current_course.total_points} points
+      - if current_student.grade_level_for_course(current_course).present?
+        – Current Level:
+        %span#userScoreNum= current_student.grade_level_for_course(current_course)
 
     = render 'students/syllabus'
 

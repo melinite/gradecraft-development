@@ -7,11 +7,7 @@ class User < ActiveRecord::Base
   after_save :cache_scores
 
   ROLES = %w(student professor gsi admin)
-#
-#   ROLES.each do |role|
-#     scope role.pluralize, -> { where course_memberships.role: role }
-#   end
-#
+
   ROLES.each do |role|
     scope role.pluralize, -> { where role: role }
   end
