@@ -8,13 +8,13 @@
 - if @grade.final_score?
   .heading Final Score:
   = @grade.final_score
-- if @grade.grade_files.present?
-  .heading.col-lg-2 Documents:
-  .col-lg-offset-2
-    - @grade.grade_files.each do |gf|
-      = link_to gf.filename, gf.url
-      if current_user.is_staff?
-        = link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :upload_id => gf.id } )
+  //- if @grade.grade_files.present?
+  //.heading.col-lg-2 Documents:
+  //.col-lg-offset-2
+  //- @grade.grade_files.each do |gf|
+  //= link_to gf.filename, gf.url
+  //if current_user.is_staff?
+  //= link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :upload_id => gf.id } )
 
 - if @grade.feedback?
   .heading Feedback:
