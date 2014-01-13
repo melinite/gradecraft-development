@@ -8,15 +8,15 @@
         Your current score is
         / Check to see if the course has a pre-determined total number of points
       - if current_course.point_total?
-        %span#userScoreNum.bold #{points current_student.cached_score_for_course(current_course)}
+        %span#userScoreNum.bold #{points current_user.cached_score_for_course(current_course)}
         %span /#{points current_course.point_total} points
         / Else tally all of the points for all of the assignments in the course
       - else
-        %span#userScoreNum #{points current_student.cached_score_for_course(current_course)}
+        %span#userScoreNum #{points current_user.cached_score_for_course(current_course)}
         %span /#{points current_course.total_points} points
-      - if current_student.grade_level_for_course(current_course).present?
+      - if current_user.grade_level_for_course(current_course).present?
         – Current Level:
-        %span#userScoreNum= current_student.grade_level_for_course(current_course)
+        %span#userScoreNum= current_user.grade_level_for_course(current_course)
 
     = render "students/timeline"
 
