@@ -1,7 +1,7 @@
 = simple_form_for @group do |f|
 
   .small-12.medium-4.columns
-    = f.label :name
+    = f.label "#{term_for :group} Name"
     = f.text_field :name
 
   - if current_user.is_staff?
@@ -24,10 +24,14 @@
     %h6.small Enter a #{term_for :student}'s name to add them to this #{term_for :group}. Only one #{term_for :student} needs to create the #{term_for :group}, after which all #{term_for :group} members will be able to submit work, see submitted materials, and see instructor grades and feedback.
 
   .small-12.medium-12.columns
-    - if current_user.is_student?
-      %span.alert.round.label= "Your #{term_for :group} needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
-    - else
-      %span.alert.round.label= "The #{term_for :group} needs to have at least #{current_course.min_group_size} members and no more than #{current_course.max_group_size}."
+    
+
+
+  .clearfix
+
+  .small-12.columns
+    %h3 #{term_for :group} Proposal
+    = f.bootsy_area :text_proposal
 
   %hr
 

@@ -127,7 +127,7 @@ class Grade < ActiveRecord::Base
   private
 
   def clean_html
-    #self.feedback = Sanitize.clean(feedback, Sanitize::Config::RESTRICTED)
+    self.feedback = Sanitize.clean(feedback, Sanitize::Config::BASIC)
   end
 
   def save_student
