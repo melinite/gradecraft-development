@@ -4,6 +4,8 @@
     %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
     %li= link_to "Edit #{@assignment.name}", edit_assignment_path(@assignment), :class => "button tiny radius"
     %li= link_to "See Detailed Grades", detailed_grades_assignment_path(@assignment), :class => "button tiny radius"
+    %li= link_to "Edit #{@assignment.assignment_type.name}", edit_assignment_type_path(@assignment.assignment_type), :class => "button tiny radius"
+    %li= link_to "Quick Grade #{@assignment.name}", mass_grade_assignment_path(@assignment), :class => "button tiny radius"
 
   .small-4.medium-10.columns
     %h2= "#{@title} (#{ points @assignment.point_total } points)"

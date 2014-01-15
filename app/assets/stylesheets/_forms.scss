@@ -35,3 +35,23 @@ form {
 label.checkbox input {
   margin-right: 10px;
 }
+
+#massGrade .inline-list {
+  margin-bottom: 0;
+
+    label {
+      margin-bottom: 0;
+    }
+
+}
+
+#massGrade .inline-list label {
+  font-weight: normal;
+  float: left;
+  margin: 0;
+}
+
+#massGrade .inline-list input {
+margin-left: 10px;
+float: left;
+}
