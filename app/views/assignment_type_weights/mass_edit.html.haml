@@ -22,15 +22,16 @@
         = hidden_field_tag :student_id, current_student.id
         - if @form.errors.has_key?(:base)
           .alert.alert-error= f.error :base
-        %ul.small-block-grid-3
-          = f.simple_fields_for :assignment_type_weights do |atwf|
-            %li.panel.callout
-              = atwf.hidden_field :assignment_type_id
-              %h3.panel-title= atwf.object.assignment_type.name
-              = atwf.input :weight, :label => "#{term_for :weight}"
-        .form-actions
-          = f.button :submit, "Update #{term_for :weights}", :class => "button radius tiny"
-          = link_to 'Cancel', current_user.is_student? ? dashboard_path : choices_students_path, class: 'button radius tiny'
+        .small-12.columns
+          %ul.small-block-grid-3
+            = f.simple_fields_for :assignment_type_weights do |atwf|
+              %li.panel.callout
+                = atwf.hidden_field :assignment_type_id
+                %h3.panel-title= atwf.object.assignment_type.name
+                = atwf.input :weight, :label => "#{term_for :weight}"
+          .right
+            = f.button :submit, "Update #{term_for :weights}", :class => "button radius tiny"
+            = link_to 'Cancel', current_user.is_student? ? dashboard_path : choices_students_path, class: 'button radius tiny'
 
 
     - else

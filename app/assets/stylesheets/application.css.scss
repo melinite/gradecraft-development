@@ -100,42 +100,7 @@ body.logged-in, body.logged-out {
   }
 }
 
-.login_forms {
-  background-color: #FFF;
-  border: none;
 
-  .content {
-    background-color: #eee;
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-
-    input {
-      width: 85%;
-      margin-left: 15px;
-    }
-  }
-
-  dd a {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    border-collapse: true;
-    padding: 14px;
-    border-top-right-radius: .5rem;
-    border-top-left-radius: .5rem;
-    background-color: $lightblue;
-  }
-  dd.active a {
-    background-color: #eee;
-  }
-
-  .right {
-    margin-right: 25px;
-  }
-}
 
 /* Header styles */
 

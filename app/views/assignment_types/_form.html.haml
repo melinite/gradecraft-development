@@ -4,78 +4,78 @@
   .panel
     %h4 The Basics
     %hr
+    .small-12.large-4.columns.panel.right.callout
+      .small-12.large-12
+        %label.checkbox{ :for => "include_in_predictor" }
+          = f.label :include_in_predictor, "Include in Grade Predictor"
+          = f.check_box :include_in_predictor
+        %h6.small Can #{term_for :students} see this #{term_for :assignment} in the grade predictor?
+
+      .small-12.large-12
+        %label.checkbox{ :for => "include_in_timeline" }
+          = f.label :include_in_timeline, "Include in Timeline"
+          = f.check_box :include_in_timeline
+        %h6.small Can #{term_for :students} see this #{term_for :assignment} in the course timeline? Note that #{term_for :assignments} without open or due dates will be excluded automatically.
+
+      .small-12.large-12
+        %label.checkbox{ :for => "include_in_to_do" }
+          = f.label :include_in_to_do, "Include in To Do List"
+          = f.check_box :include_in_to_do
+        %h6.small Can #{term_for :students} see this #{term_for :assignment} in the course to do list? Note that #{term_for :assignments} without due dates will be excluded automatically.
+
+      .small-12.large-12
+        %label.checkbox{ :for => "student_weightable" }
+          = f.check_box :student_weightable
+          %span Student Weighted
+        %h6.small Do students decide how much this #{term_for :assignment} type will count towards their grade?
+
+      .small-12.large-12
+        / Does this assignment type have due dates? If not, they won't appear in the timeline but they will appear on the assignment list
+        %label.checkbox{ :for => "due_date_present" }
+          = f.check_box :due_date_present
+          %span Due Dates
+        %h6.small Will #{term_for :assignments} in this category have due dates?
+
     .small-12.large-4.columns
       / Assignment Type name, this will appear as the category heading for both students and staff
       = f.label :name
       = f.text_field :name
 
-
     .small-12.large-4.columns
+      .small-12.large-6.columns
+        / Determining whether points for assignments are set at this level (universally, with override at the assignment level), or at the assignment level
+        = f.label :point_setting
+        = f.select :point_setting, [["By Assignment"], ["For All Assignments"]]
+       
+
+      .small-12.large-6.columns
+        / If the points are universal, this is setting that value
+        = f.label :universal_point_value, "Point Value"
+        = f.text_field :universal_point_value
+      %h6.small Do all #{term_for :assignments} of this type have the same point value? For instance, if all class attendance #{term_for :assignments} are worth 100 points and you can set that here.
+    
+    .small-12.large-2.columns
       = f.label :resubmission
       = f.select :resubmission, options_for_select([["Yes", "1"], ["No", "0"], ["Set per #{term_for :assignment}", "2"]])
       %h6.small Will students be allowed to resubmit work after it's been graded?
+    
+    
 
-    .small-12.large-4.columns
-      / Does this assignment type have due dates? If not, they won't appear in the timeline but they will appear on the assignment list
-      %label Due Dates
-      %label.check_box{ :for => "due_date_present" }
-        = f.check_box :due_date_present
-        Yes
-      %h6.small Will #{term_for :assignments} in this category have due dates?
+    
 
 
+    .small-12.large-2.columns
+      = f.label :order_placement, "#{term_for :assignment} Type Order"
+      = f.text_field :order_placement
+      %h6.small What order would you like the #{term_for :assignment} types to appear in on the student dashboard?
 
-    .clearfix
-
-    .small-12.large-4.columns
-      / Determining whether points for assignments are set at this level (universally, with override at the assignment level), or at the assignment level
-      = f.label :point_setting
-      = f.select :point_setting, [["By Assignment"], ["For All Assignments"]]
-      %h6.small Do all #{term_for :assignments} of this type have the same point value? For instance, if your type groups all class attendance #{term_for :assignments}, they could each be worth 100 points and you can set that universally here.
-
-    .small-12.large-4.columns
-      / If the points are universal, this is setting that value
-      = f.label :universal_point_value
-      = f.text_field :universal_point_value
-      %h6.small If #{term_for :assignments} in this category all have the same point value, what is that?
-
-    .small-12.large-4.columns
+    .small-12.large-2.columns
       / What's the maximum number of points a student may earn in this category? This cap needs to be finished
       = f.label :max_value, :label => "Maximum Points"
       = f.text_field :max_value
       %h6.small Is there a cap on how many points students can earn here? (Leave blank if not)
 
-
-    .clearfix
-
-    .small-12.large-4.columns
-      %label.checkbox{ :for => "student_weightable" }
-        = f.check_box :student_weightable
-        Student Weighted
-      %h6.small Do students decide how much this #{term_for :assignment} type will count towards their grade?
-
-    .small-12.large-4.columns
-      = f.label :order_placement, "#{term_for :assignment} Type Order"
-      = f.text_field :order_placement
-      %h6.small What order would you like the #{term_for :assignment} types to appear in on the student dashboard?
-
-    .small-12.large-4.columns
-      %label.checkbox{ :for => "include_in_predictor" }
-        = f.label :include_in_predictor, "Include in Grade Predictor"
-        = f.check_box :include_in_predictor
-      %h6.small Can #{term_for :students} see this #{term_for :assignment} in the grade predictor?
-
-    .small-12.large-4.columns
-      %label.checkbox{ :for => "include_in_timeline" }
-        = f.label :include_in_timeline, "Include in Timeline"
-        = f.check_box :include_in_timeline
-      %h6.small Can #{term_for :students} see this #{term_for :assignment} in the course timeline? Note that #{term_for :assignments} without open or due dates will be excluded automatically.
-
-    .small-12.large-4.columns
-      %label.checkbox{ :for => "include_in_to_do" }
-        = f.label :include_in_to_do, "Include in To Do List"
-        = f.check_box :include_in_to_do
-      %h6.small Can #{term_for :students} see this #{term_for :assignment} in the course to do list? Note that #{term_for :assignments} without due dates will be excluded automatically.
+    .clearfix 
 
     .small-12.large-12.columns
       = f.label :predictor_description, "Description"
