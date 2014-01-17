@@ -1,2 +1,2 @@
-GradeCraft::Application.config.secret_key_token = "gradecraft"
-GradeCraft::Application.config.secret_key_base = "bf2306f66a5769fb6f93f118f0743be85d74607e51f014068924092d9c2f7cf37591193ad6733fd12060956bc9dac8b45c3c70704f60625624666300abfea20a"
+GradeCraft::Application.config.secret_key_token = ENV['RAILS_TOKEN'] || 'gradecraft'
+GradeCraft::Application.config.secret_key_base = ENV['RAILS_SECRET']
