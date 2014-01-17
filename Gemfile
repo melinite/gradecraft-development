@@ -16,7 +16,7 @@ gem 'bullet', :group => :development
 gem 'canable'
 gem 'carrierwave'
 gem 'coffee-rails'
-gem "compass-rails", "~> 2.0.alpha.0"
+gem "compass-rails", "~> 1.1.3"
 gem 'dalli'
 gem 'dotenv-rails'
 gem 'fog'
