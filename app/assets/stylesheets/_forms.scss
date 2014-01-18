@@ -66,14 +66,16 @@ margin-left: 10px;
 float: left;
 }
 
+label {
+  font-weight: bold;
+}
+
 label, input {
-  margin-bottom: 0;
   padding-bottom: 0;
 }
 
 input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], select, .checkbox-inline input[type="checkbox"], input[type="text"] {
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.5rem;
 }
 
 select, input[type="text"] {
@@ -125,5 +127,13 @@ label.checkbox, label.radio  {
 }
 
 .score-level .remove-level.button {
-  margin-top: 1.2rem;
+  margin-top: 1.3rem;
 } 
+
+select {
+  background-color: #F0F8FF;
+}
+
+select:hover {
+  background-color: #55DCF5;
+}

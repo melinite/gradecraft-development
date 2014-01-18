@@ -10,9 +10,8 @@
 
   - if current_course.has_teams?
     .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
-      = form_tag users_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "medium-8"
-        = submit_tag 'Filter', :class => 'button tiny radius'
+      = form_tag users_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
   .small-12.columns
     %table.responsive.simpleTable
@@ -24,7 +23,7 @@
           %th.sortable{"data-sort" => "string"} Role
           %th.sortable{"data-sort" => "string"} #{term_for :team}
           %th.sortable{"data-sort" => "int"} Score
-          %th{:width => '300'}
+          %th.button-column
       %tbody
         - @users.each do |user|
           %tr

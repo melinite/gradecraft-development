@@ -8,30 +8,6 @@ a.button:hover {
   text-decoration: none;
 }
 
-@media (max-width: 1080px) {
-  .round .button.tiny {
-    padding: .4rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .round .button.tiny {
-  padding: .75rem;
-  border-radius: none;
-  width: 5rem;
-  border: 1px solid #eee;
-  }
-
-
-.button-group.round>*:first-child, .button-group.round>*:first-child>a, .button-group.round>*:first-child>button, .button-group.round>*:first-child>.button, .button-group.round>*:last-child, .button-group.round>*:last-child>a, .button-group.round>*:last-child>button, .button-group.round>*:last-child>.button {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-}
-
-
 .label a {
   color:#FFF;
 }

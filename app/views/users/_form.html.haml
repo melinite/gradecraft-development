@@ -44,12 +44,12 @@
       - if current_course.has_teams? && @user.is_student?
         .small-12.medium-4.columns
           - if @user.team_for_course(current_course).present?
-            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select a #{term_for :team}", :checked => @user.team_for_course(current_course).id
+            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select #{term_for :team}", :checked => @user.team_for_course(current_course).id
           - else
-            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select a #{term_for :team}"
+            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select #{term_for :team}"
       - elsif current_course.has_teams? && @user.is_staff?
         .small-12.medium-4.columns
-          = f.input :course_team_ids, :collection => @teams, :as => :check_boxes, :label => "Select a #{term_for :team}"
+          = f.input :course_team_ids, :collection => @teams, :as => :check_boxes, :label => "Select #{term_for :teams}"
 
       - if current_user.is_admin?
         .small-12.medium-4.columns

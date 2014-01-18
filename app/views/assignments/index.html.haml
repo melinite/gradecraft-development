@@ -20,7 +20,7 @@
                     %th.sortable{"data-sort" => "string"} Name
                     %th.sortable{"data-sort" => "date"} Due
                     %th.sortable{"data-sort" => "int"} Points
-                    %th{:width => "350"}
+                    %th.button-column
                 %tbody
                   - assignments.each do |assignment|
                     %tr

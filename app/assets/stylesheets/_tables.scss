@@ -71,3 +71,38 @@ dd .content.active {
 .table-condensed thead > tr > th.dow {
   color: #333 !important;
 }
+@media (min-width: 1280px)  {
+  .button-column {
+    display: inline;
+  }
+}
+
+@media (max-width: 1279px)  {
+  .button-column {
+    display: inline;
+  }
+
+  .scrollable .button-column {
+    display: inline;
+  }
+  .round .button.tiny {
+    padding: .4rem;
+  }
+}
+
+
+
+@media (max-width: 640px) {
+  .round .button.tiny {
+  padding: .75rem;
+  border-radius: none;
+  width: 5rem;
+  border: 1px solid #eee;
+  }
+  .button-group.round>*:first-child, .button-group.round>*:first-child>a, .button-group.round>*:first-child>button, .button-group.round>*:first-child>.button, .button-group.round>*:last-child, .button-group.round>*:last-child>a, .button-group.round>*:last-child>button, .button-group.round>*:last-child>.button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+}

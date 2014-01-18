@@ -15,7 +15,7 @@
             - if current_course.valuable_badges?
               %th{"data-sort" => "int"} Value
             %th.sortable{"data-sort" => "string"} Visible to Students
-            %th{:width => "300"}
+            %th.button-column
         %tbody
           - current_course_data.badges.each do |badge|
             %tr

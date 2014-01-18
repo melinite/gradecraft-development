@@ -8,10 +8,9 @@
     %h3= @title
     - if current_course.has_teams?
       .filters
-        = form_tag mass_award_badge_path, :method => :get do
+        = form_tag mass_award_badge_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
           = hidden_field_tag :badge_id, @badge.id
-          = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "input-sm"
-          = submit_tag 'Filter', :class => 'button tiny radius'
+          = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
     #massGrade
       = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|

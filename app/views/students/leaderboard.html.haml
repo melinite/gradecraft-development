@@ -10,9 +10,8 @@
 
   - if current_course.has_teams?
     .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
-      = form_tag students_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8 input-sm teamfilter"
-        = submit_tag 'Filter', :class => 'button tiny radius pull-right'
+      = form_tag students_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
   .small-12.columns
     %table.responsive.simpleTable
@@ -30,7 +29,7 @@
             %th.sortable{"data-sort" => "string"} Grade
           - if current_course.has_badges?
             %th.sortable{"data-sort" => "string", :width => "150" } Badges Earned
-          %th{:width => "320"}
+          %th.button-column
       %tbody
         - i = 1
         - current_course_data.students.order_by_high_score.each do |student|

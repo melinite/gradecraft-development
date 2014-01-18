@@ -88,7 +88,7 @@
     %h4 Predictor Settings
     %hr
     .small-12.large-4.columns
-      = f.label :points_predictor_display
+      = f.label :points_predictor_display, "Predictor Display"
       = f.select :points_predictor_display, [["Checkbox", "Fixed"], ["Slider"], ["Select List"], ["Set per Assignment"]]
       %h6.small How would you like #{term_for :students} to interact with this assignment in the predictor? If you choose Slider or Select List you must create Score Levels below
     .clearfix
