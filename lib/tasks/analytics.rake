@@ -146,7 +146,7 @@ namespace :analytics do
     export_dir = ENV['EXPORT_DIR']
     course_ids.each do |id|
       puts "Exporting for course: #{id}"
-      %w(analytics_events course_events course_role_events course_predictions course_user_events course_pageviews course_user_pageviews course_user_page_pageviews course_pageview_by_time course_page_pageview course_role_pageview course_role_page_pageview course_login course_role_login course_user_login).each do |aggregate|
+      %w(analytics_events course_events course_role_events course_predictions course_user_events course_pageviews course_user_pageviews course_user_page_pageviews course_pageview_by_times course_page_pageviews course_role_pageviews course_role_page_pageviews course_logins course_role_logins course_user_logins).each do |aggregate|
         `mongoexport --db grade_craft_development --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "#{aggregate}.json")}`
         #`mongoexport --db grade_craft_development --fields id --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "#{aggregate}.csv")} --csv`
       end
