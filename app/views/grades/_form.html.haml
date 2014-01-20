@@ -38,6 +38,7 @@
     .clearfix
 
     .small-12.columns
+      = f.hidden_field :graded_by_id, :value => current_user.id
       = f.label :feedback
       = f.bootsy_area :feedback
 

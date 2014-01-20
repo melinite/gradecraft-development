@@ -19,8 +19,8 @@
         - current_course.users.alpha.each do |user|
           - if user.is_staff?
             %tr
-              %td= user.first_name
-              %td= user.last_name
+              %td= link_to user.first_name, staff_path(user)
+              %td= link_to user.last_name, staff_path(user)
               %td= user.role.capitalize
               %td
                 %ul

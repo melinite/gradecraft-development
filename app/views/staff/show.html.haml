@@ -12,7 +12,16 @@
         %li= link_to course.name, course
 
     %h4 Recently Graded
-    - current_course.grades.where(:graded_by => current_user).each do |grade|
-      = grade.assignment
-      = grade.score
-      = grade.student
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Assignment
+          %th.sortable{"data-sort" => "string"} Score
+          %th.sortable{"data-sort" => "string"} Student
+          %th.button-column
+      %tbody
+        - current_course.grades.where(:graded_by => current_user).each do |grade|
+          %tr
+            %td= grade.assignment
+            %td= grade.score
+            %td= grade.student

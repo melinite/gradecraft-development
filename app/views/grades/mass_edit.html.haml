@@ -17,6 +17,8 @@
   .small-12.columns
     #massGrade
       = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
+        - if @team.present?
+          = hidden_field_tag :team_id, @team.id
         - if @assignment.grade_checkboxes?
           .btn-group
             %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
@@ -62,10 +64,7 @@
                         = "/ #{points @assignment.point_total}"
 
         .right
-          - if @team.present?
-            = link_to "Submit Grades", { :controller => "grades", :action => "mass_update", :assignment => @assignment.id.to_i, :team_id => @team.id }, :method => :put, :class => "button tiny radius"
-          - else
-            = f.button :submit, "Submit Grades", :class => "button tiny radius"
+          = f.button :submit, "Submit Grades", :class => "button tiny radius"
           = link_to 'Cancel', assignments_path, :class => 'button tiny radius'
 
   .clearfix
