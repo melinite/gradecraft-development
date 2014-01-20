@@ -1,12 +1,21 @@
-.top-bar-section .classInfo {
-  width: 20rem;
-  background-color: #333;
+.top-bar-section ul ul.dropdown.classInfo {
   font-size: .8rem;
   color: #FFF;
-  padding: 1rem;
+  width: 20rem;
+  padding-top: 1rem;
+}
+
+.top-bar-section ul ul.dropdown {
+  padding: 0.25rem 1rem;  
+  background-color: #333;
   border-bottom-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
   box-shadow: 1px 1px 5px #888888;
+
+  a:hover {
+      color: $lightblue;
+      background-color: #333;
+  }
 }
 
 .top-bar-section .classInfo li {
