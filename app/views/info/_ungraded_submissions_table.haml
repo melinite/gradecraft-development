@@ -1,7 +1,6 @@
 - if current_course.has_teams?
-  = form_tag grading_status_path, :method => :get do
-    = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8 input-sm"
-    = submit_tag 'Filter', :class => 'button tiny radius'
+  = form_tag grading_status_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
+    = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
 - @ungraded_submissions.group_by(&:assignment).each do |assignment, submissions|
   %h5

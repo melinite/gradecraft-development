@@ -45,6 +45,7 @@ class Assignment < ActiveRecord::Base
 
   delegate :mass_grade?, :student_weightable?, :to => :assignment_type
 
+  before_save :clean_html
   before_validation :cache_associations, :cache_point_total
   after_save :save_grades, :save_weights
 
@@ -270,6 +271,10 @@ scope :grading_done, -> { where 'grades.present? == 1' }
   end
 
   private
+
+  def clean_html
+    self.description = Sanitize.clean(description, Sanitize::Config::BASIC)
+  end
 
   def cache_point_total
     self.point_total = point_total

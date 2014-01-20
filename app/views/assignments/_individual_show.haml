@@ -13,7 +13,7 @@
           %th.sortable{"data-sort" => "string"} Status
         - if @assignment.accepts_submissions?
           %th.sortable{"data-sort" => "int"} Submission
-        %th{:width => "320"}
+        %th.button-column
         - if @assignment.release_necessary?
           %th
             .button-bar
@@ -34,8 +34,7 @@
           %td= link_to student.last_name, student_path(student)
           %td{:data => { :"sort-value" => "#{grade.raw_score}"} }= points grade.raw_score if grade.status?
           - if @assignment.assignment_type.student_weightable?
-            %td
-              = points grade.score if grade.status?
+            %td= points grade.score if grade.status?
           - if @assignment.has_levels?
             %td
               = @assignment.grade_level(grade) if grade.status?

@@ -40,39 +40,48 @@
   - if current_user.is_staff?
     .panel
       %h4= f.label :course_memberships, "Course Settings"
-      - if @user.is_student?
-        = f.simple_fields_for :course_memberships, @course_membership do |p|
-          .small-12.medium-4.columns
-            = p.input :auditing, :label => "Auditing"
-            .clearfix
-            %h6.small This student's grades will be excluded from course analysis
-          .small-12.medium-4.columns
-            = p.input :character_profile
-          .small-12.medium-4.columns
-            = p.input :shared_badges, :label => "Sharing #{term_for :badges}"
-
-      .clearfix
-
+      
       - if current_course.has_teams? && @user.is_student?
         .small-12.medium-4.columns
           - if @user.team_for_course(current_course).present?
-            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select a #{term_for :team}", :checked => @user.team_for_course(current_course).id
+            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select #{term_for :team}", :checked => @user.team_for_course(current_course).id
           - else
-            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select a #{term_for :team}"
+            = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select #{term_for :team}"
       - elsif current_course.has_teams? && @user.is_staff?
         .small-12.medium-4.columns
-          = f.input :course_team_ids, :collection => @teams, :as => :check_boxes, :label => "Select a #{term_for :team}"
+          = f.input :course_team_ids, :collection => @teams, :as => :check_boxes, :label => "Select #{term_for :teams}"
 
       - if current_user.is_admin?
         .small-12.medium-4.columns
-          = f.association :courses, :as => :check_boxes
+          .small-12
+            = f.label :default_course_id, "Default Course"
+            = f.select :default_course_id, options_from_collection_for_select(@courses, "id", "name", @user.try(:default_course_id))
+            %h6.small This course will be automatically loaded when a student logs in to GradeCraft
 
-      .small-12.medium-4.columns
-        = f.label :default_course_id, "Default Course"
-        = f.select :default_course_id, options_from_collection_for_select(@courses, "id", "name")
-        %h6.small This course will be automatically loaded when a student logs in to GradeCraft
+          %hr
+          .small-12
+            = f.association :courses, :as => :check_boxes
+          .clearfix
+
+
+      - if @user.is_student?
+        = f.simple_fields_for :course_memberships, @course_membership do |p|
+          .small-12.medium-4.columns
+            .small-12.medium-12.columns
+              = p.input :character_profile
+            .small-12.medium-12.columns
+              = p.input :auditing, :label => "Auditing"
+              .clearfix
+              %h6.small This #{term_for :student}'s grades will be excluded from course analysis
+            .small-12.medium-12.columns
+              = p.input :shared_badges, :label => "Sharing #{term_for :badges}"
+              %h6.small This #{term_for :student}'s #{term_for :badges} will be displayed on a class leaderboard
+            .clearfix
 
       .clearfix
+      
+
+      
 
 
   .right

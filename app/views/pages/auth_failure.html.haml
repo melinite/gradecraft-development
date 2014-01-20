@@ -1,28 +1,8 @@
-.small-7
-  %h1 Uh Oh!
-  %h2 We had some trouble logging you in.
+.small-12.medium-6.columns.panel.radius.callout
+  %h2 Uh Oh!
+  %h3 We had some trouble logging you in.
 
   %p An email has been sent to the GradeCraft developers, who will look into the issue shortly.
   %p In the meantime, if you have any questions feel free to #{mail_to 'cholma@umich.edu', 'get in touch'}.
-.small-5
-  %h5 LOGIN
-  %ul.nav.nav-tabs
-    %li.active
-      %a{ "data-toggle" => "tab", "data-target" => "#tabkerb" } UM Login
-    %li
-      %a{ "data-toggle" => "tab", "data-target" => "#tabgc"} GradeCraft Login
-  .tab-content.login
-    .tab-pane#tabkerb.active
-      %ul
-        .kerberos-auth
-          = form_for User.new, :url => auth_kerberos_callback_path do |f|
-            %li= text_field_tag :username, nil, placeholder: 'Uniqname'
-            %li= password_field_tag :password, nil, placeholder: 'Password'
-            %li= f.submit 'Log in', class: 'button tiny radius', alt: 'Log in'
-    .tab-pane#tabgc
-      %ul
-        .gradegraft-auth
-          = form_for User.new, :url => user_sessions_path do |f|
-            %li= f.text_field :email, placeholder: "Email"
-            %li= f.password_field :password, placeholder: 'Password'
-            %li= f.submit "Log in", class: 'button tiny radius', alt: "Log in"
+.small-12.medium-6.columns.panel.radius.login_forms
+  = render 'user_sessions/form'

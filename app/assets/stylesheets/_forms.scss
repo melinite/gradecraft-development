@@ -3,7 +3,12 @@
 }
 
 h6.small {
-  line-height: 120%;
+  line-height: 130%;
+  color: #666;
+  clear: both;
+  margin-left: 0;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 
@@ -30,8 +35,105 @@ ul.wysihtml5-toolbar {
 
 form {
   margin: 0;
+
+  .columns {
+    padding-left: 0;
+  }
 }
 
-label.checkbox input {
+label.checkbox input, label.checkbox, label.radio, label.radio input {
   margin-right: 10px;
+  clear: both;
+}
+
+#massGrade .inline-list {
+  margin-bottom: 0;
+
+    label {
+      margin-bottom: 0;
+    }
+
+}
+
+#massGrade .inline-list label {
+  font-weight: normal;
+  float: left;
+  margin: 0;
+}
+
+#massGrade .inline-list input {
+margin-left: 10px;
+float: left;
+}
+
+label {
+  font-weight: bold;
+}
+
+label, input {
+  padding-bottom: 0;
+}
+
+input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], select, .checkbox-inline input[type="checkbox"], input[type="text"] {
+  margin-bottom: 0.5rem;
+}
+
+select, input[type="text"] {
+  height: 2.5rem;
+}
+
+
+label.checkbox, label.radio  {
+    font-weight: normal;
+  }
+
+  /** Login Forms  **/
+
+  .login_forms {
+  background-color: #FFF;
+  border: none;
+
+  .content {
+    background-color: #eee;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    input {
+      width: 85%;
+      margin-left: 15px;
+    }
+  }
+
+  dd a {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-collapse: true;
+    padding: 14px;
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+    background-color: $lightblue;
+  }
+  dd.active a {
+    background-color: #eee;
+  }
+
+  .right {
+    margin-right: 25px;
+  }
+}
+
+.score-level .remove-level.button {
+  margin-top: 1.3rem;
+} 
+
+select {
+  background-color: #F0F8FF;
+}
+
+select:hover {
+  background-color: #55DCF5;
 }

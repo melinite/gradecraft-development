@@ -8,7 +8,7 @@ SELECT
 FROM grades AS g
 JOIN users AS u ON g.student_id = u.id
 JOIN assignments AS a ON g.assignment_id = a.id
-WHERE g.course_id = 2
+WHERE g.course_id = 3
 ORDER BY assignment_id, u.last_name, u.first_name
 ) TO STDOUT WITH DELIMITER ','
 CSV HEADER

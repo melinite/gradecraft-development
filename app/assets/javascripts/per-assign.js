@@ -5,7 +5,7 @@ $(function () {
       var div = $( this )
       var id = $('.grades_per_assign')[index].getAttribute('data-id');
       $.getJSON('/students/scores_for_single_assignment', { id: id }, function (data) {
-        div.sparkline(data.scores, {type: 'box', width: '300px', height: '30px' } );
+        div.sparkline(data.scores, {type: 'box', width: '300px', height: '30px', boxFillColor: '#eee'} );
       })
     })
   }

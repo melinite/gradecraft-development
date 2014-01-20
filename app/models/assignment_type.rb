@@ -15,7 +15,7 @@ class AssignmentType < ActiveRecord::Base
   has_many :score_levels, -> { order "value" }
   accepts_nested_attributes_for :score_levels, allow_destroy: true, :reject_if => proc { |a| a['value'].blank? || a['name'].blank? }
 
-  validates_presence_of :name, :points_predictor_display, :point_setting
+  validates_presence_of :name, :points_predictor_display
   before_save :ensure_score_levels, :if => :multi_select?
 
   scope :student_weightable, -> { where(:student_weightable => true) }

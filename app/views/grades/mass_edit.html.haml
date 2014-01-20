@@ -6,12 +6,11 @@
   .small-12.medium-6.columns
     %h2= @title
 
-  .small-12.medium-5.columns.right
+  .small-12.medium-4.columns.right
     - if current_course.has_teams? && @assignment.is_individual?
-      = form_tag mass_grade_assignment_path, :method => :get do
+      = form_tag mass_grade_assignment_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
         = hidden_field_tag :assignment_id, @assignment.id
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8"
-        = submit_tag 'Filter', :class => 'button tiny radius'
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
     .clearfix
 
@@ -44,9 +43,11 @@
                     - elsif @assignment.grade_select? && @assignment.has_levels?
                       = gf.select :raw_score, options_from_collection_for_select(@assignment_score_levels, :value, :name), include_blank: true
                     - elsif @assignment.grade_radio? && @assignment.assignment_type.has_levels?
-                      - @score_levels.each do |score_level|
-                        = gf.label :raw_score, score_level.name, value: score_level.value
-                        = gf.radio_button :raw_score, score_level.value, :class => "radio_inline"
+                      %ul.inline-list
+                        - @score_levels.each do |score_level|
+                          %li
+                            = gf.label :raw_score, score_level.name, value: score_level.value
+                            = gf.radio_button :raw_score, score_level.value, :class => "radio_inline"
                     - elsif @assignment.grade_radio? && @assignment.has_levels?
                       - @assignment_score_levels.each do |assignment_score_level|
                         = gf.label :raw_score, assignment_score_level.name, value: assignment_score_level.value
@@ -61,7 +62,10 @@
                         = "/ #{points @assignment.point_total}"
 
         .right
-          = f.button :submit, "Submit Grades", :class => "button tiny radius"
+          - if @team.present?
+            = link_to "Submit Grades", { :controller => "grades", :action => "mass_update", :assignment => @assignment.id.to_i, :team_id => @team.id }, :method => :put, :class => "button tiny radius"
+          - else
+            = f.button :submit, "Submit Grades", :class => "button tiny radius"
           = link_to 'Cancel', assignments_path, :class => 'button tiny radius'
 
   .clearfix

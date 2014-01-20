@@ -24,7 +24,7 @@
             %th.sortable{"data-sort" => "string"} Visible
             %th.sortable{"data-sort" => "int"} Submissions?
             %th.sortable{"data-sort" => "string"} Release necessary
-            %th{ :width => "250" }
+            %th.button-column
 
         %tbody
           - @challenges.each do |challenge|

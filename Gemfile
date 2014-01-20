@@ -63,6 +63,7 @@ gem 'whenever'
 gem 'will_paginate', '~> 3.0'
 
 group :development do
+  gem 'better_errors'
   gem 'guard'
   gem 'guard-minitest'
   gem 'haml-rails'

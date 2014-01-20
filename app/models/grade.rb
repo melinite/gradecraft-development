@@ -7,7 +7,7 @@ class Grade < ActiveRecord::Base
     :badge_ids, :earned_badges_attributes, :earned, :submission,
     :submission_id, :badge_ids, :earned_badge_id, :earned_badges, :released,
     :earned_badges_attributes, :group, :group_id, :group_type, :task, :task_id,
-    :graded_by_id, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file
+    :graded_by_id, :team_id, :grade_file_ids, :grade_files_attributes, :grade_file, :assignments_attributes
 
   STATUSES=%w(Graded Released)
 
@@ -94,7 +94,7 @@ class Grade < ActiveRecord::Base
   end
 
   def is_released?
-    (status = 'Graded' && ! assignment.release_necessary) || status == 'Released'
+    status == 'Released' || (status = 'Graded' && ! assignment.release_necessary)
   end
 
   def is_graded_or_released?
@@ -127,7 +127,7 @@ class Grade < ActiveRecord::Base
   private
 
   def clean_html
-    self.feedback = Sanitize.clean(feedback, Sanitize::Config::RESTRICTED)
+    self.feedback = Sanitize.clean(feedback, Sanitize::Config::BASIC)
   end
 
   def save_student

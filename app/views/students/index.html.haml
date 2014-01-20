@@ -12,12 +12,11 @@
   .small-12.medium-6.columns
     %h2= @title
 
-  .small-12.medium-5.columns.right
+  .small-12.medium-4.columns.right
     / Checking to see if the current course has teams, displaying the team filter if it does
     - if current_course.has_teams?
-      = form_tag students_path, :method => :get do
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}", :class => "small-8 medium-8"
-        = submit_tag 'Filter', :class => 'button tiny radius medium-3 small-3 right'
+      = form_tag students_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
+        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select a #{current_course.team_term}"
 
   .small-12.columns
     / Display the table of course students, their leaderboard display, their team affiation, their score and their grade
@@ -34,7 +33,7 @@
             %th.sortable{"data-sort" => "string"} Role
           %th.sortable{"data-sort" => "int"} Score
           %th.sortable{"data-sort" => "string"} Current Grade
-          %th{"width" => 200 }
+          %th.button-column
       %tbody
         - if @team
           - students = current_course_data.students_for_team(@team)
@@ -56,6 +55,7 @@
               %td{:data => { :"sort-value" => "#{current_course.score_for_student(student)}"} }= points current_course.score_for_student(student)
               %td
                 = student.grade_letter_for_course(current_course)
+                = "-"
                 = student.grade_level_for_course(current_course)
             %td
               .button-bar
@@ -97,8 +97,10 @@
               - if current_course.team_roles?
                 %td= student.try(:team_role)
               - if student.respond_to?(:grades)
-                %td= points student.score_for_course(current_course)
-                %td= student.grade_level_for_course(current_course)
+                %td
+                  = points student.score_for_course(current_course)
+                  = "-"
+                  = student.grade_level_for_course(current_course)
               %td
                 .button-bar
                   %ul.button-group.radius.round

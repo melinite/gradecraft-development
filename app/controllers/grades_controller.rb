@@ -29,7 +29,7 @@ class GradesController < ApplicationController
     if @assignment.notify_released? && @grade.is_released?
       NotificationMailer.grade_released(@grade.id).deliver
     end
-    redirect_to session.delete(:return_to)
+    redirect_to session[:return_to]
   end
 
   def destroy
@@ -60,7 +60,7 @@ class GradesController < ApplicationController
 
   def predict_score
     @assignment = current_course.assignments.find(params[:id])
-    #raise "Cannot set predicted score if grade status is 'Graded' or 'Released'" if current_student_data.grade_released_for_assignment?(@assignment)
+    raise "Cannot set predicted score if grade status is 'Graded' or 'Released'" if current_student_data.grade_released_for_assignment?(@assignment)
     @grade = current_student_data.grade_for_assignment(@assignment)
     @grade.predicted_score = params[:predicted_score]
     respond_to do |format|
@@ -91,9 +91,12 @@ class GradesController < ApplicationController
 
   def mass_update
     @assignment = current_course.assignments.find(params[:id])
-    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
     if @assignment.update_attributes(params[:assignment])
-      respond_with @assignment
+      if !params[:team_id].blank?
+        redirect_to assignment_path(@assignment, :team_id => params[:team_id])
+      else
+        respond_with @assignment
+      end
     else
       @title = "Quick Grade #{@assignment.name}"
       @assignment_type = @assignment.assignment_type

@@ -19,8 +19,8 @@
           %th.sortable{"data-sort" => "int"} Score
           %th.sortable{"data-sort" => "string"} Level
           - if current_course.has_badges?
-            %th{:width => '250'} #{term_for :badges} Earned
-          %th{:width => '250'}
+            %th.button-column #{term_for :badges} Earned
+          %th.button-column
       %tbody
         - @team.students.each do |student|
           - if student.is_student?

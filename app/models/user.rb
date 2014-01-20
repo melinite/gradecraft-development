@@ -7,11 +7,7 @@ class User < ActiveRecord::Base
   after_save :cache_scores
 
   ROLES = %w(student professor gsi admin)
-#
-#   ROLES.each do |role|
-#     scope role.pluralize, -> { where course_memberships.role: role }
-#   end
-#
+
   ROLES.each do |role|
     scope role.pluralize, -> { where role: role }
   end
@@ -206,6 +202,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  #grabbing the stored score for the current course
+  def cached_score_for_course(course)
+    course_memberships.where(:course_id => course).first.score || 0
+  end
+
   #I think this may be a little bit faster - ch
   def scores_for_course(course)
      user_score = course_memberships.where(:course_id => course, :auditing => FALSE).pluck('score')
@@ -214,6 +215,12 @@ class User < ActiveRecord::Base
       :scores => scores,
       :user_score => user_score
      }
+  end
+
+
+  #recalculating the student's score for the course
+  def score_for_course(course)
+    @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course) + (team_for_course(course).try(:challenge_grade_score) || 0)
   end
 
   def predictions(course)
@@ -265,15 +272,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  #recalculating the student's score for the course
-  def score_for_course(course)
-    @score_for_course ||= grades.released.where(course: course).score + earned_badge_score_for_course(course) + (team_for_course(course).try(:challenge_grade_score) || 0)
-  end
 
-  #grabbing the stored score for the current course
-  def cached_score_for_course(course)
-    course_memberships.where(:course_id => course).first.score || 0
-  end
+
 
   #student setting as to whether or not they wish to share their earned badges for this course
   def badges_shared(course)

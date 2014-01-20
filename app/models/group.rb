@@ -24,6 +24,7 @@ class Group < ActiveRecord::Base
 
   has_many :earned_badges, :as => :group
 
+  before_save :clean_html
   before_validation :cache_associations
 
   validates_presence_of :course, :name
@@ -47,6 +48,10 @@ class Group < ActiveRecord::Base
   end
 
   private
+
+  def clean_html
+    self.proposal = Sanitize.clean(proposal, Sanitize::Config::BASIC)
+  end
 
   def min_group_number_met
     if self.students.to_a.count < course.min_group_size

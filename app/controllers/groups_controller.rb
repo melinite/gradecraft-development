@@ -31,6 +31,7 @@ class GroupsController < ApplicationController
   def edit
     @group = current_course.groups.find(params[:id])
     @assignments = current_course.assignments.group_assignments
+    @title = "Editing #{@group.name} Details"
     if current_user.is_student?
       @student = current_student
       @group.students << current_student
