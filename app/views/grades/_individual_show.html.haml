@@ -1,13 +1,11 @@
-.heading= "#{term_for :student}:"
-= link_to @grade.student.try(:name), student_path(@grade.student)
-= "#{term_for :assignment}:"
-= link_to @grade.assignment.name, assignment_path(@grade.assignment_id)
 - if @grade.raw_score?
-  .heading Raw Score:
-  = @grade.raw_score
+  %h6 
+    Raw Score:
+    = points @grade.raw_score
 - if @grade.final_score?
-  .heading Final Score:
-  = @grade.final_score
+  %h6 
+    Final Score:
+    = @grade.final_score
   //- if @grade.grade_files.present?
   //.heading.col-lg-2 Documents:
   //.col-lg-offset-2
@@ -17,7 +15,7 @@
   //= link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :upload_id => gf.id } )
 
 - if @grade.feedback?
-  .heading Feedback:
+  %h6 Feedback:
   = raw @grade.feedback
 
 - if @grade.earned_badges.present?

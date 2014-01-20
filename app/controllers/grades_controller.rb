@@ -91,9 +91,8 @@ class GradesController < ApplicationController
 
   def mass_update
     @assignment = current_course.assignments.find(params[:id])
-    if @assignment.update_attributes(:assignment => params[:assignment])
-      if !params[:team_id].blank? 
-        debugger
+    if @assignment.update_attributes(params[:assignment])
+      if !params[:team_id].blank?
         redirect_to assignment_path(@assignment, :team_id => params[:team_id])
       else
         respond_with @assignment

@@ -7,7 +7,7 @@
 .analytics-chart {
   height: 200px;
 }
-.col-lg-12.analytics-chart {
+.small-12.analytics-chart {
   height: 300px;
 }
 .analytics-table {
@@ -22,8 +22,20 @@
 .dynatable-active-page {
   background: $lightblue;
 }
-.analytics-inputs select {
-  margin: 0 15px 0 2px;
+.analytics-inputs {
+
+  .columns {
+    margin-right: 10px;
+    padding: 0;
+  }
+
+  .button {
+    margin-top: 25px;
+  }
+  select {
+  margin: 0 15px 15px 2px;
+
+  }
 }
 .analytics-loading {
   background: #ccc;
