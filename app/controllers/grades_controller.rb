@@ -102,9 +102,14 @@ class GradesController < ApplicationController
       @assignment_type = @assignment.assignment_type
       @score_levels = @assignment_type.score_levels
       @assignment_score_levels = @assignment.assignment_score_levels
-      user_search_options = {}
-      user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-      @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
+      if params[:group]
+        user_search_options = {}
+        user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
+        @students = current_course.users.students.includes(:teams).where(user_search_options).alpha
+      else
+        @group = @assignment.groups.find(params[:group_id])
+        @students = @group.students
+      end
       @grades = @students.map do |s|
         @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user)
       end
@@ -123,24 +128,6 @@ class GradesController < ApplicationController
       @assignment.grades.where(:student_id => student).first || @assignment.grades.new(:student => student, :assignment => @assignment, :graded_by_id => current_user, :status => "Graded")
     end
     @submit_message = "Submit Grades"
-  end
-
-  def group_update
-    @assignment = current_course.assignments.find(params[:id])
-    if @assignment.update_attributes(params[:assignment])
-      respond_with @assignment
-    else
-      @title = "Quick Grade #{@assignment.name}"
-      @assignment_type = @assignment.assignment_type
-      @score_levels = @assignment_type.score_levels
-      @assignment_score_levels = @assignment.assignment_score_levels
-      @group = @assignment.groups.find(params[:group_id])
-      @students = @group.students
-      @grades = @students.map do |s|
-        @assignment.grades.where(:student_id => s).first || @assignment.grades.new(:student => s, :assignment => @assignment, :graded_by_id => current_user, :status => 'Graded')
-      end
-      respond_with @assignment, :template => "grades/mass_edit"
-    end
   end
 
   def edit_status
