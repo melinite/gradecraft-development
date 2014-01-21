@@ -122,6 +122,16 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def export_grades
+    @assignment = current_course.assignments.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @assignment }
+      format.csv { send_data @assignment.gradebook_for_assignment(@assignment) }
+      format.xls { send_data @assignment.to_csv(col_sep: "\t") }
+    end
+  end
+
   private
 
   def assignment_params
@@ -137,4 +147,5 @@ class AssignmentsController < ApplicationController
     end
     @assignment.save
   end
+  
 end
