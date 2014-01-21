@@ -9,3 +9,14 @@ dl.tabs {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+dl.analytics_tabs {
+	margin-top: 1rem;
+}
+
+dl.analytics_tabs dd a {
+	padding: 0;
+}
+
+dl.analytics_tabs dd.active a {
+	border: 1px solid $red;
+}

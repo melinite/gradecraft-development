@@ -37,39 +37,41 @@
   .small-12.columns
     %h2
       = link_to "#{@assignment.try(:name)}", @submission.assignment
-    %hr
-    - if current_user.is_staff?
-      %h5
-        - if @assignment.is_individual?
-          Submitted by:
-          = link_to @submission.student.try(:name), student_path(@submission.student)
-        - elsif @assignment.has_groups?
-          = "#{term_for :group}:"
-          = link_to @submission.group.try(:name), group_path(@submission.group)
-    .small-12
-      %h5
-        Submitted:
-        = @submission.created_at
-      - if @submission.updated_at != @submission.created_at
-        %h5
-          Updated:
-          = @submission.updated_at
+    .small-12.columns.panel.callout
+      .small-12.large-6.columns
+        - if current_user.is_staff?
+          %h5
+            - if @assignment.is_individual?
+              Submitted by:
+              = link_to @submission.student.try(:name), student_path(@submission.student)
+            - elsif @assignment.has_groups?
+              = "#{term_for :group}:"
+              = link_to @submission.group.try(:name), group_path(@submission.group)
+        
+          %h5
+            Submitted:
+            = @submission.created_at
+          - if @submission.updated_at != @submission.created_at
+            %h5
+              Updated:
+              = @submission.updated_at
 
-      - if @submission.link?
-        %h5
-          Link:
-          = link_to @submission.link, @submission.link
+          - if @submission.link?
+            %h5
+              Link:
+              = link_to @submission.link, @submission.link
 
-      - if @submission.submission_files.present?
-        %h5 Attachments:
-        %ul
-          - @submission.submission_files.each do |sf|
-            %li
-              = link_to sf.filename, sf.url
-              = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+          - if @submission.submission_files.present?
+            %h5 Attachments:
+            %ul
+              - @submission.submission_files.each do |sf|
+                %li
+                  = link_to sf.filename, sf.url
+                  = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
 
-      %h5 Statement:
-      %p= raw @submission.text_comment
+      .small-12.large-6.columns
+        %h5 Statement:
+        %p= raw @submission.text_comment
 
     - if @assignment.is_individual?
       = render 'individual_show'
