@@ -52,7 +52,7 @@
 
       .small-12.large-4.columns
         = f.label :assignment_type, "#{term_for :assignment} Type"
-        = f.select :assignment_type_id, options_from_collection_for_select(current_course.assignment_types, "id", "name", @assignment.try(:assignment_type_id))
+        = select_tag :assignment_type_id, options_from_collection_for_select(current_course.assignment_types, "id", "name", @assignment.try(:assignment_type_id))
 
       .small-12.large-4.columns
         = f.label :name

@@ -1,7 +1,7 @@
 class Assignment < ActiveRecord::Base
   attr_accessible :name, :description, :point_total, :due_at, :created_at,
-    :updated_at, :level, :present, :grades_attributes, :assignment_type,
-    :assignment_type_id, :grade_scope, :visible, :required,
+    :updated_at, :level, :present, :grades_attributes,
+    :grade_scope, :visible, :required,
     :open_time, :accepts_submissions, :student_logged_button_text,
     :student_logged, :release_necessary,
     :score_levels_attributes, :open_at, :close_time, :course,
@@ -14,7 +14,6 @@ class Assignment < ActiveRecord::Base
   self.inheritance_column = 'something_you_will_not_use'
 
   belongs_to :assignment_type, -> { order('order_placement ASC') }, touch: true
-  accepts_nested_attributes_for :assignment_type
 
   has_many :weights, :class_name => 'AssignmentWeight'
 
