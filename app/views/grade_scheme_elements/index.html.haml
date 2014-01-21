@@ -20,8 +20,8 @@
           %tr
             %td= element.letter
             %td= element.level
-            %td= points element.low_range
-            %td= points element.high_range
+            %td{:data => { :"sort-value" => "#{element.low_range }" }}= points element.low_range
+            %td{:data => { :"sort-value" => "#{element.high_range }" }}= points element.high_range
 
     %p= raw current_course.grading_philosophy
     %h6= "-- Prof. #{current_course.professor.try(:last_name) }"

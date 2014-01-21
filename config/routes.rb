@@ -64,6 +64,7 @@ GradeCraft::Application.routes.draw do
       get 'group_grade' => 'grades#group_edit', as: :group_grade
       put 'group_grade' => 'grades#group_update'
       get 'detailed_grades'
+      get 'export_grades'
       scope 'grades', as: :grades, controller: :grades do
         post :edit_status
         put :update_status

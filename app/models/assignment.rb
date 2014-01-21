@@ -117,7 +117,11 @@ scope :grading_done, -> { where 'grades.present? == 1' }
   end
 
   def submitted_average
-    grades.graded.where("score > 0").average('score').round(2) if grades.graded.present?
+    if grades.graded.present?
+      grades.graded.where("score > 0").average('score').round(2) 
+    else
+      0
+    end
   end
 
   def release_necessary?
@@ -263,9 +267,19 @@ scope :grading_done, -> { where 'grades.present? == 1' }
   #gradebook
   def self.gradebook_for_course(course, options = {})
     CSV.generate(options) do |csv|
-      csv << ["First Name", "Last Name", "Email", "Score", "Grade" ]
+      csv << ["First Name", "Last Name", "Email", "Score", "Grade", "Statement", "Feedback" ]
       course.students.each do |student|
         csv << [student.first_name, student.last_name, student.email, student.score_for_course(course)]
+      end
+    end
+  end
+
+  #single assignment gradebook
+  def gradebook_for_assignment(assignment, options = {})
+    CSV.generate(options) do |csv|
+      csv << ["First Name", "Last Name", "Email", "Score", "Statement", "Feedback" ]
+      course.students.each do |student|
+        csv << [student.first_name, student.last_name, student.email, student.grade_for_assignment(assignment).score, student.submission_for_assignment(assignment).try(:text_comment), student.grade_for_assignment(assignment).try(:feedback) ]
       end
     end
   end

@@ -12,7 +12,22 @@
         %li= link_to course.name, course
 
     %h4 Recently Graded
-    - current_course.grades.where(:graded_by => current_user).each do |grade|
-      = grade.assignment
-      = grade.score
-      = grade.student
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Assignment
+          %th.sortable{"data-sort" => "string"} Student
+          %th.sortable{"data-sort" => "string"} Score
+          %th.sortable{"data-sort" => "string"} Feedback
+          %th.button-column
+      %tbody
+        //- current_course.grades.where(:graded_by => current_user).each do |grade|
+        - current_course.grades.where(:team_id => @user.team_for_course(current_course)).each do |grade|
+          %tr
+            %td= link_to grade.assignment.name, assignment_path(grade.assignment)
+            %td= link_to grade.student.name, student_path(grade.student)
+            %td= points grade.score
+            %td= raw grade.feedback
+            %td
+              = grade.created_at
+              = grade.updated_at if grade.updated_at != grade.created_at

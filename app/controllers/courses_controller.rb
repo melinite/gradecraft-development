@@ -92,7 +92,6 @@ class CoursesController < ApplicationController
     @course = current_course
     if current_course.team_challenges?
       @events = @course.assignments.timelineable + @course.challenges
-      debugger
     else
       @events = @course.assignments.timelineable
     end

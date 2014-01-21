@@ -172,7 +172,6 @@ badges = badge_names.map do |badge_name|
   course.badges.create! do |b|
     b.name = badge_name
     b.point_total = 100 * rand(10)
-    b.icon = File.open(badge_icon_paths.sample)
     b.visible = 1
   end
 end

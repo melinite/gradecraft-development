@@ -9,6 +9,7 @@
       %li= link_to "Quick Grade #{@assignment.name}", mass_grade_assignment_path(@assignment, :team_id => @team), :class => "button tiny radius"
     - else
       %li= link_to "Quick Grade #{@assignment.name}", mass_grade_assignment_path(@assignment), :class => "button tiny radius"
+    %li= link_to "Download Grades", export_grades_assignment_path(@assignment, format: 'csv'), :class => "button tiny radius"
 
   .small-4.medium-10.columns
     %h2= "#{@title} (#{ points @assignment.point_total } points)"

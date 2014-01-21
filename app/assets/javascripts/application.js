@@ -15,6 +15,7 @@
 //= require s3_direct_upload
 //= require jquery.ui.widget
 //= require jquery.sparkline.min
+//= require jquery.circliful.min
 //= require underscore.min
 //= require backbone.min
 //= require bootstrap
@@ -64,6 +65,8 @@ $(document).ready(function(){
     placeholder: "Select Students",
     allowClear: true
   });
+
+  $('#myStat').circliful();
 
   // File Uploads
 

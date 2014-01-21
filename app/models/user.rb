@@ -304,6 +304,10 @@ class User < ActiveRecord::Base
     grades.where(assignment_type: assignment_type).score
   end
 
+  def grade_for_assignment(assignment)
+    grades.where(assignment: assignment)
+  end
+
   def released_score_for_assignment_type(assignment_type)
     grades.released.where(assignment_type: assignment_type).score
   end
