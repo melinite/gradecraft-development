@@ -77,7 +77,11 @@
 
   .tabs-content
     .content.small-12#boxplot
-      %div{:class => "grades_per_assign", :data => { :id => @grade.assignment.id.to_s } }
+      .chartcontainer
+        %div{:class => "grades_per_assign", :data => { :id => @grade.assignment.id.to_s } }
+
+      %h6.small= link_to "How do I read this chart?", "http://www.youtube.com/watch?v=7UK2DK7rblw&feature=youtu.be", :target => "_blank"
+
 
     .content.small-12#submitted
       #myStat{:"data-type" => "half", "data-info" => "#{term_for :students} Submitted", "data-percent" => "#{@grade.assignment.attendance_rate(current_course)}", "data-fgcolor" => "#61a9dc", "data-text" => "#{@grade.assignment.positive_grades}", "data-dimension" => "250", "data-fontsize" => "38"  }
