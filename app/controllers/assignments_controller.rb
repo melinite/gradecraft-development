@@ -31,26 +31,7 @@ class AssignmentsController < ApplicationController
         @student = current_user
       end
     end
-  end
-
-  def detailed_grades
-    @assignment = current_course.assignments.find(params[:id])
-    @title = @assignment.name
-    @groups = @assignment.groups
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-    @auditing = current_course.students.auditing.includes(:teams).where(user_search_options).alpha
-    if current_user.is_student?
-      if @assignment.accepts_submissions?
-        @submission = @assignment.submissions.new
-      end
-      if @assignment.has_groups?
-        #@group = current_course.groups.find(params[:group_id])
-      else
-        @student = current_user
-      end
-    end
+    render :detailed_grades if params[:detailed]
   end
 
   def new
@@ -98,7 +79,9 @@ class AssignmentsController < ApplicationController
     @assignment = current_course.assignments.find(params[:id])
     respond_to do |format|
       self.check_uploads
-      if @assignment.update_attributes(params[:assignment])
+      @assignment.assign_attributes(params[:assignment])
+      @assignment.assignment_type = current_course.assignment_types.find_by_id(params[:assignment_type_id])
+      if @assignment.save
         format.html { respond_with @assignment }
       else
         format.html { redirect_to edit_assignment_path(@assignment), notice: "#{@assignment.name} was not successfully updated! Please try again." }

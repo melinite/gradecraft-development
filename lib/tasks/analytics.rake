@@ -140,6 +140,19 @@ namespace :analytics do
     end
   end
 
+  desc "Export course events"
+  task :export_courses => [:environment] do
+    course_ids = Analytics::Event.distinct(:course_id)
+    export_dir = ENV['EXPORT_DIR']
+    course_ids.each do |id|
+      puts "Exporting for course: #{id}"
+      %w(analytics_events course_events course_role_events course_predictions course_user_events course_pageviews course_user_pageviews course_user_page_pageviews course_pageview_by_times course_page_pageviews course_role_pageviews course_role_page_pageviews course_logins course_role_logins course_user_logins).each do |aggregate|
+        `mongoexport --db grade_craft_development --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "#{aggregate}.json")}`
+        #`mongoexport --db grade_craft_development --fields id --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "#{aggregate}.csv")} --csv`
+      end
+    end
+  end
+
   def convert(value)
     begin
       (float = Float(value)) && (float % 1.0 == 0) ? float.to_i : float
