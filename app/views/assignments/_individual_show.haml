@@ -44,18 +44,16 @@
                 = "Released"
               - elsif grade.is_graded?
                 = "Graded"
-
           - if @assignment.accepts_submissions?
             %td
               - student.submissions.where(:assignment_id => @assignment).each do |submission|
-                - if submission && grade
-                  %ul.button-group.radius.round
-                    %li= link_to "See Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
-                    %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
+                %i.fi-paperclip
+                - if submission.late? && grade
+                  = link_to "Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny warning'
+                - elsif submission && grade
+                  = link_to "Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
                 - elsif submission
-                  = link_to "See Submission", assignment_submission_path(@assignment.id, submission.id, :student_id => student.id), :class => 'button tiny secondary round'
-                - else
-                  = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :user_id => student.id, :student_type => "User"), :class => 'button tiny secondary round'
+                  = link_to "Grade", assignment_submission_path(@assignment.id, submission.id, :student_id => student.id), :class => 'button tiny primary round'
           %td
             .button-bar
               %ul.button-group.radius.round

@@ -11,3 +11,13 @@ a.button:hover {
 .label a {
   color:#FFF;
 }
+
+a.primary {
+	background-color: $green;
+	color: #FFFFFF !important;
+}
+
+a.warning {
+	background-color: $red;
+	color: #FFFFFF !important;
+}

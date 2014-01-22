@@ -9,6 +9,8 @@
         %h5
           Submitted:
           = @grade.student.submission_for_assignment(@grade.assignment).created_at
+          - if @grade.student.submission_for_assignment(@grade.assignment).late?
+            %span.label.alert.radius Late!
         - if @grade.student.submission_for_assignment(@grade.assignment).updated_at != @grade.student.submission_for_assignment(@grade.assignment).created_at
           %h5
             Updated:
@@ -87,6 +89,7 @@
       #myStat{:"data-type" => "half", "data-info" => "#{term_for :students} Submitted", "data-percent" => "#{@grade.assignment.attendance_rate(current_course)}", "data-fgcolor" => "#61a9dc", "data-text" => "#{@grade.assignment.positive_grades}", "data-dimension" => "250", "data-fontsize" => "38"  }
 
     .content.small-12#levels
-      %div{:class => "levels_per_assign", :data => { :id => @grade.assignment.id.to_s } }
+      .chartcontainer
+        %div{:class => "levels_per_assign", :data => { :id => @grade.assignment.id.to_s } }
     
 

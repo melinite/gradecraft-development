@@ -75,6 +75,10 @@ class Submission < ActiveRecord::Base
     student.name
   end
 
+  def late?
+    created_at > self.assignment.due_at
+  end
+
   private
 
   def clean_html

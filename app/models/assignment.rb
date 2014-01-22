@@ -1,15 +1,12 @@
 class Assignment < ActiveRecord::Base
-  attr_accessible :name, :description, :point_total, :due_at, :created_at,
-    :updated_at, :level, :present, :grades_attributes,
-    :grade_scope, :visible, :required,
-    :open_time, :accepts_submissions, :student_logged_button_text,
-    :student_logged, :release_necessary,
-    :score_levels_attributes, :open_at, :close_time, :course,
-    :assignment_rubrics_attributes, :rubrics_attributes, :media,
-    :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until,
-    :assignment_file_ids, :assignment_files_attributes, :assignment_file, :points_predictor_display,
-    :assignment_score_levels_attributes, :assignment_score_level, :notify_released,
-    :mass_grade_type, :include_in_timeline, :include_in_predictor
+  attr_accessible :name, :description, :point_total, :open_at, :due_at, :grades_attributes, 
+    :grade_scope, :visible, :required, :open_time, :accepts_submissions, :student_logged_button_text,
+    :student_logged, :release_necessary, :score_levels_attributes, :media, :thumbnail, :media_credit, 
+    :caption, :media_caption, :accepts_submissions_until, :points_predictor_display,
+    :course, :assignment_type, :assignment_type_id, :notify_released, :mass_grade_type, 
+    :include_in_timeline, :include_in_predictor, :assignment_rubrics_attributes, 
+    :rubrics_attributes, :assignment_file_ids, :assignment_files_attributes, :assignment_file, 
+    :assignment_score_levels_attributes, :assignment_score_level
 
   self.inheritance_column = 'something_you_will_not_use'
 
