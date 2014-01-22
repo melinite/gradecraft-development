@@ -1,25 +1,34 @@
 class Assignment < ActiveRecord::Base
-  attr_accessible :name, :description, :point_total, :open_at, :due_at, :grades_attributes, 
-    :grade_scope, :visible, :required, :open_time, :accepts_submissions, :student_logged_button_text,
-    :student_logged, :release_necessary, :score_levels_attributes, :media, :thumbnail, :media_credit, 
-    :caption, :media_caption, :accepts_submissions_until, :points_predictor_display,
-    :course, :assignment_type, :assignment_type_id, :notify_released, :mass_grade_type, 
-    :include_in_timeline, :include_in_predictor, :assignment_rubrics_attributes, 
-    :rubrics_attributes, :assignment_file_ids, :assignment_files_attributes, :assignment_file, 
-    :assignment_score_levels_attributes, :assignment_score_level
+  attr_accessible :name, :description, :point_total, :open_at, :due_at, :grade_scope, :visible, :required, 
+    :accepts_submissions, :student_logged_button_text, :student_logged, :release_necessary, :media,
+    :thumbnail, :media_credit, :caption, :media_caption, :accepts_submissions_until, :points_predictor_display,
+    :notify_released, :mass_grade_type, :include_in_timeline, :include_in_predictor, 
+    :grades_attributes, :assignment_file_ids, :assignment_files_attributes, :assignment_file, 
+    :assignment_score_levels_attributes, :assignment_score_level, :score_levels_attributes
 
-  self.inheritance_column = 'something_you_will_not_use'
+  #self.inheritance_column = 'something_you_will_not_use'
 
-  belongs_to :assignment_type, -> { order('order_placement ASC') }, touch: true
+  belongs_to :course
 
+  belongs_to :assignment_type, -> { order('order_placement ASC') }
+  delegate :mass_grade?, :student_weightable?, :to => :assignment_type
+
+  #For instances where the assignment inherits the score levels through the assignment type
+  has_many :score_levels, :through => :assignment_type
+
+  #for instances where the assignment needs it's own unique score levels
+  has_many :assignment_score_levels
+  accepts_nested_attributes_for :assignment_score_levels, allow_destroy: true, :reject_if => proc { |a| a['value'].blank? || a['name'].blank? }
+  
   has_many :weights, :class_name => 'AssignmentWeight'
 
   has_many :assignment_groups
   has_many :groups, :through => :assignment_groups
 
   has_many :tasks, :as => :assignment, :dependent => :destroy
+
   has_many :submissions, as: :assignment
-  has_many :assignment_files
+
   has_many :grades, :dependent => :destroy
   accepts_nested_attributes_for :grades, :reject_if => Proc.new { |attrs| attrs[:raw_score].blank? }
 
@@ -28,53 +37,43 @@ class Assignment < ActiveRecord::Base
   has_many :assignment_rubrics, dependent: :destroy
   accepts_nested_attributes_for :assignment_rubrics, allow_destroy: true
   has_many :rubrics, through: :assignment_rubrics, dependent: :destroy
-
-  belongs_to :category
-  belongs_to :course
-
-  #For instances where the assignment inherits the score levels through the assignment type
-  has_many :score_levels, :through => :assignment_type
-
-  #for instances where the assignment needs it's own unique score levels
-  has_many :assignment_score_levels
-  accepts_nested_attributes_for :assignment_score_levels, allow_destroy: true, :reject_if => proc { |a| a['value'].blank? || a['name'].blank? }
-
-  delegate :mass_grade?, :student_weightable?, :to => :assignment_type
+  
+  has_many :assignment_files, :dependent => :destroy
+  accepts_nested_attributes_for :assignment_files
 
   before_save :clean_html
   before_validation :cache_associations, :cache_point_total
   after_save :save_grades, :save_weights
 
-  has_many :assignment_files, :dependent => :destroy
-  accepts_nested_attributes_for :assignment_files
 
-  validates_presence_of :assignment_type, :course, :name, :grade_scope
+  validates_presence_of :name
 
+  # Filtering Assignments by Team Work, Group Work, and Individual Work
   scope :individual_assignments, -> { where grade_scope: "Individual" }
   scope :group_assignments, -> { where grade_scope: "Group" }
   scope :team_assignments, -> { where grade_scope: "Team" }
 
+  # Filtering Assignments by where in the interface they are displayed
   scope :timelineable, -> { where(:include_in_timeline => true) }
   scope :predictable, -> { where(:include_in_predictor => true) }
 
+  # Invisible Assignments are displayed on the instructor side, but not students (until they have a grade for them)
+  scope :visible, -> { where visible: TRUE }
+
+  # Sorting assignments by different properties
   scope :chronological, -> { order('due_at ASC') }
   scope :alphabetical, -> { order('name ASC') }
 
-  scope :visible, -> { where visible: TRUE }
-
+  # Filtering Assignments by various date properties
   scope :with_due_date, -> { where('assignments.due_at IS NOT NULL') }
   scope :without_due_date, ->  { where('assignments.due_at IS NULL') }
   scope :future, -> { with_due_date.where('assignments.due_at >= ?', Time.now) }
   scope :still_accepted, -> { with_due_date.where('assignments.accepts_submissions_until >= ?', Time.now) }
   scope :past, -> { with_due_date.where('assignments.due_at < ?', Time.now) }
 
+  # Assignments and Grading
   scope :graded_for_student, ->(student) { where('EXISTS(SELECT 1 FROM grades WHERE assignment_id = assignments.id AND (status = ?) OR (status = ? AND NOT assignments.release_necessary) AND (assignments.due_at < NOW() OR student_id = ?))', 'Released', 'Graded', student.id) }
   scope :weighted_for_student, ->(student) { joins("LEFT OUTER JOIN assignment_weights ON assignments.id = assignment_weights.assignment_id AND assignment_weights.student_id = '#{sanitize student.id}'") }
-scope :grading_done, -> { where 'grades.present? == 1' }
-
-  def start_time
-    due_at
-  end
 
   def to_json(options = {})
     super(options.merge(:only => [ :id, :content, :order, :done ] ))
@@ -118,10 +117,6 @@ scope :grading_done, -> { where 'grades.present? == 1' }
     else
       0
     end
-  end
-
-  def release_necessary?
-    release_necessary == true
   end
 
   def is_individual?
@@ -206,16 +201,6 @@ scope :grading_done, -> { where 'grades.present? == 1' }
     points_predictor_display == "Select List"
   end
 
-  #We allow students to record certain boolean grades - thus far has been used to let them record attendance
-  def self_gradeable?
-    student_logged == true
-  end
-
-  #We allow instructors to mark if an assignment is 'required' - students must do the work to pass the class.
-  def is_required?
-    required == true
-  end
-
   def has_levels?
    self.assignment_score_levels.present?
   end
@@ -248,7 +233,6 @@ scope :grading_done, -> { where 'grades.present? == 1' }
   def open?
     (open_at != nil && open_at < Time.now) && (due_at != nil && due_at > Time.now)
   end
-
 
   #Counting how many non-zero grades there are for an assignment
   def positive_grades
@@ -294,13 +278,17 @@ scope :grading_done, -> { where 'grades.present? == 1' }
     self.course_id ||= assignment_type.try(:course_id)
   end
 
+  # Checking to see if the assignment point total has altered, and if it has resaving grades
   def save_grades
     if self.point_total_changed?
       grades.reload.each(&:save)
     end
   end
 
+  # Checking to see if the assignment point total has altered, and if it has resaving weights
   def save_weights
-    weights.reload.each(&:save)
+    if self.point_total_changed?
+      weights.reload.each(&:save)
+    end
   end
 end

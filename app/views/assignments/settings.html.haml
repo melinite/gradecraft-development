@@ -34,7 +34,7 @@
             %td= assignment.try(:open_at)
             %td= assignment.try(:due_at)
             %td
-              - if assignment.self_gradeable?
+              - if assignment.student_logged?
                 %button.button.tiny.radius #{assignment.assignment_type.student_logged_button_text}
             %td= points assignment.point_total
             %td= assignment.visible? ? 'Yes' : 'No'

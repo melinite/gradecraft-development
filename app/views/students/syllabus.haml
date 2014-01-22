@@ -71,9 +71,9 @@
                       %span
                       - if assignment.future?
                         %span.bold= " • Due: #{assignment.due_at.strftime("%A, %B %d, %l:%M%p")}"
-                      - if assignment.is_required?
+                      - if assignment.required?
                         %span.label.label-important Required!
-                      - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
+                      - if assignment.student_logged? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
                         = simple_form_for current_student_data.grade_for_assignment(assignment), :url => self_log_grades_assignment_path(assignment), :method => :post do |f|
                           - present = current_student_data.present_for_class?(assignment)
                           = hidden_field_tag :present, !present
