@@ -72,7 +72,7 @@
                       - else
                         = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius'
 
-    - if current_course.team_challenges?
+    - if current_course.team_challenges? && current_course.team_score_average?
       %dd
         %a{ "href" => "#challenges" } #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
         .content{:id => "challenges"}

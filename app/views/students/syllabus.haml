@@ -18,11 +18,11 @@
         Your current score is
         / Check to see if the course has a pre-determined total number of points
       - if current_course.point_total?
-        %span#userScoreNum.bold #{points current_student_data.score}
+        %span#userScoreNum.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_course.point_total} points
         / Else tally all of the points for all of the assignments in the course
       - else
-        %span#userScoreNum #{points current_student_data.score}
+        %span#userScoreNum.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_student_data.point_total}
       - if current_student_data.grade_level.present?
         Current Level:
@@ -104,7 +104,7 @@
                           - else
                             = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius'
 
-        - if current_course.team_challenges?
+        - if current_course.team_challenges? && current_course.team_score_average?
           %dd
             %a{ "href" => "#challenges" } #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
             .content{:id => "challenges"}
