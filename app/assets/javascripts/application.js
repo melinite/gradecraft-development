@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require autonumeric
 //= require bootsy
 //= require foundation
 //= require jquery.omniselect

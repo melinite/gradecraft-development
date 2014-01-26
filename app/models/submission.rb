@@ -76,7 +76,7 @@ class Submission < ActiveRecord::Base
   end
 
   def late?
-    created_at > self.assignment.due_at
+    created_at > self.assignment.due_at if self.assignment.due_at.present?
   end
 
   private

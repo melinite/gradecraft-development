@@ -98,5 +98,4 @@ class AssignmentType < ActiveRecord::Base
       errors.add(:assignment_type, "To use the selected method of quick grading you must create at least 2 score levels")
     end
   end
-
 end

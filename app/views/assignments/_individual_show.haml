@@ -11,9 +11,7 @@
           %th{"data-sort" => "string"} Level
         - if @assignment.release_necessary?
           %th.sortable{"data-sort" => "string"} Status
-        - if @assignment.accepts_submissions?
-          %th.sortable{"data-sort" => "int"}
-        %th.button-column
+        %th
         - if @assignment.release_necessary?
           %th
             .button-bar
@@ -49,16 +47,18 @@
               - student.submissions.where(:assignment_id => @assignment).each do |submission|
                 %i.fi-paperclip
                 - if submission.late? && grade
-                  = link_to "Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny warning'
+                  = link_to "Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny warning round'
                 - elsif submission && grade
-                  = link_to "Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
+                  = link_to "Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary round'
                 - elsif submission
                   = link_to "Grade", assignment_submission_path(@assignment.id, submission.id, :student_id => student.id), :class => 'button tiny primary round'
-          %td
-            .button-bar
-              %ul.button-group.radius.round
-                %li= link_to "Dashboard", student_path(student), :class => 'button tiny secondary'
-                
+              - if ! student.submissions.where(:assignment_id => @assignment).present?
+                = link_to "Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny primary round'
+          - else
+            - if grade
+              %td= link_to "Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary round'
+            - else
+              %td= link_to "Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny primary round'
           - if @assignment.release_necessary?
             %td.text-center
               - if grade.is_graded?

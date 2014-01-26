@@ -9,39 +9,53 @@
 %li.has-dropdown
   %a Class Info
   %ul.dropdown.classInfo
-    %li Professor #{ current_course.professor.try(:name) }
+    %li 
+      %i.fi-crown
+      Professor #{ current_course.professor.try(:name) }
     - if current_user.is_student?
       - current_student.team_leader.tap do |team_leader|
         - if team_leader.present?
           %li= link_to "Email #{current_course.team_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}"
     - if current_course.phone.present?
-      %li Phone Number: #{current_course.phone }
+      %li 
+        %i.fi-telephone
+        Phone Number: #{current_course.phone }
     - if current_course.class_email.present?
-      %li Class Email: #{mail_to current_course.class_email, current_course.class_email}
+      %li
+        %i.fi-mail
+        Class Email: #{mail_to current_course.class_email, current_course.class_email}
     - if current_course.twitter_handle.present?
       %li
+        %i.fi-social-twitter
         Twitter Handle:
         = link_to current_course.twitter_handle, "http://www.twitter.com/#{current_course.twitter_handle}"
     - if current_course.twitter_hashtag.present?
       %li
+        ="#"
         Hashtag:
         = link_to current_course.twitter_hashtag, "http://www.twitter.com/#{current_course.twitter_hashtag}"
     - if current_course.meeting_times.present?
       %li
+        %i.fi-projection-screen
         Classes Meet:
         = current_course.meeting_times
         = current_course.location
     - if current_course.office.present?
       %li
+        %i.fi-safety-cone
         Professor's Office:
         = current_course.office
     - if current_course.office_hours.present?
       %li
+        %i.fi-clock
         Office Hours:
         = auto_link(current_course.office_hours)
 
 %li.has-dropdown
-  = link_to current_user.public_name
+  %a
+    = current_user.public_name
   %ul.dropdown
     %li= link_to "My Account", edit_profile_users_path
-    %li= link_to "Logout", :logout
+    %li
+      %i.fi-power
+      = link_to "Logout", :logout

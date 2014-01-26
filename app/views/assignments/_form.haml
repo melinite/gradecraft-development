@@ -60,7 +60,7 @@
 
       .small-12.large-4.columns
         = f.label :point_total, "Total Score Possible"
-        = f.text_field :point_total
+        = f.text_field :point_total, data: {autonumeric: true, "m-dec" => "0"}
         - if @assignment.assignment_type.present? && @assignment.assignment_type.point_setting == "For All Assignments"
           %h6.small= "This assignment's category is currently set to have a maximum number of #{points @assignment.assignment_type.universal_point_value} points. Would you like to override this?"
 

@@ -65,7 +65,7 @@
 
     .small-12.large-4.columns
       = f.label :point_total, "Maximum Number of Points"
-      = f.text_field :point_total
+      = f.text_field :point_total, data: {autonumeric: true, "m-dec" => "0"}
       %h6.small If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create.
 
     .clearfix
@@ -228,7 +228,7 @@
     %hr
     .small-12.large-4.columns
       = f.label :total_assignment_weight, "Multiplier Count"
-      = f.text_field :total_assignment_weight
+      = f.text_field :total_assignment_weight, data: {autonumeric: true, "m-dec" => "0"}
       %h6.small
 
     .small-12.large-4.columns
@@ -238,18 +238,18 @@
 
     .small-12.large-4.columns
       = f.label :max_assignment_weight, "Maximum amount that students may allocate"
-      = f.text_field :max_assignment_weight
+      = f.text_field :max_assignment_weight, data: {autonumeric: true, "m-dec" => "0"}
 
     .clearfix
 
     .small-12.large-4.columns
       = f.label :max_assignment_types_weighted, "Maximum Multiplied Assignment Types"
-      = f.text_field :max_assignment_types_weighted
+      = f.text_field :max_assignment_types_weighted, data: {autonumeric: true, "m-dec" => "0"}
       %h6.small Is there a maximum number of assignment types that students can select to weight?"
 
     .small-12.large-4.columns
       = f.label :default_assignment_weight
-      = f.text_field :default_assignment_weight
+      = f.text_field :default_assignment_weight, data: {autonumeric: true, "m-dec" => "0"}
       %h6.small What amount should the assignment types that the student doesn't select to boost be multiplied by?
 
     .small-12.large-4.columns

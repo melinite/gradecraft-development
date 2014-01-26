@@ -58,9 +58,9 @@
                       = gf.check_box :raw_score, {}, @assignment.point_total, nil
                     - else
                       - if grade.persisted? && (grade.status == "Graded" || grade.status == "Released")
-                        = gf.text_field :raw_score
+                        = gf.text_field :raw_score, data: {autonumeric: true, "m-dec" => "0"}
                       - else
-                        = gf.text_field :raw_score, :value => nil
+                        = gf.text_field :raw_score, :value => nil, data: {autonumeric: true, "m-dec" => "0"}
                         = "/ #{points @assignment.point_total}"
 
         .right

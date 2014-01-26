@@ -18,9 +18,9 @@
                 = f.simple_fields_for :challenge_grades, cg do |cgf|
                   = cgf.hidden_field :team_id
                   - if cg.persisted?
-                    = cgf.text_field :score
+                    = cgf.text_field :score, data: {autonumeric: true, "m-dec" => "0"}
                   - else
-                    = cgf.text_field :score, :value => nil
+                    = cgf.text_field :score, :value => nil, data: {autonumeric: true, "m-dec" => "0"}
               %td= " / #{points  @challenge.point_total} points"
         .right
           = f.button :submit, "Submit", :class => "button tiny radius"

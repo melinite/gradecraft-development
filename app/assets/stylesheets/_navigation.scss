@@ -1,62 +1,51 @@
-.top-bar-section ul ul.dropdown.classInfo {
-  font-size: .8rem;
-  color: #FFF;
-  width: 20rem;
-  padding-top: 1rem;
+.top-bar-section {
+  font-family: "Avenir", sans-serif;
 }
 
 .top-bar-section ul ul.dropdown {
-  padding: 0.25rem 1rem;  
+  padding: .3rem .5rem;
   background-color: #333;
+  color: #FFF;
   border-bottom-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
-  box-shadow: 1px 1px 5px #888888;
+  box-shadow: 1px 1px 0px #888888;
+  font-size: 14px;
 
-  a:hover {
-      color: $lightblue;
-      background-color: #333;
+}
+.top-bar-section ul ul.dropdown.classInfo {
+  padding: .9rem .8rem;
+  width: 20rem;
+}
+ul.dropdown.classInfo li {
+  margin-bottom: .5rem;
+}
+
+  .top-bar-section ul ul.dropdown a {
+    color: $lightblue;
+}
+ .top-bar-section ul ul.dropdown li a:hover, .top-bar-section ul ul.dropdown li:hover {
+    color: $green;
+    background-color: #333 !important;
   }
-}
-
-.top-bar-section .classInfo li {
-  margin-bottom: .75rem;
-}
-
-.top-bar-section .dropdown.classInfo li a, .top-bar-section .dropdown.classInfo li a:hover {
-  background-color: #333;
-  padding: 0;
-  display: inline;
-}
-
-.top-bar-section .dropdown.classInfo li a {
-  color: $lightblue;
-}
-
-.sub-nav dt a, .sub-nav dd a, .sub-nav li a {
-  color: #FFF;
-}
-
-.sub-nav dt a:hover, .sub-nav dd a:hover, .sub-nav li a:hover {
-  color: #FFF;
-}
 
 select#course_id {
-  background-color: #333;
   border: 0;
   color: #FFF;
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   width: auto;
 }
 
+/** Styling the tagline **/
 .top-bar-section .left a {
   color: $lightblue;
-  font-family: "Avenir", sans-serif;
   margin-top: 1px;
   height: 1rem !important;
   position: relative;
   margin-right: 0;
+  font-family: "Avenir", sans-serif;
 }
 
+/** Foundation requires that the items in the menu bar be links, and since the 
+tagline doesn't actually link anywhere we're disabling the perception of the link **/
 .top-bar-section .left li a:hover {
   color: $lightblue;
   cursor: default;
