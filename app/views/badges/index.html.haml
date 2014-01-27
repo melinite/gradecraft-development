@@ -20,7 +20,7 @@
           - current_course_data.badges.each do |badge|
             %tr
               %td
-                %img{:src => badge.icon, :alt => badge.name, :width => "40"}
+                %img{:src => badge.icon, :alt => badge.name, :width => "80"}
                 %td
                   .bold= link_to badge.name, badge_path(badge)
                   = raw badge.description
