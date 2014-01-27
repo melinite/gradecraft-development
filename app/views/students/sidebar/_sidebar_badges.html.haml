@@ -7,19 +7,19 @@
         %li
           // Checking to see if the class has badges with points - if not display the tooltip without the point value
           - if ! current_course.valuable_badges? || ! badge.point_total.present?
-            %span.has-tip{:title => "#{badge.name}", :data => {'tooltip' => true} }
-              %img{:src => badge.icon, :alt => "You've earned the #{badge.name} badge", :class => "earned"}
+            //%span.has-tip{:title => "#{badge.name}", :data => {'tooltip' => true} }
+            %img{:src => badge.icon, :alt => "You've earned the #{badge.name} badge", :class => "earned"}
           - elsif current_course.valuable_badges?
-            %span.has-tip.tip-top{:title => "#{badge.name}, #{badge.point_total} points", :data => {'tooltip' => true} }
-              %img{:src => badge.icon, :alt => "You've earned the #{badge.name} badge", :class => "earned"}
+            //%span.has-tip.tip-top{:title => "#{badge.name}, #{badge.point_total} points", :data => {'tooltip' => true} }
+            %img{:src => badge.icon, :alt => "You've earned the #{badge.name} badge", :class => "earned"}
       - else
         %li
           - if badge.visible?
             - if current_course.valuable_badges?
-              %span.has-tip.tip-top{:title => "#{badge.name}, #{badge.point_total} points", :data => {'tooltip' => true} }
-                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
+              //%span.has-tip.tip-top{:title => "#{badge.name}, #{badge.point_total} points", :data => {'tooltip' => true} }
+              %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
             - else
-              %span.has-tip{:title => "#{badge.name}", :data => {'tooltip' => true} }
-                %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
+              //%span.has-tip{:title => "#{badge.name}", :data => {'tooltip' => true} }
+              %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
     .clearfix
     = "#{term_for :badges} you've earned will shine brightly!"
