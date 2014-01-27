@@ -1,21 +1,19 @@
 .top-bar-section {
-  font-family: "Avenir", sans-serif;
+  font-family: "Avenir", sans-serif !important;
 }
 
-
 .top-bar-section ul ul.dropdown {
-  padding: .3rem .5rem;
+  padding: .3rem .6rem;
   background-color: #333;
   color: #FFF;
-  border-bottom-left-radius: 1.5rem;
-  border-bottom-right-radius: 1.5rem;
-  box-shadow: 1px 1px 0px #888888;
+  border-bottom-left-radius: .7rem;
+  border-bottom-right-radius: .7rem;
   font-size: 14px;
 
 }
 
-.top-bar-section ul ul.dropdown li {
-  padding: .2rem;
+.top-bar-section ul ul.dropdown li a {
+  padding: 0.4rem;
 }
 
 .top-bar-section ul ul.dropdown.classInfo {
@@ -23,7 +21,7 @@
   width: 20rem;
 
   li {
-
+    margin-bottom: .5rem;
   }
 
   li:hover {
@@ -63,7 +61,6 @@ select#course_id {
   height: 1rem !important;
   position: relative;
   margin-right: 0;
-  font-family: "Avenir", sans-serif;
 }
 
 /** Foundation requires that the items in the menu bar be links, and since the

@@ -10,7 +10,7 @@
   - if current_course.has_teams?
     %li.icn_team= link_to term_for(:teams), teams_path
   %li.icn_fishes= link_to term_for(:groups), groups_path
-  - if current_course.shared_badges?
+  - if current_course.has_badges?
     %li.icn_gamepad= link_to "Class #{current_course.badge_term.pluralize}", class_badges_path
   - if current_course.student_weighted?
     %li.icn_playing_dic= link_to "#{term_for :weight} Chart", choices_students_path

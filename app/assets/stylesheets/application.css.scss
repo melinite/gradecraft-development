@@ -5,17 +5,12 @@
  *= require jquery.circliful
  *= require jquery.dynatable
  *= require timelineJS/themes/font/DroidSerif-DroidSans
- *= require bootstrap
- *= require bootstrap-glyphicons
- *= require bootstrap-datetimepicker
- *= require bootstrap-wysihtml5
  *= require responsive-tables
  *= require foundation.min
  *= require foundation_and_overrides
  *= require bootsy
  *= require select2
  *= require foundation-icons
-
 
 /* Branding colors */
 
@@ -45,13 +40,10 @@ $darkblue: #120470;
 
 body {
   font-family: "Avenir", sans-serif;
-}
-
-body.logged-in, body.logged-out {
   background: image-url("cloud_bg.gif");
 }
 
-.small-12.panel.mainContent {
+.mainContent {
   margin-top: 1rem;
   padding: 0;
   border-left: 10px solid $green;
