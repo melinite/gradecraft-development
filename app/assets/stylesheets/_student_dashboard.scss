@@ -83,8 +83,8 @@
   text-decoration: underline;
 }
 
-.assignmentDescription {
-  font-size: .85rem;
+.assignmentDescription, .assignmentDescription p {
+  font-size: .85rem !important;
   line-height: 1.25rem;
 }
 

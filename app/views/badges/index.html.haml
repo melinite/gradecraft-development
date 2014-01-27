@@ -11,7 +11,7 @@
         %thead
           %tr
             %th.sortable{"data-sort" => "string"} Icon
-            %th.sortable{"data-sort" => "string"} Description
+            %th.sortable{"data-sort" => "string", :width => 300} Description
             - if current_course.valuable_badges?
               %th{"data-sort" => "int"} Value
             %th.sortable{"data-sort" => "string"} Visible to Students
@@ -20,7 +20,7 @@
           - current_course_data.badges.each do |badge|
             %tr
               %td
-                %img{:src => badge.icon, :alt => badge.name, :width => "40"}
+                %img{:src => badge.icon, :alt => badge.name, :width => "80"}
                 %td
                   .bold= link_to badge.name, badge_path(badge)
                   = raw badge.description

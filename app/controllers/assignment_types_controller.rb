@@ -52,6 +52,11 @@ class AssignmentTypesController < ApplicationController
     end
   end
 
+  #display all grades for all assignments in an assignment type
+  def all_grades
+    @assignment_type = current_course.assignment_types.find(params[:id])
+  end
+
   def destroy
     @assignment_type = current_course.assignment_types.find(params[:id])
     @assignment_type.destroy
