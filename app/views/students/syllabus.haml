@@ -14,9 +14,8 @@
 
   .small-12.columns#syllabus
     %h2
-      - if current_user.is_student?
-        Your current score is
-        / Check to see if the course has a pre-determined total number of points
+      Your current score is
+      / Check to see if the course has a pre-determined total number of points
       - if current_course.point_total?
         %span#userScoreNum.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_course.point_total} points
@@ -47,7 +46,6 @@
 
           .small-10.assignmentDescription= raw assignment_type.predictor_description if assignment_type.predictor_description?
           %hr
-
 
           .small-10.assignmentList
             - assignments.each do |assignment|
