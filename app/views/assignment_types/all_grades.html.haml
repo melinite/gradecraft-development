@@ -10,7 +10,7 @@
         %thead
           %tr
             %th.sortable{"data-sort" => "string"} #{current_course.user_term}
-            - for assignment in @assignment_type.assignments
+            - for assignment in @assignment_type.assignments.chronological
               %th.sortable{"data-sort" => "int"}= assignment.name
         %tbody
           - current_course_data.students.each do |student|
