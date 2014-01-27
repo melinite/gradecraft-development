@@ -6,7 +6,7 @@
 
   if ($('#grade_distro').length) {
     $.getJSON('/students/scores_for_current_course.json', function (data) {
-      sparkOpts.height = '50px';
+      sparkOpts.height = '150px';
       $('#grade_distro').sparkline(data.scores, sparkOpts);
     })
   }

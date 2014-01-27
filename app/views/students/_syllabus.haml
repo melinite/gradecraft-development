@@ -1,3 +1,4 @@
+
 - cache current_student_data.cache_key('v1', current_user.is_staff?, :assignment_weights_key, :assignments_key, :grades_key, :submissions_key) do
   %dl.accordion{:data => {'accordion' => true}}
     - current_course_data.by_assignment_type.each do |assignment_type, assignments|
@@ -9,7 +10,7 @@
         .content{:id => "assignment_type-#{assignment_type.id}"}
           .small-12.columns.assignmentContent
             - if assignment_type.predictor_description?
-              %p.assignmentDescription= raw assignment_type.predictor_description
+              .assignmentDescription= raw assignment_type.predictor_description
             - if assignment_type.student_weightable? && current_course.assignment_weight_open?
               .small-2
                 - if current_student_data.weighted_assignments?
@@ -39,9 +40,9 @@
                   %span
                   - if assignment.future?
                     %span.bold= " • Due: #{assignment.due_at.strftime("%A, %B %d, %l:%M%p")}"
-                  - if assignment.is_required?
+                  - if assignment.required?
                     %span.label.label-important Required!
-                  - if assignment.self_gradeable? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
+                  - if assignment.student_logged? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
                     = simple_form_for current_student_data.grade_for_assignment(assignment), :url => self_log_grades_assignment_path(assignment), :method => :post do |f|
                       - present = current_student_data.present_for_class?(assignment)
                       = hidden_field_tag :present, !present
@@ -72,7 +73,7 @@
                       - else
                         = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius'
 
-    - if current_course.team_challenges?
+    - if current_course.team_challenges? && current_course.team_score_average?
       %dd
         %a{ "href" => "#challenges" } #{term_for :challenges} #{ points current_student.team_for_course(current_course).try(:challenge_grade_score) }/#{points current_course_data.point_total_for_challenges}
         .content{:id => "challenges"}

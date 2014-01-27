@@ -18,7 +18,7 @@
 
   .small-12.large-4.columns
     = f.label :point_total
-    = f.text_field :point_total
+    = f.text_field :point_total, data: {autonumeric: true, "m-dec" => "0"}
 
   .small-12.large-4.columns
     = f.input :due_at, as: :string, :start_year => Date.today.year, :include_blank => true, :input_html => { :class => 'datetimepicker' }

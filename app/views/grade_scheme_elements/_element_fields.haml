@@ -1,7 +1,9 @@
 .small-12.medium-2.columns
-  = f.input :low_range
+  = f.label :low_range
+  = f.text_field :low_range, data: {autonumeric: true, "m-dec" => "0"}
 .small-12.medium-2.columns
-  = f.input :high_range
+  = f.label :high_range
+  = f.text_field :high_range, data: {autonumeric: true, "m-dec" => "0"}
 .small-12.medium-3.columns
   = f.input :level
 .small-12.medium-3.columns

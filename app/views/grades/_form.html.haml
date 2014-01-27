@@ -18,7 +18,7 @@
       - elsif @assignment.has_levels?
         = f.select :raw_score, @assignment_score_levels.map { |l| [l.name,l.value] }
       - else
-        = f.text_field :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{ points @assignment.point_total }"
+        = f.text_field :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{ points @assignment.point_total }", data: {autonumeric: true, "m-dec" => "0"}
       = f.simple_fields_for :grade_files, @grade.grade_files.new do |gff|
         = gff.input :filepath, :input_html => { :class => 's3_files' }, :as => :hidden
 

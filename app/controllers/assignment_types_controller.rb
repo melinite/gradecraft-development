@@ -35,7 +35,6 @@ class AssignmentTypesController < ApplicationController
         format.json { render json: @assignment_type.errors, notice: "#{@assignment_type.name} was not created." }
       end
     end
-    respond_with(@assignment_type)
   end
 
   def update

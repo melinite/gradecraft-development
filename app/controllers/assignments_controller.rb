@@ -59,12 +59,17 @@ class AssignmentsController < ApplicationController
     if @assignment.due_at.present? && @assignment.open_at.present? && @assignment.due_at < @assignment.open_at
       flash[:error] = 'Due date must be after open date.'
       render :action => "new", :assignment => @assignment
-    elsif @assignment.save
+    end
+    respond_to do |format|
       self.check_uploads
-      set_assignment_weights
-      respond_with @assignment, :location => assignment_path(@assignment), :notice => 'Assignment was successfully created.'
-    else
-      respond_with @assignment
+      @assignment.assign_attributes(params[:assignment])
+      @assignment.assignment_type = current_course.assignment_types.find_by_id(params[:assignment_type_id])
+      if @assignment.save
+        set_assignment_weights
+        format.html { respond_with @assignment, :notice => 'Assignment was successfully created.' }
+      else
+        respond_with @assignment
+      end
     end
   end
 

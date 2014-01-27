@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require autonumeric
 //= require bootsy
 //= require foundation
 //= require jquery.omniselect
@@ -14,6 +15,7 @@
 //= require jquery.fileupload
 //= require s3_direct_upload
 //= require jquery.ui.widget
+//= require jquery.showmore.min
 //= require jquery.sparkline.min
 //= require jquery.circliful.min
 //= require underscore.min
@@ -50,6 +52,22 @@
 $(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
+
+  $('.assignmentDescription').showMore({
+        speedDown: 300,
+        speedUp: 300,
+        height: '3.6rem',
+        showText: 'Read more...',
+        hideText: '&laquo; Hide'
+   });
+
+   $('.assignmentList').showMore({
+        speedDown: 300,
+        speedUp: 300,
+        height: '0rem',
+        showText: 'See The Assignments &raquo;',
+        hideText: '&laquo; Hide'
+   });
 
 
   // Select2 Search forms for group creation

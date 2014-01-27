@@ -2,6 +2,7 @@
  *= require jquery.fileupload-ui
  *= require s3_direct_upload_progress_bars
  *= require jquery-ui.min
+ *= require jquery.circliful
  *= require jquery.dynatable
  *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require bootstrap
@@ -14,7 +15,6 @@
  *= require bootsy
  *= require select2
  *= require foundation-icons
- *= require jquery.circliful
 
 
 /* Branding colors */
@@ -152,3 +152,8 @@ h6.small {
   padding: 1rem;
   border: 1px solid #ccc;
 }
+
+.showmore_content { position:relative; overflow:hidden; }
+.showmore_trigger { margin: .5rem 0; text-transform: uppercase; cursor:pointer; color: #666; }
+.showmore_trigger:hover {text-decoration: underline;}
+.showmore_trigger span { display:block; }
