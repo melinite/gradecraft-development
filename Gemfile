@@ -62,6 +62,8 @@ gem 'timelineJS-rails'
 gem 'uglifier'
 gem 'whenever'
 gem 'will_paginate', '~> 3.0'
+gem 'foundation-icons-sass-rails'
+
 
 group :development do
   gem 'better_errors'

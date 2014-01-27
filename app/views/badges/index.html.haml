@@ -11,7 +11,7 @@
         %thead
           %tr
             %th.sortable{"data-sort" => "string"} Icon
-            %th.sortable{"data-sort" => "string"} Description
+            %th.sortable{"data-sort" => "string", :width => 300} Description
             - if current_course.valuable_badges?
               %th{"data-sort" => "int"} Value
             %th.sortable{"data-sort" => "string"} Visible to Students
