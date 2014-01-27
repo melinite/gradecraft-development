@@ -2,6 +2,7 @@
   font-family: "Avenir", sans-serif;
 }
 
+
 .top-bar-section ul ul.dropdown {
   padding: .3rem .5rem;
   background-color: #333;
@@ -12,20 +13,41 @@
   font-size: 14px;
 
 }
+
+.top-bar-section ul ul.dropdown li {
+  padding: .2rem;
+}
+
 .top-bar-section ul ul.dropdown.classInfo {
   padding: .9rem .8rem;
   width: 20rem;
-}
-ul.dropdown.classInfo li {
-  margin-bottom: .5rem;
+
+  li {
+
+  }
+
+  li:hover {
+  background-color: transparent !important;
+  }
+
+  a {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5rem;
+  }
+
+  a:hover {
+    background-color: transparent !important;
+  }
 }
 
-  .top-bar-section ul ul.dropdown a {
+  .top-bar-section ul ul.dropdown a, .top-bar-section ul ul.dropdown a:hover {
     color: $lightblue;
-}
- .top-bar-section ul ul.dropdown li a:hover, .top-bar-section ul ul.dropdown li:hover {
+  }
+
+ .top-bar-section ul ul.dropdown a:hover {
     color: $green;
-    background-color: #333 !important;
+    background-color: transparent !important;
   }
 
 select#course_id {
@@ -44,7 +66,7 @@ select#course_id {
   font-family: "Avenir", sans-serif;
 }
 
-/** Foundation requires that the items in the menu bar be links, and since the 
+/** Foundation requires that the items in the menu bar be links, and since the
 tagline doesn't actually link anywhere we're disabling the perception of the link **/
 .top-bar-section .left li a:hover {
   color: $lightblue;

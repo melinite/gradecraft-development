@@ -9,7 +9,7 @@
 %li.has-dropdown
   %a Class Info
   %ul.dropdown.classInfo
-    %li 
+    %li
       %i.fi-crown
       Professor #{ current_course.professor.try(:name) }
     - if current_user.is_student?
@@ -17,23 +17,26 @@
         - if team_leader.present?
           %li= link_to "Email #{current_course.team_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}"
     - if current_course.phone.present?
-      %li 
+      %li
         %i.fi-telephone
         Phone Number: #{current_course.phone }
     - if current_course.class_email.present?
-      %li
-        %i.fi-mail
-        Class Email: #{mail_to current_course.class_email, current_course.class_email}
+      %a{:href => "mailto:#{current_course.class_email}"}
+        %li
+          %i.fi-mail
+          Class Email: #{current_course.class_email}
     - if current_course.twitter_handle.present?
-      %li
-        %i.fi-social-twitter
-        Twitter Handle:
-        = link_to current_course.twitter_handle, "http://www.twitter.com/#{current_course.twitter_handle}"
+      %a{:href => "http://www.twitter.com/##{current_course.twitter_handle}"}
+        %li
+          %i.fi-social-twitter
+          Twitter Handle:
+          = current_course.twitter_handle
     - if current_course.twitter_hashtag.present?
-      %li
-        ="#"
-        Hashtag:
-        = link_to current_course.twitter_hashtag, "http://www.twitter.com/#{current_course.twitter_hashtag}"
+      %a{:href => "http://www.twitter.com/##{current_course.twitter_hashtag}"}
+        %li
+          ="#"
+          Hashtag:
+          = current_course.twitter_hashtag
     - if current_course.meeting_times.present?
       %li
         %i.fi-projection-screen
@@ -56,6 +59,4 @@
     = current_user.public_name
   %ul.dropdown
     %li= link_to "My Account", edit_profile_users_path
-    %li
-      %i.fi-power
-      = link_to "Logout", :logout
+    %li= link_to "Logout", :logout

@@ -10,7 +10,7 @@
         .content{:id => "assignment_type-#{assignment_type.id}"}
           .small-12.columns.assignmentContent
             - if assignment_type.predictor_description?
-              %p.assignmentDescription= raw assignment_type.predictor_description
+              .assignmentDescription= raw assignment_type.predictor_description
             - if assignment_type.student_weightable? && current_course.assignment_weight_open?
               .small-2
                 - if current_student_data.weighted_assignments?

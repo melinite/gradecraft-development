@@ -68,9 +68,14 @@
     }
 }
 
+.assignmentName, .assignmentInfo {
+  line-height: 1.25rem;
+  font-size: .85rem;
+  margin-bottom: .5rem;
+}
+
 .assignmentName a {
   color: $blue;
-  font-family: "Avenir", sans-serif;
 }
 
 .assignmentName a:hover {
@@ -78,13 +83,12 @@
   text-decoration: underline;
 }
 
-p.assignmentDescription {
-  margin-top: 1rem;
+.assignmentDescription {
   font-size: .85rem;
+  line-height: 1.25rem;
 }
 
 .student .sideBar.panel {
-
   margin-top: 1rem;
   padding: .75rem;
 }
@@ -111,10 +115,6 @@ tr.achieved {
   color: #FFF;
 }
 
-.assignmentContent {
-  background-color: #FFF;
-}
-
 #userScoreNum {
   font-weight: bold;
 }
@@ -133,4 +133,10 @@ img.earned {
 
 .strikethrough {
   text-decoration: line-through;
+}
+
+#syllabus .button.tiny {
+  margin: 0;
+  font-size: .7rem;
+  padding: 0.3rem .5rem;
 }
