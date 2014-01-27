@@ -87,7 +87,11 @@ GradeCraft::Application.routes.draw do
   resources :score_levels
 
   #3. Assignment Types
-  resources :assignment_types
+  resources :assignment_types do
+    member do
+      get 'all_grades'
+    end
+  end
 
 
   #4. Assignment Type Weights

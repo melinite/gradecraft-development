@@ -3,11 +3,11 @@
   / Badge Navigation
   - if current_user.is_staff?
     = content_nav_for @badge do
-      %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
-      %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "btn btn-tiny btn-info"
-      %li= link_to "New #{term_for :badge}", new_badge_path, :class => "btn btn-tiny btn-info"
-      %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "btn btn-tiny btn-info"
-      %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "btn btn-tiny btn-info"
+      %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
+      %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
+      %li= link_to "New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
+      %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "button tiny radius"
+      %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "button tiny radius"
   - else
     = content_nav_for @badge do
       %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
