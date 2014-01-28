@@ -12,7 +12,7 @@
           = f.simple_fields_for :grade_scheme_elements, GradeSchemeElement.new, child_index: 'child_index' do |ef|
             = render 'element_fields', f: ef
 
-      %fieldset.elements
+      %fieldset.elements.panel
         - @grade_scheme_elements.order_by_high_range.each do |element|
           %fieldset.element
             = f.simple_fields_for :grade_scheme_elements, element do |ef|

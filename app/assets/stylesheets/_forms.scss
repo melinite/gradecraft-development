@@ -46,6 +46,30 @@ label.checkbox input, label.checkbox, label.radio, label.radio input {
   clear: both;
 }
 
+
+label {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.radio label,
+.checkbox label {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: 0px;
+}
+
+
 #massGrade .inline-list {
   margin-bottom: 0;
 
@@ -126,9 +150,36 @@ label.checkbox, label.radio  {
   }
 }
 
-.score-level .remove-level.button {
+.score-level .remove-level.button, .remove-element.button {
   margin-top: 1.3rem;
-} 
+}
+
+/** Styling to make labels on checkboxes and radio forms align properly**/
+.radio,
+.checkbox {
+  display: block;
+  min-height: 20px;
+  padding-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  vertical-align: middle;
+}
+
+.radio label,
+.checkbox label {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: 0px;
+}
 
 select {
   background-color: #F0F8FF;

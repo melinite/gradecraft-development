@@ -11,7 +11,6 @@ ul.breadcrumbs {
 
   li {
   font-size: 1rem;
-  font-family: "Avenir", sans-serif;
 
   }
 }
@@ -31,16 +30,15 @@ ul.breadcrumbs {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     margin: 0 0.2rem;
-    background-color: $blue;
   }
 
   .navbar-nav li a {
     padding: 10px !important;
   }
 
-  li.active {
-    background-color: $darkblue;
-    color: #ccc;
+  .navbar-nav li a.active {
+    background-color: $lightblue;
+    color: #FFF;
   }
 }
 

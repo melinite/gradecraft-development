@@ -6,12 +6,8 @@
  *= require jquery.dynatable
  *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require responsive-tables
- *= require foundation.min
  *= require foundation_and_overrides
- *= require bootstrap
- *= require bootstrap-glyphicons
  *= require bootstrap-datetimepicker
- *= require bootstrap-wysihtml5
  *= require bootsy
  *= require select2
  *= require foundation-icons
@@ -25,6 +21,11 @@ $red: #E95D4E;
 $yellow: #FFF90D;
 $orange: #F4A425;
 $darkblue: #120470;
+
+$primary-color: #274E56;
+$secondary-color: #45A1DE;
+$alert-color: #f04124;
+$success-color: #67CF30;
 
 /* Importing supporting files. If you create a new css file you'll need to add it here.  */
 @import 'compass';
@@ -40,42 +41,36 @@ $darkblue: #120470;
 @import 'navigation';
 @import 'buttons';
 
-/* Background color for page */
-
-body {
-  font-family: "Avenir", sans-serif;
+/* Background image for site, this is declared because otherwise it overrides the text editor's bkg */
+body.logged-in, body.logged-out {
   background: image-url("cloud_bg.gif");
 }
 
 .mainContent {
-  margin-top: 1rem;
-  padding: 0;
   border-left: 10px solid $green;
   border-right: 10px solid $green;
   border-bottom: 10px solid $green;
   border-top: none;
+  border-bottom: none;
   background-color: #FFF;
   min-height: 815px;
+  padding: 0;
 }
 
 .row.panel.publicContent {
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
-  margin-top: 1rem;
   margin-bottom: 0;
   padding-top: 2rem;
   border-left: 10px solid $green;
   border-right: 10px solid $green;
-  border-top: 10px solid $green;
+  border-top: none;
   background-color: #FFF;
+  min-height: 30rem;
 }
 
 .row.panel.footer {
   margin-top: 0;
   background-color: #444;
   border: none;
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
 
   h6 {
     font-weight: bold;
@@ -153,3 +148,10 @@ h6.small {
 .showmore_trigger { margin: .5rem 0; text-transform: uppercase; cursor:pointer; color: #666; }
 .showmore_trigger:hover {text-decoration: underline;}
 .showmore_trigger span { display:block; }
+
+@media (min-width: 1000px)  {
+  .mainContent, .publicContent {
+    margin-top: 1rem;
+  }
+}
+

@@ -31,7 +31,7 @@
 
   .small-12.columns
     - cache current_student_data.cache_key('v1', :assignment_weights_key, :assignments_key, :grades_key, :badges_key, current_student.id) do
-      #gradePredictor{ 'data-magellan-expedition' => "small-12 large-8" }
+      .gradePredictor
         #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
           %h3
             Projected points:

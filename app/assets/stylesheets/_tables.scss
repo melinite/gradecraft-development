@@ -1,47 +1,51 @@
 
 /** Table Styles **/
 
+/* Set the tables to be full width of the page*/
 table.responsive {
+  width: 100%;
+  border-spacing: 0 !important;
+  font-size: .8rem;
+  margin-bottom: 1rem;
+
   a {
     color: #333;
   }
 
   a:hover {
-    color: $lightblue;
+    color: $green;
   }
 
   .button {
     margin-bottom: 0;
   }
-}
-table.responsive tbody, table.responsive tbody tr {
-  padding: 0;
+
+  td {
+    line-height: 1.5rem;
+  }
 }
 
-table td {
-  margin: 0;
-  padding: 0;
-}
-
-table {
-  width: 100%;
-  border-spacing: 0 !important;
-  border-radius: .4rem;
-}
 
 table th {
   text-transform: capitalize;
   font-weight: normal;
+  padding: .5rem;
 }
 
- table .button-group li button.tiny {
+table th.sortable {
+  cursor: pointer;
+}
+
+table .button-group li a.button.tiny {
   margin: 0;
   border-radius: 0;
   padding: .4rem .5rem;
+  font-size: .9rem;
 }
 
+/* Highlight the sorted columns */
 th.sorting-desc, th.sorting-asc {
-  color: $yellow;
+  color: $lightblue;
 }
 
 dd .content.active {
@@ -69,7 +73,7 @@ dd .content.active {
 }
 
 .table-condensed thead > tr > th.dow {
-  color: #333 !important;
+  color: $primary-color;
 }
 @media (min-width: 1280px)  {
   .button-column {

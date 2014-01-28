@@ -35,6 +35,10 @@
                   .button-bar
                     %ul.button-group.radius.round
                       %li= link_to "Quick Award", mass_award_badge_path(badge), :class => "button tiny secondary"
-                      %li= link_to 'Edit', edit_badge_path(badge), :class => 'button tiny secondary'
-                      %li= link_to 'Delete', badge_path(badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                      %li
+                        %a{:href => edit_badge_path(badge), :class => 'button tiny secondary'}
+                          %i.fi-widget
+                      %li
+                        %a{:href => badge_path(badge), :method => :delete, :data => { confirm: 'Are you sure?' }, :class => "button tiny secondary" }
+                          %i.fi-trash
     .clearfix

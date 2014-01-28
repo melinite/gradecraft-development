@@ -48,6 +48,7 @@
 //= require select2
 //= require responsive-tables
 //= require grade_distribution
+//= require jquery.sticky
 
 $(function(){ $(document).foundation(); });
 
@@ -56,8 +57,8 @@ $(document).ready(function(){
   $('.assignmentDescription').showMore({
         speedDown: 300,
         speedUp: 300,
-        height: '3.6rem',
-        showText: 'Read more...',
+        height: '0em',
+        showText: 'All the Details &raquo;',
         hideText: '&laquo; Hide'
    });
 
@@ -69,6 +70,7 @@ $(document).ready(function(){
         hideText: '&laquo; Hide'
    });
 
+   $(".gradePredictor").sticky({topSpacing:35});
 
   // Select2 Search forms for group creation
 
