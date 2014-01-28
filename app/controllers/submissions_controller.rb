@@ -11,13 +11,10 @@ class SubmissionsController < ApplicationController
   end
 
   def show
-    @title = "View Submission"
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.find(params[:id])
-    if current_user.is_student?
-      enforce_view_permission(@submission)
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-    end
+    @grade = @assignment.grades.find(@submission)
+    redirect_to assignment_grades_path(@assignment, @submission.student)
   end
 
   def new

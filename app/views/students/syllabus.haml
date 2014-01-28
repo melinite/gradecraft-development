@@ -47,44 +47,50 @@
           .small-10.assignmentDescription= raw assignment_type.predictor_description if assignment_type.predictor_description?
           %hr
 
-          .small-10.assignmentList
-            - assignments.each do |assignment|
-              - if assignment.visible? || current_student_data.grade_released_for_assignment?(assignment)
-                .small-12.assignmentInfo
-                  %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
-                  - if current_student_data.grade_released_for_assignment?(assignment)
-                    %span.points.earned= "#{points current_student_data.score_for_assignment(assignment)}  / "
-                  %span.points.total #{points current_student_data.point_total_for_assignment(assignment)} points
-                  - if assignment.assignment_type.student_weightable?
-                    = "(Multiplied) "
-                    = "–"
-                    - if current_student_data.grade_released_for_assignment?(assignment)
-                      - grade = current_student_data.grade_for_assignment(assignment)
-                      %span.points.earned= points grade.raw_score
-                      %span.points= "/"
-                    %span.points= points assignment.point_total
-                    %span.points points (Raw)
-                  - if assignment.future?
-                    %span.bold= " • Due: #{assignment.due_at.strftime("%A, %B %d, %l:%M%p")}"
-                  - if assignment.required?
-                    %span.label.alert.round Required!
-                  - if assignment.student_logged? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
-                    = simple_form_for current_student_data.grade_for_assignment(assignment), :url => self_log_grades_assignment_path(assignment), :method => :post do |f|
-                      - present = current_student_data.present_for_class?(assignment)
-                      = hidden_field_tag :present, !present
-                      = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "button #{present ? 'alert' : 'success'} tiny"
-                  - if assignment.has_groups?
-                    - if current_student.group_for_assignment(assignment)
-                      = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny radius"
-                      - if assignment.accepts_submissions?
-                        = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+          .small-12.assignmentList
+            %table.responsive
+              - assignments.each do |assignment|
+                - if assignment.visible? || current_student_data.grade_released_for_assignment?(assignment)
+                  %tr
+                    %td
+                      - if assignment.required?
+                        %span.has-tip{:title => "This #{term_for :assignment} is required!", :data => {'tooltip' => true} }
+                          %i.fi-star
+                      %span.assignmentName= link_to assignment.name, assignment_grade_path(assignment, :student_id => current_student)
+                    %td
+                      - if assignment.assignment_type.student_weightable?
+                        - grade = current_student_data.grade_for_assignment(assignment)
+                        %span.has-tip{:title => "#{points current_student_data.score_for_assignment(assignment)} / #{points current_student_data.point_total_for_assignment(assignment)} points (Multiplied), #{points grade.raw_score} / #{ points assignment.point_total } points (Raw)", :data => {'tooltip' => true}  }
+                          - if current_student_data.grade_released_for_assignment?(assignment)
+                            = "#{points current_student_data.score_for_assignment(assignment)}  / "
+                            = points assignment.point_total
+                            points
+                      - else
+                        - if current_student_data.grade_released_for_assignment?(assignment)
+                          = "#{points current_student_data.score_for_assignment(assignment)}  / "
+                          = points assignment.point_total
+                          points
+
+                    %td= "Due: #{assignment.due_at.strftime("%A, %B %d, %l:%M%p")}" if assignment.future?
+                    - if assignment.student_logged? && assignment.open? && assignment_type.name == 'Attendance' && current_user.is_student?
+                      %td
+                        = simple_form_for current_student_data.grade_for_assignment(assignment), :url => self_log_grades_assignment_path(assignment), :method => :post do |f|
+                          - present = current_student_data.present_for_class?(assignment)
+                          = hidden_field_tag :present, !present
+                          = f.submit (present ? assignment_type.student_logged_revert_button_text : assignment_type.student_logged_button_text), :class => "button #{present ? 'alert' : 'success'} tiny"
+                    - if assignment.has_groups?
+                      %td
+                        - if current_student.group_for_assignment(assignment)
+                          = link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny radius"
+                          - if assignment.accepts_submissions?
+                            = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+                        - else
+                          = link_to "Create a Group", new_group_path, :class => "button tiny radius primary"
                     - else
-                      = link_to "Create a Group", new_group_path, :class => "button tiny radius primary"
-                  - else
-                    - if assignment.accepts_submissions?
-                      = render "students/submissions", assignment: assignment
-                  - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
-                    = link_to "See Feedback", assignment_grade_path(assignment, :student_id => current_student), :class => "button tiny radius primary"
+                      - if assignment.accepts_submissions?
+                        %td= render "students/submissions", assignment: assignment
+                    - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
+                      %td= link_to "See Feedback", assignment_grade_path(assignment, :student_id => current_student), :class => "button tiny radius primary"
 
         .clearfix
 

@@ -24,6 +24,8 @@
                   %ul.button-group.radius.round
                     %li= link_to 'See', assignment_type_path(assignment_type), :class => 'button tiny secondary'
                     %li= link_to 'Edit', edit_assignment_type_path(assignment_type), :class => 'button tiny secondary'
-                    %li= link_to 'Delete', assignment_type, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                    %li
+                      %a{:href => assignment_type_path(assignment_type), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
+                        %i.fi-trash
 
   .clearfix

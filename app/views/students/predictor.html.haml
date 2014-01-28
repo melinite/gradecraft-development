@@ -42,9 +42,9 @@
                 = points current_student_data.predicted_score
             = "/"
             - if current_course.point_total.present?
-              %span#course-total-preset{ 'data-coursetotal' => "#{current_course.point_total}" }= points current_course.point_total
+              %span= "#{ points current_course.point_total } possible points"
             - else
-              %span#predictor-course-total-display= points current_student_data.point_total
+              %span= "#{points current_student_data.point_total} possible points"
 
             //%h3
             //Predicted final grade:
@@ -64,10 +64,7 @@
 
     #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
       %ul.slides.small-12.columns
-        - if current_user.is_staff?
-          = render partial: 'students/predictor/instructor_assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
-        - elsif current_user.is_student?
-          = render partial: 'students/predictor/assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
+        = render partial: 'students/predictor/assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
         = render 'students/predictor/badges'
         //= render 'students/predictor/challenges'
 

@@ -9,7 +9,6 @@
   z-index: 100;
 }
 
-
 #prediction {
   height: 200px;
 }
@@ -131,4 +130,13 @@ img.earned {
   margin: 0;
   font-size: .7rem;
   padding: 0.3rem .5rem;
+}
+
+.chartcontainer {
+  position: relative;
+
+  #levels_per_assignment {
+    height: 200px;
+  }
+
 }

@@ -1,3 +1,4 @@
+/*
 !function(app, $) {
   $(document).ready(function() {
     var users = app.preloadStore.get('users');
@@ -24,3 +25,4 @@
     });
   });
 }(Gradecraft, jQuery);
+*/

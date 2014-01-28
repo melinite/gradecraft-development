@@ -10,7 +10,6 @@
 //= require autonumeric
 //= require bootsy
 //= require foundation
-//= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
 //= require s3_direct_upload
@@ -49,6 +48,7 @@
 //= require responsive-tables
 //= require grade_distribution
 //= require jquery.sticky
+//= require levels_per_assign
 
 $(function(){ $(document).foundation(); });
 

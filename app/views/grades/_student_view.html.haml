@@ -1,30 +1,25 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
-  = content_nav_for @assignment, "My Grade" do
-    %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+  = content_nav_for @assignment do
+    = render "students/tabs"
 
   .small-12.columns
     %h3= link_to @grade.assignment.name, @grade.assignment
-    %h5
-      Score:
-      %span.bold= points @grade.score
-      - if @grade.student.submission_for_assignment(@assignment)
-        %h5= link_to "View My Submission", assignment_submission_path(@assignment, @grade.student.submission_for_assignment(@assignment))
-      //- if @grade.grade_files.present?
-      //%h5 Documents:
-      //%ul
-      //- @grade.grade_files.each do |gf|
-      //%li
-      //   = link_to gf.filename, gf.url
-      //  = link_to "(Remove)", grades_grade_file_remove_path({ :grade_id => @grade.id, :grade_file_id => gf.id, :redirect => { :controller => "grades", :id => @grade.id, :upload_id => gf.id } } )
 
-    - if @grade.earned_badges.present?
-      %h5= "#{term_for :badges}:"
-      - @grade.earned_badges.each do |badge|
-        %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
+    .assignmentDescription
+      = @grade.assignment.description
 
-    - if @grade.feedback?
-      %h5 Instructor Feedback:
-      %p= raw @grade.feedback
+    //- if @grade.grade_files.present?
+    //%h5 Documents:
+    //%ul
+    //- @grade.grade_files.each do |gf|
+    //%li
+    //   = link_to gf.filename, gf.url
+    //  = link_to "(Remove)", grades_grade_file_remove_path({ :grade_id => @grade.id, :grade_file_id => gf.id, :redirect => { :controller => "grades", :id => @grade.id, :upload_id => gf.id } } )
+
+    - if @grade.assignment.is_individual?
+      = render "individual_show"
+    - else
+      = render "group_show"
 
   .clearfix
