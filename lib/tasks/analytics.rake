@@ -146,11 +146,28 @@ namespace :analytics do
     export_dir = ENV['EXPORT_DIR']
     course_ids.each do |id|
       puts "Exporting for course: #{id}"
-      %w(analytics_events course_events course_role_events course_predictions course_user_events course_pageviews course_user_pageviews course_user_page_pageviews course_pageview_by_times course_page_pageviews course_role_pageviews course_role_page_pageviews course_logins course_role_logins course_user_logins).each do |aggregate|
-        `mongoexport --db grade_craft_development --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "#{aggregate}.json")}`
-        #`mongoexport --db grade_craft_development --fields id --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "#{aggregate}.csv")} --csv`
-      end
+
+      #puts "Generating JSON export files"
+      #%w(analytics_events course_events course_role_events course_predictions course_user_events course_pageviews course_user_pageviews course_user_page_pageviews course_pageview_by_times course_page_pageviews course_role_pageviews course_role_page_pageviews course_logins course_role_logins course_user_logins).each do |aggregate|
+        #`mongoexport --db grade_craft_development --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "json", "#{aggregate}.json")}`
+      #end
+
+      puts "Generating CSV reports"
+      # course user pageviews
+      `mongoexport --db grade_craft_development --fields user_id,pages._all.all_time --collection course_user_pageviews --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_pageviews_total.csv")} --csv`
+      # course user logins
+      `mongoexport --db grade_craft_development --fields user_id,all_time.count --collection course_user_logins --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_logins_total.csv")} --csv`
+      # course user predictor events
+      `mongoexport --db grade_craft_development --fields user_id,events.predictor.all_time --collection course_user_events --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_events_total.csv")} --csv`
+      # course user predictor pageviews
+      `mongoexport --db grade_craft_development --fields "user_id,all_time" --collection course_user_page_pageviews --query '{"course_id": #{id}, "page": "/dashboard#predictor"}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_pageviews_total.csv")} --csv`
+      # user predictor events with role, assignment, prediction score, and datetime
+      `mongoexport --db grade_craft_development --fields user_id,user_role,assignment_id,score,possible,created_at --collection analytics_events --query '{"course_id": #{id}, "event_type": "predictor"}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_events.csv")} --csv`
+      # user event with page, event, and datetime
+      `mongoexport --db grade_craft_development --fields user_id,user_role,event_type,page,created_at --collection analytics_events --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_events.csv")} --csv`
     end
+
+    puts "Done!"
   end
 
   def convert(value)
