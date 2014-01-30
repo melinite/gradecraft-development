@@ -30,6 +30,19 @@ table th {
   text-transform: capitalize;
   font-weight: normal;
   padding: .5rem;
+
+  .button-group {
+    button {
+      margin: 0;
+      padding: .2rem;
+      background-color: $lightblue;
+    }
+
+    button:hover {
+      background-color: $darkblue;
+    }
+  }
+
 }
 
 table th.sortable {
@@ -53,13 +66,22 @@ dd .content.active {
   padding: 0;
 }
 
-.button.tiny.round.aindex {
+.button.tiny.aindex {
   width: auto !important;
-  background-color: $blue;
+  background-color: $lightblue;
   color: #FFF;
   right: 0;
+  position: relative;
   top: -2.8rem;
-  margin: 0;
+  margin-bottom: -4.8rem;
+}
+
+.button.tiny.aindex:hover {
+  background-color: $darkblue;
+}
+
+dd .small-2 {
+  height: 0;
 }
 
 
@@ -119,6 +141,10 @@ td.absent {
   background-color: #f9adad;
 }
 
-td.partial {
+td.partial, td.need_to_be_released {
   background-color: #f6f87b;
+}
+
+.highcharts-axis-labels {
+  background-color: pink !important;
 }

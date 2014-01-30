@@ -18,34 +18,38 @@
             %th.sortable{"data-sort" => "string"} First Name
             %th.sortable{"data-sort" => "string"} Last Name
             - for assignment in @assignment_type.assignments.chronological
-              %th.sortable{"data-sort" => "int"}= assignment.name
+              - if assignment.point_total > 0
+                %th.sortable{"data-sort" => "int"}= assignment.name
         %tbody
           - if @team
+            // Checking to see if a team is declared, if it is only displaying students for that team
             - students = current_course_data.students_for_team(@team)
           - else
+            // otherwise displaying students from the entire class
             - students = current_course_data.students
           - students.each do |student|
             %tr
               %td= link_to student.first_name, student_path(student)
               %td= link_to student.last_name, student_path(student)
               - @assignment_type.assignments.chronological.each do |assignment|
-                - assignment.grade_for_student(student).tap do |grade|
+                - if assignment.point_total > 0
+                  - assignment.grade_for_student(student).tap do |grade|
 
-                  - if grade && grade.score == assignment.point_total
-                    // Displaying td's colored green if the student earned all points possible on the assignment
-                    %td.complete
+                    - if grade && grade.score == assignment.point_total
+                      // Displaying td's colored green if the student earned all points possible on the assignment
+                      %td.complete
 
-                  - elsif grade && grade.score == 0
-                    // Displaying td's colored red if the student earned no points on the assignment (but HAS a grade)
-                    %td.absent
+                    - elsif grade && grade.score == 0
+                      // Displaying td's colored red if the student earned no points on the assignment (but HAS a grade)
+                      %td.absent
 
-                  - elsif grade && grade.score < assignment.point_total
-                    // Displaying td's colored yellow if the student earned some points on the assignment
-                    %td.partial
+                    - elsif grade && grade.score < assignment.point_total
+                      // Displaying td's colored yellow if the student earned some points on the assignment
+                      %td.partial
 
-                  - else
-                    // Displaying td's colored white if the studnet has no grade
-                    %td
+                    - else
+                      // Displaying td's colored white if the studnet has no grade
+                      %td
 
 
 

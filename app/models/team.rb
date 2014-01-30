@@ -6,7 +6,7 @@ class Team < ActiveRecord::Base
   has_many :team_memberships
   has_many :students, :through => :team_memberships
 
-  has_many :earned_badges, :as => :group
+  has_many :earned_badges, :through => :students
 
   has_many :challenge_grades
   has_many :challenges, :through => :challenge_grades
@@ -31,6 +31,10 @@ class Team < ActiveRecord::Base
 
   def member_count
     students.count
+  end
+
+  def badge_count
+    earned_badges.count
   end
 
   def average_grade

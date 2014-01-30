@@ -14,6 +14,7 @@
           %th{"data-sort" => "int"} Rank
           %th{"data-sort" => "string"} Name
           %th{"data-sort" => "int"} # Students
+          %th{"data-sort" => "int"} Score
           - if current_course.team_score_average?
             %th{"data-sort" => "int"} Score
           - else
@@ -29,8 +30,9 @@
             %td= link_to team.name, team
             %td= team.member_count
             %td= points team.try(:average_grade)
+            %td= points team.try(:challenge_grade_score)
             - if current_user.is_staff?
-              %td= team.try(:student_badge_count)
+              %td= points team.badge_count
               %td
                 .button-bar
                   %ul.button-group.round

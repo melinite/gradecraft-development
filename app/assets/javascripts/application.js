@@ -49,6 +49,7 @@
 //= require grade_distribution
 //= require jquery.sticky
 //= require levels_per_assign
+//= require jquery.highchartTable-min
 
 $(function(){ $(document).foundation(); });
 
@@ -85,6 +86,8 @@ $(document).ready(function(){
     placeholder: "Select Students",
     allowClear: true
   });
+
+  $('table.highchart').highchartTable();
 
   $('#myStat').circliful();
 

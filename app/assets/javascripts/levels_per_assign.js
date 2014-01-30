@@ -3,11 +3,16 @@ $(document).ready(function() {
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
-            plotShadow: false
+            plotShadow: false,
+            width: 450,
+            height: 300
         },
         title: {
             text: ' '
         },
+      credits: {
+        enabled: false
+      },
         tooltip: {
     	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
