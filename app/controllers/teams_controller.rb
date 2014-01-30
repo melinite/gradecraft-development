@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except => [:index, :show, :leaderboard]
+  before_filter :ensure_staff?
 
   def index
     @teams = current_course.teams.includes(:earned_badges)

@@ -16,6 +16,10 @@
       - current_student.team_leader.tap do |team_leader|
         - if team_leader.present?
           %li= link_to "Email #{current_course.team_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}"
+    - if current_user.is_student? && current_user.team_for_course(current_course).present?
+      %li
+        %i.fi-torsos-all
+        = link_to "#{term_for :team} #{current_user.team_for_course(current_course).name}", teams_path
     - if current_course.phone.present?
       %li
         %i.fi-telephone
