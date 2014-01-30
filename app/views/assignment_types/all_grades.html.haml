@@ -10,13 +10,13 @@
         %thead
           %tr
             %th.sortable{"data-sort" => "string"} #{current_course.user_term}
-            - for assignment in @assignment_type.assignments
+            - for assignment in @assignment_type.assignments.chronological
               %th.sortable{"data-sort" => "int"}= assignment.name
         %tbody
           - current_course_data.students.each do |student|
             %tr
               %td= link_to student.name, user_path(student)
-              - @assignment_type.assignments.each do |assignment|
+              - @assignment_type.assignments.chronological.each do |assignment|
                 - assignment.grade_for_student(student).tap do |grade|
                   - if grade && grade.score != 0
                     %td.complete= link_to "#{points grade.score}", edit_assignment_grade_path(assignment, :student_id => student.id)

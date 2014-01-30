@@ -347,9 +347,9 @@ def groups_by_assignment_id
   #Export Users and Final Scores for Course
   def self.csv_for_course(course, options = {})
     CSV.generate(options) do |csv|
-      csv << ["First Name", "Last Name", "Email", "Score", "Grade" ]
+      csv << ["GradeCraft ID", "First Name", "Last Name", "Email", "Score", "Grade" ]
       course.students.each do |student|
-        csv << [student.first_name, student.last_name, student.email, student.score_for_course(course)]
+        csv << [student.id, student.first_name, student.last_name, student.email, student.score_for_course(course)]
       end
     end
   end
