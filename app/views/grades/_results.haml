@@ -1,0 +1,17 @@
+.small-12.large-6.columns
+  - if current_user.is_student?
+    .bold Your Results
+  - else
+    .bold= " #{@grade.student.try(:name)}'s Results "
+  - if @grade.raw_score?
+    %h6
+      %span Score:
+      %span.bold= "#{points @grade.raw_score }"
+      %span=" / #{points @grade.assignment.point_total } possible points"
+  - if @grade.feedback?
+    %h6 Instructor Feedback:
+    %p= raw @grade.feedback
+
+  - if @grade.assignment.release_necessary? && current_user.is_staff?
+    %h6 Status:
+    = @grade.status
