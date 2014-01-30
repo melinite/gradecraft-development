@@ -22,7 +22,7 @@
 
 
 
-  - if current_user.is_student? && ! current_student.display_name?
+  - if current_user.is_student? && ! current_student.display_name? && (current_course.in_team_leaderboard? || current_student.team_for_course(current_course).in_team_leaderboard?)
     %h6.small.right
       = "Want to see the your #{term_for :team} leaderboard?"
       .bold= link_to "Set your screen name!", edit_profile_users_path
@@ -34,7 +34,7 @@
       %table.responsive.simpleTable.highchart{:data => { "graph-container" => "#graphcontainer", "graph-type" => "column", "graph-legend-disabled" => 1, "graph-xaxis-rotation" => 0  } }
         %thead
           %tr
-            //%th{:data => { "graph-skip" => "1" } } Rank
+            //%th{:data => { "graph-skip" => 1 } } Rank
             %th #{term_for :team}
             %th Score
         %tbody
@@ -47,7 +47,7 @@
                 %td= points team.try(:average_grade)
               - else
                 %td= team.try(:challenge_grade_score)
-                //- i += 1
+            //- i += 1
     .small-12.columns.medium-8
       #graphcontainer
 

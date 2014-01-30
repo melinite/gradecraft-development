@@ -19,7 +19,7 @@
     - if current_user.is_student? && current_user.team_for_course(current_course).present?
       %li
         %i.fi-torsos-all
-        = link_to "#{term_for :team} #{current_user.team_for_course(current_course).name}", teams_path
+        = "#{term_for :team} #{current_user.team_for_course(current_course).name}"
     - if current_course.phone.present?
       %li
         %i.fi-telephone
