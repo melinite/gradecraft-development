@@ -1,14 +1,6 @@
 .small-12.panel.mainContent
   = content_nav_for "My Dashboard" do
-    %li= link_to "Syllabus", student_syllabus_path(current_student), :class => "button tiny radius"
-    - if current_course.use_timeline?
-      %li= link_to "Timeline", student_timeline_path(current_student), :class => "button tiny radius"
-    - if current_course.grading_philosophy.present?
-      %li= link_to "Grade Philosophy", student_grading_philosophy_path(current_student), :class => "button tiny radius"
-    - if current_course.predictor_on?
-      %li= link_to "Grade Predictor", student_predictor_path(current_student), :class => "button tiny radius"
-    - if current_course.has_badges?
-      %li= link_to "#{term_for :badges}", student_badges_path(current_student), :class => "button tiny radius"
+    = render "student_tabs"
 
   = link_to "Subscribe to the iCal feed", feed_assignments_path(format: "ics")
 

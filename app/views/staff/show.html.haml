@@ -1,9 +1,7 @@
 .small-12.panel.mainContent
   / Staff Navigation
   = content_nav_for @user do
-    %li= link_to "Staff Index", staff_index_path, :class => "button tiny radius"
-    %li= link_to "Create a New Staff Member", new_user_path, :class => "button tiny radius"
-    %li= link_to "Edit #{@user.name}", edit_user_path(@user), :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     %h2 Courses

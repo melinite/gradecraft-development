@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Assignment Weight Navigation
   = content_nav_for @student, AssignmentWeight do
-    %li= link_to "Back to My Dashboard", dashboard_path, :class => "button radius tiny"
+    = render "students/tabs"
 
   .small-12.columns
     - if current_user.is_staff?

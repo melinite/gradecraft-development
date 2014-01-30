@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Groups Navigation
   = content_nav_for Group do
-    %li= link_to "New #{term_for :group}", new_group_path(@assignment), :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     %h2= @title

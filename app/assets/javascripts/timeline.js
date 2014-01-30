@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var timeline = $('#time_line');
 
-  //grabing the timeline data
+  //grabbing the timeline data
   var source = JSON.parse(timeline.attr('data-timeline'));
   // Filtering down to the event objects
   var timeline_dates = source.timeline.date;
@@ -19,7 +19,8 @@ $(document).ready(function() {
     var st = timeline_dates[x].startDate;
 
     // Checking to make sure there is a date for the event - skipping it if not
-    if (typeof st != "undefined") {
+    if(typeof st !== "undefined") {
+      console.log(st.typeof);
       //splitting the variable into pieces so we can reformat it for Safari
       var dt = st.split(/[^0-9]/);
 
@@ -32,7 +33,7 @@ $(document).ready(function() {
     }
     // and if we skipped it we need to count the slide anyways
     else {
-      start_index++
+      start_index++;
     }
 
   }

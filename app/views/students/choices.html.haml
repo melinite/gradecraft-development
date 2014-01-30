@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Students Navigation
   = content_nav_for :students, "#{term_for :weight} Choices" do
-    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     .small-12.medium-4.columns

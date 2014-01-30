@@ -1,0 +1,3 @@
+%li= link_to 'See All Categories', categories_path, :class => "button tiny radius"
+- if @category.present?
+  %li= link_to "Edit #{@category.name}", edit_category_path(@category), :class => "button tiny radius"

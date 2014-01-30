@@ -1,0 +1,3 @@
+%li= link_to "See All #{term_for :challenges}", challenges_path, :class => "button tiny radius"
+%li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "button tiny radius"
+%li= link_to 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "button tiny radius"

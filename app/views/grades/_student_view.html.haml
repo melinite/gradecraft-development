@@ -1,13 +1,17 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
   = content_nav_for @assignment do
-    = render "students/tabs"
+    - if current_user.is_student?
+      = render "students/student_tabs"
+    - else
+      = render "students/tabs"
+
 
   .small-12.columns
-    %h3= link_to @grade.assignment.name, @grade.assignment
+    %h3= @grade.assignment.name
 
     .assignmentDescription
-      = @grade.assignment.description
+      = raw @grade.assignment.description
 
     //- if @grade.grade_files.present?
     //%h5 Documents:

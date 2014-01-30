@@ -1,0 +1,4 @@
+%li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
+- if @badge.present?
+  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
+  %li= link_to "See All Awarded #{term_for :badges}", @badge, :class => "button tiny radius"

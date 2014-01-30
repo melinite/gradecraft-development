@@ -1,32 +1,11 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
     = content_nav_for "My Dashboard" do
-      - if current_course.use_timeline?
-        %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
-      %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
-      - if current_course.grading_philosophy.present?
-        %li= link_to "Grade Philosophy", "#", :class => "button tiny radius active"
-      - if current_course.predictor_on?
-        %li= link_to "Grade Predictor", predictor_path, :class => "button tiny radius"
-      - if current_course.has_badges?
-        %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
-      - if current_course.has_teams? && current_course.teams_visible?
-        %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
+      = render "student_tabs"
   - else
     / Student Dashboard Breadcrumbs
     = content_nav_for current_student do
-      %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
-      %li= link_to "Grades", student_path(current_student), :class => "button tiny radius"
-      - if current_course.use_timeline?
-        %li= link_to "Timeline", student_timeline_path(current_student), :class => "button tiny radius"
-      - if current_course.grading_philosophy.present?
-        %li= link_to "Grade Philosophy", "#", :class => "button tiny radius active"
-      - if current_course.predictor_on?
-        %li= link_to "Grade Predictor", student_predictor_path(current_student), :class => "button tiny radius"
-      - if current_course.has_badges?
-        %li= link_to "#{term_for :badges}", student_badges_path(current_student), :class => "button tiny radius"
-      - if current_course.has_teams? && current_course.teams_visible?
-        %li= link_to "#{term_for :teams}", student_teams_path(current_student), :class => "button tiny radius"
+      = render "staff_tabs"
 
 
   .small-12.columns

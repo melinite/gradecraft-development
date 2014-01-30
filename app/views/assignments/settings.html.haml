@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Assignments Navigation
   = content_nav_for Assignment do
-    %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     .pull-right

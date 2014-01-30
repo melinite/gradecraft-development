@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
-  = content_nav_for "Analytics"
+  = content_nav_for "#{term_for :student} Analytics" do
+    = render "tabs"
 
   .small-12.columns
 
-    %h2 Course Analytics - Students
-    = render "tabs"
+    %h2 #{term_for :student} Analytics
 
     %h3 Interactions
     .small-12

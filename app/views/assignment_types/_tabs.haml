@@ -1,0 +1,3 @@
+%li= link_to "See All #{term_for :assignment} Types", assignment_types_path, :class => "button radius tiny"
+%li= link_to "Create New #{term_for :assignment_type}", new_assignment_type_path, :class => "button tiny radius"
+%li= link_to "Edit #{@assignment_type.name}", edit_assignment_type_path(@assignment_type), :class => "button radius tiny" if @assignment_type.present?

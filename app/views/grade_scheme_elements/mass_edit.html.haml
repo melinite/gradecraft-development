@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Grade Scheme Elements Navigation
   = content_nav_for :grade_scheme_elements do
-    %li= link_to "Grade Scheme", grade_scheme_elements_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     %h3 Grade Scheme Elements

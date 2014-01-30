@@ -1,11 +1,6 @@
-- if current_course.use_timeline?
-  %li= link_to "Timeline", "#", :class => "button tiny radius active"
-%li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
-- if current_course.grading_philosophy.present?
-  %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
-- if current_course.predictor_on?
-  %li= link_to "Grade Predictor", predictor_path, :class => "button tiny radius"
-- if current_course.has_badges?
-  %li= link_to "#{term_for :badges}", my_badges_path, :class => "button tiny radius"
-- if current_course.has_teams? && current_course.teams_visible?
-  %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
+%li= link_to "#{term_for :student} Roster", "#", :class => "button tiny radius active"
+%li= link_to "Download Roster", students_path(format: 'csv'), :class => "button tiny radius"
+%li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
+/ Link to download csv of total gradebook. Should probably be updated to trigger a background job and send the instructor an email when the download is ready
+%li= link_to "Gradebook", gradebook_path, :class => "button tiny radius"
+%li= link_to "Download Gradebook", gradebook_path(format: 'csv'), :class => "button tiny radius"

@@ -161,6 +161,7 @@ class Course < ActiveRecord::Base
   end
 
   def grade_letter_for_score(score)
+    
     grade_scheme_elements.where('low_range <= ? AND high_range >= ?', score, score).pluck('letter').first
   end
 

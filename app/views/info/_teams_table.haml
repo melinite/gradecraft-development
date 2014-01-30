@@ -4,7 +4,6 @@
       %th.sortable{"data-sort" => "string"}= course.team_term
       - if ! current_course.team_score_average
         %th.sortable{"data-sort" => "int"} Score
-      %th.sortable{"data-sort" => "string"} Badges
       %th.sortable{"data-sort" => "int"} Average #{course.user_term} Grade
       %th.sortable{"data-sort" => "string"}= course.team_leader_term
   %tbody
@@ -12,11 +11,8 @@
       %tr
         %td= link_to team.name, team_path(team)
         - if ! current_course.team_score_average
-          %td= points team.try(:score)
+          %td= points team.try(:challenge_grade_score)
 
-        %td
-          - team.earned_badges.each do |badge|
-            = image_tag badge.icon, :alt => badge.name, :width => 40
         %td= points team.try(:average_grade)
         %td
           - if team.team_leader.present?

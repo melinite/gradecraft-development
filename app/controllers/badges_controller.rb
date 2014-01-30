@@ -1,6 +1,6 @@
 class BadgesController < ApplicationController
 
-  before_filter :ensure_staff?, :except =>[:index, :show]
+  before_filter :ensure_staff?, :except => [:index]
 
   def index
     if current_user.is_student?
@@ -14,9 +14,6 @@ class BadgesController < ApplicationController
     @title = @badge.name
     @earned_badges = @badge.earned_badges
     @tasks = @badge.tasks
-    if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-    end
   end
 
   def new

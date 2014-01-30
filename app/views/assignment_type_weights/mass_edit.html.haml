@@ -1,15 +1,5 @@
 .small-12.panel.mainContent
-  - if current_user.is_student?
-    / Student Navigation
-    = content_nav_for "Editing My #{term_for :weight}" do
-      %li= link_to "My Dashboard", dashboard_path, :class => "button radius tiny"
-
-  - elsif current_user.is_staff?
-    / Instructor Navigation
-    = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
-      %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button radius tiny"
-      %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "button radius tiny"
-
+  = render "tabs"
 
   .small-12.columns
     - if current_course.assignment_weight_open? || current_user.is_staff?

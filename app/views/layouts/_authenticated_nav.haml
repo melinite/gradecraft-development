@@ -60,6 +60,7 @@
 
 %li.has-dropdown
   %a
+    = gravatar_for current_user, :size => 30
     = current_user.public_name
   %ul.dropdown
     %li= link_to "My Account", edit_profile_users_path

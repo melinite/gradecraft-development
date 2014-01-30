@@ -1,0 +1,6 @@
+%li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
+%li= link_to "Download Roster", students_path(format: 'csv'), :class => "button tiny radius"
+%li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
+/ Link to download csv of total gradebook. Should probably be updated to trigger a background job and send the instructor an email when the download is ready
+%li= link_to "Gradebook", gradebook_path, :class => "button tiny radius"
+%li= link_to "Download Gradebook", gradebook_path(format: 'csv'), :class => "button tiny radius"

@@ -1,9 +1,7 @@
 .small-12.panel.mainContent
   / Leaderboard Navigation
   = content_nav_for User, term_for(:students) do
-    %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
-    %li= link_to "Download CSV", students_path(format: 'csv'), :class => "button tiny radius"
-    %li= link_to "Download Excel", students_path(format: 'xls'), :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.medium-4.large-4.columns
     %h2= @title
@@ -39,8 +37,8 @@
             %td= student.last_name
             - if current_course.has_teams?
               %td
-                //- if student.teams.present?
-                //= link_to student.team_for_course(course).name, student.team_for_course(course).name
+                - if student.teams.present?
+                  = link_to student.team_for_course(current_course).name, student.team_for_course(current_course).name
             - if current_course.team_roles?
               %td= student.try(:team_role)
             - if student.respond_to?(:grades)

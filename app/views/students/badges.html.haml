@@ -1,33 +1,12 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
     = content_nav_for "My Dashboard" do
-      - if current_course.use_timeline?
-        %li= link_to "Timeline", dashboard_path, :class => "button tiny radius"
-      %li= link_to "Syllabus", syllabus_path, :class => "button tiny radius"
-      - if current_course.grading_philosophy.present?
-        %li= link_to "Grade Philosophy", grading_philosophy_path, :class => "button tiny radius"
-      - if current_course.predictor_on?
-        %li= link_to "Grade Predictor", predictor_path, :class => "button tiny radius"
-      - if current_course.has_badges?
-        %li= link_to "#{term_for :badges}", "#", :class => "button tiny radius active"
-      - if current_course.has_teams? && current_course.teams_visible?
-        %li= link_to "#{term_for :teams}", my_team_path, :class => "button tiny radius"
+      = render "student_tabs"
 
   - else
     / Student Dashboard Breadcrumbs
     = content_nav_for current_student do
-      %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
-      %li= link_to "Grades", student_path(current_student), :class => "button tiny radius"
-      - if current_course.use_timeline?
-        %li= link_to "Timeline", student_timeline_path(current_student), :class => "button tiny radius"
-      - if current_course.grading_philosophy.present?
-        %li= link_to "Grade Philosophy", student_grading_philosophy_path(current_student), :class => "button tiny radius"
-      - if current_course.predictor_on?
-        %li= link_to "Grade Predictor", student_predictor_path(current_student), :class => "button tiny radius"
-      - if current_course.has_badges?
-        %li= link_to "#{term_for :badges}", "#", :class => "button tiny radius  active"
-      - if current_course.has_teams? && current_course.teams_visible?
-        %li= link_to "#{term_for :teams}", student_teams_path(current_student), :class => "button tiny radius"
+      = render "staff_tabs"
 
 
   %dl.tabs{:data => {'tab' => true}}
@@ -39,11 +18,12 @@
 
     .small-12.columns
       - if current_user.is_student? && ! current_student.badges_shared(current_course)
-        = "Want to share your #{term_for :badges} with the class?"
-        = link_to "Turn on shared #{term_for :badges}!", edit_profile_users_path
+        %h6.small.right
+          = "Want to share your #{term_for :badges} with the class?"
+          .bold= link_to "Turn on shared #{term_for :badges}!", edit_profile_users_path
 
       .tabs-content
-        .content#tabb1.active
+        .content#tabb1.active.small-12
           %table.responsive.simpleTable
             %thead
               %tr
@@ -82,5 +62,5 @@
                             %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"remove_badge button tiny radius"} Stop Sharing
                           - else
                             %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"add_badge button tiny radius"} Share
-          .content#tabb2
-            = render "students/public_class_badges"
+        .content#tabb2.small-12
+          = render "students/public_class_badges"

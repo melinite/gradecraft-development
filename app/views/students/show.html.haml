@@ -1,16 +1,7 @@
 .small-12.panel.mainContent
   / Student Dashboard Breadcrumbs
   = content_nav_for current_student do
-    %li= link_to "Edit #{current_student.name}'s Profile", edit_user_path(current_student), :class => "button tiny radius"
-    %li= link_to "Syllabus", student_path(current_student), :class => "button tiny radius active"
-    - if current_course.grading_philosophy.present?
-      %li= link_to "Grade Philosophy", student_grading_philosophy_path(current_student), :class => "button tiny radius"
-    - if current_course.predictor_on?
-      %li= link_to "Grade Predictor", student_predictor_path(current_student), :class => "button tiny radius"
-    - if current_course.has_badges?
-      %li= link_to "#{term_for :badges}", student_badges_path(current_student), :class => "button tiny radius"
-    - if current_course.has_teams? && current_course.teams_visible?
-      %li= link_to "#{term_for :teams}", student_teams_path(current_student), :class => "button tiny radius"
+    = render "staff_tabs"
 
   .small-9.columns
     %h2
