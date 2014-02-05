@@ -1,47 +1,54 @@
 
 /** Table Styles **/
 
+/* Set the tables to be full width of the page*/
 table.responsive {
-  a {
-    color: #333;
-  }
+  width: 100%;
+  border-spacing: 0 !important;
+  font-size: .8rem;
+  margin-bottom: 1rem;
 
   a:hover {
-    color: $lightblue;
+    color: $green;
   }
 
   .button {
     margin-bottom: 0;
   }
-}
-table.responsive tbody, table.responsive tbody tr {
-  padding: 0;
+
+  td {
+    line-height: 1.5rem;
+  }
+
+  /* Table Header styles */
+  th {
+    text-transform: capitalize;
+    font-weight: normal;
+    padding: .5rem;
+  }
+
+  th .button-group {
+    button {
+      margin: 0;
+      padding: .2rem;
+    }
+  }
 }
 
-table td {
-  margin: 0;
-  padding: 0;
+table th.sortable {
+  cursor: pointer;
 }
 
-table {
-  width: 100%;
-  border-spacing: 0 !important;
-  border-radius: .4rem;
-}
-
-table th {
-  text-transform: capitalize;
-  font-weight: normal;
-}
-
- table .button-group li button.tiny {
+table .button-group li a.button.tiny {
   margin: 0;
   border-radius: 0;
   padding: .4rem .5rem;
 }
 
+/* Highlight the sorted columns */
 th.sorting-desc, th.sorting-asc {
-  color: $yellow;
+  color: $secondary-color;
+  background-color: $primary-color;
 }
 
 dd .content.active {
@@ -49,13 +56,22 @@ dd .content.active {
   padding: 0;
 }
 
-.button.tiny.round.aindex {
+.button.tiny.aindex {
   width: auto !important;
-  background-color: $blue;
-  color: #FFF;
+  background-color: $secondary-color;
+  color: #000;
   right: 0;
+  position: relative;
   top: -2.8rem;
-  margin: 0;
+  margin-bottom: -4.8rem;
+}
+
+.button.tiny.aindex:hover {
+  background-color: $darkblue;
+}
+
+dd .small-3 {
+  height: 0;
 }
 
 
@@ -69,17 +85,24 @@ dd .content.active {
 }
 
 .table-condensed thead > tr > th.dow {
-  color: #333 !important;
-}
-@media (min-width: 1280px)  {
-  .button-column {
-    display: inline;
-  }
+  color: $primary-color;
+
 }
 
+.button-column {
+    width: 300px;
+  }
+
 @media (max-width: 1279px)  {
-  .button-column {
+  
+  table .button-group {
     display: inline;
+  }
+
+  table .button-group li a.button.tiny  {
+  padding: .25rem;
+  border-radius: none;
+  border: none;
   }
 
   .scrollable .button-column {
@@ -93,7 +116,7 @@ dd .content.active {
 
 
 @media (max-width: 640px) {
-  .round .button.tiny {
+  table .button-group li a.button.tiny  {
   padding: .75rem;
   border-radius: none;
   width: 5rem;
@@ -113,4 +136,8 @@ td.complete {
 
 td.absent {
   background-color: #f9adad;
+}
+
+td.partial, td.need_to_be_released {
+  background-color: #f6f87b;
 }

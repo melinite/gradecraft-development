@@ -1,46 +1,36 @@
 .small-12.panel.mainContent
   / Challenge Navigation
-  - if current_user.is_student?
-    = content_nav_for Challenge do
-      %li= link_to "My Dashboard", dashboard_path, :class => "button tiny radius"
+  = content_nav_for Challenge do
+    = render "teams/tabs"
 
-    = render "student_index"
+  .small-12.columns
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} Name
+          %th.sortable{"data-sort" => "string"} Description
+          %th.sortable{"data-sort" => "int"} Point total
+          %th.sortable{"data-sort" => "string"} Due date
+          %th.sortable{"data-sort" => "string"} Visible
+          %th.sortable{"data-sort" => "int"} Submissions?
+          %th.sortable{"data-sort" => "string"} Release necessary
+          %th.button-column
 
-  - else
-    = content_nav_for Challenge do
-      - if current_user.is_staff?
-        %li= link_to "New #{term_for :challenge}", new_challenge_path, :class => "button tiny radius"
-
-    .small-12.columns
-      %h2= @title
-
-      %table.responsive.simpleTable
-        %thead
+      %tbody
+        - @challenges.each do |challenge|
           %tr
-            %th.sortable{"data-sort" => "string"} Name
-            %th.sortable{"data-sort" => "string"} Description
-            %th.sortable{"data-sort" => "int"} Point total
-            %th.sortable{"data-sort" => "string"} Due date
-            %th.sortable{"data-sort" => "string"} Visible
-            %th.sortable{"data-sort" => "int"} Submissions?
-            %th.sortable{"data-sort" => "string"} Release necessary
-            %th.button-column
-
-        %tbody
-          - @challenges.each do |challenge|
-            %tr
-              %td= link_to challenge.name, challenge
-              %td= raw challenge.description
-              %td= points challenge.point_total
-              %td= challenge.due_at
-              %td= challenge.visible? ? 'Visible' : 'Hidden'
-              %td= challenge.accepts_submissions? ? 'Yes' : 'No'
-              %td= challenge.release_necessary? ? 'Yes' : 'No'
-              %td
-                .button-bar
-                  %ul.button-group.round
-                    %li= link_to 'See', challenge, :class => 'button tiny secondary'
-                    %li= link_to 'Edit', edit_challenge_path(challenge), :class => 'button tiny secondary'
-                    %li= link_to 'Delete', challenge, :class => 'button tiny secondary', :method => :delete, data: { confirm: 'Are you sure?' }
+            %td= link_to challenge.name, challenge
+            %td= raw challenge.description
+            %td= points challenge.point_total
+            %td= challenge.due_at
+            %td= challenge.visible? ? 'Visible' : 'Hidden'
+            %td= challenge.accepts_submissions? ? 'Yes' : 'No'
+            %td= challenge.release_necessary? ? 'Yes' : 'No'
+            %td
+              .button-bar
+                %ul.button-group.round.right
+                  %li= link_to 'See', challenge, :class => 'button tiny secondary'
+                  %li= link_to 'Edit', edit_challenge_path(challenge), :class => 'button tiny secondary'
+                  %li= link_to 'Delete', challenge, :class => 'button tiny secondary', :method => :delete, data: { confirm: 'Are you sure?' }
 
   .clearfix

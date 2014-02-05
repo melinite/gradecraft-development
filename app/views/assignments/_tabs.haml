@@ -1,0 +1,16 @@
+%li{class: ("active" if current_page?(assignments_path)) }
+  = link_to_unless_current "See All #{current_course.assignment_term}s", assignments_path
+%li{class: ("active" if current_page?(new_assignment_path)) }
+  = link_to_unless_current "Create a New #{term_for :assignment}", new_assignment_path
+%li{class: ("active" if current_page?(assignment_types_path)) }
+  = link_to_unless_current "See All #{term_for :assignment_types}", assignment_types_path
+%li{class: ("active" if current_page?(new_assignment_type_path)) }
+  = link_to_unless_current "Create a New #{term_for :assignment_type}", new_assignment_type_path
+%li{class: ("active" if current_page?(grading_status_path)) }
+  = link_to_unless_current "See All Ungraded Submissions", grading_status_path
+- if @team.present? && @assignment.present?
+  %li{class: ("active" if current_page?(mass_grade_assignment_path)) }
+    = link_to_unless_current "Quick Grade #{@assignment.name}", mass_grade_assignment_path(@assignment, :team_id => @team)
+- elsif @assignment.present?
+  %li{class: ("active" if current_page?(mass_grade_assignment_path)) }
+    = link_to_unless_current "Quick Grade #{@assignment.name}", mass_grade_assignment_path(@assignment)

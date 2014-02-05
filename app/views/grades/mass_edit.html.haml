@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Grades Navigation
   = content_nav_for @assignment, "Quick Grade" do
-    %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
+    = render "assignments/tabs"
 
   .small-12.medium-6.columns
     %h2= @title
@@ -24,7 +24,7 @@
             %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
             %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
 
-        %table
+        %table.responsive
           - @grades.each_with_index do |grade, i|
             %tr
               %td= link_to grade.student.name, student_path(grade.student)
@@ -59,6 +59,7 @@
                     - else
                       - if grade.persisted? && (grade.status == "Graded" || grade.status == "Released")
                         = gf.text_field :raw_score, data: {autonumeric: true, "m-dec" => "0"}
+                        = "/ #{points @assignment.point_total}"
                       - else
                         = gf.text_field :raw_score, :value => nil, data: {autonumeric: true, "m-dec" => "0"}
                         = "/ #{points @assignment.point_total}"

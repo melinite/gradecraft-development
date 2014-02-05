@@ -1,9 +1,9 @@
 .small-12.panel.mainContent
   / Courses Navigation
-  = content_nav_for "Edit #{breadcrumb_link_for(@course)}".html_safe
+  = content_nav_for "Edit #{breadcrumb_link_for(@course)}".html_safe do 
+    = render "tabs"
 
   .small-12.columns
-    %h3= @title
     = render 'form'
 
   .clearfix

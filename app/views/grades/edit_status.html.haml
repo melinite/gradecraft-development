@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Grades Navigation
   = content_nav_for @assignment, "Updating Grade Statuses" do
-    %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
+    = render "assignments/tabs"
 
   .small-12.columns
     %h3 Selected Grades
@@ -16,15 +16,16 @@
         - for grade in @grades
           %tr
             %td= grade.student.name
-            %td= grade.raw_score
+            %td= points grade.raw_score
             %td= grade.status
 
-    .small-12
+    .small-12.right
       = simple_form_for :grade, :url => update_status_grades_assignment_path(@assignment), :html => { :method => :put, :class => "form-horizontal" } do |f|
         - for grade in @grades
           = hidden_field_tag "grade_ids[]", grade.id
-        = f.input :status, :label => "Update Status to:", :as => :select, :collection => Grade::STATUSES
-        .form-actions
+        .medium-3.right= f.input :status, :label => "Update Status to:", :as => :select, :collection => Grade::STATUSES
+        %hr
+        .right
           = f.button :submit, "Update Statuses", :class => "button tiny radius"
 
   .clearfix

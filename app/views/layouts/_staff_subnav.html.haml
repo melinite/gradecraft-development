@@ -1,23 +1,18 @@
 %ul.side-nav
-  :javascript
-    Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
-  %form.quick_search
-    .dropdown
-      %input.search-query{ :type => "text", :placeholder => "Search #{current_course.user_term.pluralize}", :label => false }
   %li
-    %h4= term_for(:students)
-  %li.icn_view_users= link_to term_for(:students), students_path
-  - if current_course.has_teams?
-    %li.icn_team= link_to term_for(:teams), teams_path
-  %li.icn_fishes= link_to term_for(:groups), groups_path
-  - if current_course.has_badges?
-    %li.icn_gamepad= link_to "Class #{current_course.badge_term.pluralize}", class_badges_path
+    %h4 Overview
+  %li.icn_film= link_to "Timeline", dashboard_path
+  %li.icn_charts= link_to "Leaderboard", leaderboard_path
+  %li.icn_flag= link_to "Ungraded Submissions", grading_status_path
   - if current_course.student_weighted?
-    %li.icn_playing_dic= link_to "#{term_for :weight} Chart", choices_students_path
+    %li.icn_playing_dic= link_to "#{term_for :weight} Choices", multiplier_choices_path
+  - if current_course.has_badges?
+    %li.icn_gamepad= link_to "Awarded #{current_course.badge_term.pluralize}", info_class_badges_path
+  %li.icn_gamepad= link_to "Gradebook", gradebook_path
   %li.divider
 
   %li
-    %h4= term_for(:assignments)
+    %h4 Coursework
   %li.icn_flash= link_to term_for(:assignments), assignments_path
   - if current_course.has_badges?
     %li.icn_certificate= link_to term_for(:badges), badges_path
@@ -27,16 +22,21 @@
 
   %li
     %h4 Analytics
-  %li.icn_charts= link_to "Leaderboard", leaderboard_students_path
-  %li.icn_charts= link_to "Top 10/Bottom 10", leaderboard_path
-  %li.icn_flag= link_to "Grading Status", grading_status_path
+  %li.icn_charts= link_to "Top 10/Bottom 10", analytics_top_10_path
   %li.icn_cardio= link_to "Course Analytics", analytics_root_path
-  %li.icn_cardio= link_to "#{term_for :assignment} Analytics", per_assign_charts_path
+  %li.icn_cardio= link_to "#{term_for :assignment} Analytics", analytics_per_assign_path
+  %li.divider
+
+  %li 
+    %h4 Users  
+  %li= link_to "Users", users_path
+  - if current_course.has_teams?
+    %li.icn_team= link_to term_for(:teams), teams_path
+  %li.icn_fishes= link_to term_for(:groups), groups_path
   %li.divider
 
   %li
     %h4 Course Setup
-  %li.icn_film= link_to "Timeline", dashboard_path
   %li.icn_settings= link_to "Options", edit_course_path(current_course)
   %li.icn_calculator= link_to "Grading Scheme", grade_scheme_elements_path
   %li.icn_group= link_to "Staff", staff_index_path
@@ -51,6 +51,5 @@
   - if current_user.is_admin?
     %li
       %h4 Admin
-    %li.icn_add_user= link_to "Add New #{current_course.user_term.pluralize}", new_student_path
     %li= link_to "All Users", users_path
     %li= link_to "Course Index", courses_path

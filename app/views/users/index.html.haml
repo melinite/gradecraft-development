@@ -1,15 +1,10 @@
 .small-12.panel.mainContent
   / User Index Navigation
-  = content_nav_for User do
-    %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
-    %li= link_to "See #{term_for :students}", students_path, :class => "button tiny radius"
-    %li= link_to "See Staff", staff_index_path, :class => "button tiny radius"
-
-  .small-12.medium-4.large-4.columns
-    %h2= @title
+  = content_nav_for @title do
+    = render "tabs"
 
   - if current_course.has_teams?
-    .small-12.large-4.large-offset-4.medium-4.medium-offset-4.columns
+    .small-12.large-4.large-offset-8.medium-6.medium-offset-6.columns
       = form_tag users_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
@@ -17,6 +12,7 @@
     %table.responsive.simpleTable
       %thead
         %tr
+          %th
           %th.sortable{"data-sort" => "string"} First Name
           %th.sortable{"data-sort" => "string"} Last Name
           %th.sortable{"data-sort" => "string"} Email
@@ -27,6 +23,9 @@
       %tbody
         - @users.each do |user|
           %tr
+            %td
+              %a{:href => "mailto:#{user.email}" }
+                %i.fi-mail
             %td
               = link_to user.first_name, student_path(user) if user.is_student?
               = link_to user.first_name, staff_path(user) if user.is_staff?
@@ -43,7 +42,7 @@
                 = points user.score_for_course(current_course) if user.respond_to?(:grades)
             %td
               .button-bar
-                %ul.button-group.radius.round
+                %ul.button-group.right.round
                   %li
                     = link_to "Dashboard", student_path(user), :class => 'button tiny secondary' if user.is_student?
                     = link_to "Dashboard", staff_path(user), :class => 'button tiny secondary' if user.is_staff?

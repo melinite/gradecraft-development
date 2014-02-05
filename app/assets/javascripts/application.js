@@ -10,7 +10,6 @@
 //= require autonumeric
 //= require bootsy
 //= require foundation
-//= require jquery.omniselect
 //= require jquery.sparkline.min
 //= require jquery.fileupload
 //= require s3_direct_upload
@@ -35,6 +34,7 @@
 //= require nested_fields
 //= require users
 //= require student_dashboard
+//= require predictor
 //= require stupidtable
 //= require submissions
 //= require submission_file
@@ -42,12 +42,14 @@
 //= require timeline
 //= require earned_badges
 //= require per-assign
-//= require predictor
 //= require datetimepicker
 //= require highcharts
 //= require select2
 //= require responsive-tables
 //= require grade_distribution
+//= require jquery.sticky
+//= require levels_per_assign
+//= require jquery.highchartTable-min
 
 $(function(){ $(document).foundation(); });
 
@@ -56,8 +58,8 @@ $(document).ready(function(){
   $('.assignmentDescription').showMore({
         speedDown: 300,
         speedUp: 300,
-        height: '3.6rem',
-        showText: 'Read more...',
+        height: '0em',
+        showText: 'All the Details &raquo;',
         hideText: '&laquo; Hide'
    });
 
@@ -69,6 +71,7 @@ $(document).ready(function(){
         hideText: '&laquo; Hide'
    });
 
+   $(".gradePredictor").sticky({topSpacing:35});
 
   // Select2 Search forms for group creation
 
@@ -83,6 +86,8 @@ $(document).ready(function(){
     placeholder: "Select Students",
     allowClear: true
   });
+
+  $('table.highchart').highchartTable();
 
   $('#myStat').circliful();
 

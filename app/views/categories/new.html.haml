@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Category Navigation
   = content_nav_for Category, "New Category" do
-    %li= link_to "See All Categories", categories_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12
     %h3= @title

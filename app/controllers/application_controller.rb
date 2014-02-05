@@ -29,6 +29,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :increment_page_views
 
+  before_filter :get_course_scores
+
   include ApplicationHelper
 
   def not_authenticated
@@ -44,6 +46,14 @@ class ApplicationController < ActionController::Base
       end
     else
       redirect_to root_path, :alert => "Please login first."
+    end
+  end
+
+  def get_course_scores
+    if current_user.present? && current_user.is_student?
+      @scores_for_current_course = current_student.scores_for_course(current_course)
+    else
+      #@scores_for_current_course = current_student.scores_for_course(current_course)
     end
   end
 

@@ -37,7 +37,7 @@
 // We use these to control various global styles
 // $body-bg: #fff;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -50,9 +50,9 @@
 // $default-float: left;
 
 // We use these as default colors throughout
- $primary-color: #0D9AFF;
- $secondary-color: #45A1DE;
-// $alert-color: #f04124;
+ $primary-color: #274E56;
+ $secondary-color: #58d0eb;
+ $alert-color: #f04124;
  $success-color: #67CF30;
 
 // We use these to make sure border radius matches unless we want it different.

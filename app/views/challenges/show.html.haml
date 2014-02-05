@@ -2,10 +2,10 @@
   / Challenge View Navigation
 
   = content_nav_for @challenge do
-    %li= link_to "See All #{term_for :challenges}", challenges_path, :class => "button tiny radius"
     - if current_user.is_staff?
-      %li= link_to "Edit #{@challenge.name}", edit_challenge_path(@challenge), :class => "button tiny radius"
-      %li= link_to 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id), :class => "button tiny radius"
+      = render "teams/tabs"
+    - else 
+      = render "students/student_tabs"
 
   .small-12.columns
     %h2= @title
@@ -33,7 +33,8 @@
               %th.sortable{"data-sort" => "string"} Status
             - if @challenge.accepts_submissions?
               %th.sortable{"data-sort" => "string"} Submission
-            %th
+            - if current_user.is_staff?
+              %th
         %tbody
           - @teams.alpha.each do |team|
             - challenge_grade = @challenge.challenge_grades.find_by team: team
@@ -54,15 +55,16 @@
                 %td= challenge_grade.try(:status) ? 'Released' : ''
               - if @challenge.accepts_submissions?
                 %td
-              %td
-                - if challenge_grade
-                  .button-bar
-                    %ul.button-group.radius.round
-                      %li= link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary'
-                      %li= link_to "Edit Grade", edit_challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary'
-                      %li= link_to "Delete", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary', :action => :delete
-                - else
-                  = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'button tiny round secondary'
+              - if current_user.is_staff?
+                %td
+                  - if challenge_grade
+                    .button-bar
+                      %ul.button-group.right.round
+                        %li= link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary'
+                        %li= link_to "Edit Grade", edit_challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary'
+                        %li= link_to "Delete", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary', :action => :delete
+                  - else
+                    = link_to 'Grade', new_challenge_challenge_grade_path("challenge_id"=>@challenge.id, :team_id => team.id), :class => 'button tiny round secondary'
 
       - if @challenge.release_necessary? && @challenge.challenge_grades.present?
         = submit_tag "Update Grade Statuses", :class => "button tiny radius"

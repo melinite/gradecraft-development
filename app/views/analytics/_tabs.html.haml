@@ -1,7 +1,12 @@
-%dl.tabs{:data => {'tab' => true}}
-  %dd{:class => ('active' if current_page?(analytics_root_path)) }
-    %a{:href => analytics_root_path } All
-  %dd{:class => ('active' if current_page?(analytics_students_path))}
-    %a{:href => analytics_students_path } Students
-  %dd{:class => ('active' if current_page?(analytics_staff_path))}
-    %a{:href => analytics_staff_path } Staff
+%li{class: ("active" if current_page?(analytics_root_path)) }
+  = link_to_unless_current "All Users", analytics_root_path
+%li{class: ("active" if current_page?(analytics_students_path)) }
+  = link_to_unless_current "#{term_for :students}", analytics_students_path
+%li{class: ("active" if current_page?(analytics_staff_path)) }
+  = link_to_unless_current "Staff", analytics_staff_path
+%li{class: ("active" if current_page?(analytics_per_assign_path)) }
+  = link_to_unless_current "#{term_for :assignment} Analytics", analytics_per_assign_path
+%li{class: ("active" if current_page?(analytics_top_10_path)) }
+  = link_to_unless_current "Top 10/Bottom 10", analytics_top_10_path
+%li{class: ("active" if current_page?(analytics_teams_path)) }
+  = link_to_unless_current "#{term_for(:team)} Analytics", analytics_teams_path

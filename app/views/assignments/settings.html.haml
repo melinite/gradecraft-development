@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Assignments Navigation
   = content_nav_for Assignment do
-    %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     .pull-right
@@ -42,8 +42,10 @@
             %td= assignment.grade_scope
             %td= assignment.accepts_submissions? ? 'Yes' : 'No'
             %td= assignment.release_necessary? ? 'Yes' : 'No'
-            %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'button tiny radius'
-            %td= link_to 'Delete', assignment_path(assignment), :class => 'button tiny radius', :data => { :confirm => 'Are you sure?' }, :method => :delete
+            %td= link_to 'Edit', edit_assignment_path(assignment), :class => 'button tiny round'
+            %td
+              %a{:href => assignment_path(assignment), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
+                %i.fi-trash
             %td
               - if assignment.has_groups?
                 = link_to 'Create Group', new_group_path("assignment_id"=>assignment.id)

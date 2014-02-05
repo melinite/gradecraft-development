@@ -2,19 +2,9 @@ require 'test_helper'
 
 class PageTest < ActionDispatch::IntegrationTest
 
-  test "contact" do
-    visit '/contact'
-    page.must_have_content 'Contact'
-  end
-
   test "features" do
     visit '/features'
     page.must_have_content 'Features'
-  end
-
-  test "news" do
-    visit '/news'
-    page.must_have_content 'News'
   end
 
   test "people" do

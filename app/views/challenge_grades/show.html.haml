@@ -1,8 +1,7 @@
 .small-12.panel.mainContent
   / Challenge Grade Navigation
   = content_nav_for ChallengeGrade do
-    %li= link_to "See All #{@challenge.name} Grades", challenge_path(@challenge), :class => "button tiny radius"
-    %li= link_to 'Edit Grade', edit_challenge_challenge_grade_path(@challenge, @challenge_grade), :class => "button tiny radius"
+    = render "teams/tabs"
 
   .small-12.columns
     %h3= @title

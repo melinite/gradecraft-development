@@ -1,11 +1,9 @@
 .small-12.panel.mainContent
   / Courses Navigation
-  = content_nav_for Course do
-    %li= link_to 'New Course', new_course_path, :class => "button tiny radius"
+  = content_nav_for @title do
+    = render "tabs"
 
   .small-12.columns
-    %h3= @title
-
     %table.responsive.simpleTable
       %thead
         %tr
@@ -27,9 +25,9 @@
             %td= points course.total_points
             %td
               .button-bar
-                %ul.button-group.round
-                  %li= link_to 'Edit', edit_course_path(course), :class => 'button tiny'
-                  %li= link_to 'Delete', course, :class => 'button tiny', :data => { confirm: 'Are you sure?' }, :method => :delete
-                  %li= link_to "Copy", copy_courses_path(:id => current_course), :class => 'button tiny', :method => :copy
+                %ul.button-group.round.right
+                  %li= link_to 'Edit', edit_course_path(course), :class => 'button tiny secondary'
+                  %li= link_to 'Delete', course, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                  %li= link_to "Copy", copy_courses_path(:id => current_course), :class => 'button tiny secondary', :method => :copy
 
   .clearfix

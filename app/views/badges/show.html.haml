@@ -3,11 +3,7 @@
   / Badge Navigation
   - if current_user.is_staff?
     = content_nav_for @badge do
-      %li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
-      %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
-      %li= link_to "New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
-      %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(@badge), :class => "button tiny radius"
-      %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "button tiny radius"
+      = render "tabs"
   - else
     = content_nav_for @badge do
       %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
@@ -61,12 +57,12 @@
                 %td= earned_badge.created_at
                 %td
                   .button-bar
-                    %ul.button-group.radius.round
+                    %ul.button-group.right.round
                       %li= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary'
                       %li= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary'
                       %li= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
 
-    .clearfix
+  .clearfix
 
 
 

@@ -11,7 +11,7 @@
               %h5.strikethrough= link_to "#{assignment.try(:name)}", assignment
           - else
             .small-9.columns
-              %h5= link_to "#{assignment.try(:name)}", assignment
+              %h5.bold= link_to assignment.name, assignment_grade_path(assignment, :student_id => current_student)
               %h6= "Due: #{assignment.try(:due_at).strftime("%A, %B %d, %Y, at %H:%M%p")}"
           - if assignment.accepts_submissions?
             .small-3.columns

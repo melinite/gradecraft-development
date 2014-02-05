@@ -66,7 +66,6 @@ gem 'foundation-icons-sass-rails'
 
 
 group :development do
-  gem 'better_errors'
   gem 'guard'
   gem 'guard-minitest'
   gem 'haml-rails'

@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
   = content_nav_for @assignment, "Import Grades" do
-    %li= link_to "Back to #{@assignment.name}", assignment_path(@assignment), :class => "button tiny radius"
+    = render "assignments/tabs"
 
   .small-12.columns
     %h3 Import Grades for #{@assignment.name}

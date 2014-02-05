@@ -1,0 +1,33 @@
+%table.responsive.simpleTable
+  %thead
+    %tr
+      %th
+      %th.sortable{"data-sort" => "string"}= course.user_term
+      %th.sortable{"data-sort" => "int"} Score
+      %th Chart
+      - if course.has_teams?
+        %th.sortable{"data-sort" => "string"}= course.team_term
+      - if course.has_badges?
+        %th.sortable{"data-sort" => "int"} Badges
+      - if course.has_teams?
+        %th.sortable{"data-sort" => "string"}= course.team_leader_term
+  %tbody
+    - students.each do |student|
+      %tr
+        %td
+          %a{:href => "mailto:#{student.email}" }
+            %i.fi-mail
+        %td= link_to student.name, student_path(student)
+        %td= points student.score_for_course(course)
+        %td{:data => { :id => student.id.to_s}, :class => "bar-chart" }
+        - if course.has_teams?
+          %td
+            - if student.team_for_course(current_course).present?
+              = link_to student.team_for_course(current_course).name
+        - if course.has_badges?
+          %td= student.earned_badges.count
+
+        - if course.has_teams?
+          %td
+            - if student.team_for_course(course) && student.team_for_course(course).team_leader.present?
+              = mail_to student.team_for_course(course).team_leader.email, "Email #{student.team_for_course(course).team_leader.first_name}", :class => "button tiny radius secondary"

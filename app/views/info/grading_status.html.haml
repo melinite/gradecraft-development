@@ -1,11 +1,12 @@
 .small-12.panel.mainContent
   / Ungraded Assignments
-  = content_nav_for Assignment, "Ungraded #{term_for :assignments}"
+  = content_nav_for Assignment, "Ungraded #{term_for :assignments}" do
+    = render "info/tabs"
 
   .small-12.columns
     %h3
-      Ungraded Submissions
-      .label.alert.radius= @count_ungraded
+      = "Ungraded #{term_for :assignments}"
+      .label.alert.round= @count_ungraded
     = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
 
   .clearfix

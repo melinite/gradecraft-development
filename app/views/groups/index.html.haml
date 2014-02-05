@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Groups Navigation
   = content_nav_for Group do
-    %li= link_to "New #{term_for :group}", new_group_path(@assignment), :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     %h2= @title
@@ -27,7 +27,7 @@
                 %li= link_to ag.assignment.name, ag.assignment
             %td
               .button-bar
-                %ul.button-group.round
+                %ul.button-group.round.right
                   %li= link_to "See #{term_for :group}", group_path(group), :class => 'button tiny secondary'
                   %li= link_to 'Edit', edit_group_path(group), :class => 'button tiny secondary'
                   %li= link_to 'Delete', group_path(group), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete

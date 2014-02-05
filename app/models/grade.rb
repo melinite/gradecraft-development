@@ -131,7 +131,7 @@ class Grade < ActiveRecord::Base
   end
 
   def save_student
-    if self.raw_score_changed?
+    if self.raw_score_changed? || self.status_changed?
       student.save
     end
   end

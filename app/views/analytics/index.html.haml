@@ -1,11 +1,9 @@
 .small-12.panel.mainContent
   / Analytics Navigation
-  = content_nav_for "Analytics"
+  = content_nav_for "Course Analytics", "All Users" do
+    = render "tabs"
 
   .small-12.columns
-
-    %h2 Course Analytics
-    = render "tabs"
 
     .navbar.navbar-inverse.section-heading
       %h3 Interactions

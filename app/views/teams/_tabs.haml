@@ -1,0 +1,15 @@
+%li{class: ("active" if current_page?(teams_path)) }
+  = link_to_unless_current "See All #{term_for :teams}", teams_path
+%li{class: ("active" if current_page?(new_team_path)) }
+  = link_to_unless_current "Add #{term_for :team}", new_team_path
+- if current_course.team_challenges?
+  %li{class: ("active" if current_page?(challenges_path)) }
+    = link_to_unless_current "#{term_for :challenges}", challenges_path
+- if @team.present? && @team.persisted?
+  %li{class: ("active" if current_page?(edit_team_path(@team))) }
+    = link_to_unless_current "Edit #{@team.name}", edit_team_path(@team)
+- if @challenge.present? && @challenge.persisted?
+  %li{class: ("active" if current_page?(edit_challenge_path(@challenge))) }
+    = link_to_unless_current "Edit #{@challenge.name}", edit_challenge_path(@challenge)
+  %li{class: ("active" if current_page?(mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id))) }
+    = link_to_unless_current 'Quick Grade', mass_edit_challenge_challenge_grades_path(:challenge_id => @challenge.id)

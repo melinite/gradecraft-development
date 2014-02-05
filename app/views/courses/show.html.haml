@@ -1,10 +1,7 @@
 .small-12.panel.mainContent
   / Courses Navigation
   = content_nav_for "#{@course.name}" do
-    - if current_user.is_admin?
-      %li= link_to 'See All Courses', courses_path, :class => "button tiny radius"
-    %li= link_to "Edit #{@course.name}", edit_course_path(@course), :class => "button tiny radius"
-
+    = render "tabs"
 
   .small-12.columns
     %h3= @title

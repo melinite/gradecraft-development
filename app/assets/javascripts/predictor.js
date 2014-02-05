@@ -37,7 +37,7 @@ var chartOptions = {
     min: 0,
     gridLineWidth: 0,
     title: {
-      text: 'Available Points'
+      text: ' '
       }
             },
   labels: {

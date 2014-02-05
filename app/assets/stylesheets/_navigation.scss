@@ -1,13 +1,9 @@
-.top-bar-section {
-  font-family: "Avenir", sans-serif !important;
-}
-
 .top-bar-section ul ul.dropdown {
   padding: .3rem .6rem;
   background-color: #333;
   color: #FFF;
-  border-bottom-left-radius: .7rem;
-  border-bottom-right-radius: .7rem;
+  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: .5rem;
   font-size: 14px;
 
 }
@@ -69,5 +65,9 @@ tagline doesn't actually link anywhere we're disabling the perception of the lin
   color: $lightblue;
   cursor: default;
   background-color: #333;
+}
+
+img.img-rounded {
+  border-radius: .25rem;
 }
 

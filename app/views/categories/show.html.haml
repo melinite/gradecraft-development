@@ -1,9 +1,7 @@
 .small-12.panel.mainContent
   / Category Navigation
   = content_nav_for @category do
-    %li= link_to 'See All Categories', categories_path, :class => "button tiny radius"
-    %li= link_to "Edit #{@category.name}", edit_category_path(@category), :class => "button tiny radius"
-    %li= link_to 'Add New Assignment', new_assignment_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12
     %h3= @title

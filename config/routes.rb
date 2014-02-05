@@ -22,6 +22,10 @@ GradeCraft::Application.routes.draw do
     root :to => :index
     get :staff
     get :students
+    get :top_10
+    get :teams
+    get :team_grade
+    get :per_assign
     get :all_events
     get :role_events
     get :assignment_events
@@ -41,14 +45,6 @@ GradeCraft::Application.routes.draw do
 
   post 'analytics_events/predictor_event'
   post 'analytics_events/tab_select_event'
-
-  resources :charts do
-    collection do
-      get :per_assign
-      get :team_grade
-      get :backbonetest
-    end
-  end
 
   #2. Assignments, Submissions, Tasks, Grades
   resources :assignments do
@@ -149,6 +145,8 @@ GradeCraft::Application.routes.draw do
   get  'class_badges' => 'students#class_badges'
 
   get 'leaderboard' => 'info#leaderboard'
+  get 'multiplier_choices' => 'info#choices'
+  get  'earned_badges' => 'info#class_badges'
   get 'grading_status' => 'info#grading_status'
   get 'gradebook' => 'info#gradebook'
   get 'all_grades' => 'courses#all_grades'
@@ -158,7 +156,14 @@ GradeCraft::Application.routes.draw do
   resources :group_memberships
 
   #10. Informational Pages
-  resources :info
+  namespace :info do
+    get :choices
+    get :class_badges
+    get :dashboard
+    get :grading_status
+    get :leaderboard
+  end
+
   resources :home
 
   get 'submit_a_bug' => 'pages#submit_a_bug'

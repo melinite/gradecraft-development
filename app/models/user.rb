@@ -202,6 +202,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def earned_badge_count_for_course(course)
+    self.earned_badges.where(course: course).count
+  end
+
   #grabbing the stored score for the current course
   def cached_score_for_course(course)
     course_memberships.where(:course_id => course).first.score || 0
@@ -356,9 +360,9 @@ def groups_by_assignment_id
 
   def self.csv_roster_for_course(course, options = {})
     CSV.generate(options) do |csv|
-      csv << ["First Name", "Last Name", "Uniqname", "Score", "Grade", "Feedback", "Team"]
+      csv << ["GradeCraft ID, First Name", "Last Name", "Uniqname", "Score", "Grade", "Feedback", "Team"]
       course.students.each do |student|
-        csv << [student.first_name, student.last_name, student.username, "", "", "", student.team_for_course(course).try(:name) ]
+        csv << [student.id, student.first_name, student.last_name, student.username, "", "", "", student.team_for_course(course).try(:name) ]
       end
     end
   end

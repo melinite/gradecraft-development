@@ -5,7 +5,7 @@
       .assignmentType
         %h5.bold
           = assignment_type.name
-          .right.label
+          .right.label.radius
             = "#{points current_student_data.score_for_assignment_type(assignment_type)} / "
             - if assignment_type.max_value?
               = "#{points assignment_type.max_value} possible points"
@@ -15,15 +15,16 @@
       - assignments.each do |assignment|
         - if assignment.point_total && assignment.try(:point_total) > 0
           .assignment.clear{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
-            %span.assignmentName= assignment.name
             - if assignment.required?
-              %span.label.label-important Required!
+              %span.has-tip{:title => "This #{term_for :assignment} is required!", :data => {'tooltip' => true} }
+                %i.fi-star
+            %span.assignmentName= assignment.name
+            = "–"
             - if current_student_data.grade_released_for_assignment?(assignment)
               %span.earned= points current_student_data.score_for_assignment(assignment)
               = " / #{points current_student_data.point_total_for_assignment(assignment)} points"
               = hidden_field_tag assignment.name, current_student_data.score_for_assignment(assignment), :'data-assignment-type-id' => assignment.assignment_type_id
             - else
-              = "–"
               - if assignment_type.fixed?
                 = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
                 %input{:type => "checkbox", :name => assignment.name, :value => current_student_data.point_total_for_assignment(assignment), :class => "class-checkbox", :'data-assignment-type-id' => assignment.assignment_type_id, :checked => current_student_data.grade_for_assignment(assignment).predicted_score > 0 }

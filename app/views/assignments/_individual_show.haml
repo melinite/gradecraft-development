@@ -4,8 +4,10 @@
       %tr
         %th.sortable{"data-sort" => "string"} First Name
         %th.sortable{"data-sort" => "string"} Last Name
-        %th.sortable{"data-sort" => "int"} Raw Score
-        - if @assignment.assignment_type.student_weightable?
+        - if ! @assignment.assignment_type.student_weightable?
+          %th.sortable{"data-sort" => "int"} Score
+        - elsif @assignment.assignment_type.student_weightable?
+          %th.sortable{"data-sort" => "int"} Raw Score
           %th.sortable{"data-sort" => "int"} Multiplied Score
         - if @assignment.has_levels?
           %th{"data-sort" => "string"} Level
@@ -15,7 +17,7 @@
         - if @assignment.release_necessary?
           %th
             .button-bar
-              %ul.button-group.radius.round
+              %ul.button-group.right.round
                 %li
                   %button.select-all.tiny= "Check"
                 %li
@@ -37,14 +39,15 @@
             %td
               = @assignment.grade_level(grade) if grade.status?
           - if @assignment.release_necessary?
-            %td
-              - if grade.is_released?
-                = "Released"
-              - elsif grade.is_graded?
-                = "Graded"
+            - if grade.is_released?
+              %td= "Released" 
+            - elsif grade.is_graded?
+              %td.need_to_be_released= "Graded" 
+            - else
+              %td
           %td
             .button-bar
-              %ul.button-group.round
+              %ul.button-group.round.right
                 - if @assignment.accepts_submissions?
                   - student.submissions.where(:assignment_id => @assignment).each do |submission|
                     - if submission && grade
@@ -56,6 +59,7 @@
                     %li= link_to "Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny primary round'
                 - else
                   - if grade
+                    %li= link_to "See Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
                     %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary round'
                   - else
                     %li= link_to "Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny primary round'
@@ -86,7 +90,7 @@
           - if @assignment.release_necessary?
             %th
               .button-bar
-                %ul.button-group.radius.round
+                %ul.button-group.right.round
                   %li
                     %button.select-all.tiny= "Check"
                   %li
@@ -118,7 +122,7 @@
               %td
                 - student.submissions.where(:assignment_id => @assignment).each do |submission|
                   - if submission && grade
-                    %ul.button-group.radius.round
+                    %ul.button-group.right.round
                       %li= link_to "See Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
                       %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
                   - elsif submission
@@ -127,7 +131,7 @@
                     = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :user_id => student.id, :student_type => "User"), :class => 'button tiny secondary round'
             %td
               .button-bar
-                %ul.button-group.radius.round
+                %ul.button-group.right.round
                   %li= link_to "Dashboard", student_path(student), :class => 'button tiny secondary'
               - if @assignment.release_necessary?
                 %td.text-center

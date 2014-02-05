@@ -1,19 +1,16 @@
 .small-12.panel.mainContent
   / Team Index Breadcrumbs
   = content_nav_for Team do
-    %li= link_to "Add #{term_for :team}", new_team_path, :class => "button tiny radius"
-    - if current_course.team_challenges?
-      %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
-    %h2= @title
-
     %table.responsive.simpleTable
       %thead
         %tr
           %th{"data-sort" => "int"} Rank
           %th{"data-sort" => "string"} Name
           %th{"data-sort" => "int"} # Students
+          %th{"data-sort" => "int"} Score
           - if current_course.team_score_average?
             %th{"data-sort" => "int"} Score
           - else
@@ -29,11 +26,12 @@
             %td= link_to team.name, team
             %td= team.member_count
             %td= points team.try(:average_grade)
+            %td= points team.try(:challenge_grade_score)
             - if current_user.is_staff?
-              %td= team.try(:student_badge_count)
+              %td= points team.badge_count
               %td
                 .button-bar
-                  %ul.button-group.round
+                  %ul.button-group.round.right
                     %li= link_to 'See', team, :class => 'button tiny secondary'
                     %li= link_to 'Edit', edit_team_path(team), :class => 'button tiny secondary'
                     %li= link_to 'Delete', team, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete

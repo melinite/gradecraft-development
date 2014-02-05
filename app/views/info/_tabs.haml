@@ -1,0 +1,15 @@
+%li{class: ("active" if current_page?(dashboard_path)) }
+  = link_to_unless_current "Timeline", dashboard_path
+%li{class: ("active" if current_page?(leaderboard_path)) }
+  = link_to_unless_current "Leaderboard", leaderboard_path
+%li{class: ("active" if current_page?(grading_status_path)) }
+  = link_to_unless_current "Ungraded Submissions", grading_status_path
+- if current_course.student_weighted? 
+  %li{class: ("active" if current_page?(multiplier_choices_path)) }
+    = link_to_unless_current "#{term_for :weight} Choices", multiplier_choices_path
+%li{class: ("active" if current_page?(earned_badges_path)) }
+  = link_to_unless_current "Awarded #{term_for :badges}", earned_badges_path
+
+/ Link to download csv of total gradebook. Should probably be updated to trigger a background job and send the instructor an email when the download is ready
+%li{class: ("active" if current_page?(gradebook_path)) }
+  = link_to_unless_current "Gradebook", gradebook_path

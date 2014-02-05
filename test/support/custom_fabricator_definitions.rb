@@ -34,14 +34,6 @@ module CustomFabricatorDefinitions
     { :student => student, :assignment => assignment }
   end
 
-  define_custom_fabricator :badge do
-    { :badge_set => badge_set }
-  end
-
-  define_custom_fabricator :badge_set do
-    { :course => course }
-  end
-
   define_custom_fabricator :category do
     { :course => course }
   end
@@ -78,6 +70,10 @@ module CustomFabricatorDefinitions
 
   define_custom_fabricator :group do
     { :course => course }
+  end
+
+  define_custom_fabricator :badge do
+    { :badge => badge }
   end
 
   define_custom_fabricator :earned_badge do

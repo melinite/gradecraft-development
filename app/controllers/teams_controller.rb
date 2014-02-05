@@ -1,11 +1,11 @@
 class TeamsController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except => [:index, :show, :leaderboard]
+  before_filter :ensure_staff?
 
   def index
     @teams = current_course.teams.includes(:earned_badges)
-    @title = "#{current_course.team_term}s"
+    @title = "#{term_for :teams}"
   end
 
   def show
@@ -17,12 +17,12 @@ class TeamsController < ApplicationController
   def new
     @team =  current_course.teams.new
     @team_memberships = @team.team_memberships.new
-    @title = "Create a New #{current_course.team_term}"
+    @title = "Create a New #{term_for :team}"
     @course = current_course
     @users = current_course.users
     @team.team_memberships.build
     @students = @users.students
-    @submit_message = "Create #{current_course.team_term}"
+    @submit_message = "Create #{term_for :team}"
     respond_with @team
   end
 
@@ -42,7 +42,7 @@ class TeamsController < ApplicationController
     @title = "Editing #{@team.name}"
     @users = current_course.users
     @students = @users.students
-    @submit_message = "Update #{current_course.team_term}"
+    @submit_message = "Update #{term_for :team}"
   end
 
   def update

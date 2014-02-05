@@ -1,9 +1,7 @@
-= content_nav_for Badge do
-  %li= link_to "Create New #{current_course.badge_term}", new_badge_path, :class => "button tiny radius"
+= content_nav_for "Course Overview", "Earned #{term_for :badges}" do
+  = render "info/tabs"
 
 .small-12.columns
-  %h2 #{current_course.badge_term.pluralize} Leaderboard
-
   %dl.tabs{:data => {'tab' => true}}
     %dd.active
       %a{ "href" => "#tab1" } All Awarded #{current_course.badge_term.pluralize}

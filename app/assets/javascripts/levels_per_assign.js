@@ -1,12 +1,49 @@
-$(function () {
-  // set 'data-id' to the assignment ID on a div with id 'grades_per_assign' to generate chart
-  if ($('.levels_per_assign').length) {
-    $('.levels_per_assign').each( function (index) {
-      var div = $( this )
-      var id = $('.levels_per_assign')[index].getAttribute('data-id');
-      $.getJSON('/students/scores_for_single_assignment', { id: id }, function (data) {
-        div.sparkline(data.scores, {type: 'pie', height: '50', width: '300' } );
-      })
-    })
-  }
-})
+$(document).ready(function() {
+    $('#levels_per_assignment').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            width: 450,
+            height: 300
+        },
+        title: {
+            text: ' '
+        },
+      credits: {
+        enabled: false
+      },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox',   45.0],
+                ['IE',       26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari',    8.5],
+                ['Opera',     6.2],
+                ['Others',   0.7]
+            ]
+        }]
+    });
+});

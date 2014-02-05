@@ -1,95 +1,9 @@
-.small-12.columns.panel.callout
-  - if @grade.student.submission_for_assignment(@assignment)
-    .small-12.large-6.columns
-      - if current_user.is_staff?
-        %h5
-          Submitted by:
-          = link_to @grade.student.try(:name), student_path(@grade.student)
-      
-        %h5
-          Submitted:
-          = @grade.student.submission_for_assignment(@grade.assignment).created_at
-          - if @grade.student.submission_for_assignment(@grade.assignment).late?
-            %span.label.alert.radius Late!
-        - if @grade.student.submission_for_assignment(@grade.assignment).updated_at != @grade.student.submission_for_assignment(@grade.assignment).created_at
-          %h5
-            Updated:
-            = @grade.student.submission_for_assignment(@grade.assignment).updated_at
-
-        - if @grade.student.submission_for_assignment(@grade.assignment).link?
-          %h5
-            Link:
-            = link_to @grade.student.submission_for_assignment(@grade.assignment).link, @grade.student.submission_for_assignment(@grade.assignment).link
-
-        - if @grade.student.submission_for_assignment(@grade.assignment).submission_files.present?
-          %h5 Attachments:
-          %ul
-            - @grade.student.submission_for_assignment(@grade.assignment).submission_files.each do |sf|
-              %li
-                = link_to sf.filename, sf.url
-                = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
-    .small-12.large-6.columns
-      %h5 Statement:
-      %p= raw @grade.student.submission_for_assignment(@grade.assignment).text_comment
+- if @grade.student.submission_for_assignment(@assignment)
+  = render "submission"
 
 .clearfix
 
-  //- if @grade.grade_files.present?
-  //.heading.col-lg-2 Documents:
-  //.col-lg-offset-2
-  //- @grade.grade_files.each do |gf|
-  //= link_to gf.filename, gf.url
-  //if current_user.is_staff?
-  //= link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :upload_id => gf.id } )
+= render "results"
 
-.small-12.large-6.columns
-  - if current_user.is_student?
-    = Your Results
-  - else
-    .bold= " #{@grade.student.try(:name)}'s Results "
-  - if @grade.raw_score?
-    %h6
-      %span Score: 
-      %span.bold= "#{points @grade.raw_score }"
-      %span=" / #{points @grade.assignment.point_total } possible points"
-  - if @grade.feedback?
-    %h6 Instructor Feedback:
-    %p= raw @grade.feedback
-
-  - if @grade.earned_badges.present?
-    %h6= "#{term_for :badges}:"
-    - @grade.earned_badges.each do |badge|
-      %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
-
-  - if @grade.assignment.release_necessary?
-    %h6 Status:
-    = @grade.status
-
-.small-12.large-6.columns
-  .bold Class Analytics 
-  %h6.small (click chart to see results)
-
-  %dl.tabs{:data => {'tab' => true}, :class => "analytics_tabs"}
-    %dd
-      = link_to image_tag(asset_path('boxplot.png'), :width => 80), "#boxplot"
-    %dd
-      = link_to image_tag(asset_path('halfcircle.png'), :width => 80), "#submitted"
-    %dd
-      = link_to image_tag(asset_path('pie.png'), :width => 80), "#levels"
-
-  .tabs-content
-    .content.small-12#boxplot
-      .chartcontainer
-        %div{:class => "grades_per_assign", :data => { :id => @grade.assignment.id.to_s } }
-
-      %h6.small= link_to "How do I read this chart?", "http://www.youtube.com/watch?v=7UK2DK7rblw&feature=youtu.be", :target => "_blank"
-
-
-    .content.small-12#submitted
-      #myStat{:"data-type" => "half", "data-info" => "#{term_for :students} Submitted", "data-percent" => "#{@grade.assignment.attendance_rate(current_course)}", "data-fgcolor" => "#61a9dc", "data-text" => "#{@grade.assignment.positive_grades}", "data-dimension" => "250", "data-fontsize" => "38"  }
-
-    .content.small-12#levels
-      .chartcontainer
-        %div{:class => "levels_per_assign", :data => { :id => @grade.assignment.id.to_s } }
-    
+//= render "analytics"
 

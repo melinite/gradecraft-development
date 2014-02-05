@@ -1,11 +1,9 @@
 .small-12.panel.mainContent
   / Staff Navigation
   = content_nav_for User, "Staff" do
-    %li= link_to 'See All Users', users_path, :class => "button tiny radius"
-    %li= link_to 'Create a New Staff Member', new_user_path, :class => "button tiny radius"
+    = render "users/tabs"
 
   .small-12.columns
-    %h2= @title
 
     %table.responsive.simpleTable
       %thead
@@ -28,7 +26,8 @@
                     %li= link_to team.try(:name), team
               %td
                 .button-bar
-                  %ul.button-group.radius.round
+                  %ul.button-group.right.round
                     %li= link_to 'See', staff_path(user), {:class => 'button tiny secondary'}
                     %li= link_to 'Edit', edit_user_path(user), {:class => 'button tiny secondary'}
                     %li= link_to 'Delete', user, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?'}, :method => :delete
+    .clearfix

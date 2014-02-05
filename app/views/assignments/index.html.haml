@@ -2,18 +2,19 @@
   .small-12.panel.mainContent
     / Assignment navigation
     = content_nav_for Assignment do
-      %li= link_to "Create a New #{term_for :assignment}", new_assignment_path, :class => "button tiny radius"
-      %li= link_to "Create a New #{term_for :assignment_type}", new_assignment_type_path, :class => "button tiny radius"
-      %li= link_to "See All Ungraded Submissions", grading_status_path, :class => "button tiny radius"
+      = render "tabs"
 
     .small-12.columns
-      %h2= @title
-
+      
       %dl.accordion{:data => {'accordion' => true, 'collapse' => "persist" } }
         - current_course_data.by_assignment_type.each do |assignment_type, assignments|
           %dd
             %a.small-12{"href" => "##{assignment_type.id}" }= "#{assignment_type.name} – #{points assignment_type.max_value} points"
-            .small-2.right= link_to "Edit #{assignment_type.name}", edit_assignment_type_path(assignment_type), :class => "button tiny round aindex"
+            .small-3.right
+              .button-bar.right
+                %ul.button-group.round
+                  %li= link_to "See Overview", all_grades_assignment_type_path(assignment_type), :class => "button tiny aindex"
+                  %li= link_to "Edit #{assignment_type.name}", edit_assignment_type_path(assignment_type), :class => "button tiny aindex"
             .content{:id => "#{assignment_type.id}" }
               %table.responsive.simpleTable
                 %thead
@@ -30,9 +31,14 @@
                       %td= points assignment.point_total
                       %td
                         .button-bar
-                          %ul.button-group.radius.round
-                            %li= link_to "Quick Grade", mass_grade_assignment_path(assignment), :class => "button tiny secondary"
-                            %li= link_to "See", assignment_path(assignment), :class => "button tiny secondary"
-                            %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny secondary'
-                            %li= link_to "Delete", assignment_path(assignment), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                          %ul.button-group.round.right
+                            %li
+                              %a{:href => mass_grade_assignment_path(assignment), :class => 'button tiny secondary' }
+                                Quick Grade
+                            %li
+                              %a{:href => edit_assignment_path(assignment), :class => 'button tiny secondary' }
+                                Edit
+                            %li
+                              %a{:href => assignment_path(assignment), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
+                                Delete
     .clearfix

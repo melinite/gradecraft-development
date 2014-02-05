@@ -1,12 +1,9 @@
 .small-12.panel.mainContent
   / Earned Badge Navigation
   = content_nav_for @badge, "Earned By #{@earned_badge.student.name}" do
-    %li= link_to "See All Awarded #{term_for :badges}", @badge, :class => "button tiny radius"
-    %li= link_to 'Edit', [:edit, :badge, :earned_badge], :class => "button tiny radius"
+    = render "badges/tabs"
 
   .small-12.columns
-
-    %br
 
     %img{:src => @earned_badge.badge.try(:icon), :alt => @earned_badge.badge.try(:name), :width => "25", :height => "25"}
     %p

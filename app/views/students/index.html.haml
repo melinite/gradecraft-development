@@ -1,16 +1,7 @@
 .small-12.panel.mainContent
   / Student Index breadcrumbs
-  = content_nav_for User, term_for(:students) do
-    / Link to create a new student
-    %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
-    / Link to download CSV of student index - current scores, final grade, badge counts
-    %li= link_to "Download CSV", students_path(format: 'csv'), :class => "button tiny radius"
-    / Link to download csv of total gradebook. Should probably be updated to trigger a background job and send the instructor an email when the download is ready
-    %li= link_to "Download Gradebook", gradebook_path(format: 'csv'), :class => "button tiny radius"
-
-
-  .small-12.medium-6.columns
-    %h2= @title
+  = content_nav_for User, "#{term_for(:students)}" do
+    = render "users/tabs"
 
   .small-12.medium-4.columns.right
     / Checking to see if the current course has teams, displaying the team filter if it does
@@ -23,6 +14,7 @@
     %table.responsive.simpleTable
       %thead
         %tr
+          %th
           %th.sortable{"data-sort" => "string"} First Name
           %th.sortable{"data-sort" => "string"} Last Name
           - if current_course.in_team_leaderboard?
@@ -41,6 +33,9 @@
           - students = current_course_data.students
         - students.each do |student|
           %tr
+            %td
+              %a{:href => "mailto:#{student.email}" }
+                %i.fi-mail
             %td= link_to student.first_name, student_path(student)
             %td= link_to student.last_name, student_path(student)
             - if current_course.in_team_leaderboard?
@@ -55,11 +50,11 @@
               %td{:data => { :"sort-value" => "#{current_course.score_for_student(student)}"} }= points current_course.score_for_student(student)
               %td
                 = student.grade_letter_for_course(current_course)
-                = "-"
+                = "-" if student.grade_letter_for_course(current_course) && student.grade_level_for_course(current_course)
                 = student.grade_level_for_course(current_course)
             %td
               .button-bar
-                %ul.button-group.radius.round
+                %ul.button-group.right.round
                   %li= link_to "Dashboard", student_path(student), :class => "button tiny secondary"
                   %li= link_to "Edit", edit_user_path(student), :class => "button tiny secondary"
 
@@ -103,7 +98,7 @@
                   = student.grade_level_for_course(current_course)
               %td
                 .button-bar
-                  %ul.button-group.radius.round
+                  %ul.button-group.right.round
                     %li= link_to "Dashboard", student_path(student), :class => "button tiny small large radius"
                     %li= link_to "Edit", edit_user_path(student), :class => "button tiny small large radius"
   .clearfix

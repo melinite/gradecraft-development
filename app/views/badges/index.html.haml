@@ -2,7 +2,7 @@
   .small-12.panel.mainContent
     / Badge Navigation
     = content_nav_for Badge do
-      %li= link_to "Create New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
+      = render "tabs"
 
     .small-12.columns
       %h2= @title
@@ -33,8 +33,12 @@
                     No
                 %td
                   .button-bar
-                    %ul.button-group.radius.round
+                    %ul.button-group.right.round
                       %li= link_to "Quick Award", mass_award_badge_path(badge), :class => "button tiny secondary"
-                      %li= link_to 'Edit', edit_badge_path(badge), :class => 'button tiny secondary'
-                      %li= link_to 'Delete', badge_path(badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                      %li
+                        %a{:href => edit_badge_path(badge), :class => 'button tiny secondary'}
+                          Edit
+                      %li
+                        %a{:href => badge_path(badge), :method => :delete, :data => { confirm: 'Are you sure?' }, :class => "button tiny secondary" }
+                          Delete
     .clearfix

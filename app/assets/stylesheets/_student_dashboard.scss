@@ -1,25 +1,16 @@
 /** Student Dashboard Styles **/
 
-#gradePredictor {
+.gradePredictor {
   background-color: #eee;
   border: 1px solid #eee;
   border-radius: 15px;
   padding: 15px;
   box-shadow: 0px 3px 3px #888888;
-  .chart-wrapper {
-    position: relative;
-  }
-
-  .chart-inner {
-  }
-}
-
-#gradePredictor.fixed {
-  width: 80% !important;
+  z-index: 100;
 }
 
 #prediction {
-  height: 200px;
+  height: 120px;
 }
 
 #predictorPage ul.slides, #predictorPage ul.slides li {
@@ -75,7 +66,7 @@
 }
 
 .assignmentName a {
-  color: $blue;
+  color: $primary-color;
 }
 
 .assignmentName a:hover {
@@ -139,4 +130,12 @@ img.earned {
   margin: 0;
   font-size: .7rem;
   padding: 0.3rem .5rem;
+}
+
+.chartcontainer {
+  position: relative;
+
+  #levels_per_assignment {
+  }
+
 }

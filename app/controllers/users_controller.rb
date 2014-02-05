@@ -15,7 +15,6 @@ class UsersController < ApplicationController
     else
       @grade_scheme_elements = current_course.grade_scheme_elements
       @grade_levels_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
-      @scores_for_current_course = current_student.scores_for_course(current_course)
     end
     if current_course.team_challenges?
       @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
@@ -118,9 +117,6 @@ class UsersController < ApplicationController
     @title = "Edit My Account"
     @user = current_user
     @default_course_options = @user.courses
-    if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-    end
   end
 
   def update_profile

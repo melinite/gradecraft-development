@@ -1,6 +1,6 @@
 .small-12.panel.columns.mainContent
-  = content_nav_for "My Dashboard" do
-    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
+  = content_nav_for "Course Timeline" do
+    = render "tabs"
 
   .small-12.columns
     %h2= "Course Dashboard"

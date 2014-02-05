@@ -12,6 +12,21 @@ class AnalyticsController < ApplicationController
     render json: data
   end
 
+  def top_10
+    @teams = current_course.teams.includes(:earned_badges)
+    @students = current_course.users.students.joins(:course_memberships).where('course_memberships.auditing = false')
+    @top_ten_students = @students.order_by_high_score.limit(10)
+    @bottom_ten_students = @students.order_by_low_score.limit(10)
+  end
+
+  def per_assign
+    respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.released.length > 1}
+  end
+
+  def team_grade
+    #respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.released.length > 1}
+  end
+
   def role_events
     data = CourseRoleEvent.data(@granularity, @range, {course_id: current_course.id, role_group: params[:role_group]}, {event_type: "_all"})
 

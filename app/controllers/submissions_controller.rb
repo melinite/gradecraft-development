@@ -11,13 +11,10 @@ class SubmissionsController < ApplicationController
   end
 
   def show
-    @title = "View Submission"
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = @assignment.submissions.find(params[:id])
-    if current_user.is_student?
-      enforce_view_permission(@submission)
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-    end
+    @grade = @assignment.grades.find(@submission)
+    redirect_to assignment_grades_path(@assignment, @submission.student)
   end
 
   def new
@@ -33,7 +30,6 @@ class SubmissionsController < ApplicationController
     end
     if current_user.is_student?
       @user = current_user
-      @scores_for_current_course = current_student.scores_for_course(current_course)
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
       else
@@ -60,7 +56,6 @@ class SubmissionsController < ApplicationController
     if current_user.is_student?
       @title = "Editing My Submission for #{@assignment.name}"
       @user = current_user
-      @scores_for_current_course = current_student.scores_for_course(current_course)
       enforce_view_permission(@submission)
     end
     @groups = @assignment.groups

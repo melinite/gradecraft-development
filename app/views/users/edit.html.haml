@@ -1,11 +1,7 @@
 .small-12.panel.mainContent
   / Edit user breadcrumbs
-  = content_nav_for User do
-    %li= link_to "See All #{term_for :students}", students_path, :class => "button tiny radius"
-    - if @user.is_student?
-      %li= link_to "View #{@user.name}'s Dashboard", student_path(@user), :class => "button tiny radius"
-    - else
-      %li= link_to "View #{@user.name}'s Dashboard", staff_path(@user), :class => "button tiny radius"
+  = content_nav_for @user do
+    = render "users/tabs"
 
   .small-12.columns
     / Form to edit user

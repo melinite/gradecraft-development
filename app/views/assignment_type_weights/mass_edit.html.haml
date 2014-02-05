@@ -1,15 +1,5 @@
 .small-12.panel.mainContent
-  - if current_user.is_student?
-    / Student Navigation
-    = content_nav_for "Editing My #{term_for :weight}" do
-      %li= link_to "My Dashboard", dashboard_path, :class => "button radius tiny"
-
-  - elsif current_user.is_staff?
-    / Instructor Navigation
-    = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
-      %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button radius tiny"
-      %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "button radius tiny"
-
+  = render "tabs"
 
   .small-12.columns
     - if current_course.assignment_weight_open? || current_user.is_staff?
@@ -17,12 +7,12 @@
       %h4 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
       %h6.small You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
 
-      %hr
       = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
         = hidden_field_tag :student_id, current_student.id
         - if @form.errors.has_key?(:base)
           .alert.alert-error= f.error :base
         .small-12.columns
+          %hr
           %ul.small-block-grid-3
             = f.simple_fields_for :assignment_type_weights do |atwf|
               %li.panel.callout

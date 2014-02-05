@@ -1,10 +1,10 @@
 .small-12.panel.mainContent
   / Assignments Navigation
-  = content_nav_for Assignment, "New #{term_for :assignment}" do
-    %li= link_to "See All #{term_for :assignments}", assignments_path, :class => "button tiny radius"
+  = content_nav_for Assignment, "#{@title}" do
+    = render "tabs"
 
   .small-12.columns
-    %h2= @title
+    
     = render 'form'
 
   .clearfix

@@ -23,9 +23,9 @@ module ApplicationHelper
     end
   end
 
-  # Add class="current" to navigation item of current page
+  # Add class="active" to navigation item of current page
   def cp(path)
-    "current" if current_page?(path)
+    "active" if current_page?(path)
   end
 
   def sortable(column, title = nil)
@@ -64,4 +64,6 @@ module ApplicationHelper
   def points(value)
     number_with_delimiter(value)
   end
+
+
 end
