@@ -14,7 +14,7 @@
               .button-bar.right
                 %ul.button-group.round
                   %li= link_to "See Overview", all_grades_assignment_type_path(assignment_type), :class => "button tiny aindex"
-                  %li= link_to "Edit #{assignment_type.name}", edit_assignment_type_path(assignment_type), :class => "button tiny aindex"
+                  %li= link_to "Edit", edit_assignment_type_path(assignment_type), :class => "button tiny aindex"
             .content{:id => "#{assignment_type.id}" }
               %table.responsive.simpleTable
                 %thead
