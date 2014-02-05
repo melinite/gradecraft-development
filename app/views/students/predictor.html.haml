@@ -14,10 +14,11 @@
         #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
           %h3
             Projected points:
-            %span#predictor-score-display.bold
-              - if current_user.is_staff?
+            - if current_user.is_staff?
+              %span.bold
                 = points current_course.score_for_student(current_student)
-              - else
+            - else
+              %span#predictor-score-display.bold
                 = points current_student_data.predicted_score
             = "/"
             - if current_course.point_total.present?
@@ -43,7 +44,10 @@
 
     #predictorPage{ 'data-student-name' => current_student.name, 'data-course-total' => current_student_data.point_total }
       %ul.slides.small-12.columns
-        = render partial: 'students/predictor/assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
+        - if current_user.is_staff?
+          = render partial: 'students/predictor/instructor_assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
+        - elsif current_user.is_student?
+          = render partial: 'students/predictor/assignments', collection: current_course_data.by_assignment_type.to_a, as: :assignment_type_and_assignments
         = render 'students/predictor/badges'
         //= render 'students/predictor/challenges'
 
