@@ -19,9 +19,7 @@ class StudentsController < ApplicationController
   end
 
   def timeline
-    if current_user.is_student?
-      @scores_for_current_course = current_student.scores_for_course(current_course)
-    elsif current_user.is_staff?
+    if current_user.is_staff?
       redirect_to dashboard_path
     end
     if current_course.team_challenges?
@@ -32,7 +30,6 @@ class StudentsController < ApplicationController
   end
 
   def syllabus
-    @scores_for_current_course = current_student.scores_for_course(current_course)
   end
 
   def export
@@ -55,7 +52,6 @@ class StudentsController < ApplicationController
     @sorted_teams = current_course.teams.order_by_high_score
     @grade_scheme_elements = current_course.grade_scheme_elements
     @grade_levels_elements_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
-    @scores_for_current_course = current_student.scores_for_course(current_course)
     if current_course.team_challenges?
       @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
     else
@@ -73,15 +69,8 @@ class StudentsController < ApplicationController
     current_student.predictions(current_course)
   end
 
-  def choices
-    @title = "View all #{current_course.weight_term} Choices"
-    @assignment_types = current_course.assignment_types
-    @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
-  end
-
   def grading_philosophy
     @grade_scheme_elements = current_course.grade_scheme_elements
-    @scores_for_current_course = current_student.scores_for_course(current_course)
   end
 
 
@@ -89,17 +78,14 @@ class StudentsController < ApplicationController
   end
 
   def badges
-    @scores_for_current_course = current_student.scores_for_course(current_course)
   end
 
   def predictor
     @grade_scheme_elements = current_course.grade_scheme_elements
     @grade_levels_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
-    @scores_for_current_course = current_student.scores_for_course(current_course)
   end
 
   def teams
-    @scores_for_current_course = current_student.scores_for_course(current_course)
   end
 
 

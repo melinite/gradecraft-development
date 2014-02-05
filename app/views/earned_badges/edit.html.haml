@@ -1,9 +1,9 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
   = content_nav_for @badge, @earned_badge do
-    = render "tabs"
+    = render "badges/tabs"
 
-  .small-12
+  .small-12.columns
     = render 'form'
 
   .clearfix

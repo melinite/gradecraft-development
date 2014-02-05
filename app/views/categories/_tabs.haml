@@ -1,3 +1,5 @@
-%li= link_to 'See All Categories', categories_path, :class => "button tiny radius"
+%li{class: ("active" if current_page?(categories_path)) }
+  = link_to_unless_current 'See All Categories', categories_path
 - if @category.present?
-  %li= link_to "Edit #{@category.name}", edit_category_path(@category), :class => "button tiny radius"
+  %li{class: ("active" if current_page?(edit_category_path(@category))) }
+    = link_to_unless_current "Edit #{@category.name}", edit_category_path(@category)

@@ -1,6 +1,11 @@
-%li= link_to "See All #{term_for :badges}", badges_path, :class => "button tiny radius"
-%li= link_to "New #{term_for :badge}", new_badge_path, :class => "button tiny radius"
-- if @badge.present?
-  %li= link_to "Edit #{@badge.name}", edit_badge_path(@badge), :class => "button tiny radius"
-  %li= link_to "Award this #{term_for :badge}", new_badge_earned_badge_path(:badge_id => @badge), :class => "button tiny radius"
-  %li= link_to "Quick Award #{term_for :badge}", mass_award_badge_path(@badge), :class => "button tiny radius"
+%li{class: ("active" if current_page?(badges_path)) }
+  = link_to_unless_current "See All #{term_for :badges}", badges_path
+%li{class: ("active" if current_page?(new_badge_path)) }
+  = link_to_unless_current "New #{term_for :badge}", new_badge_path
+- if @badge.present? && @badge.persisted?
+  %li{class: ("active" if current_page?(edit_badge_path(@badge))) }
+    = link_to_unless_current "Edit #{@badge.name}", edit_badge_path(@badge)
+  %li{class: ("active" if current_page?(new_badge_earned_badge_path(@badge))) }
+    = link_to_unless_current "Award this #{term_for :badge}", new_badge_earned_badge_path(:badge_id => @badge)
+  %li{class: ("active" if current_page?(mass_award_badge_path(@badge))) }
+    = link_to_unless_current "Quick Award #{term_for :badge}", mass_award_badge_path(@badge)

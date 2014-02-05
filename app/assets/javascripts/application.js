@@ -34,6 +34,7 @@
 //= require nested_fields
 //= require users
 //= require student_dashboard
+//= require predictor
 //= require stupidtable
 //= require submissions
 //= require submission_file
@@ -41,7 +42,6 @@
 //= require timeline
 //= require earned_badges
 //= require per-assign
-//= require predictor
 //= require datetimepicker
 //= require highcharts
 //= require select2

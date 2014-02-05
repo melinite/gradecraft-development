@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Staff Navigation
   = content_nav_for @user do
-    = render "tabs"
+    = render "users/tabs"
 
   .small-12.columns
     %h2 Courses
@@ -29,3 +29,5 @@
             %td
               = grade.created_at
               = grade.updated_at if grade.updated_at != grade.created_at
+
+  .clearfix

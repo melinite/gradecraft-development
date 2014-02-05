@@ -1,10 +1,9 @@
 .small-12.panel.mainContent
   / User All navigation
   = content_nav_for User do
-    %li= link_to "Create a New #{term_for :student}", new_user_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
-    %h2= @title
 
     %table.responsive.simpleTable
       %thead

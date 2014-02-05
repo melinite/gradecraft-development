@@ -27,7 +27,7 @@
           %li
             = link_to sf.filename, sf.url
             = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
-
+            
   .small-12.large-6.columns
     %h5 Statement:
     %p= raw @grade.student.submission_for_assignment(@grade.assignment).text_comment

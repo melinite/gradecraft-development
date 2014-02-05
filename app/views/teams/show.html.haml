@@ -1,10 +1,7 @@
 .small-12.panel.mainContent
   / Student Dashboard Breadcrumbs
   = content_nav_for @team do
-    %li= link_to "Edit #{@team.name}", edit_team_path(@team), :class => "button tiny radius"
-    %li= link_to "Add #{term_for :team}", new_team_path, :class => "button tiny radius"
-    - if current_course.team_challenges?
-      %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
     %h2= @team.name
@@ -39,7 +36,7 @@
                     %img{:src => asset_path(badge.icon), :alt => badge.name, :width => "25"}
               %td
                 .button-bar
-                  %ul.button-group.round
+                  %ul.button-group.round.right
                     %li= link_to 'Dashboard', student_path(student), :class => 'button tiny secondary'
                     %li= link_to 'Edit', edit_user_path(student), :class => 'button tiny secondary'
 

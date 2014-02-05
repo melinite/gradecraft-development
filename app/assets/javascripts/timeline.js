@@ -20,7 +20,6 @@ $(document).ready(function() {
 
     // Checking to make sure there is a date for the event - skipping it if not
     if(typeof st !== "undefined") {
-      console.log(st.typeof);
       //splitting the variable into pieces so we can reformat it for Safari
       var dt = st.split(/[^0-9]/);
 

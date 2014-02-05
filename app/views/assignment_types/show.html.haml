@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Assignment Type Navigation
   = content_nav_for @assignment_type do
-    = render "tabs"
+    = render "assignments/tabs"
 
   .small-12.columns
     %h2= @title
@@ -25,12 +25,12 @@
               - if current_user.is_staff?
                 %td
                   .button-bar
-                    %ul.button-group.round
+                    %ul.button-group.right.round
                       %li= link_to "Grade", assignment_path(assignment), :class => "button tiny secondary"
                       %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny secondary'
                       %li
                         %a{:href => assignment_path(assignment), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
-                          %i.fi-trash
+                          Delete
                       %li= link_to "Copy", copy_assignments_path(:id => assignment), :class => 'button tiny secondary', :method => :copy
               - else
                 - if assignment.accepts_submissions? && assignment.has_groups?

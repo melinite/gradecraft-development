@@ -183,8 +183,9 @@ label.checkbox, label.radio  {
 
 select {
   background-color: #F0F8FF;
+  border-radius: .5rem;
 }
 
 select:hover {
-  background-color: #55DCF5;
+  background-color: $lightblue;
 }

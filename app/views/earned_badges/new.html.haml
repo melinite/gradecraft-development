@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Earned Badge Navigation
   = content_nav_for @badge, "Award #{term_for :badge}" do
-    = render "tabs"
+    = render "badges/tabs"
 
   .small-12.columns
     = render 'form'

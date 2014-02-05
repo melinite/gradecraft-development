@@ -1,14 +1,14 @@
 .small-12.panel.mainContent
   / Challenge Grades Navigation
   = content_nav_for @challenge do
-    = render "tabs"
+    = render "teams/tabs"
 
   .small-12.columns
     %h3= @title
 
     #massGrade
       = simple_form_for @challenge, method: :put, :url => mass_edit_challenge_path(@challenge) do |f|
-        %table
+        %table.responsive
           - @challenge_grades.each_with_index do |cg, i|
             %tr
               %td

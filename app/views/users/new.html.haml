@@ -1,11 +1,10 @@
 .small-12.panel.mainContent
   / New user navigation
-  = content_nav_for User do
-    %li= link_to 'See All Users', users_path, :class => "button tiny radius"
+  = content_nav_for User, "Create a New User" do
+    = render "tabs"
 
   .small-12.columns
     / Form for creating a new user
-    %h2= "Create a New #{term_for(:student)}"
     = render 'form'
 
   .clearfix

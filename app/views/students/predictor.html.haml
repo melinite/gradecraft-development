@@ -1,12 +1,12 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
-    = content_nav_for "My Dashboard" do
-      = render "student_tabs"
+    = content_nav_for "Predict My Grade" do
+      = render "student_profile_tabs"
 
   - else
     / Student Dashboard Breadcrumbs
     = content_nav_for current_student do
-      = render "staff_tabs"
+      = render "student_profile_tabs"
 
   .small-12.columns
     - cache current_student_data.cache_key('v1', :assignment_weights_key, :assignments_key, :grades_key, :badges_key, current_student.id) do
@@ -24,10 +24,10 @@
               %span= "#{ points current_course.point_total } possible points"
             - else
               %span= "#{points current_student_data.point_total} possible points"
-
-            %h5 Predicted final grade:
-            %span#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
-            = current_student_data.predicted_grade_letter
+            –
+            Predicted final grade:
+            %span.bold#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
+              = current_student_data.predicted_grade_letter
             %hr
 
         .charts.dashboard-charts

@@ -1,13 +1,9 @@
 .small-12.panel.mainContent
   / Team Index Breadcrumbs
   = content_nav_for Team do
-    %li= link_to "Add #{term_for :team}", new_team_path, :class => "button tiny radius"
-    - if current_course.team_challenges?
-      %li= link_to "Grade #{term_for :challenge}", challenges_path, :class => "button tiny radius"
+    = render "tabs"
 
   .small-12.columns
-    %h2= @title
-
     %table.responsive.simpleTable
       %thead
         %tr
@@ -35,7 +31,7 @@
               %td= points team.badge_count
               %td
                 .button-bar
-                  %ul.button-group.round
+                  %ul.button-group.round.right
                     %li= link_to 'See', team, :class => 'button tiny secondary'
                     %li= link_to 'Edit', edit_team_path(team), :class => 'button tiny secondary'
                     %li= link_to 'Delete', team, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete

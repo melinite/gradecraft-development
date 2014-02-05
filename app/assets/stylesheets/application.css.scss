@@ -15,16 +15,17 @@
 
 /* Branding colors */
 
-$blue: #0D9AFF;
-$lightblue: #45A1DE;
-$green: #67CF30;
-$red: #E95D4E;
+/* Based on cloud colors */
+$blue: #58d0eb;
+/* Based on cloud colors */
+$lightblue: #6dd8f0;
+$green: #239C45;
 $yellow: #FFF90D;
 $orange: #F4A425;
 $darkblue: #120470;
 
 $primary-color: #274E56;
-$secondary-color: #45A1DE;
+$secondary-color: #58d0eb;
 $alert-color: #f04124;
 $success-color: #67CF30;
 
@@ -61,8 +62,6 @@ body.logged-in, body.logged-out {
 .row.panel.publicContent {
   margin-bottom: 0;
   padding-top: 2rem;
-  border-left: 10px solid $green;
-  border-right: 10px solid $green;
   border-top: none;
   background-color: #FFF;
   min-height: 30rem;
@@ -135,6 +134,19 @@ h6.small {
 
 .bold {
   font-weight: bold;
+}
+
+.not_bold {
+  font-weight: normal !important;
+}
+
+.inverse {
+  color: #FFF;
+}
+
+.panel.callout {
+  background-color: #eee;
+  border: none;
 }
 
 #attachments {

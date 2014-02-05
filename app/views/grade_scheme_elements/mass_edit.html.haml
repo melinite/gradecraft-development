@@ -1,6 +1,6 @@
 .small-12.panel.mainContent
   / Grade Scheme Elements Navigation
-  = content_nav_for :grade_scheme_elements do
+  = content_nav_for "Edit #{current_course.name} Grading" do
     = render "tabs"
 
   .small-12.columns

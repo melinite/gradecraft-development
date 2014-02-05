@@ -7,12 +7,12 @@
       %h4 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
       %h6.small You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
 
-      %hr
       = simple_form_for @form, as: :student, url: assignment_type_weights_path, method: :put do |f|
         = hidden_field_tag :student_id, current_student.id
         - if @form.errors.has_key?(:base)
           .alert.alert-error= f.error :base
         .small-12.columns
+          %hr
           %ul.small-block-grid-3
             = f.simple_fields_for :assignment_type_weights do |atwf|
               %li.panel.callout

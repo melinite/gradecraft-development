@@ -1,2 +1,4 @@
-%li= link_to "Edit Grading Scheme", mass_edit_grade_scheme_elements_path, :class => "button tiny radius"
-%li= link_to "Grade Scheme", grade_scheme_elements_path, :class => "button tiny radius"
+%li{class: ("active" if current_page?(grade_scheme_elements_path)) }
+  = link_to_unless_current "Current Grade Scheme", grade_scheme_elements_path
+%li{class: ("active" if current_page?(mass_edit_grade_scheme_elements_path)) }
+  = link_to_unless_current "Edit Grade Scheme", mass_edit_grade_scheme_elements_path

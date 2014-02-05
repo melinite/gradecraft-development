@@ -2,7 +2,7 @@
   / Students Navigation
   - if current_user.is_staff?
     = content_nav_for current_student do
-      = render "staff_tabs"
+      = render "student_profile_tabs"
 
   .small-12.columns
     %h2= current_student.name

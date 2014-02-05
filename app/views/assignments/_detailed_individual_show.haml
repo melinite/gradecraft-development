@@ -18,7 +18,7 @@
         - if @assignment.release_necessary?
           %th
             .button-bar
-              %ul.button-group.radius.round
+              %ul.button-group.right.round
                 %li
                   %button.select-all.tiny= "Check"
                 %li
@@ -59,7 +59,7 @@
                   = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :user_id => student.id, :student_type => "User"), :class => 'button tiny round secondary'
           %td
             .button-bar
-              %ul.button-group.round
+              %ul.button-group.round.right
                 %li= link_to "Dashboard", student_path(student), :class => 'button tiny secondary'
                 - if grade.is_graded? || grade.is_released?
                   %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'
@@ -95,7 +95,7 @@
           - if @assignment.release_necessary?
             %th
               .button-bar
-                %ul.button-group.radius.round
+                %ul.button-group.right.round
                   %li
                     %button.select-all.tiny= "Check"
                   %li
@@ -134,7 +134,7 @@
                     = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :user_id => student.id, :student_type => "User"), :class => 'button tiny secondary round'
             %td
               .button-bar
-                %ul.button-group.radius.round
+                %ul.button-group.right.round
                   %li= link_to "Dashboard", student_path(student), :class => 'button tiny secondary'
                   - if grade.is_graded? || grade.is_released?
                     %li= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'

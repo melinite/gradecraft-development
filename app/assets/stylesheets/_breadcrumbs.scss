@@ -22,7 +22,6 @@ ul.breadcrumbs {
   background-color: $green;
   dt {
     color: #FFF;
-
   }
 
   .navbar-nav li {
@@ -32,13 +31,23 @@ ul.breadcrumbs {
     margin: 0 0.2rem;
   }
 
-  .navbar-nav li a {
-    padding: 10px !important;
+  .navbar-nav li.active {
+    background-color: $lightblue;
+    color: #000;
   }
 
-  .navbar-nav li a.active {
-    background-color: $lightblue;
+  
+
+  .navbar-nav li {
+    background-color: $primary-color;
+    font-size: .7rem;
+    padding: 10px;
     color: #FFF;
+  }
+
+  .navbar-nav li:hover {
+    background-color: $secondary-color;
+    color: #000;
   }
 }
 

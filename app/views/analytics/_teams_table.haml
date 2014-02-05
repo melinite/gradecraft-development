@@ -1,0 +1,19 @@
+%table.responsive.simpleTable
+  %thead
+    %tr
+      %th.sortable{"data-sort" => "string"}= course.team_term
+      - if ! current_course.team_score_average
+        %th.sortable{"data-sort" => "int"} Score
+      %th.sortable{"data-sort" => "int"} Average #{course.user_term} Grade
+      %th.sortable{"data-sort" => "string"}= course.team_leader_term
+  %tbody
+    - teams.order_by_high_score.each do |team|
+      %tr
+        %td= link_to team.name, team_path(team)
+        - if ! current_course.team_score_average
+          %td= points team.try(:challenge_grade_score)
+
+        %td= points team.try(:average_grade)
+        %td
+          - if team.team_leader.present?
+            = link_to team.team_leader.try(:name), team.team_leader

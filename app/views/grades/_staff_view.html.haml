@@ -1,25 +1,15 @@
 .small-12.panel.mainContent
-  / Grades Navigation
-  - if @assignment.is_individual?
-    = content_nav_for @assignment, "#{@grade.student.name}" do
-      %li= link_to "All #{@grade.assignment.name } Grades", assignment_path(@grade.assignment_id), :class => "button tiny radius"
-      %li= link_to "See #{@grade.student.first_name}'s Dashboard", student_path(@grade.student), :class => "button tiny radius"
-      %li= link_to 'Edit Grade', edit_assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "button tiny radius"
-      %li= link_to "Delete Grade", assignment_grade_path(@assignment, :student_id => @grade.student_id), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
-
-  - else
-    = content_nav_for @assignment, "Grade" do
-      %li= link_to 'Edit Grades', group_grade_assignment_path("assignment_id" => @assignment.id, "id" => @grade.id, :group_id => @grade.group_id), :class => "button tiny radius"
-      %li= link_to "Grade Another " +@grade.assignment.name, edit_assignment_grade_path("assignment_id"=>@grade.assignment.id), :class => "button tiny radius"
-
+  = content_nav_for @assignment, "#{@grade.student.name}" do
+    = render "assignments/tabs"
 
   .small-12.columns
     - if @grade.assignment.is_individual?
-      %h2
-        = link_to "#{@grade.assignment.try(:name)}", @grade.assignment
+      %h3
+        = "#{@grade.student.name}'s #{@grade.assignment.try(:name)}"
+      .assignmentDescription= raw @grade.assignment.description
       = render "individual_show"
     - else
-      %h3.bold= "#{@grade.group.try(:name)}'s #{@grade.assignment.name}"
+      %h3= "#{@grade.group.try(:name)}'s #{@grade.assignment.name}"
       = render "group_show"
 
   .clearfix

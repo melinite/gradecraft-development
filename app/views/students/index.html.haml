@@ -1,11 +1,7 @@
 .small-12.panel.mainContent
   / Student Index breadcrumbs
-  = content_nav_for User, term_for(:students) do
-    = render "tabs"
-
-
-  .small-12.medium-6.columns
-    %h2= @title
+  = content_nav_for User, "#{term_for(:students)}" do
+    = render "users/tabs"
 
   .small-12.medium-4.columns.right
     / Checking to see if the current course has teams, displaying the team filter if it does
@@ -18,6 +14,7 @@
     %table.responsive.simpleTable
       %thead
         %tr
+          %th
           %th.sortable{"data-sort" => "string"} First Name
           %th.sortable{"data-sort" => "string"} Last Name
           - if current_course.in_team_leaderboard?
@@ -36,6 +33,9 @@
           - students = current_course_data.students
         - students.each do |student|
           %tr
+            %td
+              %a{:href => "mailto:#{student.email}" }
+                %i.fi-mail
             %td= link_to student.first_name, student_path(student)
             %td= link_to student.last_name, student_path(student)
             - if current_course.in_team_leaderboard?
@@ -54,7 +54,7 @@
                 = student.grade_level_for_course(current_course)
             %td
               .button-bar
-                %ul.button-group.radius.round
+                %ul.button-group.right.round
                   %li= link_to "Dashboard", student_path(student), :class => "button tiny secondary"
                   %li= link_to "Edit", edit_user_path(student), :class => "button tiny secondary"
 
@@ -98,7 +98,7 @@
                   = student.grade_level_for_course(current_course)
               %td
                 .button-bar
-                  %ul.button-group.radius.round
+                  %ul.button-group.right.round
                     %li= link_to "Dashboard", student_path(student), :class => "button tiny small large radius"
                     %li= link_to "Edit", edit_user_path(student), :class => "button tiny small large radius"
   .clearfix

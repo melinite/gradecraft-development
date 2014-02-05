@@ -8,10 +8,6 @@ table.responsive {
   font-size: .8rem;
   margin-bottom: 1rem;
 
-  a {
-    color: #333;
-  }
-
   a:hover {
     color: $green;
   }
@@ -23,26 +19,20 @@ table.responsive {
   td {
     line-height: 1.5rem;
   }
-}
 
+  /* Table Header styles */
+  th {
+    text-transform: capitalize;
+    font-weight: normal;
+    padding: .5rem;
+  }
 
-table th {
-  text-transform: capitalize;
-  font-weight: normal;
-  padding: .5rem;
-
-  .button-group {
+  th .button-group {
     button {
       margin: 0;
       padding: .2rem;
-      background-color: $lightblue;
-    }
-
-    button:hover {
-      background-color: $darkblue;
     }
   }
-
 }
 
 table th.sortable {
@@ -53,12 +43,12 @@ table .button-group li a.button.tiny {
   margin: 0;
   border-radius: 0;
   padding: .4rem .5rem;
-  font-size: .9rem;
 }
 
 /* Highlight the sorted columns */
 th.sorting-desc, th.sorting-asc {
-  color: $lightblue;
+  color: $secondary-color;
+  background-color: $primary-color;
 }
 
 dd .content.active {
@@ -68,8 +58,8 @@ dd .content.active {
 
 .button.tiny.aindex {
   width: auto !important;
-  background-color: $lightblue;
-  color: #FFF;
+  background-color: $secondary-color;
+  color: #000;
   right: 0;
   position: relative;
   top: -2.8rem;
@@ -80,7 +70,7 @@ dd .content.active {
   background-color: $darkblue;
 }
 
-dd .small-2 {
+dd .small-3 {
   height: 0;
 }
 
@@ -96,16 +86,23 @@ dd .small-2 {
 
 .table-condensed thead > tr > th.dow {
   color: $primary-color;
-}
-@media (min-width: 1280px)  {
-  .button-column {
-    display: inline;
-  }
+
 }
 
+.button-column {
+    width: 300px;
+  }
+
 @media (max-width: 1279px)  {
-  .button-column {
+  
+  table .button-group {
     display: inline;
+  }
+
+  table .button-group li a.button.tiny  {
+  padding: .25rem;
+  border-radius: none;
+  border: none;
   }
 
   .scrollable .button-column {
@@ -119,7 +116,7 @@ dd .small-2 {
 
 
 @media (max-width: 640px) {
-  .round .button.tiny {
+  table .button-group li a.button.tiny  {
   padding: .75rem;
   border-radius: none;
   width: 5rem;

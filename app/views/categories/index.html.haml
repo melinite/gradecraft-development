@@ -20,7 +20,7 @@
           %td= raw category.description
           %td
             .button-bar
-              %ul.button-group.radius.round
+              %ul.button-group.right.round
                 %li= link_to 'Edit', edit_category_path(category), :class => 'button tiny radius'
                 %li= link_to 'Delete', category, :class => 'button tiny radius', :data => { confirm: 'Are you sure?' }, :method => :delete
 

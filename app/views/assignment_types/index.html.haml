@@ -1,11 +1,10 @@
 .small-12.panel.mainContent
   / Assignment Type Navigation
-  = content_nav_for AssignmentType do
-    = render "tabs"
+  = content_nav_for Assignment, "See All Quest Types" do
+    = render "assignments/tabs"
 
   .small-12.columns
-    %h2= "#{term_for :assignment} Types"
-
+    
     %table.responsive.simpleTable
       %thead
         %tr
@@ -21,11 +20,11 @@
               %td= points assignment_type.max_value
               %td
                 .button-bar
-                  %ul.button-group.radius.round
+                  %ul.button-group.right.round
                     %li= link_to 'See', assignment_type_path(assignment_type), :class => 'button tiny secondary'
                     %li= link_to 'Edit', edit_assignment_type_path(assignment_type), :class => 'button tiny secondary'
                     %li
                       %a{:href => assignment_type_path(assignment_type), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
-                        %i.fi-trash
+                        Delete
 
   .clearfix

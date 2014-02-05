@@ -1,10 +1,12 @@
 - if current_user.is_student?
   / Student Navigation for Assignment Weighting
   = content_nav_for "Editing My #{term_for :weight}" do
-    %li= link_to "My Dashboard", dashboard_path, :class => "button radius tiny"
+    = render "students/student_tabs"
 
 - elsif current_user.is_staff?
   / Instructor Navigation for Assignment Weighting
   = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
-    %li= link_to "See #{current_student.name}'s Dashboard", student_path(current_student), :class => "button radius tiny"
-    %li= link_to "See All #{term_for :weight} Decisions", choices_students_path, :class => "button radius tiny"
+    %li{class: ("active" if current_page?(student_path(current_student))) }
+      = link_to_unless_current "See #{current_student.name}'s Dashboard", student_path(current_student)
+    %li{class: ("active" if current_page?(choices_students_path)) }
+      = link_to_unless_current "See All #{term_for :weight} Decisions", choices_students_path

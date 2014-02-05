@@ -2,7 +2,9 @@
   - if current_user.is_student?
     .bold Your Results
   - else
-    .bold= " #{@grade.student.try(:name)}'s Results "
+    %span.bold
+      = " #{@grade.student.try(:name)}'s Results "
+    %span= link_to "[Edit Grade]", edit_assignment_grade_path(@assignment, :student_id => @grade.student.id)
   - if @grade.raw_score?
     %h6
       %span Score:
@@ -13,5 +15,6 @@
     %p= raw @grade.feedback
 
   - if @grade.assignment.release_necessary? && current_user.is_staff?
-    %h6 Status:
-    = @grade.status
+    %h6 
+      Status:
+      %span.bold= @grade.status

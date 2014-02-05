@@ -33,12 +33,12 @@
                     No
                 %td
                   .button-bar
-                    %ul.button-group.radius.round
+                    %ul.button-group.right.round
                       %li= link_to "Quick Award", mass_award_badge_path(badge), :class => "button tiny secondary"
                       %li
                         %a{:href => edit_badge_path(badge), :class => 'button tiny secondary'}
-                          %i.fi-widget
+                          Edit
                       %li
                         %a{:href => badge_path(badge), :method => :delete, :data => { confirm: 'Are you sure?' }, :class => "button tiny secondary" }
-                          %i.fi-trash
+                          Delete
     .clearfix

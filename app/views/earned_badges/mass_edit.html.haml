@@ -1,12 +1,12 @@
 .small-12.panel.mainContent
   / Earned Badges Navigation
   = content_nav_for @badge, "Quick Award #{term_for :badges}" do
-    = render "tabs"
+    = render "badges/tabs"
 
   .small-12.columns
     %h3= @title
     - if current_course.has_teams?
-      .filters
+      .right.filters
         = form_tag mass_award_badge_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
           = hidden_field_tag :badge_id, @badge.id
           = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
@@ -16,7 +16,7 @@
         .btn-group
           %button.select-all.button.tiny.radius= "Check All"
           %button.select-none.button.tiny.radius.success= "Uncheck"
-        %table
+        %table.responsive
           - @earned_badges.each_with_index do |eb, i|
             %tr
               %td= link_to eb.student.name, student_path(eb.student)
@@ -25,8 +25,8 @@
                   = ebf.hidden_field :student_id
                   = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
                   = ebf.check_box :score, {}, @badge.point_total
-        .form-actions
-          = f.button :submit, "Award", :class => "button tiny radius"
-          = link_to 'Cancel', badges_path, :class => 'button tiny radius'
+        .right
+          = f.button :submit, "Award", :class => "button tiny round"
+          = link_to 'Cancel', badges_path, :class => 'button tiny round'
 
   .clearfix

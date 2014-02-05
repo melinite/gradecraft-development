@@ -1,7 +1,7 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
   = content_nav_for @assignment, "Import Grades" do
-    = render "tabs"
+    = render "assignments/tabs"
 
   .small-12.columns
     %h3 Import Grades for #{@assignment.name}

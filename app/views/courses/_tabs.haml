@@ -1,5 +1,8 @@
-%li= link_to 'New Course', new_course_path, :class => "button tiny radius"
 - if current_user.is_admin?
-  %li= link_to 'See All Courses', courses_path, :class => "button tiny radius"
-- if @course.present?
-  %li= link_to "Edit #{@course.name}", edit_course_path(@course), :class => "button tiny radius"
+  %li{class: ("active" if current_page?(courses_path)) }
+    = link_to_unless_current 'Course Index', courses_path
+%li{class: ("active" if current_page?(new_course_path)) }
+  = link_to_unless_current 'New Course', new_course_path
+- if @course.present? && @course.persisted?
+  %li{class: ("active" if current_page?(edit_course_path(@course))) }
+    = link_to_unless_current "Edit #{@course.name}", edit_course_path(@course)

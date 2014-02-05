@@ -3,7 +3,7 @@
 
   = content_nav_for @challenge do
     - if current_user.is_staff?
-      = render "tabs"
+      = render "teams/tabs"
     - else 
       = render "students/student_tabs"
 
@@ -59,7 +59,7 @@
                 %td
                   - if challenge_grade
                     .button-bar
-                      %ul.button-group.radius.round
+                      %ul.button-group.right.round
                         %li= link_to "See Grade", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary'
                         %li= link_to "Edit Grade", edit_challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary'
                         %li= link_to "Delete", challenge_challenge_grade_path(@challenge.id, challenge_grade.id, :team_id => team.id), :class => 'button tiny secondary', :action => :delete
