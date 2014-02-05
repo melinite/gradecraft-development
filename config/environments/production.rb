@@ -14,6 +14,7 @@ GradeCraft::Application.configure do
   }
   config.active_support.deprecation = :notify
   config.assets.compile = false
+  config.assets.precompile += %w( vendor/modernizr.js )
   config.assets.compress = true
   config.assets.css_compressor = :sass
   config.assets.digest = true
