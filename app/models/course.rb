@@ -13,7 +13,8 @@ class Course < ActiveRecord::Base
     :use_timeline, :media_file, :media_credit, :media_caption, :assignment_term,
     :challenge_term, :badge_term, :grading_philosophy, :team_score_average,
     :team_challenges, :team_leader_term, :max_assignment_types_weighted,
-    :point_total, :in_team_leaderboard, :grade_scheme_elements_attributes
+    :point_total, :in_team_leaderboard, :grade_scheme_elements_attributes, 
+    :add_team_score_to_student
 
   has_many :course_memberships
   has_many :users, :through => :course_memberships

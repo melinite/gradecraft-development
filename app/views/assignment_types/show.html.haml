@@ -43,7 +43,7 @@
                 - elsif assignment.accepts_submissions? && assignment.is_individual?
                   - current_student.submission_for_assignment(assignment).tap do |submission|
                     - if submission
-                      %td= link_to "See Submission", assignment_submission_path(assignment.id, submission, :student_id => current_student.id), :class => 'button tiny radius'
+                      %td= link_to "See Submission", assignment_grade_path(assignment.id, :student_id => current_student.id), :class => 'button tiny radius'
                       %td
                       %td
                       %td

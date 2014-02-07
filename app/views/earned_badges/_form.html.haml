@@ -1,15 +1,14 @@
 = simple_form_for([@badge, @earned_badge]) do |f|
   %h3= "You are awarding the #{@badge.name} #{term_for :badge} to..."
-  = f.input :badge_id, :as => :hidden, :collection => @badges
+  = hidden_field_tag :badge_id, @badge.id
   .small-12.medium-4.columns
-    = f.input :student_id, :collection => current_course_data.students, :label => "#{term_for :student}"
+    = select_tag :student, options_from_collection_for_select(current_course.students, "id", "name", @earned_badge.try(:student_id)), :prompt => "Select Student"
   
   .clearfix
 
   .small-12.columns
     %h5 Feedback
     = f.bootsy_area :feedback
-  = hidden_field_tag "earned_badge[badge_ids][]", nil
 
   %hr
   .right

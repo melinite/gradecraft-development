@@ -861,7 +861,8 @@ CREATE TABLE courses (
     team_challenges boolean,
     max_assignment_types_weighted integer,
     point_total integer,
-    in_team_leaderboard boolean
+    in_team_leaderboard boolean,
+    add_team_score_to_student boolean DEFAULT false
 );
 
 
@@ -3139,3 +3140,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131231135740');
 INSERT INTO schema_migrations (version) VALUES ('20131231151417');
 
 INSERT INTO schema_migrations (version) VALUES ('20140108042034');
+
+INSERT INTO schema_migrations (version) VALUES ('20140205153717');

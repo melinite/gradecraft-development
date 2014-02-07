@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
     :remember_me_token, :major, :gpa, :current_term_credits, :accumulated_credits,
     :year_in_school, :state_of_residence, :high_school, :athlete, :act_score, :sat_score,
     :student_academic_history_attributes, :team_role, :course_memberships_attributes,
-    :character_profile, :team_id, :lti_uid
+    :character_profile, :team_id, :lti_uid, :course_team_ids
 
   scope :alpha, -> { order 'last_name ASC' }
   scope :order_by_high_score, -> { order 'course_memberships.score DESC' }
@@ -383,7 +383,11 @@ def groups_by_assignment_id
 
   def cache_scores
     course_memberships.each do |membership|
-      membership.update_attribute :score, grades.released.where(course_id: membership.course_id).score + earned_badge_score_for_course(membership.course_id) + (team_for_course(membership.course_id).try(:challenge_grade_score) || 0)
+      if membership.course.add_team_score_to_student?
+        membership.update_attribute :score, grades.released.where(course_id: membership.course_id).score + earned_badge_score_for_course(membership.course_id) + (team_for_course(membership.course_id).try(:challenge_grade_score) || 0)
+      else
+        membership.update_attribute :score, grades.released.where(course_id: membership.course_id).score + earned_badge_score_for_course(membership.course_id)
+      end  
     end
   end
 

@@ -57,6 +57,7 @@ body.logged-in, body.logged-out {
   background-color: #FFF;
   min-height: 815px;
   padding: 0;
+  margin: 0;
 }
 
 .row.panel.publicContent {
@@ -165,6 +166,13 @@ h6.small {
 @media (min-width: 1000px)  {
   .mainContent, .publicContent {
     margin-top: 1rem;
+  }
+}
+
+@media (max-width: 1000px)  {
+  .columns.outerContainer {
+    margin: 0;
+    padding: 0;
   }
 }
 

@@ -20,8 +20,7 @@ class EarnedBadgesController < ApplicationController
 
   def new
     @title = "Award a New #{term_for :badge}"
-    @badges = current_course.badges
-    @badge = @badges.find(params[:badge_id])
+    @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.new
     @students = current_course.users.students.alpha
   end
@@ -59,9 +58,10 @@ class EarnedBadgesController < ApplicationController
 
 
   def create
-    @badges = current_course.badges
-    @badge = @badges.find(params[:badge_id])
-    @earned_badge = @badge.earned_badges.build(params[:earned_badge])
+    @badge = current_course.badges.find(params[:badge_id])
+    @earned_badge = current_course.earned_badges.new(params[:earned_badge])
+    @earned_badge.assign_attributes(params[:earned_badge])
+    @earned_badge.badge =  current_course.assignment_types.find_by_id(params[:badge_id])
     respond_to do |format|
       if @earned_badge.save
         format.html { redirect_to badge_path(@badge), notice: 'Badge was successfully awarded.' }
@@ -79,6 +79,7 @@ class EarnedBadgesController < ApplicationController
 
     respond_to do |format|
       if @earned_badge.update_attributes(params[:earned_badge])
+        expire_fragment "earned_badges"
         format.html { redirect_to student_path(@earned_badge.student), notice: 'Awarded badge was successfully updated.' }
         format.json { head :ok }
       else
@@ -103,6 +104,7 @@ class EarnedBadgesController < ApplicationController
   def mass_update
     @badge = current_course.badges.find(params[:id])
     if @badge.update_attributes(params[:badge])
+      expire_fragment "earned_badges"
       respond_with @badge
     else
       @title = "Quick Award #{@badge.name}"
@@ -124,6 +126,7 @@ class EarnedBadgesController < ApplicationController
     @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = @badge.earned_badges.find(params[:id])
     @earned_badge.destroy
+    expire_fragment "earned_badges"
     redirect_to @badge
   end
 

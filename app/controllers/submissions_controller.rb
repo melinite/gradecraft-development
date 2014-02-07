@@ -70,7 +70,7 @@ class SubmissionsController < ApplicationController
       self.check_uploads
       if @submission.save
         if current_user.is_student?
-          format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "#{@assignment.name} was successfully submitted." }
+          format.html { redirect_to assignment_grade_path(@assignment, :student_id => current_user), notice: "#{@assignment.name} was successfully submitted." }
           format.json { render json: @assignment, status: :created, location: @assignment }
         else
           format.html { redirect_to session.delete(:return_to), notice: "#{@assignment.name} was successfully submitted." }
@@ -104,7 +104,7 @@ class SubmissionsController < ApplicationController
       self.check_uploads
       if @submission.update_attributes(params[:submission])
         if current_user.is_student?
-          format.html { redirect_to assignment_submission_path(@assignment, @submission), notice: "Your submission for #{@assignment.name} was successfully updated." }
+          format.html { redirect_to assignment_grade_path(@assignment, :student_id => current_user), notice: "Your submission for #{@assignment.name} was successfully updated." }
           format.json { render json: @assignment, status: :created, location: @assignment }
         else
           format.html { redirect_to session.delete(:return_to), notice: "#{@assignment.name} was successfully updated." }
