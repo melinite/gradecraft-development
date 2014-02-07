@@ -11,6 +11,7 @@ $(document).ready(function() {
 
   //setting the target date
   var target_date = new Date();
+  console.log(target_date);
   // iterating through the dates
   for(var x in timeline_dates) {
 
@@ -25,6 +26,7 @@ $(document).ready(function() {
 
       // Creating the date that we'll compare against
       var slide_date = new Date( dt[0], dt[1], dt[2] );
+      console.log(slide_date);
       // Comparing our current date against the slide date and increasing the slide count if it's before our goal
       if( slide_date < target_date) start_index++;
 
