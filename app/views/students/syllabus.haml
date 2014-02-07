@@ -14,6 +14,7 @@
         %span#userScoreNum.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_student_data.point_total}
       - if current_student_data.grade_level.present?
+        / Display current level if it is present
         Current Level:
         %span#userScoreNum= current_student_data.grade_level
 

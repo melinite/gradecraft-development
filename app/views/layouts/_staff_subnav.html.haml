@@ -1,55 +1,56 @@
-%ul.side-nav
-  %li
-    %h4 Overview
-  %li.icn_film= link_to "Timeline", dashboard_path
-  %li.icn_charts= link_to "Leaderboard", leaderboard_path
-  %li.icn_flag= link_to "Ungraded Submissions", grading_status_path
-  - if current_course.student_weighted?
-    %li.icn_playing_dic= link_to "#{term_for :weight} Choices", multiplier_choices_path
-  - if current_course.has_badges?
-    %li.icn_gamepad= link_to "Awarded #{current_course.badge_term.pluralize}", info_class_badges_path
-  %li.icn_gamepad= link_to "Gradebook", gradebook_path
-  %li.divider
-
-  %li
-    %h4 Coursework
-  %li.icn_flash= link_to term_for(:assignments), assignments_path
-  - if current_course.has_badges?
-    %li.icn_certificate= link_to term_for(:badges), badges_path
-  - if current_course.team_challenges?
-    %li.icn_cup= link_to term_for(:challenges), challenges_path
-  %li.divider
-
-  %li
-    %h4 Analytics
-  %li.icn_charts= link_to "Top 10/Bottom 10", analytics_top_10_path
-  %li.icn_cardio= link_to "Course Analytics", analytics_root_path
-  %li.icn_cardio= link_to "#{term_for :assignment} Analytics", analytics_per_assign_path
-  %li.divider
-
-  %li 
-    %h4 Users  
-  %li= link_to "Users", users_path
-  - if current_course.has_teams?
-    %li.icn_team= link_to term_for(:teams), teams_path
-  %li.icn_fishes= link_to term_for(:groups), groups_path
-  %li.divider
-
-  %li
-    %h4 Course Setup
-  %li.icn_settings= link_to "Options", edit_course_path(current_course)
-  %li.icn_calculator= link_to "Grading Scheme", grade_scheme_elements_path
-  %li.icn_group= link_to "Staff", staff_index_path
-  %li.divider
-
-  %li
-    %h4 Tools
-  - LTIProvider.all.each do |tool|
-    %li= link_to tool.name, launch_lti_provider_path(tool)
-  %li.divider
-
-  - if current_user.is_admin?
+.show-for-medium-up
+  %ul.side-nav
     %li
-      %h4 Admin
-    %li= link_to "All Users", users_path
-    %li= link_to "Course Index", courses_path
+      %h4 Overview
+    %li.icn_film= link_to "Timeline", dashboard_path
+    %li.icn_charts= link_to "Leaderboard", leaderboard_path
+    %li.icn_flag= link_to "Ungraded Submissions", grading_status_path
+    - if current_course.student_weighted?
+      %li.icn_playing_dic= link_to "#{term_for :weight} Choices", multiplier_choices_path
+    - if current_course.has_badges?
+      %li.icn_gamepad= link_to "Awarded #{current_course.badge_term.pluralize}", info_class_badges_path
+    %li.icn_gamepad= link_to "Gradebook", gradebook_path
+    %li.divider
+
+    %li
+      %h4 Coursework
+    %li.icn_flash= link_to term_for(:assignments), assignments_path
+    - if current_course.has_badges?
+      %li.icn_certificate= link_to term_for(:badges), badges_path
+    - if current_course.team_challenges?
+      %li.icn_cup= link_to term_for(:challenges), challenges_path
+    %li.divider
+
+    %li
+      %h4 Analytics
+    %li.icn_charts= link_to "Top 10/Bottom 10", analytics_top_10_path
+    %li.icn_cardio= link_to "Course Analytics", analytics_root_path
+    %li.icn_cardio= link_to "#{term_for :assignment} Analytics", analytics_per_assign_path
+    %li.divider
+
+    %li 
+      %h4 Users  
+    %li= link_to "Users", users_path
+    - if current_course.has_teams?
+      %li.icn_team= link_to term_for(:teams), teams_path
+    %li.icn_fishes= link_to term_for(:groups), groups_path
+    %li.divider
+
+    %li
+      %h4 Course Setup
+    %li.icn_settings= link_to "Options", edit_course_path(current_course)
+    %li.icn_calculator= link_to "Grading Scheme", grade_scheme_elements_path
+    %li.icn_group= link_to "Staff", staff_index_path
+    %li.divider
+
+    %li
+      %h4 Tools
+    - LTIProvider.all.each do |tool|
+      %li= link_to tool.name, launch_lti_provider_path(tool)
+    %li.divider
+
+    - if current_user.is_admin?
+      %li
+        %h4 Admin
+      %li= link_to "All Users", users_path
+      %li= link_to "Course Index", courses_path

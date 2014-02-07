@@ -5,7 +5,7 @@
         = "#{group.name} Grades"
         - group.submission_for_assignment(@assignment).tap do |submission|
           - if submission
-            = link_to "See Submission", assignment_submission_path(@assignment.id, submission, :group_id => group.id, :grade_id => @grade), :class => 'button tiny radius'
+            = link_to "See Submission", assignment_grade_path(@assignment.id, :group_id => group.id), :class => 'button tiny radius'
           - else
             = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'button tiny radius'
         = link_to "Grade", group_grade_assignment_path(@assignment, :group_id => group), :class => 'button tiny radius'
