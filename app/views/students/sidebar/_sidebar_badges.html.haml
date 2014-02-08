@@ -1,7 +1,7 @@
 .text-center
   %h4= term_for :badges
   %hr
-  %ul.small-block-grid-4
+  %ul.small-block-grid-8.medium-block-grid-4
     - current_course_data.badges.each do |badge|
       - if current_student_data.earned_badge?(badge)
         %li
