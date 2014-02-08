@@ -4,16 +4,16 @@ h5 a {
   background-color: #67CF30;
   border-radius: .5rem;
   color: #FFF;
-  
 }
-h5:hover {  }
-h5.open  { }
-h5.open a { background-position: 13px -25px; }
-h5 + div { padding: 10px; }
 
+h5.open a { 
+  background-position: 13px -25px;
+}
 
-/* Pre hide sections with JavaScript on
---- */
+h5+div { padding: 10px; }
+
+/* Pre hide sections with JavaScript on */
+
 h5+div {
   display: none;
 }
