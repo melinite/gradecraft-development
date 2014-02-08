@@ -27,7 +27,7 @@ $(document).ready(function() {
       console.log(dt);
 
       // Creating the date that we'll compare against
-      var slide_date = new Date( dt[0], dt[1], dt[2] );
+      var slide_date = new Date( st );
       //console.log(slide_date);
       // Comparing our current date against the slide date and increasing the slide count if it's before our goal
       if( slide_date < target_date) start_index++;
