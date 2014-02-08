@@ -6,11 +6,9 @@
     %title
       = "#{yield :title} - " if content_for? :title
       = current_course.try(:name) || 'GradeCraft'
-    = csrf_meta_tags
-    /[if lt IE 9]
-      = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tags
     = yield(:head)
   %body(class="#{body_class}")
     .fixed

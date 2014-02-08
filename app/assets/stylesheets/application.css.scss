@@ -4,7 +4,6 @@
  *= require jquery-ui.min
  *= require jquery.circliful
  *= require jquery.dynatable
- *= require timelineJS/themes/font/DroidSerif-DroidSans
  *= require responsive-tables
  *= require foundation_and_overrides
  *= require bootstrap-datetimepicker
@@ -12,7 +11,8 @@
  *= require select2
  *= require foundation-icons
  *= require bootstrap
-
+ *= require collapse
+ 
 /* Branding colors */
 
 /* Based on cloud colors */
@@ -23,6 +23,7 @@ $green: #239C45;
 $yellow: #FFF90D;
 $orange: #F4A425;
 $darkblue: #120470;
+$logogreen: #67cf30;
 
 $primary-color: #274E56;
 $secondary-color: #58d0eb;
@@ -42,6 +43,8 @@ $success-color: #67CF30;
 @import 'breadcrumbs';
 @import 'navigation';
 @import 'buttons';
+@import 'videos';
+@import 'foundation_and_overrides';
 
 /* Background image for site, this is declared because otherwise it overrides the text editor's bkg */
 body.logged-in, body.logged-out {
@@ -70,6 +73,7 @@ body.logged-in, body.logged-out {
 
 .row.panel.footer {
   margin-top: 0;
+  color: $secondary-color;
   background-color: #444;
   border: none;
 
@@ -94,6 +98,9 @@ body.logged-in, body.logged-out {
 }
 
 
+.vco-storyjs {
+  z-index: 0;
+}
 
 /* Header styles */
 
@@ -119,19 +126,6 @@ h6.small {
   font-size: .7rem;
 }
 
-/* Timeline overrides */
-
-.vco-storyjs {
-  z-index: 0;
-}
-
- .vco-storyjs ol{
-  list-style: decimal !important;
-}
-
- .vco-storyjs ul  {
-  list-style: disc !important;
-}
 
 .bold {
   font-weight: bold;
@@ -163,6 +157,14 @@ h6.small {
 .showmore_trigger:hover {text-decoration: underline;}
 .showmore_trigger span { display:block; }
 
+.mainContent{
+  border-radius: .75rem;
+}
+
+div.small-12.medium-4.large-3.columns.sideBar.panel {
+  margin: 1rem 0;
+  border-radius: .75rem;
+}
 @media (min-width: 1000px)  {
   .mainContent, .publicContent {
     margin-top: 1rem;
@@ -170,7 +172,20 @@ h6.small {
 }
 
 @media (max-width: 1000px)  {
-  .columns.outerContainer {
+  .mainContent {
+    border-radius: 0;
+  }
+  .columns.outerContainer, .publicContent, div.small-12.medium-4.large-3.columns.sideBar.panel {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 640px)  {
+  .mainContent {
+    border-radius: 0;
+  }
+  .columns.outerContainer, .publicContent, div.small-12.medium-4.large-3.columns.sideBar.panel {
     margin: 0;
     padding: 0;
   }

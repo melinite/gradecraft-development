@@ -7,14 +7,13 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require foundation
 //= require autonumeric
 //= require bootsy
-//= require foundation
 //= require jquery.sparkline.min
 //= require jquery.fileupload
 //= require s3_direct_upload
 //= require jquery.ui.widget
-//= require jquery.showmore.min
 //= require jquery.sparkline.min
 //= require jquery.circliful.min
 //= require underscore.min
@@ -48,45 +47,49 @@
 //= require responsive-tables
 //= require grade_distribution
 //= require jquery.sticky
-//= require levels_per_assign
 //= require jquery.highchartTable-min
+//= require jquery.collapse
+//= require jquery.collapse_storage
+//= require jquery.collapse_cookie_storage
 
 $(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
 
-  $('.assignmentDescription').showMore({
-        speedDown: 300,
-        speedUp: 300,
-        height: '0em',
-        showText: 'All the Details &raquo;',
-        hideText: '&laquo; Hide'
-   });
-
-   $('.assignmentList').showMore({
-        speedDown: 300,
-        speedUp: 300,
-        height: '0rem',
-        showText: 'See The Assignments &raquo;',
-        hideText: '&laquo; Hide'
-   });
-
+   // Make the grade predictor stick to the top of page
    $(".gradePredictor").sticky({topSpacing:35});
 
   // Select2 Search forms for group creation
-
   $("#group_student_ids").select2({
     placeholder: "Select Students",
     allowClear: true
   });
 
   // Select2 Search forms for team creation
-
   $("#team_student_ids").select2({
     placeholder: "Select Students",
     allowClear: true
   });
 
+  // Initializing collapse plugin
+  // with custom show/hide methods,
+  // persistence plugin and accordion behaviour
+  $(".assignment_type").collapse({
+  show: function() {
+    // The context of 'this' is applied to
+    // the collapsed details in a jQuery wrapper 
+    this.slideDown(100);
+  },
+  hide: function() {
+    this.slideUp(100);
+  },
+  accordion: true,
+  persist: true
+});
+
+  
+
+  // Initializing highcharts table data, currently used to display team charts
   $('table.highchart').highchartTable();
 
   $('#myStat').circliful();
@@ -453,3 +456,4 @@ $(document).ready(function(){
     window.all_badges = new AllBadgesView()
   }
 });
+

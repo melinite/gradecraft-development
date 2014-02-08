@@ -2,11 +2,6 @@
   = content_nav_for "Course Timeline" do
     = render "tabs"
 
-  .small-12.columns
-    %h2= "Course Dashboard"
-
-    %hr
-
   #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
 
   .clearfix

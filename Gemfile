@@ -36,7 +36,6 @@ gem 'minitest-rails'
 gem 'mongoid', :git => 'https://github.com/mongoid/mongoid.git'
 gem 'newrelic_rpm'
 gem 'nokogiri', '1.6.0'
-gem 'oink'
 gem 'omniauth'
 gem 'omniauth-kerberos'
 gem 'omniauth-lti'
@@ -73,11 +72,12 @@ group :development do
   gem 'minitest-matchers'
   gem 'minitest-reporters'
   gem 'minitest-capybara'
-  gem 'rack-mini-profiler'
   gem 'valid_attribute'
   gem 'capybara'
+  gem 'oink'
   gem 'foreman'
   gem 'rubystats'
+  gem 'rack-mini-profiler'
 end
 
 group :test do

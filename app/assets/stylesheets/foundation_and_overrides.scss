@@ -835,25 +835,25 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 
 // These control the background color for the table and even rows
 // $table-bg: #fff;
- $table-even-row-bg: #f9f9f9 ;
+// $table-even-row-bg: #f9f9f9 ;
 
 // These control the table cell border style
- $table-border-style: solid;
- $table-border-size: 1px;
- $table-border-color: #eee;
+// $table-border-style: solid;
+//$table-border-size: 1px;
+// $table-border-color: #eee;
 
 // These control the table head styles
- $table-head-bg: #555 ;
+// $table-head-bg: #555 ;
  $table-head-font-size: rem-calc(2);
- $table-head-font-color: #FFF;
- //$table-head-font-weight: bold;
+// $table-head-font-color: #FFF;
+//$table-head-font-weight: bold;
  $table-head-padding: rem-calc(0);
 
 // These control the row padding and font styles
- $table-row-padding: rem-calc(0 0);
- $table-row-font-size: rem-calc(10);
-// $table-row-font-color: #222;
- $table-line-height: rem-calc(0);
+$table-row-padding: rem-calc(0 0);
+$table-row-font-size: rem-calc(10);
+$table-row-font-color: #222;
+$table-line-height: rem-calc(0);
 
 // These are for controlling the display and margin of tables
 // $table-display: table-cell;

@@ -6,17 +6,16 @@
 
     .small-12.columns
       
-      %dl.accordion{:data => {'accordion' => true, 'collapse' => "persist" } }
+      .assignments
         - current_course_data.by_assignment_type.each do |assignment_type, assignments|
-          %dd
-            %a.small-12{"href" => "##{assignment_type.id}" }
-              = "#{assignment_type.name} – #{points assignment_type.max_value} points"
-            .small-3.right
-              .button-bar.right
-                %ul.button-group.round
-                  %li= link_to "See Overview", all_grades_assignment_type_path(assignment_type), :class => "button tiny aindex"
-                  %li= link_to "Edit", edit_assignment_type_path(assignment_type), :class => "button tiny aindex"
-            .content{:id => "#{assignment_type.id}" }
+          .assignment_type{:id => "assignment-type-#{assignment_type.id}" }
+            %h5= "#{assignment_type.name} – #{points assignment_type.max_value} points"
+            %div
+              .small-3.right
+                .button-bar.right
+                  %ul.button-group.round
+                    %li= link_to "See Overview", all_grades_assignment_type_path(assignment_type), :class => "button tiny aindex"
+                    %li= link_to "Edit", edit_assignment_type_path(assignment_type), :class => "button tiny aindex"
               %table.responsive.simpleTable
                 %thead
                   %tr

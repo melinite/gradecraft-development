@@ -1,27 +1,36 @@
 .small-12.medium-2.columns
   %h6 Explore
   %ul
-    %li= link_to "Features", features_path
-    %li= link_to "See the Demo", "http://staging.gradecraft.com"
+    %li= link_to_unless_current "Features", features_path
+    %li= link_to_unless_current "See the Demo", "http://staging.gradecraft.com"
+  .clearfix
+  %hr.show-for-small-only
 
 .small-12.medium-2.columns
   %h6 Using GradeCraft
   %ul
-    %li= link_to "Apply to Use", using_gradecraft_path
-    %li= link_to "Documentation", documentation_path
-    %li= link_to "Submit a Bug", submit_a_bug_path
+    %li= link_to_unless_current "Apply to Use", using_gradecraft_path
+    %li= link_to_unless_current "Documentation", documentation_path
+    %li= link_to_unless_current "Submit a Bug", submit_a_bug_path
+  .clearfix
+  %hr.show-for-small-only
 
 .small-12.medium-2.columns
   %h6 About
   %ul
-    %li= link_to "Research", research_path
-    %li= link_to "People", people_path
-    %li= link_to "Codebase", "https://github.com/bellotastudios/gradecraft"
+    %li= link_to_unless_current "Research", research_path
+    %li= link_to_unless_current "People", people_path
+    %li= link_to_unless_current "Codebase", "https://github.com/bellotastudios/gradecraft"
+  .clearfix
+  %hr.show-for-small-only
+
 .small-12.medium-2.columns
   %h6 Talk to Us
   %ul
     %li= mail_to 'gradecraft@gmail.com', 'Email'
-    %li= link_to "Twitter", "https://twitter.com/gradecraft"
+    %li= link_to_unless_current "Twitter", "https://twitter.com/gradecraft"
+  .clearfix
+  %hr.show-for-small-only
 
 .small-12.medium-4.columns
   %h6.small.inverse.not_bold &copy; 2012-13 Regents of the University of Michigan

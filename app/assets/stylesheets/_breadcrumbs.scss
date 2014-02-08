@@ -16,12 +16,12 @@ ul.breadcrumbs {
 }
 
 .sub-nav {
-  padding: 10px;
-  height: 40px;
-  margin: 0;
+  padding-top: 10px !important;
+  height: 38px;
+  margin-left: 0 !important;
   background-color: $green;
   dt {
-    color: #FFF;
+    color: #FFF !important;
   }
 
   .navbar-nav li {
@@ -41,8 +41,18 @@ ul.breadcrumbs {
   .navbar-nav li {
     background-color: $primary-color;
     font-size: .7rem;
-    padding: 10px;
-    color: #FFF;
+    a{
+      color: #FFF;
+    }
+  }
+
+
+  .navbar-nav li {
+    padding: .5rem 1rem;
+  }
+
+ .navbar-nav li a {
+    padding: .5rem 0 !important;
   }
 
   .navbar-nav li:hover {

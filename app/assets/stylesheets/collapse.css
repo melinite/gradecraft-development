@@ -1,0 +1,31 @@
+h5 a {
+  background: url("sprite.png") 10px 16px no-repeat;
+  padding: .5rem 1.6rem;
+  background-color: #67CF30;
+  border-radius: .5rem;
+  color: #FFF;
+  
+}
+h5:hover {  }
+h5.open  { }
+h5.open a { background-position: 13px -25px; }
+h5 + div { padding: 10px; }
+
+
+/* Pre hide sections with JavaScript on
+--- */
+h5+div {
+  display: none;
+}
+
+.assignment_type {
+  margin-bottom: 2rem !important;
+}
+
+.assignment_type table {
+  margin: 0;
+}
+
+.assignment_type .small-3 {
+  height: 0;
+}
