@@ -24,7 +24,7 @@
           %th.button-column
       %tbody
         - i = 1
-        - current_course.students.order_by_high_score.each do |student|
+        - current_course.students.being_graded.order_by_high_score.each do |student|
           %tr
             %td= i
             %td= link_to student.first_name, student_path(student)
