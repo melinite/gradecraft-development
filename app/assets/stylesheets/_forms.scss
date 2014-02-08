@@ -114,35 +114,35 @@ label.checkbox, label.radio  {
   /** Login Forms  **/
 
   .login_forms {
-  background-color: #FFF;
-  border: none;
+  background-color: #FFF !important;
+  border: none !important;
 
   .content {
     background-color: #eee;
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-bottom-right-radius: 1rem !important;
+    border-bottom-left-radius: 1rem !important;
+    border-left: 1px solid #ccc !important;
+    border-right: 1px solid #ccc !important;
+    border-bottom: 1px solid #ccc !important;
 
     input {
-      width: 85%;
-      margin-left: 15px;
+      width: 85% !important;
+      margin-left: 15px !important;
     }
   }
 
   dd a {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    border-collapse: true;
-    padding: 14px;
-    border-top-right-radius: .5rem;
-    border-top-left-radius: .5rem;
-    background-color: $lightblue;
+    border-left: 1px solid #ccc !important;
+    border-right: 1px solid #ccc !important;
+    border-top: 1px solid #ccc !important;
+    border-collapse: true !important;
+    padding: 14px !important;
+    border-top-right-radius: .5rem !important;
+    border-top-left-radius: .5rem !important;
+    background-color: $lightblue !important;
   }
   dd.active a {
-    background-color: #eee;
+    background-color: #eee !important;
   }
 
   .right {
