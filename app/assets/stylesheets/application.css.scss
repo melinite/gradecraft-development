@@ -66,6 +66,7 @@ body.logged-in, body.logged-out {
 .row.panel.publicContent {
   margin-bottom: 0;
   padding-top: 2rem;
+  margin-top: 4rem;
   border-top: none;
   background-color: #FFF;
   min-height: 30rem;
@@ -161,7 +162,7 @@ h6.small {
 .showmore_trigger:hover {text-decoration: underline;}
 .showmore_trigger span { display:block; }
 
-.mainContent{
+.mainContent {
   border-radius: .75rem;
 }
 
