@@ -42,7 +42,6 @@ $success-color: #67CF30;
 @import 'analytics';
 @import 'breadcrumbs';
 @import 'navigation';
-@import 'buttons';
 @import 'videos';
 
 /* Background image for site, this is declared because otherwise it overrides the text editor's bkg */
@@ -50,6 +49,7 @@ body.logged-in, body.logged-out {
   background: image-url("cloud_bg.gif");
 }
 
+/* Primary page content */ 
 .mainContent {
   border-left: 10px solid $green;
   border-right: 10px solid $green;
@@ -58,16 +58,17 @@ body.logged-in, body.logged-out {
   border-bottom: none;
   background-color: #FFF;
   min-height: 815px;
-  padding: 0;
   margin: 0;
+  padding: 0;
   border-radius: $global-radius;
 }
 
+/* Front facing page, not logged in */ 
 .row.panel.publicContent {
   margin-bottom: 0;
   padding-top: 2rem;
-  margin-top: 4rem;
-  border-top: none;
+  border: none;
+  border-top-left-radius: $global-radius;
   background-color: #FFF;
   min-height: 30rem;
 }
@@ -108,11 +109,6 @@ body.logged-in, body.logged-out {
   z-index: 0;
 }
 
-h6.small {
-  font-size: .7rem;
-}
-
-
 .bold {
   font-weight: bold;
 }
@@ -125,10 +121,6 @@ h6.small {
   color: #FFF;
 }
 
-.panel.callout {
-  border: none;
-}
-
 #attachments {
   clear: both;
   margin: 2rem 0 1.5rem;
@@ -137,22 +129,32 @@ h6.small {
   border: 1px solid #ccc;
 }
 
-div.small-12.medium-4.large-3.columns.sideBar.panel {
+.sideBar.panel {
   margin: 1rem 0;
   border-radius: $global-radius;
 }
+
+/* Responsive outer container */ 
 @media (min-width: 1000px)  {
-  .mainContent, .publicContent {
+  .mainContent {
     margin-top: 1rem;
+  }
+
+  .publicContent {
+    margin-top: 4rem;
   }
 }
 
 @media (max-width: 1000px)  {
-  .mainContent {
+  .mainContent, .sideBar.panel {
     border-radius: 0;
   }
-  .columns.outerContainer, .publicContent, div.small-12.medium-4.large-3.columns.sideBar.panel {
-    margin: 0;
+  .columns.outerContainer, .sideBar.panel {
+    margin: 0 !important;
+    padding: 0;
+  }
+  .publicContent {
+    margin: 1.5rem 0 0 ;
     padding: 0;
   }
 }
@@ -162,7 +164,7 @@ div.small-12.medium-4.large-3.columns.sideBar.panel {
     border-radius: 0;
   }
   .columns.outerContainer, .publicContent, div.small-12.medium-4.large-3.columns.sideBar.panel {
-    margin: 0;
+    margin: 1.5rem 0 0 ;
     padding: 0;
   }
 }

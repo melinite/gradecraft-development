@@ -1,8 +1,19 @@
 .small-12.panel.mainContent
-  = content_nav_for @assignment, "#{@grade.student.name}" do
-    = render "assignments/tabs"
+  .show-for-large-up
+    = content_nav_for @assignment, "#{@grade.student.name}" do
+      = render "assignments/tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @assignment, "#{@grade.student.name}"
 
   .small-12.columns
+
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "assignments/tabs"
+
     - if @grade.assignment.is_individual?
       %h3
         = "#{@grade.student.name}'s #{@grade.assignment.try(:name)}"

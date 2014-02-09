@@ -92,29 +92,22 @@ label.checkbox, label.radio  {
   /** Login Forms  **/
 
   .login_forms {
-  background-color: #FFF !important;
-  border: none !important;
+  background-color: #FFF;
+  border: none;
 
   .content {
     background-color: #eee;
     border-bottom-right-radius: $global-radius;
     border-bottom-left-radius: $global-radius;
-    border-left: 1px solid #ccc !important;
-    border-right: 1px solid #ccc !important;
-    border-bottom: 1px solid #ccc !important;
 
     input {
-      width: 85% !important;
+      width: 90% !important;
       margin-left: 15px !important;
     }
   }
 
   dd a {
-    border-left: 1px solid #ccc !important;
-    border-right: 1px solid #ccc !important;
-    border-top: 1px solid #ccc !important;
     border-collapse: true !important;
-    padding: 14px !important;
     border-top-right-radius: $global-radius;
     border-top-left-radius: $global-radius;
     background-color: $lightblue !important;

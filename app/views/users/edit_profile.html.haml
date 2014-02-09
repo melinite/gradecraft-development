@@ -1,9 +1,21 @@
 .small-12.panel.mainContent
   / Student Index breadcrumbs
-  = content_nav_for "Edit My Profile" do
-    = render "students/student_profile_tabs"
+  .show-for-large-up
+    = content_nav_for "Edit My Profile" do
+      - if current_user.is_student?
+        = render "students/student_profile_tabs"
+  
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for "Edit My Profile" 
 
-  .small-12.columns
+  .small-12.columns    
+    - if current_user.is_student?
+      .hide-for-large-up
+        %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Select
+        %ul#drop.f-dropdown
+          = render "students/student_profile_tabs"
+
     .small-12.columns.panel
       .small-3.columns.text-center
         = gravatar_for @user, :size => 200

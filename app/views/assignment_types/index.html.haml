@@ -1,10 +1,19 @@
 .small-12.panel.mainContent
   / Assignment Type Navigation
-  = content_nav_for Assignment, "See All Quest Types" do
-    = render "assignments/tabs"
+  .show-for-large-up
+    = content_nav_for Assignment, "See All Quest Types" do
+      = render "assignments/tabs"
 
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for Assignment, "See All Quest Types" 
+  
   .small-12.columns
-    
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "assignments/tabs"
+
     %table.responsive.simpleTable
       %thead
         %tr

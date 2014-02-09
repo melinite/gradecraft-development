@@ -1,7 +1,11 @@
 .small-12.panel.mainContent
   / Leaderboard Navigation
-  = content_nav_for "Course Overview", "Leaderboard" do
-    = render "info/tabs"
+  .show-for-large-up
+    = content_nav_for "Course Overview", "Leaderboard" do
+      = render "info/tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for "Course Overview", "Leaderboard" 
 
   - if current_course.has_teams?
     .small-12.large-4.large-offset-8.medium-6.medium-offset-6.columns
@@ -9,6 +13,13 @@
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
   .small-12.columns
+    
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "tabs"
+
     %table.responsive.simpleTable
       %thead
         %tr
@@ -26,7 +37,9 @@
         - i = 1
         - current_course.students.being_graded.order_by_high_score.each do |student|
           %tr
-            %td= i
+            %td
+              = i
+              = gravatar_for student, :size => 30
             %td= link_to student.first_name, student_path(student)
             %td= student.last_name
             - if current_course.has_teams?

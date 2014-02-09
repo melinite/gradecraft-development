@@ -1,13 +1,26 @@
 .small-12.panel.mainContent
   / Group Navigation
-  = content_nav_for @group do
-    - if current_user.is_staff?
-      = render "tabs"
-    - else
-      = render "students/student_tabs"
+  .show-for-large-up
+    = content_nav_for @group do
+      - if current_user.is_staff?
+        = render "tabs"
+      - else
+        = render "students/student_tabs"
 
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @group 
 
   .small-12.columns
+  
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        - if current_user.is_staff?
+          = render "tabs"
+        - else
+          = render "students/student_tabs"
+
     %h2= @title
     
     %h3 

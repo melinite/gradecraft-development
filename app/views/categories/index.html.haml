@@ -1,9 +1,19 @@
 .small-12.panel.mainContent
   / Category Navigation
-  = content_nav_for Category do
-    = render  "tabs"
+  .show-for-large-up
+    = content_nav_for Category do
+      = render  "tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for Category
 
   .small-12
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "tabs"
+
     %h2= @title
 
   %table.responsive.simpleTable

@@ -1,7 +1,11 @@
 .small-12.panel.mainContent
   / Rubrics Navigation
-  = content_nav_for Rubric do
-    %li= link_to 'New Rubric', new_rubric_path
+  .show-for-large-up
+    = content_nav_for Rubric do
+      %li= link_to 'New Rubric', new_rubric_path
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for 'New Rubric', new_rubric_path
 
   %table.responsive.table-striped
     %thead

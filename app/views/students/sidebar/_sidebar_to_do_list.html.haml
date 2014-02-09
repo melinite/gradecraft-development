@@ -1,22 +1,20 @@
-%h4.text-center Due This Week
+%h3.text-center Due This Week
 %hr
 - current_course_data.by_assignment_type.each do |assignment_type, assignments|
   -# Do not use `assignment_type.has_soon_assignments?' It will trigger a query.
   - if assignments.any?(&:soon?) && assignment_type.include_in_to_do?
     - assignments.each do |assignment|
       - if assignment.soon? && assignment.visible?
-        .small-12.text-left
-          - if current_student_data.submission_for_assignment?(assignment)
-            .small-9.columns
-              %h6.strikethrough= link_to "#{assignment.try(:name)}", assignment
+        - if assignment.accepts_submissions?
+          - if assignment.is_individual?
+            .right= render "students/submissions", assignment: assignment
           - else
-            .small-9.columns
-              %h6.bold= link_to assignment.name, assignment_grade_path(assignment, :student_id => current_student)
-              %h6= "Due: #{assignment.try(:due_at).strftime("%A, %B %d, %Y, at %H:%M%p")}"
-          - if assignment.accepts_submissions?
-            .small-3.columns
-              - if assignment.is_individual?
-                .right= render "students/submissions", assignment: assignment
-              - else
-                .right= render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
-          .clearfix
+            .right= render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
+        - if current_student_data.submission_for_assignment?(assignment)
+          %h6.strikethrough= link_to "#{assignment.try(:name)}", assignment
+        - else
+          %h6
+            .bold= link_to assignment.name, assignment_grade_path(assignment, :student_id => current_student)
+            = "Due: #{assignment.try(:due_at).strftime("%A, %B %d, %Y, at %H:%M%p")}"
+        
+        .clearfix

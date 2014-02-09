@@ -1,9 +1,19 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  = content_nav_for @assignment, "Editing Grade" do
-    = render "assignments/tabs"
+  .show-for-large-up
+    = content_nav_for @assignment, "Editing Grade" do
+      = render "assignments/tabs"
 
-  .small-12.columns
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @assignment, "Editing Grade"
+
+  .small-12.columns    
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "assignments/tabs"
+
     %h3 Editing #{current_student.name}'s Grade for #{@assignment.name}
     = render 'form'
 

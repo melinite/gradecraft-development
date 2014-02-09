@@ -1,7 +1,11 @@
 .small-12.panel.mainContent
   / Criteria Navigation
-  = content_nav_for @rubric, Criterium, @criterium.category ? "Add '#{@criterium.category}' Criterium" : 'Add Criterium'
-
+  .show-for-large-up
+    = content_nav_for @rubric, Criterium, @criterium.category ? "Add '#{@criterium.category}' Criterium" : 'Add Criterium'
+  
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @rubric, Criterium, @criterium.category ? "Add '#{@criterium.category}' Criterium" : 'Add Criterium'
+  
   = render 'form'
 
   .clearfix

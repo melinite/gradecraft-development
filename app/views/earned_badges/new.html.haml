@@ -1,9 +1,20 @@
 .small-12.panel.mainContent
   / Earned Badge Navigation
-  = content_nav_for @badge, "Award #{term_for :badge}" do
-    = render "badges/tabs"
+  .show-for-large-up
+    = content_nav_for @badge, "Award #{term_for :badge}" do
+      = render "badges/tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @badge, "Award #{term_for :badge}" 
 
   .small-12.columns
+  
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "badges/tabs"
+
     = render 'form'
 
   .clearfix

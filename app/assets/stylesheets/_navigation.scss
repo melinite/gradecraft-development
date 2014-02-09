@@ -66,3 +66,7 @@ img.img-rounded {
   border-radius: .25rem;
 }
 
+.f-dropdown li.active {
+  padding: 0.5rem;
+  background-color: $secondary-color;
+}

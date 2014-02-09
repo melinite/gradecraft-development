@@ -1,7 +1,8 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
-  = link_to 'Edit', edit_criteria_level_path(@criteria_level), :class => "button tiny radius"
-  = link_to 'Back', criteria_levels_path, :class => "button tiny radius"
+  .show-for-large-up
+    = link_to 'Edit', edit_criteria_level_path(@criteria_level), :class => "button tiny radius"
+    = link_to 'Back', criteria_levels_path, :class => "button tiny radius"
 
   %p
     %b Name:

@@ -66,8 +66,8 @@ $global-radius: 0.5rem;
 
 // Media Query Ranges
 // $small-range: (0em, 40em);
-// $medium-range: (40.063em, 64em);
-// $large-range: (64.063em, 90em);
+$medium-range: (40.063em, 67em);
+$large-range: (67.063em, 90em);
 // $xlarge-range: (90.063em, 120em);
 // $xxlarge-range: (120.063em);
 
@@ -102,6 +102,14 @@ $global-radius: 0.5rem;
 // $cursor-pointer-value: pointer;
 // $cursor-help-value: help;
 // $cursor-text-value: text;
+
+// We use these to control header font sizes
+$h1-font-size: rem-calc(44);
+$h2-font-size: 1.7rem;
+$h3-font-size: 1.4rem;
+$h4-font-size: .9rem;
+$h5-font-size: rem-calc(18);
+$h6-font-size: 1rem;
 
 // Accordion
 
@@ -739,12 +747,12 @@ $button-group-border-width: 0px;
 // $include-html-nav-classes: $include-html-classes;
 
 // We use this to control padding.
-// $side-nav-padding: rem-calc(14 0);
+$side-nav-padding: rem-calc(14 0);
 
 // We use these to control list styles.
 // $side-nav-list-type: none;
 // $side-nav-list-position: inside;
-// $side-nav-list-margin: rem-calc(0 0 7 0);
+$side-nav-list-margin: rem-calc(0 0 7 1);
 
 // We use these to control link styles.
 // $side-nav-link-color: $primary-color;
@@ -757,9 +765,9 @@ $button-group-border-width: 0px;
 
 
 // We use these to control border styles
-// $side-nav-divider-size: 1px;
-// $side-nav-divider-style: solid;
-// $side-nav-divider-color: darken(#fff, 10%);
+$side-nav-divider-size: 1px;
+$side-nav-divider-style: solid;
+$side-nav-divider-color: darken(#fff, 10%);
 
 // Split Buttons
 
@@ -865,7 +873,7 @@ $table-line-height: rem-calc(0);
 
 // $include-html-tabs-classes: $include-html-classes;
 
-$tabs-navigation-padding: 0.5rem;
+$tabs-navigation-padding: 0.25rem;
 // $tabs-navigation-bg-color: #efefef  ;
 // $tabs-navigation-hover-bg-color: darken($tabs-navigation-bg-color, 5%);
 // $tabs-navigation-font-color: #222;
@@ -990,4 +998,15 @@ $tabs-navigation-padding: 0.5rem;
 // Sticky Class
 // $topbar-sticky-class: ".sticky";
 // $topbar-arrows: true; //Set false to remove the triangle icon from the menu item
+
+// We use these to style paragraphs
+$paragraph-font-family: inherit;
+$paragraph-font-weight: normal;
+$paragraph-font-size: .9rem;
+$paragraph-line-height: 1.6;
+$paragraph-margin-bottom: 1rem;
+$paragraph-aside-font-size: rem-calc(14);
+$paragraph-aside-line-height: 1.35;
+$paragraph-aside-font-style: italic;
+$paragraph-text-rendering: optimizeLegibility;
 @import 'foundation';

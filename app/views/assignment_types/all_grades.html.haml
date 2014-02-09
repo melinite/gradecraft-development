@@ -1,9 +1,12 @@
 - if current_user.is_staff?
   .small-12.panel.mainContent
     / Assignment Type Navigation
-    = content_nav_for AssignmentType do
-      = render "assignments/tabs"
-
+    .show-for-large-up
+      = content_nav_for AssignmentType do
+        = render "assignments/tabs"
+    
+    .hide-for-large-up{:style => "padding: 10px"}
+      = mobile_nav_for AssignmentType 
 
     - if current_course.has_teams?
       .small-12.right.medium-4.columns
@@ -11,6 +14,12 @@
           = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
     .small-12.columns
+      .hide-for-large-up
+        %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Select
+        %ul#drop.f-dropdown
+          = render "assignments/tabs"
+
       / Gradebook Pattern Table
       %table.responsive.simpleTable
         %thead

@@ -1,9 +1,19 @@
 .small-12.panel.mainContent
   / Grade Scheme Elements Navigation
-  = content_nav_for "Edit #{current_course.name} Grading" do
-    = render "tabs"
+  .show-for-large-up
+    = content_nav_for "Edit #{current_course.name} Grading" do
+      = render "tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for "Edit #{current_course.name} Grading"  
 
   .small-12.columns
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "tabs"
+
     %h3 Grade Scheme Elements
 
     = simple_form_for @course, method: :put, :url => mass_edit_grade_scheme_elements_path(:course_id => @course) do |f|

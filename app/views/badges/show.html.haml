@@ -2,15 +2,21 @@
 .small-12.panel.mainContent
   / Badge Navigation
   - if current_user.is_staff?
-    = content_nav_for @badge do
-      = render "tabs"
-  - else
-    = content_nav_for @badge do
-      %li= link_to "My Dashboard", dashboard_path, :class => "btn btn-tiny btn-info"
-      %li= link_to "See All #{term_for :badges}", badges_path, :class => "btn btn-tiny btn-info"
+    .show-for-large-up
+      = content_nav_for @badge do
+        = render "tabs"
 
+    .hide-for-large-up{:style => "padding: 10px"}
+      = mobile_nav_for @badge
 
   .small-12.columns
+  
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "tabs"
+
     %h2= @badge.name
     .panel.small-12.large-2.columns.text-center
       %img{:src => @badge.icon, :alt => @badge.name, :width => "100" }

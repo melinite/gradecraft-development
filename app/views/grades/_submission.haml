@@ -8,6 +8,7 @@
     %h5
       Submitted:
       = @grade.student.submission_for_assignment(@grade.assignment).created_at
+      = link_to "Edit Submission", edit_assignment_submission_path(@grade.assignment, @grade.student.submission_for_assignment(@grade.assignment)), :class => "button tiny radius secondary"
       - if @grade.student.submission_for_assignment(@grade.assignment).late?
         %span.label.alert.round Late!
     - if @grade.student.submission_for_assignment(@grade.assignment).updated_at != @grade.student.submission_for_assignment(@grade.assignment).created_at

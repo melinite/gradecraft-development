@@ -1,7 +1,27 @@
 /** Staff Sidebar **/
 .staff_subnav {
   background-color: #FFF;
-  padding-left: 1rem;
+  padding-top: 1rem;
+
+  /* Subheadings */
+  label{
+    text-transform: uppercase;
+  }
+
+  /* Spacing out the list */ 
+
+  li {
+    margin: .25rem 0;
+  }
+
+  li.divider {
+    margin: 1rem 0;
+  }
+
+  /* Forcing buttons and icons to display inline */ 
+  .side-nav li a:not(.button) {
+    display: inline;
+  }
 }
 
 /* Styles the hover state on the box plot on the student dashboard */

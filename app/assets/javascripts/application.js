@@ -86,7 +86,6 @@ $(document).ready(function(){
   accordion: true,
   persist: true
 });
-
   
 
   // Initializing highcharts table data, currently used to display team charts

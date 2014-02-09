@@ -1,7 +1,7 @@
 .text-center
-  %h4= term_for :badges
+  %h3= term_for :badges
   %hr
-  %ul.small-block-grid-8.medium-block-grid-4
+  %ul.small-block-grid-6.medium-block-grid-4
     - current_course_data.badges.each do |badge|
       - if current_student_data.earned_badge?(badge)
         %li
@@ -24,4 +24,5 @@
               %span.has-tip{:title => "#{badge.name}", :data => {'tooltip' => true} }
                 %img{:src => badge.try(:icon), :alt => "#{badge.try(:name)}", :class => "unearned"}
     .clearfix
-    = "#{term_for :badges} you've earned will shine brightly!"
+    %h3
+      %small= "#{term_for :badges} you've earned will shine brightly!"

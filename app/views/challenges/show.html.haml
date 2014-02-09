@@ -1,13 +1,27 @@
 .small-12.panel.mainContent
   / Challenge View Navigation
 
-  = content_nav_for @challenge do
-    - if current_user.is_staff?
-      = render "teams/tabs"
-    - else 
-      = render "students/student_tabs"
+  .show-for-large-up
+    = content_nav_for @challenge do
+      - if current_user.is_staff?
+        = render "teams/tabs"
+      - else 
+        = render "students/student_profile_tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @challenge
 
   .small-12.columns
+
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        - if current_user.is_staff?
+          = render "teams/tabs"
+        - else
+          = render "students/student_profile_tabs"
+
     %h2= @title
 
     - if @challenge.challenge_files.present?

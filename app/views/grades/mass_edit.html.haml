@@ -8,6 +8,13 @@
     = mobile_nav_for @assignment, "Quick Grade"
 
   .small-12.medium-8.columns
+
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "assignments/tabs"
+
     %h2= @title
 
   .small-12.medium-4.columns.right

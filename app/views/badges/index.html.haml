@@ -1,10 +1,20 @@
 - if current_user.is_staff?
   .small-12.panel.mainContent
     / Badge Navigation
-    = content_nav_for Badge do
-      = render "tabs"
+    .show-for-large-up
+      = content_nav_for Badge do
+        = render "tabs"
+
+    .hide-for-large-up{:style => "padding: 10px"}
+      = mobile_nav_for Badge
 
     .small-12.columns
+      .hide-for-large-up
+        %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Select
+        %ul#drop.f-dropdown
+          = render "tabs"
+
       %h2= @title
 
       %table.responsive.simpleTable

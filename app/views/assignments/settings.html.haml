@@ -1,13 +1,24 @@
 .small-12.panel.mainContent
   / Assignments Navigation
-  = content_nav_for Assignment do
-    = render "tabs"
+  .show-for-large-up
+    = content_nav_for Assignment do
+      = render "tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for Assignment
 
   .small-12.columns
     .pull-right
       = link_to "Assignments Info", settings_assignments_path, :class => "badge"
   - current_course_data.by_assignment_type.each do |assignment_type, assignments|
     .small-12.columns
+      
+      .hide-for-large-up
+        %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Select
+        %ul#drop.f-dropdown
+          = render "tabs"
+
       %h2= "#{assignment_type.try(:name)}"
     %table.responsive.simpleTable
       %thead

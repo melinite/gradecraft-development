@@ -134,7 +134,6 @@ GradeCraft::Application.routes.draw do
   #8. Courses
   resources :courses do
     collection do
-      get :all_grades
       post 'copy' => 'courses#copy'
     end
   end
@@ -157,6 +156,7 @@ GradeCraft::Application.routes.draw do
 
   #10. Informational Pages
   namespace :info do
+    get :all_grades
     get :choices
     get :class_badges
     get :dashboard

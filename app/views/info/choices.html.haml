@@ -1,7 +1,11 @@
 .small-12.panel.mainContent
   / Students Navigation
-  = content_nav_for :students, @title do
-    = render "info/tabs"
+  .show-for-large-up
+    = content_nav_for :students, @title do
+      = render "info/tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for :students, @title
 
   .small-12.columns
     - if current_course.has_teams?
@@ -9,7 +13,12 @@
         = form_tag choices_students_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
           = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
-
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "info/tabs"
+        
     %table.responsive.simpleTable
       %thead
         %tr
@@ -37,8 +46,8 @@
             %td
               .button-bar
                 %ul.button-group.round.right
-                  = link_to "Dashboard", student_path(student), :class => "button tiny secondary"
-                  = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny secondary"
+                  %li= link_to "Dashboard", student_path(student), :class => "button tiny secondary"
+                  %li= link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny secondary"
 
     - if current_course_data.auditing_students.present?
       %h2 Auditing
@@ -70,8 +79,8 @@
               %td
                 .button-bar
                   %ul.button-group.round
-                    = link_to "Dashboard", student_path(student), :class => "button tiny secondary"
-                    = link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny secondary"
+                    %li= link_to "Dashboard", student_path(student), :class => "button tiny secondary"
+                    %li= link_to "Edit #{term_for :weights}", assignment_type_weights_path(:student_id => student.id), :class => "button tiny secondary"
 
 
 

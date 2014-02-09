@@ -14,7 +14,7 @@
           .clearfix
       - assignments.each do |assignment|
         - if assignment.point_total && assignment.try(:point_total) > 0
-          .assignment.clear{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
+          .assignment{:data => {:assignment => assignment.id, :'possible-points' => current_student_data.point_total_for_assignment(assignment)}}
             - if assignment.required?
               %span.has-tip{:title => "This #{term_for :assignment} is required!", :data => {'tooltip' => true} }
                 %i.fi-star

@@ -1,9 +1,20 @@
 .small-12.panel.mainContent
   / Staff Navigation
-  = content_nav_for @user do
-    = render "users/tabs"
+  .show-for-large-up
+    = content_nav_for @user do
+      = render "users/tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @user 
 
   .small-12.columns
+    
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "users/tabs"
+
     %h2 Courses
     %ul
       - @user.courses.each do |course|

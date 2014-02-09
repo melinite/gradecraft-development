@@ -1,15 +1,24 @@
 - if current_user.is_staff?
   .small-12.panel.mainContent
     / Assignment navigation
-    = content_nav_for Assignment do
-      = render "tabs"
+    .show-for-large-up
+      = content_nav_for Assignment do
+        = render "tabs"
+
+    .hide-for-large-up{:style => "padding: 10px"}
+      = mobile_nav_for Assignment
 
     .small-12.columns
+      .hide-for-large-up
+        %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Select
+        %ul#drop.f-dropdown
+          = render "tabs"
       
       .assignments
         - current_course_data.by_assignment_type.each do |assignment_type, assignments|
           .assignment_type{:id => "assignment-type-#{assignment_type.id}" }
-            %h5.collapse= "#{assignment_type.name} – #{points assignment_type.max_value} points"
+            %h3.collapse= "#{assignment_type.name} – #{points assignment_type.max_value} points"
             %div
               .small-3.right
                 .button-bar.right

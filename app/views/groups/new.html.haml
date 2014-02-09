@@ -1,13 +1,23 @@
 .small-12.panel.mainContent
   / Group Navigation
-  - if current_user.is_staff?
-    = content_nav_for Group, "Create A New #{term_for :group}" do
-      = render "tabs"
-  - else
-    = content_nav_for "Create A New #{term_for :group}" do
-      = render "students/student_tabs"
+  .show-for-large-up
+    - if current_user.is_staff?
+      = content_nav_for Group, "Create A New #{term_for :group}" do
+        = render "tabs"
+    - else
+      = content_nav_for "Create A New #{term_for :group}" do
+        = render "students/student_tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for Group, "Create A New #{term_for :group}" 
 
   .small-12.columns
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "tabs"
+
     %h2= @title
     = render 'form'
 

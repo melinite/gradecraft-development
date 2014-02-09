@@ -42,4 +42,9 @@ class InfoController < ApplicationController
     @team = current_course.teams.find_by(id: params[:team_id]) if params[:team_id]
   end
 
+  # Display all grades in the course in list form
+   def all_grades
+    @grades = current_course.grades.paginate(:page => params[:page], :per_page => 500)
+  end
+
 end

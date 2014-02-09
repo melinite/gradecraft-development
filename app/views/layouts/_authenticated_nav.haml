@@ -1,3 +1,10 @@
+- if current_user.is_staff?
+  %li.has-form.hide-for-small
+    .row.collapse
+      .large-8.small-9.columns
+        %input{:type => "text", :placeholder => "Search #{term_for :students}"}
+      .large-4.small-3.columns
+        %a.success.button.expand{ :href => "#" } Search
 %li.has-dropdown.course_switch.show-for-medium-up
   %a My Courses
   //= form_tag change_current_course_path  do
@@ -58,7 +65,7 @@
         Office Hours:
         = auto_link(current_course.office_hours)
 
-%li.has-dropdown
+%li.has-dropdown.show-for-small-up
   %a
     = gravatar_for current_user, :size => 30
     = current_user.public_name

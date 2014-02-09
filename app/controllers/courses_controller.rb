@@ -84,11 +84,6 @@ class CoursesController < ApplicationController
     end
   end
 
-
-  def all_grades
-    @grades = current_course.grades.paginate(:page => params[:page], :per_page => 500)
-  end
-
   def timeline
     @course = current_course
     if current_course.team_challenges?

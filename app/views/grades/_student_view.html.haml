@@ -1,13 +1,26 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
-  = content_nav_for @assignment do
-    - if current_user.is_student?
-      = render "students/student_profile_tabs"
-    - else
-      = render "students/tabs"
+  .show-for-large-up
+    = content_nav_for @assignment do
+      - if current_user.is_student?
+        = render "students/student_profile_tabs"
+      - else
+        = render "students/tabs"
 
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @assignment
 
   .small-12.columns
+
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        - if current_user.is_student?
+          = render "students/student_profile_tabs"
+        - else
+          = render "students/tabs"
+
     %h3= @assignment.name
 
     - if @assignment.open_at?

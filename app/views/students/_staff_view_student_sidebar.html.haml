@@ -1,5 +1,5 @@
-.small-3.sideBar.panel.columns
-  .gravatar.panel.radius.small-12
+.sideBar.panel.columns
+  .gravatar.panel.radius
     = gravatar_for current_student
     %h6
       %a{:href => "mailto:#{current_student.email}" }
@@ -8,9 +8,9 @@
     = "Last activity: #{current_student.try(:last_activity_at) || "(never)"} "
 
 
-  .small-12.panel.radius= render "students/sidebar/sidebar_to_do_list"
+  .panel.radius= render "students/sidebar/sidebar_to_do_list"
 
-  .small-12.panel.radius= render 'students/sidebar/sidebar_grade_distribution'
+  .panel.radius= render 'students/sidebar/sidebar_grade_distribution'
 
   - if current_course.has_badges?
-    .small-12.panel.radius= render "students/sidebar/sidebar_badges"
+    .panel.radius= render "students/sidebar/sidebar_badges"

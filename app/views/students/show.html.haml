@@ -1,28 +1,42 @@
 .small-12.panel.mainContent
   / Student Dashboard Breadcrumbs
-  = content_nav_for current_student do
-    = render "student_profile_tabs"
+  .show-for-large-up
+    = content_nav_for current_student do
+      = render "student_profile_tabs"
+  
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for current_student 
+  
+  .small-12.medium-9.columns#syllabus
 
-  .small-9.columns
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "student_profile_tabs"
+
     %h2
       Current Score:
       / Check to see if the course has a pre-determined total number of points
       - if current_course.point_total?
-        %span#userScoreNum.bold #{points current_student.cached_score_for_course(current_course)}
+        %span.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_course.point_total} points
         / Else tally all of the points for all of the assignments in the course
       - else
-        %span#userScoreNum #{points current_student.cached_score_for_course(current_course)}
+        %span.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_course.total_points} points
       - if current_student.grade_level_for_course(current_course).present?
         – Current Level:
-        %span#userScoreNum= current_student.grade_level_for_course(current_course)
+        %span.bold= current_student.grade_level_for_course(current_course)
 
+    %hr
+    
     = render 'students/syllabus'
 
-    .clearfix
+    = render 'students/scoreboard'
 
-  = render "staff_view_student_sidebar"
+  .small-12.medium-3.columns
+    = render "staff_view_student_sidebar"
 
   .clearfix
 
