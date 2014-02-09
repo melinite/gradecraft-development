@@ -98,9 +98,16 @@ tr.achieved {
   }
 }
 
-
+/* Decreasing the size of the buttons on the syllabus page */
 #syllabus .button.tiny {
   margin: 0;
   font-size: .7rem;
   padding: 0.3rem .5rem;
+}
+
+/* Adjusting the margins on the small headers in the gravatar panel */ 
+.gravatar.panel {
+  h3 {
+    margin: 0;
+  }
 }

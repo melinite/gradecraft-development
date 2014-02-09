@@ -1,11 +1,15 @@
 .sideBar.panel.columns
   .gravatar.panel.radius
     = gravatar_for current_student
-    %h6
-      %a{:href => "mailto:#{current_student.email}" }
-        %i.fi-mail
-        = current_student.name
-    = "Last activity: #{current_student.try(:last_activity_at) || "(never)"} "
+    %h3
+      %small
+        %a{:href => "mailto:#{current_student.email}" }
+          %i.fi-mail
+          = current_student.name
+    %h3
+      %small= "#{term_for :team} #{current_student.team_for_course(current_course).name}"
+    %h3
+      %small= "Last activity: #{current_student.try(:last_activity_at) || "(never)"} "
 
 
   .panel.radius= render "students/sidebar/sidebar_to_do_list"
