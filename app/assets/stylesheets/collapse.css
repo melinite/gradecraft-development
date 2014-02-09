@@ -1,5 +1,5 @@
 h3.collapse a {
-  background: url("sprite.png") 10px 16px no-repeat;
+  background: image-url("sprite.png") 10px 16px no-repeat;
   padding: .5rem 1.6rem;
   border-radius: .5rem;
 }
