@@ -12,6 +12,7 @@ class AnalyticsController < ApplicationController
     render json: data
   end
 
+  # Displaying the top 10 and bottom 10 students for quick overview
   def top_10
     @teams = current_course.teams.includes(:earned_badges)
     @students = current_course.users.students.joins(:course_memberships).where('course_memberships.auditing = false')
@@ -19,10 +20,12 @@ class AnalyticsController < ApplicationController
     @bottom_ten_students = @students.order_by_low_score.limit(10)
   end
 
+  # Displaying per assignment summary outcome statistics
   def per_assign
     respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.released.length > 1}
   end
 
+  # Display per team summary scores
   def team_grade
     #respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.released.length > 1}
   end

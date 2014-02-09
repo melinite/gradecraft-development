@@ -5,11 +5,10 @@
   padding: .2rem .6rem;
   background-color: #333;
   color: #FFF;
-  border-bottom-left-radius: .5rem;
-  border-bottom-right-radius: .5rem;
+  border-bottom-left-radius: $global-radius;
+  border-bottom-right-radius: $global-radius;
   font-size: 14px;
   z-index: 100;
-
 }
 
 .top-bar-section ul ul.dropdown li a {
@@ -41,7 +40,7 @@
 }
 
   .top-bar-section ul ul.dropdown a, .top-bar-section ul ul.dropdown a:hover {
-    color: $lightblue;
+    color: $secondary-color;
   }
 
  .top-bar-section ul ul.dropdown a:hover {
@@ -49,29 +48,20 @@
     background-color: transparent !important;
   }
 
-select#course_id {
-  border: 0;
-  color: #FFF;
-  width: auto;
-}
-
 /** Styling the tagline **/
-.top-bar-section .left a {
-  color: $lightblue;
+/** Foundation requires that the items in the menu bar be links, and since the
+tagline doesn't actually link anywhere we're disabling the perception of the link **/
+.top-bar-section .left a, .top-bar-section .left li a:hover {
+  color: $secondary-color;
   margin-top: 1px;
   height: 1rem !important;
   position: relative;
   margin-right: 0;
-}
-
-/** Foundation requires that the items in the menu bar be links, and since the
-tagline doesn't actually link anywhere we're disabling the perception of the link **/
-.top-bar-section .left li a:hover {
-  color: $lightblue;
+  background-color: #333 !important;
   cursor: default;
-  background-color: #333;
 }
 
+/* Rounding the gravatar edges */ 
 img.img-rounded {
   border-radius: .25rem;
 }

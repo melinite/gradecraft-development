@@ -49,6 +49,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Getting the course scores to display the box plot results 
   def get_course_scores
     if current_user.present? && current_user.is_student?
       @scores_for_current_course = current_student.scores_for_course(current_course)
@@ -59,6 +60,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  # Core role authentication
   def ensure_student?
     return not_authenticated unless current_user.is_student?
   end
@@ -76,6 +78,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  # Canable checks on permission
+  def enforce_view_permission(resource)
+    raise Canable::Transgression unless can_view?(resource)
+  end
+
+  # Tracking page view counts
   def increment_page_views
     if current_user && request.format.html?
       User.increment_counter(:page_views, current_user.id)
@@ -83,10 +92,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def enforce_view_permission(resource)
-    raise Canable::Transgression unless can_view?(resource)
-  end
-
+  # Tracking course logins
   def log_course_login_event
     membership = current_user.course_memberships.where(course_id: current_course.id).first
     EventLogger.perform_async('login', course_id: current_course.id, user_id: current_user.id, user_role: current_user.role, last_login_at: membership.last_login_at.to_i)

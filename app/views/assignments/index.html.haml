@@ -9,7 +9,7 @@
       .assignments
         - current_course_data.by_assignment_type.each do |assignment_type, assignments|
           .assignment_type{:id => "assignment-type-#{assignment_type.id}" }
-            %h5= "#{assignment_type.name} – #{points assignment_type.max_value} points"
+            %h5.collapse= "#{assignment_type.name} – #{points assignment_type.max_value} points"
             %div
               .small-3.right
                 .button-bar.right

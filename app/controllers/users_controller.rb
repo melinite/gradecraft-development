@@ -5,17 +5,6 @@ class UsersController < ApplicationController
   before_filter :ensure_admin?, :only => [:all]
 
   def dashboard
-    if current_user.is_staff?
-      @students = current_course.users.students
-      @teams = current_course.teams.includes(:earned_badges)
-      @users = current_course.users
-      @top_ten_students = @students.order_by_high_score.limit(10)
-      @bottom_ten_students = @students.order_by_low_score.limit(10)
-      @submissions = current_course.submissions
-    else
-      @grade_scheme_elements = current_course.grade_scheme_elements
-      @grade_levels_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
-    end
     if current_course.team_challenges?
       @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
     else
@@ -38,18 +27,9 @@ class UsersController < ApplicationController
     end
   end
 
+  # Admin only view of all users
   def all
-    @title = "View all Users"
     @users = User.all.order('last_name ASC')
-    user_search_options = {}
-    user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
-    @users = current_course.users.includes(:teams, :earned_badges).where(user_search_options)
-    respond_to do |format|
-      format.html
-      format.json { render json: @users }
-      format.csv { send_data @users.to_csv }
-      format.xls { send_data @users.to_csv(col_sep: "\t") }
-    end
   end
 
   def new
@@ -113,6 +93,7 @@ class UsersController < ApplicationController
 
   end
 
+  # We don't allow students to edit their profile directly - this is a mediated view
   def edit_profile
     @title = "Edit My Account"
     @user = current_user
@@ -148,10 +129,6 @@ class UsersController < ApplicationController
       end
       redirect_to users_path, :notice => "Upload successful"
     end
-  end
-
-  def final_grades
-    @course = current_course
   end
 
   def search

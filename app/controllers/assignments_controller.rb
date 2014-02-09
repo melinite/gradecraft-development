@@ -5,6 +5,7 @@ class AssignmentsController < ApplicationController
     @title = "#{term_for :assignment} Index"
   end
 
+  # Displays a second view of the assignment structure - more details of logistical type, less results
    def settings
     @title = "#{term_for :assignments} Settings"
   end
@@ -33,6 +34,7 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  # Duplicate an assignment - important for super repetitive items like attendance and reading reactions
   def copy
     @assignment = current_course.assignments.find(params[:id])
     new_assignment = @assignment.dup
@@ -87,6 +89,7 @@ class AssignmentsController < ApplicationController
     redirect_to assignments_url
   end
 
+  # Calendar feed of assignments
   def feed
     @assignments = current_course.assignments
     respond_with @assignments.with_due_date do |format|
@@ -96,6 +99,7 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  # Exporting the grades for a single assignment
   def export_grades
     @assignment = current_course.assignments.find(params[:id])
     respond_to do |format|

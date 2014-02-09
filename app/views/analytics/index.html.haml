@@ -1,9 +1,19 @@
 .small-12.panel.mainContent
   / Analytics Navigation
-  = content_nav_for "Course Analytics", "All Users" do
-    = render "tabs"
+  .show-for-large-up
+    = content_nav_for "Course Analytics", "All Users" do
+      = render "tabs"
+
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for "Course Analytics", "All Users"
 
   .small-12.columns
+
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Select
+      %ul#drop.f-dropdown
+        = render "tabs"
 
     .navbar.navbar-inverse.section-heading
       %h3 Interactions

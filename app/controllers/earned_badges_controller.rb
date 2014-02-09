@@ -7,6 +7,7 @@ class EarnedBadgesController < ApplicationController
     redirect_to badge_path(@badge)
   end
 
+  # Displays the students earned badges
   def my_badges
     @title = "Awarded #{term_for :badges}"
     @earned_badges = @earnable.earned_badges
@@ -25,20 +26,7 @@ class EarnedBadgesController < ApplicationController
     @students = current_course.users.students.alpha
   end
 
-  def new_via_student
-    @title = "Award a New #{term_for :badge}"
-    @badges = current_course.badges
-    @earned_badge = @badge.earned_badges.new
-    @students = current_course.users.students
-  end
-
-  def new_via_assignment
-    @title = "Award a New #{term_for :badge}"
-    @assignments = current_course.assignments
-    @badges = current_course.badges
-    @earned_badge = @earnable.earned_badges.new
-  end
-
+  # Allows the student to change whether or not they've shared having earned this badge with the class
   def toggle_shared
     @earned_badge = current_course.earned_badges.where(:badge_id => params[:badge_id], :student_id => current_student.id).first
     @earned_badge.shared = !@earned_badge.shared
@@ -89,6 +77,7 @@ class EarnedBadgesController < ApplicationController
     end
   end
 
+  # Quickly award a badge to multiple students
   def mass_edit
     @badge = current_course.badges.find(params[:id])
     @title = "Mass Award #{@badge.name}"
@@ -117,6 +106,7 @@ class EarnedBadgesController < ApplicationController
     end
   end
 
+  # Display a chart of all badges earned in the course
   def chart
     @badges = current_course.badges
     @students = current_course.users.students

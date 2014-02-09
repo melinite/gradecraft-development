@@ -2,6 +2,7 @@ class CurrentCoursesController < ApplicationController
 
   respond_to :json 
 
+  # Switch between enrolled courses 
   def change
     if course = current_user.courses.where(:id => params[:course_id]).first
       unless session[:course_id] == course.id

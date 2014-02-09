@@ -18,6 +18,7 @@ class StudentsController < ApplicationController
     end
   end
 
+  # Course timeline, displays all assignments that are determined by the instructor to belong on the timeline + team challenges if present
   def timeline
     if current_user.is_staff?
       redirect_to dashboard_path
@@ -29,11 +30,8 @@ class StudentsController < ApplicationController
     end
   end
 
-  def syllabus
-  end
-
+  # Exporting student grades 
   def export
-    @auditing = current_course.students.auditing
     @students = current_course.students.being_graded respond_to do |format|
       format.html
       format.json { render json: @students.where("first_name like ?", "%#{params[:q]}%") }
@@ -41,6 +39,7 @@ class StudentsController < ApplicationController
     end
   end
 
+  # Displaying ranked order of students and scores
   def leaderboard
     @title = "#{current_course.user_term} Roster"
     @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
@@ -48,16 +47,7 @@ class StudentsController < ApplicationController
 
   def show
     self.current_student = current_course.students.where(id: params[:id]).first
-    @assignments_with_due_dates = current_course_data.assignments.select { |assignment| assignment.due_at.present? }
-    @sorted_teams = current_course.teams.order_by_high_score
-    @grade_scheme_elements = current_course.grade_scheme_elements
-    @grade_levels_elements_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
-    if current_course.team_challenges?
-      @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
-    else
-      @events = current_course_data.assignments.timelineable.to_a
-    end
-
+    
     scores = []
     current_course.assignment_types.each do |assignment_type|
       scores << { data: [current_student.grades.released.where(assignment_type: assignment_type).score], name: assignment_type.name }
@@ -65,29 +55,21 @@ class StudentsController < ApplicationController
 
   end
 
+  # Student predictions - can be taken out? 
   def predictions
     current_student.predictions(current_course)
   end
 
+  # Displaying the course grading scheme and professor's grading philosophy
   def grading_philosophy
     @grade_scheme_elements = current_course.grade_scheme_elements
   end
 
-
-  def class_badges
-  end
-
-  def badges
-  end
-
+  # Display the grade predictor
   def predictor
     @grade_scheme_elements = current_course.grade_scheme_elements
     @grade_levels_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
   end
-
-  def teams
-  end
-
 
   def scores_by_assignment
     scores = current_course.grades.released.joins(:assignment_type)
@@ -127,14 +109,5 @@ class StudentsController < ApplicationController
   def grade_index
     self.current_student = current_course.students.where(id: params[:id]).first
     @grades = current_student.grades.where(:course_id => current_course)
-  end
-
-  def roster
-    @students = current_course.students.being_graded
-    respond_to do |format|
-      format.html
-      format.json { render json: @students }
-      format.csv { send_data @students.csv_roster_for_course(current_course) }
-    end
   end
 end

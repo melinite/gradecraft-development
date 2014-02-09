@@ -1,6 +1,7 @@
 module ApplicationHelper
   include CustomNamedRoutes
 
+  # Adding current user role to page class
   def body_class
     classes = []
     if logged_in?
@@ -28,6 +29,7 @@ module ApplicationHelper
     "active" if current_page?(path)
   end
 
+  # Used to sort table columns on various parameters - should be replaced by Dynatable
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
@@ -44,6 +46,7 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
+  # Search items, currently broken
   def autocomplete_items
     return [] unless current_user.is_staff?
     User.students.map do |u|
@@ -61,6 +64,7 @@ module ApplicationHelper
     link_to name, options, html_options, &block
   end
 
+  # Commas in numbers!
   def points(value)
     number_with_delimiter(value)
   end

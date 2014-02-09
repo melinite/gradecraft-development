@@ -1,20 +1,18 @@
-h5 a {
-  background: url("sprite.png") 10px 16px no-repeat;
+h5.collapse a {
+  background: url("sprite.png") 10px 13px no-repeat;
   padding: .5rem 1.6rem;
-  background-color: #67CF30;
   border-radius: .5rem;
-  color: #FFF;
 }
 
-h5.open a { 
+h5.collapse.open a { 
   background-position: 13px -25px;
 }
 
-h5+div { padding: 10px; }
+h5.collapse+div { padding: 10px; }
 
 /* Pre hide sections with JavaScript on */
 
-h5+div {
+h5.collapse+div {
   display: none;
 }
 

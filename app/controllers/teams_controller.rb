@@ -26,10 +26,6 @@ class TeamsController < ApplicationController
     respond_with @team
   end
 
-  def leaderboard
-    @teams = current_course.teams
-  end
-
   def create
     @team =  current_course.teams.new(params[:team])
     @team.save
@@ -63,11 +59,4 @@ class TeamsController < ApplicationController
     { :resource_name => current_course.team_term }
   end
 
-  def sort_column
-     current_course.team.column_names.include?(params[:sort]) ? params[:sort] : "id"
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
 end

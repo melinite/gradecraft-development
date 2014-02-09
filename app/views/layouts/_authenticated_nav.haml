@@ -1,4 +1,4 @@
-%li.has-dropdown.course_switch
+%li.has-dropdown.course_switch.show-for-medium-up
   %a My Courses
   //= form_tag change_current_course_path  do
   %ul.dropdown
@@ -6,7 +6,7 @@
       %li= link_to "#{c.name}", change_current_course_path(:course_id => c.id), :method => 'post'
       //%li= select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name')
 
-%li.has-dropdown
+%li.has-dropdown.show-for-large-up
   %a Class Info
   %ul.dropdown.classInfo
     %li

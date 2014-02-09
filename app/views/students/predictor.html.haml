@@ -12,8 +12,8 @@
     - cache current_student_data.cache_key('v1', :assignment_weights_key, :assignments_key, :grades_key, :badges_key, current_student.id) do
       .gradePredictor
         #predictorWrapper#studentID{ 'data-student-id' => current_student.id }
-          %h3
-            Projected points:
+          %h4
+            Predicted points:
             - if current_user.is_staff?
               %span.bold
                 = points current_course.score_for_student(current_student)
@@ -29,7 +29,6 @@
             Predicted final grade:
             %span.bold#predictor-course-grade{:'data-grade-levels' => "#{@grade_levels_json}"}
               = current_student_data.predicted_grade_letter
-            %hr
 
         .charts.dashboard-charts
           .chart-wrapper

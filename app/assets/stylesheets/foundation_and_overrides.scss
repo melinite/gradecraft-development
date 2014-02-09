@@ -56,7 +56,7 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
  $success-color: #67CF30;
 
 // We use these to make sure border radius matches unless we want it different.
-// $global-radius: 3px;
+$global-radius: 0.5rem;
 // $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -170,21 +170,21 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 // $include-html-nav-classes: $include-html-classes;
 
 // We use this to set the background color for the breadcrumb container.
-// $crumb-bg: lighten($secondary-color, 5%);
+$crumb-bg: #FFF;
 
 // We use these to set the padding around the breadcrumbs.
-// $crumb-padding: rem-calc(9 14 9);
+$crumb-padding: .5rem .5rem 0;
 // $crumb-side-padding: rem-calc(12);
 
 // We use these to control border styles.
 // $crumb-function-factor: 10%;
-// $crumb-border-size: 1px;
+$crumb-border-size: 0px;
 // $crumb-border-style: solid;
 // $crumb-border-color: darken($crumb-bg, $crumb-function-factor);
-// $crumb-radius: $global-radius;
+$crumb-radius: 0;
 
 // We use these to set various text styles for breadcrumbs.
-// $crumb-font-size: rem-calc(11);
+$crumb-font-size: rem-calc(18);
 // $crumb-font-color: $primary-color;
 // $crumb-font-color-current: #333;
 // $crumb-font-color-unavailable: #999;
@@ -201,7 +201,7 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 
 // Sets the margin for the right side by default, and the left margin if right-to-left direction is used
 // $button-bar-margin-opposite: rem-calc(10);
-// $button-group-border-width: 1px;
+$button-group-border-width: 0px;
 
 // Clearing
 
@@ -809,11 +809,11 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 
 // We use this to control the definition
 // $sub-nav-font-family: $body-font-family;
-// $sub-nav-font-size: rem-calc(14);
-// $sub-nav-font-color: #999;
+$sub-nav-font-size: .7rem;
+$sub-nav-font-color: #FFF;
 // $sub-nav-font-weight: normal;
 // $sub-nav-text-decoration: none;
-// $sub-nav-border-radius: 3px;
+//$sub-nav-border-radius: $global-radius;
 // $sub-nav-font-color-hover: darken($sub-nav-font-color, 15%);
 
 
@@ -822,8 +822,8 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 // $sub-nav-active-font-weight: normal;
 // $sub-nav-active-bg: $primary-color;
 // $sub-nav-active-bg-hover: darken($sub-nav-active-bg, 5%);
-// $sub-nav-active-color: #fff;
-// $sub-nav-active-padding: rem-calc(3 16);
+$sub-nav-active-color: #fff;
+$sub-nav-active-padding: .5rem 1rem;
 // $sub-nav-active-cursor: default;
 
 // $sub-nav-item-divider: "";
@@ -839,7 +839,7 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 
 // These control the table cell border style
 // $table-border-style: solid;
-//$table-border-size: 1px;
+$table-border-size: 0px;
 // $table-border-color: #eee;
 
 // These control the table head styles
@@ -851,7 +851,7 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 
 // These control the row padding and font styles
 $table-row-padding: rem-calc(0 0);
-$table-row-font-size: rem-calc(10);
+$table-row-font-size: .8rem;
 $table-row-font-color: #222;
 $table-line-height: rem-calc(0);
 
@@ -865,7 +865,7 @@ $table-line-height: rem-calc(0);
 
 // $include-html-tabs-classes: $include-html-classes;
 
-// $tabs-navigation-padding: rem-calc(16);
+$tabs-navigation-padding: 0.5rem;
 // $tabs-navigation-bg-color: #efefef  ;
 // $tabs-navigation-hover-bg-color: darken($tabs-navigation-bg-color, 5%);
 // $tabs-navigation-font-color: #222;

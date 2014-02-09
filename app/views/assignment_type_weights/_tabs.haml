@@ -1,7 +1,8 @@
 - if current_user.is_student?
   / Student Navigation for Assignment Weighting
-  = content_nav_for "Editing My #{term_for :weight}" do
-    = render "students/student_tabs"
+  .show-for-large-up
+    = content_nav_for "Editing My #{term_for :weight}" do
+      = render "students/student_tabs"
 
 - elsif current_user.is_staff?
   / Instructor Navigation for Assignment Weighting

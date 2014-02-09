@@ -5,8 +5,6 @@
 table.responsive {
   width: 100%;
   border-spacing: 0 !important;
-  font-size: .8rem;
-  margin-bottom: 1rem;
 
   a:hover {
     color: $green;
@@ -66,20 +64,6 @@ th.sorting-desc, th.sorting-asc {
   color: #FFF;
 }
 
-.table-condensed thead > tr > th,
-.table-condensed tbody > tr > th,
-.table-condensed tfoot > tr > th,
-.table-condensed thead > tr > td,
-.table-condensed tbody > tr > td,
-.table-condensed tfoot > tr > td {
-  padding: 5px;
-}
-
-.table-condensed thead > tr > th.dow {
-  color: $primary-color;
-
-}
-
 .button-column {
     width: 300px;
   }
@@ -121,6 +105,7 @@ th.sorting-desc, th.sorting-asc {
 }
 }
 
+/* Styling pattern tables for assignment outcome overview */ 
 td.complete {
   background-color: #d7fae0;
 }

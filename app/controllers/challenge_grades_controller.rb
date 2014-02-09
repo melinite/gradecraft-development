@@ -29,6 +29,7 @@ class ChallengeGradesController < ApplicationController
     @challenge_grade = @challenge.challenge_grades.find(params[:id])
   end
 
+  # Grade many teams on a particular challenge at once 
   def mass_edit
     @challenge = current_course.challenges.find(params[:challenge_id])
     @teams = current_course.teams

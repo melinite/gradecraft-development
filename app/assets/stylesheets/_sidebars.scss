@@ -4,22 +4,14 @@
   padding-left: 1rem;
 }
 
+/* Styles the hover state on the box plot on the student dashboard */
 .jqstooltip {
     box-sizing: content-box;
     height: auto !important;
     width: auto !important;
 }
 
+/* Makes the box plot responsive */ 
 #student_grade_distro canvas {
   width: 100% !important;
-}
-
-
-/** Link Colors on admin subnav **/
-ul.side-nav li a {
-  color: #666;
-}
-
-ul.side-nav li a:hover {
-  color: $blue;
 }

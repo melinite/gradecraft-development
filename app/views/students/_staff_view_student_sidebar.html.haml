@@ -5,6 +5,7 @@
       %a{:href => "mailto:#{current_student.email}" }
         %i.fi-mail
         = current_student.name
+    = "Last activity: #{current_student.try(:last_activity_at) || "(never)"} "
 
 
   .small-12.panel.radius= render "students/sidebar/sidebar_to_do_list"

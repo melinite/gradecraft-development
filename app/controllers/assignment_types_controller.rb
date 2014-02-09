@@ -61,7 +61,6 @@ class AssignmentTypesController < ApplicationController
 
   end
 
-  #Delete the specified assignment type
   def destroy
     @assignment_type = current_course.assignment_types.find(params[:id])
     @assignment_type.destroy

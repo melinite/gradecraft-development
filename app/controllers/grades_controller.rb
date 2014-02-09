@@ -40,6 +40,7 @@ class GradesController < ApplicationController
     redirect_to assignment_path(@assignment), notice: "#{ @grade.student.name}'s #{@assignment.name} grade was successfully deleted."
   end
 
+  # Allows students to self log grades for a particular assignment if the instructor has turned that feature on - currently only used to log attendance
   def self_log
     @assignment = current_course.assignments.find(params[:id])
     if @assignment.open?
@@ -58,6 +59,7 @@ class GradesController < ApplicationController
     end
   end
 
+  # Students predicting the score they'll get on an assignent using the grade predictor 
   def predict_score
     @assignment = current_course.assignments.find(params[:id])
     raise "Cannot set predicted score if grade status is 'Graded' or 'Released'" if current_student_data.grade_released_for_assignment?(@assignment)
@@ -74,6 +76,7 @@ class GradesController < ApplicationController
     end
   end
 
+  # Quickly grading a single assignment for all students
   def mass_edit
     @assignment = current_course.assignments.find(params[:id])
     @title = "Quick Grade #{@assignment.name}"
@@ -117,6 +120,7 @@ class GradesController < ApplicationController
     end
   end
 
+  # Grading an assignment for a whole group
   def group_edit
     @assignment = current_course.assignments.find(params[:id])
     @group = @assignment.groups.find(params[:group_id])
@@ -130,6 +134,7 @@ class GradesController < ApplicationController
     @submit_message = "Submit Grades"
   end
 
+  # Changing the status of a grade - allows instructors to review "Graded" grades, before they are "Released" to students
   def edit_status
     @assignment = current_course.assignments.find(params[:id])
     @title = "#{@assignment.name} Grade Statuses"

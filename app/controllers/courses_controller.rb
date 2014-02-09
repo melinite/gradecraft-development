@@ -28,6 +28,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
   end
 
+  # Important for instructors to be able to copy one course's structure into a new one - does not copy students or grades
   def copy
     @course = Course.find(params[:id])
     new_course = @course.dup

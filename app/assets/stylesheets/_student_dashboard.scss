@@ -106,14 +106,11 @@ tr.achieved {
   color: #FFF;
 }
 
-#userScoreNum {
-  font-weight: bold;
-}
-
 .assignment {
   padding-bottom: 10px;
 }
 
+/* Styling badge images depending on whether or not the student has earned them */
 img.unearned {
   opacity: .2 !important;
 }
@@ -122,6 +119,8 @@ img.earned {
   opacity: 1;
 }
 
+
+/* Crossing out upcoming assignments in the to do list if the student has already submitted them */
 .strikethrough {
   text-decoration: line-through;
 }

@@ -1,12 +1,21 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  = content_nav_for @assignment, "Quick Grade" do
-    = render "assignments/tabs"
+  .show-for-large-up
+    = content_nav_for @assignment, "Quick Grade" do
+      = render "assignments/tabs"
 
-  .small-12.medium-6.columns
+  .hide-for-large-up{:style => "padding: 10px"}
+    = mobile_nav_for @assignment, "Quick Grade"
+
+  .small-12.medium-8.columns
     %h2= @title
 
   .small-12.medium-4.columns.right
+    .hide-for-large-up
+      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Options
+      %ul#drop.f-dropdown
+        = render "assignments/tabs"
     - if current_course.has_teams? && @assignment.is_individual?
       = form_tag mass_grade_assignment_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
         = hidden_field_tag :assignment_id, @assignment.id
@@ -58,11 +67,13 @@
                       = gf.check_box :raw_score, {}, @assignment.point_total, nil
                     - else
                       - if grade.persisted? && (grade.status == "Graded" || grade.status == "Released")
-                        = gf.text_field :raw_score, data: {autonumeric: true, "m-dec" => "0"}
-                        = "/ #{points @assignment.point_total}"
+                        %td
+                          = gf.text_field :raw_score, data: {autonumeric: true, "m-dec" => "0"}
+                          
                       - else
-                        = gf.text_field :raw_score, :value => nil, data: {autonumeric: true, "m-dec" => "0"}
-                        = "/ #{points @assignment.point_total}"
+                        %td
+                          = gf.text_field :raw_score, :value => nil, data: {autonumeric: true, "m-dec" => "0"}
+                          = gf.label :raw_score, "/ #{points @assignment.point_total}"
 
         .right
           = f.button :submit, "Submit Grades", :class => "button tiny radius"
