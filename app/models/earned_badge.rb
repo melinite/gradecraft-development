@@ -1,5 +1,5 @@
 class EarnedBadge < ActiveRecord::Base
-  attr_accessible :score, :feedback
+  attr_accessible :score, :feedback, :student, :badge
 
   belongs_to :course
   belongs_to :badge
@@ -26,8 +26,6 @@ class EarnedBadge < ActiveRecord::Base
   private
 
   def cache_associations
-    self.student_id ||= submission.try(:student_id)
-    self.badge_id ||= submission.try(:assignment_id) || task.try(:assignment_id)
     self.course_id ||= badge.try(:course_id)
     self.score ||= badge.try(:point_total)
   end
