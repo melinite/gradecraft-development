@@ -1,6 +1,8 @@
+/* Coloring the brand */ 
 .title-area li.name h1 a {
   color: $logogreen;
 }
+
 .top-bar-section ul ul.dropdown {
   padding: .2rem .6rem;
   background-color: #333;
@@ -8,6 +10,16 @@
   border-bottom-left-radius: $global-radius;
   border-bottom-right-radius: $global-radius;
   z-index: 100;
+}
+
+.top-bar-section .has-form input {
+  border-top-left-radius: $global-radius;
+  border-bottom-left-radius: $global-radius;
+}
+
+.success.button {
+  border-top-right-radius: $global-radius;
+  border-bottom-right-radius: $global-radius;
 }
 
 .top-bar-section ul ul.dropdown li a {
@@ -66,6 +78,7 @@ img.img-rounded {
   border-radius: .25rem;
 }
 
+/* Styling the mobile active link dropdown */ 
 .f-dropdown li.active {
   padding: 0.5rem;
   background-color: $secondary-color;

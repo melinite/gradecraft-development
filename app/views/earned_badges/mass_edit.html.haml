@@ -23,9 +23,10 @@
 
     #massGrade
       = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|
-        .btn-group
-          %button.select-all.button.tiny.radius= "Check All"
-          %button.select-none.button.tiny.radius.success= "Uncheck"
+        .button-bar
+          %ul.button-group.round.right
+            %li.select-all.button.tiny= "Check All"
+            %li.select-none.button.tiny.success= "Uncheck"
         %table.responsive
           - @earned_badges.each_with_index do |eb, i|
             %tr
