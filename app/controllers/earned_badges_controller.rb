@@ -49,7 +49,8 @@ class EarnedBadgesController < ApplicationController
     @badge = current_course.badges.find(params[:badge_id])
     @earned_badge = current_course.earned_badges.new(params[:earned_badge])
     @earned_badge.assign_attributes(params[:earned_badge])
-    @earned_badge.badge =  current_course.assignment_types.find_by_id(params[:badge_id])
+    @earned_badge.badge =  current_course.badges.find_by_id(params[:badge_id])
+    @earned_badge.student =  current_course.students.find_by_id(params[:student])
     respond_to do |format|
       if @earned_badge.save
         format.html { redirect_to badge_path(@badge), notice: 'Badge was successfully awarded.' }
