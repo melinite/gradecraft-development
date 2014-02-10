@@ -49,6 +49,7 @@ body.logged-in, body.logged-out {
   background: image-url("cloud_bg.gif");
 }
 
+
 /* Primary page content */ 
 .mainContent {
   border-left: 10px solid $green;
@@ -131,6 +132,13 @@ body.logged-in, body.logged-out {
 .sideBar.panel {
   margin: 1rem 0;
   border-radius: $global-radius;
+}
+
+/* Add the sprite to the assignment expand */ 
+h3.collapse a {
+  background: image-url("sprite.png") 10px 16px no-repeat;
+  padding: .5rem 1.6rem;
+  border-radius: .5rem;
 }
 
 /* Responsive outer container */ 
