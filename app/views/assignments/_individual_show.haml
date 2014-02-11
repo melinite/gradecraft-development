@@ -68,7 +68,7 @@
                   %ul.button-group.round.right
                     %li= link_to "Grade", edit_assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny primary round'
             - else
-              - if grade && grade.is_graded_or_released?
+              - if grade && grade.status_is_graded_or_released?
                 .button-bar
                   %ul.button-group.round.right
                     %li= link_to "See Grade", assignment_grade_path(@assignment, :student_id => student.id), :class => 'button tiny secondary'

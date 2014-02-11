@@ -98,6 +98,10 @@ class Grade < ActiveRecord::Base
     is_graded? || is_released?
   end
 
+  def status_is_graded_or_released?
+    self.status == "Graded" || self.status == "Released"
+  end
+
   #Canable Permissions
   def updatable_by?(user)
     creator == user
