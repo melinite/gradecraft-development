@@ -1,14 +1,14 @@
 .small-12.columns
   %h6 Supporting Files:
-    .s3_uploader
-      = s3_uploader_form key: upload_url('assignment_files', @assignment), acl: "private", max_file_size: 40.megabytes do
-        = file_field_tag :file, :multiple => true
-      - if @assignment.assignment_files.present?
-        %h6#uploaded_files Attachments Uploaded:
-      .upload.s3_progress
-        Progress:
-        .progress
-          .bar
+  .s3_uploader
+    = s3_uploader_form key: upload_url('assignment_files', @assignment), acl: "private", max_file_size: 40.megabytes do
+      = file_field_tag :file, :multiple => true
+    - if @assignment.assignment_files.present?
+      %h6#uploaded_files Attachments Uploaded:
+    .upload.s3_progress
+      Progress:
+      .progress
+        .bar
   = simple_form_for(@assignment) do |f|
     .panel
       %h4 The Basics
