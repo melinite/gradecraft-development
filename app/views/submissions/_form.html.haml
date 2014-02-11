@@ -5,7 +5,8 @@
   .s3_uploader
     = s3_uploader_form key: upload_url('submission_files', @assignment), acl: "private", max_file_size: 40.megabytes do
       = file_field_tag :file, :multiple => true
-      #uploaded_files Attachments Uploaded:
+      - if @submission.submission_files.present?
+        %h6#uploaded_files Attachments Uploaded:
       .upload.s3_progress
         Progress:
         .progress

@@ -1,13 +1,15 @@
-%div.s3_uploader
+.panel.small-12.columns
+  %h6 Supporting Files:
+  .s3_uploader
   = s3_uploader_form key: upload_url('badge_icons', @badge), acl: "private", max_file_size: 40.megabytes do
     = file_field_tag :file
   - if @badge.badge_files.present?
-    %div#uploaded_files Uploaded:
+    %h6#uploaded_files Attachments Uploaded:
     = file_field_tag :file, :multiple => true
-  %div.upload.s3_progress
+  .upload.s3_progress
     Progress:
-    %div.progress
-      %div.bar
+    .progress
+      .bar
 
 = form_for @badge do |f|
   .small-12.medium-4.columns

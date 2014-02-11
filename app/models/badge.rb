@@ -1,9 +1,6 @@
 class Badge < ActiveRecord::Base
   attr_accessible :name, :description, :icon, :visible, :image_file_name, :can_earn_multiple_times,
     :point_total, :earned_badges_attributes, :badge_files_attributes
-    
-
-  #mount_uploader :icon, BadgeIconUploader
 
   has_many :earned_badges, :dependent => :destroy
 

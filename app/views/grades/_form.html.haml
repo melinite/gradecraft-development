@@ -1,11 +1,14 @@
-%div.s3_uploader
+.panel.small-12.columns
+  %h6 Supporting Files:
+  .s3_uploader
   = s3_uploader_form key: upload_url('grade_files', @grade), acl: "private", max_file_size: 40.megabytes do
     = file_field_tag :file, :multiple => true
-  %div#uploaded_files Uploaded:
-  %div.upload.s3_progress
+  - if @grade.grade_files.present?
+    %h6#uploaded_files Attachments Uploaded:
+  .upload.s3_progress
     Progress:
-    %div.progress
-      %div.bar
+    .progress
+      .bar
 
 = form_for @grade, url: assignment_grade_path(@assignment), method: :patch do |f|
 

@@ -11,6 +11,10 @@
 - if @team.present? && @assignment.present?
   %li{class: ("active" if current_page?(mass_grade_assignment_path)) }
     = link_to_unless_current "Quick Grade #{@assignment.name}", mass_grade_assignment_path(@assignment, :team_id => @team)
+  %li{class: ("active" if current_page?(edit_assignment_path(@assignment))) }
+    = link_to_unless_current "Edit #{@assignment.name}", edit_assignment_path(@assignment)
 - elsif @assignment.present?
   %li{class: ("active" if current_page?(mass_grade_assignment_path)) }
     = link_to_unless_current "Quick Grade #{@assignment.name}", mass_grade_assignment_path(@assignment)
+  %li{class: ("active" if current_page?(edit_assignment_path(@assignment))) }
+    = link_to_unless_current "Edit #{@assignment.name}", edit_assignment_path(@assignment)
