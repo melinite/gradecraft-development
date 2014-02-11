@@ -3,7 +3,7 @@ class Badge < ActiveRecord::Base
     :point_total, :earned_badges_attributes, :badge_files_attributes
     
 
-  #mount_uploader :icon, BadgeIconUploader
+  mount_uploader :icon, BadgeIconUploader
 
   has_many :earned_badges, :dependent => :destroy
 

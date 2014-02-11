@@ -5,7 +5,7 @@
       - if current_user.is_staff?
         = render "tabs"
       - else
-        = render "students/student_tabs"
+        = render "students/student_profile_tabs"
 
   .hide-for-large-up{:style => "padding: 10px"}
     = mobile_nav_for @group 
@@ -19,7 +19,7 @@
         - if current_user.is_staff?
           = render "tabs"
         - else
-          = render "students/student_tabs"
+          = render "students/student_profile_tabs"
 
     %h2= @title
     

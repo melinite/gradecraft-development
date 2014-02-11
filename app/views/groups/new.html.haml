@@ -6,7 +6,7 @@
         = render "tabs"
     - else
       = content_nav_for "Create A New #{term_for :group}" do
-        = render "students/student_tabs"
+        = render "students/student_profile_tabs"
 
   .hide-for-large-up{:style => "padding: 10px"}
     = mobile_nav_for Group, "Create A New #{term_for :group}" 

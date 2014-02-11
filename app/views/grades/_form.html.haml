@@ -14,9 +14,9 @@
     .small-12.large-4.columns
       = f.label :raw_score
       - if @assignment.assignment_type.has_levels?
-        = f.select :raw_score, @score_levels.map { |l| [l.name,l.value] }
+        = f.select :raw_score, @score_levels.map { |l| [l.name,l.value] }, :include_blank => true
       - elsif @assignment.has_levels?
-        = f.select :raw_score, @assignment_score_levels.map { |l| [l.name,l.value] }
+        = f.select :raw_score, @assignment_score_levels.map { |l| [l.name,l.value] }, :include_blank => true
       - else
         = f.text_field :raw_score, :default => @assignment.point_total, :label => "Score", :hint => "Total Assignment Points: #{ points @assignment.point_total }", data: {autonumeric: true, "m-dec" => "0"}
       = f.simple_fields_for :grade_files, @grade.grade_files.new do |gff|

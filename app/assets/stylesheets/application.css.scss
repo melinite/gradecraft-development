@@ -141,6 +141,14 @@ h3.collapse a {
   border-radius: .5rem;
 }
 
+h6.small {
+  font-size: .7rem;
+}
+
+.button.tiny {
+  padding: .4rem;
+}
+
 /* Responsive outer container */ 
 @media (min-width: 1000px)  {
   .mainContent {
