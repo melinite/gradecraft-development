@@ -2,18 +2,18 @@
 .small-12.panel.mainContent
   / Badge Navigation
   - if current_user.is_staff?
-    .show-for-large-up
+    .show-for-medium-up
       = content_nav_for @badge do
         = render "tabs"
 
-    .hide-for-large-up{:style => "padding: 10px"}
+    .hide-for-medium-up{:style => "padding: 10px"}
       = mobile_nav_for @badge
 
   .small-12.columns
   
-    .hide-for-large-up
-      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Select
+    .hide-for-medium-up
+      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Options
       %ul#drop.f-dropdown
         = render "tabs"
 

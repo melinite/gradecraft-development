@@ -1,6 +1,6 @@
 .small-12.panel.mainContent
   / Tasks
-  .show-for-large-up
+  .show-for-medium-up
     = content_nav_for @assignment, @task do
       %li= link_to "See #{@assignment.name}", @assignment, :class => "button tiny radius"
       - if @task.assignment_type == "Assignment"
@@ -9,7 +9,7 @@
         %li= link_to "Edit #{@task.name} Task", edit_badge_task_path(@assignment.id, @task.id), :class => 'button tiny radius'
       %li= link_to 'Create a New Task', new_assignment_task_path, :class => "button tiny radius"
 
-  .hide-for-large-up{:style => "padding: 10px"}
+  .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for @assignment, @task 
 
   .small-12.columns

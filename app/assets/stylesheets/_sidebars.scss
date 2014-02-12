@@ -18,12 +18,12 @@
     margin: 1rem 0;
   }
 
-  /* Forcing buttons and icons to display inline */ 
-  .side-nav li a:not(.button) {
-    display: inline;
-  }
+  
 }
-
+/* Forcing buttons and icons to display inline */ 
+  .side-nav li a:not(.button) {
+    display: inline !important;
+  }
 /* Styles the hover state on the box plot on the student dashboard */
 .jqstooltip {
     box-sizing: content-box;

@@ -23,3 +23,5 @@ end
 CarrierWave.configure do |config|
   config.storage = :file
 end
+
+Rack::MiniProfiler.config.position = 'right'

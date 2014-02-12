@@ -1,9 +1,9 @@
 .small-12.panel.mainContent
   / Tasks navigation
-  .show-for-large-up
+  .show-for-medium-up
     = content_nav_for @assignment, "Editing #{(@task.name)}".html_safe do
       %li= link_to "See #{@assignment.try(:name)}", @assignment, :class => "button tiny radius"
-  .hide-for-large-up{:style => "padding: 10px"}
+  .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for @assignment, "Editing #{(@task.name)}".html_safe 
   
   .small-12.columns

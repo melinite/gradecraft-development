@@ -1,9 +1,9 @@
 .small-12.panel.mainContent
   / Rubrics Navigation
-  .show-for-large-up
+  .show-for-medium-up
     = content_nav_for Rubric, "Edit #{breadcrumb_link_for(@rubric)}".html_safe
   
-  .hide-for-large-up{:style => "padding: 10px"}
+  .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for Rubric, "Edit #{breadcrumb_link_for(@rubric)}".html_safe
     
   = render 'form'

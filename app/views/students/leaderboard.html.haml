@@ -1,10 +1,10 @@
 .small-12.panel.mainContent
   / Leaderboard Navigation
-  .show-for-large-up
+  .show-for-medium-up
     = content_nav_for "Course Overview", "Leaderboard" do
       = render "info/tabs"
   
-  .hide-for-large-up{:style => "padding: 10px"}
+  .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for "Course Overview", "Leaderboard" 
 
   - if current_course.has_teams?
@@ -15,8 +15,8 @@
   .small-12.columns
 
     .hide-for-large-up
-      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Select
+      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Options
       %ul#drop.f-dropdown
         = render "users/tabs"
 

@@ -1,15 +1,15 @@
 .small-12.panel.mainContent
   / All Grades Table
-  .show-for-large-up
+  .show-for-medium-up
     = content_nav_for :students, "All Grades" do
       = render "info/tabs"
 
-  .hide-for-large-up{:style => "padding: 10px"}
+  .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for :students, "All Grades"
   
-  .hide-for-large-up
-    %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-      Select
+  .hide-for-medium-up
+    %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+      Options
     %ul#drop.f-dropdown
       = render "info/tabs"
         

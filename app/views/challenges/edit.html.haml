@@ -1,17 +1,17 @@
 .small-12.panel.mainContent
   / Editing Challenge Navigation
-  .show-for-large-up
+  .show-for-medium-up
     = content_nav_for Challenge, "Edit #{breadcrumb_link_for(@challenge)}".html_safe do
       = render "teams/tabs"
 
-  .hide-for-large-up{:style => "padding: 10px"}
+  .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for Challenge
 
   .small-12.columns
     
-    .hide-for-large-up
-      %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Select
+    .hide-for-medium-up
+      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+        Options
       %ul#drop.f-dropdown
         = render "teams/tabs"
 

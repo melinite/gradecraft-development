@@ -1,9 +1,9 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
-  .show-for-large-up
+  .show-for-medium-up
     = content_nav_for CriteriaLevel, "Edit #{breadcrumb_link_for(@criteria_level)}".html_safe
 
-  .hide-for-large-up{:style => "padding: 10px"}
+  .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for CriteriaLevel, "Edit #{breadcrumb_link_for(@criteria_level)}".html_safe
 
   = render 'form'

@@ -1,22 +1,21 @@
 - if current_user.is_staff?
   .small-12.panel.mainContent
     / Assignment Type Navigation
-    .show-for-large-up
-      = content_nav_for AssignmentType do
-        = render "assignments/tabs"
+    = content_nav_for AssignmentType do
+      = render "assignments/tabs"
     
-    .hide-for-large-up{:style => "padding: 10px"}
+    .hide-for-medium-up{:style => "padding: 10px"}
       = mobile_nav_for AssignmentType 
 
     - if current_course.has_teams?
-      .small-12.right.medium-4.columns
+      .small-12.right.medium-6.large-4.columns
         = form_tag all_grades_assignment_type_path(@assignment_type), :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
           = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
     .small-12.columns
-      .hide-for-large-up
-        %a.radius.button.tiny.small-12.medium-4.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-          Select
+      .hide-for-medium-up
+        %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Options
         %ul#drop.f-dropdown
           = render "assignments/tabs"
 

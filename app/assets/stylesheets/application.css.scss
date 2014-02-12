@@ -5,7 +5,6 @@
  *= require jquery.circliful
  *= require jquery.dynatable
  *= require responsive-tables
- *= require foundation_and_overrides
  *= require bootstrap-datetimepicker
  *= require bootsy
  *= require select2
@@ -80,8 +79,7 @@ body.logged-in, body.logged-out {
   border: none;
 
   h6 {
-    font-weight: bold;
-    color: #FFF;
+    color: $secondary-color;
   }
 
   a {
@@ -142,9 +140,12 @@ h3.collapse a {
 }
 
 h6.small {
-  font-size: .7rem;
+  font-size: .8rem;
 }
-
+.button.tiny.dropdown {
+  font-size: 1rem;
+  padding: .5rem;
+}
 .button.tiny {
   padding: .4rem;
 }
