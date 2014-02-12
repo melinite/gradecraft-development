@@ -2,10 +2,10 @@
   / Submissions Navigation
   - if current_user.is_staff?
     .show-for-medium-up
-      = content_nav_for @assignment, Submission, "Edit Submission" do
-        %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "button tiny radius"
+      = content_nav_for @assignment, Submission, @title do
+        %li= link_to 'See All Submissions', assignment_path(@assignment)
     .hide-for-medium-up{:style => "padding: 10px"}
-      = mobile_nav_for @assignment, Submission, "Edit Submission" 
+      = mobile_nav_for @assignment, Submission, @title
   - else
     .show-for-medium-up
       = content_nav_for @assignment, "Edit My Submission" do
@@ -15,13 +15,20 @@
 
   .small-12.columns
 
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "students/student_profile_tabs"
+    - if current_user.is_staff?
+      .hide-for-medium-up
+        %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Options
+        %ul#drop.f-dropdown
+          %li= link_to 'See All Submissions', assignment_path(@assignment), :class => "button tiny radius"
+    - else
+      .hide-for-medium-up
+        %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
+          Options
+        %ul#drop.f-dropdown
+          = render "students/student_profile_tabs"
 
-    %h2= "#{@title}"
+    %h2= @title
 
     - if @assignment.open_at?
       .small-12.columns.large-4.panel

@@ -11,6 +11,7 @@
         %th.sortable{"data-sort" => "int"} Badges
       - if course.has_teams?
         %th.sortable{"data-sort" => "string"}= course.team_leader_term
+      %th Last Login
   %tbody
     - students.each do |student|
       %tr
@@ -31,3 +32,4 @@
           %td
             - if student.team_for_course(course) && student.team_for_course(course).team_leader.present?
               = mail_to student.team_for_course(course).team_leader.email, "Email #{student.team_for_course(course).team_leader.first_name}", :class => "button tiny radius secondary"
+        %td= student.try(:last_activity_at) || "(never)"

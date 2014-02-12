@@ -44,13 +44,13 @@ class SubmissionsController < ApplicationController
     session[:return_to] = request.referer
     @assignment = current_course.assignments.find(params[:assignment_id])
     @submission = current_course.submissions.find(params[:id])
-    @student = current_student
+    @student = @submission.student
     if current_user.is_staff?
       if @assignment.has_groups?
         @group = current_course.groups.find(params[:group_id])
-        @title = "Editing #{@group.name}'s Submission for #{@assignment.name}"
+        @title = "Editing #{@group.name}'s Submission "
       else
-        @title = "Editing #{@student.name}'s Submission for #{@assignment.name}"
+        @title = "Editing #{@submission.student.name}'s Submission"
       end
     end
     if current_user.is_student?
