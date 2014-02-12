@@ -2,15 +2,6 @@
   width: 20rem;
 }
 
-h6.small {
-  line-height: 130%;
-  color: #666;
-  clear: both;
-  margin-left: 0;
-  margin-top: 0;
-  padding-top: 0;
-}
-
 form {
   margin: 0;
 
@@ -19,74 +10,15 @@ form {
   }
 }
 
-label.checkbox input, label.checkbox, label.radio, label.radio input {
-  margin-right: 10px;
-  clear: both;
-}
-
-
 label {
   display: inline-block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.radio label,
-.checkbox label {
-  display: inline;
-  margin-bottom: 0;
-  font-weight: normal;
-  cursor: pointer;
-}
-
-.radio input[type="radio"],
-.radio-inline input[type="radio"],
-.checkbox input[type="checkbox"],
-.checkbox-inline input[type="checkbox"] {
-  float: left;
-  margin-left: 0px;
-}
-
-
-#massGrade .inline-list {
-  margin-bottom: 0;
-
-    label {
-      margin-bottom: 0;
-    }
-
-}
-
-#massGrade .inline-list label {
-  font-weight: normal;
-  float: left;
-  margin: 0;
-}
-
-#massGrade .inline-list input {
-margin-left: 10px;
-float: left;
-}
-
-label {
-  font-weight: bold;
-}
-
 label, input {
   padding-bottom: 0;
 }
-
-input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], select, .checkbox-inline input[type="checkbox"], input[type="text"] {
-  margin-bottom: 0.5rem;
-}
-
-select, input[type="text"] {
-}
-
-
-label.checkbox, label.radio  {
-    font-weight: normal;
-  }
 
   /** Login Forms  **/
 
@@ -134,7 +66,6 @@ label.checkbox, label.radio  {
   margin-bottom: 5px;
   vertical-align: middle;
 }
-
 .radio label,
 .checkbox label {
   display: inline;
@@ -143,6 +74,12 @@ label.checkbox, label.radio  {
   cursor: pointer;
 }
 
+label.checkbox input, label.checkbox, label.radio, label.radio input {
+  margin-right: 10px;
+  clear: both;
+}
+
+
 .radio input[type="radio"],
 .radio-inline input[type="radio"],
 .checkbox input[type="checkbox"],
@@ -150,6 +87,11 @@ label.checkbox, label.radio  {
   float: left;
   margin-left: 0px;
 }
+
+input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], select, .checkbox-inline input[type="checkbox"], input[type="text"] {
+  margin-bottom: 0.5rem;
+}
+
 
 select {
   background-color: #F0F8FF !important;

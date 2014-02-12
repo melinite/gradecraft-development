@@ -40,7 +40,6 @@
 //= require timelineJS/embed
 //= require timeline
 //= require earned_badges
-//= require per-assign
 //= require datetimepicker
 //= require highcharts
 //= require select2
@@ -51,6 +50,7 @@
 //= require jquery.collapse
 //= require jquery.collapse_storage
 //= require jquery.collapse_cookie_storage
+//= require per-assign
 
 $(function(){ $(document).foundation(); });
 

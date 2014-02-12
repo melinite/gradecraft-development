@@ -4,7 +4,7 @@
   - else
     %span.bold
       = " #{@grade.student.try(:name)}'s Results "
-    %span= link_to "[Edit Grade]", edit_assignment_grade_path(@assignment, :student_id => @grade.student.id)
+    %span= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => @grade.student.id), :class => 'button tiny secondary radius'
   - if @grade.raw_score?
     %h6
       %span Score:

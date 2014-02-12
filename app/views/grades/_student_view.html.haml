@@ -2,10 +2,7 @@
   / Criteria Levels Navigation
   .show-for-medium-up
     = content_nav_for @assignment do
-      - if current_user.is_student?
-        = render "students/student_profile_tabs"
-      - else
-        = render "students/tabs"
+      = render "students/student_profile_tabs"
 
   .hide-for-medium-up{:style => "padding: 10px"}
     = mobile_nav_for @assignment
@@ -16,10 +13,7 @@
       %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
         Select
       %ul#drop.f-dropdown
-        - if current_user.is_student?
-          = render "students/student_profile_tabs"
-        - else
-          = render "students/tabs"
+        = render "students/student_profile_tabs"
 
     %h3= @assignment.name
 

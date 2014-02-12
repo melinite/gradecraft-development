@@ -11,7 +11,7 @@
       = link_to image_tag(asset_path('pie.png'), :width => 80), "#levels"
 
   .tabs-content
-    .content.small-12#boxplot
+    .content.small-12#boxplot.active
       .chartcontainer
         %div{:class => "grades_per_assign", :data => { :id => @grade.assignment.id.to_s } }
 
