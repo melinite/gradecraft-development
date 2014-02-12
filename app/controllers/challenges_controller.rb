@@ -28,6 +28,7 @@ class ChallengesController < ApplicationController
 
     respond_to do |format|
       if @challenge.save
+        self.check_uploads
         format.html { redirect_to @challenge, notice: 'Challenge was successfully created.' }
         format.json { render json: @challenge, status: :created, location: @challenge }
       else
@@ -42,6 +43,7 @@ class ChallengesController < ApplicationController
 
     respond_to do |format|
       if @challenge.update_attributes(params[:challenge])
+        self.check_uploads
         format.html { redirect_to @challenge, notice: 'Challenge was successfully updated.' }
         format.json { head :ok }
       else
@@ -58,6 +60,13 @@ class ChallengesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to challenges_path }
       format.json { head :ok }
+    end
+  end
+
+  def check_uploads
+    if params[:challenge][:challenge_files_attributes]["0"][:filepath].empty?
+      params[:challenge].delete(:challenge_files_attributes)
+      @challenge.challenge_files.destroy_all
     end
   end
 
