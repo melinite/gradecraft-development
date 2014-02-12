@@ -38,7 +38,7 @@
               %td.right
                 = f.simple_fields_for :earned_badges, eb do |ebf|
                   = ebf.hidden_field :student_id
-                  //= ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
+                  = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
                   = ebf.check_box :score, {}, @badge.point_total
         .right
           .button-bar
