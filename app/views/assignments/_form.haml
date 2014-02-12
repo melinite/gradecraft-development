@@ -173,7 +173,7 @@
             = f.simple_fields_for :assignment_score_levels, assignment_score_level, class: 'form-inline' do |slf|
               = render 'assignment_score_level_fields', f: slf
       %hr
-      = link_to 'Add a Level', '#', class: 'add-assignment-score-level'
+      = link_to 'Add a Level', '#', class: 'add-assignment-score-level button tiny'
 
     .right
       = f.button :submit, "#{@assignment.persisted? ? 'Update' : 'Create'} #{term_for :assignment}", :class => "button radius tiny"

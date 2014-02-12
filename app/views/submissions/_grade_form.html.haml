@@ -1,4 +1,4 @@
-= simple_form_for([@assignment, @grade], :html => {:class => 'form-horizontal' }) do |f|
+= simple_form_for([@assignment, @grade]) do |f|
   .control-group
   - if @assignment.has_levels?
     = f.input :raw_score, :collection => @score_levels.map { |l| [l.name,l.value] }, :as => :select

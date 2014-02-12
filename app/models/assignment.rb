@@ -43,8 +43,9 @@ class Assignment < ActiveRecord::Base
 
   before_save :clean_html
   before_validation :cache_associations, :cache_point_total
-  after_save :save_grades, :save_weights
-
+  
+  # Longterm we may want to do more to resave grades if an assignment score total changed
+  after_save :save_weights
 
   validates_presence_of :name
 
@@ -276,13 +277,6 @@ class Assignment < ActiveRecord::Base
 
   def cache_associations
     self.course_id ||= assignment_type.try(:course_id)
-  end
-
-  # Checking to see if the assignment point total has altered, and if it has resaving grades
-  def save_grades
-    if self.point_total_changed?
-      grades.reload.each(&:save)
-    end
   end
 
   # Checking to see if the assignment point total has altered, and if it has resaving weights

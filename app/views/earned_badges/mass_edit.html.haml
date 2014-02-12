@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Earned Badges Navigation
   .show-for-medium-up
-    = content_nav_for @badge, "Quick Award #{term_for :badges}" do
+    = content_nav_for @badge, @title do
       = render "badges/tabs"
 
   .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @badge, "Quick Award #{term_for :badges}" 
+    = mobile_nav_for @badge, @title 
 
   .small-12.columns
     .hide-for-medium-up
@@ -22,22 +22,28 @@
           = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
     #massGrade
-      = simple_form_for @badge, method: :put, :html => {:class => 'form-horizontal mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|
-        .button-bar
-          %ul.button-group.round.right
-            %li.select-all.button.tiny= "Check All"
-            %li.select-none.button.tiny.success= "Uncheck"
+      = simple_form_for @badge, method: :put, :html => {:class => 'mass-edit-earned-badges' }, :url => mass_award_badge_path(@badge) do |f|
         %table.responsive
+          %thead
+            %tr
+              %th
+              %th
+                .button-bar
+                  %ul.button-group.round.right
+                    %li.select-all.button.tiny= "Check All"
+                    %li.select-none.button.tiny.success= "Uncheck"
           - @earned_badges.each_with_index do |eb, i|
             %tr
               %td= link_to eb.student.name, student_path(eb.student)
-              %td
+              %td.right
                 = f.simple_fields_for :earned_badges, eb do |ebf|
                   = ebf.hidden_field :student_id
-                  = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
+                  //= ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
                   = ebf.check_box :score, {}, @badge.point_total
         .right
-          = f.button :submit, "Award", :class => "button tiny round"
-          = link_to 'Cancel', badges_path, :class => 'button tiny round'
+          .button-bar
+            %ul.button-group.round.right
+              %li= f.button :submit, "Award", :class => "button tiny"
+              %li= link_to 'Cancel', badges_path, :class => 'button tiny'
 
   .clearfix

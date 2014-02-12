@@ -18,12 +18,12 @@
 
     .assignmentDescription
       - if @assignment.open_at?
-        .small-12.large-4.columns.panel
+        .small-12.medium-4.columns.panel
           .bold Open date:
           = @assignment.open_at
 
       - if @assignment.due_at?
-        .small-12.large-4.columns.panel
+        .small-12.medium-4.columns.panel
           .bold Due date:
           = @assignment.due_at
 

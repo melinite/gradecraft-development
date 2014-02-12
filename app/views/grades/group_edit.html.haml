@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Grades Navigation
   .show-for-medium-up
-    = content_nav_for @assignment, "Group Grade" do
+    = content_nav_for @assignment, @title do
       = render "assignments/tabs"
       
   .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @assignment, "Group Grade"
+    = mobile_nav_for @assignment, @title
 
   .small-12.columns    
     .hide-for-medium-up
@@ -16,7 +16,7 @@
 
     %h2= @title
     .heading= "Grading out of: #{points @assignment.point_total} points"
-    = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => group_grade_assignment_path(@assignment) do |f|
+    = simple_form_for @assignment, method: :put, :url => group_grade_assignment_path(@assignment) do |f|
 
       #massGrade
         %table

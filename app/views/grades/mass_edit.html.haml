@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Grades Navigation
   .show-for-medium-up
-    = content_nav_for @assignment, "Quick Grade" do
+    = content_nav_for @assignment, @title do
       = render "assignments/tabs"
 
   .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @assignment, "Quick Grade"
+    = mobile_nav_for @assignment, @title
 
   .small-12.medium-8.columns
 
@@ -18,11 +18,12 @@
     %h2= @title
 
   .small-12.medium-4.columns.right
-    .hide-for-large-up
+    .hide-for-medium-up
       %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
         Options
       %ul#drop.f-dropdown
         = render "assignments/tabs"
+    
     - if current_course.has_teams? && @assignment.is_individual?
       = form_tag mass_grade_assignment_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
         = hidden_field_tag :assignment_id, @assignment.id
@@ -32,19 +33,25 @@
 
   .small-12.columns
     #massGrade
-      = simple_form_for @assignment, method: :put, :html => {:class => 'form-horizontal' }, :url => mass_grade_assignment_path(@assignment) do |f|
+      = simple_form_for @assignment, method: :put, :url => mass_grade_assignment_path(@assignment) do |f|
         - if @team.present?
           = hidden_field_tag :team_id, @team.id
-        - if @assignment.grade_checkboxes?
-          .btn-group
-            %button.select-all.btn.btn-tiny.btn-success.btn-info= "Check All"
-            %button.select-none.btn.btn-tiny.btn-success.btn-info= "Uncheck"
+        
 
         %table.responsive
+          - if @assignment.grade_checkboxes?
+            %thead
+              %tr
+                %th
+                %th
+                  .button-bar
+                    %ul.button-group.round.right
+                      %li.select-all.button.tiny= "Check All"
+                      %li.select-none.button.tiny.success= "Uncheck"
           - @grades.each_with_index do |grade, i|
             %tr
               %td= link_to grade.student.name, student_path(grade.student)
-              %td
+              %td.right
                 = f.simple_fields_for :grades, grade do |gf|
                   = gf.hidden_field :graded_by_id
                   - if !grade.status
@@ -83,7 +90,9 @@
                           = gf.label :raw_score, "/ #{points @assignment.point_total}"
 
         .right
-          = f.button :submit, "Submit Grades", :class => "button tiny radius"
-          = link_to 'Cancel', assignments_path, :class => 'button tiny radius'
+          .button-bar
+            %ul.button-group.round.right
+              %li= f.button :submit, "Submit Grades", :class => "button tiny radius"
+              %li= link_to 'Cancel', assignments_path, :class => 'button tiny radius'
 
   .clearfix
