@@ -8,27 +8,27 @@ class StudentAcademicHistoriesController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @academic_history = @user.student_academic_history
+    @student = current_course.users.students.find(params[:id])
+    @academic_history = @student.student_academic_history
   end
 
   def new
-    @user = User.find(params[:id])
-    @academic_history = @user.student_academic_history.new
+    @student = current_course.users.students.find(params[:id])
+    @academic_history = @student.student_academic_history.new
   end
 
   def create
-    @user = User.find(params[:id])
-    @academic_history = @user.student_academic_history.build
+    @student = current_course.users.students.find(params[:id])
+    @academic_history = @student.student_academic_history.build
   end
 
   def edit
-    @user = User.find(params[:id])
-    @students = @users.students
+    @student = current_course.users.students.find(params[:id])
+    @academic_history = @student.student_academic_history
   end
 
   def update
-    @user = User.find(params[:id])
+    @student = current_course.users.students.find(params[:id])
     @academic_history.update_attributes(params[:academic_history])
   end
 

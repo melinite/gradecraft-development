@@ -32,7 +32,7 @@ class BadgesController < ApplicationController
     respond_to do |format|
       self.check_uploads
       if @badge.save
-        format.html { redirect_to @badge, notice: 'Badge was successfully created.' }
+        format.html { redirect_to @badge }
         format.json { render json: @badge, status: :created, location: @badge }
       else
         format.html { render action: "new" }
@@ -54,7 +54,7 @@ class BadgesController < ApplicationController
     respond_to do |format|
       self.check_uploads
       if @badge.update_attributes(params[:badge])
-        format.html { redirect_to @badge, notice: 'Badge was successfully updated.' }
+        format.html { redirect_to @badge }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -68,7 +68,7 @@ class BadgesController < ApplicationController
     @badge.destroy
 
     respond_to do |format|
-      format.html { redirect_to badges_path, notice: "#{ @badge.name} successfully deleted."  }
+      format.html { redirect_to badges_path }
       format.json { head :ok }
     end
   end

@@ -55,7 +55,7 @@ class AssignmentsController < ApplicationController
       @assignment.assignment_type = current_course.assignment_types.find_by_id(params[:assignment_type_id])
       if @assignment.save
         set_assignment_weights
-        format.html { respond_with @assignment, :notice => 'Assignment was successfully created.' }
+        format.html { respond_with @assignment }
       else
         respond_with @assignment
       end
@@ -78,7 +78,7 @@ class AssignmentsController < ApplicationController
       if @assignment.save
         format.html { respond_with @assignment }
       else
-        format.html { redirect_to edit_assignment_path(@assignment), notice: "#{@assignment.name} was not successfully updated! Please try again." }
+        format.html { redirect_to edit_assignment_path(@assignment) }
         format.json { render json: @assignment.errors, status: :unprocessable_entity }
       end
     end
