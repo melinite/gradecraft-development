@@ -9,8 +9,16 @@ class CourseEventExport
               :action => :page_name,
               :date_time => :created_at
 
+  def initialize(loaded_data)
+    @usernames = loaded_data[:users].inject({}) do |hash, user|
+      hash[user.id] = user.username
+      hash
+    end
+    super
+  end
+
   def username(event, index)
-    data[:users].detect{ |u| u.id == event.user_id }.try(:username) || "[user id: #{event.user_id}]"
+    @usernames[event.user_id] || "[user id: #{event.user_id}]"
   end
 
   def page(event, index)

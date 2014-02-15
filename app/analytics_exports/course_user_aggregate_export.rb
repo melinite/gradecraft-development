@@ -9,25 +9,39 @@ class CourseUserAggregateExport
              :total_predictor_events => :predictor_events,
              :total_predictor_sessions => :predictor_sessions
 
+  def initialize(loaded_data)
+    @user_predictor_event_counts = loaded_data[:predictor_events].inject(Hash.new(0)) do |hash, predictor_event|
+      hash[predictor_event.user_id] += 1
+      hash
+    end
+    @user_pageviews = loaded_data[:user_pageviews].inject(Hash.new(0)) do |hash, pageview|
+      hash[pageview.user_id] = pageview.pages["_all"]["all_time"]
+      hash
+    end
+    @user_logins = loaded_data[:user_logins].inject(Hash.new(0)) do |hash, login|
+      hash[login.user_id] = login["all_time"]["count"]
+      hash
+    end
+    @user_predictor_sessions = loaded_data[:user_predictor_pageviews].inject(Hash.new(0)) do |hash, predictor_pageview|
+      hash[predictor_pageview.user_id] = predictor_pageview["all_time"]
+      hash
+    end
+    super
+  end
+
   def pageviews(user, i)
-    user_pageview = data[:user_pageviews].detect { |up| up.user_id == user.id }
-    user_pageview.nil? ? 0 : user_pageview.pages["_all"]["all_time"]
+    @user_pageviews[user.id]
   end
 
   def logins(user, i)
-    user_login = data[:user_logins].detect { |ul| ul.user_id == user.id }
-    user_login.nil? ? 0 : user_login["all_time"]["count"]
+    @user_logins[user.id]
   end
 
   def predictor_events(user, i)
-    data[:events].count { |event|
-      event.user_id == user.id && event.event_type == "predictor"
-    }
+    @user_predictor_event_counts[user.id]
   end
 
   def predictor_sessions(user, i)
-    data[:user_page_pageviews].detect { |upp|
-      upp.user_id == user.id && upp.page == "/dashboard#predictor"
-    }.all_time || 0
+    @user_predictor_sessions[user.id]
   end
 end
