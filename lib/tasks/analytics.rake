@@ -140,34 +140,89 @@ namespace :analytics do
     end
   end
 
-  desc "Export course events"
-  task :export_courses => [:environment] do
-    course_ids = Analytics::Event.distinct(:course_id)
-    export_dir = ENV['EXPORT_DIR']
-    course_ids.each do |id|
-      puts "Exporting for course: #{id}"
+  namespace :export do
+    namespace :courses do
+      desc "Export all course analytics data as JSON"
+      task :raw => [:environment] do
+        export_dir = ENV['EXPORT_DIR']
+        course_ids.each do |id|
+          puts "Exporting for course: #{id}"
 
-      #puts "Generating JSON export files"
-      #%w(analytics_events course_events course_role_events course_predictions course_user_events course_pageviews course_user_pageviews course_user_page_pageviews course_pageview_by_times course_page_pageviews course_role_pageviews course_role_page_pageviews course_logins course_role_logins course_user_logins).each do |aggregate|
-        #`mongoexport --db grade_craft_development --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "json", "#{aggregate}.json")}`
-      #end
+          puts "Generating JSON export files"
+          %w(analytics_events course_events course_role_events course_predictions course_user_events course_pageviews course_user_pageviews course_user_page_pageviews course_pageview_by_times course_page_pageviews course_role_pageviews course_role_page_pageviews course_logins course_role_logins course_user_logins).each do |aggregate|
+            `mongoexport --db grade_craft_development --collection #{aggregate} --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "json", "#{aggregate}.json")}`
+          end
+        end
 
-      puts "Generating CSV reports"
-      # course user pageviews
-      `mongoexport --db grade_craft_development --fields user_id,pages._all.all_time --collection course_user_pageviews --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_pageviews_total.csv")} --csv`
-      # course user logins
-      `mongoexport --db grade_craft_development --fields user_id,all_time.count --collection course_user_logins --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_logins_total.csv")} --csv`
-      # course user predictor events
-      `mongoexport --db grade_craft_development --fields user_id,events.predictor.all_time --collection course_user_events --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_events_total.csv")} --csv`
-      # course user predictor pageviews
-      `mongoexport --db grade_craft_development --fields "user_id,all_time" --collection course_user_page_pageviews --query '{"course_id": #{id}, "page": "/dashboard#predictor"}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_pageviews_total.csv")} --csv`
-      # user predictor events with role, assignment, prediction score, and datetime
-      `mongoexport --db grade_craft_development --fields user_id,user_role,assignment_id,score,possible,created_at --collection analytics_events --query '{"course_id": #{id}, "event_type": "predictor"}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_events.csv")} --csv`
-      # user event with page, event, and datetime
-      `mongoexport --db grade_craft_development --fields user_id,user_role,event_type,page,created_at --collection analytics_events --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_events.csv")} --csv`
+        puts "Done!"
+      end
+
+      desc "Export filtered course analytics data as CSV"
+      task :csv => [:environment] do
+        export_dir = ENV['EXPORT_DIR']
+        course_ids.each do |id|
+          puts "Exporting for course: #{id}"
+
+          # NOTE: These could be refactored into a reusable method to generate the mongoexport,
+          # but it's easier to read and see what commands they're running by just having them typed out.
+          puts "Generating CSV reports"
+          # course user pageviews
+          `mongoexport --db grade_craft_development --fields user_id,pages._all.all_time --collection course_user_pageviews --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_pageviews_total.csv")} --csv`
+          # course user logins
+          `mongoexport --db grade_craft_development --fields user_id,all_time.count --collection course_user_logins --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_logins_total.csv")} --csv`
+          # course user predictor events
+          `mongoexport --db grade_craft_development --fields user_id,events.predictor.all_time --collection course_user_events --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_events_total.csv")} --csv`
+          # course user predictor pageviews
+          `mongoexport --db grade_craft_development --fields "user_id,all_time" --collection course_user_page_pageviews --query '{"course_id": #{id}, "page": "/dashboard#predictor"}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_pageviews_total.csv")} --csv`
+          # user predictor events with role, assignment, prediction score, and datetime
+          `mongoexport --db grade_craft_development --fields user_id,user_role,assignment_id,score,possible,created_at --collection analytics_events --query '{"course_id": #{id}, "event_type": "predictor"}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_predictor_events.csv")} --csv`
+          # user event with page, event, and datetime
+          `mongoexport --db grade_craft_development --fields user_id,user_role,event_type,page,created_at --collection analytics_events --query '{"course_id": #{id}}' --out #{File.join(export_dir, id.to_s, "csv", "course_user_events.csv")} --csv`
+        end
+
+        puts "Done!"
+      end
+
+      desc "Export analyzed course analytics data as CSV"
+      task :csv_analyzed => [:environment] do
+        export_dir = ENV['EXPORT_DIR'] || raise("No export directory provided. Prepend \"EXPORT_DIR=/path/to/exports\" to rake command.")
+        course_ids.each do |id|
+          course_export_dir = File.join(export_dir, id.to_s, "csv_analyzed")
+
+          puts "Exporting for course: #{id}"
+          puts "Gathering data (this may take a minute)..."
+
+          events = Analytics::Event.where(:course_id => id)
+          user_pageviews = CourseUserPageview.where(:course_id => id)
+          user_page_pageviews = CourseUserPagePageview.where(:course_id => id)
+          user_logins = CourseUserLogin.where(:course_id => id)
+
+          user_ids = events.collect(&:user_id).compact.uniq
+          assignment_ids = events.select { |event| event.respond_to? :assignment_id }.collect(&:assignment_id).compact.uniq
+
+          users = User.where(:id => user_ids).select(:id, :username)
+          assignments = Assignment.where(:id => assignment_ids).select(:id, :name)
+
+          data = {
+            :events => events,
+            :user_pageviews => user_pageviews,
+            :user_page_pageviews => user_page_pageviews,
+            :user_logins => user_logins,
+            :users => users,
+            :assignments => assignments
+          }
+
+          Analytics.configuration.exports[:course].each do |export|
+            puts "Generating report: #{export}"
+            export.new(data).generate_csv(course_export_dir)
+          end
+        end
+      end
+
+      def course_ids
+        @course_ids ||= Analytics::Event.distinct(:course_id)
+      end
     end
-
-    puts "Done!"
   end
 
   def convert(value)
