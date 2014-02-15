@@ -10,11 +10,13 @@ class CourseUserAggregateExport
              :total_predictor_sessions => :predictor_sessions
 
   def pageviews(user, i)
-    data[:user_pageviews].detect { |up| up.user_id == user.id }.pages._all.all_time
+    user_pageview = data[:user_pageviews].detect { |up| up.user_id == user.id }
+    user_pageview.nil? ? 0 : user_pageview.pages["_all"]["all_time"]
   end
 
   def logins(user, i)
-    data[:user_logins].detect { |ul| ul.user_id == user.id }.all_time.count
+    user_login = data[:user_logins].detect { |ul| ul.user_id == user.id }
+    user_login.nil? ? 0 : user_login["all_time"]["count"]
   end
 
   def predictor_events(user, i)
@@ -26,6 +28,6 @@ class CourseUserAggregateExport
   def predictor_sessions(user, i)
     data[:user_page_pageviews].detect { |upp|
       upp.user_id == user.id && upp.page == "/dashboard#predictor"
-    }.all_time
+    }.all_time || 0
   end
 end
