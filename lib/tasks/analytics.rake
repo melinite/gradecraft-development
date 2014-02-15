@@ -193,9 +193,9 @@ namespace :analytics do
           puts "Gathering data (this may take a minute)..."
 
           events = Analytics::Event.where(:course_id => id)
-          user_pageviews = CourseUserPageview.where(:course_id => id)
-          user_page_pageviews = CourseUserPagePageview.where(:course_id => id)
-          user_logins = CourseUserLogin.where(:course_id => id)
+          user_pageviews = CourseUserPageview.data(:all_time, nil, {:course_id => id}, {:page => "_all"})
+          user_page_pageviews = CourseUserPagePageview.data(:all_time, nil, {:course_id => id, :page => "/dashboard#predictor"})
+          user_logins = CourseUserLogin.data(:all_time, nil, {:course_id => id})
 
           user_ids = events.collect(&:user_id).compact.uniq
           assignment_ids = events.select { |event| event.respond_to? :assignment_id }.collect(&:assignment_id).compact.uniq
@@ -205,9 +205,9 @@ namespace :analytics do
 
           data = {
             :events => events,
-            :user_pageviews => user_pageviews,
-            :user_page_pageviews => user_page_pageviews,
-            :user_logins => user_logins,
+            :user_pageviews => user_pageviews[:results],
+            :user_page_pageviews => user_page_pageviews[:results],
+            :user_logins => user_logins[:results],
             :users => users,
             :assignments => assignments
           }
