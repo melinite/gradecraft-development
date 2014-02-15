@@ -186,39 +186,42 @@ namespace :analytics do
       desc "Export analyzed course analytics data as CSV"
       task :csv_analyzed => [:environment] do
         export_dir = ENV['EXPORT_DIR'] || raise("No export directory provided. Prepend \"EXPORT_DIR=/path/to/exports\" to rake command.")
-        course_ids.each do |id|
-          course_export_dir = File.join(export_dir, id.to_s, "csv_analyzed")
+        elapsed = Benchmark.realtime do
+          course_ids.each do |id|
+            course_export_dir = File.join(export_dir, id.to_s, "csv_analyzed")
 
-          puts "Exporting for course: #{id}"
-          puts "Gathering data (this may take a minute)..."
+            puts "Exporting for course: #{id}"
+            puts "Gathering data (this may take a minute)..."
 
-          events = Analytics::Event.where(:course_id => id)
-          predictor_events = Analytics::Event.where(:course_id => id, :event_type => "predictor")
-          user_pageviews = CourseUserPageview.data(:all_time, nil, {:course_id => id}, {:page => "_all"})
-          user_predictor_pageviews = CourseUserPagePageview.data(:all_time, nil, {:course_id => id, :page => "/dashboard#predictor"})
-          user_logins = CourseUserLogin.data(:all_time, nil, {:course_id => id})
+            events = Analytics::Event.where(:course_id => id)
+            predictor_events = Analytics::Event.where(:course_id => id, :event_type => "predictor")
+            user_pageviews = CourseUserPageview.data(:all_time, nil, {:course_id => id}, {:page => "_all"})
+            user_predictor_pageviews = CourseUserPagePageview.data(:all_time, nil, {:course_id => id, :page => "/dashboard#predictor"})
+            user_logins = CourseUserLogin.data(:all_time, nil, {:course_id => id})
 
-          user_ids = events.collect(&:user_id).compact.uniq
-          assignment_ids = events.select { |event| event.respond_to? :assignment_id }.collect(&:assignment_id).compact.uniq
+            user_ids = events.collect(&:user_id).compact.uniq
+            assignment_ids = events.select { |event| event.respond_to? :assignment_id }.collect(&:assignment_id).compact.uniq
 
-          users = User.where(:id => user_ids).select(:id, :username)
-          assignments = Assignment.where(:id => assignment_ids).select(:id, :name)
+            users = User.where(:id => user_ids).select(:id, :username)
+            assignments = Assignment.where(:id => assignment_ids).select(:id, :name)
 
-          data = {
-            :events => events,
-            :predictor_events => predictor_events,
-            :user_pageviews => user_pageviews[:results],
-            :user_predictor_pageviews => user_predictor_pageviews[:results],
-            :user_logins => user_logins[:results],
-            :users => users,
-            :assignments => assignments
-          }
+            data = {
+              :events => events,
+              :predictor_events => predictor_events,
+              :user_pageviews => user_pageviews[:results],
+              :user_predictor_pageviews => user_predictor_pageviews[:results],
+              :user_logins => user_logins[:results],
+              :users => users,
+              :assignments => assignments
+            }
 
-          Analytics.configuration.exports[:course].each do |export|
-            puts "Generating report: #{export}"
-            export.new(data).generate_csv(course_export_dir)
+            Analytics.configuration.exports[:course].each do |export|
+              puts "Generating report: #{export}"
+              export.new(data).generate_csv(course_export_dir)
+            end
           end
         end
+        puts "Done! Total elapsed time: #{elapsed} seconds"
       end
 
       def course_ids
