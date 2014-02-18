@@ -121,12 +121,23 @@ body.logged-in, body.logged-out {
   color: #FFF;
 }
 
+i.fi-male.present {
+  font-size: 150%;
+  color: $lightblue;
+}
+
+i.fi-male.absent {
+  font-size: 150%;
+  text-shadow: 1px 1px $blue;
+  color: white;
+}
+
 #attachments {
   clear: both;
   margin: 2rem 0 1.5rem;
-  background-color: #eee;
+  background-color: white;
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid $blue;
 }
 
 .sideBar.panel {
@@ -168,4 +179,3 @@ body.logged-in, body.logged-out {
     padding: 0;
   }
 }
-
