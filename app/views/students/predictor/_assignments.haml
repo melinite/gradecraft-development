@@ -35,7 +35,8 @@
                 .slider{:id => "slider-#{assignment.id}", :class => "small-5 right", :max => current_student_data.point_total_for_assignment(assignment), :value => "#{current_student_data.grade_for_assignment(assignment).predicted_score}", :'data-scorelevelvals' => "#{assignment_type.score_levels.map(&:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map(&:name)}", :'data-highlight' => "true"}
               - elsif assignment_type.select?
                 = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-                = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+                .small-5.right= select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+                .clearfix
               - elsif assignment_type.per_assignment?
                 - if assignment.fixed?
                   = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
@@ -46,5 +47,5 @@
                   .slider{:id => "slider-#{assignment.id}", :class => "small-5 right", :max => current_student_data.point_total_for_assignment(assignment) , :value => "#{current_student_data.grade_for_assignment(assignment).predicted_score}", :'data-scorelevelvals' => "#{assignment_type.score_levels.map(&:value)}", :'data-scorelevelnames' => "#{assignment_type.score_levels.map(&:name)}", :'data-highlight' => "true"}
                 - elsif assignment.select?
                   = "#{points current_student_data.point_total_for_assignment(assignment)} possible points"
-                  = select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
+                  .small-5.right= select_tag assignment.name, options_from_collection_for_select(assignment_type.score_levels,'value','name', current_student_data.grade_for_assignment(assignment).predicted_score), :class => 'point-value', :id => "total-#{assignment.id}", :include_blank => true
       %hr
