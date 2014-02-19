@@ -6,7 +6,6 @@
  *= require jquery.dynatable
  *= require responsive-tables
  *= require bootstrap-datetimepicker
- *= require bootsy
  *= require select2
  *= require foundation-icons
  *= require bootstrap
@@ -42,6 +41,7 @@ $success-color: #67CF30;
 @import 'breadcrumbs';
 @import 'navigation';
 @import 'videos';
+@import 'bootsy';
 
 /* Background image for site, this is declared because otherwise it overrides the text editor's bkg */
 body.logged-in, body.logged-out {
