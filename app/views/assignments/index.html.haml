@@ -20,7 +20,7 @@
                 %thead
                   %tr
                     %th.sortable{"data-sort" => "string"} Name
-                    - if assignment_type.name == "Attendance"
+                    - if assignment_type.name == "Class Attendance"
                       %th Attendance Rate
                     %th.sortable{"data-sort" => "date"} Due
                     %th.sortable{"data-sort" => "int"} Points
@@ -30,7 +30,7 @@
                     %tr
                       %td= link_to assignment.name, assignment
                       // If an attendance assignment has past, display visual of attendance percentage. Otherwise display empty space.
-                      - if assignment.assignment_type.name == "Attendance"
+                      - if assignment.assignment_type.name == "Class Attendance"
                         %td
                           - if assignment.past?
                             // Display 10 icons to show attendance percentage by percents of 10.
