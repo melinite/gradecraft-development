@@ -14,6 +14,7 @@ module GradeCraft
     config.time_zone = 'America/Detroit'
     config.autoload_paths += %W(#{Rails.root}/lib)
     config.assets.precompile += %w(.svg .eot .otf .woff .ttf)
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.filter_parameters += [:password]
     config.active_record.schema_format = :sql
     config.i18n.enforce_available_locales = true
