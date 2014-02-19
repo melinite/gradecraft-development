@@ -24,4 +24,12 @@ Analytics.configure do |config|
       CourseUserLogin
     ]
   }
+
+  config.exports = {
+    course: [
+      CourseEventExport,
+      CoursePredictorExport,
+      CourseUserAggregateExport
+    ]
+  }
 end

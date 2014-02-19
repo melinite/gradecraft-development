@@ -13,6 +13,11 @@ class CourseUserLogin
   ## No 'all_time' key since frequency for all-time would be 0
   # course_id: 1,
   # user_id: 1,
+  # all_time: {
+  #   total: %,
+  #   count: %,
+  #   average: %%
+  # },
   # yearly: {
   #   key: {
   #     total: %,
