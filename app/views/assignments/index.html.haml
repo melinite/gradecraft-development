@@ -39,14 +39,15 @@
                     %tr
                       %td= link_to assignment.name, assignment
                       // If an attendance assignment has past, display visual of attendance percentage. Otherwise display empty space.
-                      %td
-                        - if assignment.assignment_type.name == "Attendance" && assignment.past?
-                          // Display 10 icons to show attendance percentage by percents of 10.
-                          - for num in 1..10
-                            - if num <= ((assignment.attendance_rate_int(current_course) / 10).round)
-                              %i.fi-male.present
-                            - else
-                              %i.fi-male.absent
+                      - if assignment.assignment_type.name == "Attendance"
+                        %td
+                          - if assignment.past?
+                            // Display 10 icons to show attendance percentage by percents of 10.
+                            - for num in 1..10
+                              - if num <= ((assignment.attendance_rate_int(current_course) / 10).round)
+                                %i.fi-male.present
+                              - else
+                                %i.fi-male.absent
                       %td= assignment.try(:due_at) || "Ongoing"
                       %td= points assignment.point_total
                       %td
