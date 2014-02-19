@@ -91,7 +91,7 @@ img.earned {
 
 /* This colors the row in the grading philosophy the student has earned */
 tr.achieved {
-  background-color: $success-color;
+  background-color: $success-color !important;
   
   td {
     color: #FFF;
