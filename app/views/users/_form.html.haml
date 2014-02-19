@@ -49,7 +49,7 @@
             = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select #{term_for :team}"
       - elsif current_course.has_teams? && @user.is_staff?
         .small-12.medium-4.columns
-          = f.input :course_team_ids, :collection => @teams, :as => :check_boxes, :label => "Select #{term_for :teams}"
+          = f.input :course_team_ids, :collection => @teams, :as => :check_boxes, :label => "Select #{term_for :teams}", :checked => @user.team_for_course(current_course).try(:id)
 
       - if current_user.is_admin?
         .small-12.medium-4.columns

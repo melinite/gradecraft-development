@@ -1,18 +1,18 @@
 %dl.tabs{:data => {'tab' => true}}
   %dd.active
     %a{ "href" => "#tabkerb" } UM Login
-  %dd
+  %dd.tabgc
     %a{ "href" => "#tabgc"} GradeCraft Login
 .tabs-content
   .content.small-12#tabkerb.active
     .kerberos-auth
       = form_for User.new, :url => auth_kerberos_callback_path do |f|
         = text_field_tag :username, nil, placeholder: 'Uniqname', :autocorrect => "off", :autocapitalize => "off"
-        = password_field_tag :password, nil, placeholder: 'Password', :autocorrect => "off", :autocapitalize => "off"
+        = password_field_tag :password, nil, placeholder: 'Password'
         .right= f.submit 'Log in', class: 'button tiny radius', alt: 'Log in'
   .content.small-12#tabgc
     .gradegraft-auth
       = form_for User.new, :url => user_sessions_path do |f|
-        = f.text_field :email, placeholder: "Email"
+        = f.text_field :email, placeholder: "Email", :autocorrect => "off", :autocapitalize => "off"
         = f.password_field :password, placeholder: 'Password'
         .right= f.submit "Log in", class: 'button tiny radius', alt: "Log in"

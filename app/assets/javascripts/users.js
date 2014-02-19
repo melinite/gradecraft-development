@@ -1,4 +1,3 @@
-/*
 !function(app, $) {
   $(document).ready(function() {
     var users = app.preloadStore.get('users');
@@ -20,9 +19,8 @@
       }
     }).on('omniselect:select', function(event, id) {
       $(event.target).val();
-      window.location = '/students/' + id;
+      window.location = '/users/' + id;
       return false;
     });
   });
 }(Gradecraft, jQuery);
-*/

@@ -1,42 +1,31 @@
-ENV["RAILS_ENV"] = 'test'
-require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
+ENV["RAILS_ENV"] = "test"
+require File.expand_path("../../config/environment", __FILE__)
+require "rails/test_help"
+require "minitest/rails"
 
-require 'minitest/autorun'
-require 'minitest/rails'
+# To add Capybara feature tests add `gem "minitest-rails-capybara"`
+# to the test group in the Gemfile and uncomment the following:
+#require "minitest/rails/capybara"
 
-require 'capybara-screenshot/minitest'
-require 'capybara/rails'
-require 'minitest/capybara'
-require 'minitest/matchers'
+# Uncomment for awesome colorful output
+require "minitest/pride"
 require 'valid_attribute'
 
-require 'minitest/reporters'
-MiniTest::Reporters.use!
-
-require 'support/custom_fabricator_definitions'
-require 'support/authentication'
-
-Capybara.current_driver = :webkit
-
 class ActiveSupport::TestCase
-  include CustomFabricatorDefinitions
-end
+  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
+  fixtures :all
 
-class ActionDispatch::IntegrationTest
-  include CustomFabricatorDefinitions
-  include Capybara::DSL
-  include Capybara::Assertions
-  include Authentication
 
-  self.use_transactional_fixtures = false
-
-  setup do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.start
+  # Add more helper methods to be used by all tests here...
+  def login_as(user)
+    session[:user_id] = users(user).id
   end
-
-  teardown do
-    DatabaseCleaner.clean
+ 
+  def logout
+    session.delete :user_id
+  end
+ 
+  def setup
+    login_as :one if defined? session
   end
 end

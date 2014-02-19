@@ -1,18 +1,8 @@
 .small-12.panel.mainContent
-  .show-for-medium-up
-    = content_nav_for "Course Timeline" do
-      = render "students/student_profile_tabs"
-  
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for "Course Timeline"
-  
+  = content_nav_for "Course Timeline" do
+    = render "students/student_profile_tabs"
+
   .small-12.columns
-    
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "students/student_profile_tabs"
 
     %h2
       Your current score is
@@ -22,11 +12,11 @@
         %span /#{points current_course.point_total} points
         / Else tally all of the points for all of the assignments in the course
       - else
-        %span#userScoreNum #{points current_user.cached_score_for_course(current_course)}
+        %span.bold #{points current_user.cached_score_for_course(current_course)}
         %span /#{points current_course.total_points} points
       - if current_user.grade_level_for_course(current_course).present?
         – Current Level:
-        %span#userScoreNum= current_user.grade_level_for_course(current_course)
+        %span.bold= current_user.grade_level_for_course(current_course)
 
   = render "students/timeline"
 

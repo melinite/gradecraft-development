@@ -1,20 +1,9 @@
 .small-12.panel.mainContent
   / Edit user breadcrumbs
-  .show-for-medium-up
-    = content_nav_for @user do
-      = render "users/tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @user 
+  = content_nav_for @user do
+    = render "users/tabs"
 
   .small-12.columns
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
-
     / Form to edit user
     %h2= @title
     = render 'form'

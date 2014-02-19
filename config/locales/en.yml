@@ -28,8 +28,8 @@ en:
         alert: "We're sorry, the requested %{weights_term} could not be updated. Check below for possible errors."
     groups:
       create:
-        notice: "Your group was successfully created."
-        alert: "We're sorry, your group could not be created. Check below for possible errors."
+        notice: "Your %{group_term} was successfully created."
+        alert: "We're sorry, your %{term_for :group} could not be created. Check below for possible errors."
   sessions:
     create:
       error: 'Sorry, we could not log you in.'

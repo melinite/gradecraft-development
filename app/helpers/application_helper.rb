@@ -46,7 +46,7 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
-  # Search items, currently broken
+  # Search items 
   def autocomplete_items
     return [] unless current_user.is_staff?
     User.students.map do |u|

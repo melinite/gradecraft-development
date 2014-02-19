@@ -58,7 +58,7 @@ class StudentData < Struct.new(:student, :course)
 
   #Predicted score is the score already known to the user + all the predicted points for grades not released or not graded.
   def predicted_score
-    #@predicted_score ||= @score + grades.where(course: course).predicted_points
+    
   end
 
   #Possible total points for student
@@ -177,11 +177,6 @@ class StudentData < Struct.new(:student, :course)
     assignment_groups.where(assignment: assignment).first
   end
 
-  #Grabbing the challenge score for a student's team
-  def score_for_challenge(challenge)
-
-  end
-
   #Checking specifically if there is a released grade for a challenge
   def grade_released_for_challenge?(challenge)
     (grade_for_challenge(challenge).is_graded? && !challenge.release_necessary?) || grade_for_challenge(challenge).is_released?
@@ -291,10 +286,6 @@ class StudentData < Struct.new(:student, :course)
         assignment_weights[weights.assignment_id] = weights
       end
     end
-  end
-
-  def point_total_for_assignment_redux(assignment)
-    assignment.point_total + weight_for_assignment(assignment)
   end
 
   def weight_for_assignment(assignment)

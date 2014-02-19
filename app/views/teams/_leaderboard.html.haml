@@ -46,7 +46,7 @@
               - if current_course.team_score_average?
                 %td= points team.try(:average_grade)
               - else
-                %td= team.try(:challenge_grade_score)
+                %td= points team.try(:challenge_grade_score)
             //- i += 1
     .small-12.columns.medium-8
       #graphcontainer

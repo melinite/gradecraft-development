@@ -1,11 +1,7 @@
 .small-12.panel.mainContent
   / tasks navigation
-  .show-for-medium-up
-    = content_nav_for @taskable, "New Task" do
-      %li= link_to "See #{@taskable.try(:name)}", @taskable, :class => "button tiny radius"
-  
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @taskable, "New Task" 
+  = content_nav_for @taskable, "New Task" do
+    %li= link_to "See #{@taskable.try(:name)}", @taskable, :class => "button tiny radius"
   
   .small-12.columns
     %h2= @title

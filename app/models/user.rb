@@ -134,18 +134,6 @@ class User < ActiveRecord::Base
     teams.first.try(:team_leader)
   end
 
- #  def is_prof_for_course(course)?
-#     course_memberships.where(course: course).role == "professor"
-#   end
-#
-#   def is_gsi_for_course(course)?
-#     course_memberships.where(course: course).role == "gsi"
-#   end
-#
-#   def is_student_for_course(course)?
-#     course_memberships.where(course: course).role == "student" || role.blank?
-#   end
-
  def is_prof?
     role == "professor"
   end
@@ -325,7 +313,7 @@ class User < ActiveRecord::Base
     assignment_weights.where(course: course).pluck('weight').count
   end
 
-def groups_by_assignment_id
+  def groups_by_assignment_id
     @group_by_assignment ||= groups.group_by(&:assignment_id)
   end
 

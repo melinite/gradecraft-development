@@ -1,19 +1,9 @@
 .small-12.panel.mainContent
   / Groups Navigation
-  .show-for-medium-up
-    = content_nav_for Group, "Editing #{@group.name}" do
-      = render "tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @assignment, "Group Grade"
+  = content_nav_for Group, "Editing #{@group.name}" do
+    = render "tabs"
 
   .small-12.columns
-  
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
 
     %h2= @title
 

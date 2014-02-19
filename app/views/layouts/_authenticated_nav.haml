@@ -2,16 +2,16 @@
   %li.has-form.hide-for-small.hide-for-medium
     .row.collapse
       .large-8.small-9.columns
-        %input{:type => "text", :placeholder => "Search #{term_for :students}"}
+        :javascript
+          Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
+        %input.search-query{ :type => "text", :placeholder => "Search #{term_for :students}", :label => false }
       .large-4.small-3.columns
         %a.success.button.expand{ :href => "#" } Search
 %li.has-dropdown.course_switch.show-for-medium-up
   %a My Courses
-  //= form_tag change_current_course_path  do
   %ul.dropdown
     - current_user.courses.each do |c|
       %li= link_to "#{c.name}", change_current_course_path(:course_id => c.id), :method => 'post'
-      //%li= select_tag 'course_id', options_from_collection_for_select(current_user.courses, 'id', 'name')
 
 %li.has-dropdown.show-for-large-up
   %a Class Info
@@ -22,7 +22,9 @@
     - if current_user.is_student?
       - current_student.team_leader.tap do |team_leader|
         - if team_leader.present?
-          %li= link_to "Email #{current_course.team_leader_term} (#{team_leader.first_name})", "mailto:#{team_leader.email}"
+          %li
+            %i.fi-torso-business
+            = "#{current_course.team_leader_term} #{team_leader.first_name}"
     - if current_user.is_student? && current_user.team_for_course(current_course).present?
       %li
         %i.fi-torsos-all

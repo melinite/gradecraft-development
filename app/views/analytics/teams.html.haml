@@ -3,16 +3,7 @@
   = content_nav_for "Course Analytics", "#{term_for :teams}" do
     = render "tabs"
 
-  .hide-for-large-up{:style => "padding: 10px"}
-    = mobile_nav_for "Course Analytics", "#{term_for :teams}"
-
   .small-12.columns
-
-    .hide-for-large-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
         
     .panel
       %h4 Course Grade Distribution

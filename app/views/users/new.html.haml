@@ -1,20 +1,9 @@
 .small-12.panel.mainContent
   / New user navigation
-  .show-for-medium-up
-    = content_nav_for User, "Create a New User" do
-      = render "tabs"
+  = content_nav_for User, "Create a New User" do
+    = render "tabs"
   
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for User, "Create a New User" 
-
   .small-12.columns
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
-
     / Form for creating a new user
     = render 'form'
 

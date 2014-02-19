@@ -1,0 +1,13 @@
+#users.yml
+
+one:
+  first_name: albus
+  last_name: dumbledore
+  username: dumbledore
+  crypted_password: <%= BCrypt::Password.create('fawkes') %>
+ 
+two:
+  first_name: hermione
+  last_name: granger
+  username: padfoot
+  crypted_password: MyString

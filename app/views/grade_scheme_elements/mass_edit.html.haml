@@ -1,18 +1,9 @@
 .small-12.panel.mainContent
   / Grade Scheme Elements Navigation
-  .show-for-medium-up
-    = content_nav_for "Edit #{current_course.name} Grading" do
-      = render "tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for "Edit #{current_course.name} Grading"  
+  = content_nav_for "Edit #{current_course.name} Grading" do
+    = render "tabs"
 
   .small-12.columns
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
 
     %h3 Grade Scheme Elements
 
