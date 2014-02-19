@@ -269,6 +269,10 @@ class Assignment < ActiveRecord::Base
     grades.graded.count
   end
 
+  def positive_grade_count
+    grades.where("score > 0").count
+  end
+
   #Calculating attendance rate, which tallies number of people who have positive grades for attendance divided by the total number of students in the class
   def completion_rate(course)
    ((grade_count / course.graded_student_count.to_f) * 100).round(2)
@@ -277,7 +281,7 @@ class Assignment < ActiveRecord::Base
   # Lauren added:
   #Calculates attendance rate as an integer.
    def attendance_rate_int(course)
-   ((positive_grades / course.graded_student_count.to_f) * 100).to_i
+   ((positive_grade_count / course.graded_student_count.to_f) * 100).to_i
   end
 
   #gradebook
