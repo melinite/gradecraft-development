@@ -1,0 +1,12 @@
+# In fixtures/assignments.yml
+boss_battle_one:
+  name: Boss Battle 1
+  grade_scope: 'Individual'
+  point_total: 50000
+  course_id: 1
+
+boss_battle_two:
+  name: Boss Battle 2
+  grade_scope: 'Individual'
+  point_total: 100000
+  course_id: 1

@@ -1,19 +1,9 @@
 .small-12.panel.mainContent
   / Ungraded Assignments
-  .show-for-medium-up
-    = content_nav_for Assignment, "Ungraded #{term_for :assignments}" do
-      = render "info/tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for Assignment, "Ungraded #{term_for :assignments}" 
+  = content_nav_for Assignment, "Ungraded #{term_for :assignments}" do
+    = render "info/tabs"
 
   .small-12.columns
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
 
     = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
 

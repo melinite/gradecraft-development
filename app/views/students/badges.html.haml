@@ -1,22 +1,10 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
-    .show-for-medium-up
-      = content_nav_for term_for :badges do
-        = render "student_profile_tabs"
-
-    .hide-for-medium-up{:style => "padding: 10px"}
-      = mobile_nav_for term_for :badges 
-
+    = content_nav_for term_for :badges do
+      = render "student_profile_tabs"
   - else
     / Student Dashboard Breadcrumbs
-    .show-for-medium-up
-      = content_nav_for current_student do
-        = render "student_profile_tabs"
-
-  .hide-for-medium-up
-    %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-      Options
-    %ul#drop.f-dropdown
+    = content_nav_for current_student do
       = render "student_profile_tabs"
 
   %dl.tabs{:data => {'tab' => true}}

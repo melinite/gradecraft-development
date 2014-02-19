@@ -15,22 +15,21 @@ en:
     actions:
       create:
         notice: "%{resource_name} was successfully created."
-        alert: "Could not create %{resource_name}."
+        alert: "We're sorry, your %{resource_name} could not be created. Check below for possible errors."
       update:
         notice: "%{resource_name} was successfully updated."
-        alert: "Could not update %{resource_name}."
+        alert: "We're sorry, your  %{resource_name} could not be updated. Check below for possible errors."
       destroy:
         notice: "%{resource_name} was successfully deleted."
-        alert: "Could not delete %{resource_name}."
+        alert: "We're sorry, your %{resource_name} could not be deleted. Check below for possible errors."
     assignment_type_weights:
       mass_update:
         notice: "%{weights_term} were successfully updated."
-        alert: "Could not update %{weights_term}."
+        alert: "We're sorry, the requested %{weights_term} could not be updated. Check below for possible errors."
     groups:
       create:
-        notice: "Your group was successfully created."
-        alert: "We're sorry, your group could not be created. Check below to see possible errors."
+        notice: "Your %{group_term} was successfully created."
+        alert: "We're sorry, your %{term_for :group} could not be created. Check below for possible errors."
   sessions:
     create:
-      success: 'You have been succesfully logged in'
       error: 'Sorry, we could not log you in.'

@@ -3,17 +3,8 @@
   .show-for-medium-up
     = content_nav_for @assignment_type do
       = render "assignments/tabs"
-  
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @assignment_type
 
   .small-12.columns
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "assignments/tabs"
 
     %h2= @title
 

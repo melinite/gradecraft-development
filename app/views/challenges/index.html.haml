@@ -1,20 +1,10 @@
 .small-12.panel.mainContent
   / Challenge Navigation
-  .show-for-medium-up
-    = content_nav_for Challenge do
-      = render "teams/tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for Challenge
+  = content_nav_for Challenge do
+    = render "teams/tabs"
 
   .small-12.columns
-    
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "teams/tabs"
-
+  
     %table.responsive.simpleTable
       %thead
         %tr

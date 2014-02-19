@@ -5,39 +5,11 @@ $(document).ready(function() {
   var source = JSON.parse(timeline.attr('data-timeline'));
   // Filtering down to the event objects
   var timeline_dates = source.timeline.date;
-
-  //starting the slide count
   var start_index = 0;
-
-  //setting the target date
-  var target_date = new Date();
-  console.log(target_date);
-  //console.log(target_date);
-  // iterating through the dates
-  for(var x in timeline_dates) {
-
-    //setting the dates to a variable that will be parsed - this is because Safari and dates don't play nicely
-    var st = timeline_dates[x].startDate;
-
-    // Checking to make sure there is a date for the event - skipping it if not
-    if(typeof st !== "undefined") {
-      console.log(st);
-      //splitting the variable into pieces so we can reformat it for Safari
-      var dt = st.split(/[^0-9]/);
-      console.log(dt);
-
-      // Creating the date that we'll compare against
-      var slide_date = new Date( st );
-      //console.log(slide_date);
-      // Comparing our current date against the slide date and increasing the slide count if it's before our goal
+  var target_date = new Date(); //set whatever date you want as your start date
+  for(x in timeline_dates) {
+      var slide_date = new Date( timeline_dates[x].startDate );
       if( slide_date < target_date) start_index++;
-
-    }
-    // and if we skipped it we need to count the slide anyways
-    else {
-      start_index++;
-    }
-
   }
 
   if (timeline.length) {

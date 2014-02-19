@@ -1,16 +1,8 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except => [:dashboard, :edit_profile, :update_profile]
+  before_filter :ensure_staff?, :except => [:edit_profile, :update_profile]
   before_filter :ensure_admin?, :only => [:all]
-
-  def dashboard
-    if current_course.team_challenges?
-      @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
-    else
-      @events = current_course_data.assignments.timelineable.to_a
-    end
-  end
 
   def index
     @title = "View All Users"

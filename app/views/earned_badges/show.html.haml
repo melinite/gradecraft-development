@@ -1,19 +1,9 @@
 .small-12.panel.mainContent
   / Earned Badge Navigation
-  .show-for-medium-up
-    = content_nav_for @badge, "Earned By #{@earned_badge.student.name}" do
-      = render "badges/tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @badge, "Earned By #{@earned_badge.student.name}"
+  = content_nav_for @badge, "Earned By #{@earned_badge.student.name}" do
+    = render "badges/tabs"
 
   .small-12.columns
-  
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "badges/tabs"
         
     %img{:src => @earned_badge.badge.try(:icon), :alt => @earned_badge.badge.try(:name), :width => "25", :height => "25"}
     %p

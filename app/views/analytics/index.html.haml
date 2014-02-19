@@ -3,16 +3,7 @@
   = content_nav_for "Course Analytics", "All Users" do
     = render "tabs"
 
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for "Course Analytics", "All Users"
-
   .small-12.columns
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
 
     .navbar.navbar-inverse.section-heading
       %h3 Interactions

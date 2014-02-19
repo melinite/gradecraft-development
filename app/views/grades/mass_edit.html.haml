@@ -1,28 +1,9 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  .show-for-medium-up
-    = content_nav_for @assignment, @title do
-      = render "assignments/tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @assignment, @title
-
-  .small-12.medium-8.columns
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "assignments/tabs"
-
-    %h2= @title
+  = content_nav_for @assignment, @title do
+    = render "assignments/tabs"
 
   .small-12.medium-4.columns.right
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "assignments/tabs"
     
     - if current_course.has_teams? && @assignment.is_individual?
       = form_tag mass_grade_assignment_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do

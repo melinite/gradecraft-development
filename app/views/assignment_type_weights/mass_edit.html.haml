@@ -8,23 +8,6 @@
       = render "info/tabs"
   .small-12.columns
 
-    .hide-for-medium-up
-      - if current_user.is_student?
-        = mobile_nav_for "Editing My #{term_for :weights}" do
-          = render "students/student_profile_tabs"
-      - else
-        = mobile_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
-          = render "info/tabs"
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        - if current_user.is_student?
-          = render "students/student_profile_tabs"
-        - else
-          = render "info/tabs"
-        
     - if current_course.assignment_weight_open? || current_user.is_staff?
       %h3 Editing #{current_student.name}'s #{term_for :weights}
       %h4 #{term_for :weights} remaining: #{current_course.total_assignment_weight}

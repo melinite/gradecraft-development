@@ -3,16 +3,7 @@
   = content_nav_for "Course Analytics", "#{term_for :assignment} Analytics" do
     = render "analytics/tabs"
 
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for "Course Analytics", "#{term_for :assignment} Analytics"
-
-  .small-12.columns
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "analytics/tabs"
-
+  .columns
     - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
       %h3= link_to assignment_type.name, assignment_type
       %table.responsive.simpleTable
@@ -21,18 +12,24 @@
             %th Name
             %th Min
             %th Max
-            %th Ave
-            %th Ave Earned
-            %th Distribution
+            %th Median
+            %th 
+              Ave
+              %i.fi-info{:title => "The average of all grades, including those who earned zero", :data => {'tooltip' => true} }
+            %th 
+              Ave Earned
+              %i.fi-info{:title => "The average of all scores above zero", :data => {'tooltip' => true} }
+            %th{:width => 200} Distribution
         %tbody
           - assignments.each do |assignment|
             %tr
               %td= link_to assignment.name, assignment
-              %td= assignment.low_score
-              %td= assignment.high_score
-              %td= assignment.average
-              %td= assignment.submitted_average
-              %td
-                %div{:class => "grades_per_assign", :data => { :id => assignment.id.to_s }}
+              %td= points assignment.low_score
+              %td= points assignment.high_score
+              %td= points assignment.median
+              %td= points assignment.average
+              %td= points assignment.earned_average
+              %td.right
+                .grades_per_assign{ "data-scores" => assignment.grades.graded.pluck('score') }
 
   .clearfix

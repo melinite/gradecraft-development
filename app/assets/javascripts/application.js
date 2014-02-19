@@ -7,21 +7,19 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery.omniselect
 //= require foundation
+//= require gradecraft
 //= require autonumeric
 //= require bootsy
 //= require jquery.sparkline.min
 //= require jquery.fileupload
 //= require s3_direct_upload
-//= require jquery.ui.widget
-//= require jquery.sparkline.min
-//= require jquery.circliful.min
 //= require underscore.min
 //= require backbone.min
 //= require bootstrap
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
-//= require gradecraft
 //= require preload_store
 //= require selectToUISlider.jQuery
 //= require_self
@@ -45,6 +43,9 @@
 //= require select2
 //= require responsive-tables
 //= require grade_distribution
+//= require jquery.ui.widget
+//= require jquery.sparkline.min
+//= require jquery.circliful.min
 //= require jquery.sticky
 //= require jquery.highchartTable-min
 //= require jquery.collapse
@@ -265,6 +266,8 @@ $(document).ready(function(){
     })
   }
 
+
+  /** Tiny highcharts display on the Top 10/Bottom 10 Student Table display **/
   if ($('.bar-chart').length) {
     var assignmentTypeScores
     function assignmentTypeBars () {
@@ -365,8 +368,6 @@ $(document).ready(function(){
       assignmentTypeBars();
     })
 
-    // Ask Cory.
-    $('.table-toggle').on('click', assignmentTypeBars);
   }
 
   if ($('#shared_badges_table').length) {

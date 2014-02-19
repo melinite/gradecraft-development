@@ -1,7 +1,7 @@
 //
   var sparkOpts = {
     type: 'box',
-    width: '100%',
+    width: '80%',
   };
 
   if ($('#grade_distro').length) {

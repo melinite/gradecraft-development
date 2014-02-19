@@ -1,19 +1,9 @@
 .small-12.panel.mainContent
   / Student Dashboard Breadcrumbs
-  .show-for-medium-up
-    = content_nav_for current_student do
-      = render "student_profile_tabs"
-  
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for current_student 
-  
+  = content_nav_for current_student do
+    = render "student_profile_tabs"
+    
   .small-12.medium-9.columns#syllabus
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "student_profile_tabs"
 
     %h2
       Current Score:
@@ -26,6 +16,7 @@
         %span.bold #{points current_student.cached_score_for_course(current_course)}
         %span /#{points current_course.total_points} points
       - if current_student.grade_level_for_course(current_course).present?
+        / Display current level if it is present
         – Current Level:
         %span.bold= current_student.grade_level_for_course(current_course)
 

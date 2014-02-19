@@ -5,6 +5,8 @@
 - if current_course.team_challenges?
   %li{class: ("active" if current_page?(challenges_path)) }
     = link_to_unless_current "#{term_for :challenges}", challenges_path
+  %li{class: ("active" if current_page?(new_challenge_path)) }
+    = link_to_unless_current "Create a New #{term_for :challenge}", new_challenge_path
 - if @team.present? && @team.persisted?
   %li{class: ("active" if current_page?(edit_team_path(@team))) }
     = link_to_unless_current "Edit #{@team.name}", edit_team_path(@team)

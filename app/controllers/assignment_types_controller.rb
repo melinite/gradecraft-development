@@ -28,11 +28,11 @@ class AssignmentTypesController < ApplicationController
 
     respond_to do |format|
       if @assignment_type.save
-        format.html { redirect_to @assignment_type, notice: "#{@assignment_type.name} was successfully created." }
+        format.html { redirect_to @assignment_type }
         format.json { render json: @assignment_type, status: :created, location: @assignment_type }
       else
         format.html { render action: "new" }
-        format.json { render json: @assignment_type.errors, notice: "#{@assignment_type.name} was not created." }
+        format.json { render json: @assignment_type.errors }
       end
     end
   end
@@ -43,11 +43,11 @@ class AssignmentTypesController < ApplicationController
 
     respond_to do |format|
       if @assignment_type.save
-        format.html { redirect_to @assignment_type, notice: "#{@assignment_type.name} was successfully update." }
+        format.html { redirect_to @assignment_type }
         format.json { render json: @assignment_type, status: :created, location: @assignment_type }
       else
         format.html { render action: "new" }
-        format.json { render json: @assignment_type.errors, notice: "#{@assignment_type.name} was not updated." }
+        format.json { render json: @assignment_type.errors }
       end
     end
   end

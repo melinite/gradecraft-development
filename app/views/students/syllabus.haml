@@ -1,18 +1,8 @@
 .small-12.panel.mainContent
-  .show-for-medium-up
-    = content_nav_for "Course Syllabus" do
-      = render "student_profile_tabs"
-
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for "Course Syllabus" 
+  = content_nav_for "Course Syllabus" do
+    = render "student_profile_tabs"
 
   .small-12.columns#syllabus
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "student_profile_tabs"
 
     %h2
       Your current score is
@@ -23,11 +13,11 @@
         / Else tally all of the points for all of the assignments in the course
       - else
         %span.bold #{points current_student.cached_score_for_course(current_course)}
-        %span /#{points current_student_data.point_total}
-      - if current_student_data.grade_level.present?
+        %span /#{points current_student_data.point_total} points
+      - if current_student.grade_level_for_course(current_course).present?
         / Display current level if it is present
         Current Level:
-        %span.bold= current_student_data.grade_level
+        %span.bold= current_student.grade_level_for_course(current_course)
 
       %hr
 

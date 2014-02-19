@@ -1,7 +1,6 @@
 .small-12.panel.mainContent
   / Criteria Navigation
-  .show-for-medium-up
-    %li= link_to 'Add Criterium', new_rubric_criterium_path(@rubric)
+  %li= link_to 'Add Criterium', new_rubric_criterium_path(@rubric)
 
   - @criteria.group_by(&:category).each do |category, criteria|
     .panel

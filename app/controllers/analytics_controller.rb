@@ -22,7 +22,7 @@ class AnalyticsController < ApplicationController
 
   # Displaying per assignment summary outcome statistics
   def per_assign
-    respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.released.length > 1}
+    respond_with @assignments = current_course.assignments.order('name ASC').select {|a| a.grades.graded.length > 1}
   end
 
   # Display per team summary scores

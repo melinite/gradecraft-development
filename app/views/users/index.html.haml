@@ -1,11 +1,7 @@
 .small-12.panel.mainContent
   / User Index Navigation
-  .show-for-medium-up
-    = content_nav_for @title do
-      = render "tabs"
-  
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @title 
+  = content_nav_for @title do
+    = render "tabs"
 
   - if current_course.has_teams?
     .small-12.large-4.large-offset-8.medium-6.medium-offset-6.columns
@@ -13,13 +9,6 @@
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
   .small-12.columns
-
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
-
     %table.responsive.simpleTable
       %thead
         %tr

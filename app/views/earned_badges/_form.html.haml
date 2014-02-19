@@ -2,7 +2,7 @@
   %h3= "You are awarding the #{@badge.name} #{term_for :badge} to..."
   = hidden_field_tag :badge_id, @badge.id
   .small-12.medium-4.columns
-    = select_tag :student, options_from_collection_for_select(current_course.students, "id", "name", @earned_badge.try(:student_id)), :prompt => "Select Student"
+    = select_tag :student, options_from_collection_for_select(current_course.students.alpha, "id", "name", @earned_badge.try(:student_id)), :prompt => "Select Student"
   
   .clearfix
 

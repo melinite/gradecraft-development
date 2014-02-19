@@ -1,19 +1,7 @@
 .small-12.panel.columns.mainContent
-  .show-for-medium-up
-    = content_nav_for "Course Timeline" do
-      = render "tabs"
-
-  .hide-for-medium-up
-    = mobile_nav_for "Course Timeline" do
-      = render "tabs"
+  = content_nav_for "Course Timeline" do
+    = render "tabs"
   
-  .small-12.columns
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "tabs"
-
   #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
 
   .clearfix

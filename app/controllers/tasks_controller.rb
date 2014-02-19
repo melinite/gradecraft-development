@@ -29,7 +29,7 @@ class TasksController < ApplicationController
     @assignment = find_assignment
     @task = @assignment.tasks.new(params[:task])
     if @task.save
-      redirect_to @assignment, notice: "Your task has been created."
+      redirect_to @assignment 
     else
       render :new
     end

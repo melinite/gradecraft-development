@@ -1,26 +1,13 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
-    .show-for-medium-up
-      = content_nav_for "Grade Philosophy" do
-        = render "student_profile_tabs"
-    .hide-for-medium-up{:style => "padding: 10px"}
-      = mobile_nav_for "Grade Philosophy"
+    = content_nav_for "Grade Philosophy" do
+      = render "student_profile_tabs"
   - else
     / Student Dashboard Breadcrumbs
-    .show-for-medium-up
-      = content_nav_for current_student do
-        = render "student_profile_tabs"
-    .hide-for-medium-up{:style => "padding: 10px"}
-      = mobile_nav_for current_student 
-
+    = content_nav_for current_student do
+      = render "student_profile_tabs"
 
   .small-12.columns
-
-    .hide-for-large-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "student_profile_tabs"
 
     - if current_course.grade_scheme_elements.present?
       %table.responsive.simpleTable

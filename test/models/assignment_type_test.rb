@@ -1,9 +1,15 @@
 require 'test_helper'
 
 class AssignmentTypeTest < ActiveSupport::TestCase
-  test "sets weight for a particular student" do
-
+  
+  test "should not save assignment type without name" do
+    assignment_type = AssignmentType.new
+    assert !assignment_type.save, "Saved the assignment without a title"
   end
+
+  # test "sets weight for a particular student" do
+
+  # end
 
   # Max weight for any particular assignment type
   # Total weight equals total available weight

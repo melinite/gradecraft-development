@@ -1,13 +1,32 @@
-$(function () {
-  // set 'data-id' to the assignment ID on a div with id 'grades_per_assign' to generate chart
+//
+  var sparkOpts = {
+    type: 'box',
+    width: '100%',
+  };
+
   if ($('.grades_per_assign').length) {
-    $('.grades_per_assign').each( function (index) {
-      var div = $( this )
-      var id = $('.grades_per_assign')[index].getAttribute('data-id');
-      $.getJSON('/students/scores_for_single_assignment', { id: id }, function (data) {
-        div.sparkline(data.scores, {type: 'box', boxFillColor: '#eee', lineColor: '#333', boxLineColor: '#333', whiskerColor: '#333', outlierLineColor: '#333',
-outlierFillColor: '#F4A425', spotRadius: '10', medianColor: '#0D9AFF', height: '50', width: '300' } );
-      })
-    })
+    var data = JSON.parse($('.grades_per_assign').attr('data-scores'));
+    if (data !== null) {
+      sparkOpts.tooltipOffsetY = -130;
+      sparkOpts.height = '35';
+      sparkOpts.width = '200';
+      sparkOpts.tooltipOffsetY = -80;
+      sparkOpts.targetColor = "#FF0000";
+      sparkOpts.boxFillColor = '#eee';
+      sparkOpts.lineColor = '#333';
+      sparkOpts.boxLineColor = '#333';
+      sparkOpts.whiskerColor = '#333';
+      sparkOpts.outlierLineColor = '#333';
+      sparkOpts.outlierFillColor = '#F4A425';
+      sparkOpts.spotRadius = '10';
+      sparkOpts.medianColor = '#0D9AFF';
+      $('.grades_per_assign').sparkline(data, sparkOpts);
+    }
   }
-})
+
+  var sparkResize;
+
+  $(window).resize(function(e) {
+      clearTimeout(sparkResize);
+      sparkResize = setTimeout(sparkOpts, 500);
+  });

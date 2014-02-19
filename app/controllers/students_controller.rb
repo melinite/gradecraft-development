@@ -20,13 +20,10 @@ class StudentsController < ApplicationController
 
   # Course timeline, displays all assignments that are determined by the instructor to belong on the timeline + team challenges if present
   def timeline
-    if current_user.is_staff?
-      redirect_to dashboard_path
-    end
     if current_course.team_challenges?
-      @events = current_course_data.assignments.timelineable.to_a + current_course.challenges
+      @events = current_course.assignments.timelineable.to_a + current_course.challenges
     else
-      @events = current_course_data.timelineable.to_a
+      @events = current_course.timelineable.to_a
     end
   end
 
@@ -41,7 +38,7 @@ class StudentsController < ApplicationController
 
   # Displaying ranked order of students and scores
   def leaderboard
-    @title = "#{current_course.user_term} Roster"
+    @title = "#{current_course.user_term} Leaderboard"
     @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
   end
 
@@ -71,6 +68,7 @@ class StudentsController < ApplicationController
     @grade_levels_json = @grade_scheme_elements.order(:low_range).pluck(:low_range, :letter, :level).to_json
   end
 
+  #TODO: Should be moved to a method
   def scores_by_assignment
     scores = current_course.grades.released.joins(:assignment_type)
                            .group('grades.student_id, assignment_types.name')
@@ -80,30 +78,6 @@ class StudentsController < ApplicationController
       :scores => scores,
     }
   end
-
-  def scores_by_team
-    records = current_course.grades.released
-                            .joins(:team)
-                            .joins('join course_memberships on grades.student_id = course_memberships.user_id')
-                            .where('course_memberships.auditing = false')
-                            .group('grades.student_id, grades.team_id, teams.name')
-                            .order('grades.team_id')
-    scores = records.pluck('grades.team_id, SUM(grades.score), teams.name')
-    render :json => {
-      :scores => scores
-    }
-  end
-
-  def scores_for_single_assignment
-    scores = current_course.grades.released
-                                  .joins('join course_memberships on grades.student_id = course_memberships.user_id')
-                                  .where('grades.assignment_id = ' + params[:id], 'course_memberships.auditing = false')
-    scores = scores.pluck('grades.score')
-    render :json => {
-      :scores => scores
-    }
-  end
-
 
   #All Admins to see all of one student's grades at once, proof for duplicates
   def grade_index

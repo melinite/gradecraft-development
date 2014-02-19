@@ -1,10 +1,6 @@
 .small-12.panel.mainContent
   / Criteria Navigation
-  .show-for-medium-up
-    = content_nav_for @rubric, Criterium, "Edit #{breadcrumb_link_for @criterium}".html_safe
-  
-  .hide-for-medium-up{:style => "padding: 10px"}
-    = mobile_nav_for @rubric, Criterium, "Edit #{breadcrumb_link_for @criterium}".html_safe
+  = content_nav_for @rubric, Criterium, "Edit #{breadcrumb_link_for @criterium}".html_safe
 
   = render 'form'
 
