@@ -102,10 +102,22 @@ td.complete, tr.achieved {
   background-color: #d7fae0;
 }
 
+i.complete {
+  color: $success-color;
+}
+
 td.absent {
   background-color: #f9adad;
 }
 
+i.absent {
+  color: $alert-color;
+}
+
 td.partial, td.need_to_be_released {
-  background-color: #f6f87b;
+  background-color: $secondary-color;
+}
+
+i.partial {
+  color: $secondary-color;
 }

@@ -7,9 +7,8 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
-//= require jquery.omniselect
 //= require foundation
-//= require gradecraft
+//= require jquery.omniselect
 //= require autonumeric
 //= require bootsy
 //= require jquery.sparkline.min
@@ -20,6 +19,7 @@
 //= require bootstrap
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
+//= require gradecraft
 //= require preload_store
 //= require selectToUISlider.jQuery
 //= require_self

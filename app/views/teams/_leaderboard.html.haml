@@ -39,7 +39,7 @@
             %th Score
         %tbody
           //- i = 1
-          - current_course_data.teams_by_high_score.each do |team|
+          - current_course.teams.order_by_high_score.each do |team|
             %tr
               //%td= i
               %td= team.name

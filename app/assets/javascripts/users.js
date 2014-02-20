@@ -19,7 +19,7 @@
       }
     }).on('omniselect:select', function(event, id) {
       $(event.target).val();
-      window.location = '/users/' + id;
+      window.location = '/students/' + id;
       return false;
     });
   });
