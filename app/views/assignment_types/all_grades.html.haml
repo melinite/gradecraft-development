@@ -3,17 +3,16 @@
     / Assignment Type Navigation
     = content_nav_for AssignmentType do
       = render "assignments/tabs"
-
-    - if current_course.has_teams?
-      .small-12.right.medium-6.large-4.columns
-        = form_tag all_grades_assignment_type_path(@assignment_type), :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
-          = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
-
+    
     .small-12.columns
-
       %h3= "#{@assignment_type.name} Grade Patterns"
 
-      .small-12.medium-4
+      - if current_course.has_teams?
+        .small-12.right.medium-6.large-4.columns
+          = form_tag all_grades_assignment_type_path(@assignment_type), :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
+            = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
+
+      .small-12.medium-5
         %table
           %tr
             %th 
@@ -26,55 +25,61 @@
             %th
               %i.fi-skull.absent
               Zero Points
+            %th
+              %i.fi-skull.missing_grade
+              No Grade
 
-      / Gradebook Pattern Table
-      %table.responsive.simpleTable
-        %thead
+    / Gradebook Pattern Table
+    %table.responsive.simpleTable
+      %thead
+        %tr
+          %th.sortable{"data-sort" => "string"} First Name
+          %th.sortable{"data-sort" => "string"} Last Name
+          - for assignment in @assignment_type.assignments.chronological
+            - if assignment.point_total > 0
+              %th.sortable{"data-sort" => "int"}= assignment.due_at.strftime("%b %d") if assignment.due_at.present?
+      %tbody
+        - if @team
+          // Checking to see if a team is declared, if it is only displaying students for that team
+          - students = current_course_data.students_for_team(@team)
+        - else
+          // otherwise displaying students from the entire class
+          - students = current_course_data.students
+        - students.each do |student|
           %tr
-            %th.sortable{"data-sort" => "string"} First Name
-            %th.sortable{"data-sort" => "string"} Last Name
-            - for assignment in @assignment_type.assignments.chronological
+            %td= link_to student.first_name, student_path(student)
+            %td= link_to student.last_name, student_path(student)
+            - i = 0
+            - @assignment_type.assignments.chronological.each do |assignment|
               - if assignment.point_total > 0
-                %th.sortable{"data-sort" => "int"}= assignment.due_at.strftime("%b %d") if assignment.due_at.present?
-        %tbody
-          - if @team
-            // Checking to see if a team is declared, if it is only displaying students for that team
-            - students = current_course_data.students_for_team(@team)
-          - else
-            // otherwise displaying students from the entire class
-            - students = current_course_data.students
-          - students.each do |student|
-            %tr
-              %td= link_to student.first_name, student_path(student)
-              %td= link_to student.last_name, student_path(student)
-              - i = 0
-              - @assignment_type.assignments.chronological.each do |assignment|
-                - if assignment.point_total > 0
-                  
-                  - assignment.grade_for_student(student).tap do |grade|
+                
+                - assignment.grade_for_student(student).tap do |grade|
 
-                    - if grade && grade.score == assignment.point_total
-                      - i += 1
-                      // Displaying td's colored green if the student earned all points possible on the assignment
-                      %td
-                        %i.fi-heart.complete
-                          = i
+                  - if grade && grade.score == assignment.point_total
+                    - i += 1
+                    // Displaying td's colored green if the student earned all points possible on the assignment
+                    %td
+                      %i.fi-heart.complete
+                        = i
 
-                    - elsif grade && grade.score == 0
-                      // Displaying td's colored red if the student earned no points on the assignment (but HAS a grade)
-                      - i = 0
-                      %td
-                        %i.fi-skull.absent
+                  - elsif grade && grade.score == 0
+                    // Displaying td's colored red if the student earned no points on the assignment (but HAS a grade)
+                    - i = 0
+                    %td
+                      %i.fi-skull.absent
 
-                    - elsif grade && grade.score < assignment.point_total
-                      // Displaying td's colored yellow if the student earned some points on the assignment
-                      - i = 0
-                      %td
-                        %i.fi-cloud.partial
+                  - elsif grade && grade.score < assignment.point_total
+                    // Displaying td's colored yellow if the student earned some points on the assignment
+                    - i = 0
+                    %td
+                      %i.fi-cloud.partial
 
-                    - else
-                      // Displaying td's colored white if the studnet has no grade
-                      %td
+                  - else
+                    // Displaying td's colored white if the studnet has no grade
+                    - i = 0
+                    %td
+                      - if assignment.past?
+                        %i.fi-skull.missing_grade
 
 
 

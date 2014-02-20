@@ -121,3 +121,7 @@ td.partial, td.need_to_be_released {
 i.partial {
   color: $secondary-color;
 }
+
+i.missing_grade {
+  color: #CCC;
+}
