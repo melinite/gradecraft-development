@@ -12,6 +12,8 @@
       #role-events-chart.analytics-chart{:data => {:chart => 'timeseries', :url => '/analytics/role_events.json', :url_data => 'role_group=student', :title => 'Interactions', :subtitle => '{{granularity}}', :y_axis_label => 'Number of events'}}
       -##events-chart{:data => {:chart => 'timeseries', :url => '/analytics/assignment_events.json', :title => 'Assignment Events', :subtitle => '{{granularity}}', :y_axis_label => 'Number of events'}}
 
+    %hr
+
     %h3 Pageviews
     .small-12.medium-6.columns
       / Pageviews Total
@@ -27,6 +29,8 @@
           %th{:'data-dynatable-column' => 'total'} Pageviews
         %tbody
 
+    %hr
+
     %h3 Logins
     .small-12.medium-6.columns
       / Login counts
@@ -37,6 +41,8 @@
       / Average User Login Frequencies
       = analytics_chart_inputs('role-logins-frequencies-chart', 'past_week')
       #role-logins-frequencies-chart.analytics-chart{:data => {:chart => 'timeseries', :url => '/analytics/role_login_frequencies.json', :url_data => 'role_group=student', :title => 'Average User Login Frequencies', :subtitle => '{{granularity}}', :y_axis_label => 'User Login Rate (in logins {{granularity}})'}}
+
+    %hr
 
     %h3 Predictor
     .small-12.medium-6.columns
@@ -53,10 +59,11 @@
           %th{:'data-dynatable-column' => 'average'} Average Predicted Score
         %tbody
 
-  #per-student-analytics.small-12
+    %hr
+    #per-student-analytics.small-12
 
-    %h2 Student Analytics
-    = select_tag :user, options_from_collection_for_select(current_course_data.students, "id", "name"), :id => 'per-student-select', :prompt => "Select Student"
+      %h2 Student Analytics
+      .small-12.medium-4= select_tag :user, options_from_collection_for_select(current_course_data.students, "id", "name"), :id => 'per-student-select', :prompt => "Select Student"
 
     /
       %h3 Logins

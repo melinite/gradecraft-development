@@ -32,5 +32,5 @@ en:
         alert: "We're sorry, your group could not be created. Check below to see possible errors."
   sessions:
     create:
-      success: 'You have been succesfully logged in'
+      success: 'You have been successfully logged in'
       error: 'Sorry, we could not log you in.'
