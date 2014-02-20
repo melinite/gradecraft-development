@@ -11,6 +11,22 @@
 
     .small-12.columns
 
+      %h3= "#{@assignment_type.name} Grade Patterns"
+
+      .small-12.medium-4
+        %table
+          %tr
+            %th 
+              %i.fi-heart.complete
+              Full Points
+
+            %th 
+              %i.fi-cloud.partial
+              Partial Points
+            %th
+              %i.fi-skull.absent
+              Zero Points
+
       / Gradebook Pattern Table
       %table.responsive.simpleTable
         %thead

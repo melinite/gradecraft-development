@@ -46,17 +46,23 @@
               %th Date Awarded
               %th
           %tbody
-            - @earned_badges.each do |earned_badge|
+            - if @team
+              - students = current_course_data.students_for_team(@team)
+            - else
+              - students = current_course_data.students
+            - students.each do |student|
               %tr
-                %td= link_to earned_badge.student.try(:name), student_path(earned_badge.student)
-                %td= raw earned_badge.feedback
-                %td= earned_badge.created_at
+                %td= link_to student.first_name, student_path(student)
+                %td= link_to student.last_name, student_path(student)
                 %td
-                  .button-bar
-                    %ul.button-group.right.round
-                      %li= link_to 'View', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary'
-                      %li= link_to 'Edit', edit_badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary'
-                      %li= link_to 'Delete', badge_earned_badge_path(@badge, earned_badge), :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+                  - @badge.earned_badges.where(:student_id => student.id).each do |badge|
+                    %img{:src => @badge.icon, :alt => @badge.name, :width => "20" }
+                    %span.has-tip{:title => "Edit this #{term_for :badge}", :data => {'tooltip' => true} }= link_to "(#{badge.created_at.strftime("%b %d")})", edit_badge_earned_badge_path(@badge, badge.id)
+                    %span= badge.feedback
+                    %span
+                      = link_to badge_earned_badge_path(@badge, badge), :method => :delete, :data => { confirm: "Are you sure you want to delete this #{term_for :badge}?" } do
+                        %i.fi-trash
+                    .clearfix
 
   .clearfix
 
