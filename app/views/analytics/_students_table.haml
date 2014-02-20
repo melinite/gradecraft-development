@@ -20,7 +20,7 @@
             %i.fi-mail
         %td= link_to student.name, student_path(student)
         %td= points student.score_for_course(course)
-        %td{:data => { :id => student.id.to_s}, :class => "bar-chart" }
+        %td{:data => { :id => student.id.to_s, :max => current_course.total_points }, :class => "bar-chart" }
         - if course.has_teams?
           %td
             - if student.team_for_course(current_course).present?

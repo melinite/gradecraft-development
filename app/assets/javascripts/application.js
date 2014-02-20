@@ -220,7 +220,6 @@ $(document).ready(function(){
     }
 
     $.getJSON('/students/scores_by_team', function (data) {
-      console.log(data)
       data = data.scores
       var categories = [], scores = {
         name: 'Stats:',
@@ -274,6 +273,7 @@ $(document).ready(function(){
       if (!assignmentTypeScores) return;
       $('.bar-chart').each(function () {
           var id = this.getAttribute('data-id');
+          var max = this.getAttribute('data-max');
           var scores = assignmentTypeScores[id];
           var names = assignmentTypeScores.names[id];
           var series = []
@@ -294,6 +294,7 @@ $(document).ready(function(){
             },
             yAxis: {
               min: 0,
+              max: max,
               title: {
                 text: ''
               }

@@ -17,7 +17,7 @@
         %td= link_to student.last_name, student_path(student)
         %td
           - student.earned_badges.each do |eb|
-            %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "20"}
+            %img.has-tip{:src => eb.try(:icon), :alt => eb.try(:name), :width => "20", :title => eb.name, :data => {'tooltip' => true}}
         - if current_course.valuable_badges?
           %td= points student.earned_badge_score_for_course(current_course)
 
@@ -44,6 +44,6 @@
           %td= link_to student.last_name, student_path(student)
           %td
             - student.earned_badges.each do |eb|
-              %img{:src => eb.try(:icon), :alt => eb.try(:name), :width => "40"}
+              %img.has-tip{:src => eb.try(:icon), :alt => eb.try(:name), :width => "20", :title => eb.name, :data => {'tooltip' => true}}
           - if current_course.valuable_badges?
             %td= points student.earned_badge_score_for_course(current_course)

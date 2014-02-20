@@ -40,7 +40,7 @@
             - if current_course.has_badges?
               %td#earned_badges
                 - student.earned_badges.each do |badge|
-                  %img{:src => badge.try(:icon), :alt => badge.try(:name), :width => "20"}
+                  %img.has-tip{:src => badge.try(:icon), :alt => badge.try(:name), :width => "20", :title => badge.name, :data => {'tooltip' => true}}
             %td
               .button-bar
                 %ul.button-group.round.right
