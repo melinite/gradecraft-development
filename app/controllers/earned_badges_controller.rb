@@ -53,7 +53,8 @@ class EarnedBadgesController < ApplicationController
     @earned_badge.student =  current_course.students.find_by_id(params[:student])
     respond_to do |format|
       if @earned_badge.save
-        format.html { redirect_to badge_path(@badge), notice: 'Badge was successfully awarded.' }
+        NotificationMailer.earned_badge_awarded(@earned_badge.id).deliver
+        format.html { redirect_to badge_path(@badge), notice: '#{term_for :badge} was successfully awarded.' }
       else
         format.html { render action: "new" }
         format.json { render json: @earned_badge.errors, status: :unprocessable_entity }

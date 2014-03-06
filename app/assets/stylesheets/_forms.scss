@@ -4,10 +4,6 @@
 
 form {
   margin: 0;
-
-  .columns {
-    padding-left: 0;
-  }
 }
 
 label {
@@ -53,7 +49,8 @@ label, input {
 }
 
 .score-level .remove-level.button, .remove-element.button {
-  margin-top: 1.3rem;
+  margin-top: 1.8rem;
+  color: #FFF;
 }
 
 /** Styling to make labels on checkboxes and radio forms align properly**/
@@ -62,14 +59,12 @@ label, input {
   display: block;
   min-height: 20px;
   padding-left: 0px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  vertical-align: middle;
+  margin-bottom: 15px;
 }
 .radio label,
 .checkbox label {
-  display: inline;
   margin-bottom: 0;
+  margin-top: -10px;
   font-weight: normal;
   cursor: pointer;
 }
@@ -104,4 +99,16 @@ select:hover {
 
 ul.dropdown-menu {
   background-color: #FFF;
+}
+
+.form_label {
+  font-size: 80%;
+  line-height: 130%;
+  color: #666;
+  font-weight: normal;
+}
+
+.checkbox .form_label {
+
+  margin-left: 1.5rem;
 }

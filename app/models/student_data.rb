@@ -156,17 +156,7 @@ class StudentData < Struct.new(:student, :course)
       end
     end
   end
-
-  #Checking if the student has a submission for an assignment
-  def submission_for_assignment?(assignment)
-    assignment_submissions[assignment.id].present?
-  end
-
-  #Grabbing the submission for an assignment
-  def submission_for_assignment(assignment)
-    assignment_submissions[assignment.id]
-  end
-
+  
   #Checking if the student's group has a submission for an assignment
   def group_submission_for_assignment?(assignment, group)
     assignment_submissions[assignment.id, group.id].present?

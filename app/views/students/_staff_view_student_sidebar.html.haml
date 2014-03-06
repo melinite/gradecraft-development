@@ -7,7 +7,7 @@
           %i.fi-mail
           = current_student.name
     %h3
-      %small= "#{term_for :team} #{current_student.team_for_course(current_course).name}"
+      %small= "#{term_for :team} #{current_student.team_for_course(current_course).name}" if current_student.team_for_course(current_course).present?
     %h3
       %small= "Last activity: #{current_student.try(:last_activity_at) || "(never)"} "
 

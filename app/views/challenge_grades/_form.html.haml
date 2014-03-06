@@ -5,21 +5,20 @@
   .small-12.large-4.columns
     = f.label :score
     = f.text_field :score, data: {autonumeric: true, "m-dec" => "0"}
-    %h6.small out of #{points @challenge.point_total} points
+    .form_label out of #{points @challenge.point_total} points
 
 
   .small-12.large-4.columns
     = f.label :status
     = f.select :status, Grade::STATUSES
-    %h6.small Can the student see this grade?
+    .form_label Can the student see this grade?
 
   .clearfix
 
   .small-12.columns
     = f.bootsy_area :feedback
 
-
   .clearfix
 
   .right
-    = f.button :submit, "#{ @challenge_grade.persisted? ? 'Update' : 'Submit'} #{ term_for :challenge }",  :class => "button tiny radius"
+    = f.button :submit, "#{ @challenge_grade.persisted? ? 'Update' : 'Submit'} #{ term_for :challenge }",  :class => "button tiny radius transparent"

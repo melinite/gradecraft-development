@@ -1,4 +1,14 @@
-- if current_user.is_staff?
-  = render "staff_view"
-- else
-  = render "student_view"
+.small-12.mainContent
+  = content_nav_for @assignment, @grade.student.name do
+    = render "assignments/tabs"
+
+  .small-12.columns
+    - if @grade.assignment.is_individual?
+      %h3 #{link_to @grade.student.name, student_path(@grade.student)}'s  #{link_to @grade.assignment.try(:name), assignment_path(@assignment)}
+
+      = render "individual_show"
+      
+    - else
+      %h3 #{@grade.group.try(:name)}'s #{@grade.assignment.name}
+        
+      = render "group_show"

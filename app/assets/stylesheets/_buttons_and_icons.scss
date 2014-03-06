@@ -1,0 +1,42 @@
+
+h2 a.button.tiny {
+  margin: 0 !important;
+  padding: .2rem .4rem;
+  top: -.3rem;
+}
+
+i.fi-male.present {
+  font-size: 150%;
+  color: $lightblue;
+}
+
+i.fi-male.absent {
+  font-size: 150%;
+  text-shadow: 1px 1px $blue;
+  color: white;
+}
+
+
+.button.tiny.dropdown {
+  font-size: 1rem;
+  padding: .5rem;
+}
+.button.tiny {
+  margin-left: .35rem;
+  padding: .4rem;
+}
+.button.tiny.aindex {
+  margin: 0rem;
+}
+
+/* Used on cancel buttons to reduce distraction */
+.button.transparent {
+  background-color: transparent !important;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+a.btn.btn-primary {
+  background-color: $primary-color;
+  color: #FFF;
+}

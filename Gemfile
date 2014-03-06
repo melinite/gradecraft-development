@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.3'
 
 gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
@@ -27,7 +27,6 @@ gem 'haml'
 gem 'ims-lti'
 gem 'jbuilder'
 gem 'jquery-rails', '~> 2.0'
-gem 'jquery.fileupload-rails'
 gem 'json'
 gem 'kiqstand', :git => 'https://github.com/mongoid/kiqstand.git'
 gem 'markerb'
@@ -67,7 +66,6 @@ group :development do
   gem 'quiet_assets'
   gem 'foreman'
   gem 'rubystats'
-  gem 'rack-mini-profiler'
 end
 
 group :test do

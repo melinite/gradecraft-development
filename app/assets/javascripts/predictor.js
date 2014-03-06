@@ -1,3 +1,4 @@
+
 // add commas to predictor displays below
 function addCommas(i){
 	numWithCommas = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

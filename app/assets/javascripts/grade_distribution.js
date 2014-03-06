@@ -37,3 +37,4 @@
       clearTimeout(sparkResize);
       sparkResize = setTimeout(sparkOpts, 500);
   });
+

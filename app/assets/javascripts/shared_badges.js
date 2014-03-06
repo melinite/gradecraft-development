@@ -83,3 +83,4 @@
     window.shared_badges = new SharedBadgeView()
     window.all_badges = new AllBadgesView()
   }
+  

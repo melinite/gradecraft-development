@@ -1,35 +1,20 @@
 %h4
   .small-2= "#{term_for :group}:"
-  .small-10= link_to @group.name, group_path(@grade.group)
+  - if @group.present?
+    .small-10= link_to @group.name, group_path(@grade.group)
 
+    - @group.students.each do |student|
+      %h3 #{term_for :student}
+      = link_to @assignment.grade_for_student(student).student.name, student_path(@assignment.grade_for_student(student).student)
 %hr.clear
 
-- @group.students.each do |student|
-  %h3 #{term_for :student}
-  = link_to @assignment.grade_for_student(student).student.name, student_path(@assignment.grade_for_student(student).student)
-  .heading.col-lg-2 Raw Score:
-  .col-lg-offset-2= @assignment.grade_for_student(student).raw_score if (@assignment.grade_for_student(student).is_graded? || @assignment.grade_for_student(student).is_released?)
-  - if @assignment.grade_for_student(student).final_score?
-    .heading.col-lg-2 Final Score:
-    .col-lg-offset-2= @assignment.grade_for_student(student).final_score
-  - if @assignment.grade_for_student(student).grade_files.present?
-    .heading.col-lg-2 Documents:
-    .col-lg-offset-2
-      - @assignment.grade_for_student(student).grade_files.each do |gf|
-        = link_to gf.filename, gf.url
-        = link_to "(Remove)", remove_uploads_path({ :model => "GradeFile", :grade_file_id => gf.id, :redirect => { :controller => "grade", :id => @grade.id } } )
 
-  - if @assignment.grade_for_student(student).feedback?
-    .heading.col-lg-2 Feedback:
-    .col-lg-offset-2= raw @assignment.grade_for_student(student).feedback
+  - if @group.present? && @group.submission_for_assignment(@assignment)
+    = render "submission"
 
-  - if @assignment.grade_for_student(student).earned_badges.present?
-    .heading.col-lg-2= "#{term_for :badges}:"
-    .col-lg-offset-2
-      - @assignment.grade_for_student(student).earned_badges.each do |badge|
-        %img{:src => badge.try(:icon), :alt => badge.name, :width => "40", :height => "40"}
+.clearfix
 
-  - if @assignment.grade_for_student(student).assignment.release_necessary?
-    .heading.col-lg-2 Status:
-    .col.col-lg-offset-2= @assignment.grade_for_student(student).status
-  %hr
+= render "results"
+
+//= render "analytics"
+

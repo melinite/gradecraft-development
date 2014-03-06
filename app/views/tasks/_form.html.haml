@@ -5,4 +5,4 @@
 
   .form-actions
     = f.button :submit, "#{@task.persisted? ? 'Update' : 'Create'} Task", :class => "button tiny radius"
-    = link_to 'Cancel', taskable_path(@taskable), :class => 'button tiny radius'
+    = link_to 'Cancel', taskable_path(@taskable), :class => 'button tiny radius transparent'

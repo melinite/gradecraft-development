@@ -30,3 +30,5 @@
       clearTimeout(sparkResize);
       sparkResize = setTimeout(sparkOpts, 500);
   });
+
+  $('#myStat').circliful();

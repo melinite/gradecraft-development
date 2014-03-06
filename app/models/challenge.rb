@@ -1,10 +1,9 @@
 class Challenge < ActiveRecord::Base
 
-  attr_accessible :assignment, :assignment_id, :name, :description, :icon,
-    :visible, :created_at, :updated_at, :image_file_name, :occurrence,
-    :category_id, :value, :multiplier, :point_total, :due_at,
-    :accepts_submissions, :release_necessary, :course, :team, :challenge,
-    :challenge_file_ids, :challenge_files_attributes, :challenge_file, :challenge_grades_attributes
+  attr_accessible :name, :description, :icon, :visible, :image_file_name, :occurrence,
+    :category_id, :value, :multiplier, :point_total, :due_at, :open_at, :accepts_submissions, 
+    :release_necessary, :course, :team, :challenge, :challenge_file_ids, 
+    :challenge_files_attributes, :challenge_file, :challenge_grades_attributes
 
   belongs_to :course
   has_many :submissions

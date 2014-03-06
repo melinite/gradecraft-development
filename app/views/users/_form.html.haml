@@ -56,7 +56,7 @@
           .small-12
             = f.label :default_course_id, "Default Course"
             = f.select :default_course_id, options_from_collection_for_select(@courses, "id", "name", @user.try(:default_course_id))
-            %h6.small This course will be automatically loaded when a student logs in to GradeCraft
+            .form_label This course will be automatically loaded when a student logs in to GradeCraft
 
           %hr
           .small-12
@@ -72,10 +72,10 @@
             .small-12.medium-12.columns
               = p.input :auditing, :label => "Auditing"
               .clearfix
-              %h6.small This #{term_for :student}'s grades will be excluded from course analysis
+              .form_label This #{term_for :student}'s grades will be excluded from course analysis
             .small-12.medium-12.columns
               = p.input :shared_badges, :label => "Sharing #{term_for :badges}"
-              %h6.small This #{term_for :student}'s #{term_for :badges} will be displayed on a class leaderboard
+              .form_label This #{term_for :student}'s #{term_for :badges} will be displayed on a class leaderboard
             .clearfix
 
       .clearfix
@@ -86,4 +86,4 @@
 
   .right
     = submit_tag "#{@user.persisted? ? 'Update' : 'Create'} User", :class => "button tiny radius"
-    = link_to 'Cancel', users_path, :class => 'button tiny radius'
+    = link_to 'Cancel', users_path, :class => 'button tiny radius trasnparent'

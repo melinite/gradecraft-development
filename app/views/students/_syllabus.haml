@@ -30,7 +30,7 @@
                     - if assignment.required?
                       %span.has-tip{:title => "This #{term_for :assignment} is required!", :data => {'tooltip' => true} }
                         %i.fi-star
-                    %span.assignmentName= link_to assignment.name, assignment_grade_path(assignment, :student_id => current_student)
+                    %span.assignmentName= link_to assignment.name, assignment_path(assignment, :student_id => current_student)
                   %td
                     - if assignment.assignment_type.student_weightable?
                       - grade = current_student_data.grade_for_assignment(assignment)
@@ -62,8 +62,9 @@
                   - else
                     - if assignment.accepts_submissions?
                       %td= render "students/submissions", assignment: assignment
-                  - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
-                    %td= link_to "See Feedback", assignment_grade_path(assignment, :student_id => current_student), :class => "button tiny radius primary"
+                  %td
+                    - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
+                      = link_to "See Feedback", assignment_grade_path(assignment, :student_id => current_student), :class => "button tiny radius primary"
                   - if current_user.is_staff?
                     - if assignment.is_individual?
                       - if current_student_data.grade_released_for_assignment?(assignment)

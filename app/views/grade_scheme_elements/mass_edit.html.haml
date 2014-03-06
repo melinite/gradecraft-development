@@ -19,11 +19,11 @@
             = f.simple_fields_for :grade_scheme_elements, element do |ef|
               = render 'element_fields', f: ef
 
-      = link_to 'Add an Element', '#', class: 'add-element button tiny radius'
+        = link_to 'Add an Element', '#', class: 'add-element button tiny radius'
 
 
       .right
         = f.button :submit, :class => "button tiny radius"
-        = link_to 'Cancel', grade_scheme_elements_path, :class => 'button tiny radius'
+        = link_to 'Cancel', grade_scheme_elements_path, :class => 'button tiny radius transparent'
 
   .clearfix

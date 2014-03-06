@@ -12,8 +12,8 @@
             %h3.collapse= "#{assignment_type.name} – #{points assignment_type.max_value} points"
             %div
               .small-3.right
-                .button-bar.right
-                  %ul.button-group.round
+                .button-bar
+                  %ul.button-group.round.right
                     %li= link_to "See Overview", all_grades_assignment_type_path(assignment_type), :class => "button tiny aindex"
                     %li= link_to "Edit", edit_assignment_type_path(assignment_type), :class => "button tiny aindex"
               %table.responsive.simpleTable

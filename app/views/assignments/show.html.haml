@@ -7,32 +7,29 @@
     = content_nav_for @assignment do
       = render "students/student_profile_tabs"
 
-  .small-4.medium-10.columns
+  .small-12.columns
+    %h2
+      = "#{@title} (#{ points @assignment.point_total } points)"
+      = link_to "Edit", edit_assignment_path(@assignment), :class => "button tiny secondary radius" if current_user.is_staff?
 
-    %h2= "#{@title} (#{ points @assignment.point_total } points)"
-
-    .assignmentDescription
-      - if @assignment.open_at?
-        .small-12.medium-4.columns.panel
-          .bold Open date:
-          = @assignment.open_at
-
-      - if @assignment.due_at?
-        .small-12.medium-4.columns.panel
-          .bold Due date:
-          = @assignment.due_at
-
-      - if @assignment.accepts_submissions_until?
-        .small-12.large-4.columns.panel
-          .bold Accept submissions until:
-          %span.has-tip{:title => "Not shown to students", :data => {'tooltip' => true} }= @assignment.accepts_submissions_until
-
-      .clearfix
-
+    .small-12.medium-7.columns.columns-no-padding
       - if @assignment.description?
         %p= raw @assignment.description
 
-
+    .small-12.medium-4.right.columns
+      - if @assignment.open_at?
+        Open:
+        %span.bold= @assignment.open_at
+      .clearfix
+      - if @assignment.due_at?
+        Due:
+        %span.bold= @assignment.due_at
+      .clearfix
+      - if current_user.is_staff?
+        - if @assignment.accepts_submissions_until?
+          Accepted until:
+          %span.bold.has-tip{:title => "Not shown to students", :data => {'tooltip' => true} }= @assignment.accepts_submissions_until
+      .clearfix
       - if @assignment.assignment_files.present?
         %p
           %b Attachments:
@@ -42,17 +39,21 @@
                 = link_to af.filename, af.url
                 = link_to " (Remove)", remove_uploads_path({ :model => "AssignmentFile", :upload_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id} } )
 
-  - if current_course.has_teams? && @assignment.is_individual?
-    .small-12.right.medium-4.columns
-      = form_tag assignment_path(@assignment), :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
-        = hidden_field_tag :assignment_id, @assignment.id
-        = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
+    %hr
 
-  .small-12.columns
-    - if @assignment.has_groups?
-      = render 'group_show'
-    - else
-      = render 'individual_show'
+  - if current_user.is_staff?
+    .small-12.columns
+      - if @assignment.has_groups?
+        = render "group_show"
+      - else
+        = render "individual_show"
+    .clearfix
+  - else
+    .small-12.columns
+      - if @assignment.has_groups?
+        = render "grades/group_show"
+      - else
+        = render "grades/individual_show"
+    .clearfix
 
-  .clearfix
-
+      

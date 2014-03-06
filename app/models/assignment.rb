@@ -116,10 +116,12 @@ class Assignment < ActiveRecord::Base
     grades.graded.minimum('grades.score')
   end
 
+  #average of all grades for an assignment
   def average
     grades.graded.average('grades.score').to_i if grades.graded.present?
   end
 
+  #average of above-zero grades for an assignment
   def earned_average
     if grades.graded.present?
       grades.graded.where("score > 0").average('score').to_i
@@ -278,7 +280,6 @@ class Assignment < ActiveRecord::Base
    ((grade_count / course.graded_student_count.to_f) * 100).round(2)
   end
 
-  # Lauren added:
   #Calculates attendance rate as an integer.
    def attendance_rate_int(course)
    ((positive_grade_count / course.graded_student_count.to_f) * 100).to_i
@@ -302,6 +303,26 @@ class Assignment < ActiveRecord::Base
         csv << [student.first_name, student.last_name, student.email, student.grade_for_assignment(assignment).score, student.submission_for_assignment(assignment).try(:text_comment), student.grade_for_assignment(assignment).try(:feedback) ]
       end
     end
+  end
+
+  # Calculating how many of each score exists
+  def score_count
+    Hash[grades.graded.group_by{ |g| g.score }.map{ |k, v| [k, v.size] }]
+  end
+
+  # Calculating how many of each score exists
+  def percentage_score_count
+    Hash[grades.graded.group_by{ |g| g.score }.map{ |k, v| [k, v.size / grades.graded.count.to_f] }]
+  end
+
+  def percentage_score_earned
+    scores = []
+    percentage_score_count.each do |score|
+      scores << { :data => score[1], :name => score[0] }
+    end
+    return {
+      :scores => scores
+    }
   end
 
   private

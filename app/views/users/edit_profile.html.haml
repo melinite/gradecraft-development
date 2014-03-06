@@ -9,8 +9,8 @@
       .small-3.columns.text-center
         = gravatar_for @user, :size => 200
         .clearfix
-        %p
-        %h6
+        %hr
+        .form_label 
           Need a Gravatar?
           = link_to "Get One Here!", "https://en.gravatar.com/"
 
@@ -28,17 +28,17 @@
               .small-12.large-4.columns
                 = f.label :display_name, "Pseudonym"
                 = f.text_field :display_name
-                %h6.small What would you like your name to be on the leaderboards?
+                .form_label What would you like your name to be on the leaderboards?
             - if current_course.team_roles? 
               .small-12.large-4.columns
                 = f.label :team_role, "#{term_for :team} Role"
                 = f.text_field :team_role
-                %h6.small What will you contribute to your #{term_for :team}?"
+                .form_label What will you contribute to your #{term_for :team}?"
 
           .small-12.medium-4.columns
             = f.label :default_course_id, "Default Course"
             = f.select :default_course_id, options_from_collection_for_select(@default_course_options, "id", "name")
-            %h6.small This course will be automatically loaded when you log in to GradeCraft
+            .form_label This course will be automatically loaded when you log in to GradeCraft
 
           
           - if @user.is_student?
@@ -46,7 +46,7 @@
               - if current_course.shared_badges?
                 .small-12.large-4.columns
                   = p.input :shared_badges, :label => "Shared #{term_for :badges}", as: :boolean
-                  %h6.small Do you want to publically display the #{term_for :badges} you earn? You'll still be able to decide which specific #{term_for :badges} you want to share.
+                  .form_label Do you want to publically display the #{term_for :badges} you earn? (You'll still be able to decide which specific #{term_for :badges} you want to share.)
               - if current_course.character_profiles?
                 .small-12.large-4.columns
                   = p.input :character_profile, :label => "Character Profile", :hint => "This will be displayed on the #{term_for :team} leaderboard"

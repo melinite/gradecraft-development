@@ -532,8 +532,8 @@ CREATE TABLE badges (
     icon character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    visible boolean,
-    can_earn_multiple_times boolean
+    visible boolean DEFAULT true,
+    can_earn_multiple_times boolean DEFAULT true
 );
 
 
@@ -732,7 +732,7 @@ CREATE TABLE challenges (
     due_at timestamp without time zone,
     course_id integer,
     points_predictor_display character varying(255),
-    visible boolean,
+    visible boolean DEFAULT true,
     accepts_submissions boolean,
     release_necessary boolean,
     created_at timestamp without time zone NOT NULL,
@@ -1611,7 +1611,8 @@ CREATE TABLE teams (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     teams_leaderboard boolean DEFAULT false,
-    in_team_leaderboard boolean DEFAULT false
+    in_team_leaderboard boolean DEFAULT false,
+    banner character varying(255)
 );
 
 
@@ -3142,3 +3143,7 @@ INSERT INTO schema_migrations (version) VALUES ('20131231151417');
 INSERT INTO schema_migrations (version) VALUES ('20140108042034');
 
 INSERT INTO schema_migrations (version) VALUES ('20140205153717');
+
+INSERT INTO schema_migrations (version) VALUES ('20140304230129');
+
+INSERT INTO schema_migrations (version) VALUES ('20140305040029');

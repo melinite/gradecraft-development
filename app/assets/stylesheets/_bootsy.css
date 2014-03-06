@@ -47,8 +47,11 @@
 }
 
 ul.wysihtml5-toolbar {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: .5em .5em 0!important;
+  background-color: #eee;
   display: block;
 }
 
@@ -299,11 +302,16 @@ textarea.bootsy:required:invalid {
 
 /*Modal Design Styles*/
 
-.bootsy-modal .file-input-name {display: none;}  /*Hide the input file name from showing as it's not needed and ruins design*/
+.modal-content .file-input-name {display: none;}  /*Hide the input file name from showing as it's not needed and ruins design*/
 
 /*Set a min-height on the modal body to prevent jumping up and down of modal when adding content*/
-.bootsy-modal .modal-body {
+.modal-content .modal-body {
   min-height: 120px;
+}
+
+.modal-content .modal-body input.bootstrap-wysihtml5-insert-link-url, .modal-content .modal-body input.bootstrap-wysihtml5-insert-image-url {
+  width: 100%;
+  height: 2em;
 }
 
 .bootsy-image {
@@ -326,9 +334,10 @@ textarea.bootsy:required:invalid {
   opacity: .01;
 }
 
-/* Avoid Boostrap input borders */
-body.bootsy_text_area.form-control {
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+th.next, th.prev {
+  background-color: $secondary-color;
+}
+
+th.next {
+  content: "\e144";
 }

@@ -10,7 +10,7 @@
             .right= render "students/submissions", assignment: assignment
           - else
             .right= render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
-        - if current_student_data.submission_for_assignment?(assignment)
+        - if current_student.submission_for_assignment(assignment).present?
           %h6.strikethrough= link_to "#{assignment.try(:name)}", assignment
         - else
           %h6

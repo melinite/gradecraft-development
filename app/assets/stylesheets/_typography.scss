@@ -1,0 +1,48 @@
+
+.bold {
+  font-weight: bold;
+}
+
+.not_bold {
+  font-weight: normal !important;
+}
+
+.inverse {
+  color: #FFF;
+}
+.underline {
+  text-decoration: underline;
+}
+
+.center {
+  text-align: center;
+}
+
+.pushdown{
+  padding-top: .3rem;
+}
+
+.pushup{
+  padding-bottom: .2rem;
+}
+
+.transparent{
+  opacity: .6;
+}
+
+/* Add the sprite to the assignment expand */ 
+h3.collapse a {
+  background: image-url("sprite.png") 10px 16px no-repeat;
+  padding: .5rem 1.6rem;
+  border-radius: .5rem;
+}
+
+h6.small {
+  font-size: .8rem;
+  line-height: 130%;
+  color: #666;
+  clear: both;
+  margin-left: 0;
+  margin-top: 0;
+  padding-top: 0;
+}

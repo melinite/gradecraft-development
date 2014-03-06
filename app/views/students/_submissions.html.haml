@@ -1,4 +1,4 @@
-- if current_student_data.submission_for_assignment?(assignment)
+- if current_student.submission_for_assignment(assignment).present?
   = link_to "See Submission", assignment_grade_path(assignment, :student_id => current_student), :class => 'button tiny radius'
 - elsif assignment.future? || assignment.still_accepted?
   = link_to "Submit", new_assignment_submission_path(assignment, :student_id => current_student), :class => 'button tiny secondary radius'
