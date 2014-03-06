@@ -42,6 +42,7 @@
               %td
                 - if team.banner.present?
                   %img{:src => team.banner}
+                  .form_label= team.name
                 - else
                   = team.name
               - if current_course.team_score_average?
