@@ -29,8 +29,6 @@ $alert-color: #f04124;
 $success-color: #67CF30;
 
 
-
-
 /* Importing supporting files. If you create a new css file you'll need to add it here.  */
 @import 'foundation_and_overrides';
 @import 'compass';
@@ -47,4 +45,5 @@ $success-color: #67CF30;
 @import 'bootsy';
 @import 'layout';
 @import 'buttons_and_icons';
+@import 'typography';
 

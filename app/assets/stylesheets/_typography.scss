@@ -10,6 +10,25 @@
 .inverse {
   color: #FFF;
 }
+.underline {
+  text-decoration: underline;
+}
+
+.center {
+  text-align: center;
+}
+
+.pushdown{
+  padding-top: .3rem;
+}
+
+.pushup{
+  padding-bottom: .2rem;
+}
+
+.transparent{
+  opacity: .6;
+}
 
 /* Add the sprite to the assignment expand */ 
 h3.collapse a {
