@@ -5,6 +5,7 @@ class InfoController < ApplicationController
 
   # Displays instructor dashboard, with or without Team Challenge dates 
   def dashboard
+    @grade_scheme_elements = current_course.grade_scheme_elements
     if current_course.team_challenges?
       @events = current_course.assignments.timelineable.to_a + current_course.challenges
     else
