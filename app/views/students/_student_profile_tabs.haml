@@ -7,7 +7,7 @@
     = link_to_unless_current "Timeline", student_timeline_path(current_student)
   - if current_course.grading_philosophy.present?
     %li{class: ("active" if current_page?(student_grading_philosophy_path(current_student))) }
-      = link_to_unless_current "Grade Philosophy", student_grading_philosophy_path(current_student)
+      = link_to_unless_current "Course Progress", student_grading_philosophy_path(current_student)
   - if current_course.predictor_on?
     %li{class: ("active" if current_page?(student_predictor_path(current_student))) }
       = link_to_unless_current "Grade Predictor", student_predictor_path(current_student)
@@ -24,7 +24,7 @@
     = link_to_unless_current "#{term_for :assignments}", syllabus_path
   - if current_course.grading_philosophy.present?
     %li{class: ("active" if current_page?(grading_philosophy_path)) }
-      = link_to_unless_current "Grade Philosophy", grading_philosophy_path
+      = link_to_unless_current "Course Progress", grading_philosophy_path
   - if current_course.predictor_on?
     %li{class: ("active" if current_page?(predictor_path)) }
       = link_to_unless_current "Grade Predictor", predictor_path
