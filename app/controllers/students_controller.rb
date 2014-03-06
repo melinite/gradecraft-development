@@ -36,12 +36,6 @@ class StudentsController < ApplicationController
     end
   end
 
-  # Displaying ranked order of students and scores
-  def leaderboard
-    @title = "#{current_course.user_term} Leaderboard"
-    @sorted_students = params[:team_id].present? ? current_course_data.students_for_team(Team.find(params[:team_id])) : current_course.students
-  end
-
   def show
     self.current_student = current_course.students.where(id: params[:id]).first
     

@@ -1,0 +1,7 @@
+Dear <%= @user.first_name %>,
+
+Congratulations, you've been awarded the <%= @earned_badge.badge.name %> <%= @course.badge_term %> badge.
+
+Play on!
+
+GradeCraft

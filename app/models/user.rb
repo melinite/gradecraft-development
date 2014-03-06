@@ -264,9 +264,6 @@ class User < ActiveRecord::Base
     end
   end
 
-
-
-
   #student setting as to whether or not they wish to share their earned badges for this course
   def badges_shared(course)
     course_memberships.any? { |m| m.course_id = course.id and m.shared_badges }
@@ -317,7 +314,7 @@ class User < ActiveRecord::Base
   end
 
   def grade_for_assignment(assignment)
-    grades.where(assignment: assignment)
+    grades.where(assignment: assignment).first
   end
 
   def released_score_for_assignment_type(assignment_type)

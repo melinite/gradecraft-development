@@ -4,5 +4,5 @@
 
   .form-actions
     = f.button :submit, "#{@category.persisted? ? 'Update' : 'Create'} #{term_for :category}",  :class => "button tiny radius"
-    = link_to 'Cancel', categories_path, :class => 'button tiny radius'
+    = link_to 'Cancel', categories_path, :class => 'button tiny radius transparent'
 

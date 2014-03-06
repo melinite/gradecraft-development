@@ -1,49 +1,53 @@
 $(document).ready(function() {
-    $('#levels_per_assignment').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            width: 450,
-            height: 300
+ var options = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        renderTo: 'levels_per_assignment'
         },
-        title: {
-            text: ' '
-        },
+      title: {
+        text: 'Percentage of Earned Scores'
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
       credits: {
         enabled: false
       },
-        tooltip: {
-    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    color: '#000000',
-                    connectorColor: '#000000',
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Browser share',
-            data: [
-                ['Firefox',   45.0],
-                ['IE',       26.8],
-                {
-                    name: 'Chrome',
-                    y: 12.8,
-                    sliced: true,
-                    selected: true
-                },
-                ['Safari',    8.5],
-                ['Opera',     6.2],
-                ['Others',   0.7]
-            ]
-        }]
-    });
+      plotOptions: {
+        pie: {
+          allowPointSelect: false,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            color: '#000000',
+            connectorColor: '#000000'
+          }
+        }
+      },
+      series: []
+    };
+
+    var seriesNew = {
+      type: 'pie',
+      data: []
+    };
+
+    if ($('#levels_per_assignment').length) {
+      data = JSON.parse($('#levels_per_assignment').attr('data-levels'));
+      myJson = data.scores;
+    
+      jQuery.each(myJson, function (itemNo, item) {
+        seriesNew.data.push({
+          name: String(item.name),
+          y: item.data
+        })
+      });
+
+      options.series.push(seriesNew); 
+
+      chart = new Highcharts.Chart(options);
+    }
+
 });

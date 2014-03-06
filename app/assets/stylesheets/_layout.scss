@@ -1,0 +1,120 @@
+
+/* Background image for site, this is declared because otherwise it overrides the text editor's bkg */
+body.logged-in, body.logged-out {
+  background: image-url("cloud_bg.gif");
+}
+
+
+/* Primary page content */ 
+.mainContent {
+  border-left: 10px solid $green;
+  border-right: 10px solid $green;
+  border-bottom: 10px solid $green;
+  border-top: none;
+  border-bottom: none;
+  background-color: #FFF;
+  min-height: 815px;
+  margin: 0;
+  padding: 0;
+  border-radius: $global-radius;
+}
+
+/* Front facing page, not logged in */ 
+.row.panel.publicContent {
+  margin-bottom: 0;
+  padding-top: 2rem;
+  border: none;
+  background-color: #FFF;
+  min-height: 30rem;
+}
+
+.row.panel.footer {
+  margin-top: 0;
+  color: $secondary-color;
+  background-color: $darkgrey;
+  border: none;
+
+  h6 {
+    color: $secondary-color;
+  }
+
+  a {
+    color: #FFF;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    list-style-type: none;
+    font-size: .9rem;
+  }
+}
+
+.columns-no-padding {
+  padding: 0;
+}
+
+/* Force the alert to be below the navigation */ 
+.alert-box {
+  margin-top: 1rem;
+}
+
+/* Allow other things to appear above the timeline */
+.vco-storyjs {
+  z-index: 0;
+}
+
+#attachments {
+  clear: both;
+  margin: 2rem 0 1.5rem;
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid $blue;
+}
+
+
+.content#boxplot, .content#submitted, .content#levels {
+  padding: 1rem;
+}
+.panel p {
+  margin-bottom: 0;
+}
+
+
+/* Responsive outer container */ 
+@media (min-width: 1000px)  {
+  .mainContent {
+    margin-top: 1rem;
+  }
+
+  .publicContent {
+    margin-top: 4rem;
+  }
+}
+
+@media (max-width: 1000px)  {
+  .mainContent, .sideBar.panel {
+    border-radius: 0;
+  }
+  .columns.outerContainer, .sideBar.panel {
+    margin: 0 !important;
+    padding: 0;
+  }
+  .publicContent {
+    margin: 1.5rem 0 0 ;
+    padding: 0;
+  }
+}
+
+@media (max-width: 640px)  {
+  .mainContent {
+    border-radius: 0;
+  }
+  .columns.outerContainer, .publicContent, div.small-12.medium-4.large-3.columns.sideBar.panel {
+    margin: 1.5rem 0 0 ;
+    padding: 0;
+  }
+}

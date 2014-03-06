@@ -2,7 +2,7 @@
   %li{class: ("active" if current_page?(edit_user_path(current_student))) }
     = link_to_unless_current "Edit #{current_student.name}'s Profile", edit_user_path(current_student)
   %li{class: ("active" if current_page?(student_path(current_student))) }
-    = link_to_unless_current "Syllabus", student_path(current_student)
+    = link_to_unless_current "#{term_for :assignments}", student_path(current_student)
   %li{class: ("active" if current_page?(student_timeline_path(current_student))) }
     = link_to_unless_current "Timeline", student_timeline_path(current_student)
   - if current_course.grading_philosophy.present?
@@ -21,7 +21,7 @@
   %li{class: ("active" if current_page?(dashboard_path)) }
     = link_to_unless_current "Timeline", dashboard_path
   %li{class: ("active" if current_page?(syllabus_path)) }
-    = link_to_unless_current "Syllabus", syllabus_path
+    = link_to_unless_current "#{term_for :assignments}", syllabus_path
   - if current_course.grading_philosophy.present?
     %li{class: ("active" if current_page?(grading_philosophy_path)) }
       = link_to_unless_current "Grade Philosophy", grading_philosophy_path

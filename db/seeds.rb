@@ -26,13 +26,3 @@ User.create! do |u|
   u.email = 'fishman@umich.edu'
 end
 puts "Barry is here..."
-
-# Generate Cory
-User.create! do |u|
-  u.username = 'kaufmanc'
-  u.first_name = 'Cory'
-  u.last_name = 'Kaufman-Schofield'
-  u.role = 'admin'
-  u.email = 'cory@corykaufman.com'
-end
-puts "Thank goodness for Cory"

@@ -13,7 +13,7 @@
     .small-12.large-4.columns
       = f.label :courseno, "Course Number"
       = f.text_field :courseno
-      %h6.small This will be used as the prefix to the subject line on all email notifications sent for the course
+      .form_label This will be used as the prefix to the subject line on all email notifications sent for the course
 
     .clearfix
 
@@ -66,7 +66,7 @@
     .small-12.large-4.columns
       = f.label :point_total, "Maximum Number of Points"
       = f.text_field :point_total, data: {autonumeric: true, "m-dec" => "0"}
-      %h6.small If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create.
+      .form_label If you leave this blank, GradeCraft will calculate the total number of points based on the assignments you create.
 
     .clearfix
 
@@ -80,18 +80,18 @@
       %label.checkbox{ :for => "accepts_submissions" }
         = f.label :accepts_submissions, "Assignment Submissions"
         = f.check_box :accepts_submissions
-      %h6.small Will you be using GradeCraft to accept assignment submissions?
+        .form_label Will you be using GradeCraft to accept assignment submissions?
 
     .small-12.large-4.columns
       = f.input :predictor_setting, :label => "Grade Predictor"
-      %h6.small The grade predictor is a tab on the student dashboard where students can plan out their course work and estimate their grade.
+      .form_label The grade predictor is a tab on the student dashboard where students can plan out their course work and estimate their grade.
 
     .clearfix
 
     .small-12
-      %h6.small What would you like to tell students about how they should expected to be graded?
       = f.bootsy_area :grading_philosophy
-
+      .form_label What would you like to tell students about how they should expected to be graded?
+      
     .clearfix
 
   .panel
@@ -99,16 +99,16 @@
     %hr
     .small-12.large-4.columns
       = f.input :badge_setting, :label => "Badges"
-      %h6.small Do you want to use badges in your course?"
+      .form_label Do you want to use badges in your course?"
 
     .small-12.large-4.columns
       = f.label :badge_term, "Badge Term"
       = f.text_field :badge_term
-      %h6.small Would you like to call badges something else?"
+      .form_label Would you like to call badges something else?"
 
     .small-12.large-4.columns
       = f.input :shared_badges, :label => "Social Badges"
-      %h6.small Students can share badges with the class"
+      .form_label Students can share badges with the class"
 
     .clearfix
 
@@ -126,12 +126,12 @@
       %label.checkbox{ :for => "team_setting" }
         = f.label :team_setting, "Sections"
         = f.check_box :team_setting
-      %h6.small Will you have semester-long sections in your course?
+        .form_label  Will you have semester-long sections in your course?
 
     .small-12.large-4.columns
       = f.label :team_term, "Section Term"
       = f.text_field :team_term
-      %h6.small What will you call these? Team, House, Section...
+      .form_label  What will you call these? Team, House, Section...
 
     
 
@@ -139,7 +139,7 @@
       %label.checkbox{ :for => "team_challenges" }
         = f.label :team_challenges, "Section Assignments"
         = f.check_box :team_challenges
-      %h6.small Will the sections have to complete assignments collaboratively?
+        .form_label  Will the sections have to complete assignments collaboratively?
 
     .clearfix
 
@@ -147,13 +147,13 @@
       %label.checkbox{ :for => "team_score_average" }
         = f.label :team_score_average, "Section Score = Average User Score"
         = f.check_box :team_score_average
-      %h6.small Will sections' scores be the average of their students' scores?
+        .form_label  Will sections' scores be the average of their students' scores?
 
     .small-12.large-4.columns
       %label.checkbox{ :for => "add_team_score_to_student" }
         = f.label :add_team_score_to_student, "Student Score = Grades + Team Assignments"
         = f.check_box :add_team_score_to_student
-      %h6.small Do you want team assignment scores to be added directly into student scores?
+        .form_label  Do you want team assignment scores to be added directly into student scores?
 
     
 
@@ -161,13 +161,13 @@
       %label.text_field{ :for => "challenge_term" }
         = f.label :challenge_term, "Section Assignment Term"
         = f.text_field :challenge_term
-      %h6.small What would you like to call these section assignments? Quests, Boss Battles, Challenges...
+        .form_label What would you like to call these section assignments? Quests, Boss Battles, Challenges...
 
     .small-12.large-4.columns
       %label.checkbox{ :for => "teams_visible" }
         = f.label :teams_visible, "Section Leaderboard"
         = f.check_box :teams_visible
-      %h6.small Can students see a leaderboard of the section rankings and their points?
+        .form_label Can students see a leaderboard of the section rankings and their points?
 
     .clearfix
 
@@ -175,18 +175,18 @@
       %label.checkbox{ :for => "in_team_leaderboard" }
         = f.label :in_team_leaderboard, "In-Section Leaderboard"
         = f.check_box :in_team_leaderboard
-      %h6.small Can students see in-section rankings and points (students must opt in to this by adding a screenname to protect their privacy)?
+        .form_label Can students see in-section rankings and points (students must opt in to this by adding a screenname to protect their privacy)?
 
     .small-12.large-4.columns
       %label.checkbox{ :for => "team_roles" }
         = f.label :team_roles, "Section Roles"
         = f.check_box :team_roles
-      %h6.small Do students self-declare their role within the section?
+        .form_label Do students self-declare their role within the section?
 
     .small-12.large-4.columns
       = f.label :team_leader_term, "What do you call your section leaders?"
       = f.text_field :team_leader_term
-      %h6.small TA, GSI, Team Leader..."
+      .form_label TA, GSI, Team Leader..."
 
     .clearfix
 
@@ -197,12 +197,12 @@
       %label.checkbox{ :for => "group_setting" }
         = f.label :group_setting, "Groups"
         = f.check_box :group_setting
-      %h6.small Will students work in groups on any assignments, and thus all receive the same grade?
+        .form_label Will students work in groups on any assignments, and thus all receive the same grade?
 
     .small-12.large-4.columns
       = f.label :group_term
       = f.text_field :group_term
-      %h6.small What will these groups be called?
+      .form_label What will these groups be called?
 
     .clearfix
 
@@ -224,7 +224,7 @@
     .small-12.large-4.columns
       = f.label :user_term, "User Term"
       = f.text_field :user_term
-      %h6.small What will you call your user? Student, Learner, Player..."
+      .form_label What will you call your user? Student, Learner, Player..."
 
     .small-12.large-4.columns
       %label.checkbox{ :for => "academic_history_visible" }
@@ -240,12 +240,11 @@
     .small-12.large-4.columns
       = f.label :total_assignment_weight, "Multiplier Count"
       = f.text_field :total_assignment_weight, data: {autonumeric: true, "m-dec" => "0"}
-      %h6.small
 
     .small-12.large-4.columns
       = f.label :assignment_weight_close_at, "Multiplier Close Date"
       = f.input :assignment_weight_close_at, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker', :value => @assignment.try(:open_at) }, :label => false
-      %h6.small What date must they make this decision by?
+      .form_label What date must they make this decision by?
 
     .small-12.large-4.columns
       = f.label :max_assignment_weight, "Maximum amount that students may allocate"
@@ -256,17 +255,17 @@
     .small-12.large-4.columns
       = f.label :max_assignment_types_weighted, "Maximum Multiplied Assignment Types"
       = f.text_field :max_assignment_types_weighted, data: {autonumeric: true, "m-dec" => "0"}
-      %h6.small Is there a maximum number of assignment types that students can select to weight?"
+      .form_label Is there a maximum number of assignment types that students can select to weight?"
 
     .small-12.large-4.columns
       = f.label :default_assignment_weight
       = f.text_field :default_assignment_weight, data: {autonumeric: true, "m-dec" => "0"}
-      %h6.small What amount should the assignment types that the student doesn't select to boost be multiplied by?
+      .form_label What amount should the assignment types that the student doesn't select to boost be multiplied by?
 
     .small-12.large-4.columns
       = f.label :weight_term
       = f.text_field :weight_term
-      %h6.small What do you want to call these weights/multipliers?
+      .form_label What do you want to call these weights/multipliers?
 
     .clearfix
 
@@ -277,14 +276,14 @@
       %label.checkbox{ :for => "use_timeline" }
         = f.label :use_timeline, "Timeline"
         = f.check_box :use_timeline
-      %h6.small Would you like to use the interactive timeline to display your syllabus?
+        .form_label Would you like to use the interactive timeline to display your syllabus?
 
     .clearfix
 
     .small-12.large-4.columns
       = f.label :media_file
       = f.text_field :media_file
-      %h6.small What video or image file (on YouTube, Flickr or Vimeo) would you like to display here?
+      .form_label What video or image file (on YouTube, Flickr or Vimeo) would you like to display here?
 
     .small-12.large-4.columns
       = f.label :media_credit, "Media Credit"
@@ -298,4 +297,4 @@
 
   .right
     = f.button :submit, "#{@course.persisted? ? 'Update' : 'Create'} Course", :class => "button tiny radius"
-    = link_to 'Cancel', courses_path, :class => 'button tiny radius'
+    = link_to 'Cancel', courses_path, :class => 'button tiny radius transparent'

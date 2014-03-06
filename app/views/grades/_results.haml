@@ -1,20 +1,20 @@
-.small-12.large-6.columns
+- if current_student.grade_for_assignment(@assignment).present?
   - if current_user.is_student?
-    .bold Your Results
+    %p.bold Your Results
   - else
-    %span.bold
-      = " #{@grade.student.try(:name)}'s Results "
-    %span= link_to "Edit Grade", edit_assignment_grade_path(@assignment, :student_id => @grade.student.id), :class => 'button tiny secondary radius'
-  - if @grade.raw_score?
-    %h6
-      %span Score:
-      %span.bold= "#{points @grade.raw_score }"
-      %span=" / #{points @grade.assignment.point_total } possible points"
-  - if @grade.feedback?
-    %h6 Instructor Feedback:
-    %p= raw @grade.feedback
+    %p.bold 
+      #{current_student.try(:first_name)}'s Grade
+      %span= link_to "Edit", edit_assignment_grade_path(@assignment, :student_id => current_student.id), :class => 'button tiny secondary radius'
 
-  - if @grade.assignment.release_necessary? && current_user.is_staff?
+  - grade = current_student.grade_for_assignment(@assignment)
+  %p
+    %span.bold= "#{points grade.raw_score }"
+    %span=" / #{points @assignment.point_total } possible points"
+  - if current_student.grade_for_assignment(@assignment).feedback.present?
+    %p.bold Instructor Feedback:
+    %p= raw current_student.grade_for_assignment(@assignment).feedback
+
+  - if current_student.grade_for_assignment(@assignment).assignment.release_necessary? && current_user.is_staff?
     %h6 
       Status:
-      %span.bold= @grade.status
+      %span.bold= current_student.grade_for_assignment(@assignment).status

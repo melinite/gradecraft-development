@@ -78,7 +78,7 @@ class AssignmentType < ActiveRecord::Base
     mass_grade_type == "Text"
   end
 
-
+  # Check to see if the assignment type needs score levels to be present for grading purposes
   def multi_select?
     grade_select? || grade_radio?
   end

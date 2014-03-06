@@ -2,15 +2,19 @@ class GradesController < ApplicationController
   respond_to :html, :json
 
   before_filter :set_assignment, only: [:show, :edit, :update, :destroy]
-  before_filter :ensure_staff?, :except => [:self_log, :show, :predict_score]
+  before_filter :ensure_staff?, :except => [:self_log, :predict_score, :show]
   before_filter :ensure_student?, only: [:predict_score]
 
   def show
-    @grade = current_student_data.grade_for_assignment(@assignment)
-    if @assignment.has_groups? && current_user.is_staff?
-      @group = @assignment.groups.find(params[:group_id])
-    elsif @assignment.has_groups? && current_user.is_student?
+    @assignment = current_course.assignments.find(params[:assignment_id])
+    if current_user.is_student? 
+      redirect_to @assignment
     end
+    @grade = current_student_data.grade_for_assignment(@assignment)
+    # # if @assignment.has_groups? && current_user.is_staff?
+    # #   @group = @assignment.groups.find(params[:group_id])
+    # # elsif @assignment.has_groups? && current_user.is_student?
+    # # end
   end
 
   def edit

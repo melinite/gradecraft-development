@@ -187,7 +187,7 @@ class Course < ActiveRecord::Base
   end
 
   def minimum_course_score
-    #.min
+    course_memberships.order('course_memberships.score ASC').first.user
   end
 
   def maximum_course_score

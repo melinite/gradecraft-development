@@ -7,6 +7,23 @@
       %div.bar
 
 = simple_form_for(@challenge) do |f|
+  .small-12.large-4.columns.right.panel.callout
+    .small-12
+      %label.checkbox{ :for => "visible" }
+        = f.label :visible, "Visible to students?"
+        = f.check_box :visible
+
+    .small-12
+      %label.checkbox{ :for => "accepts_submissions" }
+        = f.label :check_box, "Will the #{term_for :team} submit materials?"
+        = f.check_box :accepts_submissions
+        .form_label All #{term_for :team} members will be able to submit work for their #{term_for :team} as a whole, and see their resulting grades.
+
+    .small-12
+      %label.checkbox{ :for => "release_necessary" }
+        = f.label :release_necessary, "Release necessary?"
+        = f.check_box :release_necessary
+        .form_label Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important.
 
   .small-12.large-4.columns
     = f.label :name
@@ -19,37 +36,23 @@
   .small-12.large-4.columns
     = f.label :point_total
     = f.text_field :point_total, data: {autonumeric: true, "m-dec" => "0"}
-
+  
+  
   .small-12.large-4.columns
-    = f.input :due_at, as: :string, :start_year => Date.today.year, :include_blank => true, :input_html => { :class => 'datetimepicker' }
-
-  .clearfix
-
+    = f.input :open_at, as: :string, :input_html => { :class => 'datetimepicker', :value => @challenge.try(:open_at) }
+    
   .small-12.large-4.columns
-    %label.checkbox{ :for => "visible" }
-      = f.label :visible, "Visible to students?"
-      = f.check_box :visible
+    = f.input :due_at, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker', :value => @challenge.try(:due_at) }
 
-  .small-12.large-4.columns
-    %label.checkbox{ :for => "accepts_submissions" }
-      = f.label :check_box, "Will the #{term_for :team} submit materials?"
-      = f.check_box :accepts_submissions
-    %h6.small All #{term_for :team} members will be able to submit work for their #{term_for :team} as a whole, and see their resulting grades.
-
-  .small-12.large-4.columns
-    %label.checkbox{ :for => "release_necessary" }
-      = f.label :release_necessary, "Release necessary?"
-      = f.check_box :release_necessary
-    %h6.small Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important.
+  
 
   .clearfix
 
   .small-12.columns
-    %h6.small What do the #{term_for :teams} need to do to succeed?
     = f.bootsy_area :description
-
+    %p What do the #{term_for :teams} need to do to succeed?
 
 
   .right
     = f.button :submit, "#{@challenge.persisted? ? 'Update' : 'Create'} #{term_for :challenge }", :class => "button tiny radius"
-    = link_to 'Cancel', challenges_path, :class => 'button tiny radius'
+    = link_to 'Cancel', challenges_path, :class => 'button tiny radius transparent'

@@ -1,4 +1,4 @@
-.small-12.large-6.columns
+.small-12.columns
   .bold Class Analytics
   %h6.small (click chart to see results)
 
@@ -7,20 +7,21 @@
       = link_to image_tag(asset_path('boxplot.png'), :width => 80), "#boxplot"
     %dd
       = link_to image_tag(asset_path('halfcircle.png'), :width => 80), "#submitted"
-    %dd
+    %dd.active
       = link_to image_tag(asset_path('pie.png'), :width => 80), "#levels"
 
-  .tabs-content
-    .content.small-12#boxplot.active
+  .tabs-content{:style => "background-color: #FFFFFF;"}
+    .content.small-12#boxplot
       .chartcontainer
-        %div{:class => "grades_per_assign", :data => { :id => @grade.assignment.id.to_s } }
+        .grades_per_assign{ "data-scores" => @assignment.grades.graded.pluck('score') }
 
       %h6.small= link_to "How do I read this chart?", "http://www.youtube.com/watch?v=7UK2DK7rblw&feature=youtu.be", :target => "_blank"
 
 
-    .content.small-12#submitted
-      #myStat{:"data-type" => "half", "data-info" => "#{term_for :students} Submitted", "data-percent" => "#{@grade.assignment.attendance_rate(current_course)}", "data-fgcolor" => "#61a9dc", "data-text" => "#{@grade.assignment.positive_grades}", "data-dimension" => "250", "data-fontsize" => "38"  }
+    .content.small-12#submitted.center
+      #myStat{:"data-type" => "half", "data-info" => "#{term_for :students} Submitted", "data-percent" => "#{@assignment.completion_rate(current_course)}", "data-fgcolor" => "#61a9dc", "data-text" => "#{@assignment.positive_grade_count}", "data-dimension" => "250", "data-fontsize" => "38"  }
 
-    .content.small-12#levels
-      .chartcontainer
-        #levels_per_assignment
+    .content.small-12#levels.active
+      #levels_per_assignment{'data-levels' =>  @assignment.percentage_score_earned.to_json}
+
+.clearfix

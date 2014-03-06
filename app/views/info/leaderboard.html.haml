@@ -25,7 +25,7 @@
           %th.button-column
       %tbody
         - i = 1
-        - current_course.students.being_graded.order_by_high_score.each do |student|
+        - @students.each do |student|
           %tr
             %td
               = i

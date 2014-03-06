@@ -19,25 +19,25 @@
         %label.checkbox{ :for => "visible" }
           = f.label :visible
           = f.check_box :visible
-        %h6.small Can #{term_for :students} see this #{term_for :assignment} in their dashboard?
+          .form_label Can #{term_for :students} see this #{term_for :assignment} in their dashboard?
 
         .small-12
           %label.checkbox{ :for => "include_in_predictor" }
             = f.label :include_in_predictor
             = f.check_box :include_in_predictor
-          %h6.small Can #{term_for :students} see this #{term_for :assignment} in the grade predictor?
+            .form_label Can #{term_for :students} see this #{term_for :assignment} in the grade predictor?
 
         .small-12
           %label.checkbox{ :for => "include_in_timeline" }
             = f.label :include_in_timeline
             = f.check_box :include_in_timeline
-          %h6.small Can #{term_for :students} see this #{term_for :assignment} in the course timeline? Note that #{term_for :assignments} without open or due dates will be excluded automatically.
+            .form_label Can #{term_for :students} see this #{term_for :assignment} in the course timeline? Note that #{term_for :assignments} without open or due dates will be excluded automatically.
 
         .small-12
           %label.checkbox{ :for => "required" }
             = f.label :required
             = f.check_box :required
-          %h6.small Are ALL #{term_for :students} expected to complete this #{term_for :assignment} to pass the course?
+            .form_label Are ALL #{term_for :students} expected to complete this #{term_for :assignment} to pass the course?
 
       .small-12.large-4.columns
         = f.label :assignment_type, "#{term_for :assignment} Type"
@@ -51,7 +51,7 @@
         = f.label :point_total, "Total Score Possible"
         = f.text_field :point_total, data: {autonumeric: true, "m-dec" => "0"}
         - if @assignment.assignment_type.present? && @assignment.assignment_type.point_setting == "For All Assignments"
-          %h6.small= "This assignment's category is currently set to have a maximum number of #{points @assignment.assignment_type.universal_point_value} points. Would you like to override this?"
+          .form_label= "This assignment's category is currently set to have a maximum number of #{points @assignment.assignment_type.universal_point_value} points. Would you like to override this?"
 
       .small-12.large-4.columns
         = f.label :points_predictor_display
@@ -74,7 +74,9 @@
 
       .small-12.large-12.columns
         = f.bootsy_area :description
-        %h6.small This will be shown to students on their dashboard, and when they submit their assignment.
+        .form_label 
+          %b Assignment Description: 
+          %span This will be shown to students on their dashboard, and when they submit their assignment.
 
 
       .clearfix
@@ -124,32 +126,32 @@
         .small-12.large-4.columns
           = f.label :mass_grade_type, "Quick Grade Format"
           = f.select :mass_grade_type, [[], ["Radio Buttons"], ["Select List"], ["Checkbox"], ["Text"]]
-          %h6.small Would you like the levels to be represented via checkbox, radio buttons or select forms?
+          .form_label Would you like the levels to be represented via checkbox, radio buttons or select forms?
 
       - if current_course.accepts_submissions?
         .small-12.large-4.columns
           %label.checkbox{ :for => "accepts_submissions" }
             = f.label :accepts_submissions #{term_for :assignment} Submissions
             = f.check_box :accepts_submissions
-          %h6.small Will you be using GradeCraft to accept submissions for this #{term_for :assignment}?
+            .form_label Will you be using GradeCraft to accept submissions for this #{term_for :assignment}?
 
         .clearfix
 
         .small-12.large-4.columns
           = f.input :accepts_submissions_until, as: :string, :include_blank => true, :input_html => { :class => 'datetimepicker', :value => @assignment.try(:accepts_submissions_until) }
-          %h6.small When would you like to accept submissions until?
+          .form_label When would you like to accept submissions until?
 
         .small-12.large-4.columns
           %label.checkbox{ :for => "student_logged" }
             = f.label :student_logged
             = f.check_box :student_logged
-          %h6.small Do students self-report their grade for this #{term_for :assignment}?
+            .form_label Do students self-report their grade for this #{term_for :assignment}?
 
         .small-12.large-4.columns
           %label.checkbox{ :for => "release_necessary" }
             = f.label :release_necessary
             = f.check_box :release_necessary
-          %h6.small Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important.
+            .form_label Do you want to release all grades at once? This is particularly useful for situations where extensive feedback is important.
 
         .clearfix
 
@@ -157,7 +159,7 @@
         .small-12.large-4.columns
           = f.label :notify_released, "Notify by email?"
           = f.input :notify_released
-          %h6.small Do you want to notify students by email when a grade is awarded? If grade release is necessary, this email will not be sent out until the grade is officially released.
+          .form_label Do you want to notify students by email when a grade is awarded? If grade release is necessary, this email will not be sent out until the grade is officially released.
 
     .panel
       %h4 Grading Scheme
@@ -173,8 +175,8 @@
             = f.simple_fields_for :assignment_score_levels, assignment_score_level, class: 'form-inline' do |slf|
               = render 'assignment_score_level_fields', f: slf
       %hr
-      = link_to 'Add a Level', '#', class: 'add-assignment-score-level button tiny'
+      = link_to 'Add a Level', '#', class: 'add-assignment-score-level button tiny radius'
 
     .right
       = f.button :submit, "#{@assignment.persisted? ? 'Update' : 'Create'} #{term_for :assignment}", :class => "button radius tiny"
-      = link_to 'Cancel', assignments_path, :class => "button radius tiny"
+      = link_to 'Cancel', assignments_path, :class => "button radius transparent tiny"

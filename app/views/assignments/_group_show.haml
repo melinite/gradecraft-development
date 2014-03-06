@@ -1,50 +1,79 @@
-= form_tag edit_status_grades_assignment_path(@assignment) do
-  - @groups.each do |group|
-    .small-12
-      %h3
-        = "#{group.name} Grades"
-        - group.submission_for_assignment(@assignment).tap do |submission|
-          - if submission
-            = link_to "See Submission", assignment_grade_path(@assignment.id, :group_id => group.id), :class => 'button tiny radius'
-          - else
-            = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'button tiny radius'
-        = link_to "Grade", group_grade_assignment_path(@assignment, :group_id => group), :class => 'button tiny radius'
+- if current_user.is_staff?
+  = form_tag edit_status_grades_assignment_path(@assignment) do
+    - @groups.each do |group|
+      .small-12
+        %h3
+          = "#{group.name} Grades"
+          - group.submission_for_assignment(@assignment).tap do |submission|
+            - if submission
+              = link_to "See Submission", assignment_grade_path(@assignment.id, :group_id => group.id), :class => 'button tiny radius'
+            - else
+              = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'button tiny radius'
+          = link_to "Grade", group_grade_assignment_path(@assignment, :group_id => group), :class => 'button tiny radius'
 
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          - if @assignment.release_necessary?
-            %th
-              .btn-group
-                %button.select-all.btn.btn-xs.btn-info= "Check"
-                %button.select-none.btn.btn-xs.btn-info= "Uncheck"
-          %th.sortable{"data-sort" => "string"}= current_course.group_term
-          %th.sortable{"data-sort" => "string"} Score
-          - if @assignment.assignment_type.student_weightable?
-            %th.sortable{"data-sort" => "int"} Multiplied Scores
-          - if @assignment.has_levels?
-            %th.sortable{"data-sort" => "string"} Level
-          - if @assignment.release_necessary?
-            %th.sortable{"data-sort" => "string"} Status
-      %tbody
-        - group.students.each do |student|
-          - grade = @assignment.grades.find_by student_id: student
+      %table.responsive.simpleTable
+        %thead
           %tr
             - if @assignment.release_necessary?
-              %td
-                - if grade && grade.is_graded?
-                  = check_box_tag "grade_ids[]", grade.id
-            %td= link_to student.name, student_path(student)
-            %td
-              - if grade && (grade.is_graded? || grade.status == "Released" )
-                = grade.raw_score
+              %th
+                .btn-group
+                  %button.select-all.btn.btn-xs.btn-info= "Check"
+                  %button.select-none.btn.btn-xs.btn-info= "Uncheck"
+            %th.sortable{"data-sort" => "string"}= current_course.group_term
+            %th.sortable{"data-sort" => "string"} Score
             - if @assignment.assignment_type.student_weightable?
-              %td= grade.score if grade
+              %th.sortable{"data-sort" => "int"} Multiplied Scores
             - if @assignment.has_levels?
-              %td
-                - if grade
-                  = @assignment.grade_level(grade)
+              %th.sortable{"data-sort" => "string"} Level
             - if @assignment.release_necessary?
-              %td= grade.try(:status)
-  - if @assignment.release_necessary? && @assignment.grades.present?
-    = submit_tag "Update Grade Statuses", :class => "button tiny radius"
+              %th.sortable{"data-sort" => "string"} Status
+        %tbody
+          - group.students.each do |student|
+            - grade = @assignment.grades.find_by student_id: student
+            %tr
+              - if @assignment.release_necessary?
+                %td
+                  - if grade && grade.is_graded?
+                    = check_box_tag "grade_ids[]", grade.id
+              %td= link_to student.name, student_path(student)
+              %td
+                - if grade && (grade.is_graded? || grade.status == "Released" )
+                  = grade.raw_score
+              - if @assignment.assignment_type.student_weightable?
+                %td= grade.score if grade
+              - if @assignment.has_levels?
+                %td
+                  - if grade
+                    = @assignment.grade_level(grade)
+              - if @assignment.release_necessary?
+                %td= grade.try(:status)
+    - if @assignment.release_necessary? && @assignment.grades.present?
+      = submit_tag "Update Grade Statuses", :class => "button tiny radius"
+- else
+  - if current_student.group_for_assignment(@assignment)
+    %h3 
+      = "#{term_for :group}: #{current_student.group_for_assignment(@assignment).name}"
+
+    %hr
+
+    %h3 Assignment(s)
+    %ul
+      - current_student.group_for_assignment(@assignment).assignment_groups.each do |ag|
+        %li= link_to ag.assignment.name, ag.assignment
+
+    %h3 Members:
+    %ul
+      - current_student.group_for_assignment(@assignment).group_memberships.each do |gm|
+        - if current_user.is_staff?
+          %li= link_to gm.student.name, student_path(gm.student)
+        - else
+          %li= gm.student.name
+
+    - if current_student.group_for_assignment(@assignment).text_proposal?
+      %h3 Proposal:
+      %p= raw @group.try(:proposal)
+
+    - if @assignment.accepts_submissions?
+      = render "students/group_submissions", assignment: @assignment, group: current_student.group_for_assignment(@assignment)
+  - else
+    = link_to "Create a Group", new_group_path, :class => "button tiny radius primary"

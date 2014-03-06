@@ -35,10 +35,6 @@ class Badge < ActiveRecord::Base
     earned_badges_by_student_id[[student.id]].try(:first)
   end
 
-  def grade_scope
-    'Individual'
-  end
-
   def icon
     super.presence || "/images/badge.png"
   end

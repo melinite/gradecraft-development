@@ -3,15 +3,16 @@
   = content_nav_for Team do
     = render "tabs"
   
-  %dl.tabs{:data => {'tab' => true}}
-    %dd.active
-      %a{ "href" => "#tabt1"} #{term_for :teams}
-    %dd
-      %a{ "href" => "#tabt2"} #{term_for :team} Leaderboard
+  .small-12.columns
+    %dl.tabs{:data => {'tab' => true}}
+      %dd.active
+        %a{ "href" => "#tabt2"} #{term_for :team} Leaderboard
+      %dd
+        %a{ "href" => "#tabt1"} #{term_for :teams} Stats
 
   .small-12.columns
     .tabs-content
-      .content#tabt1.active.small-12
+      .content#tabt1
         %table.responsive.simpleTable
           %thead
             %tr
@@ -44,7 +45,7 @@
                         %li= link_to 'Edit', edit_team_path(team), :class => 'button tiny secondary'
                         %li= link_to 'Delete', team, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
               - i += 1
-      .content#tabt2.small-12
+      .content#tabt2.active
         .small-12.columns.medium-4
           %table.responsive.simpleTable.highchart{:data => { "graph-container" => "#graphcontainer", "graph-type" => "column", "graph-legend-disabled" => 1, "graph-xaxis-rotation" => 0  } }
             %thead
@@ -57,7 +58,11 @@
               - current_course_data.teams_by_high_score.each do |team|
                 %tr
                   //%td= i
-                  %td= team.name
+                  %td
+                    - if team.banner.present?
+                      %img{:src => team.banner}
+                    - else
+                      = team.name
                   - if current_course.team_score_average?
                     %td= points team.try(:average_grade)
                   - else

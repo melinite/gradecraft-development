@@ -34,20 +34,20 @@
       %table.responsive.simpleTable.highchart{:data => { "graph-container" => "#graphcontainer", "graph-type" => "column", "graph-legend-disabled" => 1, "graph-xaxis-rotation" => 0  } }
         %thead
           %tr
-            //%th{:data => { "graph-skip" => 1 } } Rank
             %th #{term_for :team}
             %th Score
         %tbody
-          //- i = 1
           - current_course.teams.order_by_high_score.each do |team|
             %tr
-              //%td= i
-              %td= team.name
+              %td
+                - if team.banner.present?
+                  %img{:src => team.banner}
+                - else
+                  = team.name
               - if current_course.team_score_average?
                 %td= points team.try(:average_grade)
               - else
                 %td= points team.try(:challenge_grade_score)
-            //- i += 1
     .small-12.columns.medium-8
       #graphcontainer
 

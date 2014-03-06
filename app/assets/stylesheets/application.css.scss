@@ -1,5 +1,4 @@
 /*
- *= require jquery.fileupload-ui
  *= require s3_direct_upload_progress_bars
  *= require jquery-ui.min
  *= require jquery.circliful
@@ -22,6 +21,7 @@ $yellow: #FFF90D;
 $orange: #F4A425;
 $darkblue: #120470;
 $logogreen: #67cf30;
+$darkgrey: #444444;
 
 $primary-color: #274E56;
 $secondary-color: #58d0eb;
@@ -45,183 +45,6 @@ $success-color: #67CF30;
 @import 'navigation';
 @import 'videos';
 @import 'bootsy';
+@import 'layout';
+@import 'buttons_and_icons';
 
-/* Background image for site, this is declared because otherwise it overrides the text editor's bkg */
-body.logged-in, body.logged-out {
-  background: image-url("cloud_bg.gif");
-}
-
-
-/* Primary page content */ 
-.mainContent {
-  border-left: 10px solid $green;
-  border-right: 10px solid $green;
-  border-bottom: 10px solid $green;
-  border-top: none;
-  min-height: 815px;
-  background-color: #FFF;
-  margin: 0;
-  padding: 0;
-  border-radius: $global-radius;
-  overflow:hidden;
-}
-
-/* Front facing page, not logged in */ 
-.row.panel.publicContent {
-  margin-bottom: 0;
-  padding-top: 2rem;
-  border: none;
-  background-color: #FFF;
-  min-height: 30rem;
-}
-
-.row.panel.footer {
-  margin-top: 0;
-  color: $secondary-color;
-  background-color: #444;
-  border: none;
-
-  h6 {
-    color: $secondary-color;
-  }
-
-  a {
-    color: #FFF;
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    list-style-type: none;
-    font-size: .9rem;
-  }
-}
-
-/* Force the alert to be below the navigation */ 
-.alert-box {
-  margin-top: 1rem;
-}
-
-/* Allow other things to appear above the timeline */
-.vco-storyjs {
-  z-index: 0;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.not_bold {
-  font-weight: normal !important;
-}
-
-.underline {
-  text-decoration: underline;
-}
-
-.center {
-  text-align: center;
-}
-
-.pushdown{
-  padding-top: .3rem;
-}
-
-.pushup{
-  padding-bottom: .2rem;
-}
-
-.transparent{
-  opacity: .6;
-}
-
-.inverse {
-  color: #FFF;
-}
-
-i.fi-male.present {
-  font-size: 150%;
-  color: $lightblue;
-}
-
-i.fi-male.absent {
-  font-size: 150%;
-  text-shadow: 1px 1px $blue;
-  color: white;
-} 
-
-#attachments {
-  clear: both;
-  margin: 2rem 0 1.5rem;
-  background-color: white;
-  padding: 1rem;
-  border: 1px solid $blue;
-}
-
-.sideBar.panel {
-  margin: 1rem 0;
-  border-radius: $global-radius;
-}
-
-/* Add the sprite to the assignment expand */ 
-h3.collapse a {
-  background: image-url("sprite.png") 10px 16px no-repeat;
-  padding: .5rem 1.6rem;
-  border-radius: .5rem;
-}
-
-h6.small {
-  font-size: .8rem;
-  line-height: 130%;
-  color: #666;
-  clear: both;
-  margin-left: 0;
-  margin-top: 0;
-  padding-top: 0;
-}
-.button.tiny.dropdown {
-  font-size: 1rem;
-  padding: .5rem;
-}
-.button.tiny {
-  padding: .4rem;
-}
-
-
-/* Responsive outer container */ 
-@media (min-width: 1000px)  {
-  .mainContent {
-    margin-top: 1rem;
-  }
-
-  .publicContent {
-    margin-top: 4rem;
-  }
-}
-
-@media (max-width: 1000px)  {
-  .mainContent, .sideBar.panel {
-    border-radius: 0;
-  }
-  .columns.outerContainer, .sideBar.panel {
-    margin: 0 !important;
-    padding: 0;
-  }
-  .publicContent {
-    margin: 1.5rem 0 0 ;
-    padding: 0;
-  }
-}
-
-@media (max-width: 640px)  {
-  .mainContent {
-    border-radius: 0;
-  }
-  .columns.outerContainer, .publicContent, div.small-12.medium-4.large-3.columns.sideBar.panel {
-    margin: 1.5rem 0 0 ;
-    padding: 0;
-  }
-}

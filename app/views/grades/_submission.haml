@@ -1,34 +1,40 @@
-.small-12.columns.panel.callout
-  .small-12.large-6.columns
-    - if current_user.is_staff?
-      %h5
-        Submitted by:
-        = link_to @grade.student.try(:name), student_path(@grade.student)
+%h4.bold
+  - if current_user.is_staff?
+    = "#{current_student.first_name}'s Submission" 
+  - else
+    Your Submission
+  // link to edit the submission
+  %span= link_to "Edit", edit_assignment_submission_path(@assignment, current_student.submission_for_assignment(@assignment)), :class => "button tiny radius secondary"
+// Displaying when the assignment was submitted
+%p
+  Submitted:
+  = current_student.submission_for_assignment(@assignment).created_at
 
-    %h5
-      Submitted:
-      = @grade.student.submission_for_assignment(@grade.assignment).created_at
-      = link_to "Edit Submission", edit_assignment_submission_path(@grade.assignment, @grade.student.submission_for_assignment(@grade.assignment)), :class => "button tiny radius secondary"
-      - if @grade.student.submission_for_assignment(@grade.assignment).late?
-        %span.label.alert.round Late!
-    - if @grade.student.submission_for_assignment(@grade.assignment).updated_at != @grade.student.submission_for_assignment(@grade.assignment).created_at
-      %h5
-        Updated:
-        = @grade.student.submission_for_assignment(@grade.assignment).updated_at
+  // Late alert if submitted after due date
+  - if current_student.submission_for_assignment(@assignment).late?
+    %span.label.alert.round Late!
+    
+  // Checking to see if the submission was updated - if the update date is different from the creation date, displaying it
+- if current_student.submission_for_assignment(@assignment).updated_at != current_student.submission_for_assignment(@assignment).created_at
+  %p
+    Updated:
+    %span= current_student.submission_for_assignment(@assignment).updated_at
 
-    - if @grade.student.submission_for_assignment(@grade.assignment).link?
-      %h5
-        Link:
-        = link_to @grade.student.submission_for_assignment(@grade.assignment).link, @grade.student.submission_for_assignment(@grade.assignment).link
+// Displaying the link to the submission if there is one
+- if current_student.submission_for_assignment(@assignment).link?
+  %p
+    Link:
+    = link_to current_student.submission_for_assignment(@assignment).link, current_student.submission_for_assignment(@assignment).link
 
-    - if @grade.student.submission_for_assignment(@grade.assignment).submission_files.present?
-      %h5 Attachments:
-      %ul
-        - @grade.student.submission_for_assignment(@grade.assignment).submission_files.each do |sf|
-          %li
-            = link_to sf.filename, sf.url
-            = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+- if current_student.submission_for_assignment(@assignment).submission_files.present?
+  %p
+    Attachments:
+    %ul
+      - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
+        %li
+          = link_to sf.filename, sf.url
+          = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
             
-  .small-12.large-6.columns
-    %h5 Statement:
-    %p= raw @grade.student.submission_for_assignment(@grade.assignment).text_comment
+%p
+  Statement:
+  = raw current_student.submission_for_assignment(@assignment).text_comment

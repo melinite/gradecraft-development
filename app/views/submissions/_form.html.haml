@@ -24,7 +24,7 @@
 
   .small-12.panel
     = f.input :link
-    %h6.small If you're linking to documents somewhere else on the web for this #{term_for :assignment} submission you can add them here.
+    .form_label If you're linking to documents somewhere else on the web for this #{term_for :assignment} submission you can add them here.
 
 
   .small-12.panel
@@ -33,4 +33,4 @@
 
   .right
     = f.button :submit, "#{@submission.persisted? ? 'Update Submission' : "Submit #{term_for :assignment}"} ", :class => "button tiny radius"
-    = link_to 'Cancel', assignment_path(@assignment), :class => 'button tiny radius'
+    = link_to 'Cancel', assignment_path(@assignment), :class => 'button tiny radius transparent'

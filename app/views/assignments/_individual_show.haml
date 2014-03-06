@@ -1,3 +1,9 @@
+- if current_course.has_teams? && @assignment.is_individual?
+  .small-12.right.medium-4.columns
+    = form_tag assignment_path(@assignment), :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
+      = hidden_field_tag :assignment_id, @assignment.id
+      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
+
 = form_tag edit_status_grades_assignment_path @assignment do
   %table.responsive.simpleTable
     %thead

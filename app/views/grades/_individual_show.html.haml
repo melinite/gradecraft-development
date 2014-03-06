@@ -1,9 +1,15 @@
-- if @grade.student.submission_for_assignment(@assignment)
-  = render "submission"
+.small-12.medium-6.columns.columns-no-padding
+  - if current_student.grade_for_assignment(@assignment).present?
+    .panel= render "grades/results"
 
-.clearfix
+  - if current_student.submission_for_assignment(@assignment)
+    .panel= render "grades/submission"
+  - elsif @assignment.future? || @assignment.still_accepted?
+    .panel
+      = link_to "Submit", new_assignment_submission_path(@assignment, :student_id => current_student), :class => 'button tiny secondary radius'
+      - if @assignment.past?
+        .label.alert.radius= "Past due"
 
-= render "results"
-
-//= render "analytics"
+.small-12.medium-6.columns
+  .panel= render "grades/analytics"
 

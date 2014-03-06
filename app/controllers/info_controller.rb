@@ -42,8 +42,12 @@ class InfoController < ApplicationController
   end
 
   # Display all grades in the course in list form
-   def all_grades
+  def all_grades
     @grades = current_course.grades.paginate(:page => params[:page], :per_page => 500)
+  end
+
+  def leaderboard
+    @students = current_course.students.being_graded.order_by_high_score.includes(:earned_badges, :teams)
   end
 
 end
