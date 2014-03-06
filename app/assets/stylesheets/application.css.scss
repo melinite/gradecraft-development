@@ -28,6 +28,9 @@ $secondary-color: #58d0eb;
 $alert-color: #f04124;
 $success-color: #67CF30;
 
+
+
+
 /* Importing supporting files. If you create a new css file you'll need to add it here.  */
 @import 'foundation_and_overrides';
 @import 'compass';
@@ -55,12 +58,12 @@ body.logged-in, body.logged-out {
   border-right: 10px solid $green;
   border-bottom: 10px solid $green;
   border-top: none;
-  border-bottom: none;
-  background-color: #FFF;
   min-height: 815px;
+  background-color: #FFF;
   margin: 0;
   padding: 0;
   border-radius: $global-radius;
+  overflow:hidden;
 }
 
 /* Front facing page, not logged in */ 
@@ -115,6 +118,26 @@ body.logged-in, body.logged-out {
   font-weight: normal !important;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
+.center {
+  text-align: center;
+}
+
+.pushdown{
+  padding-top: .3rem;
+}
+
+.pushup{
+  padding-bottom: .2rem;
+}
+
+.transparent{
+  opacity: .6;
+}
+
 .inverse {
   color: #FFF;
 }
@@ -128,7 +151,7 @@ i.fi-male.absent {
   font-size: 150%;
   text-shadow: 1px 1px $blue;
   color: white;
-}
+} 
 
 #attachments {
   clear: both;
@@ -166,6 +189,7 @@ h6.small {
 .button.tiny {
   padding: .4rem;
 }
+
 
 /* Responsive outer container */ 
 @media (min-width: 1000px)  {

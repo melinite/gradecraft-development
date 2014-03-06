@@ -20,4 +20,18 @@ class GradeSchemeElement < ActiveRecord::Base
   def overlap?(element)
     element.low_range <= high_range && element.high_range >= low_range
   end
+  
+  def range
+    high_range.to_f - low_range.to_f
+  end
+
+  def points_to_next_level(student, course)
+    #if high range, +1
+    high_range - student.cached_score_for_course(course) + 1
+  end
+
+  def progress_percent(student, course)
+    ((student.cached_score_for_course(course) - low_range)/(range)) * 100
+  end
+
 end

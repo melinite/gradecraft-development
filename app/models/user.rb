@@ -280,6 +280,26 @@ class User < ActiveRecord::Base
     @grade_letter_for_course ||= course.grade_letter_for_score(cached_score_for_course(course))
   end
 
+  def next_element_level(course)
+    n = 1
+    stop = 0
+    level = ''
+    course.grade_scheme_elements.order_by_low_range.each do |element|
+      n += 1
+      if n == stop
+        level = element.level
+      end 
+      if element.high_range >= cached_score_for_course(course) && cached_score_for_course(course) >= element.low_range
+        stop = n + 1
+      end
+    end
+    if level == ''
+      return false
+    else
+      return level
+    end
+  end
+
   def point_total_for_course(course)
     @point_total_for_course ||= course.assignments.point_total_for_student(self) + earned_badge_score_for_course(course)
   end
