@@ -9,7 +9,7 @@
       / Check to see if the course has scheme elements
       - if current_course.grade_scheme_elements.present?
         - if  current_user.next_element_level(current_course) == false
-          Congratulations! You beat #{current_course.name}
+          Congratulations! You beat #{current_course.name}.
         - else
           - @grade_scheme_elements.order_by_low_range.each do |element|  
             -if element.high_range >= current_user.cached_score_for_course(current_course) && current_user.cached_score_for_course(current_course) >= element.low_range
