@@ -51,7 +51,6 @@ GradeCraft::Application.routes.draw do
     collection do
       get :feed
       post 'copy' => 'assignments#copy'
-      get :settings
       get 'weights' => 'assignment_weights#mass_edit', :as => :mass_edit_weights
     end
     member do
