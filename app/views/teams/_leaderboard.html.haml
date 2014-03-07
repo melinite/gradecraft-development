@@ -49,6 +49,7 @@
                 %td= points team.try(:average_grade)
               - else
                 %td= points team.try(:challenge_grade_score)
+
     .small-12.columns.medium-8
       #graphcontainer
 
@@ -57,3 +58,5 @@
 
   .content#tabt3.small-12
     = render "challenges/student_index"
+
+
