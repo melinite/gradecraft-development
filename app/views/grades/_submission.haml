@@ -1,10 +1,10 @@
-%h4.bold
+%p.bold
   - if current_user.is_staff?
     = "#{current_student.first_name}'s Submission" 
   - else
     Your Submission
   // link to edit the submission
-  %span= link_to "Edit", edit_assignment_submission_path(@assignment, current_student.submission_for_assignment(@assignment)), :class => "button tiny radius secondary"
+  %span= link_to "Edit", edit_assignment_submission_path(@assignment, current_student.submission_for_assignment(@assignment)), :class => "button tiny radius secondary no-margin"
 // Displaying when the assignment was submitted
 %p
   Submitted:
@@ -35,6 +35,7 @@
           = link_to sf.filename, sf.url
           = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
             
-%p
-  Statement:
-  = raw current_student.submission_for_assignment(@assignment).text_comment
+- if current_student.submission_for_assignment(@assignment).text_comment?
+  %p
+    Statement:
+    = raw current_student.submission_for_assignment(@assignment).text_comment
