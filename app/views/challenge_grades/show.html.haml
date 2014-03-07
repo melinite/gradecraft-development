@@ -14,7 +14,7 @@
       = points @challenge_grade.score
     %p
       %b Feedback:
-      = @challenge_grade.text_feedback
+      = raw @challenge_grade.text_feedback
     %p
       %b Status:
       = @challenge_grade.status
