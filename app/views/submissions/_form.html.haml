@@ -12,6 +12,7 @@
           .progress
             .bar
       #uploaded_files
+        %ul
         - if @submission.submission_files.present?
           - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
             %li
