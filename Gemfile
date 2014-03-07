@@ -60,7 +60,6 @@ gem 'timelineJS-rails'
 gem 'uglifier'
 gem 'whenever'
 
-
 group :development do
   gem 'haml-rails'
   gem 'valid_attribute'
@@ -82,4 +81,5 @@ group :test, :development do
   gem 'debugger'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'rspec-rails', '~> 3.0.0.beta2'
 end
