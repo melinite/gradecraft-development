@@ -11,6 +11,7 @@
           Progress:
           .progress
             .bar
+        .clearfix
       %ul#uploaded_files
         - if @submission.submission_files.present?
           - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
