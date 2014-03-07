@@ -1,6 +1,6 @@
 class ChallengeGrade < ActiveRecord::Base
 
-  attr_accessible :name, :course_id, :rank, :score, :challenge_id, :feedback, :status, :team_id, :final_score, :status, :team, :challenge
+  attr_accessible :name, :course_id, :rank, :score, :challenge_id, :text_feedback, :status, :team_id, :final_score, :status, :team, :challenge
 
   belongs_to :course
   belongs_to :challenge

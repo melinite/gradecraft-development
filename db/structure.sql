@@ -697,7 +697,8 @@ CREATE TABLE challenge_grades (
     team_id integer,
     final_score integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    text_feedback text
 );
 
 
@@ -3147,3 +3148,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140205153717');
 INSERT INTO schema_migrations (version) VALUES ('20140304230129');
 
 INSERT INTO schema_migrations (version) VALUES ('20140305040029');
+
+INSERT INTO schema_migrations (version) VALUES ('20140307194848');
