@@ -5,7 +5,8 @@
       %th.sortable{"data-sort" => "string"} Description
       %th.sortable{"data-sort" => "int"} Point total
       %th.sortable{"data-sort" => "string"} Due date
-      %th.sortable{"data-sort" => "int"} Score
+      - if current_student.team_for_course(current_course).present?
+        %th.sortable{"data-sort" => "int"} Score
 
   %tbody
     - current_course_data.challenges.each do |challenge|
@@ -15,4 +16,5 @@
           %td= raw challenge.description
           %td= points challenge.point_total
           %td= challenge.due_at
-          %td= challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).try(:score)
+          - if current_student.team_for_course(current_course).present?
+            %td= challenge.challenge_grade_for_team(current_student.team_for_course(current_course)).try(:score)
