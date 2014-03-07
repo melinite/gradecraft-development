@@ -13,11 +13,11 @@
             .bar
       #uploaded_files
         %ul
-        - if @submission.submission_files.present?
-          - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
-            %li
-              = link_to sf.filename, sf.url
-              = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+          - if @submission.submission_files.present?
+            - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
+              %li
+                = link_to sf.filename, sf.url
+                = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
       
 
 = simple_form_for([@assignment, @submission]) do |f|
