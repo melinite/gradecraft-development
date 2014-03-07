@@ -5,12 +5,12 @@
   .s3_uploader
     = s3_uploader_form key: upload_url('submission_files', @assignment), acl: "private", max_file_size: 40.megabytes do
       = file_field_tag :file, :multiple => true
-      - if @submission.submission_files.present?
-        %h6.bold#uploaded_files Attachments Uploaded:
-        - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
-          %li
-            = link_to sf.filename, sf.url
-            = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+      #uploaded_files
+        - if @submission.submission_files.present?
+          - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
+            %li
+              = link_to sf.filename, sf.url
+              = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
       .upload.s3_progress
         Progress:
         .progress
