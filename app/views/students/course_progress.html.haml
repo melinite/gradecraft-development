@@ -1,17 +1,12 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
-    = content_nav_for "Grade Philosophy" do
+    = content_nav_for "Course Progress" do
       = render "student_profile_tabs"
   - else
     = content_nav_for current_student do
       = render "student_profile_tabs"
 
   .small-12.columns
-    .hide-for-medium-up
-      %a.radius.button.tiny.small-12.dropdown{:href => "#", :data => { :dropdown => "drop" } }
-        Options
-      %ul#drop.f-dropdown
-        = render "student_profile_tabs"
     - if current_course.grade_scheme_elements.present?
       - @grade_scheme_elements.order_by_high_range.each do |element|
         - if current_student.cached_score_for_course(current_course) < element.low_range
@@ -41,10 +36,11 @@
           .progress.secondary.round.bar_magic
             .meter{:style => "width: #{element.progress_percent(current_student, current_course)}%"}
               .striped
+  .clearfix
   
   .small-12.columns
     %p= raw current_course.grading_philosophy
     %h6.bold= "-- Prof. #{current_course.professor.try(:last_name) }"
 
 
-.clearfix
+  .clearfix

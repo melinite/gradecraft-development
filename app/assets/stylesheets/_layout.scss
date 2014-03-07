@@ -67,15 +67,6 @@ body.logged-in, body.logged-out {
   z-index: 0;
 }
 
-#attachments {
-  clear: both;
-  margin: 2rem 0 1.5rem;
-  background-color: white;
-  padding: 1rem;
-  border: 1px solid $blue;
-}
-
-
 .content#boxplot, .content#submitted, .content#levels {
   padding: 1rem;
 }

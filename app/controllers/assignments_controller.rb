@@ -5,11 +5,6 @@ class AssignmentsController < ApplicationController
     @title = "#{term_for :assignment} Index"
   end
 
-  # Displays a second view of the assignment structure - more details of logistical type, less results
-   def settings
-    @title = "#{term_for :assignments} Settings"
-  end
-
   def show
     @assignment = current_course.assignments.find(params[:id])
     @title = @assignment.name

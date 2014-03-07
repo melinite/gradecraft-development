@@ -26,13 +26,6 @@
     - if @assignment.description?
       %p= raw @assignment.description
 
-    - if @submission.submission_files.present?
-      %p
-        %b Documents:
-        - @submission.submission_files.each do |sf|
-          = link_to sf.filename, sf.url
-          = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
-
     - if @assignment.has_groups?
       - if current_user.is_student?
         %h4= "You are editing the assignment submission for Group #{current_student.group_for_assignment(@assignment).name }"

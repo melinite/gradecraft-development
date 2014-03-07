@@ -18,16 +18,24 @@
   text-align: center;
 }
 
-.pushdown{
+.pushdown {
   padding-top: .3rem;
 }
 
-.pushup{
+.pushup {
   padding-bottom: .2rem;
 }
 
 .transparent{
   opacity: .6;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.smallcaps {
+  font-variant: small-caps;
 }
 
 /* Add the sprite to the assignment expand */ 

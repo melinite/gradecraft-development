@@ -26,7 +26,7 @@
       } else {
         $('.s3_files').val(content.filepath)
       }
-      $('#uploaded_files').append('<br /> ' + content.filename)
+      $('#uploaded_files').append('<li> ' + content.filename + '</li>')
 
       $('.s3_progress').css('visibility', 'hidden')
     })

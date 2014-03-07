@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
 
   respond_to :html, :json
 
-  before_filter :ensure_staff?, :except=> [:timeline, :predictor, :grading_philosophy, :badges, :teams, :syllabus]
+  before_filter :ensure_staff?, :except=> [:timeline, :predictor, :course_progress, :badges, :teams, :syllabus]
 
   def index
     @title = "#{current_course.user_term} Roster"
@@ -20,6 +20,9 @@ class StudentsController < ApplicationController
 
   # Course timeline, displays all assignments that are determined by the instructor to belong on the timeline + team challenges if present
   def timeline
+    if current_user.is_student?
+      redirect_to dashboard_path
+    end
     if current_course.team_challenges?
       @events = current_course.assignments.timelineable.to_a + current_course.challenges
     else
@@ -52,7 +55,7 @@ class StudentsController < ApplicationController
   end
 
   # Displaying the course grading scheme and professor's grading philosophy
-  def grading_philosophy
+  def course_progress
     @grade_scheme_elements = current_course.grade_scheme_elements
   end
 

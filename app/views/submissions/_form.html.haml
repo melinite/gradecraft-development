@@ -1,16 +1,25 @@
 .clearfix
 
-#attachments
+#attachments.panel
   %h6.bold Attachments
   .s3_uploader
     = s3_uploader_form key: upload_url('submission_files', @assignment), acl: "private", max_file_size: 40.megabytes do
-      = file_field_tag :file, :multiple => true
-      - if @submission.submission_files.present?
-        %h6#uploaded_files Attachments Uploaded:
-      .upload.s3_progress
-        Progress:
-        .progress
-          .bar
+      .small-12.medium-6.columns
+        = file_field_tag :file, :multiple => true
+      .small-12.medium-6.columns
+        .upload.s3_progress
+          Progress:
+          .progress
+            .bar
+        .clearfix
+      %ul#uploaded_files
+        - if @submission.submission_files.present?
+          %hr
+          - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
+            %li
+              = link_to sf.filename, sf.url
+              = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+      
 
 = simple_form_for([@assignment, @submission]) do |f|
   - if @assignment.has_groups? && current_user.is_student?

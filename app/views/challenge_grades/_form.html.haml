@@ -16,9 +16,9 @@
   .clearfix
 
   .small-12.columns
-    = f.bootsy_area :feedback
+    = f.bootsy_area :text_feedback
 
   .clearfix
 
   .right
-    = f.button :submit, "#{ @challenge_grade.persisted? ? 'Update' : 'Submit'} #{ term_for :challenge }",  :class => "button tiny radius transparent"
+    = f.button :submit, "#{ @challenge_grade.persisted? ? 'Update Grade for' : 'Grade'} #{ term_for :challenge }",  :class => "button tiny radius"

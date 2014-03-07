@@ -51,7 +51,6 @@ GradeCraft::Application.routes.draw do
     collection do
       get :feed
       post 'copy' => 'assignments#copy'
-      get :settings
       get 'weights' => 'assignment_weights#mass_edit', :as => :mass_edit_weights
     end
     member do
@@ -223,7 +222,7 @@ GradeCraft::Application.routes.draw do
     get :calendar
     get :badges
     get :predictor
-    get :grading_philosophy
+    get :course_progress
     get :teams
     collection do
       get :leaderboard
@@ -247,7 +246,7 @@ GradeCraft::Application.routes.draw do
   get 'calendar' => 'students#calendar'
   get 'predictor' => 'students#predictor'
   get 'syllabus' => 'students#syllabus'
-  get 'grading_philosophy' => 'students#grading_philosophy'
+  get 'course_progress' => 'students#course_progress'
   get 'my_badges' => 'students#badges'
   get 'my_team' => 'students#teams'
 

@@ -75,7 +75,7 @@
 .datetimepicker table tr td.today:hover,
 .datetimepicker table tr td.today.disabled,
 .datetimepicker table tr td.today.disabled:hover {
-	background-color: $primary-color !important;
+	background-color: #274E56 !important;
 	color: #FFF;
 }
 

@@ -33,7 +33,7 @@ class UserSessionsController < ApplicationController
     @user.courses << @course unless @user.courses.include?(@course)
     save_lti_context
     auto_login @user
-    redirect_back_or(dashboard_path)
+    respond_with @user, notice: t('sessions.create.success'), location: dashboard_path
   end
 
   def kerberos_create
@@ -44,7 +44,7 @@ class UserSessionsController < ApplicationController
       redirect_to auth_failure_path and return
     end
     auto_login @user
-    redirect_back_or(dashboard_path)
+    respond_with @user, notice: t('sessions.create.success'), location: dashboard_path
   end
 
   def destroy
