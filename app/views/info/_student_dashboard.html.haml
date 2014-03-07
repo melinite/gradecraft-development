@@ -27,6 +27,6 @@
           – Current Level:
           %span#userScoreNum= current_user.grade_level_for_course(current_course)
 
-  = render "students/timeline"
+  #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
 
   .clearfix
