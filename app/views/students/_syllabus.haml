@@ -60,24 +60,27 @@
                       - else
                         = link_to "Create a Group", new_group_path, :class => "button tiny radius primary"
                   - else
-                    - if assignment.accepts_submissions?
-                      %td= render "students/submissions", assignment: assignment
+                    %td
+                      - if assignment.accepts_submissions?
+                        = render "students/submissions", assignment: assignment
                   %td
                     - if current_student_data.grade_released_for_assignment?(assignment) && current_student_data.grade_for_assignment(assignment).feedback?
                       = link_to "See Feedback", assignment_grade_path(assignment, :student_id => current_student), :class => "button tiny radius primary"
                   - if current_user.is_staff?
                     - if assignment.is_individual?
-                      - if current_student_data.grade_released_for_assignment?(assignment)
-                        - grade = current_student_data.grade_for_assignment(assignment)
-                        %td= link_to "Edit Grade", edit_assignment_grade_path(assignment.id, :student_id => current_student.id), :class => 'button tiny radius  secondary'
-                      - else
-                        %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => current_student.id), :class => 'button tiny radius'
+                      %td
+                        - if current_student_data.grade_released_for_assignment?(assignment)
+                          - grade = current_student_data.grade_for_assignment(assignment)
+                          = link_to "Edit Grade", edit_assignment_grade_path(assignment.id, :student_id => current_student.id), :class => 'button tiny radius  secondary'
+                        - else
+                          = link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => current_student.id), :class => 'button tiny radius'
                     - elsif assignment.has_groups?
-                      - if current_student_data.grade_released_for_assignment?(assignment)
-                        - grade = current_student_data.grade_for_assignment(assignment)
-                        %td= link_to "Edit Grade", group_grade_assignment_path(assignment, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius secondary'
-                      - else
-                        %td= link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius'
+                      %td
+                        - if current_student_data.grade_released_for_assignment?(assignment)
+                          - grade = current_student_data.grade_for_assignment(assignment)
+                          = link_to "Edit Grade", group_grade_assignment_path(assignment, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius secondary'
+                        - else
+                          = link_to 'Grade', group_grade_assignment_path("assignment_id"=>assignment.id, :group_id => current_student.group_for_assignment(assignment)), :class => 'button tiny radius'
 
     .clearfix
 
