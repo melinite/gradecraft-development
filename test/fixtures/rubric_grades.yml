@@ -1,0 +1,26 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  metric_name: MyString
+  metric_description: MyString
+  max_points: 1
+  order: 1
+  tier_name: MyString
+  tier_description: MyString
+  points: 1
+  submission_id: 1
+  metric_id: 1
+  tier_id: 1
+
+two:
+  metric_name: MyString
+  metric_description: MyString
+  max_points: 1
+  order: 1
+  tier_name: MyString
+  tier_description: MyString
+  points: 1
+  submission_id: 1
+  metric_id: 1
+  tier_id: 1

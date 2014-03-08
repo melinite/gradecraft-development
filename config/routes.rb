@@ -77,8 +77,13 @@ GradeCraft::Application.routes.draw do
     resource :grade, only: [:show, :edit, :update, :destroy] do
       resources :earned_badges
     end
+    resource :rubric
   end
 
+  resources :metrics do
+    resources :tiers
+  end
+  resources :graded_metrics
 
   resources :score_levels
 
@@ -177,9 +182,6 @@ GradeCraft::Application.routes.draw do
   get 'ping' => 'pages#ping'
 
   #11. Rubrics & Grade Schemes
-  resources :rubrics do
-    resources :criteria
-  end
   resources :grade_scheme_elements do
     collection do
       post :destroy_multiple

@@ -1,0 +1,16 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  description: MyString
+  max_points: 1
+  rubric_id: 1
+  order: 1
+
+two:
+  name: MyString
+  description: MyString
+  max_points: 1
+  rubric_id: 1
+  order: 1
