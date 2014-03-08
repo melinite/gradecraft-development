@@ -40,7 +40,7 @@ class Team < ActiveRecord::Base
   def average_grade
     total_score = 0
     students.each do |student|
-      total_score += student.score_for_course(course)
+      total_score += (student.cached_score_for_course(course) || 0 )
     end
     if member_count > 0
       average_grade = total_score / member_count
@@ -48,7 +48,7 @@ class Team < ActiveRecord::Base
   end
 
   def challenge_grade_score
-    challenge_grades.pluck('score').sum || 0
+    challenge_grades.sum('score') || 0
   end
 
   private
@@ -58,9 +58,7 @@ class Team < ActiveRecord::Base
         self.score = average_grade
       end
     else
-      if self.score_changed?
-        self.score = challenge_grades.pluck('score').sum
-      end
+      self.score = challenge_grades.sum('score')
     end
   end
 

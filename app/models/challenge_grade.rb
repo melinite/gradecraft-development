@@ -21,4 +21,8 @@ class ChallengeGrade < ActiveRecord::Base
       team.save
     end
   end
+
+  def score
+    super.presence || 0
+  end
 end
