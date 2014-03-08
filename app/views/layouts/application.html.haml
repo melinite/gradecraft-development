@@ -42,30 +42,6 @@
         .row.panel.footer
           .small-12.medium-12.columns
             = render 'layouts/footer'
-    / .off-canvas-wrap.hide-for-medium-up
-    /   .inner-wrap
-    /     - if current_user
-    /       %nav.tab-bar
-    /       %section.left-small
-    /         %a.left-off-canvas-toggle.menu-icon
-    /           %span
-    /         - if current_user.is_staff?
-    /           %aside.left-off-canvas-menu
-    /             = render "layouts/staff_subnav"
-    /     %section.main-section
-    /       - if current_user
-    /         - if current_user.is_staff?
-    /           = render 'layouts/staff'
-    /         - else
-    /           = render 'layouts/student'
-    /       - else
-    /         .row.panel.publicContent
-    /           .small-12.columns
-    /             = render 'layouts/public'
-    /         - if ! current_user
-    /           .row.panel.footer
-    /             .small-12.medium-12.columns
-    /               = render 'layouts/footer'
     = render 'layouts/google_analytics'
     = javascript_include_tag 'application'
 

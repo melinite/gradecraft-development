@@ -26,9 +26,10 @@
     %dl.tabs{:data => {'tab' => true}}
       %dd.active
         %a{ "href" => "#tabt1"} #{term_for :team} Leaderboard
-      - if current_course.in_team_leaderboard? || current_student.team_for_course(current_course).present? && current_student.team_for_course(current_course).in_team_leaderboard?
-        %dd
-          %a{ "href" => "#tabt2"} In-#{term_for :team} Rankings
+      - if current_student.team_for_course(current_course).present?
+        - if current_course.in_team_leaderboard? || current_student.team_for_course(current_course).in_team_leaderboard?
+          %dd
+            %a{ "href" => "#tabt2"} In-#{term_for :team} Rankings
       %dd
         %a{ "href" => "#tabt3"} #{term_for :challenges }
 

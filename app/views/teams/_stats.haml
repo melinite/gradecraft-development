@@ -20,7 +20,7 @@
         %td= link_to team.name, team
         %td= team.member_count
         %td= points team.try(:average_grade)
-        %td= points team.try(:challenge_grade_score)
+        %td= points team.try(:score)
         - if current_user.is_staff?
           %td= points team.badge_count
           %td

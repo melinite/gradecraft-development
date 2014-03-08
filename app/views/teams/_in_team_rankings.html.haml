@@ -17,7 +17,7 @@
       - j = 1
       - current_student_data.team.sorted_students.each do |student|
         - if student.display_name?
-          %tr
+          %tr{class: ("complete" if student == current_student) }
             %td= j
             %td= student.display_name
             - if current_course.character_profiles?

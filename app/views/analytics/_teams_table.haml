@@ -11,7 +11,7 @@
       %tr
         %td= link_to team.name, team_path(team)
         - if ! current_course.team_score_average
-          %td= points team.try(:challenge_grade_score)
+          %td= points team.try(:score)
 
         %td= points team.try(:average_grade)
         %td
