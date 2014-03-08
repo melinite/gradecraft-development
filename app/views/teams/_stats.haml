@@ -1,0 +1,32 @@
+%table.responsive.simpleTable
+  %thead
+    %tr
+      %th{"data-sort" => "int"} Rank
+      %th{"data-sort" => "string"} Name
+      %th{"data-sort" => "int"} # Students
+      %th{"data-sort" => "int"} Score
+      - if current_course.team_score_average?
+        %th{"data-sort" => "int"} Score
+      - else
+        %th{"data-sort" => "int"} Ave. Score
+      - if current_user.is_staff?
+        %th{"data-sort" => "int"} # #{term_for :badges}
+        %th.button-column
+  %tbody
+    - i = 1
+    - @teams.alpha.order_by_high_score.each do |team|
+      %tr
+        %td= i
+        %td= link_to team.name, team
+        %td= team.member_count
+        %td= points team.try(:average_grade)
+        %td= points team.try(:challenge_grade_score)
+        - if current_user.is_staff?
+          %td= points team.badge_count
+          %td
+            .button-bar
+              %ul.button-group.round.right
+                %li= link_to 'See', team, :class => 'button tiny secondary'
+                %li= link_to 'Edit', edit_team_path(team), :class => 'button tiny secondary'
+                %li= link_to 'Delete', team, :class => 'button tiny secondary', :data => { confirm: 'Are you sure?' }, :method => :delete
+      - i += 1

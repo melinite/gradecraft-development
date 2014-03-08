@@ -50,17 +50,12 @@
               - if current_course.character_profiles?
                 .small-12.large-4.columns
                   = p.input :character_profile, :label => "Character Profile", :hint => "This will be displayed on the #{term_for :team} leaderboard"
-            // Taken out bc of cosign
-            //= f.input :password
-            //= f.input :password_confirmation
-
-
-          %hr
+            
 
           .clearfix
 
           .right
             = submit_tag 'Update Settings', :class => 'button tiny radius'
-            = link_to 'Cancel', root_path, :class => 'button tiny radius'
+            = link_to 'Cancel', root_path, :class => 'button tiny radius transparent'
 
     .clearfix

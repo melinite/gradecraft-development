@@ -9,6 +9,36 @@
 
   .small-12.columns
 
-    = render "teams/leaderboard"
+    %h4.bold
+      - if current_student.team_for_course(current_course).present?
+        Your #{term_for :team}:
+        = current_student.team_for_course(current_course).name
+
+        – Score:
+        - if current_student.team_for_course(current_course).score.present?
+          = points current_student.team_for_course(current_course).score
+        - else
+          0
+        %hr
+
+  .small-12.columns
+
+    %dl.tabs{:data => {'tab' => true}}
+      %dd.active
+        %a{ "href" => "#tabt1"} #{term_for :team} Leaderboard
+      - if current_course.in_team_leaderboard? || current_student.team_for_course(current_course).present? && current_student.team_for_course(current_course).in_team_leaderboard?
+        %dd
+          %a{ "href" => "#tabt2"} In-#{term_for :team} Rankings
+      %dd
+        %a{ "href" => "#tabt3"} #{term_for :challenges }
+
+  .small-12.columns
+    .tabs-content
+      .content#tabt1.active
+        = render "teams/leaderboard"
+      .content#tabt2.small-12
+        = render "teams/in_team_rankings"
+      .content#tabt3
+        = render "challenges/student_index"
 
   .clearfix

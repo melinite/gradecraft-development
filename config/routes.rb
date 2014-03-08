@@ -144,7 +144,7 @@ GradeCraft::Application.routes.draw do
 
   get 'leaderboard' => 'info#leaderboard'
   get 'multiplier_choices' => 'info#choices'
-  get  'earned_badges' => 'info#class_badges'
+  get 'earned_badges' => 'info#class_badges'
   get 'grading_status' => 'info#grading_status'
   get 'gradebook' => 'info#gradebook'
   get 'all_grades' => 'courses#all_grades'

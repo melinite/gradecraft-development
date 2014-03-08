@@ -1,62 +1,28 @@
-%dl.tabs{:data => {'tab' => true}}
-  %dd.active
-    %a{ "href" => "#tabt1"} #{term_for :team} Leaderboard
-  - if current_course.in_team_leaderboard? || current_student.team_for_course(current_course).present? && current_student.team_for_course(current_course).in_team_leaderboard?
-    %dd
-      %a{ "href" => "#tabt2"} In-#{term_for :team} Rankings
-  - if current_course.team_challenges?
-    %dd
-      %a{ "href" => "#tabt3"} #{term_for :challenges}
+.small-12.columns.medium-4
+  %table.responsive.simpleTable.highchart{:data => { "graph-container" => "#graphcontainer", "graph-type" => "column", "graph-legend-disabled" => 1, "graph-xaxis-rotation" => 0  } }
+    %thead
+      %tr
+        %th #{term_for :team}
+        %th Score
+        %th{:data => { "graph-skip" => 1 } }  Rank
+    %tbody
+      - i = 1
+      - current_course.teams.order_by_high_score.each do |team|
+        %tr
+          %td
+            - if team.banner.present?
+              %img{:src => team.banner}
+              .img.form_label= team.name
+            - else
+              = team.name
+          - if current_course.team_score_average?
+            %td= points team.try(:average_grade)
+          - else
+            %td= points team.try(:score)
+          %td= i
+          - i += 1
+.small-12.columns.medium-8
+  #graphcontainer
 
-.columns
-  %p
-    - if current_student.team_for_course(current_course).present?
-      Your #{term_for :team}:
-      = current_student.team_for_course(current_course).name
-
-      – Score:
-      - if current_student.team_for_course(current_course).score.present?
-        = points current_student.team_for_course(current_course).score
-      - else
-        0
-
-
-
-      - if current_user.is_student? && ! current_student.display_name? && (current_course.in_team_leaderboard? || current_student.team_for_course(current_course).in_team_leaderboard?)
-        %h6.small.right
-          = "Want to see the your #{term_for :team} leaderboard?"
-          .bold= link_to "Set your screen name!", edit_profile_users_path
-
-
-.tabs-content
-  .content#tabt1.active.small-12
-    .small-12.columns.medium-4
-      %table.responsive.simpleTable.highchart{:data => { "graph-container" => "#graphcontainer", "graph-type" => "column", "graph-legend-disabled" => 1, "graph-xaxis-rotation" => 0  } }
-        %thead
-          %tr
-            %th #{term_for :team}
-            %th Score
-        %tbody
-          - current_course.teams.order_by_high_score.each do |team|
-            %tr
-              %td
-                - if team.banner.present?
-                  %img{:src => team.banner}
-                  .form_label= team.name
-                - else
-                  = team.name
-              - if current_course.team_score_average?
-                %td= points team.try(:average_grade)
-              - else
-                %td= points team.try(:challenge_grade_score)
-
-    .small-12.columns.medium-8
-      #graphcontainer
-
-  .content#tabt2.small-12
-    = render "teams/in_team_rankings"
-
-  .content#tabt3.small-12
-    = render "challenges/student_index"
 
 

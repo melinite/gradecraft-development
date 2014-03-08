@@ -1,12 +1,17 @@
 - if current_student_data.team.present?
-  %h4= current_student_data.team.name
-  %table.responsive.simpleTable
+  - if current_user.is_student? && ! current_student.display_name? && (current_course.in_team_leaderboard? || current_student.team_for_course(current_course).in_team_leaderboard?)
+    %h6.small.right
+      %span= "Want to participate in the #{term_for :team} leaderboard?"
+      %span.bold= link_to "Set your screen name!", edit_profile_users_path
+  %table.responsive
     %thead
       %tr
-        %th
+        %th Rank
         %th Name
-        %th Character Profile
-        %th Role
+        - if current_course.character_profiles?
+          %th Character Profile
+        - if current_course.team_roles? 
+          %th Role
         %th Score
     %tbody
       - j = 1
@@ -15,7 +20,9 @@
           %tr
             %td= j
             %td= student.display_name
-            %td= student.character_profile(current_course)
-            %td= student.team_role
+            - if current_course.character_profiles?
+              %td= student.character_profile(current_course)
+            - if current_course.team_roles? 
+              %td= student.team_role
             %td= points student.cached_score_for_course(current_course) if student.respond_to?(:grades)
           - j += 1
