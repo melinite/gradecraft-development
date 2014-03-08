@@ -155,9 +155,10 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 
 /* Text editor box styling */
 
-.wysihtml5-sandbox  {
+iframe.wysihtml5-sandbox  {
   height: 15rem !important;
   padding-top: 0;
+  margin: 0 !important;
 }
 
 .wysihtml5-sandbox body.wysihtml5-editor {

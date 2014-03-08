@@ -1,9 +1,11 @@
-.small-6.large-2.columns
-  = f.label :name, "Score Name"
-  = f.text_field :name
-.small-6.large-2.columns
-  = f.label :value
-  = f.text_field :value, data: {autonumeric: true}
-= f.hidden_field :id
-= f.hidden_field :_destroy
-= link_to 'Remove Level', '#', class: 'remove-level button tiny radius'
+.small-12.columns.panel
+  %span.large-3.columns
+    = f.label :name, "Score Name"
+    = f.text_field :name
+  %span.large-3.columns
+    = f.label :value
+    = f.text_field :value, data: {autonumeric: true}
+    = f.hidden_field :id
+  %span.large-6.columns
+    = f.hidden_field :_destroy, class: 'destroy'
+    = link_to 'Remove Level', '#', class: 'remove-level button tiny radius'

@@ -1,8 +1,9 @@
-.small-12.large-2.columns
-  = f.input :name, :label => "Score Name"
-.small-12.large-2.columns
-  = f.label :value
-  = f.text_field :value, data: {autonumeric: true, "m-dec" => "0"}
-  = f.hidden_field :_destroy, class: 'destroy'
-.small-12.large-2.columns
-  = link_to 'Remove Level', '#', class: 'remove-assignment-score-level'
+.small-12.columns.panel
+  %span.large-3.columns
+    = f.input :name, :label => "Score Name"
+  %span.large-3.columns
+    = f.label :value
+    = f.text_field :value, data: {autonumeric: true, "m-dec" => "0"}
+  %span.large-6.columns
+    = f.hidden_field :_destroy, class: 'destroy'
+    = link_to 'Remove Level', '#', class: 'remove-assignment-score-level button tiny radius right'

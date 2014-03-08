@@ -48,9 +48,14 @@ label, input {
   }
 }
 
-.score-level .remove-level.button, .remove-element.button {
+.score-level .remove-level.button, .remove-element.button, .assignment-score-levels .remove-assignment-score-level.button {
   margin-top: 1.8rem;
   color: #FFF;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
 }
 
 /** Styling to make labels on checkboxes and radio forms align properly**/
@@ -111,4 +116,11 @@ ul.dropdown-menu {
 .checkbox .form_label {
 
   margin-left: 1.5rem;
+}
+
+.textarea .form_label {
+  background-color: #eee;
+  padding: 1rem;
+  border-bottom-right-radius: $global-radius;
+  border-bottom-left-radius: $global-radius;
 }

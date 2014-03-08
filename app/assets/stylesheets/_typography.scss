@@ -38,6 +38,10 @@
   font-variant: small-caps;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 /* Add the sprite to the assignment expand */ 
 h3.collapse a {
   background: image-url("sprite.png") 10px 16px no-repeat;
