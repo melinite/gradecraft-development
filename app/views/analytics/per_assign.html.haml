@@ -6,7 +6,7 @@
   .columns
     - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
       %h3= link_to assignment_type.name, assignment_type
-      %table.responsive.simpleTable
+      %table.responsive
         %thead
           %tr
             %th Name

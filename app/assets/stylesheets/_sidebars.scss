@@ -2,14 +2,13 @@
 .staff_subnav {
   background-color: #FFF;
   padding-top: 1rem;
-
+  display: table-cell; 
   /* Subheadings */
   label{
     text-transform: uppercase;
   }
 
   /* Spacing out the list */ 
-
   li {
     margin: .25rem 0;
   }

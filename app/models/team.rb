@@ -1,10 +1,12 @@
 class Team < ActiveRecord::Base
-  attr_accessible :name, :course, :course_id, :student_ids, :score, :students, :teams_leaderboard, :in_team_leaderboard
+  attr_accessible :name, :course, :course_id, :student_ids, :score, :students, :teams_leaderboard, :in_team_leaderboard, :banner
 
   belongs_to :course
 
   has_many :team_memberships
   has_many :students, :through => :team_memberships
+
+  mount_uploader :banner, ThumbnailUploader
 
   has_many :earned_badges, :through => :students
 

@@ -1,9 +1,9 @@
-%table.responsive.simpleTable
+%table.responsive
   %thead
     %tr
-      %th.sortable{"data-sort" => "string"}= course.team_term
+      %th= course.team_term
       - if ! current_course.team_score_average
-        %th.sortable{"data-sort" => "int"} Score
+        %th Score
       %th.sortable{"data-sort" => "int"} Average #{course.user_term} Grade
       %th.sortable{"data-sort" => "string"}= course.team_leader_term
   %tbody

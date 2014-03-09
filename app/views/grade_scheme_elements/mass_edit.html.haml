@@ -5,8 +5,6 @@
 
   .small-12.columns
 
-    %h3 Grade Scheme Elements
-
     = simple_form_for @course, method: :put, :url => mass_edit_grade_scheme_elements_path(:course_id => @course) do |f|
       %script(id="element-template" type="text/x-template")
         %fieldset.element

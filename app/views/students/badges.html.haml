@@ -7,14 +7,19 @@
     = content_nav_for current_student do
       = render "student_profile_tabs"
 
-  %dl.tabs{:data => {'tab' => true}}
-    %dd.active
-      %a{ "href" => "#tabb1"} My #{term_for :badges}
-    - if current_course.shared_badges?
-      %dd
-        %a{ "href" => "#tabb2"} Class #{term_for :badges}
+  .small-12.columns
+    %dl.tabs{:data => {'tab' => true}}
+      %dd.active
+        - if current_user.is_student?
+          %a{ "href" => "#tabb1"} My #{term_for :badges} 
+        - else
+          %a{ "href" => "#tabb1"} #{current_student.name}'s #{term_for :badges}
+        
+      - if current_course.shared_badges?
+        %dd
+          %a{ "href" => "#tabb2"} Shared #{term_for :badges}
 
-    .small-12.columns
+    .small-12
       - if current_user.is_student? && ! current_student.badges_shared(current_course)
         %h6.small.right
           = "Want to share your #{term_for :badges} with the class?"
@@ -22,15 +27,15 @@
 
       .tabs-content
         .content#tabb1.active.small-12
-          %table.responsive.simpleTable
+          %table.responsive
             %thead
               %tr
-                %th.sortable{"data-sort" => "string"} Icon
-                %th.sortable{"data-sort" => "string", :width => 300} Description
-                %th.sortable{"data-sort" => "string"} Tasks
+                %th Icon
+                %th{ :width => 300} Description
+                %th Tasks
                 - if current_course.valuable_badges?
-                  %th.sortable{"data-sort" => "string"} Value
-                %th.sortable{"data-sort" => "string"} Earned?
+                  %th Value
+                %th Earned?
                 - if current_course.shared_badges? && current_student.badges_shared(current_course)
                   %th Share this with the class?
             %tbody
@@ -54,11 +59,19 @@
                   - if current_course.shared_badges? && current_student.badges_shared(current_course)
                     %td
                       - earned_badge = current_student_data.earned_badge(badge)
-                      - if earned_badge.present?
+                      - if current_user.is_student? && earned_badge.present?
                         %div{:class=>"share_badge", :data => { badge_id: badge.id.to_s, earned_badge_id: earned_badge.id.to_s, name: badge.name, icon: badge.icon }}
                           - if earned_badge.shared?
                             %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"remove_badge button tiny radius"} Stop Sharing
                           - else
                             %a.btn{:id => 'shared_' + badge.id.to_s, :class=>"add_badge button tiny radius"} Share
+                      - elsif earned_badge.present?
+                        - if earned_badge.shared?
+                          = "Shared"
+                        - else 
+                          = "Not Shared"
+
         .content#tabb2.small-12
           = render "students/public_class_badges"
+
+  .clearfix

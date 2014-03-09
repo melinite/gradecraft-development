@@ -3,6 +3,9 @@
     = f.label :name, "#{current_course.team_term} Name"
     = f.text_field :name
   .small-12.medium-4.columns
+    = f.file_field :banner, :label => "Select a banner for this #{term_for :team}"
+    .form_label Choose an icon for this #{term_for :team}
+  .small-12.medium-4.columns
     = f.association :students, :collection => current_course_data.students, as: :select
   .small-12.columns.medium-4
     = f.input :teams_leaderboard, :label => "#{term_for :team} Leaderboard Display"

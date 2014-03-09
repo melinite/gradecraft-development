@@ -1,4 +1,15 @@
+// Matching the main content div to the size of the window
+//Initial load of page
+$(document).ready(sizeContent);
 
+//Every resize of window
+$(window).resize(sizeContent);
+
+//Dynamically assign height
+function sizeContent() {
+    var newHeight = $(document).height() + "px";
+    $(".mainContent").css("height", newHeight);
+}
 
 // handle 'select all' buttons, used on release grade forms
 $(".select-all").click(function(e){

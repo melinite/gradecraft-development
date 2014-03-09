@@ -3,29 +3,35 @@
   = content_nav_for "Course Overview", "Leaderboard" do
     = render "info/tabs"
 
+  %span.pagetitle= @title  
+
   - if current_course.has_teams?
-    .small-12.large-4.large-offset-8.medium-6.medium-offset-6.columns
-      = form_tag students_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
+    .small-12.large-4.medium-6.columns.right
+      = form_tag leaderboard_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
   .small-12.columns
 
-    %table.responsive.simpleTable
+    %table.responsive
       %thead
         %tr
-          %th.sortable{"data-sort" => "int"} Rank
-          %th.sortable{"data-sort" => "string"} First Name
-          %th.sortable{"data-sort" => "string"} Last Name
+          %th Rank
+          %th First Name
+          %th Last Name
           - if current_course.has_teams?
-            %th.sortable{"data-sort" => "string"} #{current_course.team_term}
-          %th.sortable{"data-sort" => "int"} Score
-          %th.sortable{"data-sort" => "string"} Grade
+            %th #{current_course.team_term}
+          %th Score
+          %th Grade
           - if current_course.has_badges?
-            %th.sortable{"data-sort" => "string", :width => "150" } Badges Earned
+            %th{:width => "150" } Badges Earned
           %th.button-column
       %tbody
+        - if @team
+          - students = current_course_data.students_for_team(@team)
+        - else
+          - students = current_course_data.students
         - i = 1
-        - @students.each do |student|
+        - students.each do |student|
           %tr
             %td
               = i
@@ -36,7 +42,9 @@
               %td#team_for_course
                 = link_to student.team_for_course(current_course).name, student.team_for_course(current_course).name if student.teams.present?
             %td= points student.cached_score_for_course(current_course)
-            %td= student.grade_level_for_course(current_course)
+            %td
+              = student.grade_letter_for_course(current_course)
+              = student.grade_level_for_course(current_course)
             - if current_course.has_badges?
               %td#earned_badges
                 - student.earned_badges.each do |badge|

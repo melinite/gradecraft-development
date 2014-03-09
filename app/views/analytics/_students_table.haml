@@ -24,7 +24,7 @@
         - if course.has_teams?
           %td
             - if student.team_for_course(current_course).present?
-              = link_to student.team_for_course(current_course).name
+              = link_to student.team_for_course(current_course).name, student.team_for_course(current_course)
         - if course.has_badges?
           %td= student.earned_badges.count
 

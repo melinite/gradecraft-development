@@ -41,13 +41,19 @@ class BadgesController < ApplicationController
     end
   end
 
-  
+  def check_uploads
+    # if params[:badge][:badge_files_attributes]["0"][:filepath].empty?
+    #   params[:badge].delete(:badge_files_attributes)
+    #   @badge.badge_files.destroy_all
+    # end
+  end
 
   def update
     @badge = current_course.badges.find(params[:id])
 
     respond_to do |format|
       self.check_uploads
+
       if @badge.update_attributes(params[:badge])
         format.html { redirect_to @badge }
         format.json { head :ok }
@@ -70,10 +76,5 @@ class BadgesController < ApplicationController
 
   private
 
-  def check_uploads
-    if params[:badge][:badge_files_attributes]["0"][:filepath].empty?
-      params[:badge].delete(:badge_files_attributes)
-      @badge.badge_files.destroy_all
-    end
-  end
+  
 end

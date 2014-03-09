@@ -1,6 +1,7 @@
 /* Coloring the brand */ 
 .title-area li.name h1 a {
   color: $logogreen;
+  white-space:nowrap;
 }
 
 .top-bar-section ul ul.dropdown {

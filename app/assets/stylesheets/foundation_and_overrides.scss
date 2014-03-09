@@ -19,7 +19,7 @@
 // $base-line-height: 150%;
 
 // This is the default html and body font-size for the base rem value.
-// $rem-base: 16px;
+// $rem-base: 16px; 
 
 // We use this to control whether or not CSS classes come through in the gem files.
 // $include-html-classes: true;
@@ -104,12 +104,12 @@ $large-range: (67.063em, 90em);
 // $cursor-text-value: text;
 
 // We use these to control header font sizes
-$h1-font-size: rem-calc(44);
-$h2-font-size: 1.7rem;
+$h1-font-size: 2.2rem;
+$h2-font-size: 1.8rem;
 $h3-font-size: 1.4rem;
-$h4-font-size: .9rem;
-$h5-font-size: rem-calc(18);
-$h6-font-size: 1rem;
+$h4-font-size: 1.2rem;
+$h5-font-size: .8rem;
+$h6-font-size: .6rem;
 
 // Accordion
 

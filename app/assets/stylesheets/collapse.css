@@ -1,4 +1,9 @@
-
+/* Add the sprite to the assignment expand */ 
+h3.collapse a {
+  background: image-url("sprite.png") 10px 16px no-repeat;
+  padding: .5rem 1.6rem;
+  border-radius: .5rem;
+}
 
 h3.collapse.open a { 
   background-position: 13px -25px;
@@ -23,3 +28,4 @@ h3.collapse+div {
 .assignment_type .small-3 {
   height: 0;
 }
+

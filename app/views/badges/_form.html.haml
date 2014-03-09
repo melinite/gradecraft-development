@@ -20,7 +20,7 @@
 
 = simple_form_for @badge do |f|
   .small-12.medium-4.columns
-    = f.input :icon, :as => :file, :label => "Icon", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5'}
+    = f.file_field :icon, :label => "Select an icon for this badge."
     .form_label Choose an icon for this badge.
   .clearfix
 

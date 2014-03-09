@@ -14,12 +14,15 @@
 //= require bootsy
 //= require jquery.sparkline.min
 //= require s3_direct_upload
+//= require responsive-tables
 //= require underscore.min
 //= require backbone.min
 //= require bootstrap
+//= require highcharts
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
 //= require gradecraft
+//= require users
 //= require preload_store
 //= require selectToUISlider.jQuery
 //= require analytics
@@ -28,7 +31,6 @@
 //= require assignments
 //= require grade_scheme_elements
 //= require nested_fields
-//= require users
 //= require student_dashboard
 //= require predictor
 //= require levels_per_assign
@@ -37,11 +39,10 @@
 //= require submission_file
 //= require timelineJS/embed
 //= require timeline
+//= require turbolinks
 //= require earned_badges
 //= require datetimepicker
-//= require highcharts
 //= require select2
-//= require responsive-tables
 //= require grade_distribution
 //= require jquery.ui.widget
 //= require jquery.sparkline.min

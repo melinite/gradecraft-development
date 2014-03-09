@@ -15,19 +15,28 @@
               .center.pushdown
                 %span
                   %i.fi-lock
-                %span.has-tip.tip-top{:title=> "#{element.letter}" , :data=> {'tooltip'=> true}}= element.level
+                - if element.level.present?
+                  %span.has-tip.tip-top{:title=> "#{element.letter}" , :data=> {'tooltip'=> true}}= element.level
+                - else
+                  %span= element.letter
                 %span=points element.low_range
         - elsif current_student.cached_score_for_course(current_course) >= element.high_range
           .progress.success.round.bar_magic
             .meter
               .center.pushdown
-                %span.has-tip.tip-top{:title=> "#{element.letter}" , :data=> {'tooltip'=> true}}= element.level
+                - if element.level.present?
+                  %span.has-tip.tip-top{:title=> "#{element.letter}" , :data=> {'tooltip'=> true}}= element.level
+                - else
+                  %span= element.letter
                 %span has already been achieved!
                 %span=points element.low_range
         - else
           .center.pushup
             %span Your rank: 
-            %span.has-tip.tip-top{:title=> "#{element.letter}" , :data=> {'tooltip'=> true}}= element.level
+            - if element.level.present?
+              %span.has-tip.tip-top{:title=> "#{element.letter}" , :data=> {'tooltip'=> true}}= element.level
+            - else
+              %span= element.letter
             %span with
             %span.underline=points current_student.cached_score_for_course(current_course)
             %span points.
@@ -40,7 +49,7 @@
   
   .small-12.columns
     %p= raw current_course.grading_philosophy
-    %h6.bold= "-- Prof. #{current_course.professor.try(:last_name) }"
+    %h5.bold= "– Prof. #{current_course.professor.try(:last_name) }"
 
 
   .clearfix

@@ -325,6 +325,8 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    turbolinks (2.2.1)
+      coffee-rails
     tzinfo (0.3.38)
     uglifier (2.1.2)
       execjs (>= 0.3.0)
@@ -408,6 +410,7 @@ DEPENDENCIES
   simple_form (~> 3.0.0.rc)
   sorcery
   timelineJS-rails
+  turbolinks
   uglifier
   valid_attribute
   whenever

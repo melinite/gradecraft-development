@@ -6,12 +6,9 @@
     %title
       = "#{yield :title} - " if content_for? :title
       = current_course.try(:name) || 'GradeCraft'
+    = stylesheet_link_tag "application", :media => "all", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tags
-    /[if lt IE 9]
-      = javascript_include_tag "https://html5shim.googlecode.com/svn/trunk/html5.js"
-    = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag 'application'
     = yield(:head)
 
   %body(class="#{body_class}")
@@ -35,7 +32,7 @@
             %ul.right= render 'layouts/authenticated_nav'
     - if current_user
       - if current_user.is_staff?
-        = render 'layouts/staff'
+        .columns= render 'layouts/staff'
       - else
         = render 'layouts/student'
     - else
@@ -47,5 +44,6 @@
           .small-12.medium-12.columns
             = render 'layouts/footer'
     = render 'layouts/google_analytics'
+    = javascript_include_tag 'application', "data-turbolinks-track" => true
 
         

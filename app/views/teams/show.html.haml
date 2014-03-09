@@ -5,7 +5,7 @@
 
   .small-12.columns
 
-    %h2= @team.name
+    %h4.bold= @team.name
 
     %table.responsive.simpleTable
       %thead
@@ -13,7 +13,8 @@
           %th.sortable{"data-sort" => "string"} First Name
           %th.sortable{"data-sort" => "string"} Last Name
           %th.sortable{"data-sort" => "string"} Email
-          %th.sortable{"data-sort" => "string"} Role
+          - if current_course.team_roles? 
+            %th.sortable{"data-sort" => "string"} Role
           %th.sortable{"data-sort" => "int"} Score
           %th.sortable{"data-sort" => "string"} Level
           - if current_course.has_badges?
@@ -26,7 +27,8 @@
               %td= link_to student.first_name, student_path(student)
               %td= link_to student.last_name, student_path(student)
               %td= mail_to student.email, student.email
-              %td= student.team_role
+              - if current_course.team_roles? 
+                %td= student.team_role
               %td= points student.cached_score_for_course(current_course) if student.respond_to?(:grades)
               %td
                 = student.grade_letter_for_course(current_course)
@@ -45,7 +47,7 @@
     %hr
 
     .small-12
-      %h2 Challenge Grades
+      %h4.bold Challenge Grades
 
     %table.responsive.simpleTable
       %thead

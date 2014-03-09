@@ -14,7 +14,7 @@ body.logged-in, body.logged-out {
   border-bottom: none;
   background-color: #FFF;
   min-height: 815px;
-  margin: 0;
+  margin: 0 0 1rem;
   padding: 0;
   border-radius: $global-radius;
 }
@@ -74,6 +74,10 @@ body.logged-in, body.logged-out {
   margin-bottom: 0;
 }
 
+.outerContainer {
+  display: table-cell; 
+}
+
 
 /* Responsive outer container */ 
 @media (min-width: 1000px)  {
@@ -84,11 +88,20 @@ body.logged-in, body.logged-out {
   .publicContent {
     margin-top: 4rem;
   }
+
+  .staff_subnav {
+    margin: 1rem 0;
+    border-radius: $global-radius;
+  }
 }
 
 @media (max-width: 1000px)  {
   .mainContent, .sideBar.panel {
     border-radius: 0;
+  }
+  .staff_subnav {
+    margin: 0;
+    border-radius: none;
   }
   .columns.outerContainer, .sideBar.panel {
     margin: 0 !important;
@@ -103,6 +116,10 @@ body.logged-in, body.logged-out {
 @media (max-width: 640px)  {
   .mainContent {
     border-radius: 0;
+  }
+  .staff_subnav {
+    margin: 0;
+    border-radius: none;
   }
   .columns.outerContainer, .publicContent, div.small-12.medium-4.large-3.columns.sideBar.panel {
     margin: 1.5rem 0 0 ;

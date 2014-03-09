@@ -1,6 +1,8 @@
 class Badge < ActiveRecord::Base
-   attr_accessible :name, :description, :icon, :visible, :image_file_name, :can_earn_multiple_times, 
+   attr_accessible :name, :description, :icon, :visible, :can_earn_multiple_times, 
     :value, :multiplier, :point_total, :earned_badges, :earned_badges_attributes, :score, :badge_file_ids, :badge_files_attributes, :badge_file
+
+  mount_uploader :icon, BadgeIconUploader
 
   has_many :earned_badges, :dependent => :destroy
 
@@ -33,10 +35,6 @@ class Badge < ActiveRecord::Base
 
   def earned_badge_for_student(student)
     earned_badges_by_student_id[[student.id]].try(:first)
-  end
-
-  def icon
-    super.presence || "/images/badge.png"
   end
 
 end

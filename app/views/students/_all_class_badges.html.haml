@@ -21,9 +21,11 @@
         - if current_course.valuable_badges?
           %td= points student.earned_badge_score_for_course(current_course)
 
-- if (@team && current_course_data.auditing_students_for_team(@team).present?) || ! @team
+- if (@team && current_course_data.auditing_students_for_team(@team).present?)
 
-  %h2 Auditing
+  %hr
+
+  %span.pagetitle Auditing
 
   %table.responsive.simpleTable
     %thead
