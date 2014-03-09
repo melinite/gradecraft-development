@@ -1,22 +1,26 @@
-.panel.small-12.columns
+.small-12.columns
   %h6 Supporting Files:
   .s3_uploader
-  = s3_uploader_form key: upload_url('badge_icons', @badge), acl: "private", max_file_size: 40.megabytes do
-    = file_field_tag :file
-  - if @badge.badge_files.present?
-    %h6#uploaded_files Attachments Uploaded:
-    = file_field_tag :file, :multiple => true
-  .upload.s3_progress
-    Progress:
-    .progress
-      .bar
+    = s3_uploader_form key: upload_url('badge_files', @badge), acl: "private", max_file_size: 40.megabytes do
+      .small-12.medium-6.columns
+        = file_field_tag :file, :multiple => true
+      .small-12.medium-6.columns
+        .upload.s3_progress
+          Progress:
+          .progress
+            .bar
+        .clearfix
+      %ul#uploaded_files
+        - if @badge.badge_files.present?
+          %hr
+          - @badge.badge_files.each do |bf|
+            %li
+              = link_to bf.filename, bf.url
+              = link_to "(Remove)", remove_uploads_path({ :model => "BadgeFile", :badge_id => @badge.id, :upload_id => bf.id } )
 
-= form_for @badge do |f|
+= simple_form_for @badge do |f|
   .small-12.medium-4.columns
-    = f.simple_fields_for :badge_files, @badge.badge_files.new do |bff|
-      = bff.input :filepath, :label => "Documents", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5 s3_files'}, :as => :hidden
-
-    = f.file_field :icon, :label => "Select an icon for this badge."
+    = f.input :icon, :as => :file, :label => "Icon", :input_html => {:class => 'col-lg-4 col-md-4 col-sm-5'}
     .form_label Choose an icon for this badge.
   .clearfix
 
@@ -40,12 +44,11 @@
         = f.check_box :can_earn_multiple_times
         .form_label Can this #{term_for :badge} be given to one #{term_for :student} multiple times through the semester?
 
-  .small-12.medium-9.columns
-    = f.label :description, "#{term_for :badge} Description"
+  .clearfix
+
+  .small-12.textarea
     = f.bootsy_area :description
-    .form_label Describe what this #{term_for :badge} means, and how it can be earned. Note that if this badge is marked as visible then this description will also be viewable in the list of badges.
-
-
+    .form_label Describe what this #{term_for :badge} means, and how it can be earned. Note that if this #{term_for :badge} is marked as visible then this description will also be viewable in the list of #{term_for :badges}.
 
   .clearfix
 

@@ -27,7 +27,7 @@ class BadgesController < ApplicationController
   end
 
   def create
-    @badge = current_course.badges.create(params[:badge])
+    @badge = current_course.badges.new(params[:badge])
 
     respond_to do |format|
       self.check_uploads
@@ -41,12 +41,7 @@ class BadgesController < ApplicationController
     end
   end
 
-  def check_uploads
-    if params[:badge][:badge_files_attributes]["0"][:filepath].empty?
-      params[:badge].delete(:badge_files_attributes)
-      @badge.badge_files.destroy_all
-    end
-  end
+  
 
   def update
     @badge = current_course.badges.find(params[:id])
@@ -70,6 +65,15 @@ class BadgesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to badges_path }
       format.json { head :ok }
+    end
+  end
+
+  private
+
+  def check_uploads
+    if params[:badge][:badge_files_attributes]["0"][:filepath].empty?
+      params[:badge].delete(:badge_files_attributes)
+      @badge.badge_files.destroy_all
     end
   end
 end

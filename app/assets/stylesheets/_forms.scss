@@ -104,6 +104,33 @@ select:hover {
 
 ul.dropdown-menu {
   background-color: #FFF;
+  
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: $global-radius;
+
+  li {
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: .1rem;  
+    border-radius: $global-radius;
+    width: 100% !important;
+
+  }
+
+  li a, li.active a {
+    background-color: #FFF !important;
+    color: #333 !important;
+    line-height: 1.8rem !important;
+    border-radius: $global-radius;
+    width: 100% !important;
+  }
+
+  li a:hover {
+    background-color: $primary-color !important;
+    border-radius: $global-radius;
+    color: #fff !important;
+  }
 }
 
 .form_label {

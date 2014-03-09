@@ -1,13 +1,24 @@
-%h6 Supporting Files:
-.s3_uploader
-  = s3_uploader_form key: upload_url('assignment_files', @assignment), acl: "private", max_file_size: 40.megabytes do
-    = file_field_tag :file, :multiple => true
-  - if @assignment.assignment_files.present?
-    %h6#uploaded_files Attachments Uploaded:
-  .upload.s3_progress
-    Progress:
-    .progress
-      .bar
+.small-12.columns
+  %h6 Supporting Files:
+  .s3_uploader
+    = s3_uploader_form key: upload_url('assignment_files', @assignment), acl: "private", max_file_size: 40.megabytes do
+      .small-12.medium-6.columns
+        = file_field_tag :file, :multiple => true
+      .small-12.medium-6.columns
+        .upload.s3_progress
+          Progress:
+          .progress
+            .bar
+        .clearfix
+      %ul#uploaded_files
+        - if @assignment.assignment_files.present?
+          %hr
+          - @assignment.assignment_files.each do |af|
+            %li
+              = link_to af.filename, af.url
+              = link_to "(Remove)", remove_uploads_path({ :model => "AssignmentFile", :assignment_id => @assignment.id, :upload_id => af.id } )
+
+.clearfix
 
 = simple_form_for(@assignment) do |f|
   %dl.tabs{:data => {'tab' => true}}

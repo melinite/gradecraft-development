@@ -1,10 +1,20 @@
-%div.form-inputs.s3_uploader
+.s3_uploader
   = s3_uploader_form key: upload_url('challenge_files', @challenge), acl: "private", max_file_size: 40.megabytes do
-    = file_field_tag :file, :multipled => true
-  %div#uploaded_files Uploaded:
-  %div.upload.s3_progress
-    %div.progress
-      %div.bar
+    .small-12.medium-6.columns
+      = file_field_tag :file, :multiple => true
+    .small-12.medium-6.columns
+      .upload.s3_progress
+        Progress:
+        .progress
+          .bar
+      .clearfix
+    %ul#uploaded_files
+      - if @challenge.challenge_files.present?
+        %hr
+        - @challenge.challenge_files.each do |cf|
+          %li
+            = link_to cf.filename, cf.url
+            = link_to "(Remove)", remove_uploads_path({ :model => "ChallengeFile", :challenge_id => @challenge.id, :upload_id => cf.id } )
 
 = simple_form_for(@challenge) do |f|
   .small-12.large-4.columns.right.panel.callout

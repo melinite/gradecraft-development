@@ -37,7 +37,8 @@
             - @assignment.assignment_files.each do |af|
               %li
                 = link_to af.filename, af.url
-                = link_to " (Remove)", remove_uploads_path({ :model => "AssignmentFile", :upload_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id} } )
+                - if current_user.is_staff?
+                  = link_to " (Remove)", remove_uploads_path({ :model => "AssignmentFile", :upload_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id} } )
 
     %hr
 

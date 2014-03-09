@@ -1,4 +1,5 @@
 class AssignmentsController < ApplicationController
+  
   before_filter :ensure_staff?, :except => [:feed, :show]
 
   def index

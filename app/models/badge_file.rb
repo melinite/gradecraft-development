@@ -3,7 +3,7 @@ class BadgeFile < ActiveRecord::Base
 
   attr_accessible :filename, :filepath, :badge_id
 
-  belongs_to :assignment
+  belongs_to :badge
 
   before_save :strip_path
 
