@@ -88,14 +88,14 @@ class ApplicationController < ActionController::Base
   def increment_page_views
     if current_user && request.format.html?
       User.increment_counter(:page_views, current_user.id)
-      EventLogger.perform_async('pageview', course_id: current_course.id, user_id: current_user.id, user_role: current_user.role, page: request.original_fullpath, created_at: Time.now)
+      EventLogger.perform_async('pageview', course_id: current_course.id, user_id: current_user.id, student_id: current_student.try(:id), user_role: current_user.role, page: request.original_fullpath, created_at: Time.now)
     end
   end
 
   # Tracking course logins
   def log_course_login_event
     membership = current_user.course_memberships.where(course_id: current_course.id).first
-    EventLogger.perform_async('login', course_id: current_course.id, user_id: current_user.id, user_role: current_user.role, last_login_at: membership.last_login_at.to_i, created_at: Time.now)
+    EventLogger.perform_async('login', course_id: current_course.id, user_id: current_user.id, student_id: current_student.try(:id), user_role: current_user.role, last_login_at: membership.last_login_at.to_i, created_at: Time.now)
     membership.update_attribute(:last_login_at, Time.now)
   end
 
