@@ -54,5 +54,11 @@
     - else
       = render 'individual_show'
 
+  .small-12.columns
+    - if @assignment.has_rubric?
+      Display Rubric
+    - else
+      != new_assignment_rubric_path
+
   .clearfix
 

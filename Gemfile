@@ -71,16 +71,14 @@ group :development do
 end
 
 group :test do
-  gem 'minitest-rails-capybara'
-  gem 'minitest-colorize'
-  gem 'minitest-focus'
-  gem 'minitest-matchers'
   gem 'faker'
+  gem 'rspec-rails', '~> 3.0.0.beta2'
+  gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'capybara', '~> 2.2.1'
 end
 
 group :test, :development do
   gem 'debugger'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'rspec-rails', '~> 3.0.0.beta2'
 end

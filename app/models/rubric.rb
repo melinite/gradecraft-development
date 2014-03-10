@@ -3,5 +3,5 @@ class Rubric < ActiveRecord::Base
   has_many :metrics
   has_many :rubric_grades
 
-  validates :assignment
+  validates :assignment, presence: true
 end
