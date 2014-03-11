@@ -38,15 +38,18 @@
                   - assignments.each do |assignment|
                     %tr
                       %td= link_to assignment.name, assignment
-                      // If an attendance assignment has past, display visual of attendance percentage. Otherwise display empty space.
+                      // If an attendance assignment has past and students could earn points for the class,
+                      // display visual of attendance percentage. Otherwise display empty space.
                       %td
-                        - if assignment.assignment_type.name == "Attendance" && assignment.past?
-                          // Display 10 icons to show attendance percentage by percents of 10.
-                          - for num in 1..10
-                            - if num <= ((assignment.attendance_rate_int(current_course) / 10).round)
-                              %i.fi-male.present
-                            - else
-                              %i.fi-male.absent
+                        - if assignment.assignment_type.name == "Attendance" && assignment.past? && assignment.point_total != 0
+                          // Provide mouseover with actual attendance percentage.
+                          %span.has-tip.tip-top{:title => "#{assignment.attendance_rate_int(current_course)}%", :data => {'tooltip' => true}}
+                            // Display 10 person icons to show attendance percentage by percents of 10.
+                            - for i in 1..10
+                              - if i <= ((assignment.attendance_rate_int(current_course) / 10).round)
+                                %i.fi-male.present
+                              - else
+                                %i.fi-male.absent
                       %td= assignment.try(:due_at) || "Ongoing"
                       %td= points assignment.point_total
                       %td

@@ -1,10 +1,17 @@
 - cache current_student_data.cache_key('v1', current_user.is_staff?, :assignment_weights_key, :assignments_key, :grades_key, :submissions_key) do
+  // Display top headers for expandable list of assignments.
   - current_course_data.by_assignment_type.each do |assignment_type, assignments|
     .assignment_type{:id => "assignment-type-#{assignment_type.id}" }
+      // Display the student's points out of assignment total, if there is an assignment max value. Else
+      // display the student's points out of the the current point total for assignment. 
       - if assignment_type.max_value?
         %h3.collapse #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
       - else
         %h3.collapse #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
+      // If the course and particular assignment uses weights, display assignment weighting options
+      // with appropriate terminology, if the course accepts weighting. If a student has already set a
+      // weight, give the option to change weight; else if the student has not yet set a weight, 
+      // give the option to set weights for the assignment.
       %div
         - if assignment_type.student_weightable? && current_course.assignment_weight_open?
           .small-2.right
@@ -15,17 +22,33 @@
               = link_to "Set #{term_for :weights}", assignment_type_weights_path(:student_id => current_student.id), assignment_type: assignment_type, :class => "label tiny primary round"
         - elsif assignment_type.student_weightable?
           %span.label.round= "#{current_student_data.weight_for_assignment_type(assignment_type)} #{term_for :weights}"
-
+        // Display the description for the assignment type if it exists.
         - if assignment_type.predictor_description?
           .small-10.columns
             %p= raw assignment_type.predictor_description 
           %hr
 
+        // Display the assignments for each assignment type in a responsive table, below header.
         .small-12.assignmentList
           %table.responsive
             - assignments.each do |assignment|
               - if assignment.visible? || current_student_data.grade_released_for_assignment?(assignment)
                 %tr
+                  // For the attendance assignment, add visualization in first column to display
+                  // whether or not the student attended the class.
+                  - if assignment.assignment_type.name == "Attendance"
+                    %td
+                      - if assignment.past? && current_student_data.grade_for_assignment(assignment).is_graded?
+                        - if current_student_data.score_for_assignment(assignment) == 0
+                          %i.fi-male.absent
+                          // To indicate partial attendance, use the following code.
+                          // - elsif current_student_data.score_for_assignment(assignment) == assignment.point_total
+                          // %i.fi-male.present
+                          // - else
+                          //   .partial-container
+                          //      %i.fi-male.partial
+                        - else
+                          %i.fi-male.present
                   %td
                     - if assignment.required?
                       %span.has-tip{:title => "This #{term_for :assignment} is required!", :data => {'tooltip' => true} }

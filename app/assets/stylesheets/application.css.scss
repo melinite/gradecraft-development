@@ -128,8 +128,18 @@ i.fi-male.present {
 
 i.fi-male.absent {
   font-size: 150%;
-  text-shadow: 1px 1px $blue;
+  text-shadow: 0px 0px 3px $blue;
   color: white;
+}
+
+.partial-container {
+  height: 10px !important;
+  overflow: hidden;
+}
+
+i.fi-male.partial {
+  font-size: 150%;
+  color: $lightblue;
 }
 
 #attachments {

@@ -244,7 +244,6 @@ class Assignment < ActiveRecord::Base
    ((positive_grades / course.graded_student_count.to_f) * 100).round(2)
   end
 
-  # Lauren added:
   #Calculates attendance rate as an integer.
    def attendance_rate_int(course)
    ((positive_grades / course.graded_student_count.to_f) * 100).to_i
