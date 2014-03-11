@@ -181,13 +181,15 @@ var PredictorView = Backbone.View.extend({
           $assignment = $item.closest('.assignment'),
           assignmentId = $assignment.data('assignment'),
           score = getScore($item),
-          possibleScore = $assignment.data('possible-points');
+          possibleScore = $assignment.data('possible-points'),
+          studentId = $('[data-student-id]').data('student-id');
       $.ajax('/analytics_events/predictor_event', {
         method: 'post',
         data: {
           assignment: assignmentId,
           score: score,
-          possible: possibleScore
+          possible: possibleScore,
+          student_id: studentId
         }
       });
     }
