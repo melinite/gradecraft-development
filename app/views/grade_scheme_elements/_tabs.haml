@@ -1,4 +1,4 @@
 %li{class: ("active" if current_page?(grade_scheme_elements_path)) }
-  = link_to_unless_current "Current Grade Scheme", grade_scheme_elements_path
+  = link_to_unless_current "#{current_course.name}'s Grade Scheme", grade_scheme_elements_path
 %li{class: ("active" if current_page?(mass_edit_grade_scheme_elements_path)) }
   = link_to_unless_current "Edit Grade Scheme", mass_edit_grade_scheme_elements_path

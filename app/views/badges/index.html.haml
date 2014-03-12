@@ -1,21 +1,21 @@
 - if current_user.is_staff?
   .small-12.panel.mainContent
     / Badge Navigation
-    = content_nav_for Badge do
+    = content_nav do
       = render "tabs"
+  
+    .pagetitle= @title
 
     .small-12.columns
-
-      %h2= @title
-
-      %table.responsive.simpleTable
+      
+      %table.responsive
         %thead
           %tr
-            %th.sortable{"data-sort" => "string"} Icon
-            %th.sortable{"data-sort" => "string", :width => 300} Description
+            %th Icon
+            %th Description
             - if current_course.valuable_badges?
               %th{"data-sort" => "int"} Value
-            %th.sortable{"data-sort" => "string"} Visible to Students
+            %th Visible to Students
             %th.button-column
         %tbody
           - current_course_data.badges.each do |badge|

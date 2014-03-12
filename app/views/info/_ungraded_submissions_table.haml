@@ -1,59 +1,32 @@
-.small-12.medium-4.columns
-  %h3
-    = "Ungraded #{term_for :assignments}"
-    .label.alert.round= @count_ungraded
-- if current_course.has_teams?
-  .small-12.right.medium-4.columns
-    = form_tag grading_status_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
-      = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
+.pagetitle
+  = "Ungraded #{term_for :assignment} Submissions"
+  .label.alert.round= @count_ungraded
 
 - @ungraded_submissions.group_by(&:assignment).each do |assignment, submissions|
-  .columns.panel
-    %h5
+  .small-12.columns
+    %h5.bold
       = link_to assignment.name, assignment
-      = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "button tiny secondary round"
+      = link_to 'Quick Grade', mass_grade_assignment_path(assignment), :class => "button tiny round success"
 
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          - if assignment.is_individual?
-            %th.sortable{"data-sort" => "string"} First Name
-            %th.sortable{"data-sort" => "string"} Last Name
-            - if current_course.has_teams?
-              %th= #{term_for :team}
-          - elsif assignment.has_groups?
-            %th.sortable{"data-sort" => "string"} Group
+  %table.responsive.simpleTable.columns
+    %thead
+      %tr
+        - if assignment.is_individual?
+          %th.sortable{"data-sort" => "string"} First Name
+          %th.sortable{"data-sort" => "string"} Last Name
+          - if current_course.has_teams?
+            %th= "#{term_for :team}"
+        - elsif assignment.has_groups?
+          %th.sortable{"data-sort" => "string"} Group
 
 
-          %th
-          %th
-      %tbody
-        - submissions.each do |ug|
-          - if ug.ungraded?
-            - if params[:team_id].present?
-              - if ug.student.team_for_course(current_course).id == params[:team_id].to_i
-                %tr
-                  - if ug.assignment.is_individual?
-                    %td= link_to ug.student.try(:first_name), student_path(ug.student)
-                    %td= link_to ug.student.try(:last_name), student_path(ug.student)
-                    %td
-                      - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
-                        = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
-                    %td
-                      .button-bar
-                        %ul.button-group.right.round
-                          %li
-                            %i.fi-paperclip
-                            = link_to "See Submission", assignment_grade_path(ug.assignment, :student_id => ug.student_id), :class => 'button tiny radius'
-                          %li= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'button tiny radius'
-                  - elsif ug.assignment.has_groups?
-                    %td
-                      .button-bar
-                        %ul.button-group.right.round
-                          %li= link_to ug.group.try(:name), group_path(ug.group)
-                          %li= link_to "See Submission", assignment_grade_path(ug.assignment, :student_id => ug.student_id), :class => 'button tiny radius'
-                    %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'button tiny radius'
-            - else
+        %th
+        %th
+    %tbody
+      - submissions.each do |ug|
+        - if ug.ungraded?
+          - if params[:team_id].present?
+            - if ug.student.team_for_course(current_course).id == params[:team_id].to_i
               %tr
                 - if ug.assignment.is_individual?
                   %td= link_to ug.student.try(:first_name), student_path(ug.student)
@@ -65,16 +38,39 @@
                     .button-bar
                       %ul.button-group.right.round
                         %li
-                          %a.button.tiny.secondary{:href => "#{assignment_grade_path(ug.assignment, :student_id => ug.student_id)}" }
-                            = "See Submission"
-                            - if ug.submission_files.present?
-                              %i.fi-paperclip
-                        %li= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => 'button tiny secondary'
+                          %i.fi-paperclip
+                          = link_to "See Submission", assignment_grade_path(ug.assignment, :student_id => ug.student_id), :class => "button tiny alert"
+                        %li= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => "button tiny alert"
                 - elsif ug.assignment.has_groups?
-                  %td= link_to ug.group.try(:name), group_path(ug.group)
                   %td
                     .button-bar
                       %ul.button-group.right.round
-                        %li= link_to "See Submission", assignment_grade_path(ug.assignment, ug), :class => 'button tiny radius'
-                        %li= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => 'button tiny radius'
+                        %li= link_to ug.group.try(:name), group_path(ug.group)
+                        %li= link_to "See Submission", assignment_grade_path(ug.assignment, :student_id => ug.student_id), :class => "button tiny alert"
+                  %td= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => "button tiny alert"
+          - else
+            %tr
+              - if ug.assignment.is_individual?
+                %td= link_to ug.student.try(:first_name), student_path(ug.student)
+                %td= link_to ug.student.try(:last_name), student_path(ug.student)
+                %td
+                  - if current_course.has_teams? && ug.student.present? && ug.student.team_for_course(current_course).present?
+                    = link_to ug.student.team_for_course(current_course).try(:name), ug.student.team_for_course(current_course)
+                %td
+                  .button-bar
+                    %ul.button-group.right.round
+                      %li
+                        %a.button.tiny.secondary{:href => "#{assignment_grade_path(ug.assignment, :student_id => ug.student_id)}" }
+                          = "See Submission"
+                          - if ug.submission_files.present?
+                            %i.fi-paperclip
+                      %li= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :student_id => ug.student.try(:id)), :class => "button tiny alert"
+              - elsif ug.assignment.has_groups?
+                %td= link_to ug.group.try(:name), group_path(ug.group)
+                %td
+                  .button-bar
+                    %ul.button-group.right.round
+                      %li= link_to "See Submission", assignment_grade_path(ug.assignment, ug), :class => "button tiny alert"
+                      %li= link_to 'Grade', edit_assignment_grade_path("assignment_id"=>assignment.id, :group_id => ug.group.try(:id)), :class => "button tiny alert"
 
+  .clearfix

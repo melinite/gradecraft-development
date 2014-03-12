@@ -1,5 +1,5 @@
 .small-12.panel.mainContent
-  = content_nav_for "My Dashboard" do
+  = content_nav do
     = render "student_profile_tabs"
 
   = link_to "Subscribe to the iCal feed", feed_assignments_path(format: "ics")

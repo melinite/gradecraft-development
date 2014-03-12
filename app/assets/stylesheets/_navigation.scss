@@ -1,6 +1,6 @@
 /* Coloring the brand */ 
 .title-area li.name h1 a {
-  color: $logogreen;
+  color: $secondary-color;
   white-space:nowrap;
 }
 
@@ -18,13 +18,15 @@
   border-bottom-left-radius: $global-radius;
 }
 
-.success.button {
+.alert.button {
   border-top-right-radius: $global-radius;
   border-bottom-right-radius: $global-radius;
+  background-color: $primary-color-3;
 }
 
 .top-bar-section ul ul.dropdown li a {
   padding: 0.2rem;
+  color: $secondary-color-4;
   line-height: 2rem !important;
 }
 
@@ -38,11 +40,12 @@
   }
 
   li:hover {
-  background-color: transparent !important;
+    background-color: transparent !important;
   }
 
   a {
     margin: 0;
+    color: $secondary-color-4;
     padding: 0;
     line-height: 1.5rem;
   }
@@ -57,7 +60,7 @@
   }
 
  .top-bar-section ul ul.dropdown a:hover {
-    color: $green;
+    color: $secondary-color;
     background-color: transparent !important;
   }
 
@@ -65,7 +68,7 @@
 /** Foundation requires that the items in the menu bar be links, and since the
 tagline doesn't actually link anywhere we're disabling the perception of the link **/
 .top-bar-section .left a, .top-bar-section .left li a:hover {
-  color: $secondary-color;
+  color: $primary-color-3;
   margin-top: 1px;
   height: 1rem !important;
   position: relative;

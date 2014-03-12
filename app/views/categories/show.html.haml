@@ -1,13 +1,11 @@
 .small-12.panel.mainContent
   / Category Navigation
-  = content_nav_for @category do
+  = content_nav do
     = render "tabs"
 
-  .small-12
+  .pagetitle= @title
 
-    %h3= @title
-
-  %table.responsive.simpleTable
+  %table.responsive
     %thead
       %tr
         %th.sortable{"data-sort" => "string"} Assignment

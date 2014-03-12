@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Editing Challenge Navigation
-  = content_nav_for Challenge, "Edit #{breadcrumb_link_for(@challenge)}".html_safe do
+  = content_nav do
     = render "teams/tabs"
 
-  .small-12.columns
-  
-    %h2= @title
+  .pagetitle= @title
+
+  .small-12.columns    
     = render 'form'
 
   .clearfix

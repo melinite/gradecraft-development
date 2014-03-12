@@ -55,3 +55,5 @@
               = link_to 'Grade', group_grade_assignment_path("assignment_id"=>@assignment.id, :group_id => group.id), :class => "button radius tiny"
   - if @assignment.release_necessary? && @assignment.grades.present?
     = submit_tag "Update Grade Statuses", :class => "button radius tiny"
+
+  .clearfix

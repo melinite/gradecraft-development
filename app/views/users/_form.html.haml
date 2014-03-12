@@ -1,27 +1,27 @@
 = simple_form_for @user do |f|
 
   .panel
-    %h4= "User Profile"
-    .small-12.medium-4.columns
+    %h4.bold= "User Profile"
+    .small-12.medium-4.columns.columns-no-padding
       = f.label :first_name
       = f.text_field :first_name
     .small-12.medium-4.columns
       = f.label :last_name
       = f.text_field :last_name
     - if current_user.is_admin?
-      .small-12.medium-4.columns
+      .small-12.medium-4.columns.columns-no-padding
         = f.label :role, "Select Role"
         = f.select :role, [["Student", "student"],["GSI", "gsi"],["Professor", "professor"],["Admin", "admin"]]
 
     .clearfix
 
-    .small-12.medium-4.columns
+    .small-12.medium-4.columns.columns-no-padding
       = f.label :username
       = f.text_field :username
     .small-12.medium-4.columns
       = f.label :email
       = f.text_field :email, :input_html => { :class => "small-12 medium-4 columns"}
-    .small-12.medium-4.columns
+    .small-12.medium-4.columns.columns-no-padding
       = f.label :display_name
       = f.text_field :display_name
 
@@ -39,10 +39,10 @@
 
   - if current_user.is_staff?
     .panel
-      %h4= f.label :course_memberships, "Course Settings"
+      %h4.bold= "Course Settings"
       
       - if current_course.has_teams? && @user.is_student?
-        .small-12.medium-4.columns
+        .small-12.medium-4.columns.columns-no-padding
           - if @user.team_for_course(current_course).present?
             = f.input :course_team_ids, :collection => @teams, :as => :radio_buttons, :label => "Select #{term_for :team}", :checked => @user.team_for_course(current_course).id
           - else
@@ -66,7 +66,7 @@
 
       - if @user.is_student?
         = f.simple_fields_for :course_memberships, @course_membership do |p|
-          .small-12.medium-4.columns
+          .small-12.medium-4.columns.columns-no-padding
             .small-12.medium-12.columns
               = p.input :character_profile
             .small-12.medium-12.columns
@@ -86,4 +86,4 @@
 
   .right
     = submit_tag "#{@user.persisted? ? 'Update' : 'Create'} User", :class => "button tiny radius"
-    = link_to 'Cancel', users_path, :class => 'button tiny radius trasnparent'
+    = link_to 'Cancel', users_path, :class => 'button tiny radius transparent'

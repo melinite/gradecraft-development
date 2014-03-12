@@ -1,5 +1,6 @@
-.small-12.columns
-  %h6 Supporting Files:
+.small-12.right.medium-4.columns
+  %br
+  .label.radius Supporting Files
   .s3_uploader
     = s3_uploader_form key: upload_url('badge_files', @badge), acl: "private", max_file_size: 40.megabytes do
       .small-12.medium-6.columns
@@ -20,13 +21,13 @@
 
 = simple_form_for @badge do |f|
   .small-12.medium-4.columns
-    = f.file_field :icon, :label => "Select an icon for this badge."
-    .form_label Choose an icon for this badge.
-  .clearfix
-
-  .small-12.medium-4.columns
     = f.label :name, "Name"
     = f.text_field :name
+  
+  .small-12.medium-4.columns
+    = f.file_field :icon, :label => "Select an icon for this badge."
+    .form_label Choose an icon for this badge.
+
 
   - if current_course.valuable_badges?
     .small-12.medium-2.columns

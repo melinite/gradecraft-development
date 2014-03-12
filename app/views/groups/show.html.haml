@@ -1,17 +1,14 @@
 .small-12.panel.mainContent
   / Group Navigation
-  = content_nav_for @group do
+  = content_nav do
     - if current_user.is_staff?
       = render "tabs"
     - else
       = render "students/student_profile_tabs"
 
-  .small-12.columns
+  .pagetitle= "#{term_for :group}: #{@group.name}"
 
-    %h2= @title
-    
-    %h3 
-      = "#{term_for :group}: #{@group.name}"
+  .small-12.columns
 
     %hr
 
@@ -20,7 +17,7 @@
       - @group.assignment_groups.each do |ag|
         %li= link_to ag.assignment.name, ag.assignment
 
-    %h3 Members:
+    %h3 Members: 
     %ul
       - @group.group_memberships.each do |gm|
         - if current_user.is_staff?

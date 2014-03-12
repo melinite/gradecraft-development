@@ -1,11 +1,9 @@
 .small-12.panel.mainContent
-  - if current_user.is_student?
-    = content_nav_for "Course Progress" do
-      = render "student_profile_tabs"
-  - else
-    = content_nav_for current_student do
-      = render "student_profile_tabs"
+  = content_nav do
+    = render "student_profile_tabs"
 
+  .pagetitle= @title
+  
   .small-12.columns
     - if current_course.grade_scheme_elements.present?
       - @grade_scheme_elements.order_by_high_range.each do |element|

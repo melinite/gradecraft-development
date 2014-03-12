@@ -1,20 +1,27 @@
-%h4
-  .small-2= "#{term_for :group}:"
-  - if @group.present?
-    .small-10= link_to @group.name, group_path(@grade.group)
+.small-12.columns
+  %h4
+    %span.bold= "#{term_for :group}:"
+    - if @group.present?
+      = link_to @group.name, group_path(@group)
 
-    - @group.students.each do |student|
-      %h3 #{term_for :student}
-      = link_to @assignment.grade_for_student(student).student.name, student_path(@assignment.grade_for_student(student).student)
-%hr.clear
+      .clearfix
+
+      %h4.bold= "#{term_for :students}:"
+      %ul
+        - @group.students.each do |student|  
+          %li= link_to student.name, student_path(student)
+    - else
+      = link_to "Create a #{term_for :group}", new_group_path, :class => "button tiny radius"
+
+  %hr.clear
 
 
-  - if @group.present? && @group.submission_for_assignment(@assignment)
-    = render "submission"
+    - if @group.present? && @group.submission_for_assignment(@assignment)
+      = render "submission"
 
-.clearfix
+  .clearfix
 
-= render "results"
+  //= render "results"
 
-//= render "analytics"
+  //= render "analytics"
 

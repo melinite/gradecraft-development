@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Earned Badges Navigation
-  = content_nav_for @badge, @title do
+  = content_nav do
     = render "badges/tabs"
 
-  .small-12.columns
+  .pagetitle= @title
 
-    %h3= @title
+  .small-12.columns
     - if current_course.has_teams?
       .right.filters
         = form_tag mass_award_badge_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
@@ -20,9 +20,11 @@
               %th
               %th
                 .button-bar
-                  %ul.button-group.round.right
-                    %li.select-all.button.tiny= "Check All"
-                    %li.select-none.button.tiny.success= "Uncheck"
+                  %ul.button-group.right.round
+                    %li
+                      %button.select-all.tiny= "Check All"
+                    %li
+                      %button.select-none.tiny= "Uncheck"
           - @earned_badges.each_with_index do |eb, i|
             %tr
               %td= link_to eb.student.name, student_path(eb.student)
@@ -30,11 +32,9 @@
                 = f.simple_fields_for :earned_badges, eb do |ebf|
                   = ebf.hidden_field :student_id
                   = ebf.hidden_field :_destroy, class: 'destroy', value: !ebf.object.persisted?
-                  = ebf.check_box :score, @badge.point_total
+                  = ebf.check_box :score, value: @badge.point_total
         .right
-          .button-bar
-            %ul.button-group.round.right
-              %li= f.button :submit, "Award", :class => "button tiny"
-              %li= link_to 'Cancel', badges_path, :class => 'button tiny'
+          = f.button :submit, "Award", :class => "button tiny radius"
+          = link_to 'Cancel', badges_path, :class => 'button tiny transparent radius'
 
   .clearfix

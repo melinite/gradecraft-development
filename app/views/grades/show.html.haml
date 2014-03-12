@@ -1,14 +1,14 @@
-.small-12.mainContent
-  = content_nav_for @assignment, @grade.student.name do
+.small-12.panel.mainContent
+  = content_nav do
     = render "assignments/tabs"
 
-  .small-12.columns
-    - if @grade.assignment.is_individual?
-      %h3 #{link_to @grade.student.name, student_path(@grade.student)}'s  #{link_to @grade.assignment.try(:name), assignment_path(@assignment)}
+  
+  - if @assignment.is_individual?
+    .pagetitle= "#{@grade.student.name}'s #{ @assignment.name }"
 
-      = render "individual_show"
+    .small-12.columns= render "individual_show"
+    
+  - else
+    .pagetitle #{@group.try(:name)}'s #{@assignment.name}
       
-    - else
-      %h3 #{@grade.group.try(:name)}'s #{@grade.assignment.name}
-        
-      = render "group_show"
+    .small-12.columns= render "group_show"

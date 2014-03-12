@@ -1,10 +1,10 @@
 .small-12.panel.mainContent
   / Assignments Navigation
-  = content_nav_for Assignment, "#{@title}" do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= @title
+  
   .small-12.columns
-    
     = render 'form'
-
-  .clearfix
+  

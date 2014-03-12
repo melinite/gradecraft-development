@@ -1,41 +1,85 @@
-%p.bold
+- if @assignment.is_individual?
+  %p.bold
+    - if current_user.is_staff?
+      = "#{current_student.first_name}'s Submission" 
+    - else
+      Your Submission
+    // link to edit the submission
+    %span= link_to "Edit", edit_assignment_submission_path(@assignment, current_student.submission_for_assignment(@assignment)), :class => "button tiny radius secondary no-margin"
+  // Displaying when the assignment was submitted
+  %p
+    Submitted:
+    = current_student.submission_for_assignment(@assignment).created_at
+
+    // Late alert if submitted after due date
+    - if current_student.submission_for_assignment(@assignment).late?
+      %span.label.alert.round Late!
+      
+    // Checking to see if the submission was updated - if the update date is different from the creation date, displaying it
+  - if current_student.submission_for_assignment(@assignment).updated_at != current_student.submission_for_assignment(@assignment).created_at
+    %p
+      Updated:
+      %span= current_student.submission_for_assignment(@assignment).updated_at
+
+  // Displaying the link to the submission if there is one
+  - if current_student.submission_for_assignment(@assignment).link?
+    %p
+      Link:
+      = link_to current_student.submission_for_assignment(@assignment).link, current_student.submission_for_assignment(@assignment).link
+
+  - if current_student.submission_for_assignment(@assignment).submission_files.present?
+    %p
+      Attachments:
+      %ul
+        - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
+          %li
+            = link_to sf.filename, sf.url
+            = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+              
+  - if current_student.submission_for_assignment(@assignment).text_comment?
+    %p
+      Statement:
+      = raw current_student.submission_for_assignment(@assignment).text_comment
+
+
+- else
   - if current_user.is_staff?
-    = "#{current_student.first_name}'s Submission" 
+    = "#{@group.name}'s Submission" 
   - else
     Your Submission
   // link to edit the submission
-  %span= link_to "Edit", edit_assignment_submission_path(@assignment, current_student.submission_for_assignment(@assignment)), :class => "button tiny radius secondary no-margin"
-// Displaying when the assignment was submitted
-%p
-  Submitted:
-  = current_student.submission_for_assignment(@assignment).created_at
+  %span= link_to "Edit", edit_assignment_submission_path(@assignment, @group.submission_for_assignment(@assignment)), :class => "button tiny radius secondary no-margin"
+  // Displaying when the assignment was submitted
+  %p
+    Submitted:
+    = @group.submission_for_assignment(@assignment).created_at
 
-  // Late alert if submitted after due date
-  - if current_student.submission_for_assignment(@assignment).late?
-    %span.label.alert.round Late!
-    
-  // Checking to see if the submission was updated - if the update date is different from the creation date, displaying it
-- if current_student.submission_for_assignment(@assignment).updated_at != current_student.submission_for_assignment(@assignment).created_at
-  %p
-    Updated:
-    %span= current_student.submission_for_assignment(@assignment).updated_at
+    // Late alert if submitted after due date
+    - if @group.submission_for_assignment(@assignment).late?
+      %span.label.alert.round Late!
+      
+    // Checking to see if the submission was updated - if the update date is different from the creation date, displaying it
+  - if @group.submission_for_assignment(@assignment).updated_at != @group.submission_for_assignment(@assignment).created_at
+    %p
+      Updated:
+      %span= @group.submission_for_assignment(@assignment).updated_at
 
-// Displaying the link to the submission if there is one
-- if current_student.submission_for_assignment(@assignment).link?
-  %p
-    Link:
-    = link_to current_student.submission_for_assignment(@assignment).link, current_student.submission_for_assignment(@assignment).link
+  // Displaying the link to the submission if there is one
+  - if @group.submission_for_assignment(@assignment).link?
+    %p
+      Link:
+      = link_to @group.submission_for_assignment(@assignment).link, @group.submission_for_assignment(@assignment).link
 
-- if current_student.submission_for_assignment(@assignment).submission_files.present?
-  %p
-    Attachments:
-    %ul
-      - current_student.submission_for_assignment(@assignment).submission_files.each do |sf|
-        %li
-          = link_to sf.filename, sf.url
-          = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
-            
-- if current_student.submission_for_assignment(@assignment).text_comment?
-  %p
-    Statement:
-    = raw current_student.submission_for_assignment(@assignment).text_comment
+  - if @group.submission_for_assignment(@assignment).submission_files.present?
+    %p
+      Attachments:
+      %ul
+        - @group.submission_for_assignment(@assignment).submission_files.each do |sf|
+          %li
+            = link_to sf.filename, sf.url
+            = link_to "(Remove)", remove_uploads_path({ :model => "SubmissionFile", :assignment_id => @assignment.id, :upload_id => sf.id } )
+              
+  - if @group.submission_for_assignment(@assignment).text_comment?
+    %p
+      Statement:
+      = raw @group.submission_for_assignment(@assignment).text_comment

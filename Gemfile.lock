@@ -409,7 +409,7 @@ DEPENDENCIES
   sidekiq
   simple_form (~> 3.0.0.rc)
   sorcery
-  timelineJS-rails
+  timelineJS-rails (~> 1.1.5)
   turbolinks
   uglifier
   valid_attribute

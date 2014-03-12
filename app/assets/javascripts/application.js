@@ -18,12 +18,11 @@
 //= require underscore.min
 //= require backbone.min
 //= require bootstrap
-//= require highcharts
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
 //= require gradecraft
-//= require users
 //= require preload_store
+//= require users
 //= require selectToUISlider.jQuery
 //= require analytics
 //= require analytics_dashboard
@@ -37,10 +36,11 @@
 //= require stupidtable
 //= require submissions
 //= require submission_file
-//= require timelineJS/embed
-//= require timeline
+//=require timelineJS/embed
+//= require timeline_settings
 //= require turbolinks
 //= require earned_badges
+//= require highcharts
 //= require datetimepicker
 //= require select2
 //= require grade_distribution

@@ -1,12 +1,11 @@
 .small-12.panel.mainContent
   / Courses Navigation
-  = content_nav_for "#{@course.name}" do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= @title
+
   .small-12.columns
-
-    %h3= @title
-
     .panel
       %h4 THE BASICS
       %p.clear

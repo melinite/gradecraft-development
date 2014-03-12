@@ -57,6 +57,7 @@ class StudentsController < ApplicationController
   # Displaying the course grading scheme and professor's grading philosophy
   def course_progress
     @grade_scheme_elements = current_course.grade_scheme_elements
+    @title = "Your Course Progress"
   end
 
   # Display the grade predictor

@@ -1,32 +1,40 @@
-= simple_form_for @group do |f|
+.small-12.columns
+  = simple_form_for @group do |f|
 
-  .small-12.medium-4.columns
-    = f.label "#{term_for :group} Name"
-    = f.text_field :name
+    .small-12.medium-4
+      = f.label "#{term_for :group} Name"
+      = f.text_field :name
 
-  - if current_user.is_staff?
-    .small-12.medium-4.columns
-      = f.label :approved, "Status"
-      = f.select :approved, [[], ["Approved"], ["Rejected"]]
-      .form_label If rejected, this #{term_for :group} will be unable to submit any further work for these assignments
+    %br
 
-  .small-12.medium-4.columns
-    = f.association :assignments, :collection => @assignments, :as => :check_boxes
-    .form_label What #{term_for :assignments} will this #{term_for :group} work on together?
-
-  .clearfix
-
-  .small-12.medium-6.columns
-    - if current_user.is_student?
-      = f.association :students, :collection => current_course_data.students, as: :select
     - if current_user.is_staff?
-      = f.association :students, :collection => current_course_data.students, as: :select
-    .form_label Enter a #{term_for :student}'s name to add them to this #{term_for :group}. Only one #{term_for :student} needs to create the #{term_for :group}, after which all #{term_for :group} members will be able to submit work, see submitted materials, and see instructor grades and feedback.
+      .small-12.medium-4
+        = f.label :approved, "Status"
+        = f.select :approved, [[], ["Approved"], ["Rejected"]]
+        .form_label If rejected, this #{term_for :group} will be unable to submit any further work for these assignments
 
-  .small-12.columns
-    %h3 #{term_for :group} Proposal
-    = f.bootsy_area :text_proposal
+    .small-12.medium-4
+      = f.association :assignments, :collection => @assignments, :as => :check_boxes
+      .form_label What #{term_for :assignments} will this #{term_for :group} work on together?
 
-  .right
-    = submit_tag "#{@group.persisted? ? 'Update' : 'Create'} #{ term_for :group } ",  :class => 'button tiny radius'
-    = link_to 'Cancel', groups_path, :class => 'button tiny radius transparent'
+    %br
+
+    .small-12.medium-6
+      - if current_user.is_student?
+        = f.association :students, :collection => current_course_data.students, as: :select 
+      - if current_user.is_staff?
+        = f.association :students, :collection => current_course_data.students, as: :select
+      %br
+      .form_label Enter a #{term_for :student}'s name to add them to this #{term_for :group}. Only one #{term_for :student} needs to create the #{term_for :group}, after which all #{term_for :group} members will be able to submit work, see submitted materials, and see instructor grades and feedback.
+
+    %br
+
+    .small-12.textarea
+      = f.bootsy_area :text_proposal
+      .form_label #{term_for :group} Proposal
+
+    %br
+
+    .right
+      = submit_tag "#{@group.persisted? ? 'Update' : 'Create'} #{ term_for :group } ",  :class => 'button tiny radius'
+      = link_to 'Cancel', groups_path, :class => 'button tiny radius transparent'

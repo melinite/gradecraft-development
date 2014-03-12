@@ -1,11 +1,14 @@
 .small-12.panel.mainContent
   / Assignment Navigation
-  = content_nav_for Assignment, "Edit #{current_course.assignment_term} '#{breadcrumb_link_for @assignment}'".html_safe do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= @title
+  
   .small-12.columns
 
-    %h2= @title
     = render 'form'
 
   .clearfix
+  
+  

@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Team Edit Breadcrumbs
-  = content_nav_for Team, "Edit #{breadcrumb_link_for(@team)}".html_safe do
+  = content_nav do
     = render "tabs"
   
-  .small-12.columns
+  .pagetitle= @title
   
-    %h2= @title
+  .small-12.columns
     = render 'form'
 
   .clearfix

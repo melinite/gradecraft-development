@@ -1,13 +1,12 @@
 /*
- * jQuery Dynatable plugin 0.1.0
+ * jQuery Dynatable plugin 0.3.1
  *
- * Copyright (c) 2013 Steve Schwartz (JangoSteve)
+ * Copyright (c) 2014 Steve Schwartz (JangoSteve)
  *
- * Dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
+ * Dual licensed under the AGPL and Proprietary licenses:
+ *   http://www.dynatable.com/license/
  *
- * Date: Tue Aug 13 12:50:00 2013 -0500
+ * Date: Tue Jan 02 2014
  */
 //
 
@@ -70,6 +69,12 @@
       recordCountPlacement: 'after',
       paginationLinkTarget: null,
       paginationLinkPlacement: 'after',
+      paginationClass: 'dynatable-pagination-links',
+      paginationLinkClass: 'dynatable-page-link',
+      paginationPrevClass: 'dynatable-page-prev',
+      paginationNextClass: 'dynatable-page-next',
+      paginationActiveClass: 'dynatable-active-page',
+      paginationDisabledClass: 'dynatable-disabled-page',
       paginationPrev: 'Previous',
       paginationNext: 'Next',
       paginationGap: [1,2,2,1],
@@ -172,6 +177,8 @@
   };
 
   build = function() {
+    this.$element.trigger('dynatable:preinit', this);
+
     for (model in modelPrototypes) {
       if (modelPrototypes.hasOwnProperty(model)) {
         var modelInstance = this[model] = new modelPrototypes[model](this, this.settings);
@@ -224,7 +231,7 @@
           // update table with new records
           _this.dom.update();
 
-          if (_this.settings.features.pushState && !skipPushState && history.pushState) {
+          if (!skipPushState && _this.state.initOnLoad()) {
             _this.state.push(data);
           }
         },
@@ -258,7 +265,7 @@
       this.dom.update();
       this.processingIndicator.hide();
 
-      if (this.settings.features.pushState && !skipPushState && history.pushState) {
+      if (!skipPushState && this.state.initOnLoad()) {
         this.state.push(data);
       }
     }
@@ -266,30 +273,37 @@
   };
 
   function defaultRowWriter(rowIndex, record, columns, cellWriter) {
-    var $tr = $('<tr></tr>');
+    var tr = '';
 
     // grab the record's attribute for each column
     for (var i = 0, len = columns.length; i < len; i++) {
-      var column = columns[i],
-      html = column.dataWriter(record),
-      $td = cellWriter(html);
-
-      if (column.hidden) {
-        $td.hide();
-      }
-      if (column.textAlign) {
-        $td.css('text-align', column.textAlign);
-      }
-      $tr.append($td);
+      tr += cellWriter(columns[i], record);
     }
 
-    return $tr;
+    return '<tr>' + tr + '</tr>';
   };
 
-  function defaultCellWriter(html) {
-    return $('<td></td>', {
-      html: html
-    });
+  function defaultCellWriter(column, record) {
+    var html = column.attributeWriter(record),
+        td = '<td';
+
+    if (column.hidden || column.textAlign) {
+      td += ' style="';
+
+      // keep cells for hidden column headers hidden
+      if (column.hidden) {
+        td += 'display: none;';
+      }
+
+      // keep cells aligned as their column headers are aligned
+      if (column.textAlign) {
+        td += 'text-align: ' + column.textAlign + ';';
+      }
+
+      td += '"';
+    }
+
+    return td + '>' + html + '</td>';
   };
 
   function defaultAttributeWriter(record) {
@@ -332,18 +346,18 @@
     // update table contents with new records array
     // from query (whether ajax or not)
     this.update = function() {
-      var $rows = $(),
+      var rows = '',
           columns = settings.table.columns,
           rowWriter = settings.writers._rowWriter,
           cellWriter = settings.writers._cellWriter;
 
-      obj.$element.trigger('dynatable:beforeUpdate', $rows);
+      obj.$element.trigger('dynatable:beforeUpdate', rows);
 
       // loop through records
       for (var i = 0, len = settings.dataset.records.length; i < len; i++) {
         var record = settings.dataset.records[i],
-            $tr = rowWriter(i, record, columns, cellWriter);
-        $rows = $rows.add($tr);
+            tr = rowWriter(i, record, columns, cellWriter);
+        rows += tr;
       }
 
       // Appended dynatable interactive elements
@@ -378,17 +392,23 @@
       }
 
       // Query search functionality
-      if (settings.inputs.queries) {
-        settings.inputs.queries.each(function() {
+      if (settings.inputs.queries || settings.features.search) {
+        var allQueries = settings.inputs.queries || $();
+        if (settings.features.search) {
+          allQueries = allQueries.add('#dynatable-query-search-' + obj.element.id);
+        }
+
+        allQueries.each(function() {
           var $this = $(this),
               q = settings.dataset.queries[$this.data('dynatable-query')];
-          $(this).val(q || '');
+          $this.val(q || '');
         });
       }
-      obj.$element.find(settings.table.bodyRowSelector).remove();
-      obj.$element.append($rows);
 
-      obj.$element.trigger('dynatable:afterUpdate', $rows);
+      obj.$element.find(settings.table.bodyRowSelector).remove();
+      obj.$element.append(rows);
+
+      obj.$element.trigger('dynatable:afterUpdate', rows);
     };
   };
 
@@ -433,8 +453,8 @@
         index: position,
         label: label,
         id: id,
-        dataWriter: settings.writers[id] || settings.writers._attributeWriter,
-        dataReader: settings.readers[id] || settings.readers._attributeReader,
+        attributeWriter: settings.writers[id] || settings.writers._attributeWriter,
+        attributeReader: settings.readers[id] || settings.readers._attributeReader,
         sorts: sorts,
         hidden: $column.css('display') === 'none',
         textAlign: $column.css('text-align')
@@ -644,7 +664,7 @@
             // retrieve the contents of this column for each record)
             obj.domColumns.add(obj.domColumns.generate(), columns.length, false, true); // don't skipAppend, do skipUpdate
           }
-          var value = columns[index].dataReader(this, record),
+          var value = columns[index].attributeReader(this, record),
               attr = columns[index].id;
 
           // If value from table is HTML, let's get and cache the text equivalent for
@@ -773,7 +793,7 @@
     this.init = function() {
       window.onpopstate = function(event) {
         if (event.state && event.state.dynatable) {
-          this.pop(event);
+          obj.state.pop(event);
         }
       }
     };
@@ -781,17 +801,28 @@
     this.push = function(data) {
       var urlString = window.location.search,
           urlOptions,
+          path,
+          params,
+          hash,
           newParams,
           cacheStr,
-          cache;
+          cache,
+          // replaceState on initial load, then pushState after that
+          firstPush = !(window.history.state && window.history.state.dynatable),
+          pushFunction = firstPush ? 'replaceState' : 'pushState';
 
       if (urlString && /^\?/.test(urlString)) { urlString = urlString.substring(1); }
       $.extend(urlOptions, data);
 
       params = utility.refreshQueryString(urlString, data, settings);
+      if (params) { params = '?' + params; }
+      hash = window.location.hash;
+      path = window.location.pathname;
+
       obj.$element.trigger('dynatable:push', data);
 
       cache = { dynatable: { dataset: settings.dataset } };
+      if (!firstPush) { cache.dynatable.scrollTop = $(window).scrollTop(); }
       cacheStr = JSON.stringify(cache);
 
       // Mozilla has a 640k char limit on what can be stored in pushState.
@@ -803,23 +834,25 @@
       // Since we don't know what the actual limit will be in any given situation, we'll just try caching and rescue
       // any exceptions by retrying pushState without caching the records.
       //
-      // I have aboslutely no idea why perPageOptions suddenly becomes an array-like object instead of an array,
+      // I have absolutely no idea why perPageOptions suddenly becomes an array-like object instead of an array,
       // but just recently, this started throwing an error if I don't convert it:
       // 'Uncaught Error: DATA_CLONE_ERR: DOM Exception 25'
       cache.dynatable.dataset.perPageOptions = $.makeArray(cache.dynatable.dataset.perPageOptions);
 
       try {
-        window.history.pushState(cache, "Dynatable state", '?' + params);
+        window.history[pushFunction](cache, "Dynatable state", path + params + hash);
       } catch(error) {
         // Make cached records = null, so that `pop` will rerun process to retrieve records
         cache.dynatable.dataset.records = null;
-        window.history.pushState(cache, "Dynatable state", '?' + params);
+        window.history[pushFunction](cache, "Dynatable state", path + params + hash);
       }
     };
 
     this.pop = function(event) {
       var data = event.state.dynatable;
       settings.dataset = data.dataset;
+
+      if (data.scrollTop) { $(window).scrollTop(data.scrollTop); }
 
       // If dataset.records is cached from pushState
       if ( data.dataset.records ) {
@@ -1067,7 +1100,7 @@
         if (settings.dataset.queries.hasOwnProperty(query)) {
           var value = settings.dataset.queries[query];
           if (_this.functions[query] === undefined) {
-            // Try to lazily evaluate query from column names if not explictly defined
+            // Try to lazily evaluate query from column names if not explicitly defined
             var queryColumn = utility.findObjectInArray(settings.table.columns, {id: query});
             if (queryColumn) {
               _this.functions[query] = function(record, queryValue) {
@@ -1170,6 +1203,7 @@
       var $search = $('<input />', {
             type: 'search',
             id: 'dynatable-query-search-' + obj.element.id,
+            'data-dynatable-query': 'search',
             value: settings.dataset.queries.search
           }),
           $searchSpan = $('<span></span>', {
@@ -1205,7 +1239,14 @@
 
     this.init = function() {
       var pageUrl = window.location.search.match(new RegExp(settings.params.page + '=([^&]*)'));
-      this.set(pageUrl ? pageUrl[1] : 1);
+      // If page is present in URL parameters and pushState is enabled
+      // (meaning that it'd be possible for dynatable to have put the
+      // page parameter in the URL)
+      if (pageUrl && settings.features.pushState) {
+        this.set(pageUrl[1]);
+      } else {
+        this.set(1);
+      }
     };
 
     this.set = function(page) {
@@ -1223,10 +1264,15 @@
     this.init = function() {
       var perPageUrl = window.location.search.match(new RegExp(settings.params.perPage + '=([^&]*)'));
 
-      if (perPageUrl) {
-        this.set(perPageUrl[1]);
+      // If perPage is present in URL parameters and pushState is enabled
+      // (meaning that it'd be possible for dynatable to have put the
+      // perPage parameter in the URL)
+      if (perPageUrl && settings.features.pushState) {
+        // Don't reset page to 1 on init, since it might override page
+        // set on init from URL
+        this.set(perPageUrl[1], true);
       } else {
-        this.set(settings.dataset.perPageDefault);
+        this.set(settings.dataset.perPageDefault, true);
       }
 
       if (settings.features.perPageSelect) {
@@ -1261,8 +1307,8 @@
       $target[settings.inputs.perPagePlacement](this.create());
     };
 
-    this.set = function(number) {
-      obj.paginationPage.set(1);
+    this.set = function(number, skipResetPage) {
+      if (!skipResetPage) { obj.paginationPage.set(1); }
       settings.dataset.perPage = parseInt(number);
     };
   };
@@ -1280,13 +1326,10 @@
     };
 
     this.create = function() {
-      var $pageLinks = $('<ul></ul>', {
-            id: 'dynatable-pagination-links-' + obj.element.id,
-            'class': 'dynatable-pagination-links',
-            html: '<span>Pages: </span>'
-          }),
-          pageLinkClass = 'dynatable-page-link',
-          activePageClass = 'dynatable-active-page',
+      var pageLinks = '<ul id="' + 'dynatable-pagination-links-' + obj.element.id + '" class="' + settings.inputs.paginationClass + '">',
+          pageLinkClass = settings.inputs.paginationLinkClass,
+          activePageClass = settings.inputs.paginationActiveClass,
+          disabledPageClass = settings.inputs.paginationDisabledClass,
           pages = Math.ceil(settings.dataset.queryRecordCount / settings.dataset.perPage),
           page = settings.dataset.page,
           breaks = [
@@ -1294,65 +1337,53 @@
             settings.dataset.page - settings.inputs.paginationGap[1],
             settings.dataset.page + settings.inputs.paginationGap[2],
             (pages + 1) - settings.inputs.paginationGap[3]
-          ],
-          $link;
+          ];
+
+      pageLinks += '<li><span>Pages: </span></li>';
 
       for (var i = 1; i <= pages; i++) {
         if ( (i > breaks[0] && i < breaks[1]) || (i > breaks[2] && i < breaks[3])) {
           // skip to next iteration in loop
           continue;
         } else {
-          $link = $('<a></a>',{
-            html: i,
-            'class': pageLinkClass,
-            'data-dynatable-page': i
-          }).appendTo($pageLinks);
-
-          if (page == i) { $link.addClass(activePageClass); }
+          var li = obj.paginationLinks.buildLink(i, i, pageLinkClass, page == i, activePageClass),
+              breakIndex,
+              nextBreak;
 
           // If i is not between one of the following
           // (1 + (settings.paginationGap[0]))
           // (page - settings.paginationGap[1])
           // (page + settings.paginationGap[2])
           // (pages - settings.paginationGap[3])
-          var breakIndex = $.inArray(i, breaks),
-              nextBreak = breaks[breakIndex + 1];
+          breakIndex = $.inArray(i, breaks);
+          nextBreak = breaks[breakIndex + 1];
           if (breakIndex > 0 && i !== 1 && nextBreak && nextBreak > (i + 1)) {
-            var $ellip = $('<span class="dynatable-page-break">&hellip;</span>');
-            $link = breakIndex < 2 ? $link.before($ellip) : $link.after($ellip);
+            var ellip = '<li><span class="dynatable-page-break">&hellip;</span></li>';
+            li = breakIndex < 2 ? ellip + li : li + ellip;
           }
 
-        }
+          if (settings.inputs.paginationPrev && i === 1) {
+            var prevLi = obj.paginationLinks.buildLink(page - 1, settings.inputs.paginationPrev, pageLinkClass + ' ' + settings.inputs.paginationPrevClass, page === 1, disabledPageClass);
+            li = prevLi + li;
+          }
+          if (settings.inputs.paginationNext && i === pages) {
+            var nextLi = obj.paginationLinks.buildLink(page + 1, settings.inputs.paginationNext, pageLinkClass + ' ' + settings.inputs.paginationNextClass, page === pages, disabledPageClass);
+            li += nextLi;
+          }
 
-        if (settings.inputs.paginationPrev && i === 1) {
-          var $prevLink = $('<a></a>',{
-            html: settings.inputs.paginationPrev,
-            'class': pageLinkClass + ' dynatable-page-prev',
-            'data-dynatable-page': page - 1
-          });
-          if (page === 1) { $prevLink.addClass(activePageClass); }
-          $link = $link.before($prevLink);
-        }
-        if (settings.inputs.paginationNext && i === pages) {
-          var $nextLink = $('<a></a>',{
-            html: settings.inputs.paginationNext,
-            'class': pageLinkClass + ' dynatable-page-next',
-            'data-dynatable-page': page + 1
-          });
-          if (page === pages) { $nextLink.addClass(activePageClass); }
-          $link = $link.after($nextLink);
+          pageLinks += li;
         }
       }
 
-      $pageLinks.children().wrap('<li></li>');
+      pageLinks += '</ul>';
 
-      // only bind page handler to non-active pages
-      var selector = '#dynatable-pagination-links-' + obj.element.id + ' .' + pageLinkClass + ':not(.' + activePageClass + ')';
+      // only bind page handler to non-active and non-disabled page links
+      var selector = '#dynatable-pagination-links-' + obj.element.id + ' a.' + pageLinkClass + ':not(.' + activePageClass + ',.' + disabledPageClass + ')';
       // kill any existing delegated-bindings so they don't stack up
       $(document).undelegate(selector, 'click.dynatable');
       $(document).delegate(selector, 'click.dynatable', function(e) {
         $this = $(this);
-        $this.closest('.dynatable-pagination-links').find('.' + activePageClass).removeClass(activePageClass);
+        $this.closest(settings.inputs.paginationClass).find('.' + activePageClass).removeClass(activePageClass);
         $this.addClass(activePageClass);
 
         obj.paginationPage.set($this.data('dynatable-page'));
@@ -1360,18 +1391,33 @@
         e.preventDefault();
       });
 
-      return $pageLinks;
+      return pageLinks;
+    };
+
+    this.buildLink = function(page, label, linkClass, conditional, conditionalClass) {
+      var link = '<a data-dynatable-page=' + page + ' class="' + linkClass,
+          li = '<li';
+
+      if (conditional) {
+        link += ' ' + conditionalClass;
+        li += ' class="' + conditionalClass + '"';
+      }
+
+      link += '">' + label + '</a>';
+      li += '>' + link + '</li>';
+
+      return li;
     };
 
     this.attach = function() {
-      // append page liks *after* delegate-event-binding so it doesn't need to
+      // append page links *after* delegate-event-binding so it doesn't need to
       // find and select all page links to bind event
       var $target = settings.inputs.paginationLinkTarget ? $(settings.inputs.paginationLinkTarget) : obj.$element;
       $target[settings.inputs.paginationLinkPlacement](obj.paginationLinks.create());
     };
   };
 
-  utility = {
+  utility = dt.utility = {
     normalizeText: function(text, style) {
       text = this.textTransform[style](text);
       return text;
@@ -1494,6 +1540,9 @@
           if (attr == "queries" && data[label]) {
             var queries = settings.inputs.queries || [],
                 inputQueries = $.makeArray(queries.map(function() { return $(this).attr('name') }));
+
+            if (settings.features.search) { inputQueries.push('search'); }
+
             for (var i = 0, len = inputQueries.length; i < len; i++) {
               var attr = inputQueries[i];
               if (data[label][attr]) {
@@ -1506,7 +1555,7 @@
             continue;
           }
 
-          // If we havne't returned true by now, then we actually want to update the parameter in the URL
+          // If we haven't returned true by now, then we actually want to update the parameter in the URL
           if (data[label]) {
             urlOptions[label] = data[label];
           } else {

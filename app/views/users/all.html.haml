@@ -1,42 +1,40 @@
 .small-12.panel.mainContent
   / User All navigation
-  = content_nav_for User, "All Users" do
+  = content_nav do
     = render "tabs"
   
-  .small-12.columns
-        
-    %table.responsive.simpleTable
-      %thead
+  .pagetitle= @title
+  
+  %table.responsive.simpleTable
+    %thead
+      %tr
+        %th.sortable{"data-sort" => "string"} First Name
+        %th.sortable{"data-sort" => "string"} Last Name
+        %th.sortable{"data-sort" => "string"} Email
+        %th.sortable{"data-sort" => "string"} Role
+        %th.sortable{"data-sort" => "string"} Courses
+        %th.sortable{"data-sort" => "int"} Score
+        %th
+    %tbody
+      - @users.alpha.each do |user|
         %tr
-          %th.sortable{"data-sort" => "string"} First Name
-          %th.sortable{"data-sort" => "string"} Last Name
-          %th.sortable{"data-sort" => "string"} Email
-          %th.sortable{"data-sort" => "string"} Role
-          %th.sortable{"data-sort" => "string"} Courses
-          %th.sortable{"data-sort" => "int"} Score
-          %th
-      %tbody
-        - @users.alpha.each do |user|
-          %tr
-            %td
-              = link_to user.first_name, student_path(user) if user.is_student?
-              = link_to user.first_name, staff_path(user) if user.is_staff?
-            %td
-              = link_to user.last_name, student_path(user) if user.is_student?
-              = link_to user.last_name, staff_path(user) if user.is_staff?
-            %td= user.email
-            %td= user.role.capitalize
-            %td
-              %ul
-                - user.course_memberships.each do |cm|
-                  %li= cm.course.name
-            %td
-              - if user.is_student?
-                = points user.score_for_course(current_course) if user.respond_to?(:grades)
-            %td
-              .button-bar
-                %ul.button-group.right.round
-                  %li= link_to 'Edit', edit_user_path(user), :class => 'button tiny secondary'
-                  %li= link_to 'Delete', user, :class => 'button tiny secondary', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete
-
-  .clearfix
+          %td
+            = link_to user.first_name, student_path(user) if user.is_student?
+            = link_to user.first_name, staff_path(user) if user.is_staff?
+          %td
+            = link_to user.last_name, student_path(user) if user.is_student?
+            = link_to user.last_name, staff_path(user) if user.is_staff?
+          %td= user.email
+          %td= user.role.capitalize
+          %td
+            %ul
+              - user.course_memberships.each do |cm|
+                %li= cm.course.name
+          %td
+            - if user.is_student?
+              = points user.score_for_course(current_course) if user.respond_to?(:grades)
+          %td
+            .button-bar
+              %ul.button-group.right.round
+                %li= link_to 'Edit', edit_user_path(user), :class => 'button tiny secondary'
+                %li= link_to 'Delete', user, :class => 'button tiny secondary', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete

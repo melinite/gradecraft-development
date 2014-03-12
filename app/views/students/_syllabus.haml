@@ -5,7 +5,7 @@
         %h3.collapse #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points assignment_type.max_value}
       - else
         %h3.collapse #{assignment_type.try(:name)} • #{ points current_student_data.score_for_assignment_type(assignment_type) }/#{points current_student_data.point_total_for_assignment_type(assignment_type)}
-      %div
+      .small-12.columns
         - if assignment_type.student_weightable? && current_course.assignment_weight_open?
           .small-2.right
             - if current_student_data.weighted_assignments?
@@ -19,9 +19,10 @@
         - if assignment_type.predictor_description?
           .small-10.columns
             %p= raw assignment_type.predictor_description 
-          %hr
+          .columns
+            %hr
 
-        .small-12.assignmentList
+        .small-12.columns
           %table.responsive
             - assignments.each do |assignment|
               - if assignment.visible? || current_student_data.grade_released_for_assignment?(assignment)

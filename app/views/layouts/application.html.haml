@@ -28,17 +28,14 @@
               %li
                 %a= current_course.try(:tagline)
         - if current_user
-          %section.top-bar-section
-            %ul.right= render 'layouts/authenticated_nav'
+          = render 'layouts/authenticated_nav'
     - if current_user
       - if current_user.is_staff?
         .columns= render 'layouts/staff'
       - else
         = render 'layouts/student'
     - else
-      .row.panel.publicContent
-        .small-12.columns
-          = render 'layouts/public'
+      = render 'layouts/public'
       - if ! current_user
         .row.panel.footer
           .small-12.medium-12.columns

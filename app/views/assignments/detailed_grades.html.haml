@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Assignment Navigation
-  = content_nav_for @assignment do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= "#{@title} (#{ points @assignment.point_total } points)"
+  
   .small-12.columns
-
-    %h2= "#{@title} (#{ points @assignment.point_total } points)"
 
     - if @assignment.open_at?
       .small-12.large-4.columns.panel

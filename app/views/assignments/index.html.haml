@@ -1,8 +1,10 @@
 - if current_user.is_staff?
   .small-12.panel.mainContent
     / Assignment navigation
-    = content_nav_for Assignment do
+    = content_nav do
       = render "tabs"
+
+    .pagetitle= @title
 
     .small-12.columns
       
@@ -16,7 +18,7 @@
                   %ul.button-group.round.right
                     %li= link_to "See Overview", all_grades_assignment_type_path(assignment_type), :class => "button tiny aindex"
                     %li= link_to "Edit", edit_assignment_type_path(assignment_type), :class => "button tiny aindex"
-              %table.responsive.simpleTable
+              %table.responsive
                 %thead
                   %tr
                     %th.sortable{"data-sort" => "string"} Name
@@ -45,12 +47,12 @@
                         .button-bar
                           %ul.button-group.round.right
                             %li
-                              %a{:href => mass_grade_assignment_path(assignment), :class => 'button tiny secondary' }
+                              %a{:href => mass_grade_assignment_path(assignment), :class => 'button tiny alert' }
                                 Quick Grade
                             %li
-                              %a{:href => edit_assignment_path(assignment), :class => 'button tiny secondary' }
+                              %a{:href => edit_assignment_path(assignment), :class => 'button tiny alert' }
                                 Edit
                             %li
-                              %a{:href => assignment_path(assignment), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
+                              %a{:href => assignment_path(assignment), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny alert" }
                                 Delete
     .clearfix

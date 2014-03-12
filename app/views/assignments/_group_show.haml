@@ -1,17 +1,17 @@
 - if current_user.is_staff?
   = form_tag edit_status_grades_assignment_path(@assignment) do
     - @groups.each do |group|
-      .small-12
-        %h3
+      .small-12.columns
+        %h4.bold
           = "#{group.name} Grades"
           - group.submission_for_assignment(@assignment).tap do |submission|
             - if submission
-              = link_to "See Submission", assignment_grade_path(@assignment.id, :group_id => group.id), :class => 'button tiny radius'
+              = link_to "See Submission", assignment_grade_path(@assignment.id, :group_id => group.id), :class => 'button tiny radius success'
             - else
-              = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'button tiny radius'
-          = link_to "Grade", group_grade_assignment_path(@assignment, :group_id => group), :class => 'button tiny radius'
+              = link_to "Submit", new_assignment_submission_path(@assignment, @submission, :group_id => group.id), :class => 'button tiny radius success'
+          = link_to "Grade", group_grade_assignment_path(@assignment, :group_id => group), :class => 'button tiny radius success'
 
-      %table.responsive.simpleTable
+      %table.responsive.small-12.columns
         %thead
           %tr
             - if @assignment.release_necessary?
@@ -19,14 +19,14 @@
                 .btn-group
                   %button.select-all.btn.btn-xs.btn-info= "Check"
                   %button.select-none.btn.btn-xs.btn-info= "Uncheck"
-            %th.sortable{"data-sort" => "string"}= current_course.group_term
-            %th.sortable{"data-sort" => "string"} Score
+            %th= current_course.group_term
+            %th Score
             - if @assignment.assignment_type.student_weightable?
-              %th.sortable{"data-sort" => "int"} Multiplied Scores
+              %th Multiplied Scores
             - if @assignment.has_levels?
-              %th.sortable{"data-sort" => "string"} Level
+              %th Level
             - if @assignment.release_necessary?
-              %th.sortable{"data-sort" => "string"} Status
+              %th Status
         %tbody
           - group.students.each do |student|
             - grade = @assignment.grades.find_by student_id: student
@@ -76,4 +76,4 @@
     - if @assignment.accepts_submissions?
       = render "students/group_submissions", assignment: @assignment, group: current_student.group_for_assignment(@assignment)
   - else
-    = link_to "Create a Group", new_group_path, :class => "button tiny radius primary"
+    = link_to "Create a Group", new_group_path, :class => "button tiny radius"

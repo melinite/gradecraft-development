@@ -11,7 +11,7 @@
     %span.bold= "#{points grade.raw_score }"
     %span=" / #{points @assignment.point_total } possible points"
   - if current_student.grade_for_assignment(@assignment).assignment.release_necessary? && current_user.is_staff?
-    %h6 
+    %p 
       Status:
       %span.bold= current_student.grade_for_assignment(@assignment).status
   - if current_student.grade_for_assignment(@assignment).feedback.present?

@@ -1,18 +1,23 @@
 
 /** Table Styles **/
 
+#gradebook {
+  overflow: auto !important; 
+}
+
 /* Set the tables to be full width of the page*/
 table.responsive {
   width: 100%;
   border-spacing: 0 !important;
+  margin-bottom: 1rem;
 
   a:hover {
-    color: $green;
+    color: $secondary-color;
   }
 
   .button {
     margin-bottom: 0;
-  }
+   }
 
   td {
     line-height: 1.5rem;
@@ -41,16 +46,10 @@ table .button-group li a.button.tiny {
 
 .button.tiny.aindex {
   width: auto !important;
-  background-color: $secondary-color;
   right: 0;
   position: relative;
   top: -2.8rem;
   margin-bottom: -4.8rem;
-}
-
-.button.tiny.aindex:hover {
-  background-color: $darkblue;
-  color: #FFF;
 }
 
 @media (max-width: 1279px)  {

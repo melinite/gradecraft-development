@@ -20,8 +20,8 @@ class EarnedBadgesController < ApplicationController
   end
 
   def new
-    @title = "Award a New #{term_for :badge}"
     @badge = current_course.badges.find(params[:badge_id])
+    @title = "Award #{@badge.name}"
     @earned_badge = @badge.earned_badges.new
     @students = current_course.users.students.alpha
   end

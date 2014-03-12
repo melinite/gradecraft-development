@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Tasks navigation
-  = content_nav_for @assignment, "Editing #{(@task.name)}".html_safe do
+  = content_nav do
     %li= link_to "See #{@assignment.try(:name)}", @assignment, :class => "button tiny radius"
   
+  .pagetitle= @title
+  
   .small-12.columns
-
-    %h2= @title
     = render 'form'
 
   .clearfix

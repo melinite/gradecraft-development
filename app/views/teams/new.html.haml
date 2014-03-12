@@ -1,10 +1,11 @@
 .small-12.panel.mainContent
   / Create Team Breadcrumbs
-  = content_nav_for Team, @title.html_safe do
+  = content_nav do
     = render "tabs"
   
+  .pagetitle= @title
+  
   .small-12.columns
-        
     = render 'form'
 
   .clearfix

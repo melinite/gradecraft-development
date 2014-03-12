@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Challenge Grade Navigation
-  = content_nav_for ChallengeGrade do
+  = content_nav do
     = render "teams/tabs"
 
-  .small-12.columns
+  .pagetitle= @title
 
-    %h3= @title
+  .small-12.columns
     %p
       %b #{term_for :team}:
       = link_to @challenge_grade.team.name, @challenge_grade.team

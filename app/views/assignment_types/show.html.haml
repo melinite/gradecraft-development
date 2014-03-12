@@ -1,62 +1,58 @@
 .small-12.panel.mainContent
   / Assignment Type Navigation
-  .show-for-medium-up
-    = content_nav_for @assignment_type do
-      = render "assignments/tabs"
+  = content_nav do
+    = render "assignments/tabs"
 
-  .small-12.columns
+  .pagetitle= @title
 
-    %h2= @title
-
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          %th.sortable{"data-sort" => "string"} Name
-          %th.sortable{"data-sort" => "date"} Open - Due
-          %th.sortable{"data-sort" => "int"} Points
-          %th
-      %tbody
-        - @assignment_type.assignments.alphabetical.chronological.each do |assignment|
-          - if assignment.visible? || (current_user.is_student? && current_student_data.grade_released_for_assignment?(assignment)) || current_user.is_staff?
-            %tr
-              %td= link_to assignment.name, assignment
+  %table.responsive.small-12.columns
+    %thead
+      %tr
+        %th.sortable{"data-sort" => "string"} Name
+        %th.sortable{"data-sort" => "date"} Open - Due
+        %th.sortable{"data-sort" => "int"} Points
+        %th
+    %tbody
+      - @assignment_type.assignments.alphabetical.chronological.each do |assignment|
+        - if assignment.visible? || (current_user.is_student? && current_student_data.grade_released_for_assignment?(assignment)) || current_user.is_staff?
+          %tr
+            %td= link_to assignment.name, assignment
+            %td
+              = "#{assignment.open_at } -" if assignment.open_at.present?
+              = assignment.try(:due_at) || "Ongoing"
+            %td= points assignment.point_total
+            - if current_user.is_staff?
               %td
-                = "#{assignment.open_at } -" if assignment.open_at.present?
-                = assignment.try(:due_at) || "Ongoing"
-              %td= points assignment.point_total
-              - if current_user.is_staff?
-                %td
-                  .button-bar
-                    %ul.button-group.right.round
-                      %li= link_to "Grade", assignment_path(assignment), :class => "button tiny secondary"
-                      %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny secondary'
-                      %li
-                        %a{:href => assignment_path(assignment), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
-                          Delete
-                      %li= link_to "Copy", copy_assignments_path(:id => assignment), :class => 'button tiny secondary', :method => :copy
-              - else
-                - if assignment.accepts_submissions? && assignment.has_groups?
-                  - if current_student.group_for_assignment(assignment)
-                    %td= link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny radius"
-                    - if assignment.accepts_submissions?
-                      = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
-                  - else
-                    %td= link_to "Create a Group", new_group_path, :class => "button tiny radius"
-                - elsif assignment.accepts_submissions? && assignment.is_individual?
-                  - current_student.submission_for_assignment(assignment).tap do |submission|
-                    - if submission
-                      %td= link_to "See Submission", assignment_grade_path(assignment.id, :student_id => current_student.id), :class => 'button tiny radius'
-                      %td
-                      %td
-                      %td
-                    - else
-                      %td= link_to "Submit", new_assignment_submission_path(assignment, @submission, :user_id => current_student.id, :student_type => "User"), :class => 'button tiny radius'
-                      %td
-                      %td
-                      %td
+                .button-bar
+                  %ul.button-group.right.round
+                    %li= link_to "Grade", assignment_path(assignment), :class => "button tiny alert"
+                    %li= link_to "Edit", edit_assignment_path(assignment), :class => 'button tiny alert'
+                    %li
+                      %a{:href => assignment_path(assignment), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny alert" }
+                        Delete
+                    %li= link_to "Copy", copy_assignments_path(:id => assignment), :class => 'button tiny alert', :method => :copy
+            - else
+              - if assignment.accepts_submissions? && assignment.has_groups?
+                - if current_student.group_for_assignment(assignment)
+                  %td= link_to "See Group", group_path(current_student.group_for_assignment(assignment)), :class => "button tiny alert radius"
+                  - if assignment.accepts_submissions?
+                    = render "students/group_submissions", assignment: assignment, group: current_student.group_for_assignment(assignment)
                 - else
-                  %td
-                  %td
-                  %td
-
-  .clearfix
+                  %td= link_to "Create a Group", new_group_path, :class => "button tiny radius"
+              - elsif assignment.accepts_submissions? && assignment.is_individual?
+                - current_student.submission_for_assignment(assignment).tap do |submission|
+                  - if submission
+                    %td= link_to "See Submission", assignment_grade_path(assignment.id, :student_id => current_student.id), :class => 'button tiny alert radius'
+                    %td
+                    %td
+                    %td
+                  - else
+                    %td= link_to "Submit", new_assignment_submission_path(assignment, @submission, :user_id => current_student.id, :student_type => "User"), :class => 'button tiny alert radius'
+                    %td
+                    %td
+                    %td
+              - else
+                %td
+                %td
+                %td
+      .clearfix

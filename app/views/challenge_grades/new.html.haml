@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / New Challenge Grade Navigation
-  = content_nav_for @challenge, "New Grade" do
+  = content_nav do
     = render "teams/tabs"
 
-  .small-12.columns
-  
-    %h3= @title
+  .pagetitle= @title
+
+  .small-12.columns  
     = render 'form'
 
   .clearfix

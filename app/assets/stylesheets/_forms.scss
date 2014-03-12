@@ -1,11 +1,12 @@
 .select2-search-field {
   width: 20rem;
+  height: 20rem;
+  clear: left;
 }
 
-form {
-  margin: 0;
+label#s2id_autogen1 {
+  clear: both;
 }
-
 label {
   display: inline-block;
   margin-bottom: 5px;
@@ -18,7 +19,7 @@ label, input {
 
   /** Login Forms  **/
 
-  .login_forms {
+.login_forms {
   background-color: #FFF;
   border: none;
 
@@ -37,10 +38,12 @@ label, input {
     border-collapse: true !important;
     border-top-right-radius: $global-radius;
     border-top-left-radius: $global-radius;
-    background-color: $lightblue !important;
+    background-color: $secondary-color !important;
+    color: #FFF;
   }
   dd.active a {
     background-color: #eee !important;
+    color: #000;
   }
 
   .right {
@@ -99,12 +102,11 @@ select {
 }
 
 select:hover {
-  background-color: $lightblue;
+  background-color: $primary-color-3;
 }
 
 ul.dropdown-menu {
   background-color: #FFF;
-  
   padding: 0 !important;
   margin: 0 !important;
   border-radius: $global-radius;
@@ -141,7 +143,6 @@ ul.dropdown-menu {
 }
 
 .checkbox .form_label {
-
   margin-left: 1.5rem;
 }
 
@@ -153,7 +154,6 @@ ul.dropdown-menu {
 }
 
 .img.form_label {
-
   background-color: #333;
   padding: .5rem;
   border-bottom-right-radius: $global-radius;

@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  = content_nav_for @assignment, "Updating Grade Statuses" do
+  = content_nav do
     = render "assignments/tabs"
 
-  .small-12.columns            
-    %h3 Selected Grades
+  .pagetitle Updating Selected Grades
 
+  .small-12.columns            
     %table.responsive.simpleTable
       %thead
         %tr

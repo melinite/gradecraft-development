@@ -9,7 +9,7 @@
     = link_to "Leaderboard", leaderboard_path
   %li
     %i.fi-flag
-    = link_to "Ungraded Submissions", grading_status_path
+    = link_to "Grading Status", grading_status_path
   - if current_course.student_weighted?
     %li
       %i.fi-die-three
@@ -17,7 +17,7 @@
   - if current_course.has_badges?
     %li
       %i.fi-star
-      = link_to "Awarded #{current_course.badge_term.pluralize}", info_class_badges_path
+      = link_to "Awarded #{current_course.badge_term.pluralize}", earned_badges_path
   %li
     %i.fi-book-bookmark
     = link_to "Gradebook", gradebook_path
@@ -74,6 +74,9 @@
   %li
     %i.fi-wrench
     = link_to "Options", edit_course_path(current_course)
+  %li
+    %i.fi-database
+    = link_to "#{term_for :assignment_types}", assignment_types_path
   %li
     %i.fi-list
     = link_to "Grading Scheme", grade_scheme_elements_path

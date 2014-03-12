@@ -1,31 +1,29 @@
 .small-12.panel.mainContent
-  = content_nav_for "Course Timeline" do
+  = content_nav do
     = render "students/student_profile_tabs"
 
-  .small-12.columns
-
-    %h2
-      
-      / Check to see if the course has scheme elements
-      - if current_course.grade_scheme_elements.present?
-        - if  current_user.next_element_level(current_course) == false
-          Congratulations! You beat #{current_course.name}.
-        - else
-          - @grade_scheme_elements.order_by_low_range.each do |element|  
-            -if element.high_range >= current_user.cached_score_for_course(current_course) && current_user.cached_score_for_course(current_course) >= element.low_range
-              %span=points element.points_to_next_level(current_user, current_course)
-              %span points until next rank:
-              %span.bold= current_user.next_element_level(current_course)
-
-
-            
-        / Else tally all of the points for all of the assignments in the course
+  .pagetitle
+    
+    / Check to see if the course has scheme elements
+    - if current_course.grade_scheme_elements.present?
+      - if  current_user.next_element_level(current_course) == false
+        Congratulations! You beat #{current_course.name}.
       - else
-        %span#userScoreNum #{points current_user.cached_score_for_course(current_course)}
-        %span /#{points current_course.total_points} points
-        - if current_user.grade_level_for_course(current_course).present?
-          – Current Level:
-          %span#userScoreNum= current_user.grade_level_for_course(current_course)
+        - @grade_scheme_elements.order_by_low_range.each do |element|  
+          -if element.high_range >= current_user.cached_score_for_course(current_course) && current_user.cached_score_for_course(current_course) >= element.low_range
+            %span=points element.points_to_next_level(current_user, current_course)
+            %span points until next rank:
+            %span.bold= current_user.next_element_level(current_course)
+
+
+          
+      / Else tally all of the points for all of the assignments in the course
+    - else
+      %span#userScoreNum #{points current_user.cached_score_for_course(current_course)}
+      %span /#{points current_course.total_points} points
+      - if current_user.grade_level_for_course(current_course).present?
+        – Current Level:
+        %span#userScoreNum= current_user.grade_level_for_course(current_course)
 
   #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
 

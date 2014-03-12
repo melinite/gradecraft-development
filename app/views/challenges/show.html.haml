@@ -1,16 +1,15 @@
 .small-12.panel.mainContent
   / Challenge View Navigation
 
-  = content_nav_for @challenge do
+  = content_nav do
     - if current_user.is_staff?
       = render "teams/tabs"
     - else 
       = render "students/student_profile_tabs"
 
+  .pagetitle= @title
+
   .small-12.columns
-
-    %h2= @title
-
     - if @challenge.challenge_files.present?
       %p
         %b Documents:
@@ -32,8 +31,6 @@
               %th.sortable{"data-sort" => "string"} Level
             - if @challenge.release_necessary?
               %th.sortable{"data-sort" => "string"} Status
-            - if @challenge.accepts_submissions?
-              %th.sortable{"data-sort" => "string"} Submission
             - if current_user.is_staff?
               %th
         %tbody
@@ -54,8 +51,6 @@
                     = @challenge.grade_level(grade)
               - if @challenge.release_necessary?
                 %td= challenge_grade.try(:status) ? 'Released' : ''
-              - if @challenge.accepts_submissions?
-                %td
               - if current_user.is_staff?
                 %td
                   - if challenge_grade

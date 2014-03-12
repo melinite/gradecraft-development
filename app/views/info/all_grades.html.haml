@@ -1,8 +1,10 @@
 .small-12.panel.mainContent
   / All Grades Table
-  = content_nav_for :students, "All Grades" do
+  = content_nav do
     = render "info/tabs"
-        
+ 
+  .pagetitle= @title
+
   %table.responsive.simpleTable
     %thead
       %tr
@@ -33,9 +35,9 @@
           %td
             .button-bar
               %ul.button-group.round.right
-                %li= link_to "Edit Grade", edit_assignment_grade_path(g.assignment_id, g, :student_id => g.student_id), :class => 'button tiny radius'
-                %li= link_to "See Grade", assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => "button tiny radius"
-                %li= link_to "Delete Grade", assignment_grade_path(g.assignment_id, g, :student_id => g.student_id), :class => "button tiny radius", :data => { confirm: 'Are you sure?' }, :method => :delete
+                %li= link_to "Edit Grade", edit_assignment_grade_path(g.assignment_id, g, :student_id => g.student_id), :class => "button tiny alert"
+                %li= link_to "See Grade", assignment_grade_path(g.assignment_id, :student_id => g.student_id), :class => "button tiny alert"
+                %li= link_to "Delete Grade", assignment_grade_path(g.assignment_id, g, :student_id => g.student_id), :class => "button tiny alert", :data => { confirm: 'Are you sure?' }, :method => :delete
 
   = will_paginate @grades
 

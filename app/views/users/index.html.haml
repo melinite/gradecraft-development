@@ -1,10 +1,12 @@
 .small-12.panel.mainContent
   / User Index Navigation
-  = content_nav_for @title do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= @title
+  
   - if current_course.has_teams?
-    .small-12.large-4.large-offset-8.medium-6.medium-offset-6.columns
+    .small-12.medium-4.columns.right
       = form_tag users_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
@@ -44,9 +46,9 @@
               .button-bar
                 %ul.button-group.right.round
                   %li
-                    = link_to "Dashboard", student_path(user), :class => 'button tiny secondary' if user.is_student?
-                    = link_to "Dashboard", staff_path(user), :class => 'button tiny secondary' if user.is_staff?
-                  %li= link_to 'Edit', edit_user_path(user), :class => 'button tiny secondary'
-                  %li= link_to 'Delete', user, :class => 'button tiny secondary', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete
+                    = link_to "Dashboard", student_path(user), :class => 'button tiny alert' if user.is_student?
+                    = link_to "Dashboard", staff_path(user), :class => 'button tiny alert' if user.is_staff?
+                  %li= link_to 'Edit', edit_user_path(user), :class => 'button tiny alert'
+                  %li= link_to 'Delete', user, :class => 'button tiny alert', :data => { confirm: 'This will delete the student from GradeCraft - Are you sure?' } , :method => :delete
 
   .clearfix

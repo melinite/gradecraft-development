@@ -1,10 +1,11 @@
 .small-12.panel.mainContent
   / Courses Navigation
-  = content_nav_for "Edit #{breadcrumb_link_for(@course)}".html_safe do 
+  = content_nav do 
     = render "tabs"
 
+  .pagetitle= @title
+  
   .small-12.columns
-
     = render 'form'
 
   .clearfix

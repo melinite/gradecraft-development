@@ -1,7 +1,9 @@
 .small-12.panel.mainContent
   / Grade Scheme Elements Navigation
-  = content_nav_for "Edit #{current_course.name} Grading" do
+  = content_nav do
     = render "tabs"
+
+  .pagetitle= @title
 
   .small-12.columns
 
@@ -17,7 +19,7 @@
             = f.simple_fields_for :grade_scheme_elements, element do |ef|
               = render 'element_fields', f: ef
 
-        = link_to 'Add an Element', '#', class: 'add-element button tiny radius'
+        = link_to 'Add an Element', '#', class: 'add-element button tiny alert radius'
 
 
       .right

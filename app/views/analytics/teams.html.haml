@@ -1,15 +1,13 @@
 .small-12.panel.mainContent
   / Leaderboards
-  = content_nav_for "Course Analytics", "#{term_for :teams}" do
+  = content_nav do
     = render "tabs"
+
+  .pagetitle #{term_for :team} Grade Distribution
 
   .small-12.columns
         
-    .panel
-      %h4 Course Grade Distribution
-      #grade_distro
-
-    %hr
+    #grade_distro
 
     - if current_course.has_teams?
       #highchart

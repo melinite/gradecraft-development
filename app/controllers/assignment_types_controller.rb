@@ -3,6 +3,7 @@ class AssignmentTypesController < ApplicationController
   before_filter :ensure_staff?
 
   def index
+    @title = "#{term_for :assignment_types}"
   end
 
   def show

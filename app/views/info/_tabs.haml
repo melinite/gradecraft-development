@@ -3,7 +3,7 @@
 %li{class: ("active" if current_page?(leaderboard_path)) }
   = link_to_unless_current "Leaderboard", leaderboard_path
 %li{class: ("active" if current_page?(grading_status_path)) }
-  = link_to_unless_current "Ungraded Submissions", grading_status_path
+  = link_to_unless_current "Grading Status", grading_status_path
 - if current_course.student_weighted? 
   %li{class: ("active" if current_page?(multiplier_choices_path)) }
     = link_to_unless_current "#{term_for :weight} Choices", multiplier_choices_path

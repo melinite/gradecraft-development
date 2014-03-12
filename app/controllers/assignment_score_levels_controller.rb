@@ -2,22 +2,6 @@ class AssignmentScoreLevelsController < ApplicationController
 
   before_filter :ensure_staff?
 
-  def index
-    @assignment_score_levels = current_course.assignment_score_levels
-  end
-
-  def show
-    @assignment_score_level = current_course.assignment_score_levels.find(params[:id])
-  end
-
-  def new
-    @assignment_score_level = current_course.assignment_score_levels.new
-  end
-
-  def edit
-    @assignment_score_level = current_course.assignment_score_levels.find(params[:id])
-  end
-
   def create
     @assignment_score_level = current_course.assignment_score_levels.new(params[:assignment_score_level])
     @assignment_score_level.save

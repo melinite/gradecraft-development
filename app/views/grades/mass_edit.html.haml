@@ -1,7 +1,9 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  = content_nav_for @assignment, @title do
+  = content_nav do
     = render "assignments/tabs"
+
+  %span.pagetitle= @title
 
   .small-12.medium-4.columns.right
     
@@ -28,7 +30,7 @@
                   .button-bar
                     %ul.button-group.round.right
                       %li.select-all.button.tiny= "Check All"
-                      %li.select-none.button.tiny.success= "Uncheck"
+                      %li.select-none.button.tiny= "Uncheck"
           - @grades.each_with_index do |grade, i|
             %tr
               %td= link_to grade.student.name, student_path(grade.student)
@@ -66,14 +68,11 @@
                           = gf.text_field :raw_score, data: {autonumeric: true, "m-dec" => "0"}
                           
                       - else
-                        %td
-                          = gf.text_field :raw_score, :value => nil, data: {autonumeric: true, "m-dec" => "0"}
-                          = gf.label :raw_score, "/ #{points @assignment.point_total}"
+                        %td= gf.text_field :raw_score, :value => nil, data: {autonumeric: true, "m-dec" => "0"}
+                        %td= gf.label :raw_score, "/ #{points @assignment.point_total}"
 
         .right
-          .button-bar
-            %ul.button-group.round.right
-              %li= f.button :submit, "Submit Grades", :class => "button tiny radius"
-              %li= link_to 'Cancel', assignments_path, :class => 'button tiny radius'
+          = f.button :submit, "Submit Grades", :class => "button tiny radius"
+          = link_to 'Cancel', assignments_path, :class => "button tiny radius transparent"
 
   .clearfix

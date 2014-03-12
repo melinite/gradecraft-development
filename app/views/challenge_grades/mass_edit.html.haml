@@ -1,10 +1,11 @@
 .small-12.panel.mainContent
   / Challenge Grades Navigation
-  = content_nav_for @challenge do
+  = content_nav do
     = render "teams/tabs"
 
+  .pagetitle= @title
+
   .small-12.columns
-    %h3= @title
 
     #massGrade
       = simple_form_for @challenge, method: :put, :url => mass_edit_challenge_path(@challenge) do |f|
@@ -23,6 +24,6 @@
               %td= " / #{points  @challenge.point_total} points"
         .right
           = f.button :submit, "Submit", :class => "button tiny radius"
-          = link_to 'Cancel', challenges_path, :class => 'button tiny radius'
+          = link_to 'Cancel', challenges_path, :class => 'button tiny radius transparent'
 
   .clearfix

@@ -1,11 +1,13 @@
 .small-12.panel.mainContent
   / Assignment Charts Navigation
-  = content_nav_for "Course Analytics", "#{term_for :assignment} Analytics" do
+  = content_nav do
     = render "analytics/tabs"
 
-  .columns
-    - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
-      %h3= link_to assignment_type.name, assignment_type
+  
+  - @assignments.group_by(&:assignment_type).each do |assignment_type, assignments|
+    .pagetitle= assignment_type.name 
+
+    .columns
       %table.responsive
         %thead
           %tr
@@ -32,4 +34,4 @@
               %td.right
                 .grades_per_assign{ "data-scores" => assignment.grades.graded.pluck('score') }
 
-  .clearfix
+    .clearfix

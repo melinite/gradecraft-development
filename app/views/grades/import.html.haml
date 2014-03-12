@@ -1,12 +1,11 @@
 .small-12.panel.mainContent
   / Criteria Levels Navigation
-  = content_nav_for @assignment, "Import Grades" do
+  = content_nav do
     = render "assignments/tabs"
 
+  .pagetitle Import Grades for #{@assignment.name}
+
   .small-12.columns
-
-    %h3 Import Grades for #{@assignment.name}
-
     %p
       = "To import grades you need to upload a .csv file with the following content: the #{term_for :student}'s name, uniqname, score, and any text feedback you'd like to include. These fields *MUST* be in this order. Note that you may include additional information in the extra columns, but that content will be ignored."
       = link_to "Download Sample File", roster_students_path(format: 'csv'), :class => "button tiny radius"

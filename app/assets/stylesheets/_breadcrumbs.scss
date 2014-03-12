@@ -1,23 +1,15 @@
-
-/* Adjusting the margin below the site breadcrumbs */
-.breadcrumbs {
-  margin-bottom: 0.5rem;
-}
-
-/* styling the tab menu system */
+/* Tab menu system */
 .sub-nav {
-  padding-top: 10px !important;
-  height: 40px;
+  height: 32px;
+  position: absolute;
   margin-left: 0 !important;
-  background-color: $green;
+  top: 0px !important;
 
   /* Individual Tabs */
   .navbar-nav {
     display: inline;
-
       li {
-      box-shadow: 0px 0px 4px #777;
-      background-color: $primary-color;
+      background-color: $secondary-color;
       border-top-left-radius: $global-radius;
       border-top-right-radius: $global-radius;
       margin: 0 0.2rem;
@@ -29,13 +21,15 @@
       }
     }
   }
-  /* Setting the active tab and hover styles to be the light blue */
-  .navbar-nav li.active, .navbar-nav li:hover {
-    background-color: $secondary-color;
-    color: #000;
-  }
 }
 
+/* Setting the active tab and hover styles to be the dark green */
+.navbar-nav li.active, .sub-nav .navbar-nav li:hover {
+  background-color: $secondary-color-2;
+  color: #eee;
+}
+
+/* Reducing padding and font size for small screens */
 @media (max-width: 1000px)  {
  .sub-nav .navbar-nav li {
     padding: .5rem .25rem;

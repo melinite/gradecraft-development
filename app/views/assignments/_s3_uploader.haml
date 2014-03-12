@@ -1,0 +1,21 @@
+.small-12.right.medium-4.columns
+  %br
+  .label.radius Supporting Files
+  .s3_uploader
+    = s3_uploader_form key: upload_url('assignment_files', @assignment), acl: "private", max_file_size: 40.megabytes do
+      .small-12.medium-6.columns
+        = file_field_tag :file, :multiple => true
+      .small-12.medium-6.columns
+        .upload.s3_progress
+          Progress:
+          .progress
+            .bar
+        .clearfix
+      %ul#uploaded_files
+        - if @assignment.assignment_files.present?
+          %hr
+          %h5.bold Uploaded files
+          - @assignment.assignment_files.each do |af|
+            %li
+              = link_to af.filename, af.filename
+              = link_to "(Remove)", remove_uploads_path({ :model => "AssignmentFile", :assignment_id => @assignment.id, :upload_id => af.id } )

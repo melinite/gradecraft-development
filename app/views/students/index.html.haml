@@ -1,7 +1,9 @@
 .small-12.panel.mainContent
   / Student Index breadcrumbs
-  = content_nav_for User, "#{term_for(:students)}" do
+  = content_nav do
     = render "users/tabs"
+
+  .pagetitle= @title
 
   .small-12.medium-4.columns.right
     / Checking to see if the current course has teams, displaying the team filter if it does

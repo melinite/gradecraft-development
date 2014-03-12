@@ -1,6 +1,6 @@
-.small-12.panel.columns.mainContent
-  = content_nav_for "Course Timeline" do
-    = render "tabs"
+.small-12.panel.mainContent
+  = content_nav do
+    = render "info/tabs"
   
   #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
 

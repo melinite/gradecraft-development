@@ -1,15 +1,18 @@
 .small-12.panel.mainContent
   - if current_user.is_student?
-    = content_nav_for "Editing My #{term_for :weights}" do
+    = content_nav do
       = render "students/student_profile_tabs"
   - elsif current_user.is_staff?
     / Instructor Navigation for Assignment Weighting
-    = content_nav_for "Editing #{term_for :weights} for #{current_student.name}" do
+    = content_nav do
       = render "info/tabs"
+  
+  .pagetitle Editing #{current_student.name}'s #{term_for :weights}
+      
+  
   .small-12.columns
 
     - if current_course.assignment_weight_open? || current_user.is_staff?
-      %h3 Editing #{current_student.name}'s #{term_for :weights}
       %h4 #{term_for :weights} remaining: #{current_course.total_assignment_weight}
       .form_label You may set up to #{pluralize current_course.max_assignment_weight, term_for(:weight)} on a single #{ term_for :assignment_type}
 

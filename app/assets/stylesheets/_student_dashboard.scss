@@ -30,7 +30,7 @@
 }
 
 .ui-widget-header {
-  background: $green;
+  background: $secondary-color;
 }
 
 .ui-slider .ui-slider-handle {
@@ -53,24 +53,10 @@
   }
 }
 
-/* Styling the student sidebar */ 
-.sideBar.panel {
-  border: none;
-  background-color: $green;
-  border-radius: $global-radius;
-  padding: .5rem !important;
-  margin: 0;
-
-  /* Resizing buttons in the sidebar (Mainly to do list items) */ 
-  .button.tiny {
-    padding: .4rem;
-  }
-}
-
 /* Adjusting the margin between panels */
-.sideBar.panel .panel {
+.sideBar .panel {
   background-color: #FFF;
-  margin-bottom: .75rem;
+  margin-bottom: 1rem;
   border: none;
 }
 
@@ -79,7 +65,6 @@
   text-decoration: line-through;
 }
 
-
 /* Styling badge images depending on whether or not the student has earned them */
 img.unearned {
   opacity: .2 !important;
@@ -87,15 +72,6 @@ img.unearned {
 
 img.earned {
   opacity: 1;
-}
-
-/* This colors the row in the grading philosophy the student has earned */
-tr.achieved {
-  background-color: $success-color !important;
-  
-  td {
-    color: #FFF;
-  }
 }
 
 /* Decreasing the size of the buttons on the syllabus page */
@@ -111,7 +87,6 @@ tr.achieved {
     margin: 0;
   }
 }
-
 
 .bar_magic {
   height: 2rem;

@@ -1,7 +1,9 @@
 .small-12.panel.mainContent
   / Staff Navigation
-  = content_nav_for User, "Staff" do
+  = content_nav do
     = render "users/tabs"
+
+  .pagetitle= @title
 
   .small-12.columns
 

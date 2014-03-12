@@ -1,77 +1,79 @@
-- if current_user.is_staff?
-  %li.has-form.hide-for-small.hide-for-medium
-    .row.collapse
-      .large-8.small-9.columns
-        :javascript
-          Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
-        %input.search-query{ :type => "text", :placeholder => "Search #{term_for :students}", :label => false }
-      .large-4.small-3.columns
-        %a.success.button.expand{ :href => "#" } Search
-%li.has-dropdown.course_switch.show-for-medium-up
-  %a My Courses
-  %ul.dropdown
-    - current_user.courses.each do |c|
-      %li= link_to "#{c.name}", change_current_course_path(:course_id => c.id), :method => 'post'
+%section.top-bar-section
+  %ul.right
+    / - if current_user.is_staff?
+    /   %li.has-form.hide-for-small.hide-for-medium
+    /     .row.collapse
+    /       .large-8.small-9.columns
+    /         :javascript
+    /           Gradecraft.preloadStore.set('users', #{autocomplete_items.to_json});
+    /         %input.search-query{ :type => "text", :placeholder => "Search #{term_for :students}", :label => false }
+    /       .large-4.small-3.columns
+    /         %a.alert.button.expand{ :href => "#" } Search
+    %li.has-dropdown.course_switch.show-for-medium-up
+      %a My Courses
+      %ul.dropdown
+        - current_user.courses.each do |c|
+          %li= link_to "#{c.name}", change_current_course_path(:course_id => c.id), :method => 'post'
 
-- cache do
-  %li.has-dropdown.show-for-large-up
-    %a Class Info
-    %ul.dropdown.classInfo
-      %li
-        %i.fi-crown
-        Professor #{ current_course.professor.try(:name) }
-      - if current_user.is_student?
-        - current_student.team_leader.tap do |team_leader|
-          - if team_leader.present?
+    - cache do
+      %li.has-dropdown.show-for-large-up
+        %a Class Info
+        %ul.dropdown.classInfo
+          %li
+            %i.fi-crown
+            Professor #{ current_course.professor.try(:name) }
+          - if current_user.is_student?
+            - current_student.team_leader.tap do |team_leader|
+              - if team_leader.present?
+                %li
+                  %i.fi-torso-business
+                  = "#{current_course.team_leader_term} #{team_leader.first_name}"
+          - if current_user.is_student? && current_user.team_for_course(current_course).present?
             %li
-              %i.fi-torso-business
-              = "#{current_course.team_leader_term} #{team_leader.first_name}"
-      - if current_user.is_student? && current_user.team_for_course(current_course).present?
-        %li
-          %i.fi-torsos-all
-          = "#{term_for :team} #{current_user.team_for_course(current_course).name}"
-      - if current_course.phone.present?
-        %li
-          %i.fi-telephone
-          Phone Number: #{current_course.phone }
-      - if current_course.class_email.present?
-        %a{:href => "mailto:#{current_course.class_email}"}
-          %li
-            %i.fi-mail
-            Class Email: #{current_course.class_email}
-      - if current_course.twitter_handle.present?
-        %a{:href => "http://www.twitter.com/##{current_course.twitter_handle}"}
-          %li
-            %i.fi-social-twitter
-            Twitter Handle:
-            = current_course.twitter_handle
-      - if current_course.twitter_hashtag.present?
-        %a{:href => "http://www.twitter.com/##{current_course.twitter_hashtag}"}
-          %li
-            ="#"
-            Hashtag:
-            = current_course.twitter_hashtag
-      - if current_course.meeting_times.present?
-        %li
-          %i.fi-projection-screen
-          Classes Meet:
-          = current_course.meeting_times
-          = current_course.location
-      - if current_course.office.present?
-        %li
-          %i.fi-safety-cone
-          Professor's Office:
-          = current_course.office
-      - if current_course.office_hours.present?
-        %li
-          %i.fi-clock
-          Office Hours:
-          = auto_link(current_course.office_hours)
+              %i.fi-torsos-all
+              = "#{term_for :team} #{current_user.team_for_course(current_course).name}"
+          - if current_course.phone.present?
+            %li
+              %i.fi-telephone
+              Phone Number: #{current_course.phone }
+          - if current_course.class_email.present?
+            %a{:href => "mailto:#{current_course.class_email}"}
+              %li
+                %i.fi-mail
+                Class Email: #{current_course.class_email}
+          - if current_course.twitter_handle.present?
+            %a{:href => "http://www.twitter.com/##{current_course.twitter_handle}"}
+              %li
+                %i.fi-social-twitter
+                Twitter Handle:
+                = current_course.twitter_handle
+          - if current_course.twitter_hashtag.present?
+            %a{:href => "http://www.twitter.com/##{current_course.twitter_hashtag}"}
+              %li
+                ="#"
+                Hashtag:
+                = current_course.twitter_hashtag
+          - if current_course.meeting_times.present?
+            %li
+              %i.fi-projection-screen
+              Classes Meet:
+              = current_course.meeting_times
+              = current_course.location
+          - if current_course.office.present?
+            %li
+              %i.fi-safety-cone
+              Professor's Office:
+              = current_course.office
+          - if current_course.office_hours.present?
+            %li
+              %i.fi-clock
+              Office Hours:
+              = auto_link(current_course.office_hours)
 
-%li.has-dropdown.show-for-small-up
-  %a
-    = gravatar_for current_user, :size => 30
-    = current_user.public_name
-  %ul.dropdown
-    %li= link_to "My Account", edit_profile_users_path
-    %li= link_to "Logout", :logout
+    %li.has-dropdown.show-for-small-up
+      %a
+        = gravatar_for current_user, :size => 30
+        = current_user.public_name
+      %ul.dropdown
+        %li= link_to "My Account", edit_profile_users_path
+        %li= link_to "Logout", :logout

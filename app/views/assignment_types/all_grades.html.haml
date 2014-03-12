@@ -1,11 +1,12 @@
 - if current_user.is_staff?
   .small-12.panel.mainContent
     / Assignment Type Navigation
-    = content_nav_for @assignment_type, "#{@assignment_type.name} Grade Patterns" do
+    = content_nav do
       = render "assignments/tabs"
     
+    .pagetitle= "#{@assignment_type.name} Grade Patterns"
+
     .small-12.columns
-      %h3= "#{@assignment_type.name} Grade Patterns"
 
       - if current_course.has_teams?
         .small-12.right.medium-6.large-4.columns

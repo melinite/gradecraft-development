@@ -9,6 +9,7 @@ class GradeSchemeElementsController < ApplicationController
 
   # Edit all the grade scheme items for a course
   def mass_edit
+    @title = "Edit Grade Scheme"
     @course = current_course
     @grade_scheme_elements = current_course.grade_scheme_elements
   end

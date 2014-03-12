@@ -2,8 +2,7 @@
 = simple_form_for(@assignment_type) do |f|
   / First section should cover the simple stuff we need to know about every assignment type
   .panel
-    %h4 The Basics
-    %hr
+    %h4.bold The Basics
     .small-12.large-4.columns.panel.right.callout
       .small-12
         %label.checkbox{ :for => "include_in_predictor" }
@@ -25,50 +24,51 @@
 
       .small-12
         %label.checkbox{ :for => "student_weightable" }
+          = f.label :student_weightable, "Student Weighted"
           = f.check_box :student_weightable
-          %span Student Weighted
           .form_label Do students decide how much this #{term_for :assignment} type will count towards their grade?
 
       .small-12
         / Does this assignment type have due dates? If not, they won't appear in the timeline but they will appear on the assignment list
         %label.checkbox{ :for => "due_date_present" }
+          = f.label :due_date_present, "Due Dates"
           = f.check_box :due_date_present
-          %span Due Dates
           .form_label Will #{term_for :assignments} in this category have due dates?
 
-    .small-12.large-3.columns
-      / Assignment Type name, this will appear as the category heading for both students and staff
-      = f.label :name
-      = f.text_field :name
+    .small-12.large-4.columns
+      .small-12
+        / Assignment Type name, this will appear as the category heading for both students and staff
+        = f.label :name
+        = f.text_field :name
 
-    .small-12.large-5.columns
-      .small-12.large-8.columns
+      .small-12
         / Determining whether points for assignments are set at this level (universally, with override at the assignment level), or at the assignment level
         = f.label :point_setting
         = f.select :point_setting, [["By Assignment"], ["For All Assignments"]]
 
+      .small-12
+        = f.label :resubmission
+        = f.select :resubmission, options_for_select([["Yes", "1"], ["No", "0"], ["Set per #{term_for :assignment}", "2"]])
+        .form_label Will students be allowed to resubmit work after it's been graded?
 
-    .small-12.large-3.columns
-      / If the points are universal, this is setting that value
-      = f.label :universal_point_value, "Point Value"
-      = f.text_field :universal_point_value, data: {autonumeric: true, "m-dec" => "0"}
-      .form_label Do all #{term_for :assignments} of this type have the same point value? For instance, if all class attendance #{term_for :assignments} are worth 100 points and you can set that here.
+    .small-12.large-4.columns
+      .small-12
+        / If the points are universal, this is setting that value
+        = f.label :universal_point_value, "Point Value"
+        = f.text_field :universal_point_value, data: {autonumeric: true, "m-dec" => "0"}
+        .form_label Do all #{term_for :assignments} of this type have the same point value? For instance, if all class attendance #{term_for :assignments} are worth 100 points and you can set that here.
 
-    .small-12.large-3.columns
-      = f.label :resubmission
-      = f.select :resubmission, options_for_select([["Yes", "1"], ["No", "0"], ["Set per #{term_for :assignment}", "2"]])
-      .form_label Will students be allowed to resubmit work after it's been graded?
+      %br
 
-
-    .small-12.large-3.columns
-      / What's the maximum number of points a student may earn in this category? This cap needs to be finished
-      = f.label :max_value, :label => "Maximum Points"
-      = f.text_field :max_value, data: {autonumeric: true, "m-dec" => "0"}
-      .form_label Is there a cap on how many points students can earn here? (Leave blank if not)
+      .small-12
+        / What's the maximum number of points a student may earn in this category? This cap needs to be finished
+        = f.label :max_value, :label => "Maximum Points"
+        = f.text_field :max_value, data: {autonumeric: true, "m-dec" => "0"}
+        .form_label Is there a cap on how many points students can earn here? (Leave blank if not)
 
     .clearfix
 
-    .small-12.large-12.columns
+    .small-12.large-12.columns.textarea
       = f.label :predictor_description, "Description"
       = f.bootsy_area :predictor_description
       .form_label How would you like to describe this #{term_for :assignment} type on the student dashboard? Are there hints that you can give students that will help them understand how to succeed?
@@ -76,8 +76,7 @@
     .clearfix
 
   .panel
-    %h4 Predictor Settings
-    %hr
+    %h4.bold Predictor Settings
     .small-12.large-4.columns
       = f.label :points_predictor_display, "Predictor Display"
       = f.select :points_predictor_display, [["Checkbox", "Fixed"], ["Slider"], ["Select List"], ["Set per Assignment"]]
@@ -85,8 +84,7 @@
     .clearfix
 
   .panel
-    %h4 Grading
-    %hr
+    %h4.bold Grading
     .small-12.large-4.columns
       = f.label :mass_grade_type, "Quick Grade Format"
       = f.select :mass_grade_type, [["Text"], ["Checkbox"], ["Radio Buttons"], ["Select List"], ["Set per Assignment"]]
@@ -96,7 +94,6 @@
       = f.check_box :notify_released
       .form_label Do you want to notify students by email when a grade is awarded? If grade release is necessary, this email will not be sent out until the grade is officially released.
 
-    %hr
     %h5 Self-Grading
     .small-12.large-4.columns
       = f.label :student_logged_button_text, "Button Text"
@@ -108,13 +105,10 @@
       = f.text_field :student_logged_revert_button_text
       .form_label If a student unchecks this button, what should it say?
 
-
-
     .clearfix
 
   .panel
-    %h4 Grading Scheme
-    %hr
+    %h4.bold Grading Scheme
     .score-levels
       %h6 Example: You could create three score levels to produce this quick grading scheme - Complete (5000 points), Finalist (7000 points), and Winner (10,000 points). These levels will then be available to use for quick grading.
       %script(id="score-level-template" type="text/x-template")
@@ -127,7 +121,6 @@
             = render 'score_level_fields', f: slf
     = link_to 'Add a Level', '#', class: 'add-level button tiny radius'
 
-  %hr
   .right
     = f.button :submit, "#{@assignment_type.persisted? ? 'Update' : 'Create'} #{term_for :assignment_type}", :class => "button radius tiny"
     = link_to 'Cancel', assignment_types_path, :class => "button radius tiny transparent"

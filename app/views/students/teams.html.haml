@@ -1,11 +1,8 @@
 .small-12.panel.mainContent
-  - if current_user.is_student?
-    = content_nav_for "#{term_for :teams}" do
-      = render "student_profile_tabs"
-  - else
-    / Student Dashboard Breadcrumbs
-    = content_nav_for current_student do
-      = render "student_profile_tabs"
+  = content_nav do
+    = render "student_profile_tabs"
+
+  .pagetitle= "#{term_for :teams}"
 
   .small-12.columns
 

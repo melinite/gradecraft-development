@@ -20,12 +20,15 @@ class InfoController < ApplicationController
     user_search_options = {}
     user_search_options['team_memberships.team_id'] = params[:team_id] if params[:team_id].present?
     @ungraded_submissions = current_course.submissions.ungraded
+    @unreleased_grades = current_course.grades.not_released
+    @count_unreleased = @unreleased_grades.not_released.count
     @count_ungraded = @ungraded_submissions.count
     @badges = current_course.badges.includes(:tasks)
   end
 
   #grade index export
   def gradebook
+    @title = "#{current_course.name} Gradebook"
     respond_to do |format|
       format.html
       format.json { render json: current_course.assignments }

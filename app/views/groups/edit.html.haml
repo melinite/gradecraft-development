@@ -1,13 +1,11 @@
 .small-12.panel.mainContent
   / Groups Navigation
-  = content_nav_for Group, "Editing #{@group.name}" do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= @title
+
   .small-12.columns
-
-    %h2= @title
-
-    %hr
     = render 'form'
 
   .clearfix

@@ -1,30 +1,28 @@
 .small-12.panel.mainContent
   / Assignment Type Navigation
-  = content_nav_for Assignment, "See All Quest Types" do
+  = content_nav do
     = render "assignments/tabs"
 
-  .small-12.columns
+  .pagetitle= @title
 
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          %th.sortable{"data-sort" => "string"} Name
-          %th.sortable{"data-sort" => "string"} Predictor Display
-          %th.sortable{"data-sort" => "int"} Max value
-          %th
-        %tbody
-          - current_course_data.assignment_types.each do |assignment_type|
-            %tr
-              %td= link_to assignment_type.name, assignment_type
-              %td= assignment_type.points_predictor_display
-              %td= points assignment_type.max_value
-              %td
-                .button-bar
-                  %ul.button-group.right.round
-                    %li= link_to 'See', assignment_type_path(assignment_type), :class => 'button tiny secondary'
-                    %li= link_to 'Edit', edit_assignment_type_path(assignment_type), :class => 'button tiny secondary'
-                    %li
-                      %a{:href => assignment_type_path(assignment_type), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny secondary" }
-                        Delete
-
-  .clearfix
+  %table.responsive.small-12.columns
+    %thead
+      %tr
+        %th Name
+        %th Predictor Display
+        %th Max value
+        %th
+      %tbody
+        - current_course_data.assignment_types.each do |assignment_type|
+          %tr
+            %td= link_to assignment_type.name, assignment_type
+            %td= assignment_type.points_predictor_display
+            %td= points assignment_type.max_value
+            %td
+              .button-bar
+                %ul.button-group.right.round
+                  %li= link_to 'See', assignment_type_path(assignment_type), :class => 'button tiny alert'
+                  %li= link_to 'Edit', edit_assignment_type_path(assignment_type), :class => 'button tiny alert'
+                  %li
+                    %a{:href => assignment_type_path(assignment_type), :data => { confirm: 'Are you sure?', method: :delete }, :class => "button tiny alert" }
+                      Delete

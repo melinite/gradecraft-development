@@ -1,11 +1,8 @@
 .small-12.panel.mainContent
-  - if current_user.is_student?
-    = content_nav_for "Predict My Grade" do
-      = render "student_profile_tabs"
-  - else
-    / Student Dashboard Breadcrumbs
-    = content_nav_for current_student do
-      = render "student_profile_tabs"
+  = content_nav do
+    = render "student_profile_tabs"
+
+  .pagetitle= "Plan Your Coursework"
 
   .small-12.columns
 

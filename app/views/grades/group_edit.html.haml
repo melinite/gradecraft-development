@@ -1,10 +1,11 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  = content_nav_for @assignment, @title do
+  = content_nav do
     = render "assignments/tabs"
   
+  .pagetitle= @title
+
   .small-12.columns    
-    %h2= @title
     .heading= "Grading out of: #{points @assignment.point_total} points"
     = simple_form_for @assignment, method: :put, :url => group_grade_assignment_path(@assignment) do |f|
 

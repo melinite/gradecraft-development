@@ -4,11 +4,11 @@
       %th{"data-sort" => "int"} Rank
       %th{"data-sort" => "string"} Name
       %th{"data-sort" => "int"} # Students
-      %th{"data-sort" => "int"} Score
       - if current_course.team_score_average?
         %th{"data-sort" => "int"} Score
       - else
         %th{"data-sort" => "int"} Ave. Score
+        %th{"data-sort" => "int"} Score
       - if current_user.is_staff?
         %th{"data-sort" => "int"} # #{term_for :badges}
         %th.button-column
@@ -19,8 +19,11 @@
         %td= i
         %td= link_to team.name, team
         %td= team.member_count
-        %td= points team.try(:average_grade)
-        %td= points team.try(:score)
+        - if current_course.team_score_average?
+          %td= points team.try(:average_grade)
+        - else
+          %td= points team.try(:average_grade)
+          %td= points team.try(:score)
         - if current_user.is_staff?
           %td= points team.badge_count
           %td

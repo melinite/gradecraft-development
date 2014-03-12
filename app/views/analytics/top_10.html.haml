@@ -1,13 +1,12 @@
 .small-12.panel.mainContent
   / Leaderboards
-  = content_nav_for "Course Analytics", "Top 10/Bottom 10" do
+  = content_nav do
     = render "tabs"
 
-  .small-12.columns
-    %h4.bold Top 10
-    = render 'students_table', :course => current_course, :students => @top_ten_students
-    %hr
-    %h4.bold Bottom 10
-    = render 'students_table', :course => current_course, :students => @bottom_ten_students.reverse
+  .pagetitle Top 10
+  = render 'students_table', :course => current_course, :students => @top_ten_students
 
-  .clearfix
+  %br
+
+  .pagetitle Bottom 10
+  = render 'students_table', :course => current_course, :students => @bottom_ten_students.reverse

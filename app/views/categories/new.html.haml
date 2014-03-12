@@ -1,11 +1,12 @@
 .small-12.panel.mainContent
   / Category Navigation
-  = content_nav_for Category, "New Category" do
+  = content_nav do
     = render "tabs"
   
+  .pagetitle= @title
+
   .small-12
 
-    %h3= @title
     = render 'form'
 
   .clearfix

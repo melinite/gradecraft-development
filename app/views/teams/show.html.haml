@@ -1,12 +1,11 @@
 .small-12.panel.mainContent
   / Student Dashboard Breadcrumbs
-  = content_nav_for @team do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= @team.name
+
   .small-12.columns
-
-    %h4.bold= @team.name
-
     %table.responsive.simpleTable
       %thead
         %tr

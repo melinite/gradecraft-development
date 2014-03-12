@@ -1,16 +1,11 @@
 .small-12.panel.mainContent
   / Submissions Navigation
-  - if current_user.is_staff?
-    = content_nav_for @assignment, Submission, @title do
-      %li= link_to 'See All Submissions', assignment_path(@assignment)
-  - else
-    = content_nav_for @assignment, "Edit My Submission" do
-      = render "students/student_profile_tabs"
+  = content_nav do
+    = render "students/student_profile_tabs"
+
+  .pagetitle= @title
 
   .small-12.columns
-
-    %h2= @title
-
     - if @assignment.open_at?
       .small-12.columns.large-4.panel
         %b Open date:

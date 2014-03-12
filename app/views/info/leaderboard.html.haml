@@ -1,6 +1,6 @@
 .small-12.panel.mainContent
   / Leaderboard Navigation
-  = content_nav_for "Course Overview", "Leaderboard" do
+  = content_nav do
     = render "info/tabs"
 
   %span.pagetitle= @title  
@@ -10,51 +10,47 @@
       = form_tag leaderboard_path, :name => "see_team", :onchange => ("javascript: document.see_team.submit();"), :method => :get do
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
-  .small-12.columns
-
-    %table.responsive
-      %thead
+  %table.responsive.small-12.columns
+    %thead
+      %tr
+        %th Rank
+        %th First Name
+        %th Last Name
+        - if current_course.has_teams?
+          %th #{current_course.team_term}
+        %th Score
+        %th Grade
+        - if current_course.has_badges?
+          %th{:width => "150" } Badges Earned
+        %th.button-column
+    %tbody
+      - if @team
+        - students = current_course_data.students_for_team(@team)
+      - else
+        - students = current_course_data.students
+      - i = 1
+      - students.each do |student|
         %tr
-          %th Rank
-          %th First Name
-          %th Last Name
+          %td
+            = i
+            = gravatar_for student, :size => 30
+          %td= link_to student.first_name, student_path(student)
+          %td= student.last_name
           - if current_course.has_teams?
-            %th #{current_course.team_term}
-          %th Score
-          %th Grade
+            %td#team_for_course
+              = link_to student.team_for_course(current_course).name, student.team_for_course(current_course).name if student.teams.present?
+          %td= points student.cached_score_for_course(current_course)
+          %td
+            = student.grade_letter_for_course(current_course)
+            = student.grade_level_for_course(current_course)
           - if current_course.has_badges?
-            %th{:width => "150" } Badges Earned
-          %th.button-column
-      %tbody
-        - if @team
-          - students = current_course_data.students_for_team(@team)
-        - else
-          - students = current_course_data.students
-        - i = 1
-        - students.each do |student|
-          %tr
-            %td
-              = i
-              = gravatar_for student, :size => 30
-            %td= link_to student.first_name, student_path(student)
-            %td= student.last_name
-            - if current_course.has_teams?
-              %td#team_for_course
-                = link_to student.team_for_course(current_course).name, student.team_for_course(current_course).name if student.teams.present?
-            %td= points student.cached_score_for_course(current_course)
-            %td
-              = student.grade_letter_for_course(current_course)
-              = student.grade_level_for_course(current_course)
-            - if current_course.has_badges?
-              %td#earned_badges
-                - student.earned_badges.each do |badge|
-                  %img.has-tip{:src => badge.try(:icon), :alt => badge.try(:name), :width => "20", :title => badge.name, :data => {'tooltip' => true}}
-            %td
-              .button-bar
-                %ul.button-group.round.right
-                  %li= link_to "Dashboard", student_path(student), :class => "button tiny secondary"
-                  %li= mail_to student.email, "Email", :class => "button tiny secondary"
-                  %li= link_to "Edit", edit_user_path(student), :class => "button tiny secondary"
-          - i += 1
-
-  .clearfix
+            %td#earned_badges
+              - student.earned_badges.each do |badge|
+                %img.has-tip{:src => badge.try(:icon), :alt => badge.try(:name), :width => "20", :title => badge.name, :data => {'tooltip' => true}}
+          %td
+            .button-bar
+              %ul.button-group.round.right
+                %li= link_to "Dashboard", student_path(student), :class => "button tiny"
+                %li= mail_to student.email, "Email", :class => "button tiny"
+                %li= link_to "Edit", edit_user_path(student), :class => "button tiny"
+        - i += 1

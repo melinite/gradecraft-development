@@ -1,13 +1,8 @@
 .small-12.panel.mainContent
   / Student Dashboard Breadcrumbs
-  - if current_user.is_student?
-    = content_nav_for "#{term_for :teams}" do
-      = render "student_profile_tabs"
-  - else
-    / Student Dashboard Breadcrumbs
-    = content_nav_for current_student do
-      = render "student_profile_tabs"
-    
+  = content_nav do
+    = render "student_profile_tabs"
+
   .small-12.medium-9.columns
     #time_line{"data-timeline" => render(:partial => 'info/timeline', :handlers => [:jbuilder], :formats => [:js])}
 

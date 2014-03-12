@@ -1,10 +1,12 @@
 .small-12.panel.mainContent
   / Ungraded Assignments
-  = content_nav_for Assignment, "Ungraded #{term_for :assignments}" do
+  = content_nav do
     = render "info/tabs"
 
-  .small-12.columns
+  = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
 
-    = render 'ungraded_submissions_table', :course => current_course, :submissions => @ungraded_submissions
+  %hr
+
+  = render 'unreleased_grades_table', :course => current_course
 
   .clearfix

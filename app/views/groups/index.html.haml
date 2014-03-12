@@ -1,11 +1,11 @@
-.small-12.panel.mainContent
+.mainContent
   / Groups Navigation
-  = content_nav_for Group do
+  = content_nav do
     = render "tabs"
 
-  .small-12.columns
+  .pagetitle= @title
 
-    %h2= @title
+  .small-12.columns  
 
     %table.responsive.simpleTable
       %thead

@@ -1,6 +1,6 @@
 = simple_form_for(@course, :validate => false)  do |f|
   .panel
-    %h4 THE BASICS
+    %h4.bold The Basics
     %hr
     .small-12.large-4.columns
       = f.label :name, "Course Title"
@@ -73,7 +73,7 @@
     .small-12.large-4.columns
       = f.label :assignment_term, "Assignment Term"
       = f.text_field :assignment_term
-      %h6.small Would you like to call assignments something else?
+      .form_label Would you like to call assignments something else?
 
 
     .small-12.large-4.columns
@@ -88,7 +88,7 @@
 
     .clearfix
 
-    .small-12
+    .small-12.textarea
       = f.bootsy_area :grading_philosophy
       .form_label What would you like to tell students about how they should expected to be graded?
       
@@ -99,16 +99,16 @@
     %hr
     .small-12.large-4.columns
       = f.input :badge_setting, :label => "Badges"
-      .form_label Do you want to use badges in your course?"
+      .form_label Do you want to use badges in your course?
 
     .small-12.large-4.columns
       = f.label :badge_term, "Badge Term"
       = f.text_field :badge_term
-      .form_label Would you like to call badges something else?"
+      .form_label Would you like to call badges something else?
 
     .small-12.large-4.columns
       = f.input :shared_badges, :label => "Social Badges"
-      .form_label Students can share badges with the class"
+      .form_label Students can share badges with the class
 
     .clearfix
 

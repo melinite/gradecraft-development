@@ -1,13 +1,10 @@
 .small-12.panel.mainContent
-  / Students Navigation
-  - if current_user.is_staff?
-    = content_nav_for current_student do
-      = render "student_profile_tabs"
+  = content_nav do
+    = render "student_profile_tabs"
+
+  .pagetitle= current_student.name
 
   .small-12.columns
-
-    %h2= current_student.name
-
     %table.responsive.simpleTable
       %thead
         %tr

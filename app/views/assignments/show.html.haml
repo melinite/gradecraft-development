@@ -1,60 +1,23 @@
 .small-12.panel.mainContent
   / Assignment Navigation
-  - if current_user.is_staff?
-    = content_nav_for @assignment do
+  = content_nav do
+    - if current_user.is_staff?
       = render "tabs", :assignment => @assignment
-  - else
-    = content_nav_for @assignment do
+    - else
       = render "students/student_profile_tabs"
 
-  .small-12.columns
-    %h2
-      = "#{@title} (#{ points @assignment.point_total } points)"
-      = link_to "Edit", edit_assignment_path(@assignment), :class => "button tiny secondary radius" if current_user.is_staff?
-
-    .small-12.medium-7.columns.columns-no-padding
-      - if @assignment.description?
-        %p= raw @assignment.description
-
-    .small-12.medium-4.right.columns
-      - if @assignment.open_at?
-        Open:
-        %span.bold= @assignment.open_at
-      .clearfix
-      - if @assignment.due_at?
-        Due:
-        %span.bold= @assignment.due_at
-      .clearfix
-      - if current_user.is_staff?
-        - if @assignment.accepts_submissions_until?
-          Accepted until:
-          %span.bold.has-tip{:title => "Not shown to students", :data => {'tooltip' => true} }= @assignment.accepts_submissions_until
-      .clearfix
-      - if @assignment.assignment_files.present?
-        %p
-          %b Attachments:
-          %ul
-            - @assignment.assignment_files.each do |af|
-              %li
-                = link_to af.filename, af.url
-                - if current_user.is_staff?
-                  = link_to " (Remove)", remove_uploads_path({ :model => "AssignmentFile", :upload_id => af.id, :redirect => { :controller => "assignments", :id => @assignment.id} } )
-
-    %hr
+  .pagetitle= "#{@title} (#{ points @assignment.point_total } points)"
 
   - if current_user.is_staff?
-    .small-12.columns
-      - if @assignment.has_groups?
-        = render "group_show"
-      - else
-        = render "individual_show"
-    .clearfix
+    - if @assignment.has_groups?
+      = render "group_show"
+    - else
+      = render "individual_show"
   - else
     .small-12.columns
       - if @assignment.has_groups?
         = render "grades/group_show"
       - else
         = render "grades/individual_show"
-    .clearfix
 
       

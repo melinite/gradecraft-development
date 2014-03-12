@@ -1,41 +1,39 @@
 /** Staff Sidebar **/
 .staff_subnav {
   background-color: #FFF;
-  padding-top: 1rem;
+  padding: 1rem;
   display: table-cell; 
+  
   /* Subheadings */
   label{
     text-transform: uppercase;
   }
 
-  /* Spacing out the list */ 
+  /* Spacing out the list items*/ 
   li {
     margin: .25rem 0;
   }
 
+  /* Spacing the list divider */
   li.divider {
     margin: 1rem 0;
-  }
-
-  
+    width: 85%;
+  }  
 }
+
 /* Forcing buttons and icons to display inline */ 
-  .side-nav li a:not(.button) {
-    display: inline !important;
-  }
+.side-nav li a:not(.button) {
+  display: inline !important;
+}
+
 /* Styles the hover state on the box plot on the student dashboard */
 .jqstooltip {
-    box-sizing: content-box;
-    height: auto !important;
-    width: auto !important;
+  box-sizing: content-box;
+  height: auto !important;
+  width: auto !important;
 }
 
 /* Makes the box plot responsive */ 
 #student_grade_distro canvas {
   width: 100% !important;
-}
-
-.sideBar.panel {
-  margin: 1rem 0;
-  border-radius: $global-radius;
 }

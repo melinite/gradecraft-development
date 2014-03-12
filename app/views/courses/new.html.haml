@@ -1,10 +1,11 @@
 .small-12.panel.mainContent
   / Courses Navigation
-  = content_nav_for @title do
+  = content_nav do
     = render "tabs"
 
-  .small-12.columns
-    
+  .pagetitle= @title
+
+  .small-12.columns  
     = render 'form'
 
   .clearfix

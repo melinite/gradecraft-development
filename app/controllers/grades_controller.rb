@@ -10,11 +10,11 @@ class GradesController < ApplicationController
     if current_user.is_student? 
       redirect_to @assignment
     end
-    @grade = current_student_data.grade_for_assignment(@assignment)
-    # # if @assignment.has_groups? && current_user.is_staff?
-    # #   @group = @assignment.groups.find(params[:group_id])
-    # # elsif @assignment.has_groups? && current_user.is_student?
-    # # end
+    if @assignment.has_groups? && current_user.is_staff?
+      @group = @assignment.groups.find(params[:group_id])
+    elsif @assignment.has_groups? && current_user.is_student?
+      @grade = current_student_data.grade_for_assignment(@assignment)
+    end
   end
 
   def edit

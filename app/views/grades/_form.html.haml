@@ -1,6 +1,8 @@
-.panel.small-12.columns
-  %h6 Supporting Files:
+.small-12.right.medium-4.columns
+  %br
+  .label.radius Supporting Files
   .s3_uploader
+  %br
   = s3_uploader_form key: upload_url('grade_files', @grade), acl: "private", max_file_size: 40.megabytes do
     = file_field_tag :file, :multiple => true
   - if @grade.grade_files.present?

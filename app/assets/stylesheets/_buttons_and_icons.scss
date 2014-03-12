@@ -5,25 +5,44 @@ h2 a.button.tiny {
   top: -.3rem;
 }
 
+/* Attendance rate visuals */
 i.fi-male.present {
   font-size: 150%;
-  color: $lightblue;
+  color: $primary-color-3;
 }
 
 i.fi-male.absent {
   font-size: 150%;
-  text-shadow: 1px 1px $blue;
+  text-shadow: 1px 1px $primary-color;
   color: white;
 }
 
+/* Option dropdowns for small screens */
 .button.tiny.dropdown {
+  margin-top: .5rem;
   font-size: 1rem;
   padding: .5rem;
 }
+
+table {
+  .button.tiny {
+    margin-left: .35rem;
+    padding: .4rem;
+  }
+}
+
 .button.tiny {
   margin-left: .35rem;
   padding: .4rem;
+  background-color: #ddd !important;
+  color: #000;
 }
+
+.button:hover {
+  background-color: $primary-color-5 !important;
+  color: #FFF;
+}
+
 .button.tiny.aindex {
   margin: 0rem;
 }

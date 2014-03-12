@@ -1,16 +1,16 @@
-%table.responsive.simpleTable
+%table.responsive.small-12.columns
   %thead
     %tr
       %th
-      %th.sortable{"data-sort" => "string"}= course.user_term
-      %th.sortable{"data-sort" => "int"} Score
+      %th= course.user_term
+      %th Score
       %th Chart
       - if course.has_teams?
-        %th.sortable{"data-sort" => "string"}= course.team_term
+        %th= course.team_term
       - if course.has_badges?
-        %th.sortable{"data-sort" => "int"} Badges
+        %th Badges
       - if course.has_teams?
-        %th.sortable{"data-sort" => "string"}= course.team_leader_term
+        %th= course.team_leader_term
       %th Last Login
   %tbody
     - students.each do |student|

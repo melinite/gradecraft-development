@@ -1,7 +1,9 @@
 .small-12.panel.mainContent
   / Challenge Navigation
-  = content_nav_for Challenge do
+  = content_nav do
     = render "teams/tabs"
+
+  .pagetitle= @title
 
   .small-12.columns
   

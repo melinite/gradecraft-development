@@ -1,6 +1,6 @@
 .small-12.panel.mainContent
   / Tasks
-  = content_nav_for @assignment, @task do
+  = content_nav do
     %li= link_to "See #{@assignment.name}", @assignment, :class => "button tiny radius"
     - if @task.assignment_type == "Assignment"
       %li= link_to 'Edit #{@task.name} Task', edit_assignment_task_path, :class => "button tiny radius"
@@ -8,8 +8,9 @@
       %li= link_to "Edit #{@task.name} Task", edit_badge_task_path(@assignment.id, @task.id), :class => 'button tiny radius'
     %li= link_to 'Create a New Task', new_assignment_task_path, :class => "button tiny radius"
 
-  .small-12.columns
-    %h2= @title
+  .pagetitle= @title
+  
+  .small-12.columns  
     %p
       %b Assignment:
       = @assignment.name

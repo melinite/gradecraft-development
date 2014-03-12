@@ -1,11 +1,12 @@
 .small-12.panel.mainContent
   / Assignment Type Navigation
-  = content_nav_for AssignmentType, "Edit #{breadcrumb_link_for(@assignment_type)}".html_safe do
+  = content_nav do
     = render "assignments/tabs"
 
-  .small-12.columns
+  .pagetitle= @title
 
-    / Display Assignment Type form
+  / Display Assignment Type form
+  .small-12.columns
     = render 'form'
 
   .clearfix

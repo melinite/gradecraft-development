@@ -2,12 +2,13 @@
 .small-12.panel.mainContent
   / Badge Navigation
   - if current_user.is_staff?
-    = content_nav_for @badge do
+    = content_nav do
       = render "tabs"
+  
+  .pagetitle= @title
 
   .small-12.columns
-  
-    %h2= @badge.name
+
     .panel.small-12.large-2.columns.text-center
       %img{:src => @badge.icon, :alt => @badge.name, :width => "100" }
     - if @badge.point_total?
@@ -31,12 +32,9 @@
                 - if current_user.is_staff?
                   = link_to "(Remove)", remove_uploads_path({ :model => "BadgeFile", :upload_id => bf.id } )
 
-
-    .clearfix
-
     - if current_user.is_staff?
-      .small-12
-        %h3.clear Awarded #{term_for :badges}
+
+      .small-12   
 
         %table.responsive.simpleTable
           %thead
@@ -44,7 +42,6 @@
               %th= term_for(:student)
               %th Feedback
               %th Date Awarded
-              %th
           %tbody
             - if @team
               - students = current_course_data.students_for_team(@team)

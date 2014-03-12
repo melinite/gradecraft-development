@@ -1,7 +1,9 @@
 .small-12.panel.mainContent
   / Earned Badge Navigation
-  = content_nav_for @badge, "Earned By #{@earned_badge.student.name}" do
+  = content_nav do
     = render "badges/tabs"
+
+  .pagetitle= @title
 
   .small-12.columns
         

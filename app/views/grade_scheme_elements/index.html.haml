@@ -1,30 +1,28 @@
 .small-12.panel.mainContent
   / Grade Scheme Elements Navigation
-  = content_nav_for "#{current_course.name} Grading" do
+  = content_nav do
     = render "tabs"
 
+  .pagetitle= @title
+
   / Grade Scheme Elements Table Display
+  %table.responsive.simpleTable.small-12.columns
+    %thead
+      %tr
+        %th.sortable{"data-sort" => "string"} Grade
+        %th.sortable{"data-sort" => "string"} Level
+        %th.sortable{"data-sort" => "int"} Low Range
+        %th.sortable{"data-sort" => "int"} High Range
+    %tbody
+      - @grade_scheme_elements.order_by_high_range.each do |element|
+        %tr
+          %td= element.letter
+          %td= element.level
+          %td{:data => { :"sort-value" => "#{element.low_range }" }}= points element.low_range
+          %td{:data => { :"sort-value" => "#{element.high_range }" }}= points element.high_range
 
   .small-12.columns
-
-    %h3= @title
-
-    %table.responsive.simpleTable
-      %thead
-        %tr
-          %th.sortable{"data-sort" => "string"} Grade
-          %th.sortable{"data-sort" => "string"} Level
-          %th.sortable{"data-sort" => "int"} Low Range
-          %th.sortable{"data-sort" => "int"} High Range
-      %tbody
-        - @grade_scheme_elements.order_by_high_range.each do |element|
-          %tr
-            %td= element.letter
-            %td= element.level
-            %td{:data => { :"sort-value" => "#{element.low_range }" }}= points element.low_range
-            %td{:data => { :"sort-value" => "#{element.high_range }" }}= points element.high_range
-
     %p= raw current_course.grading_philosophy
     %h6= "-- Prof. #{current_course.professor.try(:last_name) }"
 
-  .clearfix
+    .clearfix

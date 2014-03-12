@@ -1,28 +1,27 @@
 .small-12.panel.mainContent
-  = content_nav_for "Course Syllabus" do
+  = content_nav do
     = render "student_profile_tabs"
 
+  .pagetitle
+    Your current score is
+    / Check to see if the course has a pre-determined total number of points
+    - if current_course.point_total?
+      %span.bold #{points current_student.cached_score_for_course(current_course)}
+      %span /#{points current_course.point_total} points
+      / Else tally all of the points for all of the assignments in the course
+    - else
+      %span.bold #{points current_student.cached_score_for_course(current_course)}
+      %span /#{points current_student_data.point_total} points
+    - if current_student.grade_level_for_course(current_course).present?
+      / Display current level if it is present
+      Current Level:
+      %span.bold= current_student.grade_level_for_course(current_course)
+
+    
   .small-12.columns#syllabus
 
-    %h2
-      Your current score is
-      / Check to see if the course has a pre-determined total number of points
-      - if current_course.point_total?
-        %span.bold #{points current_student.cached_score_for_course(current_course)}
-        %span /#{points current_course.point_total} points
-        / Else tally all of the points for all of the assignments in the course
-      - else
-        %span.bold #{points current_student.cached_score_for_course(current_course)}
-        %span /#{points current_student_data.point_total} points
-      - if current_student.grade_level_for_course(current_course).present?
-        / Display current level if it is present
-        Current Level:
-        %span.bold= current_student.grade_level_for_course(current_course)
+    = render "students/syllabus"
 
-      %hr
-
-      = render "students/syllabus"
-
-      = render 'students/scoreboard'
+    = render 'students/scoreboard'
 
   .clearfix

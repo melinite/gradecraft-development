@@ -49,12 +49,6 @@ $body-font-family: "Avenir", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 // $opposite-direction: right;
 // $default-float: left;
 
-// We use these as default colors throughout
- $primary-color: #274E56;
- $secondary-color: #58d0eb;
- $alert-color: #f04124;
- $success-color: #67CF30;
-
 // We use these to make sure border radius matches unless we want it different.
 $global-radius: 0.5rem;
 // $global-rounded: 1000px;
@@ -209,7 +203,7 @@ $crumb-font-size: rem-calc(18);
 
 // Sets the margin for the right side by default, and the left margin if right-to-left direction is used
 // $button-bar-margin-opposite: rem-calc(10);
-$button-group-border-width: 0px;
+$button-group-border-width: 1px;
 
 // Clearing
 
@@ -617,7 +611,7 @@ $off-canvas-link-padding: 1rem;
 // $include-html-panel-classes: $include-html-classes;
 
 // We use these to control the background and border styles
-// $panel-bg: darken(#fff, 5%);
+$panel-bg: darken(#fff, 2%);
 // $panel-border-style: solid;
 // $panel-border-size: 1px;
 

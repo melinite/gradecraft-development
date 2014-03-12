@@ -1,7 +1,7 @@
 .clearfix
 
 #attachments.panel
-  %h6.bold Attachments
+  %h5.bold Attachments
   .s3_uploader
     = s3_uploader_form key: upload_url('submission_files', @assignment), acl: "private", max_file_size: 40.megabytes do
       .small-12.medium-6.columns
@@ -37,7 +37,7 @@
 
 
   .small-12.panel
-    %h6.bold Content/Description:
+    %h5.bold Content/Description:
     = f.bootsy_area :text_comment
 
   .right

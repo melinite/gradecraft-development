@@ -1,10 +1,11 @@
 .small-12.panel.mainContent
   / tasks navigation
-  = content_nav_for @taskable, "New Task" do
+  = content_nav do
     %li= link_to "See #{@taskable.try(:name)}", @taskable, :class => "button tiny radius"
   
+  .pagetitle= @title
+  
   .small-12.columns
-    %h2= @title
     = render 'form'
 
   .clearfix

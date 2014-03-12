@@ -1,10 +1,11 @@
 .small-12.panel.mainContent
   / Grades Navigation
-  = content_nav_for @assignment, "Editing Grade" do
+  = content_nav do
     = render "assignments/tabs"
 
+  .pagetitle Editing #{current_student.name}'s Grade for #{@assignment.name}
+  
   .small-12.columns    
-    %h3 Editing #{current_student.name}'s Grade for #{@assignment.name}
     = render 'form'
 
   .clearfix

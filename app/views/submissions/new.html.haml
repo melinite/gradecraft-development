@@ -1,11 +1,11 @@
 .small-12.panel.mainContent
   / Submissions Navigation
-  = content_nav_for @assignment, "Submit" do
+  = content_nav do
     = render "students/student_profile_tabs"
 
-  .small-12.columns
+  .pagetitle= "#{@title} (#{points @assignment.point_total} points)"
 
-    %h2= "#{@title} (#{points @assignment.point_total} points)"
+  .small-12.columns
 
     - if @assignment.open_at?
       .small-12.columns.large-4.panel

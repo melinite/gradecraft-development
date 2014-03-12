@@ -1,6 +1,6 @@
 .small-12.panel.mainContent
   / Student Index breadcrumbs
-  = content_nav_for "Edit My Profile" do
+  = content_nav do
     - if current_user.is_student?
       = render "students/student_profile_tabs"
 
