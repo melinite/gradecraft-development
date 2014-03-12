@@ -319,6 +319,7 @@ GEM
       bcrypt-ruby (~> 3.0.0)
       oauth (~> 0.4.4)
       oauth2 (~> 0.8.0)
+    spring (1.1.2)
     sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -425,6 +426,7 @@ DEPENDENCIES
   sidekiq
   simple_form (~> 3.0.0.rc)
   sorcery
+  spring
   timelineJS-rails
   uglifier
   valid_attribute

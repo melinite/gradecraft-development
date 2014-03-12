@@ -17,6 +17,12 @@
 //= require underscore.min
 //= require backbone.min
 //= require bootstrap
+
+//= require angular
+//= require angular-resource
+//= require ./angular/main.js
+//= require_tree ./angular
+
 //= require bootstrap-datetimepicker
 //= require jquery.dynatable
 //= require gradecraft
@@ -52,6 +58,8 @@
 //= require jquery.collapse_storage
 //= require jquery.collapse_cookie_storage
 //= require per-assign
+
+
 
 $(function(){ $(document).foundation(); });
 

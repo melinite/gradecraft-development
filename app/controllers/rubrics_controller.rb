@@ -1,36 +1,37 @@
 class RubricsController < ApplicationController
   before_action :find_rubric, except: [:new, :create]
-  after_action :respond_with_rubric
 
   def new
     @assignment = Assignment.find params[:assignment_id]
-    @rubric = @assignment.rubric.build
+    @rubric = @assignment.build_rubric
+    respond_with @rubric
   end
 
   def edit
+    respond_with @rubric
   end
 
   def create
     @rubric = Rubric.create params[:rubric]
+    respond_with @rubric
   end
 
   def destroy
     @rubric.destroy
+    respond_with @rubric
   end
 
   def show
+    respond_with @rubric
   end
 
   def update
     @rubric.update_attributes params[:rubric]
+    respond_with @rubric
   end
 
   private
   def find_rubric
     @rubric = Rubric.find params[:id]
-  end
-
-  def respond_with_rubric
-    respond_with @rubric
   end
 end

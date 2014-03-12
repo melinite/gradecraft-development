@@ -1,0 +1,19 @@
+.small-12.panel.mainContent
+  .small-12.columns
+    %br
+    %br
+    %h3 Create Rubric for "#{@assignment.name}"
+    #new_rubric(ng-app="gradecraft" ng-controller="RubricController")
+      {{test}}
+      %br
+      %br
+
+      %form(ng-submit="createRubric")
+        .row
+          .small-3.columns(style="background: #eee; border: 1px solid #ccc; padding: 24px")
+            %h4 {{goggles}}
+            %input(type="text" ng-model="MetricName" placeholder="Name")
+            %input(type="text" ng-model="MetricPoints" placeholder="Points")
+            %input(type="text" ng-model="MetricDescription" placeholder="Description")
+      
+  .clearfix

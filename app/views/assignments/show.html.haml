@@ -49,16 +49,17 @@
         = select_tag :team_id, options_for_select(current_course.teams.alpha.map { |t| [t.name, t.id] }, @team.try(:id)), :prompt => "Select #{current_course.team_term}"
 
   .small-12.columns
+    - if @assignment.has_rubric?
+      Display Rubric
+    - else
+      %h3!= link_to "Add Rubric", new_assignment_rubric_path(@assignment)
+
+
+  .small-12.columns
     - if @assignment.has_groups?
       = render 'group_show'
     - else
       = render 'individual_show'
-
-  .small-12.columns
-    - if @assignment.has_rubric?
-      Display Rubric
-    - else
-      != new_assignment_rubric_path
 
   .clearfix
 

@@ -68,6 +68,8 @@ group :development do
   gem 'foreman'
   gem 'rubystats'
   gem 'rack-mini-profiler'
+  gem 'spring'
+  # gem 'guard-spring'
 end
 
 group :test do

@@ -7,13 +7,14 @@ describe Assignment do
 
   context "doesn't have a rubric" do
     it "should know it doesn't have a rubric" do
-      @assignment.has_rubric?.should be_false
+      expect(@assignment.has_rubric?).to eq false
     end
   end
 
   context "has a rubric" do
     it "should know it has a rubric" do
-      @assignment.has_rubric?.should be_true
+      allow(@assignment).to receive(:rubric).and_return true
+      expect(@assignment.has_rubric?).to eq true
     end
   end
 end
